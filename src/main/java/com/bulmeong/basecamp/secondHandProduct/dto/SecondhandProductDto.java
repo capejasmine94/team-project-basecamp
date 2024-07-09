@@ -1,4 +1,4 @@
-package com.bulmeong.basecamp.secondHandProduct.secondHandProductDto.secondHandProduct;
+package com.bulmeong.basecamp.secondHandProduct.dto;
 
 import lombok.Data;
 
