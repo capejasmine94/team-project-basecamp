@@ -10,6 +10,7 @@ import com.bulmeong.basecamp.user.dto.UserDto;
 public interface UserSqlMapper {
     public UserDto getUserByAccountAndPassword(UserDto userDto);
     public UserDto getUserById(UserDto userDto);
+    public UserDto getUserByAccount(UserDto userDto);
     public List<UserDto> getAllUser();
     public int getAllUserCount();
 }

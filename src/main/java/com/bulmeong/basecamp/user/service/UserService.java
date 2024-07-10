@@ -20,6 +20,15 @@ public class UserService {
     public UserDto getUserByAccountAndPassword(UserDto userDto){
         return userSqlMapper.getUserByAccountAndPassword(userDto);
     }
+    public UserDto getUserByAccount(String account){
+        account = account.replace(" ", "");
+        UserDto userDto = new UserDto();
+        userDto.setAccount(account);
+        return userSqlMapper.getUserByAccount(userDto);   
+    }
+    public UserDto getUserByAccount(UserDto userDto){
+        return userSqlMapper.getUserByAccount(userDto);   
+    }
     public UserDto getUserById(int id) {
         UserDto userDto = new UserDto();
         userDto.setId(id);
@@ -28,7 +37,6 @@ public class UserService {
     public UserDto getUserById(UserDto userDto) {
         return userSqlMapper.getUserById(userDto);
     }
-
     /**모든 유저의 정보를 담은 맵입니다.
      @param dtoList => [List(UserDto)] 유저의 정보가 담긴 리스트
      @param count => [int] 유저의 수

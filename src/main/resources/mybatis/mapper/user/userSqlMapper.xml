@@ -18,9 +18,14 @@
             select count(*) from bc_user    
         </select>
 
-        <!-- 아이디 -->
+        <!-- 고유번호 -->
         <select id="getUserById" resultType="com.bulmeong.basecamp.user.dto.UserDto">
             select * from bc_user where id = #{id}    
+        </select>
+
+        <!-- 아이디 -->
+        <select id="getUserByAccount" resultType="com.bulmeong.basecamp.user.dto.UserDto">
+            select * from bc_user where account = #{account}    
         </select>
     <!-- ============================================== -->
 
