@@ -3,4 +3,35 @@
 
 <mapper namespace="com.bulmeong.basecamp.club.mapper.ClubSqlMapper">
 
+    <!-- 소모임 생성 -->
+    <insert id="insertClubDto">
+        insert into bc_club(
+            user_id, region_id, name, description, capacity, main_image
+        )values(
+            #{user_id}, #{region_id}, #{name}, #{description}, #{capacity}, #{main_image}
+        );
+    </insert>
+
+
+    <!-- 소모임 가입조건 -->
+    <insert id="insertClubJoinCondition">
+        insert into bc_club_join_condition(
+            club_id, min_age, max_age, gender
+        )values(
+            #{club_id},#{min_age},#{max_age},#{gender}
+        );
+    </insert>
+
+
+    <!-- 지역 카테고리 -->
+    <insert id="insertClubRegionCategory">
+        insert into bc_club_region_category(
+            region_name
+        )values(
+            #{region_name}
+        );
+    </insert>
+
+
+
 </mapper>
