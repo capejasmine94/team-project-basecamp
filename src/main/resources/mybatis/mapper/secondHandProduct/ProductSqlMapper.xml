@@ -3,7 +3,7 @@
 
 <mapper namespace="com.bulmeong.basecamp.secondHandProduct.mapper.ProductSqlMapper">
 
-    <select id="userTest" resultType="com.bulmeong.basecamp.secondHandProduct.dto.UserDto">
+    <select id="userTest" resultType="UserDto">
         SELECT * FROM bc_secondhand_product_user
         WHERE account = #{account}
           AND password =#{password}

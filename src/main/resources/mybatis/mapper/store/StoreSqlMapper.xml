@@ -3,5 +3,4 @@
 
 <mapper namespace="com.bulmeong.basecamp.store.mapper.StoreSqlMapper">
 
-
 </mapper>
