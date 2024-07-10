@@ -39,10 +39,10 @@
 <div class="container" style="margin-top: 4rem">
     <div class="row">
         <div class="col">
-            <a href="/secondhandProduct/loginPage">
+            <a href="/secondhandProduct/loginPage" th:if="${session.userInfo == null}">
                 로그인
             </a>
-            <span></span>
+<!--            <span th:text="${session.userInfo.nickname}" th></span>-->
         </div>
 
     </div>
