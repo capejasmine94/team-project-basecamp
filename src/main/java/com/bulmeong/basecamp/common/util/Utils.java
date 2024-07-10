@@ -44,15 +44,17 @@ public class Utils {
 
 
     /**세션에 오브젝트를 추가합니다. 컨트롤러에 세션을 선언할 필요가 없습니다.
-     * @return 없음
-     * @param name 세션이름
-     * @param object 세션 오브젝트
+     * @param name : 세션이름
+     * @param object : 세션 오브젝트
      */
-    public void addSession(String name, Object object) {
+    public void setSession(String name, Object object) {
         request.getSession().setAttribute(name, object);
     }
 
-    // 세션에 있는 오브젝트를 원하는 형태로 바로 불러올 수 있습니다.
+     /**세션 안의 오브젝트를 가져옵니다. 원하는 형태로 바로 불러올 수 있습니다.
+     * @param name : 세션이름
+     * @return 세션의 오브젝트
+     */
     public <T>T getSession(String name) {
         T data = (T)request.getSession().getAttribute(name);
         if(data == null)
@@ -60,16 +62,12 @@ public class Utils {
         return data;
     }
 
-    // 로그인이 필요한지 여부를 알아냅니다. (true : 로그인이 필요하다! = 세션에 유저 데이터가 없다)
-    //  손쉽게 처리하는 방법
-    //  if(util.isNeedLogin()){
-    //      return "/user/needLogin";
-    //  }
+    /** 로그인이 필요한지 여부를 알아냅니다. 결과가 true라면 로그인이 필요한 상태입니다. */
     public boolean isNeedLogin() {
         return request.getSession().getAttribute("sessionUserInfo") == null;
     }
 
-    // 유저 1로 즉시 로그인합니다.
+    /** 유저 1로 즉시 로그인합니다. */
     public void loginUser() {
         UserDto params = new UserDto();
         params.setAccount("user1");
@@ -78,7 +76,7 @@ public class Utils {
         request.getSession().setAttribute("sessionUserInfo", userDto);
     }
 
-    //특정 숫자의 유저로 로그인합니다. 숫자를 잘못 입력해도 그 숫자와 가까운 숫자의 유저로 바뀝니다
+     /** 특정 숫자의 유저로 즉시 로그인합니다. 존재하지 않는 유저 숫자를 입력하면, 그 숫자의 가장 가까운 유저로 로그인합니다. */
     public void loginUser(int number) {
         number = Math.max(1, Math.min(number, 3));
         UserDto params = new UserDto();
@@ -88,7 +86,7 @@ public class Utils {
         request.getSession().setAttribute("sessionUserInfo", userDto);
     }
     
-    // 로그아웃합니다.
+    /** 로그아웃합니다. */
     public void logOut() {
         request.getSession().invalidate();
     }
