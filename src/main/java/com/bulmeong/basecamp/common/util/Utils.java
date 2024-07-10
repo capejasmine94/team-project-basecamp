@@ -1,0 +1,95 @@
+package com.bulmeong.basecamp.common.util;
+
+import java.util.Map;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
+import com.bulmeong.basecamp.user.dto.*;
+import com.bulmeong.basecamp.user.service.UserService;
+
+import jakarta.servlet.http.HttpServletRequest;
+
+@Component
+public class Utils {
+    @Autowired
+     private HttpServletRequest request;
+    @Autowired
+     private UserService userService;
+
+    
+    //=========================================================================================
+    //   Utils (made by. ksw & jjh)
+    //  사용법
+    //  1. 사용할 Controller에 Autowired를 해주세요
+    //  2. Autowired를 한 변수를 통해 필요한 기능을 불러와 사용합니다
+    //  
+    //  주의사항 : 실험적이니 버그가 발생할 수 있습니다. 버그가 있으면 문의해주세요
+    //=========================================================================================
+
+
+    
+    //=========================================================================================
+    //정규식 패턴을 수정하려면 여기를 건드시면 됩니다.
+    //=========================================================================================
+    //아이디
+    private final String ID_PATTERN = "^[a-z0-9_]{1,19}$"; 
+    //비밀번호
+    private final String PASSWORD_PATTERN = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!#%*?&])[A-Za-z\\d@$!%*?&]{8,16}$"; 
+    //이메일
+    private final String EMAIL_PATTERN = "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$"; 
+    //전화번호
+    private final String PHONE_NUMBER_PATTERN = "^0(10|2|[3-9]\\d{1})[- ]?\\d{3,4}[- ]?\\d{4}$"; 
+
+
+
+    /**세션에 오브젝트를 추가합니다. 컨트롤러에 세션을 선언할 필요가 없습니다.
+     * @return 없음
+     * @param name 세션이름
+     * @param object 세션 오브젝트
+     */
+    public void addSession(String name, Object object) {
+        request.getSession().setAttribute(name, object);
+    }
+
+    // 세션에 있는 오브젝트를 원하는 형태로 바로 불러올 수 있습니다.
+    public <T>T getSession(String name) {
+        T data = (T)request.getSession().getAttribute(name);
+        if(data == null)
+            System.out.println("Utils - 세션에 오브젝트 형태가 다릅니다!!! : " + name);
+        return data;
+    }
+
+    // 로그인이 필요한지 여부를 알아냅니다. (true : 로그인이 필요하다! = 세션에 유저 데이터가 없다)
+    //  손쉽게 처리하는 방법
+    //  if(util.isNeedLogin()){
+    //      return "/user/needLogin";
+    //  }
+    public boolean isNeedLogin() {
+        return request.getSession().getAttribute("sessionUserInfo") == null;
+    }
+
+    // 유저 1로 즉시 로그인합니다.
+    public void loginUser() {
+        UserDto params = new UserDto();
+        params.setAccount("user1");
+        params.setPassword("1234");
+        UserDto userDto = userService.getUserByAccountAndPassword(params);
+        request.getSession().setAttribute("sessionUserInfo", userDto);
+    }
+
+    //특정 숫자의 유저로 로그인합니다. 숫자를 잘못 입력해도 그 숫자와 가까운 숫자의 유저로 바뀝니다
+    public void loginUser(int number) {
+        number = Math.max(1, Math.min(number, 3));
+        UserDto params = new UserDto();
+        params.setAccount("user" + number);
+        params.setPassword("1234");
+        UserDto userDto = userService.getUserByAccountAndPassword(params);
+        request.getSession().setAttribute("sessionUserInfo", userDto);
+    }
+    
+    // 로그아웃합니다.
+    public void logOut() {
+        request.getSession().invalidate();
+    }
+}
