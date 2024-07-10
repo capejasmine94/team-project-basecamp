@@ -15,6 +15,8 @@ import org.springframework.web.multipart.MultipartFile;
 import com.bulmeong.basecamp.common.dto.ImageDto;
 
 public class ImageUtil {
+    //made by ksw
+
      // input에서 받아온 파일을 서버에 저장하고 그 경로를 반환합니다. 하나의 이미지를 불러올 때 유용합니다.
     static public String saveImageAndReturnLocation(MultipartFile inputImage){
        return saveImageAndReturnDto(inputImage).getLocation();
@@ -37,7 +39,7 @@ public class ImageUtil {
         LocalDateTime localDateTime = LocalDateTime.now();
         DateTimeFormatter format = DateTimeFormatter.ofPattern("yyyy/MM/dd");
 
-        String filePath = "/coffeePrincessImage/";
+        String filePath = "/basecampImage/";
 
         String existDate = localDateTime.format(format);
         String Path = filePath + existDate + "/";

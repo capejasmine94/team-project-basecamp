@@ -19,7 +19,7 @@ public class Utils {
 
     
     //=========================================================================================
-    //   Utils (made by. ksw & jjh)
+    //   Utils (made by. jjh)
     //  사용법
     //  1. 사용할 Controller에 Autowired를 해주세요
     //  2. Autowired를 한 변수를 통해 필요한 기능을 불러와 사용합니다
