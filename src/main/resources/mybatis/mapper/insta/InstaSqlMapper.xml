@@ -3,4 +3,12 @@
 
 <mapper namespace="com.bulmeong.basecamp.insta.mapper.InstaSqlMapper">
 
+    <insert id="insertInstaUserInfo">
+        insert into bc_insta_user_info(
+            user_id, insta_nickname, insta_profile_img, intro, is_private
+        )value(
+            #{user_id}, #{insta_nickname}, #{insta_profile_img}, #{intro}, null
+        )
+    </insert>
+
 </mapper>

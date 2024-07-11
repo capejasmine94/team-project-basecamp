@@ -1,78 +1,100 @@
 <!DOCTYPE html>
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
-
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap">
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap">
-
-        <title>insta_confirmPage</title>
-    </head>
-    <body>
-        <div class="container">
-            <div class="row fixed-top bg-white border-bottom">
-                <div class="col text-start">
-                    <button type="button" class="btn text-start">
-                        <a href="..." class="fs-5 link-dark link-offset-2 link-underline link-underline-opacity-0"><i class="bi bi-chevron-left"></i></a>
-                    </button>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap">
+    <title>insta_confirmPage</title>
+</head>
+<body>
+    <div class="container">
+        <div class="row">
+            <form class="col" action="./confirmProcess" method="post" enctype="multipart/form-data">
+                <div class="row fixed-top bg-white border-bottom">
+                    <div class="col text-start">
+                        <button type="button" class="btn text-start">
+                            <a href="..." class="fs-5 link-dark link-offset-2 link-underline link-underline-opacity-0"><i class="bi bi-chevron-left"></i></a>
+                        </button>
+                    </div>
+                    <div class="col text-center align-self-center fw-bold">
+                        <span>campstagram</span>
+                    </div>
+                    <div class="col text-end"></div>
                 </div>
-                <div class="col text-center align-self-center fw-bold">
-                    <span>campstagram</span>
+                
+                <div class="row mt-5 pt-4">
+                    <div class="col" style="text-align: center;">
+                        <span th:text="${session.sessionUserInfo.nickname}"></span><span>님 반갑습니다!</span>
+                        <input type="hidden" name="user_id" th:value="${session.sessionUserInfo.id}">
+                    </div>
                 </div>
-                <div class="col text-end"></div>
-            </div>
+                <div class="row mt-3">
+                    <div class="col" style="text-align: center;">
+                        <span>
+                            instagram에서 사용할 프로필을 설정해주세요
+                        </span>
+                    </div>
+                </div>
+
+                <!-- 이미지 -->
+                <div class="row pt-2">
+                    <div class="col-3"></div>
+                    <div class="col-6 text-center pt-4">
+                        <img id="profileImage" src="/public/img/instaImage/userImg.jpeg" class="img-fluid rounded-circle" alt="Profile Image">
+                    </div>
+                    <div class="col-3"></div>         
+                </div>
+                <div class="row mt-3">
+                    <div class="col">
+                        <div class="input-group">
+                            <input id="imageInput" name="insta_img" type="file" class="form-control" accept="image/*">
+                            <!-- <label class="input-group-text" for="bowWow_image">Choose File</label> -->
+                        </div>
+                    </div>
+                </div>
+
+                <div class="pb-2 border-bottom border-secondary-subtle mt-3"></div>
             
-            <div class="row mt-5 pt-4">
-                <div class="col" style="text-align: center;">
-                    <span th:text="${session.sessionUserInfo.nickname}"></span><span>님 반갑습니다!</span>
+                <div class="row mt-3">
+                    <div class="col">
+                        <input type="text" class="form-control full-width" style="border: none;" name="insta_nickname" placeholder="insta_nickname">
+                    </div>
                 </div>
-            </div>
-            <div class="row mt-3">
-                <div class="col" style="text-align: center;">
-                    <span>
-                        instagram에서 사용할 프로필을 설정해주세요
-                    </span>
-                </div>
-            </div>
-            <div class="row pt-2">
-                <div class="col-3"></div>
-                <div class="col-6 text-center py-4">
-                    <img src="/static/public/img/instaImage/userImg.jpeg" class="img-fluid rounded-circle">
-                </div>
-                <div class="col-3"></div>         
-            </div>
-
-            <div class="pb-2 border-bottom border-secondary-subtle"></div>
-        
-            <div class="row mt-3">
-                <div class="col">
-                    <input type="text" class="form-control full-width" style="border: none;" name="insta_nickname" placeholder="insta_nickname">
-                </div>
-            </div>
-        
-            <div class="mt-2 pb-2 border-bottom border-secondary-subtle"></div>
             
-            <div class="row mt-3">
-                <div class="col">
-                    <textarea class="form-control" name="content" style="border: none;" placeholder="intro"></textarea>
+                <div class="mt-2 pb-2 border-bottom border-secondary-subtle"></div>
+                
+                <div class="row mt-3">
+                    <div class="col">
+                        <textarea class="form-control" name="intro" style="border: none;" placeholder="intro"></textarea>
+                    </div>
                 </div>
-            </div>
 
-            <div class="mt-2 border-bottom border-secondary-subtle mb-5 pb-5"></div>
-            <div class="row mt-5 pt-5"></div>
+                <div class="mt-2 border-bottom border-secondary-subtle mb-5 pb-5"></div>
+                <div class="row mt-5 pt-5"></div>
 
-            <div class="row">
-                <div class="col d-grid position-fixed bottom-0 py-3 border-top" style="background-color: white;">
-                    <button type="button" class="btn" style="background-color: #0095f6; color: white;">입장하기</button>
+                <div class="row">
+                    <div class="col d-grid position-fixed bottom-0 py-3 border-top" style="background-color: white;">
+                        <button type="submit" class="btn" style="background-color: #0095f6; color: white;">입장하기</button>
+                    </div>
                 </div>
-            </div>
+            </form>
         </div>
-        
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
-    </body>
+    </div>
+    
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <script>
+        document.getElementById('imageInput').addEventListener('change', function(event) {
+            var reader = new FileReader();
+            reader.onload = function() {
+                var output = document.getElementById('profileImage');
+                output.src = reader.result;
+            };
+            reader.readAsDataURL(event.target.files[0]);
+        });
+    </script>
+</body>
 </html>
