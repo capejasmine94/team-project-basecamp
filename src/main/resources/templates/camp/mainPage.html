@@ -7,71 +7,14 @@
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
         <script src="https://kit.fontawesome.com/7b271bba58.js" crossorigin="anonymous"></script>
-        
-        <style>
-            .seller_profile img{
-                aspect-ratio: 1/1;
-                width: 100px;
-                object-fit: cover;
-                object-position: center;
-            }
-            .scrollable {
-                height: 100vh;
-                /* height: calc(100vh - 58px); */
-                overflow-y: auto;
-                position: fixed;
-            }
-            .category{
-                transition: background-color 0.3s;
-            }
-            .category:hover{
-                background-color: #263445;
-            }
-            .subcategory {
-                background-color: #1F2D3D;
-                transition: background-color 0.3s;
-            }
-            .subcategory:hover{
-                background-color: #001528;
-            }
-            .bi-chevron-down, .bi-chevron-up{
-                color: #8F9399;
-            }
-            a{
-                text-decoration: none;
-            }
-            .product-category a{
-                color: black;
-            }
-            .left a{
-                color: #F4F4F5;
-            }
-            .store-center{
-                background-color: #1F2D3D;
-            }
-            .f08{
-                font-size: 0.8em;
-            }
-            .f09{
-                font-size: 0.9em;
-            }
-            .top-nav{
-                height: 58px;
-            }
-            .left{
-                width: 15em;
-            }
-            .right{
-                padding-left: 15em;
-            }
-        </style>
+        <link rel="stylesheet" href="/public/css/common.css">
     </head>
     <body>
         <div th:replace="~{common/navi::topNaviSeller}"></div>
         
         <div class="container-fluid">
             <div class="row">
-                <!-- left -->
+                <!-- 왼쪽 메뉴 -->
                 <div id="leftMenu" class="col border-end scrollable left" style="color: #F4F4F5; background-color: #304156; padding-top: 58px;">
                     <div class="row py-4">
                         <div class="col">
@@ -280,11 +223,25 @@
                         </div>
                     </div>
                 </div>
-                <!-- right -->
+                <!-- 오른쪽 메뉴 -->
                 <div class="col bg-body-secondary right" style="padding-top: 58px;">
-                    <div class="row py-3 px-4">
+                    <div class="row py-3 px-4 justify-content-between">
                         <div class="col fs-3 fw-bold">
-                            상품 등록
+                            제목
+                        </div>
+                        <div class="col-3 pe-0">
+                            <div class="row">
+                                <div class="col d-grid">
+                                    <button class="btn btn-secondary border py-2">
+                                        버튼1
+                                    </button>
+                                </div>
+                                <div class="col d-grid">
+                                    <button class="btn btn-primary border py-2">
+                                        버튼2
+                                    </button>
+                                </div>
+                            </div>
                         </div>
                     </div>
                     
@@ -292,348 +249,16 @@
                         <div class="col border bg-white rounded-2">
                             <div class="row py-3 border-bottom">
                                 <div class="col fw-bold">
-                                    상품 카테고리
+                                    소제목
                                 </div>
                             </div>
                             <div class="row py-3 px-3">
-                                <div class="col-2">
-                                    선택
-                                </div>
-                                <div class="col">
-                                    <div class="row pb-3 product-category">
-                                        <div class="col-2 border overflow-y-auto" style="height: 10em;">
-                                            <div class="row">
-                                                <div class="col">
-                                                    <a href="">
-                                                        대분류
-                                                    </a>
-                                                </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="col">
-                                                    <a href="">
-                                                        대분류
-                                                    </a>
-                                                </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="col">
-                                                    <a href="">
-                                                        대분류
-                                                    </a>
-                                                </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="col">
-                                                    <a href="">
-                                                        대분류
-                                                    </a>
-                                                </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="col">
-                                                    <a href="">
-                                                        대분류
-                                                    </a>
-                                                </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="col">
-                                                    <a href="">
-                                                        대분류
-                                                    </a>
-                                                </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="col">
-                                                    <a href="">
-                                                        대분류
-                                                    </a>
-                                                </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="col">
-                                                    <a href="">
-                                                        대분류
-                                                    </a>
-                                                </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="col">
-                                                    <a href="">
-                                                        대분류
-                                                    </a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-2 border overflow-y-auto" style="height: 10em;">
-                                            <div class="row">
-                                                <div class="col">
-                                                    <a href="">
-                                                        소분류
-                                                    </a>
-                                                </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="col">
-                                                    <a href="">
-                                                        소분류
-                                                    </a>
-                                                </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="col">
-                                                    <a href="">
-                                                        소분류
-                                                    </a>
-                                                </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="col">
-                                                    <a href="">
-                                                        소분류
-                                                    </a>
-                                                </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="col">
-                                                    <a href="">
-                                                        소분류
-                                                    </a>
-                                                </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="col">
-                                                    <a href="">
-                                                        소분류
-                                                    </a>
-                                                </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="col">
-                                                    <a href="">
-                                                        소분류
-                                                    </a>
-                                                </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="col">
-                                                    <a href="">
-                                                        소분류
-                                                    </a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="row align-items-center">
-                                        <div class="col-auto px-0 f09">
-                                            선택한 카테고리 :
-                                        </div>
-                                        <div class="col-auto pe-0 fw-bold">
-                                            대분류
-                                        </div>
-                                        <div class="col-auto pe-0 fw-bold">
-                                            <i class="bi bi-chevron-right"></i>
-                                        </div>
-                                        <div class="col fw-bold">
-                                            소분류
-                                        </div>
-                                    </div>
+                             <!-- 내용 -->
+                                <div class="col new-fs-9">
+                                    내용
                                 </div>
                             </div>
 
-                        </div>
-                    </div>
-
-                    <div class="row px-4 pb-4">
-                        <div class="col border bg-white rounded-2">
-                            <div class="row py-3 border-bottom">
-                                <div class="col fw-bold">
-                                    기본 정보
-                                </div>
-                            </div>
-                            <div class="row py-3 align-items-center">
-                                <div class="col-2">
-                                    상품명
-                                </div>
-                                <div class="col d-grid">
-                                    <input type="text" class="form-control">
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="row px-4 pb-4">
-                        <div class="col border bg-white rounded-2">
-                            <div class="row py-3 border-bottom">
-                                <div class="col fw-bold">
-                                    판매가
-                                </div>
-                            </div>
-                            <div class="row pt-3 align-items-center">
-                                <div class="col">
-                                    <div class="row pb-3 align-items-center">
-                                        <div class="col-2">
-                                            판매가
-                                        </div>
-                                        <div class="col-3 d-grid">
-                                            <input type="text" class="form-control">
-                                        </div>
-                                        <div class="col">
-                                            원
-                                        </div>
-                                    </div>
-                                    <div class="row pb-3 align-items-center">
-                                        <div class="col-2">
-                                            할인
-                                        </div>
-                                        <div class="col-2 px-4">
-                                            <div class="row border">
-                                                <div class="col p-0 d-grid text-center border-end">
-                                                    <button class="py-2 border-0 bg-body-tertiary">
-                                                        설정함
-                                                    </button>
-                                                </div>
-                                                <div class="col p-0 d-grid text-center">
-                                                    <button class="py-2 bg-white border-0">
-                                                        설정안함
-                                                    </button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    
-                                    <div class="row py-3 border-top">
-                                        <div class="col">
-                                            <div class="row pb-3 align-items-center">
-                                                <div class="col-2">
-                                                    할인 설정
-                                                </div>
-                                                <div class="col-3 d-grid">
-                                                    <input type="text" class="form-control">
-                                                </div>
-                                                <div class="col">
-                                                    %
-                                                </div>
-                                            </div>
-                                            <div class="row pb-3 align-items-center">
-                                                <div class="col-2"></div>
-                                                <div class="col-auto pe-0">
-                                                    <input type="checkbox" class="form-check-input" checked>
-                                                </div>
-                                                <div class="col f08">
-                                                    특정 기간만 할인
-                                                </div>
-                                            </div>
-                                            <div class="row pb-3 align-items-center">
-                                                <div class="col-2"></div>
-                                                <div class="col-2">
-                                                    <input type="date" class="form-control">
-                                                </div>
-                                                <div class="col-auto">
-                                                    ~
-                                                </div>
-                                                <div class="col-2">
-                                                    <input type="date" class="form-control">
-                                                </div>
-                                            </div>
-                                            <div class="row px-3">
-                                                <div class="col-2"></div>
-                                                <div class="col py-3 ps-0 border-top fw-bold">
-                                                    <div class="row align-items-center">
-                                                        <div class="col-auto">
-                                                            <span class="f08">최종 판매가</span>
-                                                        </div>
-                                                        <div class="col fw-bold text-primary">
-                                                            <span class="fs-5">50,000</span><span> 원</span>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="row px-4 pb-4">
-                        <div class="col border bg-white rounded-2">
-                            <div class="row py-3 border-bottom">
-                                <div class="col fw-bold">
-                                    옵션
-                                </div>
-                            </div>
-                            <div class="row pt-3 align-items-center">
-                                <div class="col">
-                                    <div class="row pb-3 align-items-center">
-                                        <div class="col-2">
-                                            옵션
-                                        </div>
-                                        <div class="col-2 px-4">
-                                            <div class="row border">
-                                                <div class="col p-0 d-grid text-center border-end">
-                                                    <button class="py-2 border-0 bg-body-tertiary">
-                                                        설정함
-                                                    </button>
-                                                </div>
-                                                <div class="col p-0 d-grid text-center">
-                                                    <button class="py-2 bg-white border-0">
-                                                        설정안함
-                                                    </button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="row py-3 border-top">
-                                        <div class="col">
-                                            <div class="row pb-3 align-items-center">
-                                                <div class="col f08">
-                                                    옵션 입력
-                                                </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="col">
-                                                    <input type="text" class="form-control">
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="row px-4 pb-4">
-                        <div class="col border bg-white rounded-2">
-                            <div class="row py-3 border-bottom">
-                                <div class="col fw-bold">
-                                    재고수량
-                                </div>
-                            </div>
-                            <div class="row py-3">
-                                <div class="col">
-                                    <div class="row pb-3 align-items-center">
-                                        <div class="col-2">
-                                            재고수량
-                                        </div>
-                                        <div class="col-3 d-grid">
-                                            <input type="text" class="form-control">
-                                        </div>
-                                        <div class="col">
-                                            개
-                                        </div>                                                
-                                    </div>
-                                    <div class="row f09 ">
-                                        <div class="col-2"></div>
-                                        <div class="col">
-                                            <i class="fa-solid fa-circle-info"></i> 옵션 재고수량을 설정하면, 옵션의 재고수량으로 자동 적용됩니다.
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
                         </div>
                     </div>
 
@@ -662,46 +287,13 @@
                             </div>
                         </div>
                     </div>
-
-                    <div class="row px-4 pb-4">
-                        <div class="col border bg-white rounded-2">
-                            <div class="row py-3 border-bottom">
-                                <div class="col fw-bold">
-                                    상세 설명
-                                </div>
-                            </div>
-                            <div class="row py-3 align-items-center">
-                                <div class="col d-grid">
-                                    <input type="text" class="form-control" value="이거 어떤식으로 할지 고민중">
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="row px-4 pb-4">
-                        <div class="col-2 d-grid">
-                            <button class="btn bg-white border py-2">
-                                취소하기
-                            </button>
-                        </div>
-                        <div class="col"></div>
-                        <div class="col-2 d-grid">
-                            <button class="btn btn-secondary border py-2">
-                                미리보기
-                            </button>
-                        </div>
-                        <div class="col-2 d-grid">
-                            <button class="btn btn-primary border py-2">
-                                등록하기
-                            </button>
-                        </div>
-                    </div>
                 </div>
             </div>
         </div>
     
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
         <script>
+            // 카테고리 토글 아이콘 변경
             document.querySelectorAll('.toggle-icon').forEach(button => {
                 button.addEventListener('click', function () {
                     const icon = this.querySelector('.bi');
@@ -711,6 +303,7 @@
                     }
                 });
             });
+            // 왼쪽 메뉴 패딩 변경
             function onResize(){
                 const topNaviSeller = document.getElementById("topNaviSeller");
                 const height = topNaviSeller.offsetHeight;
@@ -718,18 +311,8 @@
                 const leftMenu = document.getElementById("leftMenu");
                 leftMenu.style.paddingTop = height + 'px';
             }
+            onResize();
             window.addEventListener("resize",function(){onResize();});
-            // function openCollapse(){
-            //     const a = new bootstrap.Collapse('#first-collapse', {
-            //         toggle: false
-            //     })
-            //     document.getElementById("productRegister").classList.add("text-primary");
-            //     a.show();
-            // }
-
-            // window.addEventListener("DOMContentLoaded", ()=> {
-            //     openCollapse();
-            // })
         </script>
     </body>
 </html>
