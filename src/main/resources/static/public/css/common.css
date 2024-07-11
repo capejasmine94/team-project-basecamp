@@ -448,6 +448,7 @@ body { margin-bottom: 45px }
 .scrollable {
     height: 100vh;
     overflow-y: auto;
+    position: fixed;
 }
 .category{
     transition: background-color 0.3s;
@@ -482,6 +483,15 @@ a{
 }
 .f09{
     font-size: 0.9em;
+}
+.top-nav{
+    height: 58px;
+}
+.left{
+    width: 15em;
+}
+.right{
+    padding-left: 15em;
 }
 
 
