@@ -19,6 +19,7 @@
     --bs-primary5: #2D2926;
 
 }
+
 /* 부트스트랩 기본 메인 컬러 */
 .btn-primary {
     background-color: var(--bs-primary);
@@ -152,6 +153,10 @@
     border-color: var(--bs-primary5) !important;
 }
 
+
+
+
+
 /* 폰트 */
 .font-roboto { font-family: 'Roboto', sans-serif }
 
@@ -167,6 +172,10 @@ ul, li {
     padding: 0;
     list-style: none;
 }
+
+
+
+
 
 /* 공통 */
 .new-d-inline-block { display: inline-block }
