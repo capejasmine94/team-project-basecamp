@@ -15,8 +15,10 @@
                 object-position: center;
             }
             .scrollable {
-                height: 100vh;
+                /* height: 100vh; */
+                height: calc(100vh - 58px);
                 overflow-y: auto;
+                position: fixed;
             }
             .category{
                 transition: background-color 0.3s;
@@ -52,11 +54,20 @@
             .f09{
                 font-size: 0.9em;
             }
+            .top-nav{
+                height: 58px;
+            }
+            .left{
+                width: 15vw;
+            }
+            .right{
+                padding-left: 15vw;
+            }
         </style>
     </head>
     <body>
 
-        <div class="row fixed-top align-items-center py-2 px-3 store-center">
+        <div class="row fixed-top align-items-center py-2 px-3 store-center top-nav">
             <div class="col fs-3 text-white">
                 <span class="fw-bold">BaseCamp</span> Store Center
             </div>
@@ -73,13 +84,13 @@
         <div class="container-fluid">
             <div class="row">
                 <!-- left -->
-                <div class="col-2 border-end scrollable sticky-top left" style="color: #F4F4F5; padding-top: 58px; background-color: #304156;">
+                <div class="col border-end scrollable left" style="color: #F4F4F5; margin-top: 58px; background-color: #304156;">
                     
                     <div class="row py-4">
                         <div class="col">
                             <div class="row">
                                 <div class="col seller_profile text-center">
-                                    <img src="/seller_management_template/Basecamp.jpg" class="rounded-circle">
+                                    <img src="https://img1.newsis.com/2023/07/12/NISI20230712_0001313626_web.jpg" class="rounded-circle">
                                 </div>
                             </div>
                             <div class="row text-center pt-2 fw-bold">
@@ -91,10 +102,10 @@
                     </div>
 
                     <div class="row category">
-                        <div class="col py-3 pe-0 d-grid fs-5">
-                            <button type="button" class="accordion-button collapsed fw-bold">
+                        <div class="col pe-0 d-grid">
+                            <a href="dashboard.html" type="button" class="py-3 fw-bold">
                                 Dashboard
-                            </button>
+                            </a>
                         </div>
                     </div>
                     <div class="row category toggle-icon" data-bs-toggle="collapse" data-bs-target="#first-collapse">
@@ -105,16 +116,16 @@
                         </div>
                         <div class="col-auto ps-0 d-grid fs-5">
                             <button type="button" class="py-3 accordion-button collapsed">
-                                <i class="bi bi-chevron-down"></i>
+                                <i class="bi bi-chevron-up"></i>
                             </button>
                         </div>
                     </div>
-                    <div class="row accordion-collapse collapse p-0" id="first-collapse">
+                    <div class="row accordion-collapse collapse show p-0" id="first-collapse">
                         <div class="col">
                             <a class="row accordion-body py-3 ps-4 subcategory" href="http://www.naver.com">
                                 상품조회/수정
                             </a>
-                            <a class="row accordion-body py-3 ps-4 subcategory" href="https://getbootstrap.com/">
+                            <a class="row accordion-body py-3 ps-4 subcategory text-primary" href="productRegister.html" id="productRegister">
                                 상품등록
                             </a>
                             <a class="row accordion-body py-3 ps-4 subcategory" href="https://getbootstrap.com/">
@@ -284,7 +295,7 @@
                 </div>
                 
                 <!-- right -->
-                <div class="col bg-body-secondary" style="padding-top: 58px;">
+                <div class="col bg-body-secondary right" style="padding-top: 58px;">
                     <div class="row py-3 px-4">
                         <div class="col fs-3 fw-bold">
                             상품 등록
@@ -652,7 +663,7 @@
                                     대표 이미지
                                 </div>
                                 <div class="col seller_profile">
-                                    <img src="/seller_management_template/Basecamp.jpg">
+                                    <img src="https://img1.newsis.com/2023/07/12/NISI20230712_0001313626_web.jpg">
                                 </div>
                             </div>
                             <div class="row py-3 align-items-center">
@@ -660,7 +671,7 @@
                                     상세 이미지
                                 </div>
                                 <div class="col seller_profile">
-                                    <img src="/seller_management_template/Basecamp.jpg">
+                                    <img src="https://img1.newsis.com/2023/07/12/NISI20230712_0001313626_web.jpg">
                                 </div>
                             </div>
                         </div>
@@ -696,6 +707,18 @@
                     }
                 });
             });
+
+            // function openCollapse(){
+            //     const a = new bootstrap.Collapse('#first-collapse', {
+            //         toggle: false
+            //     })
+            //     document.getElementById("productRegister").classList.add("text-primary");
+            //     a.show();
+            // }
+
+            // window.addEventListener("DOMContentLoaded", ()=> {
+            //     openCollapse();
+            // })
         </script>
     </body>
 </html>
