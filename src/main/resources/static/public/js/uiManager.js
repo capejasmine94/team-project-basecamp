@@ -8,14 +8,13 @@ let uiContents
 function initUIContent(...contents){
     uiContents = []
     contents.forEach(function(content){
-        const node = document.getElementById(content);
-        uiContents.push(node);
+        uiContents.push(content);
     });
 }
 
 function onClickButton(content) {
     uiContents.forEach(function(node) {
-        node.classList.add("d-none");
+        $("#" + node).fadeOut("fast");
     });
-    document.getElementById(content).classList.remove("d-none");
+    $("#" + content).fadeIn("fast");
 }
