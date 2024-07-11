@@ -37,5 +37,28 @@
         );
     </insert>
 
+    <!-- 게시글 작성 -->
+    <insert id="insertClubPostDto">
+        insert into bc_club_post(
+	        club_id, 
+            user_id, 
+            category_id, 
+            title, 
+            content, 
+            read_count
+        )values(
+	        #{club_id},
+            #{user_id}, 
+            #{category_id},
+            #{title}, 
+            #{content}, 
+            0
+        );
+
+    </insert>
+
+    <select id= "selectClubDto" resultType="package com.bulmeong.basecamp.club.dto.ClubDto">
+    select * from bc_club
+    </select>
 
 </mapper>

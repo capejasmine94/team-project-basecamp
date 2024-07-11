@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.bulmeong.basecamp.club.dto.ClubDto;
 import com.bulmeong.basecamp.club.dto.ClubJoinConditionDto;
+import com.bulmeong.basecamp.club.dto.ClubPostDto;
 import com.bulmeong.basecamp.club.service.ClubService;
 import com.bulmeong.basecamp.common.util.Utils;
 
@@ -25,6 +26,12 @@ public class ClubController {
     @Autowired
     private ClubService clubService;
 
+    @RequestMapping("main")
+    public String clubMain(){
+
+        return "club/clubMainPage";
+    }
+
     @RequestMapping("createNewClub")
     public String createNewClub(){
         util.loginUser();
@@ -41,4 +48,24 @@ public class ClubController {
 
         return "/club/clubMainPage";
     }
+
+    @RequestMapping("writeNewPost")
+    public String writeNewPost(){
+        util.loginUser();
+        return "/club/writeNewPostPage";
+    }
+
+    @RequestMapping("writeNewPostProcess")
+    public String writeNewPostProcess(ClubPostDto clubPostDto){
+        clubService.writeClubPost(clubPostDto);
+
+        System.out.println("butter" +  clubPostDto);
+
+        return "/club/clubMainPage";
+
+    }
+
+
 }
+
+
