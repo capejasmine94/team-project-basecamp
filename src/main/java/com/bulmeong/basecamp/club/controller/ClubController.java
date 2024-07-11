@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 
 import com.bulmeong.basecamp.club.dto.ClubDto;
+import com.bulmeong.basecamp.club.dto.ClubJoinConditionDto;
 import com.bulmeong.basecamp.club.service.ClubService;
 import com.bulmeong.basecamp.common.util.Utils;
 
@@ -31,8 +32,8 @@ public class ClubController {
     }
 
     @RequestMapping("createNewClubProcess")
-    public String createClubProcess(ClubDto clubDto){
-        clubService.createNewClub(clubDto);
+    public String createClubProcess(ClubDto clubDto, ClubJoinConditionDto clubJoinConditionDto){
+        clubService.createNewClub(clubDto, clubJoinConditionDto);
         util.loginUser();
 
 

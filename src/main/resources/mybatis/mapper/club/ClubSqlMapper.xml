@@ -5,11 +5,37 @@
 
     <!-- 소모임 생성 -->
     <insert id="insertClubDto">
+
+        <selectKey resultType="int" keyProperty="id" order="AFTER">
+            select max(id) from bc_club
+        </selectKey>
+
         insert into bc_club(
-            user_id, region_id, name, description, capacity, main_image
+            user_id, 
+            region_id, 
+            name, 
+            description, 
+            capacity, 
+            main_image
         )values(
-            #{user_id}, #{region_id}, #{name}, #{description}, #{capacity}, #{main_image}
+            #{user_id}, 
+            #{region_id}, 
+            #{name}, 
+            #{description}, 
+            #{capacity}, 
+            #{main_image}
         );
     </insert>
+
+
+    <!-- 소모임 가입조건 -->
+    <insert id="insertClubJoinCondition">
+        insert into bc_club_join_condition(
+            club_id, min_age, max_age, gender
+        )values(
+            #{club_id},#{min_age},#{max_age},#{gender}
+        );
+    </insert>
+
 
 </mapper>
