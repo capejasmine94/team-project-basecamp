@@ -436,6 +436,55 @@ body { margin-bottom: 45px }
     right: 0;
     z-index: 1060;
 }
+
+
+/* 판매자용 */
+.seller_profile img{
+    aspect-ratio: 1/1;
+    width: 100px;
+    object-fit: cover;
+    object-position: center;
+}
+.scrollable {
+    height: 100vh;
+    overflow-y: auto;
+}
+.category{
+    transition: background-color 0.3s;
+}
+.category:hover{
+    background-color: #263445;
+}
+.subcategory {
+    background-color: #1F2D3D;
+    transition: background-color 0.3s;
+}
+.subcategory:hover{
+    background-color: #001528;
+}
+.bi-chevron-down, .bi-chevron-up{
+    color: #8F9399;
+}
+a{
+    text-decoration: none;
+}
+.product-category a{
+    color: black;
+}
+.left a{
+    color: #F4F4F5;
+}
+.store-center{
+    background-color: #1F2D3D;
+}
+.f08{
+    font-size: 0.8em;
+}
+.f09{
+    font-size: 0.9em;
+}
+
+
 @media screen and (max-width: 1170px) {
     /* 레이아웃 */
     .page-wrap .page-left-banner {
