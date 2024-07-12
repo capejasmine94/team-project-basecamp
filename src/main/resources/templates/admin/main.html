@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <!-- Font Awesome -->
+    <script src="https://kit.fontawesome.com/7b271bba58.js" crossorigin="anonymous"></script>
+    <!-- Google Material Icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet">
+    <!-- admin_main css -->
+    <link href="/public/css/campingcar/adminmain.css" rel="stylesheet">
+    <link href="/public/css/common.css" rel="stylesheet">
+
+</head>
+<body class="main-page">
+    <!-- 상단 고정 네비게이션 바 -->
+    <div class="row fixed-top align-items-center py-2 px-3 center top-nav font-roboto">
+        <div class="col fs-3 text-black">
+            <span class="fw-bold">BaseCamp_</span><span>Natural Forest Center🌿</span>
+        </div>
+        <div class="col fs-5 text-end">
+            <span class="fw-semibold text-black">
+                Sacabambaspis
+            </span>
+        </div>
+        <div class="col-auto">
+            <button class="btn btn-outline-light btn-sm fw-semibold text-black">로그아웃</button>
+        </div>
+    </div>
+
+    <div class="container-fluid">
+        <div class="row font-roboto">
+            <!-- 왼쪽 메뉴 -->
+            <div class="col border-end scrollable left">
+                <div class="row py-4">
+                    <div class="col">
+                        <div class="row">
+                            <div class="col seller_profile text-center">
+                                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTuSIY57GfjG6GdkHgMtdJU0p3L8F-JHp3QHg&s" class="rounded-circle">
+                            </div>
+                        </div>
+                        <div class="row text-center pt-2 fw-semibold">
+                            <div class="col">
+                                렌트의 왕🫅🏻
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- 대시보드 -->
+                <div class="row category  fw-semibold">
+                    <div class="col pe-0 d-grid">
+                        <button type="button" class="py-3 accordion-button collapsed fw-semibold fs-7">
+                            <span class="material-symbols-outlined fs-7">
+                                dashboard
+                            </span>Dashboard
+                        </button>
+                    </div>
+                </div>
+
+                <div class="row f08 text-tertiary">
+                    <div class="col">
+                        서비스 관리
+                    </div>
+                </div>
+                <!-- 상품관리 섹션-->
+                <div class="row category toggle-icon" data-bs-toggle="collapse" data-bs-target="#first-collapse">
+                    <div class="col pe-0 d-grid"> 
+                        <button type="button" class="py-3 accordion-button collapsed fw-semibold">
+                            <span class="material-symbols-outlined">
+                                directions_car
+                            </span>차량관리
+                        </button>
+                    </div>
+                    <div class="col-auto ps-0 d-grid fs-5">
+                        <button type="button" class="py-3 accordion-button collapsed">
+                            <span class="material-symbols-outlined dropdown-icon">arrow_drop_down</span>
+                        </button>
+                    </div>
+                </div>
+                <div class="row accordion-collapse collapse p-0" id="first-collapse">
+                    <div class="col">
+                        <a class="row accordion-body py-3 ps-4 subcategory" href="#" data-page="/reservation_status.html" data-target="dynamic-content">
+                            차량조회/수정
+                        </a>
+                        <a class="row accordion-body py-3 ps-4 subcategory" href="#" data-page="car_registration.html">
+                            차량등록
+                        </a>
+                    </div>
+                </div>
+                <!-- 예약관리 섹션 -->
+                <div class="row category toggle-icon" data-bs-toggle="collapse" data-bs-target="#second-collapse">
+                    <div class="col pe-0 d-grid fs-5">
+                        <button type="button" class="py-3 accordion-button collapsed fw-semibold">
+                            <span class="material-symbols-outlined">
+                                event_available
+                            </span>예약
+                        </button>
+                    </div>
+                    <div class="col-auto ps-0 d-grid fs-5">
+                        <button type="button" class="py-3 accordion-button collapsed">
+                            <span class="material-symbols-outlined dropdown-icon">arrow_drop_down</span>
+                        </button>
+                    </div>
+                </div>
+                <div class="row accordion-collapse collapse p-0" id="second-collapse">
+                    <div class="col"> 
+                        <a class="row accordion-body py-3 ps-4 subcategory" href="#" data-page="/admin/reservation_status"  data-target="dynamic-content">
+                            예약 현황
+                        </a>
+                        <a class="row accordion-body py-3 ps-4 subcategory" href="#" data-page="/book_reservation.html" data-target="dynamic-content">
+                            예약신청
+                        </a>
+                        <a class="row accordion-body py-3 ps-4 subcategory" href="#" data-page="option_settings" data-target="content">
+                            옵션설정
+                        </a>
+                        <a class="row accordion-body py-3 ps-4 subcategory" href="#" data-page="peak_season" data-target="content">
+                            성수기·휴일
+                        </a>
+                        <a class="row accordion-body py-3 ps-4 subcategory" href="#" data-page="settings" data-target="content">
+                            환경설정
+                        </a>
+                    </div>
+                </div>
+                <!-- 문의/리뷰 관리 섹션 -->
+                <div class="row category toggle-icon" data-bs-toggle="collapse" data-bs-target="#third-collapse">
+                    <div class="col pe-0 d-grid fs-5">
+                        <button type="button" class="py-3 accordion-button collapsed fw-semibold">
+                            <span class="material-symbols-outlined">feedback</span>문의/리뷰 관리
+                        </button>
+                    </div>
+                    <div class="col-auto ps-0 d-grid fs-5">
+                        <button type="button" class="py-3 accordion-button collapsed">
+                            <span class="material-symbols-outlined dropdown-icon">arrow_drop_down</span>
+                        </button>
+                    </div>
+                </div>
+                <div class="row accordion-collapse collapse p-0" id="third-collapse">
+                    <div class="col">
+                        <a class="row accordion-body py-3 ps-4 subcategory" href="#" data-page="/inquiry_manage.html" data-target="dynamic-content">
+                            문의관리
+                        </a>
+                        <a class="row accordion-body py-3 ps-4 subcategory" href="#" data-page="/review_manage.html" data-target="dynamic-content">
+                            리뷰관리
+                        </a>
+                    </div>
+                </div>
+                <!-- 컨텐츠 관리 섹션 -->
+                <div class="row category toggle-icon" data-bs-toggle="collapse" data-bs-target="#fourth-collapse">
+                    <div class="col pe-0 d-grid fs-5">
+                        <button type="button" class="py-3 accordion-button collapsed fw-semibold">
+                            <span class="material-symbols-outlined">
+                                edit_square
+                            </span> 컨텐츠 관리
+                        </button>
+                    </div>
+                    <div class="col-auto ps-0 d-grid fs-5">
+                        <button type="button" class="py-3 accordion-button collapsed">
+                            <span class="material-symbols-outlined dropdown-icon">arrow_drop_down</span>
+                        </button>
+                    </div>
+                </div>
+                <div class="row accordion-collapse collapse p-0" id="fourth-collapse">
+                    <div class="col">
+                        <a class="row accordion-body py-3 ps-4 subcategory" href="#" data-page="/inputform.html" data-target="dynamic-content">
+                            입력폼 
+                        </a>
+                        <a class="row accordion-body py-3 ps-4 subcategory" href="#" data-page="/map.html" data-target="dynamic-content">
+                            지도 
+                        </a>
+                        <a class="row accordion-body py-3 ps-4 subcategory" href="#" data-page="/schedule.html" data-target="dynamic-content">
+                            일정 
+                        </a>
+                        <a class="row accordion-body py-3 ps-4 subcategory" href="#" data-page="/report_block.html" data-target="dynamic-content">
+                            신고·차단
+                        </a>
+                    </div>
+                </div>
+                <!-- 통계 섹션 -->
+                <div class="row category toggle-icon" data-bs-toggle="collapse" data-bs-target="#fifth-collapse">
+                    <div class="col pe-0 d-grid fs-5">
+                        <button type="button" class="py-3 accordion-button collapsed fw-semibold">
+                            <span class="material-symbols-outlined">
+                                chart_data
+                            </span>통계
+                        </button>
+                    </div>
+                    <div class="col-auto ps-0 d-grid fs-5">
+                        <button type="button" class="py-3 accordion-button collapsed">
+                            <span class="material-symbols-outlined dropdown-icon">arrow_drop_down</span>
+                        </button>
+                    </div>
+                </div>
+                <div class="row accordion-collapse collapse p-0" id="fifth-collapse">
+                    <div class="col">
+                        <a class="row accordion-body py-3 ps-4 subcategory" href="#" data-page="/statistics_home.html" data-target="dynamic-content">
+                            홈
+                        </a>
+                        <a class="row accordion-body py-3 ps-4 subcategory" href="#" data-page="/sales.html" data-target="dynamic-content">
+                            매출
+                        </a>
+                        <a class="row accordion-body py-3 ps-4 subcategory" href="#" data-page="/periodic_analysis.html" data-target="dynamic-content">
+                            기간별 분석
+                        </a>
+                        <a class="row accordion-body py-3 ps-4 subcategory" href="#" data-page="/referral_sites.html" data-target="dynamic-content">
+                            유입 사이트
+                        </a>
+                        <a class="row accordion-body py-3 ps-4 subcategory" href="#" data-page="/search_keywords.html" data-target="dynamic-content">
+                            유입 검색어
+                        </a>
+                        <a class="row accordion-body py-3 ps-4 subcategory" href="#" data-page="/visitors.html" data-target="dynamic-content">
+                            방문자
+                        </a>
+                        <a class="row accordion-body py-3 ps-4 subcategory" href="#" data-page="/top_visited_pages.html" data-target="dynamic-content">
+                            많이 방문한 페이지
+                        </a>
+                        <a class="row accordion-body py-3 ps-4 subcategory" href="#" data-page="/rewardse.html" data-target="dynamic-content">
+                            적립금
+                        </a>
+                        <a class="row accordion-body py-3 ps-4 subcategory" href="#" data-page="/additional_services.html" data-target="dynamic-content">
+                            부가 서비스
+                        </a>
+                    </div>
+                </div>
+
+                <!--  금융 서비스 및 판매 지원 프로그램 --> 
+                <div class="row py-4">
+                    <div class="col">
+                        <div class="row py-3">
+                            <div class="col">
+                                <div class="row f08 text-tertiary">
+                                    <div class="col">
+                                        금융 서비스 바로가기
+                                    </div>
+                                </div>
+                                <div class="row pt-2">
+                                    <div class="col">
+                                        선정산 서비스 <i class="fa-solid fa-arrow-up-right-from-square"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row py-3">
+                            <div class="col">
+                                <div class="row f08 text-tertiary">
+                                    <div class="col">
+                                        판매 지원 프로그램
+                                    </div>
+                                </div>
+                                <div class="row pt-2">
+                                    <div class="col">
+                                        파트너센터 <i class="fa-solid fa-arrow-up-right-from-square"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row py-3">
+                            <div class="col">
+                                <div class="row f08 text-tertiary">
+                                    <div class="col">
+                                        판매 지원 프로그램
+                                    </div>
+                                </div>
+                                <div class="row pt-2">
+                                    <div class="col">
+                                        판매 가이드 <i class="fa-solid fa-arrow-up-right-from-square"></i>
+                                    </div>
+                                </div>
+                                <div class="row pt-2">
+                                    <div class="col">
+                                        온라인 교육 <i class="fa-solid fa-arrow-up-right-from-square"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 도움말 및 고객센터 -->
+                <div class="row pb-5">
+                    <div class="col">
+                        <div class="row">
+                            <div class="col">
+                                도움이 필요하신가요?
+                            </div>
+                        </div>
+                        <div class="row pt-3">
+                            <div class="col d-grid">
+                                <button class="btn btn-outline-light py-2">
+                                    <i class="fa-solid fa-headset"></i> 고객센터 바로가기
+                                </button>
+                            </div>
+                        </div>
+                        <div class="row pt-3">
+                            <div class="col d-grid">
+                                <button class="btn btn-outline-light py-2">
+                                    카테고리 담당자 찾기
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 오른쪽 콘텐츠 영역 -->
+            <div class="col right">
+                <div class="content-title-bar">
+                    <div class="fs-6 fw-semibold" id="content-title">대시보드</div>
+                </div>
+                <div id="dynamic-content" class="content-body">
+                    <!-- 여기에 오른쪽 콘텐츠가 표시됩니다 -->
+                    <p>템플릿화할 콘텐츠를 여기에 추가하세요.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="/public/css/campingcar/adminmain.js"></script>
+    <script>
+        
+    // AJAX 콘텐츠 로딩
+    document.querySelectorAll('.subcategory').forEach(link => {
+        link.addEventListener('click', function(event) {
+            event.preventDefault();
+            const page = this.getAttribute('data-page');
+            const target = this.getAttribute('data-target');
+            const title = this.textContent.trim();
+            loadPage(page, target, title);
+        });
+    });
+
+    function loadPage(page, targetId, title) {
+        console.log(`Loading page: ${page} into target: ${targetId}`); // 콘솔에 로딩 정보 출력
+        document.getElementById('content-title').textContent = title; // 상단 바 제목 변경
+        const xhr = new XMLHttpRequest();
+        xhr.open('POST', page); // Thymeleaf 템플릿 파일 경로를 입력
+        xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+        xhr.onload = function() {
+            if (xhr.status === 200) {
+                document.getElementById(targetId).innerHTML = xhr.responseText;
+                console.log('Page loaded successfully');
+            } else {
+                console.error(`Failed to load page: ${xhr.status} ${xhr.statusText}`);
+            }
+        };
+        xhr.onerror = function() {
+            console.error('Request failed.');
+        };
+        xhr.send();
+    }
+    </script>
+</body>
+</html>
