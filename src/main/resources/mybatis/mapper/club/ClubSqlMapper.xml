@@ -66,4 +66,18 @@
     </insert>
 
 
+    <!-- 소모임 회원 가입 -->
+    <insert id="insertClubMemberDto">
+        insert into bc_club_member(
+	        club_id, 
+            user_id, 
+            role_id
+        )values(
+	        #{club_id}, 
+            #{user_id}, 
+            #{role_id} 
+        )
+    </insert>
+
+
 </mapper>
