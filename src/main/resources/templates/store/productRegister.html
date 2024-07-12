@@ -15,8 +15,8 @@
                 object-position: center;
             }
             .scrollable {
-                /* height: 100vh; */
-                height: calc(100vh - 58px);
+                height: 100vh;
+                /* height: calc(100vh - 58px); */
                 overflow-y: auto;
                 position: fixed;
             }
@@ -58,33 +58,58 @@
                 height: 58px;
             }
             .left{
-                width: 15vw;
+                width: 15em;
             }
             .right{
-                padding-left: 15vw;
+                padding-left: 15em;
+            }
+            /* 임의의 영역 생성 */
+            .scrollBar { 
+            width: 15em;
+            overflow-y: scroll;
+            }
+
+            /* 아래의 모든 코드는 영역::코드로 사용 */
+            .scrollBar::-webkit-scrollbar {
+                width: 7px;  /* 스크롤바의 너비 */
+            }
+
+            .scrollBar::-webkit-scrollbar-thumb {
+                height: 30%; /* 스크롤바의 길이 */
+                background: #ffffff29; /* 스크롤바의 색상 */
+                
+                /* border-radius: 10px; */
+            }
+
+            .scrollBar::-webkit-scrollbar-track {
+                background: rgba(33, 122, 244, .1);  /*스크롤바 뒷 배경 색상*/
             }
         </style>
     </head>
     <body>
 
-        <div class="row fixed-top align-items-center py-2 px-3 store-center top-nav">
-            <div class="col fs-3 text-white">
-                <span class="fw-bold">BaseCamp</span> Store Center
-            </div>
-            <div class="col fs-5 text-end">
-                <span class="fw-bold text-white">
-                    Sacabambaspis
-                </span>
-            </div>
-            <div class="col-auto">
-                <button class="btn btn-outline-light btn-sm fw-bold">로그아웃</button>
+        <div class="container-fluid">
+            <div id="topNaviSeller" class="row fixed-top align-items-center py-2 px-3 store-center">
+                <div class="col fs-3 text-white">
+                    <span class="fw-bold">BaseCamp</span> Store Center
+                </div>
+                <div class="col fs-5 text-end">
+                    <span class="fw-bold text-white">
+                        Sacabambaspis
+                    </span>
+                </div>
+                <div class="col-auto">
+                    <button class="btn btn-outline-light btn-sm fw-bold">로그아웃</button>
+                </div>
             </div>
         </div>
+
+        <!-- <div th:replace="~{common/navi::topNaviSeller}"></div> -->
 
         <div class="container-fluid">
             <div class="row">
                 <!-- left -->
-                <div class="col border-end scrollable left" id="leftAccordion" style="color: #F4F4F5; margin-top: 58px; background-color: #304156;">
+                <div class="col border-end scrollable scrollBar left" id="leftAccordion" style="color: #F4F4F5; padding-top: 58px; background-color: #304156;">
                     
                     <div class="row py-4">
                         <div class="col">
@@ -103,7 +128,7 @@
 
                     <div class="row category">
                         <div class="col pe-0 d-grid">
-                            <a href="dashboard.html" type="button" class="py-3 fw-bold">
+                            <a href="dashboard2.html" type="button" class="py-3 fw-bold">
                                 Dashboard
                             </a>
                         </div>
@@ -777,6 +802,18 @@
                     });
                 });
             });
+
+            // 왼쪽 메뉴 패딩 변경
+            function onResize(){
+                const topNaviSeller = document.getElementById("topNaviSeller");
+                const height = topNaviSeller.offsetHeight;
+                console.log(height);
+                const leftMenu = document.getElementById("leftAccordion");
+                leftMenu.style.paddingTop = height + 'px';
+            }
+            onResize();
+
+            window.addEventListener("resize",function(){onResize();});
 
             // function openCollapse(){
             //     const a = new bootstrap.Collapse('#first-collapse', {
