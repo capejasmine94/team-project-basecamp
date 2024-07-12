@@ -6,8 +6,11 @@ import org.springframework.stereotype.Service;
 import com.bulmeong.basecamp.club.dto.ClubDto;
 import com.bulmeong.basecamp.club.dto.ClubJoinConditionDto;
 import com.bulmeong.basecamp.club.dto.ClubPostDto;
+import com.bulmeong.basecamp.club.dto.ClubPostImageDto;
 import com.bulmeong.basecamp.club.mapper.ClubSqlMapper;
 import com.bulmeong.basecamp.user.mapper.UserSqlMapper;
+
+import java.util.List;
 import java.util.Map;
 
 @Service
@@ -30,15 +33,13 @@ public class ClubService {
 
     //  소모임 게시판 글 작성하기
 
-    public void writeClubPost(ClubPostDto clubPostDto){
+    public void writeClubPost(ClubPostDto clubPostDto, List<ClubPostImageDto>clubPostImageDtoList){
+       for(ClubPostImageDto clubPostImageDto : clubPostImageDtoList){
+           clubSqlMapper.insertClubPostImage(clubPostImageDto);
+       }
         clubSqlMapper.insertClubPostDto(clubPostDto);
+    }
+
     
 
-        System.out.println("글작성데이터 확인" + clubPostDto);
-    }
-
-    public ClubDto selectClubDto(){
-        ClubDto clubDto = clubSqlMapper.selectClubDto();
-        return clubDto;
-    }
 }

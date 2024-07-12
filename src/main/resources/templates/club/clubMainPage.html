@@ -10,21 +10,18 @@
       
   
         <div class="container">
-            <span>메인페이지</span>
-                <br>
-                <a href="/club/createNewClub">소모임 개설하기</a>
-                <br>
-                <a href="/club/writeNewPost">소모임 게시판 글 작성하기</a>
+            <span>소모임 통합 메인페이지</span>
 
             <!-- 전체 박스 -->
                 <div class="row">
-                    <div class="col">
+                    <div class="col px-4">
 
+                        <!-- 검색 -->
                         <div class="row">
                             <div class="col">
 
                                 <div class="row">
-                                    <div class="col">
+                                    <div class="col-auto">
                                         <select name="region_id" class="form-select form-control">
                                             <option value="1">지역</option>
                                             <option value="2">서울</option>
@@ -32,12 +29,111 @@
                                         </select>
                                     </div>
                                     <div class="col">
-                                        검색창
+                                        <div class="row me-0">
+                                            <div class="col px-0 input-group">
+                                            <input type="text" th:value="${param.searchWord}" name="searchWord" class="form-control" placeholder="검색어를 입력하세요.">
+                                                <button class="btn bg-body-tertiary border col-auto">
+                                                    <i class="bi bi-search"></i>
+                                                </button>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                              
                             </div>
                         </div>
+
+                        <!-- 내 모임 limit 걸어서 반복 횟수 제한하기-->
+                        <div class="row">
+                            <div class="col">
+
+                                <div class="row pt-4 pb-1">
+                                    <div class="col">
+                                        <a href=""><span>내모임 ></span></a>
+                                        
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col">
+                                        <a href="/club/home">
+                                            <div class="section" style="margin-bottom: 20px;">
+                                                <div class="circles" style="display: flex; gap: 10px;">
+                                                    <div class="circle" style="width: 80px; height: 80px; border: 1px solid #fff; border-radius: 50%; overflow:hidden;">
+                                                        <img src="image1.jpg" alt="모임 이미지 1" style="width: 100%; height: 100%; object-fit: cover;">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </a>
+
+
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+
+                         <!-- 새로운 소모임 -->
+                         <div class="row">
+                            <div class="col">
+
+                                <div class="row pb-1">
+                                    <div class="col">
+                                        <a href=""><span>새로운 소모임 ></span></a>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col">
+                                        
+                                        <div class="rectangles" style="display: flex; gap: 10px;">
+                                            <div class="rectangle" style="width: 100px; height: 70px; border: 1px solid #fff;">
+                                                <img src="image1.jpg" alt="모임 이미지 1" style="width: 100%; height: 100%; object-fit: cover;"></div>
+                                            <!-- <div class="rectangle" style="width: 100px; height: 70px; border: 1px solid #fff;">
+                                                <img src="image1.jpg" alt="모임 이미지 1" style="width: 100%; height: 100%; object-fit: cover;"></div>
+                                            <div class="rectangle" style="width: 100px; height: 70px; border: 1px solid #fff;">
+                                                <img src="image1.jpg" alt="모임 이미지 1" style="width: 100%; height: 100%; object-fit: cover;"></div> -->
+                                        </div>
+
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+
+                         <!-- 우리동네 모임 -->
+                         <div class="row">
+                            <div class="col">
+
+                                <div class="row">
+                                    <div class="col pt-4 pb-1">
+                                        <a href=""><span>우리동네 모임 ></span></a>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col">
+                                        
+                                        <div class="rectangles" style="display: flex; gap: 10px;">
+                                            <div class="rectangle" style="width: 100px; height: 70px; border: 1px solid #fff;">
+                                                <img src="image1.jpg" alt="모임 이미지 1" style="width: 100%; height: 100%; object-fit: cover;"></div>
+                                            <!-- <div class="rectangle" style="width: 100px; height: 70px; border: 1px solid #fff;">
+                                                <img src="image1.jpg" alt="모임 이미지 1" style="width: 100%; height: 100%; object-fit: cover;"></div>
+                                            <div class="rectangle" style="width: 100px; height: 70px; border: 1px solid #fff;">
+                                                <img src="image1.jpg" alt="모임 이미지 1" style="width: 100%; height: 100%; object-fit: cover;"></div> -->
+                                        </div>
+
+                                    </div>
+                                </div>
+
+                                <div class="row pt-5">
+                                    <div class="col">
+                                        <a href="/club/createNewClub" class="btn form-control btn-dark">소모임 개설하기</a>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+
+
+                 
 
 
                     </div>

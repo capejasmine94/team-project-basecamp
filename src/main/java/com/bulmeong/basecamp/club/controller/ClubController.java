@@ -1,15 +1,23 @@
 package com.bulmeong.basecamp.club.controller;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
-
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.bulmeong.basecamp.club.dto.ClubDto;
 import com.bulmeong.basecamp.club.dto.ClubJoinConditionDto;
 import com.bulmeong.basecamp.club.dto.ClubPostDto;
+import com.bulmeong.basecamp.club.dto.ClubPostImageDto;
 import com.bulmeong.basecamp.club.service.ClubService;
+import com.bulmeong.basecamp.common.dto.ImageDto;
+import com.bulmeong.basecamp.common.util.ImageUtil;
 import com.bulmeong.basecamp.common.util.Utils;
 
 import com.bulmeong.basecamp.user.service.UserService;
@@ -32,6 +40,12 @@ public class ClubController {
         return "club/clubMainPage";
     }
 
+    @RequestMapping("home")
+    public String clubHome(){
+
+        return "club/clubHomePage";
+    }
+
     @RequestMapping("createNewClub")
     public String createNewClub(){
         util.loginUser();
@@ -49,22 +63,30 @@ public class ClubController {
         return "/club/clubMainPage";
     }
 
-    @RequestMapping("writeNewPost")
-    public String writeNewPost(){
+    @RequestMapping("writePost")
+    public String writePost(){
         util.loginUser();
-        return "/club/writeNewPostPage";
+        return "/club/writePostPage";
     }
 
-    @RequestMapping("writeNewPostProcess")
-    public String writeNewPostProcess(ClubPostDto clubPostDto){
-        clubService.writeClubPost(clubPostDto);
-        clubService.selectClubDto();
+    @RequestMapping("writePostProcess")
+    public String writePostProcess(ClubPostDto clubPostDto, @RequestParam("main_image") MultipartFile[]main_image){
 
-        System.out.println("butter" +  clubPostDto);
+        List<ClubPostImageDto> clubPostImageDtoList = new ArrayList<>(); 
+        List<ImageDto> imgList = ImageUtil.saveImageAndReturnDtoList(main_image);
+        for(ImageDto img : imgList){
+            ClubPostImageDto clubPostImageDto = new ClubPostImageDto();
+            clubPostImageDto.setPost_img_location(img.getLocation());
+            clubPostImageDto.setPost_id(clubPostDto.getId());
+            clubPostImageDtoList.add(clubPostImageDto);
+        }
+
+
+        clubService.writeClubPost(clubPostDto, clubPostImageDtoList);
 
         return "/club/clubMainPage";
-
     }
+
 
 
 }

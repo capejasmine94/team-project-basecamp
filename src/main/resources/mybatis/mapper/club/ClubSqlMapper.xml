@@ -54,11 +54,16 @@
             #{content}, 
             0
         );
-
     </insert>
 
-    <select id= "selectClubDto" resultType="com.bulmeong.basecamp.club.dto.ClubDto">
-    select * from bc_club
-    </select>
+    <!-- 게시글 사진 첨부 -->
+    <insert id="insertClubPostImage">
+        insert into bc_club_post_image (
+	        post_id, post_img_location
+        )values(
+            #{post_id},#{post_img_location} 
+        )
+    </insert>
+
 
 </mapper>
