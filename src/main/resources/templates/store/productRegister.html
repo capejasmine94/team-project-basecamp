@@ -84,7 +84,7 @@
         <div class="container-fluid">
             <div class="row">
                 <!-- left -->
-                <div class="col border-end scrollable left" style="color: #F4F4F5; margin-top: 58px; background-color: #304156;">
+                <div class="col border-end scrollable left" id="leftAccordion" style="color: #F4F4F5; margin-top: 58px; background-color: #304156;">
                     
                     <div class="row py-4">
                         <div class="col">
@@ -120,7 +120,7 @@
                             </button>
                         </div>
                     </div>
-                    <div class="row accordion-collapse collapse show p-0" id="first-collapse">
+                    <div class="row accordion-collapse collapse show p-0" id="first-collapse" data-bs-parent="#leftAccordion">
                         <div class="col">
                             <a class="row accordion-body py-3 ps-4 subcategory" href="http://www.naver.com">
                                 상품조회/수정
@@ -146,7 +146,7 @@
                             </button>
                         </div>
                     </div>
-                    <div class="row accordion-collapse collapse p-0" id="second-collapse">
+                    <div class="row accordion-collapse collapse p-0" id="second-collapse" data-bs-parent="#leftAccordion">
                         <div class="col">
                             <a class="row accordion-body py-3 ps-4 subcategory" href="http://www.naver.com">
                                 주문 통합 검색
@@ -175,7 +175,7 @@
                             </button>
                         </div>
                     </div>
-                    <div class="row accordion-collapse collapse p-0" id="third-collapse">
+                    <div class="row accordion-collapse collapse p-0" id="third-collapse" data-bs-parent="#leftAccordion">
                         <div class="col">
                             <a class="row accordion-body py-3 ps-4 subcategory" href="http://www.naver.com">
                                 문의관리
@@ -303,7 +303,7 @@
                 </div>
                 
                 <!-- right -->
-                <div class="col bg-body-secondary right" style="padding-top: 58px;">
+                <div class="col bg-body-tertiary right" style="padding-top: 58px;">
                     <div class="row py-3 px-4">
                         <div class="col fs-3 fw-bold">
                             상품 등록
@@ -611,13 +611,49 @@
                                     <div class="row py-3 border-top">
                                         <div class="col">
                                             <div class="row pb-3 align-items-center">
-                                                <div class="col f08">
+                                                <div class="col-2">
                                                     옵션 입력
                                                 </div>
-                                            </div>
-                                            <div class="row">
+                                                <div class="col-2 pe-0">
+                                                    옵션명
+                                                </div>
                                                 <div class="col">
+                                                    옵션값
+                                                </div>
+                                            </div>
+                                            <div class="row pb-3 align-items-center">
+                                                <div class="col-2"></div>
+                                                <div class="col-2 pe-0">
                                                     <input type="text" class="form-control">
+                                                </div>
+                                                <div class="col-5">
+                                                    <input type="text" class="form-control">
+                                                </div>
+                                                <div class="col p-0">
+                                                    <input type="button" class="btn btn-light border" value="+">
+                                                </div>
+                                            </div>
+                                            <div class="row pb-3">
+                                                <div class="col-2"></div>
+                                                <div class="col">
+                                                    <button class="btn btn-light border py-2">
+                                                        옵션 목록으로 적용 <i class="fa-solid fa-arrow-down"></i>
+                                                    </button>
+                                                </div>
+                                            </div>
+
+                                            <div class="row px-3">
+                                                <div class="col p-0 border-top">
+                                                    <div class="row py-3">
+                                                        <div class="col">
+                                                            옵션 목록
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col">
+                                                            선택삭제
+                                                        </div>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
@@ -701,14 +737,14 @@
                     </div>
 
                     <div class="row px-4 pb-4">
-                        <div class="col-2 d-grid">
+                        <!-- <div class="col-2 d-grid">
                             <button class="btn bg-white border py-2">
                                 취소하기
                             </button>
-                        </div>
+                        </div> -->
                         <div class="col"></div>
                         <div class="col-2 d-grid">
-                            <button class="btn btn-secondary border py-2">
+                            <button class="btn bg-white border py-2">
                                 미리보기
                             </button>
                         </div>
@@ -724,6 +760,7 @@
     
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
         <script>
+
             document.querySelectorAll('.toggle-icon').forEach(button => {
                 button.addEventListener('click', function () {
                     const icon = this.querySelector('.bi');
@@ -731,6 +768,13 @@
                         icon.classList.toggle('bi-chevron-down');
                         icon.classList.toggle('bi-chevron-up');
                     }
+
+                    document.querySelectorAll('.toggle-icon .bi').forEach(otherIcon => {
+                        if (otherIcon !== icon) {
+                            otherIcon.classList.remove('bi-chevron-up');
+                            otherIcon.classList.add('bi-chevron-down');
+                        }
+                    });
                 });
             });
 

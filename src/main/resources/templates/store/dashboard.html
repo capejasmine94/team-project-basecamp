@@ -317,8 +317,25 @@
                         icon.classList.toggle('bi-chevron-down');
                         icon.classList.toggle('bi-chevron-up');
                     }
+
+                    document.querySelectorAll('.toggle-icon .bi').forEach(otherIcon => {
+                        if (otherIcon !== icon) {
+                            otherIcon.classList.remove('bi-chevron-up');
+                            otherIcon.classList.add('bi-chevron-down');
+                        }
+                    });
                 });
             });
+
+            // document.querySelectorAll('.toggle-icon').forEach(button => {
+            //     button.addEventListener('click', function () {
+            //         const icon = this.querySelector('.bi');
+            //         if (icon) {
+            //             icon.classList.toggle('bi-chevron-down');
+            //             icon.classList.toggle('bi-chevron-up');
+            //         }
+            //     });
+            // });
 
             // function openCollapse(){
             //     const a = new bootstrap.Collapse('#first-collapse', {
