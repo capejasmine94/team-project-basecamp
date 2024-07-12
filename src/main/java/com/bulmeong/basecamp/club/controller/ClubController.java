@@ -13,6 +13,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.bulmeong.basecamp.club.dto.ClubDto;
 import com.bulmeong.basecamp.club.dto.ClubJoinConditionDto;
+import com.bulmeong.basecamp.club.dto.ClubMemberDto;
 import com.bulmeong.basecamp.club.dto.ClubPostDto;
 import com.bulmeong.basecamp.club.dto.ClubPostImageDto;
 import com.bulmeong.basecamp.club.service.ClubService;
@@ -85,6 +86,21 @@ public class ClubController {
         clubService.writeClubPost(clubPostDto, clubPostImageDtoList);
 
         return "/club/clubMainPage";
+    }
+
+    // 소모임 회원가입
+    @RequestMapping("joinClub")
+    public String joinClub(){
+        util.loginUser();
+        return "club/joinClubPage";
+    }
+
+    @RequestMapping("joinClubProcess")
+    public String joinClubProcess(ClubMemberDto clubMemberDto){
+        util.loginUser();
+        clubService.joinClub(clubMemberDto);
+
+        return "/club/main";
     }
 
 

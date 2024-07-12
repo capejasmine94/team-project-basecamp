@@ -4,6 +4,7 @@ import org.apache.ibatis.annotations.Mapper;
 
 import com.bulmeong.basecamp.club.dto.ClubDto;
 import com.bulmeong.basecamp.club.dto.ClubJoinConditionDto;
+import com.bulmeong.basecamp.club.dto.ClubMemberDto;
 import com.bulmeong.basecamp.club.dto.ClubPostDto;
 import com.bulmeong.basecamp.club.dto.ClubPostImageDto;
 
@@ -14,4 +15,5 @@ public interface ClubSqlMapper {
     public void insertClubJoinCondition(ClubJoinConditionDto clubJoinConditionDto);
     public void insertClubPostDto(ClubPostDto clubPostsDto);
     public void insertClubPostImage(ClubPostImageDto clubPostImageDto);
+    public void insertClubMemberDto(ClubMemberDto clubMemberDto);
 }

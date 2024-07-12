@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 
 import com.bulmeong.basecamp.club.dto.ClubDto;
 import com.bulmeong.basecamp.club.dto.ClubJoinConditionDto;
+import com.bulmeong.basecamp.club.dto.ClubMemberDto;
 import com.bulmeong.basecamp.club.dto.ClubPostDto;
 import com.bulmeong.basecamp.club.dto.ClubPostImageDto;
 import com.bulmeong.basecamp.club.mapper.ClubSqlMapper;
@@ -39,6 +40,12 @@ public class ClubService {
        }
         clubSqlMapper.insertClubPostDto(clubPostDto);
     }
+
+    // 소모임 회원가입
+    public void joinClub(ClubMemberDto clubMemberDto){
+        clubSqlMapper.insertClubMemberDto(clubMemberDto);
+    }
+
 
     
 
