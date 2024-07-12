@@ -9,12 +9,31 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap">
     <title>insta_confirmPage</title>
+
+    <style>
+        #profileImage {
+            width: 150px;  /* 원하는 너비 */
+            height: 150px; /* 원하는 높이 */
+            object-fit: cover; /* 이미지가 요소를 채우도록 조정 */
+        }
+
+        .fixed-top {
+            height: 50px; /* 원하는 높이로 설정 */
+        }
+        .fixed-bottom {
+            text-align: center;
+            justify-content: space-around; /* 가로 중앙 정렬 */
+            align-items: center; /* 세로 중앙 정렬 */
+            height: 70px; /* 원하는 높이로 설정 */
+        }
+    </style>
+
 </head>
 <body>
     <div class="container">
         <div class="row">
             <form class="col" action="./confirmProcess" method="post" enctype="multipart/form-data">
-                <div class="row fixed-top bg-white border-bottom">
+                <div class="row fixed-top bg-white border-bottom fixed-top">
                     <div class="col text-start">
                         <button type="button" class="btn text-start">
                             <a href="..." class="fs-5 link-dark link-offset-2 link-underline link-underline-opacity-0"><i class="bi bi-chevron-left"></i></a>
@@ -41,7 +60,7 @@
                 </div>
 
                 <!-- 이미지 -->
-                <div class="row pt-2">
+                <div class="row">
                     <div class="col-3"></div>
                     <div class="col-6 text-center pt-4">
                         <img id="profileImage" src="/public/img/instaImage/userImg.jpeg" class="img-fluid rounded-circle" alt="Profile Image">
@@ -86,6 +105,10 @@
     </div>
     
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    
+    <!-- 자바스크립트 공부하고 이 부분 다시 이해하기 -->
+    <input type="file" id="imageInput">
+    <img id="profileImage" alt="Profile Image Preview">
     <script>
         document.getElementById('imageInput').addEventListener('change', function(event) {
             var reader = new FileReader();

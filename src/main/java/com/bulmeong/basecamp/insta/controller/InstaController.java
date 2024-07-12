@@ -47,4 +47,32 @@ public class InstaController {
         return "insta/mainPage";
     }
 
+    @RequestMapping("instaWritePage")
+    public String instaWritePage(){
+
+        return "insta/instaWritePage";
+    }
+
+    @RequestMapping("instaWriteProcess")
+    public String instaWriteProcess(){
+
+        return "insta/instaWriteProcess";
+    }
+
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
