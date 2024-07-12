@@ -48,11 +48,11 @@
 <body>    
     <div class="container">
         <div class="row">
-            <form class="col" action="./instaWriteProcess" method="get" enctype="multipart/form-data">
+            <form class="col" action="./instaWriteProcess" method="post" enctype="multipart/form-data">
                 <!-- 상단바 -->
                 <div class="row mb-5 border-bottom fixed-top">
                     <div class="col-2">
-                        <a href="./mainPage" style="color: black;"><i class="bi bi-x-lg"></i></a>
+                        <a th:href="@{./mainPage(user_id=${session.sessionInstaUserInfo.user_id})}" style="color: black;"><i class="bi bi-x-lg"></i></a>
                     </div>
                     <div class="col-10 pe-5 ps-0">
                         <span>새 게시물</span>
@@ -63,7 +63,8 @@
                 <div class="row mt-5 pt-3">
                     <div class="col">
                         <div class="input-group">
-                            <input id="imageInput" name="article_img" type="file" class="form-control" accept="image/*">
+                            <input name="insta_article_img" type="file" class="form-control" multiple accept="image/*">
+                            <input type="hidden" name="user_id" th:value="${session.sessionInstaUserInfo.user_id}">
                             <!-- <label class="input-group-text" for="bowWow_image">Choose File</label> -->
                         </div>
                     </div>
@@ -82,7 +83,7 @@
                         <i class="bi bi-tag fs-4"></i>
                     </div>
                     <div class="col">
-                        <input type="text" class="form-control full-width" style="border: none;" name="content" placeholder="해시태그(최대 20개)">
+                        <input type="text" class="form-control full-width" style="border: none;" name="text" placeholder="해시태그(최대 20개)">
                     </div>
                 </div>
 
@@ -96,6 +97,7 @@
         </div>
     </div>
 
-
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <script src="https://kit.fontawesome.com/7b271bba58.js" crossorigin="anonymous"></script>
 </body>
 </html>

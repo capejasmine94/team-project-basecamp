@@ -9,6 +9,6 @@ public class InstaArticleCommentDto {
     private int id;
     private int user_id;
     private int article_id;
-    private String content;
+    private String comment;
     private Date created_at;
 }

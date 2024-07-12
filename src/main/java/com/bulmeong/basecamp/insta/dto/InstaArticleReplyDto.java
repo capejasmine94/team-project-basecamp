@@ -9,6 +9,6 @@ public class InstaArticleReplyDto {
     private int id;
     private int user_id;
     private int comment_id;
-    private String content;
+    private String reply;
     private Date created_at;
 }

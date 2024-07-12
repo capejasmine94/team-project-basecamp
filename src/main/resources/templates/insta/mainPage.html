@@ -15,7 +15,7 @@
     
     <script>
         function action(){
-            alert("aaa")
+            alert("껄끄럽네~")
         }
     </script>
     <style>
@@ -35,8 +35,8 @@
 
         /* 이미지 크기 */
         .storyImage {
-            width: 50px;  /* 원하는 너비 */
-            height: 50px; /* 원하는 높이 */
+            width: 60px;  /* 원하는 너비 */
+            height: 60px; /* 원하는 높이 */
             object-fit: cover; /* 이미지가 요소를 채우도록 조정 */
         }
         .profileImage {
@@ -73,7 +73,7 @@
     <div th:replace="~{common/navi::popup}"></div>
     <div class="container">
         <!-- 상단바 -->
-        <div class="row mb-5 pb-3">
+        <div class="row mb-5 pb-2">
             <div class="col">
                 <div class="row border-bottom fixed-top px-2">
                     <div class="col-1 pe-0 fs-1">
@@ -89,7 +89,94 @@
 
         <div class="row">
             <div class="col">
-                <span></span>
+
+                <!-- 스토리 -->
+                <!-- overflow-x: auto; 이 클래스가 적용된 요소는 내용이 요소의 크기를 초과할 때, x축 방향으로 스크롤할 수 있게 됩니다. -->
+                <div class="row border-bottom pb-1">
+                    <div class="col overflow-x-auto">
+                        <div class="row" style="width: 120%;">
+                            <div class="col">
+                                <div class="row">
+                                    <a class="col link-dark link-offset-2 link-underline link-underline-opacity-0 " href="...">
+                                        <div class="row">
+                                            <!-- <div class="col">
+                                                <img class="rounded" th:src="|/bowWow_image/${e.productDto.product_main_img_link}|" style="height: 7em; width: 100%;" >
+                                            </div> -->
+
+                                            <div class="col">
+                                                <div class="row">
+                                                    <div class="col">
+                                                        <img th:src="|/basecampImage/${session.sessionInstaUserInfo.insta_profile_img}|" class="img-fluid rounded-circle storyImage">
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col px-1 text-center" style="font-size: 0.7em;">
+                                                        <span th:text="${session.sessionInstaUserInfo.insta_nickname}">닉네임</span>                                                        
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col">
+                                                <div class="row">
+                                                    <div class="col">
+                                                        <img id="profileImage" src="/public/img/instaImage/userImg.jpeg" class="img-fluid rounded-circle storyImage" alt="Profile Image">
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col px-1 text-center" style="font-size: 0.7em;">
+                                                        <span>닉네임</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col">
+                                                <div class="row">
+                                                    <div class="col">
+                                                        <img id="profileImage" src="/public/img/instaImage/userImg.jpeg" class="img-fluid rounded-circle storyImage" alt="Profile Image">
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col px-1 text-center" style="font-size: 0.7em;">
+                                                        <span>닉네임</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col">
+                                                <div class="row">
+                                                    <div class="col">
+                                                        <img id="profileImage" src="/public/img/instaImage/userImg.jpeg" class="img-fluid rounded-circle storyImage" alt="Profile Image">
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col px-1 text-center" style="font-size: 0.7em;">
+                                                        <span>닉네임</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col">
+                                                <div class="row">
+                                                    <div class="col">
+                                                        <img id="profileImage" src="/public/img/instaImage/userImg.jpeg" class="img-fluid rounded-circle storyImage" alt="Profile Image">
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col px-1 text-center" style="font-size: 0.7em;">
+                                                        <span>닉네임</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="row">
+            <div class="col">
+                <!-- <span th:text="${session.sessionUserInfo.nickname}">aa</span> -->
+                <span th:text="${session.sessionInstaUserInfo.insta_nickname}"></span>
             </div>
         </div>
 
@@ -112,7 +199,7 @@
                 <div class="row border-top fixed-bottom">
 
                     <div class="col">
-                        <button onclick="popup(`aaa`,`으아아`,`예`,`아니오`,function(){action()})" class="btn" type="submit">
+                        <button onclick="popup(`당신의 선택은`,`과연`,`자바스크립트`,`타임리프`,function(){action()})" class="btn" type="submit">
                             <i class="bi bi-airplane fs-2"></i>
                         </button>
                     </div>

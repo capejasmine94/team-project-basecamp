@@ -6,8 +6,31 @@
     <insert id="insertInstaUserInfo">
         insert into bc_insta_user_info(
             user_id, insta_nickname, insta_profile_img, intro, is_private
-        )value(
+        )values(
             #{user_id}, #{insta_nickname}, #{insta_profile_img}, #{intro}, null
+        )
+    </insert>
+
+    <select id="selectUserInfoByUserId" resultType="com.bulmeong.basecamp.insta.dto.InstaUserInfoDto">
+        select * from bc_insta_user_info
+        where user_id = #{user_id}
+    </select>
+
+    <!-- 게시판 insert -->
+    <insert id="insertInstaArticle" useGeneratedKeys="true" keyProperty="id">
+        insert into bc_insta_article(
+            user_id, content
+        )values(
+            #{user_id}, #{content}
+        );
+    </insert>
+
+    <!-- 게시판 이미지 insert -->
+    <insert id="insertInstaArticleImg">
+        insert into bc_insta_article_img(
+            article_id, img_link
+        )values(
+            #{article_id}, #{img_link}
         )
     </insert>
 
