@@ -1,260 +1,358 @@
 <!DOCTYPE html>
-<html lang="ko">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>웹사이트</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-    <style>
-        body {
-            font-size: 14px;
-        }
-        .sidebar-sticky {
-            height: 100vh;
-            padding-top: 20px;
-            background-color: #ffffff;
-            color: #000;
-        }
-        .nav-link {
-            color: #000;
-            font-size: 0.9rem;
-            display: block;
-            padding: 0.75rem 1.25rem;
-            background-color: #ffffff;
-            transition: background-color 0.3s ease;
-            border: none;
-            text-decoration: none !important;
-            cursor: pointer;
-            text-align: left;
-        }
-        .nav-link i {
-            margin-right: 8px;
-            font-size: 1.1rem;
-        }
-        .nav-tabs .nav-link {
-            color: #000;
-            background-color: #ffffff;
-            border: none;
-        }
-        .nav-tabs .nav-link.active {
-            color: #007bff;
-        }
-        .tab-content > .tab-pane {
-            padding: 20px;
-        }
-        .container-fluid {
-            background-color: #f8f9fa;
-        }
-        .content-title {
-            font-size: 1.5rem;
-            margin-bottom: 1rem;
-        }
-        .status-label {
-            font-weight: bold;
-        }
-        /* Hover 효과 설정 */
-        .nav-link:hover {
-            background-color: #495057;
-            color: #fff;
-        }
-        /* 아코디언 스타일 */
-        .accordion-button {
-            color: #000;
-            background-color: #ffffff;
-            border: none;
-            text-align: left;
-            padding: 0.75rem 1.25rem;
-            margin-bottom: 0.5rem;
-            cursor: pointer;
-        }
-        .accordion-button i {
-            margin-left: auto;
-            transition: transform 0.3s ease;
-        }
-        .accordion-button.collapsed i.fa-caret-up {
-            transform: rotate(180deg);
-        }
-        .accordion-body {
-            padding: 0;
-        }
-    </style>
-</head>
-<body>
-<div class="container-fluid">
-    <div class="row">
-        <!-- 사이드바 -->
-        <nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block sidebar">
-            <div class="sidebar-sticky">
-                <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
-                    <span>사이트 관리</span>
-                </h6>
-                <div class="accordion" id="sidebarAccordion">
-                    <!-- 사용자 관리 아코디언 -->
-                    <div>
-                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                            <i class="fas fa-user-cog"></i> 사용자 관리 <i class="fas fa-caret-down ml-auto"></i>
-                        </button>
-                        <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#sidebarAccordion">
-                            <ul class="nav flex-column">
-                                <li class="nav-item">
-                                    <button class="nav-link" data-toggle="tab" data-target="#user-settings">
-                                        <i class="fas fa-users-cog"></i> 사용자 설정
-                                    </button>
-                                </li>
-                                <li class="nav-item">
-                                    <button class="nav-link" data-toggle="tab" data-target="#security-settings">
-                                        <i class="fas fa-user-shield"></i> 보안 설정
-                                    </button>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                    <!-- CRM 캠페인 자동화 아코디언 -->
-                    <div>
-                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-                            <i class="fas fa-bullhorn"></i> CRM 캠페인 자동화 <span class="badge badge-danger ml-1">New</span> <i class="fas fa-caret-down ml-auto"></i>
-                        </button>
-                        <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#sidebarAccordion">
-                            <div class="accordion-body">
-                                <!-- CRM 캠페인 자동화 내용 -->
+<html lang="kr">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <!-- Bootstrap CSS -->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+        <!-- Bootstrap Icons -->
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+        <!-- Google Material Icons -->
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+        <!-- Font Awesome -->
+        <script src="https://kit.fontawesome.com/7b271bba58.js" crossorigin="anonymous"></script>
+        <style>
+            /* 스타일링 프로필 이미지 */
+            .seller_profile img{
+                aspect-ratio: 1/1;
+                width: 100px;
+                object-fit: cover;
+                object-position: center;
+            }
+            /* 스크롤 가능 영역의 높이 설정 */
+            .scrollable {
+                height: calc(100vh - 58px); /* 화면 높이에서 상단 바 높이(58px)를 뺀 높이 */
+                overflow-y: hidden; /* 스크롤 자동 설정 */
+            }
+            /* 카테고리 항목 스타일링 및 호버 효과 */
+            .category{
+                transition: background-color 0.3s;
+            }
+            .category:hover{
+                background-color: #263445;
+            }
+            /* 서브카테고리 항목 스타일링 및 호버 효과 */
+            .subcategory {
+                background-color: #1F2D3D;
+                transition: background-color 0.3s;
+            }
+            .subcategory:hover{
+                background-color: #001528;
+            }
+            /* 아이콘 색상 설정 */
+            .bi-chevron-down, .bi-chevron-up{
+                color: #8F9399;
+            }
+            /* 링크 기본 스타일 제거 */
+            a{
+                text-decoration: none;
+            }
+            /* 상품 카테고리 링크 색상 설정 */
+            .product-category a{
+                color: black;
+            }
+            /* 왼쪽 메뉴 링크 색상 설정 */
+            .left a{
+                color: #F4F4F5;
+            }
+            /* 상점 센터 배경 색상 설정 */
+            .center{
+                background-color: #fff;
+            }
+            /* 폰트 크기 설정 */
+            .f08{
+                font-size: 0.8em;
+            }
+            .f09{
+                font-size: 0.9em;
+            }
+            /* 상단 바 높이 설정 */
+            .top-nav{
+                height: 58px;
+            }
+            /* 왼쪽 메뉴 스타일링 */
+            .left{
+                width: 15vw;
+                height: calc(100vh - 58px); /* 화면 높이에서 상단 바 높이(58px)를 뺀 높이 */
+                position: fixed;
+                top: 58px; /* 상단 바 높이 */
+                overflow-y: auto; /* 스크롤 가능하게 설정 */
+                min-width: 200px; /* 최소 너비 설정 */
+            }
+            /* 오른쪽 영역 패딩 설정 */
+            .right{
+                padding-left: 15vw;
+            }
+            /* 화면 크기 768px 이하일 때 레이아웃 변경 */
+            @media (max-width: 768px) {
+                .left {
+                    width: 100%;
+                    height: auto;
+                    position: relative;
+                }
+                .right {
+                    padding-left: 0;
+                }
+            }
+        </style>
+    </head>
+    <body>
+
+        <!-- 상단 고정 네비게이션 바 -->
+        <div class="row fixed-top align-items-center py-2 px-3 center top-nav">
+            <div class="col fs-3 text-black">
+                <span class="fw-bold">BaseCamp</span> 
+                <span class="fw-bold">Store Center</span>
+            </div>
+            <div class="col fs-5 text-end">
+                <span class="fw-semibold text-black">
+                    Sacabambaspis
+                </span>
+            </div>
+            <div class="col-auto">
+                <button class="btn btn-outline-light btn-sm fw-semibold text-black">로그아웃</button>
+            </div>
+        </div>
+
+        <div class="container-fluid">
+            <div class="row">
+                <!-- 왼쪽 메뉴 -->
+                <div class="col border-end scrollable left" style="color: black; background-color: #fff;">
+                    
+                    <div class="row py-4">
+                        <div class="col">
+                            <div class="row">
+                                <div class="col seller_profile text-center">
+                                    <img src="https://img1.newsis.com/2023/07/12/NISI20230712_0001313626_web.jpg" class="rounded-circle">
+                                </div>
+                            </div>
+                            <div class="row text-center pt-2 fw-bold">
+                                <div class="col">
+                                    사카밤바스피스
+                                </div>
                             </div>
                         </div>
                     </div>
-                    <!-- 고객 행동 관리 아코디언 -->
-                    <div>
-                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
-                            <i class="fas fa-user-friends"></i> 고객 행동 관리 <i class="fas fa-caret-down ml-auto"></i>
-                        </button>
-                        <div id="collapseFour" class="collapse" aria-labelledby="headingFour" data-parent="#sidebarAccordion">
-                            <div class="accordion-body">
-                                <!-- 고객 행동 관리 내용 -->
+
+                    <div class="row category">
+                        <div class="col pe-0 d-grid">
+                            <a href="dashboard.html" type="button" class="py-3 fw-bold text-primary">
+                                Dashboard
+                            </a>
+                        </div>
+                    </div>
+                    <!-- 상품관리 섹션 -->
+                    <div class="row category toggle-icon" data-bs-toggle="collapse" data-bs-target="#first-collapse">
+                        <div class="col pe-0 d-grid fs-5">
+                            <button type="button" class="py-3 accordion-button collapsed fw-bold">
+                                상품관리
+                            </button>
+                        </div>
+                        <div class="col-auto ps-0 d-grid fs-5">
+                            <button type="button" class="py-3 accordion-button collapsed">
+                                <i class="bi bi-chevron-down"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="row accordion-collapse collapse p-0" id="first-collapse">
+                        <div class="col">
+                            <a class="row accordion-body py-3 ps-4 subcategory" href="http://www.naver.com">
+                                상품조회/수정
+                            </a>
+                            <a class="row accordion-body py-3 ps-4 subcategory" href="productRegister.html" id="productRegister">
+                                상품등록
+                            </a>
+                            <a class="row accordion-body py-3 ps-4 subcategory" href="https://getbootstrap.com/">
+                                배송정보 관리
+                            </a>
+                        </div>
+                    </div>
+                    <!-- 판매관리 섹션 -->
+                    <div class="row category toggle-icon" data-bs-toggle="collapse" data-bs-target="#second-collapse">
+                        <div class="col pe-0 d-grid fs-5">
+                            <button type="button" class="py-3 accordion-button collapsed fw-bold">
+                                판매관리
+                            </button>
+                        </div>
+                        <div class="col-auto ps-0 d-grid fs-5">
+                            <button type="button" class="py-3 accordion-button collapsed">
+                                <i class="bi bi-chevron-down"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="row accordion-collapse collapse p-0" id="second-collapse">
+                        <div class="col">
+                            <a class="row accordion-body py-3 ps-4 subcategory" href="http://www.naver.com">
+                                주문 통합 검색
+                            </a>
+                            <a class="row accordion-body py-3 ps-4 subcategory" href="https://getbootstrap.com/">
+                                발송관리
+                            </a>
+                            <a class="row accordion-body py-3 ps-4 subcategory" href="http://www.naver.com">
+                                취소관리
+                            </a>
+                            <a class="row accordion-body py-3 ps-4 subcategory" href="https://getbootstrap.com/">
+                                반품관리
+                            </a>
+                        </div>
+                    </div>
+                    <!-- 문의/리뷰 관리 섹션 -->
+                    <div class="row category toggle-icon" data-bs-toggle="collapse" data-bs-target="#third-collapse">
+                        <div class="col pe-0 d-grid fs-5">
+                            <button type="button" class="py-3 accordion-button collapsed fw-bold">
+                                문의/리뷰 관리
+                            </button>
+                        </div>
+                        <div class="col-auto ps-0 d-grid fs-5">
+                            <button type="button" class="py-3 accordion-button collapsed">
+                                <i class="bi bi-chevron-down"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="row accordion-collapse collapse p-0" id="third-collapse">
+                        <div class="col">
+                            <a class="row accordion-body py-3 ps-4 subcategory" href="http://www.naver.com">
+                                문의관리
+                            </a>
+                            <a class="row accordion-body py-3 ps-4 subcategory" href="https://getbootstrap.com/">
+                                리뷰관리
+                            </a>
+                        </div>
+                    </div>
+                    <!-- 정산관리 및 판매자정보 섹션 -->
+                    <div class="row category">
+                        <div class="col pe-0 d-grid">
+                            <a href="" type="button" class="py-3 fw-bold">
+                                정산관리
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="row category">
+                        <div class="col pe-0 d-grid">
+                            <a href="" type="button" class="py-3 fw-bold">
+                                판매자정보
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- 금융 서비스 및 판매 지원 프로그램 -->
+                    <div class="row py-4">
+                        <div class="col">
+                            <div class="row py-3">
+                                <div class="col">
+                                    <div class="row f08 text-tertiary">
+                                        <div class="col">
+                                            금융 서비스 바로가기
+                                        </div>
+                                    </div>
+                                    <div class="row pt-2">
+                                        <div class="col">
+                                            선정산 서비스 <i class="fa-solid fa-arrow-up-right-from-square"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row py-3">
+                                <div class="col">
+                                    <div class="row f08 text-tertiary">
+                                        <div class="col">
+                                            판매 지원 프로그램
+                                        </div>
+                                    </div>
+                                    <div class="row pt-2">
+                                        <div class="col">
+                                            파트너센터 <i class="fa-solid fa-arrow-up-right-from-square"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row py-3">
+                                <div class="col">
+                                    <div class="row f08 text-tertiary">
+                                        <div class="col">
+                                            판매 지원 프로그램
+                                        </div>
+                                    </div>
+                                    <div class="row pt-2">
+                                        <div class="col">
+                                            판매 가이드 <i class="fa-solid fa-arrow-up-right-from-square"></i>
+                                        </div>
+                                    </div>
+                                    <div class="row pt-2">
+                                        <div class="col">
+                                            온라인 교육 <i class="fa-solid fa-arrow-up-right-from-square"></i>
+                                        </div>
+                                    </div>
+                                    <div class="row pt-2">
+                                        <div class="col">
+                                            해외직구/판매 안내 <i class="fa-solid fa-arrow-up-right-from-square"></i>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
-                    <!-- 예약 아코디언 -->
-                    <div>
-                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-target="#collapseFive" aria-expanded="false" aria-controls="collapseFive">
-                            <i class="fas fa-calendar-alt"></i> 예약 <i class="fas fa-caret-down ml-auto"></i>
-                        </button>
-                        <div id="collapseFive" class="collapse" aria-labelledby="headingFive" data-parent="#sidebarAccordion">
-                            <ul class="nav flex-column">
-                                <li class="nav-item">
-                                    <button class="nav-link" data-toggle="tab" data-target="#reservation-rooms">
-                                        <i class="fas fa-bed"></i> 객실 사이트
+                    
+                    <!-- 도움말 및 고객센터 -->
+                    <div class="row pb-5">
+                        <div class="col">
+                            <div class="row">
+                                <div class="col">
+                                    도움이 필요하신가요?
+                                </div>
+                            </div>
+                            <div class="row pt-3">
+                                <div class="col d-grid">
+                                    <button class="btn btn-outline-light py-2">
+                                        <i class="fa-solid fa-headset"></i> 고객센터 바로가기
                                     </button>
-                                </li>
-                                <li class="nav-item">
-                                    <button class="nav-link" data-toggle="tab" data-target="#reservation-status">
-                                        <i class="fas fa-book"></i> 예약 현황
+                                </div>
+                            </div>
+                            <div class="row pt-3">
+                                <div class="col d-grid">
+                                    <button class="btn btn-outline-light py-2">
+                                        카테고리 담당자 찾기
                                     </button>
-                                </li>
-                                <li class="nav-item">
-                                    <button class="nav-link" data-toggle="tab" data-target="#reservation-application">
-                                        <i class="fas fa-calendar-check"></i> 예약 신청
-                                    </button>
-                                </li>
-                            </ul>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-        </nav>
-        <!-- 메인 콘텐츠 -->
-        <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4">
-            <div class="tab-content" id="myTabContent">
-                <!-- 사용자 관리 탭 -->
-                <div class="tab-pane fade" id="dashboard-user-management" role="tabpanel" aria-labelledby="dashboard-user-management-tab">
-                    <h2 class="content-title">사용자 관리</h2>
-                    <div id="dashboard-user-management-content">
-                        <p>사용자 관리에 관한 내용을 여기에 추가하세요.</p>
-                    </div>
-                </div>
-                <!-- 객실 사이트 탭 -->
-                <div class="tab-pane fade" id="reservation-rooms" role="tabpanel" aria-labelledby="reservation-rooms-tab">
-                    <h2 class="content-title">객실 사이트</h2>
-                    <div id="reservation-rooms-content">
-                        <table class="table table-striped">
-                            <thead>
-                                <tr>
-                                    <th scope="col">예약 ID</th>
-                                    <th scope="col">예약 상태</th>
-                                    <th scope="col">대표 예약 옵션</th>
-                                    <th scope="col">체크인 - 체크아웃</th>
-                                    <th scope="col">예약자(인원)</th>
-                                    <th scope="col">대표 투숙자</th>
-                                    <th scope="col">판매 금액</th>
-                                    <th scope="col">입금 금액</th>
-                                    <th scope="col">예약 일시(KST)</th>
-                                    <th scope="col"></th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td class="status-label">LDG-20200101-12345</td>
-                                    <td class="status-label"><span class="badge badge-warning">확정대기</span></td>
-                                    <td>스탠다드룸 - 객실 Only</td>
-                                    <td>2023.10.27(금) - 2023.10.31(화)</td>
-                                    <td>김루나(2)</td>
-                                    <td>김루나</td>
-                                    <td>1,200,000원</td>
-                                    <td>100,000원</td>
-                                    <td>2023.09.28. 16:40</td>
-                                    <td><button class="btn btn-secondary btn-sm">메모</button></td>
-                                </tr>
-                                <!-- Additional rows as needed -->
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-                <!-- 예약 현황 탭 -->
-                <div class="tab-pane fade" id="reservation-status" role="tabpanel" aria-labelledby="reservation-status-tab">
-                    <h2 class="content-title">예약 현황</h2>
-                    <div id="reservation-status-content">
-                        <p>예약 현황에 관한 내용을 여기에 추가하세요.</p>
-                    </div>
-                </div>
-                <!-- 예약 신청 탭 -->
-                <div class="tab-pane fade" id="reservation-application" role="tabpanel" aria-labelledby="reservation-application-tab">
-                    <h2 class="content-title">예약 신청</h2>
-                    <div id="reservation-application-content">
-                        <p>예약 신청에 관한 내용을 여기에 추가하세요.</p>
-                    </div>
+                
+                <!-- 오른쪽 콘텐츠 영역 -->
+                <div class="col bg-body-secondary right" style="padding-top: 58px;">
+                    <!-- 여기에 오른쪽 콘텐츠가 표시됩니다 -->
                 </div>
             </div>
-        </main>
-    </div>
-</div>
+        </div>
+    
+        <!-- Bootstrap JS -->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+        <script>
+            // 카테고리 토글 아이콘 변경
+            document.querySelectorAll('.toggle-icon').forEach(button => {
+                button.addEventListener('click', function () {
+                    const icon = this.querySelector('.bi');
+                    if (icon) {
+                        icon.classList.toggle('bi-chevron-down');
+                        icon.classList.toggle('bi-chevron-up');
+                    }
+                });
+            });
 
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-<script>
-    $(document).ready(function() {
-        // 페이지 로드 시 모든 아코디언 닫기
-        $('.collapse').collapse('hide');
-
-        // 아코디언 버튼 클릭 이벤트 처리
-        $('.accordion-button').click(function() {
-            // 다른 아코디언 항목 닫기
-            $('.collapse').collapse('hide');
-            $('.accordion-button').addClass('collapsed');
-            $('.accordion-button i.fa-caret-up').removeClass('fa-caret-up').addClass('fa-caret-down');
-
-            // 현재 클릭한 아코디언 항목 열기
-            $(this).removeClass('collapsed');
-            var icon = $(this).find('i.fa-caret-down');
-            icon.removeClass('fa-caret-down').addClass('fa-caret-up');
-            $(this).next('.collapse').collapse('show');
-        });
-
-        // 탭 버튼 클릭 이벤트 처리
-        $('.nav-link').on('click', function() {
-            var target = $(this).data('target');
-            $('.tab-pane').removeClass('show active');
-            $(target).addClass('show active');
-        });
-    });
-</script>
-</body>
+            // 왼쪽 메뉴 패딩 변경
+            function onResize(){
+                const topNaviSeller = document.getElementById("topNaviSeller");
+                const height = topNaviSeller.offsetHeight;
+                console.log(height);
+                const leftMenu = document.getElementById("leftMenu");
+                leftMenu.style.paddingTop = height + 'px';
+            }
+            onResize();
+            window.addEventListener("resize",function(){onResize();});
+        </script>
+    </body>
 </html>
