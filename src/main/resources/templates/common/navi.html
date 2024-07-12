@@ -13,3 +13,22 @@
         </div>
    </div>
 </div>
+
+<!-- 팝업 모달 -->
+    <div th:fragment="popup" class="modal fade container-fluid" id="popup" tabindex="-1" aria-labelledby="popup-title" aria-hidden="true">
+        <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+            <h1 class="modal-title fs-5" id="popup-title">Modal title</h1>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div id="popup-content" class="modal-body">
+            ...
+            </div>
+            <div class="modal-footer">
+            <button id="popup-no" type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <button id="popup-button" type="button" class="btn btn-primary">Save changes</button>
+            </div>
+        </div>
+     </div>
+</div>

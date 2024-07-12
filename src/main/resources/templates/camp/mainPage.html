@@ -8,297 +8,165 @@
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
         <script src="https://kit.fontawesome.com/7b271bba58.js" crossorigin="anonymous"></script>
         <link rel="stylesheet" href="/public/css/common.css">
+        <script src="/public/js/util.js"></script>
         <script src="/public/js/sellerPage.js"></script>
-        <style>
-            /* 임의의 영역 생성 */
-            .scrollBar { 
-            width: 200px;
-            overflow-y: scroll;
-            }
-
-            /* 아래의 모든 코드는 영역::코드로 사용 */
-            .scrollBar::-webkit-scrollbar {
-                width: 7px;  /* 스크롤바의 너비 */
-            }
-
-            .scrollBar::-webkit-scrollbar-thumb {
-                height: 30%; /* 스크롤바의 길이 */
-                background: #000000; /* 스크롤바의 색상 */
-                
-                border-radius: 10px;
-            }
-
-            .scrollBar::-webkit-scrollbar-track {
-                background: rgba(33, 122, 244, .1);  /*스크롤바 뒷 배경 색상*/
-            }
-        </style>
     </head>
-    <body>
+    <body> 
         <div th:replace="~{common/navi::topNaviSeller}"></div>
-        
         <div class="container-fluid">
-            <div class="row">
-                <!-- 왼쪽 메뉴 -->
-                <div id="leftMenu" class="col border-end scrollable scrollBar left" style="color: #F4F4F5; background-color: #304156; padding-top: 58px;">
-                    <div class="row py-4">
-                        <div class="col">
-                            <div class="row">
-                                <div class="col seller_profile text-center">
-                                    <img src="https://img1.newsis.com/2023/07/12/NISI20230712_0001313626_web.jpg" class="rounded-circle">
-                                </div>
-                            </div>
-                            <div class="row text-center pt-2 fw-bold">
-                                <div class="col">
-                                    사카밤바스피스
-                                </div>
+          <div class="row">
+            <div class="col border-end scrollable scrollBar left" id="leftAccordion" style="color: #F4F4F5; padding-top: 58px; background-color: #304156;">
+                <!-- 프로필 -->
+                <div class="row py-4">
+                    <div class="col">
+                        <div class="row">
+                            <div class="col seller_profile text-center">
+                                <img src="https://img1.newsis.com/2023/07/12/NISI20230712_0001313626_web.jpg" class="rounded-circle">
                             </div>
                         </div>
-                    </div>
-        
-                    <div class="row category">
-                        <div class="col pe-0 d-grid">
-                            <a href="dashboard.html" type="button" class="py-3 fw-bold">
-                                Dashboard
-                            </a>
+                        <div class="row text-center pt-2 fw-bold">
+                            <div class="col">
+                                사카밤바스피스
+                            </div>
                         </div>
                     </div>
-                    <div class="row category toggle-icon" data-bs-toggle="collapse" data-bs-target="#first-collapse">
-                        <div class="col pe-0 d-grid fs-5">
-                            <button type="button" class="py-3 accordion-button collapsed fw-bold">
-                                캠핑장/구역관리
-                            </button>
-                        </div>
-                        <div class="col-auto ps-0 d-grid fs-5">
-                            <button type="button" class="py-3 accordion-button collapsed">
-                                <i class="bi bi-chevron-up"></i>
-                            </button>
-                        </div>
+                </div>
+
+                <!-- 메인 페이지 -->
+                <div class="row category">
+                    <div class="col pe-0 d-grid">
+                        <a href="dashboard2.html" type="button" class="py-3 fw-bold">
+                            메인페이지
+                        </a>
                     </div>
-                    <div class="row accordion-collapse collapse show p-0" id="first-collapse">
-                        <div class="col">
-                            <a class="row accordion-body py-3 ps-4 subcategory" href="http://www.naver.com">
-                                캠핑장 등록/수정
-                            </a>
-                            <a class="row accordion-body py-3 ps-4 subcategory text-primary" href="productRegister.html" id="productRegister">
-                                구역 등록/수정
-                            </a>
-                        </div>
+                </div>
+
+                <div class="row category">
+                    <div class="col pe-0 d-grid">
+                        <a href="" type="button" class="py-3 fw-bold">
+                            캠핑장관리
+                        </a>
                     </div>
-        
-                    <div class="row category">
-                        <div class="col py-3 pe-0 d-grid fs-5">
-                            <button type="button" class="accordion-button collapsed fw-bold">
-                                예약관리
-                            </button>
-                        </div>
-                    </div>     
-        
-                    <div class="row category">
-                        <div class="col py-3 pe-0 d-grid fs-5">
-                            <button type="button" class="accordion-button collapsed fw-bold">
-                                리뷰관리
-                            </button>
-                        </div>
+                </div>
+
+                <div class="row category">
+                    <div class="col pe-0 d-grid">
+                        <a href="" type="button" class="py-3 fw-bold">
+                            구역관리
+                        </a>
                     </div>
-        
-                    <div class="row category">
-                        <div class="col py-3 pe-0 d-grid fs-5">
-                            <button type="button" class="accordion-button collapsed fw-bold">
-                                재무관리
-                            </button>
-                        </div>
+                </div>
+
+                <div class="row category">
+                    <div class="col pe-0 d-grid">
+                        <a href="" type="button" class="py-3 fw-bold">
+                            재무관리
+                        </a>
                     </div>
-        
-                    <div class="row category">
-                        <div class="col py-3 pe-0 d-grid fs-5">
-                            <button type="button" class="accordion-button collapsed fw-bold">
-                                통계
-                            </button>
-                        </div>
+                </div>
+
+                <div class="row category">
+                    <div class="col pe-0 d-grid">
+                        <a href="" type="button" class="py-3 fw-bold">
+                            통계
+                        </a>
                     </div>
-        
-                    <div class="row category">
-                        <div class="col py-3 pe-0 d-grid fs-5">
-                            <button type="button" class="accordion-button collapsed fw-bold">
-                                스토어관리
-                            </button>
-                        </div>
+                </div>
+                
+                <div class="row category">
+                    <div class="col pe-0 d-grid">
+                        <a href="" type="button" class="py-3 fw-bold">
+                            판매자정보
+                        </a>
                     </div>
-        
-                    <div class="row py-4">
-                        <div class="col">
-                            <div class="row py-3">
-                                <div class="col">
-                                    <div class="row f08 text-tertiary">
-                                        <div class="col">
-                                            금융 서비스 바로가기
-                                        </div>
-                                    </div>
-                                    <div class="row pt-2">
-                                        <div class="col">
-                                            선정산 서비스 <i class="fa-solid fa-arrow-up-right-from-square"></i>
-                                        </div>
+                </div>
+
+                <div class="row py-4">
+                    <div class="col">
+                        <div class="row py-3">
+                            <div class="col">
+                                <div class="row f08 text-tertiary">
+                                    <div class="col">
+                                        금융 서비스 바로가기
                                     </div>
                                 </div>
-                            </div>
-        
-                            <div class="row py-3">
-                                <div class="col">
-                                    <div class="row f08 text-tertiary">
-                                        <div class="col">
-                                            판매 지원 프로그램
-                                        </div>
-                                    </div>
-                                    <div class="row pt-2">
-                                        <div class="col">
-                                            파트너센터 <i class="fa-solid fa-arrow-up-right-from-square"></i>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-        
-                            <div class="row py-3">
-                                <div class="col">
-                                    <div class="row f08 text-tertiary">
-                                        <div class="col">
-                                            판매 지원 프로그램
-                                        </div>
-                                    </div>
-                                    <div class="row pt-2">
-                                        <div class="col">
-                                            판매 가이드 <i class="fa-solid fa-arrow-up-right-from-square"></i>
-                                        </div>
-                                    </div>
-                                    <div class="row pt-2">
-                                        <div class="col">
-                                            온라인 교육 <i class="fa-solid fa-arrow-up-right-from-square"></i>
-                                        </div>
-                                    </div>
-                                    <div class="row pt-2">
-                                        <div class="col">
-                                            해외직구/판매 안내 <i class="fa-solid fa-arrow-up-right-from-square"></i>
-                                        </div>
+                                <div class="row pt-2">
+                                    <div class="col">
+                                        선정산 서비스 <i class="fa-solid fa-arrow-up-right-from-square"></i>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    
-                    <div class="row pb-5">
-                        <div class="col">
-                            <div class="row">
-                                <div class="col">
-                                    도움이 필요하신가요?
+
+                        <div class="row py-3">
+                            <div class="col">
+                                <div class="row f08 text-tertiary">
+                                    <div class="col">
+                                        판매 지원 프로그램
+                                    </div>
+                                </div>
+                                <div class="row pt-2">
+                                    <div class="col">
+                                        파트너센터 <i class="fa-solid fa-arrow-up-right-from-square"></i>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="row pt-3">
-                                <div class="col d-grid">
-                                    <button class="btn btn-outline-light py-2">
-                                        <i class="fa-solid fa-headset"></i> 고객센터 바로가기
-                                    </button>
+                        </div>
+
+                        <div class="row py-3">
+                            <div class="col">
+                                <div class="row f08 text-tertiary">
+                                    <div class="col">
+                                        판매 지원 프로그램
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="row pt-3">
-                                <div class="col d-grid">
-                                    <button class="btn btn-outline-light py-2">
-                                        카테고리 담당자 찾기
-                                    </button>
+                                <div class="row pt-2">
+                                    <div class="col">
+                                        판매 가이드 <i class="fa-solid fa-arrow-up-right-from-square"></i>
+                                    </div>
+                                </div>
+                                <div class="row pt-2">
+                                    <div class="col">
+                                        온라인 교육 <i class="fa-solid fa-arrow-up-right-from-square"></i>
+                                    </div>
+                                </div>
+                                <div class="row pt-2">
+                                    <div class="col">
+                                        해외직구/판매 안내 <i class="fa-solid fa-arrow-up-right-from-square"></i>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-                <!-- 오른쪽 메뉴 -->
-                <div class="col right" style="padding-top: 58px;">
-                    <div class="row py-3 px-4 justify-content-between">
-                        <div class="col fs-3 fw-bold">
-                            제목
-                        </div>
-                        <div class="col-3 pe-0">
-                            <div class="row">
-                                <div class="col d-grid">
-                                    <button class="btn btn-secondary border py-2">
-                                        버튼1
-                                    </button>
-                                </div>
-                                <div class="col d-grid">
-                                    <button class="btn btn-primary border py-2">
-                                        버튼2
-                                    </button>
-                                </div>
+                
+                <div class="row pb-5">
+                    <div class="col">
+                        <div class="row">
+                            <div class="col">
+                                도움이 필요하신가요?
                             </div>
                         </div>
-                    </div>
-                    
-                    <div class="row px-4 pb-4">
-                        <div class="col border bg-white rounded-2">
-                            <div class="row py-3 border-bottom">
-                                <div class="col fw-bold">
-                                    소제목
-                                </div>
+                        <div class="row pt-3">
+                            <div class="col d-grid">
+                                <button class="btn btn-outline-light py-2">
+                                    <i class="fa-solid fa-headset"></i> 고객센터 바로가기
+                                </button>
                             </div>
-                            <div class="row py-3 px-3">
-                             <!-- 내용 -->
-                                <div class="col new-fs-9">
-                                    내용
-                                </div>
-                            </div>
-
                         </div>
-                    </div>
-
-                    <div class="row px-4 pb-4">
-                        <div class="col border bg-white rounded-2">
-                            <div class="row py-3 border-bottom">
-                                <div class="col fw-bold">
-                                    이미지 등록
-                                </div>
-                            </div>
-                            <div class="row py-3 align-items-center border-bottom">
-                                <div class="col-sm-2">
-                                    대표 이미지
-                                </div>
-                                <div class="col seller_profile">
-                                    <img src="https://img1.newsis.com/2023/07/12/NISI20230712_0001313626_web.jpg">
-                                </div>
-                            </div>
-                            <div class="row py-3 align-items-center">
-                                <div class="col-2">
-                                    상세 이미지
-                                </div>
-                                <div class="col seller_profile">
-                                    <img src="https://img1.newsis.com/2023/07/12/NISI20230712_0001313626_web.jpg">
-                                </div>
+                        <div class="row pt-3">
+                            <div class="col d-grid">
+                                <button class="btn btn-outline-light py-2">
+                                    카테고리 담당자 찾기
+                                </button>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
+          </div>
         </div>
-    
+        <div th:replace="~{common/navi::popup}"></div>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
-        <script>
-            // 카테고리 토글 아이콘 변경
-            document.querySelectorAll('.toggle-icon').forEach(button => {
-                button.addEventListener('click', function () {
-                    const icon = this.querySelector('.bi');
-                    if (icon) {
-                        icon.classList.toggle('bi-chevron-down');
-                        icon.classList.toggle('bi-chevron-up');
-                    }
-                });
-            });
-            // 왼쪽 메뉴 패딩 변경
-            function onResize(){
-                const topNaviSeller = document.getElementById("topNaviSeller");
-                const height = topNaviSeller.offsetHeight;
-                console.log(height);
-                const leftMenu = document.getElementById("leftMenu");
-                leftMenu.style.paddingTop = height + 'px';
-            }
-            onResize();
-
-            window.addEventListener("resize",function(){onResize();});
-        </script>
     </body>
 </html>

@@ -381,62 +381,6 @@ body { margin-bottom: 45px }
 .main {
     min-height: 71vh;
 }
-/* 퀵 */
-.quick-navi {
-    width: 100%;
-    max-width: 520px;
-    margin: 0 auto;
-    position: fixed;
-    bottom: 0;
-    z-index: 101;
-}
-/* 오프캔버스 */
-.offcanvas.offcanvas-bottom {
-    z-index: 1075;
-    width: 100%;
-    max-width: 520px;
-    bottom: 0;
-    right: initial;
-    left: initial;
-}
-.offcanvas.offcanvas-start {
-    position: absolute;
-    width: 100%;
-    max-width: 520px;
-    height: 100vh;
-    left: initial;
-}
-.offcanvas-backdrop {
-    width: 100%;
-    max-width: 520px;
-    left: initial;
-    z-index: 1070
-}
-/* 모달 */
-.modal {
-    width: 100%;
-    max-width: 520px;
-    left: initial;
-    z-index: 1065;
-}
-.modal-open {
-    position: relative;
-    width: 1170px;
-    max-width: 100%;
-    margin: 0 auto;
-    padding-right: 0 !important
-}
-.modal-backdrop {
-    width: 100%;
-    max-width: 520px;
-    height: 100%;
-    margin: 0 auto;
-    position: absolute;
-    left: initial;
-    right: 0;
-    z-index: 1060;
-}
-
 
 /* 판매자용 */
 .seller_profile img{
@@ -494,28 +438,24 @@ a{
     padding-left: 15em;
 }
 
+ /* 임의의 영역 생성 */
+ .scrollBar { 
+    width: 15em;
+    overflow-y: scroll;
+    }
 
-@media screen and (max-width: 1170px) {
-    /* 레이아웃 */
-    .page-wrap .page-left-banner {
-        display: none !important;
+    /* 아래의 모든 코드는 영역::코드로 사용 */
+    .scrollBar::-webkit-scrollbar {
+        width: 7px;  /* 스크롤바의 너비 */
     }
-    .page-wrap .page-site {
-        overflow-x: hidden;
-        margin: 0 auto;
+
+    .scrollBar::-webkit-scrollbar-thumb {
+        height: 30%; /* 스크롤바의 길이 */
+        background: #ffffff29; /* 스크롤바의 색상 */
+        
+        /* border-radius: 10px; */
     }
-    /* 모달 */
-    .modal-backdrop {
-        left: 0;
+
+    .scrollBar::-webkit-scrollbar-track {
+        background: rgba(33, 122, 244, .1);  /*스크롤바 뒷 배경 색상*/
     }
-}
-@media screen and (max-width: 520px) {
-    /* 레이아웃 */
-    .page-wrap .page-site {
-        overflow-x: initial
-    }
-    .main {
-        min-height: auto;
-    }
-    body.new-bg-gray { background: white }
-}
