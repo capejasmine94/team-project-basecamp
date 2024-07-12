@@ -58,6 +58,7 @@ public class ClubController {
     @RequestMapping("writeNewPostProcess")
     public String writeNewPostProcess(ClubPostDto clubPostDto){
         clubService.writeClubPost(clubPostDto);
+        clubService.selectClubDto();
 
         System.out.println("butter" +  clubPostDto);
 

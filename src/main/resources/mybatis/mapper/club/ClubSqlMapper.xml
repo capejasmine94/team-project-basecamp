@@ -57,7 +57,7 @@
 
     </insert>
 
-    <select id= "selectClubDto" resultType="package com.bulmeong.basecamp.club.dto.ClubDto">
+    <select id= "selectClubDto" resultType="com.bulmeong.basecamp.club.dto.ClubDto">
     select * from bc_club
     </select>
 
