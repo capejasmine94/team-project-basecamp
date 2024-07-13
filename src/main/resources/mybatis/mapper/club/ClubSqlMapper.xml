@@ -100,6 +100,21 @@
         where user_id = #{user_id}
     </select>
 
+    <!-- 각 소모임의 게시판 글 목록 뽑기 -->
+    <select id="selectClubPostDtoList" resultType="com.bulmeong.basecamp.club.dto.ClubPostDto">
+        select * from bc_club_post
+        where club_id = #{club_id}
+    </select>
+
+    <select id="selectUserDtoById" resultType="com.bulmeong.basecamp.user.dto.UserDto">
+    select * from bc_user 
+    where id = #{id}
+    </select>
+
+
+
+
+
 
 
 

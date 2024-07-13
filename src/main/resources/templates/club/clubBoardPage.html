@@ -17,15 +17,15 @@
 
                         <div class="row py-4">
                             <div class="col text-center fw-bold">
-                                CLUB HOME!!!!!!!!!!!!!!!!!!!!!
+                                CLUB BOARD
                             </div>
                         </div>
 
                         <div class="row pt-3 pb-1 border-bottom border-3">
-                            <div class="col text-center fw-bold">
+                            <div class="col text-center">
                                 <a th:href="@{/club/home(id=${id})}" style="text-decoration:none; color:black;"><span>홈</span></a>
                             </div>
-                            <div class="col text-center">
+                            <div class="col text-center fw-bold">
                                 <a th:href="@{/club/board(id=${id})}" style="text-decoration:none; color:black;"><span>게시판</span></a>
                             </div>
                             <div class="col text-center">
@@ -75,7 +75,33 @@
                                     </div>
                                 </div>
 
-                                
+                                <!-- 글 박스 -->
+                                <div class="row">
+                                    <div class="col">
+
+                                        <div class="row">
+                                            <div class="col fw-bold">
+                                                게시글 제목
+                                            </div>
+                                        </div>
+                                        <div class="row border-2 border-bottom pb-3" style="font-size: 0.9em;">
+                                            <div class="col">
+                                                게시글 내용이 간략하게 출력됩니다<br>
+                                                게시글 내용이 간략하게 출력됩니다<br>
+                                                게시글 내용이 간략하게 출력됩니다
+                                            </div>
+                                        </div>
+                                        <div class="row py-2" style="font-size: 0.8em;">
+                                            <div class="col-auto">
+                                                <i class="bi bi-heart"></i><span> 좋아요 <span class="text-primary fw-bold">2</span></span>
+                                                <i class="bi bi-chat"></i><span> 댓글 <span class="text-primary fw-bold">5</span></span>
+                                            </div>
+                                            <div class="col text-end">
+                                                게시글 카테고리
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                                 
 
                             </div>
@@ -85,7 +111,7 @@
 
                         <div class="row pt-5 text-center">
                             <div class="col">
-                                <a th:href="@{/club/joinClub(id=${id})}" class="btn form-control btn-dark">가입하기</a>
+                                <a th:href="@{/club/writePost(id=${id})}" class="btn form-control btn-dark">글 작성하기</a>
                             </div>
                         </div>
 

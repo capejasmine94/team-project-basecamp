@@ -10,6 +10,7 @@ import com.bulmeong.basecamp.club.dto.ClubMemberDto;
 import com.bulmeong.basecamp.club.dto.ClubPostDto;
 import com.bulmeong.basecamp.club.dto.ClubPostImageDto;
 import com.bulmeong.basecamp.club.dto.ClubRegionCategoryDto;
+import com.bulmeong.basecamp.user.dto.UserDto;
 
 
 @Mapper
@@ -22,4 +23,6 @@ public interface ClubSqlMapper {
     public List<ClubRegionCategoryDto> selectRegionCategory();
     public List<ClubDto> selectClubList();
     public List<ClubDto> selectJoinClubList(int user_id);
+    public List<ClubPostDto> selectClubPostDtoList(int club_id);
+    public UserDto selectUserDtoById(int id);
 }

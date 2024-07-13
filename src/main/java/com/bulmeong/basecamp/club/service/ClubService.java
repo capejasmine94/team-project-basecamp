@@ -12,8 +12,11 @@ import com.bulmeong.basecamp.club.dto.ClubPostImageDto;
 import com.bulmeong.basecamp.club.dto.ClubRegionCategoryDto;
 import com.bulmeong.basecamp.club.mapper.ClubSqlMapper;
 import com.bulmeong.basecamp.common.dto.ImageDto;
+import com.bulmeong.basecamp.user.dto.UserDto;
 import com.bulmeong.basecamp.user.mapper.UserSqlMapper;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -51,14 +54,6 @@ public class ClubService {
 
     }
 
-    // public void writeClubPost(ClubPostDto clubPostDto, List<ClubPostImageDto>clubPostImageDtoList){
-
-    //    for(ClubPostImageDto clubPostImageDto : clubPostImageDtoList){
-    //        clubSqlMapper.insertClubPostImage(clubPostImageDto);
-    //    }
-    //    clubSqlMapper.insertClubPostDto(clubPostDto);
-    // }
-
     // 소모임 회원가입
     public void joinClub(ClubMemberDto clubMemberDto){
         clubSqlMapper.insertClubMemberDto(clubMemberDto);
@@ -84,6 +79,25 @@ public class ClubService {
 
         List<ClubDto> joinClubDtoList =  clubSqlMapper.selectJoinClubList(user_id);
         return joinClubDtoList;
+    }
+
+    // 각 소모임 게시글 목록 뽑기 (by club_id)
+    public  List<Map<String, Object>> getClubPostDtoList(int club_id){
+        List<Map<String, Object>>postDetailList = new ArrayList<>();
+        List<ClubPostDto> clubPostDtoList = clubSqlMapper.selectClubPostDtoList(club_id);
+       
+        for(ClubPostDto clubPostDto : clubPostDtoList){
+            int userPk = clubPostDto.getUser_id();
+            UserDto userDto = clubSqlMapper.selectUserDtoById(userPk);
+
+            Map<String, Object> postDetailMap = new HashMap<>();
+            postDetailMap.put("clubPostDto", clubPostDto);
+            postDetailMap.put("userDto", userDto);
+
+            postDetailList.add(postDetailMap);
+        }
+
+        return postDetailList;
     }
 
     

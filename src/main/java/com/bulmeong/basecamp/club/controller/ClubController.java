@@ -122,6 +122,15 @@ public class ClubController {
         return "redirect:/club/main";
     }
 
+    @RequestMapping("board")
+    public String clubBoard(@RequestParam("id") int id, Model model){
+        model.addAttribute("id", id);
+        // List<ClubPostDto> clubPostDtoList = clubService.getClubPostDtoList(id);
+
+        
+        return "club/clubBoardPage";
+    }
+
 }
 
 
