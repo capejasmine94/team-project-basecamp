@@ -24,7 +24,7 @@
             #{description}, 
             #{capacity}, 
             #{main_image}
-        );
+        )
     </insert>
 
 
@@ -34,11 +34,16 @@
             club_id, min_age, max_age, gender
         )values(
             #{club_id},#{min_age},#{max_age},#{gender}
-        );
+        )
     </insert>
 
     <!-- 게시글 작성 -->
     <insert id="insertClubPostDto">
+
+        <selectKey resultType="int" keyProperty="id" order="AFTER">
+            select max(id) from bc_club_post
+        </selectKey>
+        
         insert into bc_club_post(
 	        club_id, 
             user_id, 
@@ -53,7 +58,7 @@
             #{title}, 
             #{content}, 
             0
-        );
+        )
     </insert>
 
     <!-- 게시글 사진 첨부 -->
@@ -78,6 +83,26 @@
             #{role_id} 
         )
     </insert>
+
+    <!-- 지역 카테고리 -->
+    <select id="selectRegionCategory" resultType="com.bulmeong.basecamp.club.dto.ClubRegionCategoryDto">
+        select * from bc_club_region_category
+    </select>
+
+    <!-- 소모임 목록 뽑기 -->
+    <select id="selectClubList" resultType="com.bulmeong.basecamp.club.dto.ClubDto">
+        select * from bc_club
+    </select>
+
+    <!-- 가입한 소모임 목록 뽑기 (by user_id) -->
+    <select id="selectJoinClubList" resultType="com.bulmeong.basecamp.club.dto.ClubDto">
+        select * from bc_club
+        where user_id = #{user_id}
+    </select>
+
+
+
+
 
 
 </mapper>

@@ -2,13 +2,16 @@ package com.bulmeong.basecamp.club.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.ui.Model;
 
 import com.bulmeong.basecamp.club.dto.ClubDto;
 import com.bulmeong.basecamp.club.dto.ClubJoinConditionDto;
 import com.bulmeong.basecamp.club.dto.ClubMemberDto;
 import com.bulmeong.basecamp.club.dto.ClubPostDto;
 import com.bulmeong.basecamp.club.dto.ClubPostImageDto;
+import com.bulmeong.basecamp.club.dto.ClubRegionCategoryDto;
 import com.bulmeong.basecamp.club.mapper.ClubSqlMapper;
+import com.bulmeong.basecamp.common.dto.ImageDto;
 import com.bulmeong.basecamp.user.mapper.UserSqlMapper;
 
 import java.util.List;
@@ -34,17 +37,56 @@ public class ClubService {
 
     //  소모임 게시판 글 작성하기
 
-    public void writeClubPost(ClubPostDto clubPostDto, List<ClubPostImageDto>clubPostImageDtoList){
-       for(ClubPostImageDto clubPostImageDto : clubPostImageDtoList){
-           clubSqlMapper.insertClubPostImage(clubPostImageDto);
-       }
+    public void writeClubPost(ClubPostDto clubPostDto, List<ImageDto>imageDtolist){
+        
         clubSqlMapper.insertClubPostDto(clubPostDto);
+
+        for(ImageDto imageDto : imageDtolist){
+            int id = clubPostDto.getId();
+            ClubPostImageDto clubPostImageDto = new ClubPostImageDto();
+            clubPostImageDto.setPost_id(id);
+            clubPostImageDto.setPost_img_location(imageDto.getLocation());
+            clubSqlMapper.insertClubPostImage(clubPostImageDto);
+        }
+
     }
+
+    // public void writeClubPost(ClubPostDto clubPostDto, List<ClubPostImageDto>clubPostImageDtoList){
+
+    //    for(ClubPostImageDto clubPostImageDto : clubPostImageDtoList){
+    //        clubSqlMapper.insertClubPostImage(clubPostImageDto);
+    //    }
+    //    clubSqlMapper.insertClubPostDto(clubPostDto);
+    // }
 
     // 소모임 회원가입
     public void joinClub(ClubMemberDto clubMemberDto){
         clubSqlMapper.insertClubMemberDto(clubMemberDto);
     }
+
+    // 지역 카테고리
+    public List<ClubRegionCategoryDto> findRegionCategory(){
+
+        List<ClubRegionCategoryDto> regionCategroyDtoList = clubSqlMapper.selectRegionCategory();
+
+        return regionCategroyDtoList;
+    }
+
+    // 모든 소모임 목록 뽑기
+    public List<ClubDto> findClubDtoList(){
+
+        List<ClubDto> clubDtoList = clubSqlMapper.selectClubList();
+        return clubDtoList;
+    }
+
+    // 가입한 소모임 목록 뽑기 (by user_id)
+    public List<ClubDto> findJoinClubDtoList(int user_id){
+
+        List<ClubDto> joinClubDtoList =  clubSqlMapper.selectJoinClubList(user_id);
+        return joinClubDtoList;
+    }
+
+    
 
 
     
