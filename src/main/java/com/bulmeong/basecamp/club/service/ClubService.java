@@ -2,11 +2,11 @@ package com.bulmeong.basecamp.club.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.ui.Model;
 
 import com.bulmeong.basecamp.club.dto.ClubDto;
 import com.bulmeong.basecamp.club.dto.ClubJoinConditionDto;
 import com.bulmeong.basecamp.club.dto.ClubMemberDto;
+import com.bulmeong.basecamp.club.dto.ClubPostCategoryDto;
 import com.bulmeong.basecamp.club.dto.ClubPostDto;
 import com.bulmeong.basecamp.club.dto.ClubPostImageDto;
 import com.bulmeong.basecamp.club.dto.ClubRegionCategoryDto;
@@ -32,7 +32,7 @@ public class ClubService {
         clubSqlMapper.insertClubDto(clubDto);
 
         int club_id = clubDto.getId();
-        ClubJoinConditionDto clubJoinConditionDtoIncludeClubId  = new ClubJoinConditionDto();
+        // ClubJoinConditionDto clubJoinConditionDtoIncludeClubId  = new ClubJoinConditionDto();
         clubJoinConditionDto.setClub_id(club_id);
 
         clubSqlMapper.insertClubJoinCondition(clubJoinConditionDto);
@@ -67,6 +67,13 @@ public class ClubService {
         return regionCategroyDtoList;
     }
 
+    // 소모임 게시글 카테고리
+    public List<ClubPostCategoryDto> findPostCategory(){
+        List<ClubPostCategoryDto> postCategoryDtoList = clubSqlMapper.selectPostCategoryDto();
+        
+        return postCategoryDtoList;
+    }
+
     // 모든 소모임 목록 뽑기
     public List<ClubDto> findClubDtoList(){
 
@@ -89,16 +96,25 @@ public class ClubService {
         for(ClubPostDto clubPostDto : clubPostDtoList){
             int userPk = clubPostDto.getUser_id();
             UserDto userDto = clubSqlMapper.selectUserDtoById(userPk);
+            ClubPostCategoryDto clubPostCategoryDto = clubSqlMapper.selectPostCategoryDtoById(clubPostDto.getCategory_id());
 
             Map<String, Object> postDetailMap = new HashMap<>();
             postDetailMap.put("clubPostDto", clubPostDto);
             postDetailMap.put("userDto", userDto);
+            postDetailMap.put("clubPostCategoryDto", clubPostCategoryDto);
 
             postDetailList.add(postDetailMap);
         }
 
         return postDetailList;
     }
+
+    // 앨범 이미지
+        public List<ClubPostImageDto> clubPostImageDtoList(){
+            List<ClubPostImageDto>clubPostImageDtoList = clubSqlMapper.seleClubPostImageDtoList();
+            // 반복문 돌려서 뺴온 아이디로 또 필요한 데이터 찾기
+            return clubPostImageDtoList;
+        }
 
     
 

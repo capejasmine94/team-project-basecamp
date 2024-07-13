@@ -89,6 +89,19 @@
         select * from bc_club_region_category
     </select>
 
+    <!-- 게시글 카테고리 (by id) -->
+    <select id="selectPostCategoryDtoById" resultType="com.bulmeong.basecamp.club.dto.ClubPostCategoryDto">
+        select * from bc_club_post_category
+        where id = #{id}
+    </select>
+
+<!-- 게시글 전체 카테고리 -->
+    <select id="selectPostCategoryDto" resultType="com.bulmeong.basecamp.club.dto.ClubPostCategoryDto">
+    select * from bc_club_post_category
+    </select>
+
+
+
     <!-- 소모임 목록 뽑기 -->
     <select id="selectClubList" resultType="com.bulmeong.basecamp.club.dto.ClubDto">
         select * from bc_club
@@ -109,6 +122,11 @@
     <select id="selectUserDtoById" resultType="com.bulmeong.basecamp.user.dto.UserDto">
     select * from bc_user 
     where id = #{id}
+    </select>
+
+    <!-- 이미지dto 리스트 뽑기 -->
+    <select id="selectPostImageDtoList" resultType="com.bulmeong.basecamp.club.dto.ClubPostImageDto">
+        select * from bc_club_post_image;
     </select>
 
 

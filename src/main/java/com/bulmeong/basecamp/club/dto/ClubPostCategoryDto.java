@@ -5,5 +5,5 @@ import lombok.Data;
 @Data
 public class ClubPostCategoryDto {
     private int id;
-    private String name;
+    private String category_name;
 }

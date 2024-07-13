@@ -1,7 +1,7 @@
 package com.bulmeong.basecamp.club.controller;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -14,8 +14,8 @@ import org.springframework.web.multipart.MultipartFile;
 import com.bulmeong.basecamp.club.dto.ClubDto;
 import com.bulmeong.basecamp.club.dto.ClubJoinConditionDto;
 import com.bulmeong.basecamp.club.dto.ClubMemberDto;
+import com.bulmeong.basecamp.club.dto.ClubPostCategoryDto;
 import com.bulmeong.basecamp.club.dto.ClubPostDto;
-import com.bulmeong.basecamp.club.dto.ClubPostImageDto;
 import com.bulmeong.basecamp.club.dto.ClubRegionCategoryDto;
 import com.bulmeong.basecamp.club.service.ClubService;
 import com.bulmeong.basecamp.common.dto.ImageDto;
@@ -43,6 +43,8 @@ public class ClubController {
         util.loginUser();
 
         UserDto userDto = (UserDto)session.getAttribute("sessionUserInfo");
+        List<ClubRegionCategoryDto> regionCategoryDtoList = clubService.findRegionCategory();
+        model.addAttribute("regionCategoryDtoList", regionCategoryDtoList);
 
         //  내가 가입한 소모임 목록
         List<ClubDto> joinClubDtoList = clubService.findJoinClubDtoList(userDto.getId());
@@ -86,7 +88,9 @@ public class ClubController {
     @RequestMapping("writePost")
     public String writePost(@RequestParam("id") int id, Model model){
         util.loginUser();
+        List<ClubPostCategoryDto> postCategoryDtoList = clubService.findPostCategory();
         model.addAttribute("id", id);
+        model.addAttribute("postCategoryDtoList", postCategoryDtoList);
         return "/club/writePostPage";
     }
 
@@ -125,12 +129,19 @@ public class ClubController {
     @RequestMapping("board")
     public String clubBoard(@RequestParam("id") int id, Model model){
         model.addAttribute("id", id);
-        // List<ClubPostDto> clubPostDtoList = clubService.getClubPostDtoList(id);
+        
+        List<Map<String,Object>> postDetailList = clubService.getClubPostDtoList(id);
+        model.addAttribute("postDetailList", postDetailList);
 
         
         return "club/clubBoardPage";
     }
 
+    @RequestMapping("album")
+    public String clubAlbum(){
+
+        return "club/clubAlbumPage";
+    }
 }
 
 

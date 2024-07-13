@@ -7,6 +7,7 @@ import org.apache.ibatis.annotations.Mapper;
 import com.bulmeong.basecamp.club.dto.ClubDto;
 import com.bulmeong.basecamp.club.dto.ClubJoinConditionDto;
 import com.bulmeong.basecamp.club.dto.ClubMemberDto;
+import com.bulmeong.basecamp.club.dto.ClubPostCategoryDto;
 import com.bulmeong.basecamp.club.dto.ClubPostDto;
 import com.bulmeong.basecamp.club.dto.ClubPostImageDto;
 import com.bulmeong.basecamp.club.dto.ClubRegionCategoryDto;
@@ -25,4 +26,7 @@ public interface ClubSqlMapper {
     public List<ClubDto> selectJoinClubList(int user_id);
     public List<ClubPostDto> selectClubPostDtoList(int club_id);
     public UserDto selectUserDtoById(int id);
+    public ClubPostCategoryDto selectPostCategoryDtoById(int id);
+    public List<ClubPostCategoryDto> selectPostCategoryDto();
+    public List<ClubPostImageDto> seleClubPostImageDtoList();
 }
