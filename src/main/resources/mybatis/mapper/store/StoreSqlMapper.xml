@@ -3,4 +3,14 @@
 
 <mapper namespace="com.bulmeong.basecamp.store.mapper.StoreSqlMapper">
 
+    <select id="selectCountStoreByAccountId" resultType="int">
+        select count(*) from store
+        where account_id = #{account_id}
+    </select>
+
+    <select id="selectCountStoreByName" resultType="int">
+        select count(*) from store
+        where name = #{name}
+    </select>
+
 </mapper>

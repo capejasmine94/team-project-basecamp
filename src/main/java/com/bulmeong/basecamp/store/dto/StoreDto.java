@@ -13,8 +13,10 @@ public class StoreDto {
     private String email;
     private String name;
     private int crn;
+    private String postCode;
     private String address;
-    private String web_link;
+    private String detail_address;
+    // private String web_link;
     private String description;
     private String main_image;
     private String status;
