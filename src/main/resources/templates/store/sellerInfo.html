@@ -128,7 +128,7 @@
 
                     <div class="row category">
                         <div class="col pe-0 d-grid">
-                            <a href="dashboard2.html" type="button" class="py-3 fw-bold text-primary">
+                            <a href="/storeCenter/dashboard" type="button" class="py-3 fw-bold">
                                 Dashboard
                             </a>
                         </div>
@@ -147,13 +147,13 @@
                     </div>
                     <div class="row accordion-collapse collapse p-0" id="first-collapse" data-bs-parent="#leftAccordion">
                         <div class="col">
-                            <a class="row accordion-body py-3 ps-4 subcategory" href="http://www.naver.com">
+                            <a class="row accordion-body py-3 ps-4 subcategory" href="/storeCenter/productManage">
                                 상품조회/수정
                             </a>
-                            <a class="row accordion-body py-3 ps-4 subcategory" href="productRegister.html" id="productRegister">
+                            <a class="row accordion-body py-3 ps-4 subcategory" href="/storeCenter/productRegister" id="productRegister">
                                 상품등록
                             </a>
-                            <a class="row accordion-body py-3 ps-4 subcategory" href="https://getbootstrap.com/">
+                            <a class="row accordion-body py-3 ps-4 subcategory" href="/storeCenter/deliveryInfo">
                                 배송정보 관리
                             </a>
                         </div>
@@ -173,16 +173,16 @@
                     </div>
                     <div class="row accordion-collapse collapse p-0" id="second-collapse" data-bs-parent="#leftAccordion">
                         <div class="col">
-                            <a class="row accordion-body py-3 ps-4 subcategory" href="http://www.naver.com">
+                            <a class="row accordion-body py-3 ps-4 subcategory" href="/storeCenter/orderIntegration">
                                 주문 통합 검색
                             </a>
-                            <a class="row accordion-body py-3 ps-4 subcategory" href="https://getbootstrap.com/">
+                            <a class="row accordion-body py-3 ps-4 subcategory" href="/storeCenter/sendProcessing">
                                 발송관리
                             </a>
-                            <a class="row accordion-body py-3 ps-4 subcategory" href="http://www.naver.com">
+                            <a class="row accordion-body py-3 ps-4 subcategory" href="/storeCenter/cancelManage">
                                 취소관리
                             </a>
-                            <a class="row accordion-body py-3 ps-4 subcategory" href="https://getbootstrap.com/">
+                            <a class="row accordion-body py-3 ps-4 subcategory" href="/storeCenter/returnManage">
                                 반품관리
                             </a>
                         </div>
@@ -202,10 +202,10 @@
                     </div>
                     <div class="row accordion-collapse collapse p-0" id="third-collapse" data-bs-parent="#leftAccordion">
                         <div class="col">
-                            <a class="row accordion-body py-3 ps-4 subcategory" href="http://www.naver.com">
+                            <a class="row accordion-body py-3 ps-4 subcategory" href="/storeCenter/manageQnA">
                                 문의관리
                             </a>
-                            <a class="row accordion-body py-3 ps-4 subcategory" href="https://getbootstrap.com/">
+                            <a class="row accordion-body py-3 ps-4 subcategory" href="/storeCenter/manageReview">
                                 리뷰관리
                             </a>
                         </div>
@@ -213,7 +213,7 @@
 
                     <div class="row category">
                         <div class="col pe-0 d-grid">
-                            <a href="" type="button" class="py-3 fw-bold">
+                            <a href="/storeCenter/balanceAccountsList" type="button" class="py-3 fw-bold">
                                 정산관리
                             </a>
                         </div>
@@ -221,7 +221,7 @@
 
                     <div class="row category">
                         <div class="col pe-0 d-grid">
-                            <a href="" type="button" class="py-3 fw-bold">
+                            <a href="/storeCenter/statistics" type="button" class="py-3 fw-bold">
                                 통계
                             </a>
                         </div>
@@ -229,7 +229,7 @@
 
                     <div class="row category">
                         <div class="col pe-0 d-grid">
-                            <a href="" type="button" class="py-3 fw-bold">
+                            <a href="/storeCenter/storeInfo" type="button" class="py-3 fw-bold">
                                 스토어관리
                             </a>
                         </div>
@@ -237,7 +237,7 @@
                     
                     <div class="row category">
                         <div class="col pe-0 d-grid">
-                            <a href="" type="button" class="py-3 fw-bold">
+                            <a href="/storeCenter/sellerInfo" type="button" class="py-3 fw-bold text-primary">
                                 판매자정보
                             </a>
                         </div>
@@ -329,6 +329,131 @@
                 
                 <!-- right -->
                 <div class="col bg-body-tertiary right" style="padding-top: 58px;">
+                    <div class="row py-3 px-4">
+                        <div class="col fs-3 fw-bold">
+                            판매자 정보
+                        </div>
+                    </div>
+
+                    <div class="row px-4 pb-4">
+                        <div class="col border bg-white rounded-2">
+                            <div class="row py-3 px-3 border-bottom">
+                                <div class="col fw-bold">
+                                    계정 정보
+                                </div>
+                            </div>
+
+                            <div class="row py-3 px-3">
+                                <div class="col-2">
+                                    아이디
+                                </div>
+                                <div class="col">
+                                    아이디~~
+                                </div>
+                            </div>
+                            <div class="row py-3 px-3 align-items-center">
+                                <div class="col-2">
+                                    비밀번호
+                                </div>
+                                <div class="col">
+                                    <button class="btn bg-white border rounded-0">
+                                        비밀번호 변경
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row px-4 pb-4">
+                        <div class="col border bg-white rounded-2">
+                            <div class="row py-3 border-bottom px-3">
+                                <div class="col fw-bold">
+                                    셀러 정보
+                                </div>
+                            </div>
+
+                            <div class="row py-3 px-3">
+                                <div class="col-2">
+                                    담당자명
+                                </div>
+                                <div class="col">
+                                    <span>
+                                        김첨지
+                                    </span>
+                                </div>
+                            </div>
+                            
+                            <div class="row py-3 px-3">
+                                <div class="col-2">
+                                    연락처
+                                </div>
+                                <div class="col">
+                                    <span>
+                                        010-1234-5678
+                                    </span>
+                                </div>
+                            </div>
+
+                            <div class="row py-3 px-3">
+                                <div class="col-2">
+                                    이메일
+                                </div>
+                                <div class="col">
+                                    <span>
+                                        qwer@qwer.com
+                                    </span>
+                                </div>
+                            </div>
+
+                            <div class="row py-3 px-3">
+                                <div class="col-2">
+                                    소재지
+                                </div>
+                                <div class="col">
+                                    <span>
+                                        서울시 어쩌구 무슨동 123-456
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row px-4 pb-4">
+                        <div class="col border bg-white rounded-2">
+                            <div class="row py-3 border-bottom px-3">
+                                <div class="col fw-bold">
+                                    정산 정보
+                                </div>
+                            </div>
+
+                            <div class="row py-3 px-3">
+                                <div class="col-2">
+                                    은행명
+                                </div>
+                                <div class="col">
+                                    국민은행
+                                </div>
+                            </div>
+
+                            <div class="row py-3 px-3">
+                                <div class="col-2">
+                                    예금주
+                                </div>
+                                <div class="col">
+                                    김첨지
+                                </div>
+                            </div>
+
+                            <div class="row py-3 px-3">
+                                <div class="col-2">
+                                    계좌번호
+                                </div>
+                                <div class="col">
+                                    123-456-7890
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
