@@ -32,4 +32,13 @@ public class RestStoreController {
 
         return restResponseDto;
     }
+
+    @RequestMapping("getStoreDtoByAccountInfo")
+    public StoreRestResponseDto getStoreDtoByAccountInfo(@RequestParam("account_id") String account_id, @RequestParam("account_pw") String account_pw){
+        StoreRestResponseDto restResponseDto = new StoreRestResponseDto();
+
+        restResponseDto.add("storeDto", storeService.getStoreDtoByAccountInfo(account_id, account_pw));
+
+        return restResponseDto;
+    }
 }

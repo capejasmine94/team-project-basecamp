@@ -13,4 +13,10 @@
         where name = #{name}
     </select>
 
+    <select id="selectStoreByAccountInfo" resultType="com.bulmeong.basecamp.store.dto.StoreDto">
+        select * from store
+        where account_id = #{account_id}
+        and account_pw = #{account_pw}
+    </select>
+
 </mapper>

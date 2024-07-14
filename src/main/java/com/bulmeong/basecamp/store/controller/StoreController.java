@@ -1,11 +1,35 @@
 package com.bulmeong.basecamp.store.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
+import com.bulmeong.basecamp.store.dto.StoreDto;
+import com.bulmeong.basecamp.store.service.StoreService;
+
+import jakarta.servlet.http.HttpSession;
 
 @Controller
 @RequestMapping("storeCenter")
 public class StoreController {
+
+    @Autowired
+    private StoreService storeService;
+
+    @RequestMapping("login")
+    public String login(){
+        return "/store/login";
+    }
+
+    @RequestMapping("loginProcess")
+    public String loginProcess(@RequestParam("account_id") String account_id, @RequestParam("account_pw") String account_pw, HttpSession session){
+        
+        StoreDto storeDto = storeService.getStoreDtoByAccountInfo(account_id, account_pw);
+        session.setAttribute("sessionStoreInfo", storeDto);
+
+        return "redirect:/storeCenter/dashboard";
+    }
 
     @RequestMapping("storeRegister")
     public String storeRegister(){
