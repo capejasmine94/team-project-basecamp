@@ -3,6 +3,14 @@
 
 <mapper namespace="com.bulmeong.basecamp.insta.mapper.InstaSqlMapper">
 
+    <!-- 로그인한 유저가 인스타 유저에 등록되어있는지 확인하는 쿼리 -->
+    <select id="instaUserConfirom" resultType="int">
+        select count(*) from bc_user bu
+        inner join bc_insta_user_info biui on biui.user_id = bu.id
+        where account = #{account}
+        and password = #{password}
+    </select>
+
     <insert id="insertInstaUserInfo">
         insert into bc_insta_user_info(
             user_id, insta_nickname, insta_profile_img, intro, is_private
@@ -34,4 +42,16 @@
         )
     </insert>
 
+    
+
 </mapper>
+
+
+
+
+
+
+
+
+
+

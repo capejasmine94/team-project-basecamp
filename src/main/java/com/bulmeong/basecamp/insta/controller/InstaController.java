@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.bulmeong.basecamp.club.dto.ClubPostImageDto;
 import com.bulmeong.basecamp.common.dto.ImageDto;
 import com.bulmeong.basecamp.common.util.ImageUtil;
 import com.bulmeong.basecamp.common.util.Utils;
@@ -19,8 +18,8 @@ import com.bulmeong.basecamp.insta.dto.InstaArticleDto;
 import com.bulmeong.basecamp.insta.dto.InstaArticleImgDto;
 import com.bulmeong.basecamp.insta.dto.InstaUserInfoDto;
 import com.bulmeong.basecamp.insta.service.InstaService;
+import com.bulmeong.basecamp.user.dto.UserDto;
 
-import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 
 @Controller
@@ -33,13 +32,40 @@ public class InstaController {
     @Autowired
     private InstaService instaService;
 
-    // 고객이 인스타 최초 접속시 나타나는 Page
-    @RequestMapping("confirmPage")
-    public String confirmPage(){
-        util.loginUser();
+    // insta용 임시 loginPage
+    @RequestMapping("instaLoginPage")
+    public String instaLoginPage(){
+        
 
-        return "insta/confirmPage";
+        return "insta/instaLoginPage";
     }
+
+    // insta 접속 할 때 두가지 접속 경로가 있음
+    @RequestMapping("instaLoginProcess")
+    public String instaLoginProcess(HttpSession session, @RequestParam("id") int id){
+        util.loginUser(id);
+        UserDto userDto = (UserDto) session.getAttribute("sessionUserInfo");
+
+        int userC = instaService.instaUserC(userDto);
+
+        System.out.println("userC" + userC);
+
+        if(userC == 1){
+            return "redirect:./instaMainPage?user_id=" + userDto.getId();
+        }else{
+            return "redirect:./instaConfirmPage";
+        }
+
+    }
+
+    // 고객이 인스타 최초 접속시 나타나는 Page
+    @RequestMapping("instaConfirmPage")
+    public String instaConfirmPage(UserDto userDto){
+
+        return "insta/instaConfirmPage";
+    }
+
+    
 
     @RequestMapping("confirmProcess") // MultipartFile = 한개의 파일만 받을 때 / MultipartFile[] = 여러개의 파일만 받을 때
     public String confirmProcess(InstaUserInfoDto instaUserInfoDto, @RequestParam("insta_img") MultipartFile insta_img){
@@ -51,11 +77,11 @@ public class InstaController {
         instaService.instaUserInfo(instaUserInfoDto);
         
         // return "insta/confirmProcess";
-        return "redirect:./mainPage?user_id=" + instaUserInfoDto.getUser_id();
+        return "redirect:./instaMainPage?user_id=" + instaUserInfoDto.getUser_id();
     }
 
-    @RequestMapping("mainPage")
-    public String mainPage(HttpSession session, Model model , @RequestParam("user_id") int user_id){
+    @RequestMapping("instaMainPage")
+    public String instaMainPage(HttpSession session, Model model , @RequestParam("user_id") int user_id){
         InstaUserInfoDto instaUserInfoDto = instaService.userInfoByUserId(user_id);
         model.addAttribute("instaUserInfoDto", instaUserInfoDto);
 
@@ -67,7 +93,7 @@ public class InstaController {
         // System.out.println(instaUserInfoDto);
         System.out.println("Session Info: " + session.getAttribute("sessionInstaUserInfo"));
 
-        return "insta/mainPage";
+        return "insta/instaMainPage";
     }
 
     @RequestMapping("instaWritePage")

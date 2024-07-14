@@ -3,12 +3,11 @@ package com.bulmeong.basecamp.insta.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.bulmeong.basecamp.club.dto.ClubPostDto;
-import com.bulmeong.basecamp.club.dto.ClubPostImageDto;
 import com.bulmeong.basecamp.insta.dto.InstaArticleDto;
 import com.bulmeong.basecamp.insta.dto.InstaArticleImgDto;
 import com.bulmeong.basecamp.insta.dto.InstaUserInfoDto;
 import com.bulmeong.basecamp.insta.mapper.InstaSqlMapper;
+import com.bulmeong.basecamp.user.dto.UserDto;
 
 import java.util.List;
 
@@ -16,6 +15,14 @@ import java.util.List;
 public class InstaService {
     @Autowired
     private InstaSqlMapper instaSqlMapper;
+
+    public int instaUserC(UserDto userDto){
+        // 인스타 최초 접속 유저이면 instaUser = 0을 return
+        // 인스타 프로필 등록한 유저이면 instaUser = 1을 return
+        int instaUser = instaSqlMapper.instaUserConfirom(userDto);
+
+        return instaUser;
+    }
 
     public void instaUserInfo(InstaUserInfoDto InstaUserInfoDto){
         instaSqlMapper.insertInstaUserInfo(InstaUserInfoDto);
