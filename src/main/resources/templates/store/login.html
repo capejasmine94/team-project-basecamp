@@ -74,6 +74,11 @@
             a{
                 text-decoration: none;
             }
+            input:focus {
+                z-index: 1;
+                position: relative;
+                outline: 1px solid black;
+            }
         </style>
         <script>
             function formSubmit(){
@@ -118,29 +123,23 @@
                         <div class="col rounded-1">
                             <div class="row bg-body-tertiary">
                                 <div class="col d-grid px-0">
-                                    <button class="fw-bold border border-bottom-0 border-primary py-3 rounded-1 rounded-bottom-0 bg-white" style="border-bottom: 0px;">
-                                        Store
-                                    </button>
+                                    <input type="button" class="fw-bold border border-bottom-0 border-primary py-3 rounded-1 rounded-bottom-0 bg-white" value="Store" style="border-bottom: 0px;">
                                 </div>
                                 <div class="col d-grid px-0">
-                                    <button class="fw-bold border border-bottom-0 rounded-1 rounded-bottom-0 bg-body-tertiary text-body-tertiary">
-                                        Camp
-                                    </button>
+                                    <input type="button" class="fw-bold border border-bottom-0 rounded-1 rounded-bottom-0 bg-body-tertiary text-body-tertiary" value="Camp">
                                 </div>
                                 <div class="col d-grid px-0">
-                                    <button class="fw-bold border border-bottom-0 rounded-1 rounded-bottom-0 bg-body-tertiary text-body-tertiary">
-                                        Caravan
-                                    </button>
+                                    <input type="button" class="fw-bold border border-bottom-0 rounded-1 rounded-bottom-0 bg-body-tertiary text-body-tertiary" value="Caravan">
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col d-grid px-0">
-                                    <input type="text" id="inputId" name="account_id" class="border border-bottom-0 form-control rounded-0 py-3" placeholder="아이디">
+                                    <input type="text" id="inputId" name="account_id" class="border border-bottom-0 rounded-0 py-3 px-3" placeholder="아이디">
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col d-grid px-0">
-                                    <input type="password" id="inputPw" name="account_pw" class="border form-control rounded-1 rounded-top-0 py-3" placeholder="비밀번호">
+                                    <input type="password" id="inputPw" name="account_pw" class="border rounded-1 rounded-top-0 py-3 px-3" placeholder="비밀번호">
                                 </div>
                             </div>
                             <div class="row">
