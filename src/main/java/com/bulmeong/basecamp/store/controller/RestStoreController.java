@@ -5,8 +5,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.bulmeong.basecamp.common.dto.RestResponseDto;
+import com.bulmeong.basecamp.store.dto.StoreDto;
 import com.bulmeong.basecamp.store.dto.StoreRestResponseDto;
 import com.bulmeong.basecamp.store.service.StoreService;
+
+import jakarta.servlet.http.HttpSession;
 
 @RestController
 @RequestMapping("/api/store")
@@ -14,6 +18,21 @@ public class RestStoreController {
 
     @Autowired
     private StoreService storeService;
+
+    @RequestMapping("getSessionStoreId")
+    public RestResponseDto getSessionStoreId(HttpSession session){
+        RestResponseDto restResponseDto = new RestResponseDto();
+        restResponseDto.setResult("success");
+
+        StoreDto sessionStore = (StoreDto)session.getAttribute("sessionStoreInfo");
+        if(sessionStore != null){
+            restResponseDto.add("id", sessionStore.getId());
+        }else{
+            restResponseDto.add("id", null);
+        }
+
+        return restResponseDto;
+    }
 
     @RequestMapping("isExistStoreAccountId")
     public StoreRestResponseDto isExistAccountId(@RequestParam("account_id") String account_id){
