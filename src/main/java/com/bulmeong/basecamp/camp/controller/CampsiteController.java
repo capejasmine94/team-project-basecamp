@@ -25,6 +25,6 @@ public class CampsiteController {
 
     @RequestMapping("mainPage")
     public String mainPage(){
-        return "camp/mainPage";
+        return "camp/calendarTest";
     }
 }

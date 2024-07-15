@@ -459,3 +459,29 @@ a{
     .scrollBar::-webkit-scrollbar-track {
         background: rgba(33, 122, 244, .1);  /*스크롤바 뒷 배경 색상*/
     }
+
+    .table .saturday {
+      color: blue;
+    }
+
+    .table .sunday {
+    color: red;
+    }
+
+    .table .selected-start {
+    background-color: #007bff;
+    color: white;
+    }
+
+    .table .selected-end {
+    background-color: #007bff;
+    color: white;
+    }
+
+    .table .selected-range {
+    background-color: #cce5ff;
+    }
+
+    .table .inactive {
+    color: #d3d3d3;
+    }
