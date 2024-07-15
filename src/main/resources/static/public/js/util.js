@@ -35,10 +35,21 @@ function popup(title,content,accept,action) {
    bootstrap.Modal.getOrCreateInstance('#popup').show();
 }
 
+//팝업 백드롭 클릭 방지
+document.addEventListener('DOMContentLoaded', function() {
+   var modalElement = document.getElementById('popup');
+
+   modalElement.addEventListener('hide.bs.modal', function(event) {
+     if (event.target === modalElement) {
+       event.preventDefault();
+     }
+   });
+ });
+
+
 
 //로그인이 필요한 서비스를 확인해주는 기능입니다.
 //강제성이 없습니다.
-
 function checkLogin() {
    const url ='/api/user/checkLogin';
    fetch(url)
@@ -63,3 +74,6 @@ function checkMustLogin() {
       });
    });
 }
+
+
+
