@@ -15,3 +15,7 @@ function popup(title,content,yes,no,action) {
    text.innerText = yes;
    bootstrap.Modal.getOrCreateInstance('#popup').show();
 }
+
+function checkLogin() {
+   
+}
