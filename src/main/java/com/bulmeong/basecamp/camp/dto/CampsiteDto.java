@@ -10,6 +10,7 @@ public class CampsiteDto {
     private String account;
     private String password;
     private String name;
+    private String seller;
     private String address;
     private String phone;
     private String email;
