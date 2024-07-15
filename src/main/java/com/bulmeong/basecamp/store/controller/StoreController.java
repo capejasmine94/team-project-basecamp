@@ -5,6 +5,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.bulmeong.basecamp.store.dto.StoreBankAccountDto;
+import com.bulmeong.basecamp.store.dto.StoreDeliveryInfoDto;
 import com.bulmeong.basecamp.store.dto.StoreDto;
 import com.bulmeong.basecamp.store.service.StoreService;
 
@@ -34,6 +36,14 @@ public class StoreController {
     @RequestMapping("storeRegister")
     public String storeRegister(){
         return "/store/storeRegisterPage";
+    }
+
+    @RequestMapping("storeRegisterProcess")
+    public String storeRegisterProcess(StoreDto storeDto, StoreDeliveryInfoDto storeDeliveryInfoDto, StoreBankAccountDto storeBankAccountDto){
+
+        storeService.registerStore(storeDto, storeDeliveryInfoDto, storeBankAccountDto);
+
+        return "redirect:/storeCenter/registerComplete";
     }
 
     @RequestMapping("registerComplete")
