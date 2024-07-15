@@ -1,3 +1,17 @@
+//캘린더 사용법
+//1. 캘린더가 들어가야 하는 col 에 아이디로 'calendar_(달력이름)' 을 넣습니다
+//2. html body 마지막 부근에 script를 추가합니다
+//      => createCalender(달력이름, 선택불가날짜시작일) : 하나의 날만 결정 가능한 달력입니다.
+//      => createRangeCalender(달력이름, 최대 범위, 선택불가날짜시작일) : 여러 날을 범위로 지정 가능한 달력입니다.
+
+
+//범위 달력에서 날짜 불러오기
+
+//1. getStartDate(달력이름) : 해당 이름의 달력에서 선택된 시작일을 가져옵니다.
+//2. getEndDate(달력이름) : 해당 이름의 달력에서 선택된 마지막일을 가져옵니다.
+
+
+
 class CalendarData{ 
     constructor(length,limit) {
         this.length = length;
@@ -16,7 +30,6 @@ function getCalendarData(calendarName){
     }
     return data;
 }
-
 function getStartDate(calendarName) {
     const data = getCalendarData(calendarName);
     if(data == null) return;
@@ -32,7 +45,6 @@ function getDate(calendarName) {
     if(data == null) return;
     return data.startDate;
 }
-
 function createCalendarStructure(name) {
     const container = document.getElementById('calendar_' + name);
 
@@ -54,6 +66,17 @@ function createCalendarStructure(name) {
     nextIcon.className = 'bi bi-caret-right-fill';
     nextIcon.id = 'nextMonth';
     
+    const startDateData = document.createElement('input');
+    startDateData.type ='hidden';
+    startDateData.name = 'startDate';
+    getCalendarData(name)
+
+    const endDateData = document.createElement('input');
+    endDateData.type ='hidden';
+    endDateData.name = 'endDate';
+
+    navCol.appendChild(startDateData);
+    navCol.appendChild(endDateData);
     navCol.appendChild(prevIcon);
     navCol.appendChild(monthYearSpan);
     navCol.appendChild(nextIcon);
@@ -279,7 +302,7 @@ function createRangeCalendar(name, length, limit) {
 
     renderCalendar(data.currentDate); // 초기 달력 렌더링
 }
-function createCalendar(name, length, limit) {
+function createCalendar(name, limit) {
     console.log(limit);
     const calendarDocument = createCalendarStructure(name);
     const calendarBody = calendarDocument.querySelector('#calendarBody');
@@ -287,7 +310,7 @@ function createCalendar(name, length, limit) {
     const prevMonth = calendarDocument.querySelector('#prevMonth');
     const nextMonth = calendarDocument.querySelector('#nextMonth');
 
-    const data = new CalendarData(length,limit);
+    const data = new CalendarData(1,limit);
     calendarDataList.set(name, data);
     const today = new Date(); // 오늘 날짜 객체
 

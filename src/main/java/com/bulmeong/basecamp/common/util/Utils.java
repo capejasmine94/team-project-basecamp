@@ -76,7 +76,7 @@ public class Utils {
 
      /** 특정 숫자의 유저로 즉시 로그인합니다. 존재하지 않는 유저 숫자를 입력하면, 그 숫자의 가장 가까운 유저로 로그인합니다. */
     public void loginUser(int number) {
-        number = Math.max(1, Math.min(number, 3));
+        number = Math.max(1, Math.min(number, 4));
         UserDto params = new UserDto();
         params.setAccount("user" + number);
         params.setPassword("1234");
