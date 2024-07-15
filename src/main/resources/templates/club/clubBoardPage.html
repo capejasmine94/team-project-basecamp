@@ -47,6 +47,12 @@
                             </div>
                         </div>
 
+                        <div class="row pt-3 text-center">
+                            <div class="col">
+                                <a th:href="@{/club/writePost(id=${id})}" class="btn form-control btn-outline-dark">글 작성하기</a>
+                            </div>
+                        </div>
+
                         <!-- 여기서부터 게시글 목록 출력 -->
                         <!-- 프로필 박스 -->
                         <div class="row border-5 border-bottom" th:each="postDetail : ${postDetailList}">
@@ -81,12 +87,16 @@
 
                                         <div class="row">
                                             <div class="col fw-bold">
-                                                <span th:text="${postDetail.clubPostDto.title}"></span>
+                                                <a th:href="@{/club/readPost(id=${postDetail.clubPostDto.id})}" style="text-decoration: none; color: black;">
+                                                    <span th:text="${postDetail.clubPostDto.title}"></span>
+                                                </a>
                                             </div>
                                         </div>
                                         <div class="row border-2 border-bottom pb-3" style="font-size: 0.9em;">
                                             <div class="col">
-                                                <span th:text="${postDetail.clubPostDto.content}"></span>
+                                                <a th:href="@{/club/readPost(id=${postDetail.clubPostDto.id})}" style="text-decoration: none; color: black;">
+                                                    <span th:text="${postDetail.clubPostDto.content}"></span>
+                                                </a>
                                             </div>
                                         </div>
                                         <div class="row py-2" style="font-size: 0.8em;">
@@ -105,14 +115,7 @@
                             </div>
                         </div>
 
-                        
-
-                        <div class="row pt-5 text-center">
-                            <div class="col">
-                                <a th:href="@{/club/writePost(id=${id})}" class="btn form-control btn-dark">글 작성하기</a>
-                            </div>
-                        </div>
-
+                
                     </div>
                 </div>
         </div>

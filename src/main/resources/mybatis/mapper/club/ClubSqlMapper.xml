@@ -89,13 +89,13 @@
         select * from bc_club_region_category
     </select>
 
-    <!-- 게시글 카테고리 (by id) -->
+    <!-- 게시글 각가의 카테고리 (by id) -->
     <select id="selectPostCategoryDtoById" resultType="com.bulmeong.basecamp.club.dto.ClubPostCategoryDto">
         select * from bc_club_post_category
         where id = #{id}
     </select>
 
-<!-- 게시글 전체 카테고리 -->
+    <!-- 게시글 카테고리 -->
     <select id="selectPostCategoryDto" resultType="com.bulmeong.basecamp.club.dto.ClubPostCategoryDto">
     select * from bc_club_post_category
     </select>
@@ -117,6 +117,7 @@
     <select id="selectClubPostDtoList" resultType="com.bulmeong.basecamp.club.dto.ClubPostDto">
         select * from bc_club_post
         where club_id = #{club_id}
+        order by id desc;
     </select>
 
     <select id="selectUserDtoById" resultType="com.bulmeong.basecamp.user.dto.UserDto">
@@ -128,6 +129,21 @@
     <select id="selectPostImageDtoList" resultType="com.bulmeong.basecamp.club.dto.ClubPostImageDto">
         select * from bc_club_post_image;
     </select>
+
+    <!-- 게시글DTO 가져오기 -->
+    <select id="selectPostDtoById" resultType="com.bulmeong.basecamp.club.dto.ClubPostDto">
+        select * from bc_club_post
+        where id = #{id}
+    </select>
+
+    <!-- 게시글 댓글 인서트 -->
+    <insert id="insertClubPostCommentDto">
+        insert into bc_club_post_comment(
+	        post_id, user_id, content
+        )values(
+            #{post_id}, #{user_id}, #{content}
+        )
+    </insert>
 
 
 

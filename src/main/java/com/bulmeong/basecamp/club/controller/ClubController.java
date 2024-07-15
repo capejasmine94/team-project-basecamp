@@ -15,6 +15,7 @@ import com.bulmeong.basecamp.club.dto.ClubDto;
 import com.bulmeong.basecamp.club.dto.ClubJoinConditionDto;
 import com.bulmeong.basecamp.club.dto.ClubMemberDto;
 import com.bulmeong.basecamp.club.dto.ClubPostCategoryDto;
+import com.bulmeong.basecamp.club.dto.ClubPostCommentDto;
 import com.bulmeong.basecamp.club.dto.ClubPostDto;
 import com.bulmeong.basecamp.club.dto.ClubRegionCategoryDto;
 import com.bulmeong.basecamp.club.service.ClubService;
@@ -104,7 +105,7 @@ public class ClubController {
 
         
 
-        return "redirect:/club/home?id=" + clubPostDto.getClub_id();
+        return "redirect:/club/board?id=" + clubPostDto.getClub_id();
     }
 
     // 소모임 회원가입
@@ -137,10 +138,26 @@ public class ClubController {
         return "club/clubBoardPage";
     }
 
-    @RequestMapping("album")
-    public String clubAlbum(){
+    // @RequestMapping("album")
+    // public String clubAlbum(){
 
-        return "club/clubAlbumPage";
+    //     return "club/clubAlbumPage";
+    // }
+
+    @RequestMapping("readPost")
+    public String readPost(@RequestParam("id") int id, Model model){
+        model.addAttribute("id", id);
+        Map<String, Object> map = clubService.getClubPostData(id);
+        model.addAttribute("map", map);
+
+        return "/club/readPostPage";
+    }
+
+    @RequestMapping("writeCommentProcess")
+    public String writeComment(ClubPostCommentDto clubPostCommentDto){
+        clubService.writeClubPostComment(clubPostCommentDto);
+            
+        return "redirect:/club/readPost?id="+ clubPostCommentDto.getPost_id();
     }
 }
 

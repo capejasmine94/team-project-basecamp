@@ -2,11 +2,13 @@ package com.bulmeong.basecamp.club.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.bulmeong.basecamp.club.dto.ClubDto;
 import com.bulmeong.basecamp.club.dto.ClubJoinConditionDto;
 import com.bulmeong.basecamp.club.dto.ClubMemberDto;
 import com.bulmeong.basecamp.club.dto.ClubPostCategoryDto;
+import com.bulmeong.basecamp.club.dto.ClubPostCommentDto;
 import com.bulmeong.basecamp.club.dto.ClubPostDto;
 import com.bulmeong.basecamp.club.dto.ClubPostImageDto;
 import com.bulmeong.basecamp.club.dto.ClubRegionCategoryDto;
@@ -109,6 +111,20 @@ public class ClubService {
         return postDetailList;
     }
 
+    // 상세 게시글 내용 가져오기 (by id)
+    public Map<String, Object> getClubPostData(int id){
+        ClubPostDto clubPostDto = clubSqlMapper.selectPostDtoById(id);
+        UserDto userDto = clubSqlMapper.selectUserDtoById(clubPostDto.getUser_id());
+
+        Map<String, Object> map = new HashMap<>();
+        map.put("clubPostDto", clubPostDto);
+        map.put("userDto", userDto);
+
+        return map ;
+    }
+
+
+
     // 앨범 이미지
         public List<ClubPostImageDto> clubPostImageDtoList(){
             List<ClubPostImageDto>clubPostImageDtoList = clubSqlMapper.seleClubPostImageDtoList();
@@ -117,8 +133,20 @@ public class ClubService {
         }
 
     
+    //
+        public UserDto selectUserDtoById(int id){
+            UserDto userDto = clubSqlMapper.selectUserDtoById(id);
 
+            return userDto;
+        }
 
+    //  게시글 댓글 
+        public void writeClubPostComment(ClubPostCommentDto clubPostCommentDto){
+            clubSqlMapper.insertClubPostCommentDto(clubPostCommentDto);
+
+        }
+
+    //  게시글 댓글 출력
     
 
 }
