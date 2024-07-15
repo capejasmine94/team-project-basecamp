@@ -18,5 +18,78 @@
         where account_id = #{account_id}
         and account_pw = #{account_pw}
     </select>
+    
+    <insert id="insertStoreDto">
+        <selectKey resultType="int" keyProperty="id" order="AFTER">
+            select max(id) from store
+        </selectKey>
+        insert into store(
+            account_id,
+            account_pw,
+            seller,
+            phone,
+            email,
+            name,
+            crn,
+            post_code,
+            address,
+            detail_address,
+            description,
+            status
+        )values(
+            #{account_id},
+            #{account_pw},
+            #{seller},
+            #{phone},
+            #{email},
+            #{name},
+            #{crn},
+            #{postcode},
+            #{address},
+            #{detail_address},
+            #{description},
+            '승인완료'
+        )
+    </insert>
+
+    <insert id="insertStoreDeliveryInfoDto">
+        insert into delivery_info(
+            store_id,
+            origin_postcode,
+            origin_address,
+            detail_origin_address,
+            fee,
+            min_amount,
+            return_postcode,
+            return_address,
+            detail_return_address,
+            return_delivery_fee
+        )values(
+            #{store_id},
+            #{origin_postcode},
+            #{origin_address},
+            #{detail_origin_address},
+            #{fee},
+            #{min_amount},
+            #{return_postcode},
+            #{return_address},
+            #{detail_return_address},
+            #{return_delivery_fee}
+        )
+    </insert>
+
+    <insert id="insertStoreBankAccountDto">
+        insert into store_bank_account(
+            store_id,
+            bank_name,
+            account_number,
+            account_holder
+        )values(
+            #{store_id},
+            #{bank_name},
+            #{account_number},
+            #{account_holder}
+        )
+    </insert>
 
 </mapper>

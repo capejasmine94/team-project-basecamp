@@ -13,7 +13,7 @@ public class StoreDto {
     private String email;
     private String name;
     private int crn;
-    private String postCode;
+    private String postcode;
     private String address;
     private String detail_address;
     // private String web_link;
