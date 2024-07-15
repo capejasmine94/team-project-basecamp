@@ -83,7 +83,6 @@ function createCalendarStructure(name) {
     navRow.appendChild(navCol);
     container.appendChild(navRow);
     
-    // Create calendar table
     const table = document.createElement('table');
     table.className = 'table table-bordered text-center';
 
@@ -103,7 +102,7 @@ function createCalendarStructure(name) {
     table.appendChild(tbody);
     container.appendChild(table);
 
-    // Create selected dates row
+    
     const selectedRow = document.createElement('div');
     selectedRow.className = 'row';
     
