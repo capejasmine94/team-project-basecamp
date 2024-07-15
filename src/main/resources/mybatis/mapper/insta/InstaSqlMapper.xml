@@ -25,12 +25,12 @@
     </select>
 
     <!-- 게시판 insert -->
-    <insert id="insertInstaArticle" useGeneratedKeys="true" keyProperty="id">
+    <insert id="insertInstaArticle">
         insert into bc_insta_article(
             user_id, content
         )values(
             #{user_id}, #{content}
-        );
+        )
     </insert>
 
     <!-- 게시판 이미지 insert -->

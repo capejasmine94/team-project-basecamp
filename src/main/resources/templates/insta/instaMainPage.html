@@ -75,7 +75,7 @@
         <!-- 상단바 -->
         <div class="row mb-5 pb-2">
             <div class="col">
-                <div class="row border-bottom fixed-top px-2">
+                <div class="row border-bottom fixed-top px-2" style="background-color: white;">
                     <div class="col-1 pe-0 fs-1">
                         <i class="fa-brands fa-square-instagram" style="color: #E1306C;"></i>
                     </div>
@@ -87,107 +87,230 @@
             </div>
         </div>
 
-        <div class="row">
-            <div class="col">
+        <!-- 스토리 -->
+        <!-- overflow-x: auto; 이 클래스가 적용된 요소는 내용이 요소의 크기를 초과할 때, x축 방향으로 스크롤할 수 있게 됩니다. -->
+        <div class="row border-bottom pb-1 mb-3" >
+            <div class="col overflow-x-auto">
+                <div class="row" style="width: 150%;">
+                    <a class="col-auto link-dark link-offset-2 link-underline link-underline-opacity-0 " href="./instaMyPage">
+                        <div class="row">
+                            <!-- <div class="col">
+                                <img class="rounded" th:src="|/bowWow_image/${e.productDto.product_main_img_link}|" style="height: 7em; width: 100%;" >
+                            </div> -->
 
-                <!-- 스토리 -->
-                <!-- overflow-x: auto; 이 클래스가 적용된 요소는 내용이 요소의 크기를 초과할 때, x축 방향으로 스크롤할 수 있게 됩니다. -->
-                <div class="row border-bottom pb-1 mb-3">
-                    <div class="col overflow-x-auto">
-                        <div class="row" style="width: 120%;">
                             <div class="col">
                                 <div class="row">
-                                    <a class="col link-dark link-offset-2 link-underline link-underline-opacity-0 " href="...">
-                                        <div class="row">
-                                            <!-- <div class="col">
-                                                <img class="rounded" th:src="|/bowWow_image/${e.productDto.product_main_img_link}|" style="height: 7em; width: 100%;" >
-                                            </div> -->
-
-                                            <div class="col">
-                                                <div class="row">
-                                                    <div class="col">
-                                                        <img th:src="|/basecampImage/${session.sessionInstaUserInfo.insta_profile_img}|" class="img-fluid rounded-circle storyImage">
-                                                    </div>
-                                                </div>
-                                                <div class="row">
-                                                    <div class="col px-1 text-center" style="font-size: 0.8em;">
-                                                        <span th:text="${session.sessionInstaUserInfo.insta_nickname}">닉네임</span>                                                        
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col">
-                                                <div class="row">
-                                                    <div class="col">
-                                                        <img id="profileImage" src="/public/img/instaImage/userImg.jpeg" class="img-fluid rounded-circle storyImage" alt="Profile Image">
-                                                    </div>
-                                                </div>
-                                                <div class="row">
-                                                    <div class="col px-1 text-center" style="font-size: 0.8em;">
-                                                        <span>닉네임</span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col">
-                                                <div class="row">
-                                                    <div class="col">
-                                                        <img id="profileImage" src="/public/img/instaImage/userImg.jpeg" class="img-fluid rounded-circle storyImage" alt="Profile Image">
-                                                    </div>
-                                                </div>
-                                                <div class="row">
-                                                    <div class="col px-1 text-center" style="font-size: 0.8em;">
-                                                        <span>닉네임</span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col">
-                                                <div class="row">
-                                                    <div class="col">
-                                                        <img id="profileImage" src="/public/img/instaImage/userImg.jpeg" class="img-fluid rounded-circle storyImage" alt="Profile Image">
-                                                    </div>
-                                                </div>
-                                                <div class="row">
-                                                    <div class="col px-1 text-center" style="font-size: 0.8em;">
-                                                        <span>닉네임</span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col">
-                                                <div class="row">
-                                                    <div class="col">
-                                                        <img id="profileImage" src="/public/img/instaImage/userImg.jpeg" class="img-fluid rounded-circle storyImage" alt="Profile Image">
-                                                    </div>
-                                                </div>
-                                                <div class="row">
-                                                    <div class="col px-1 text-center" style="font-size: 0.8em;">
-                                                        <span>닉네임</span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </a>
+                                    <div class="col">
+                                        <img th:src="|/basecampImage/${session.instaUserInfoDto.insta_profile_img}|" class="img-fluid rounded-circle storyImage">
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col px-1 text-center" style="font-size: 0.8em;">
+                                        <span th:text="${session.instaUserInfoDto.insta_nickname}">닉네임</span>                                                        
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                </div>
+                    </a>
 
+                    <a class="col-auto link-dark link-offset-2 link-underline link-underline-opacity-0 " href="./instaUserPage">
+                        <div class="row">
+                            <div class="col">
+                                <div class="row">
+                                    <div class="col">
+                                        <img id="profileImage" src="/public/img/instaImage/userImg.jpeg" class="img-fluid rounded-circle storyImage" alt="Profile Image">
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col px-1 text-center" style="font-size: 0.8em;">
+                                        <span>닉네임</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                    <a class="col-auto link-dark link-offset-2 link-underline link-underline-opacity-0 " href="./instaUserPage">
+                        <div class="row">
+                            <div class="col">
+                                <div class="row">
+                                    <div class="col">
+                                        <img id="profileImage" src="/public/img/instaImage/userImg.jpeg" class="img-fluid rounded-circle storyImage" alt="Profile Image">
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col px-1 text-center" style="font-size: 0.8em;">
+                                        <span>닉네임</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                    <a class="col-auto link-dark link-offset-2 link-underline link-underline-opacity-0 " href="./instaUserPage">
+                        <div class="row">
+                            <div class="col">
+                                <div class="row">
+                                    <div class="col">
+                                        <img id="profileImage" src="/public/img/instaImage/userImg.jpeg" class="img-fluid rounded-circle storyImage" alt="Profile Image">
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col px-1 text-center" style="font-size: 0.8em;">
+                                        <span>닉네임</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                    <a class="col-auto link-dark link-offset-2 link-underline link-underline-opacity-0 " href="./instaUserPage">
+                        <div class="row">
+                            <div class="col">
+                                <div class="row">
+                                    <div class="col">
+                                        <img id="profileImage" src="/public/img/instaImage/userImg.jpeg" class="img-fluid rounded-circle storyImage" alt="Profile Image">
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col px-1 text-center" style="font-size: 0.8em;">
+                                        <span>닉네임</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                    <a class="col-auto link-dark link-offset-2 link-underline link-underline-opacity-0 " href="./instaUserPage">
+                        <div class="row">
+                            <div class="col">
+                                <div class="row">
+                                    <div class="col">
+                                        <img id="profileImage" src="/public/img/instaImage/userImg.jpeg" class="img-fluid rounded-circle storyImage" alt="Profile Image">
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col px-1 text-center" style="font-size: 0.8em;">
+                                        <span>닉네임</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col">
                 <div class="row">
                     <div class="col-auto pe-1">
-                        <img th:src="|/basecampImage/${session.sessionInstaUserInfo.insta_profile_img}|" class="img-fluid rounded-circle profileImage">
+                        <img th:src="|/basecampImage/${session.instaUserInfoDto.insta_profile_img}|" class="img-fluid rounded-circle profileImage">
                     </div>
                     <div class="col-10 ps-0">
                         <!-- <span th:text="${session.sessionUserInfo.nickname}">aa</span> -->
-                        <span th:text="${session.sessionInstaUserInfo.insta_nickname}" style="font-size: 0.8em;"></span>
+                        <span th:text="${session.instaUserInfoDto.insta_nickname}" style="font-size: 0.8em;"></span>
                     </div>
                 </div>
 
+                <div id="carouselExampleIndicators" class="carousel slide mt-3">
+                    <div class="carousel-indicators">
+                        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+                        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
+                        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
+                    </div>
+                    <div class="carousel-inner">
+                        <div class="carousel-item active">
+                            <img id="profileImage" src="/public/img/instaImage/userImg.jpeg" class="img-fluid" alt="">
+                        </div>
+                        <div class="carousel-item">
+                            <img id="profileImage" src="/public/img/instaImage/userImg.jpeg" class="img-fluid" alt="">
+                        </div>
+                        <div class="carousel-item">
+                            <img id="profileImage" src="/public/img/instaImage/userImg.jpeg" class="img-fluid" alt="">
+                        </div>
+                    </div>
+                    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Previous</span>
+                    </button>
+                    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Next</span>
+                    </button>                    
+                </div>
+
+                <!-- 지워야 됨 -->
+                <div id="carouselExampleIndicators" class="carousel slide mt-3">
+                    <div class="carousel-indicators">
+                        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+                        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
+                        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
+                    </div>
+                    <div class="carousel-inner">
+                        <div class="carousel-item active">
+                            <img id="profileImage" src="/public/img/instaImage/userImg.jpeg" class="img-fluid" alt="">
+                        </div>
+                        <div class="carousel-item">
+                            <img id="profileImage" src="/public/img/instaImage/userImg.jpeg" class="img-fluid" alt="">
+                        </div>
+                        <div class="carousel-item">
+                            <img id="profileImage" src="/public/img/instaImage/userImg.jpeg" class="img-fluid" alt="">
+                        </div>
+                    </div>
+                    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Previous</span>
+                    </button>
+                    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Next</span>
+                    </button>                    
+                </div>
+
+                <div class="row">
+                    <!-- 좋아요 -->
+                    <div class="col">
+                        <form action="./pushArticleLikeProcess" method="get">
+                            <button class="btn">
+                                <i class="fa-solid fa-heart"></i>
+                            </button>
+                        </form>
+                    </div>
+                    <div class="col">
+                        <form action="./pushArticleLikeProcess" method="get">
+                            <button class="btn">
+                                <i class="fa-regular fa-heart"></i>
+                            </button>
+                        </form>
+                    </div>
+
+                    <!-- 댓글 -->
+                    <div class="col">
+                        <span>
+                            <i class="fa-regular fa-comment"></i>
+                        </span>
+                    </div>
+
+                    <!-- 북마크 -->
+                    <div class="col">
+                        <form action="./pushArticleLikeProcess" method="get">
+                            <button class="btn">
+                                <i class="fa-regular fa-bookmark"></i>
+                            </button>
+                        </form>
+                    </div>
+                    <div class="col">
+                        <form action="./pushArticleLikeProcess" method="get">
+                            <button class="btn">
+                                <i class="fa-solid fa-bookmark"></i>
+                            </button>
+                        </form>
+                    </div>
+                </div>
             </div>
         </div>
         
         
         <!-- 글쓰기 페이지 -->
-        <form class="row fixed-bottom mb-5 pb-5" action="./instaWritePage" method="post">
-            <div class="col"></div>
+        <form class="row fixed-bottom mb-5 pb-5" action="./instaWritePage" method="get">
+            <div class="col-10"></div>
             <div class="col-2 ps-0">
                 <button class="btn" type="submit">
                     <i class="bi bi-plus-square fs-2"></i>
@@ -196,11 +319,11 @@
         </form>
     </div>
 
-    <div class="container">
+    <div class="container mt-5 pt-4">
         <!-- 하단바 -->
         <div class="row">
             <div class="col">
-                <div class="row border-top fixed-bottom">
+                <div class="row border-top fixed-bottom" style="background-color: white;">
 
                     <div class="col">
                         <button onclick="popup(`당신의 선택은`,`과연`,`자바스크립트`,`타임리프`,function(){action()})" class="btn" type="submit">

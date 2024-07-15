@@ -6,7 +6,6 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 // import org.springframework.boot.autoconfigure.ssl.SslProperties.Bundles.Watch.File;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
@@ -48,7 +47,7 @@ public class InstaController {
 
         int userC = instaService.instaUserC(userDto);
 
-        System.out.println("userC" + userC);
+        // System.out.println("userC" + userC);
 
         if(userC == 1){
             return "redirect:./instaMainPage?user_id=" + userDto.getId();
@@ -81,17 +80,14 @@ public class InstaController {
     }
 
     @RequestMapping("instaMainPage")
-    public String instaMainPage(HttpSession session, Model model , @RequestParam("user_id") int user_id){
+    public String instaMainPage(HttpSession session, @RequestParam("user_id") int user_id){
         InstaUserInfoDto instaUserInfoDto = instaService.userInfoByUserId(user_id);
-        model.addAttribute("instaUserInfoDto", instaUserInfoDto);
 
         // System.out.println(instaUserInfoDto.getInsta_profile_img());
-        // System.out.println(session);
 
-        // session에 로그인한 유저 정보를 받아 instaInfoDto정보 추가
-        session.setAttribute("sessionInstaUserInfo", instaUserInfoDto);
-        // System.out.println(instaUserInfoDto);
-        System.out.println("Session Info: " + session.getAttribute("sessionInstaUserInfo"));
+        // session에 로그인한 유저 정보를 받아 instaUserInfoDto정보 추가
+        session.setAttribute("instaUserInfoDto", instaUserInfoDto);
+        System.out.println("instaUserInfoDto" + instaUserInfoDto);
 
         return "insta/instaMainPage";
     }
@@ -103,9 +99,9 @@ public class InstaController {
     }
 
     @RequestMapping("instaWriteProcess")
-    public String instaWriteProcess(InstaArticleDto instaArticleDto, @RequestParam("insta_article_img") MultipartFile[]insta_article_img){
+    public String instaWriteProcess(InstaArticleDto instaArticleDto, @RequestParam("insta") MultipartFile[]insta_article_img){
         instaService.writeArticle(instaArticleDto);
-        System.out.println("instaArticleDto" + instaArticleDto);
+        System.out.println("instaArticleDto : " + instaArticleDto);
         // System.out.println("instaId" + instaArticleDto.getId());
 
         List<InstaArticleImgDto> instaAtricleImgDtoList = new ArrayList<>();
@@ -119,7 +115,9 @@ public class InstaController {
 
         instaService.writeArticleImg(instaAtricleImgDtoList);
 
-        return "redirect:./mainPage?user_id=" + instaArticleDto.getUser_id();
+        System.out.println("instaArticleDto : " + instaArticleDto);
+
+        return "redirect:./instaMainPage?user_id=" + instaArticleDto.getUser_id();
     }
 
 }
