@@ -1,11 +1,10 @@
 //팝업을 쉽게 만들어줍니다.
-//popup : 두개의 선택지가 있는 팝업입니다
-//popupYesOrYes : 하나의 선택지만 있는 팝업입니다.
+//popup : 두개의 선택지가 있는 팝업입니다.
 //1. <div th:replace="~{common/navi::popup}"></div> 를 html에 추가합니다.
 //2. 확인을 눌렀을 때 실행하는 함수를 만듭니다.
 //3. popup을 onclick에 넣습니다.
 //4-1. popup의 매개변수는 (제목,내용,예,아니오,function(){2번에서 만든 함수}) 순으로 넣으시면 됩니다.
-//4-2. popupYesOrYes의 매개변수는 기존 popup에서 아니오만 빼면 됩니다.
+//4-2. 매개변수에서 기존 popup에서 아니오만 빼면 단일 팝업을 표시합니다.
 
 function popup(title,content,yes,no,action) {
    const node = document.getElementById('popup');
@@ -22,7 +21,7 @@ function popup(title,content,yes,no,action) {
    bootstrap.Modal.getOrCreateInstance('#popup').show();
 }
 
-function popupYesOrYes(title,content,accept,action) {
+function popup(title,content,accept,action) {
    const node = document.getElementById('popup');
    let text = node.querySelector("#popup-title");
    text.innerText = title;
@@ -36,6 +35,10 @@ function popupYesOrYes(title,content,accept,action) {
    bootstrap.Modal.getOrCreateInstance('#popup').show();
 }
 
+
+//로그인이 필요한 서비스를 확인해주는 기능입니다.
+//강제성이 없습니다.
+
 function checkLogin() {
    const url ='/api/user/checkLogin';
    fetch(url)
@@ -43,6 +46,19 @@ function checkLogin() {
    .then((response) => {
        if(response.data.needLogin)
        popup('로그인이 필요합니다','로그인이 필요한 서비스입니다. 로그인하시겠습니까?','예','아니오',function(){
+         location.href = '/user/loginPage';
+      });
+   });
+}
+
+//강제성이 있는 로그인 팝업을 띄워주는 기능입니다.
+function checkMustLogin() {
+   const url ='/api/user/checkLogin';
+   fetch(url)
+   .then(response => response.json())
+   .then((response) => {
+       if(response.data.needLogin)
+       popup('로그인이 필요합니다','로그인이 필요합니다.','확인', function(){
          location.href = '/user/loginPage';
       });
    });
