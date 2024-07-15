@@ -134,5 +134,3 @@ function handleDragEnd(e) {
     });
 }
 
-// 업로드 생성 예시
-createUploader('example');
