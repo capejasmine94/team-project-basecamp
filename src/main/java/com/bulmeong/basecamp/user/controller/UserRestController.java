@@ -1,17 +1,24 @@
 package com.bulmeong.basecamp.user.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.bulmeong.basecamp.common.dto.RestResponseDto;
 import com.bulmeong.basecamp.common.util.Utils;
 
 @RestController
+@RequestMapping("/api/user")
 public class UserRestController {
     @Autowired
-    Utils utils;
+    private Utils utils;
 
+
+    @RequestMapping("checkLogin")
     public RestResponseDto checkLogin() {
-        return null;
+        RestResponseDto result = new RestResponseDto();
+        result.setResult("success");
+        result.add("needLogin", utils.isNeedLogin());
+        return result;
     }
 }

@@ -9,6 +9,7 @@
         <script src="https://kit.fontawesome.com/7b271bba58.js" crossorigin="anonymous"></script>
         <link rel="stylesheet" href="/public/css/common.css">
         <script src="/public/js/sellerPage.js"></script>
+        <script src="/public/js/util.js"></script>
         <script src="/public/js/calendar.js"></script>
         <style>
             /* 임의의 영역 생성 */
@@ -36,7 +37,7 @@
     </head>
     <body>
         <div th:replace="~{common/navi::topNaviSeller}"></div>
-        
+        <div th:replace="~{common/navi::popup}"></div>
         <div class="container-fluid">
             <div class="row mt-5">
                 <div class="col-6 mt-3">
@@ -52,6 +53,7 @@
         <script>
             createCalendar('test', 5, new Date(2024, 11, 30));
             createRangeCalendar('test2', 8, new Date(2024, 11, 30));
+            checkLogin();
         </script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
        

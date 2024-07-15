@@ -17,5 +17,13 @@ function popup(title,content,yes,no,action) {
 }
 
 function checkLogin() {
-   
+   const url ='/api/user/checkLogin';
+   fetch(url)
+   .then(response => response.json())
+   .then((response) => {
+       if(response.data.needLogin)
+       popup('로그인이 필요합니다','로그인이 필요한 서비스입니다. 로그인하시겠습니까?','예','아니오',function(){
+         location.href = '/user/loginPage';
+      });
+   });
 }
