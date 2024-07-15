@@ -68,11 +68,13 @@ function createCalendarStructure(name) {
     
     const startDateData = document.createElement('input');
     startDateData.type ='hidden';
+    startDateData.classList.add("startDate");
     startDateData.name = 'startDate';
     getCalendarData(name)
 
     const endDateData = document.createElement('input');
     endDateData.type ='hidden';
+    endDateData.classList.add("endDate");
     endDateData.name = 'endDate';
 
     navCol.appendChild(startDateData);
@@ -102,7 +104,7 @@ function createCalendarStructure(name) {
     table.appendChild(tbody);
     container.appendChild(table);
 
-    
+
     const selectedRow = document.createElement('div');
     selectedRow.className = 'row';
     
@@ -335,6 +337,7 @@ function createCalendar(name, limit) {
             }
             cell.addEventListener('click', function() {
                 data.startDate = cellDate; // 시작 날짜 설정
+                //calendarBody.querySelector('startDate').value = cellDate;
                 renderCalendar(data.currentDate); // 달력 다시 렌더링
                 //데이터 정보 입력
             });

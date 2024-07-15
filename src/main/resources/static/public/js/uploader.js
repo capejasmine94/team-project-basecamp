@@ -3,12 +3,13 @@ function createUploadStructure(name, multiple) {
     uploadNameDiv.classList.add('row');
 
     const colDiv = document.createElement('div');
-    colDiv.classList.add('col', 'upload-container');
+    colDiv.classList.add('col', 'upload-container','px-0');
 
     const previewRow = document.createElement('div');
-    previewRow.classList.add('row', 'preview', 'd-flex', 'flex-wrap');
+    previewRow.classList.add('row', 'preview', 'd-flex', 'flex-wrap','ms-2');
 
     const fileUploadDiv = document.createElement('div');
+    fileUploadDiv.classList.add('col-auto','my-1','ms-3','me-2','mt-2','mb-1');
     fileUploadDiv.classList.add('file-upload');
 
     const inputFile = document.createElement('input');
@@ -23,7 +24,7 @@ function createUploadStructure(name, multiple) {
     previewRow.appendChild(fileUploadDiv);
 
     const alertRow = document.createElement('div');
-    alertRow.classList.add('row', 'alert', 'alert-danger', 'mx-1');
+    alertRow.classList.add('row', 'alert', 'alert-danger', 'mx-1', 'mt-3');
     alertRow.id = `alert_${name}`; // 동적으로 ID 설정
     alertRow.innerText = '이미지 파일만 업로드할 수 있습니다.';
 
@@ -57,6 +58,7 @@ function createUploader(name, multiple) {
                     img.src = e.target.result;
                     img.draggable = true; // 드래그 가능 설정
                     img.classList.add('draggable'); // 클래스 추가
+                    img.classList.add('col-auto','me-2','my-1','mt-2','mb-3'); // 클래스 추가
                     addDragAndDropHandlers(img); // 드래그 앤 드롭 핸들러 추가
                     preview.appendChild(img);
                 }

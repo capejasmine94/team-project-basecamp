@@ -498,7 +498,6 @@ a{
         display: inline-flex;
         width: 6em;
         height: 6em;
-        margin: 1em;
         border: 0.2em dashed #d3d3d3; /* 연한 회색 보더 */
         border-radius: 1em; /* 모서리 라운드 */
         position: relative;
@@ -520,7 +519,6 @@ a{
       .file-upload:before {
         content: "+";
         font-size: 4em;
-        margin-bottom: 0.2em;
         color: #d3d3d3;
       }
       .file-upload:hover {
@@ -530,3 +528,11 @@ a{
         flex-wrap: wrap;
         align-items: center;
       }
+
+        .preview img {
+      width: 6em;
+      height: 6em;
+      object-fit: cover;
+      border: 0.2em solid #d3d3d3; /* 연한 회색 보더 */
+      border-radius: 1em; /* 모서리 라운드 */
+    }
