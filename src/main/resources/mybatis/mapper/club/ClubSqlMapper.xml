@@ -145,6 +145,12 @@
         )
     </insert>
 
+    <!-- 게시글 댓글 DTO 가져오기 by post_id -->
+    <select id="selectPostCommentDto" resultType="com.bulmeong.basecamp.club.dto.ClubPostCommentDto">
+        select * from bc_club_post_comment
+        where post_id = #{post_id}
+    </select>
+
 
 
 

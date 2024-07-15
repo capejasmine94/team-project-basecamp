@@ -147,6 +147,19 @@ public class ClubService {
         }
 
     //  게시글 댓글 출력
-    
+        public List<Map<String, Object>> getPostCommentDetailList(int id){
+            List<Map<String, Object>> commentDetailList = new ArrayList<>();
+            List<ClubPostCommentDto> clubPostCommentDtoList = clubSqlMapper.selectPostCommentDto(id);
+            for(ClubPostCommentDto clubPostCommentDto : clubPostCommentDtoList){
+               UserDto userDto = clubSqlMapper.selectUserDtoById(clubPostCommentDto.getUser_id());
+
+               Map<String, Object> map = new HashMap<>();
+               map.put("clubPostCommentDto", clubPostCommentDto);
+               map.put("userDto", userDto);
+            
+               commentDetailList.add(map);
+            }
+            return commentDetailList;
+        }    
 
 }

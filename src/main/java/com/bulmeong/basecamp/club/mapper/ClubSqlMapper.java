@@ -32,4 +32,5 @@ public interface ClubSqlMapper {
     public List<ClubPostImageDto> seleClubPostImageDtoList();
     public ClubPostDto selectPostDtoById(int id);
     public void insertClubPostCommentDto(ClubPostCommentDto clubPostCommentDto);
+    public List<ClubPostCommentDto> selectPostCommentDto(int post_id);
 }

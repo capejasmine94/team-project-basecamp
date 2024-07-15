@@ -145,10 +145,12 @@ public class ClubController {
     // }
 
     @RequestMapping("readPost")
-    public String readPost(@RequestParam("id") int id, Model model){
+    public String readPost(@RequestParam("id") int id, Model model, HttpSession session){
         model.addAttribute("id", id);
         Map<String, Object> map = clubService.getClubPostData(id);
         model.addAttribute("map", map);
+        List<Map<String, Object>> postCommentDetailList = clubService.getPostCommentDetailList(id);
+        model.addAttribute("postCommentDetailList", postCommentDetailList);
 
         return "/club/readPostPage";
     }
@@ -156,6 +158,8 @@ public class ClubController {
     @RequestMapping("writeCommentProcess")
     public String writeComment(ClubPostCommentDto clubPostCommentDto){
         clubService.writeClubPostComment(clubPostCommentDto);
+        
+        
             
         return "redirect:/club/readPost?id="+ clubPostCommentDto.getPost_id();
     }

@@ -29,6 +29,11 @@
             font-size: 16px;
             font-weight: normal;
         }
+
+        .thicker-light-border {
+            border-bottom: 7px solid #dee2e6;
+        }
+        
     </style>
 </head>
 
@@ -53,8 +58,7 @@
                     <div class="col">
                         <div class="row pb-3 border-bottom align-items-center">
                             <div class="col-2 pe-0">
-                                <img src="/public/img/clubImage/mangleProfile.jpg" class="img-fluid rounded-circle" style="aspect-ratio: 1/1;">
-                                <!-- <img th:src="|/image/${readPostMap.memberDto.profile_image}|" class="img-fluid rounded-circle" style="aspect-ratio: 1/1;"> -->
+                                <img th:src="|/image/${map.userDto.profile_image}|" class="img-fluid rounded-circle" style="aspect-ratio: 1/1;">
                             </div>
                             <div class="col">
                                 <div class="row">
@@ -64,7 +68,7 @@
                                 </div>
                                 <div class="row">
                                     <div class="col text-secondary" style="font-size: 0.9em;">
-                                        <i class="bi bi-clock"></i><span th:text="${#dates.format(map.clubPostDto.created_at,'hh:mm')}"> 난 시간으로 표기하고 싶은데? 08:47</span>
+                                        <i class="bi bi-clock"></i><span th:text="${#dates.format(map.clubPostDto.created_at,'hh:mm')}">08:47</span>
                                         <i class="bi bi-file-earmark-text"></i><span> 27</span>
                                     </div>
                                 </div>
@@ -78,7 +82,7 @@
                     </div>
                 </div>
 
-                <div class="row pb-5 pt-4 border-bottom border-5">
+                <div class="row pb-5 pt-4 thicker-light-border">
                     <div class="col">
                         <span th:text="${map.clubPostDto.content}">게시글의 내용이 출력되는 부분입니다</span>
 
@@ -122,44 +126,44 @@
                             </div>
 
 
-                            <!-- <div class="row" th:each="commentDetail : ${commentDetailList}"> -->
+                            <div class="row" th:each="postCommentDetail : ${postCommentDetailList}">
                                 <div class="col">
 
                                     <div class="row py-3 border-bottom">
                                         <div class="col-2" >
-                                            <img src="/public/img/clubImage/mangleProfile.jpg" class="img-fluid rounded-circle" style="aspect-ratio: 1/1;">
-                                            <!-- <img th:src="|/image/${commentDetail.memberDto.profile_image}|" class="img-fluid rounded-circle"  style="aspect-ratio: 1/1;"> -->
+                                            <!-- <img src="/public/img/clubImage/mangleProfile.jpg" class="img-fluid rounded-circle" style="aspect-ratio: 1/1;"> -->
+                                            <img th:src="|/image/${postCommentDetail.userDto.profile_image}|" class="img-fluid rounded-circle"  style="aspect-ratio: 1/1;">
                                         </div>
                                         <div class="col">
                                             <div class="row" style="font-size:0.9em">
         
                                                 <div class="col ps-0">
                                                     <!-- <a th:href="@{/freeboard/myPage(id=${commentDetail.memberDto.id})}"> -->
-                                                        <!-- <span class="fw-bold" th:text="${commentDetail.memberDto.nickname}">닉네임출력</span> -->
+                                                        <span class="fw-bold" th:text="${postCommentDetail.userDto.nickname}">닉네임출력</span>
                                                     <!-- </a> -->
                                                 </div>
-                                                <div class="col text-end">
-                                                    <!-- <a th:href="@{/freeboard/deleteCommentProcess(id=${commentDetail.freeboardCommentDto.id}, post_id=${commentDetail.freeboardCommentDto.post_id})}" -->
-                                                        <!-- th:if="${session.sessionMemberInfo != null and session.sessionMemberInfo.id == commentDetail.freeboardCommentDto.member_id}"> -->
+                                                <!-- <div class="col text-end">
+                                                    <a th:href="@{/freeboard/deleteCommentProcess(id=${commentDetail.freeboardCommentDto.id}, post_id=${commentDetail.freeboardCommentDto.post_id})}"
+                                                        th:if="${session.sessionUserInfo != null and session.sessionUserInfo.id == postCommentDetail.clubPostCommentDto.user_id}">
                                                         <span class="col text-secondary pe-2" style="font-size: 0.9em"><i class="bi bi-trash3"></i> 삭제</span>
                                                     </a>
-                                                </div>
-        
-                                                <!-- <div class="col text-end pt-1 pe-4 text-secondary" style="font-size:0.8em" th:if="${session.sessionMemberInfo != null and session.sessionMemberInfo.id == commentDetail.freeboardCommentDto.member_id}">
-                                                    <a th:href="@{/freeboard/updatePost(id=${readPostMap.freeboardPostDto.id})}">수정</a>
-                                                    <a th:href="@{/freeboard/deletePostProcess(id=${readPostMap.freeboardPostDto.id})}">삭제</a>
                                                 </div> -->
+        
+                                                <!-- <div class="col text-end pt-1 pe-4 text-secondary" style="font-size:0.8em" th:if="${session.sessionUserInfo != null and session.sessionUserInfo.id == postCommentDetail.clubPostCommentDto.user_id}"> -->
+                                                    <!-- <a th:href="@{/freeboard/updatePost(id=${readPostMap.freeboardPostDto.id})}">수정</a> -->
+                                                    <!-- <a th:href="@{/freeboard/deletePostProcess(id=${readPostMap.freeboardPostDto.id})}">삭제</a> -->
+                                                <!-- </div> -->
                                         </div>
                                         <div class="row text-secondary" style="font-size:0.8em">
                                             <div class="col ps-0">
-                                                <!-- <span th:text="${#dates.format(commentDetail.freeboardCommentDto.created_at,'yy.MM.dd')}"></span> -->
+                                                <span th:text="${#dates.format(postCommentDetail.clubPostCommentDto.created_at,'yy.MM.dd')}"></span>
                                             </div>
                                         </div>
                                         <div class="row">
                                             <div class="col">
                                                 <div class="row pt-2">
                                                     <div class="col ps-0">
-                                                        <!-- <span th:text="${commentDetail.freeboardCommentDto.content}">본문</span> -->
+                                                        <span th:text="${postCommentDetail.clubPostCommentDto.content}">본문</span>
                                                     </div>
                                                 </div>
         
@@ -188,36 +192,6 @@
                                     </div>
                                 </div>
                             
-                                <!-- <div class="row border-bottom" th:if="${commentDetail.nestedCommentDetailList != null}" th:each="nestedCommentMap : ${commentDetail.nestedCommentDetailList}"> -->
-                                    <div class="col-1">
-                                        <i class="bi bi-arrow-return-right"></i>
-                                    </div>
-                                    <div class="col-2">
-                                        <!-- <img th:src="@{/image/${nestedCommentMap.nestedCommentMemberDto.profile_image}}" class="img-fluid rounded-circle"> -->
-                                    </div>
-                                    <div class="col">
-                                        <div class="row">
-                                            <div class="col">
-                                                <!-- <span class="fw-bold" style="font-size: 0.9em;" th:text="${nestedCommentMap.nestedCommentMemberDto.nickname}">닉네임출력</span> -->
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col">
-                                                <!-- <span th:text="${#dates.format(nestedCommentMap.freeboardNestedCommentDto.created_at,'yy.MM.dd')}"></span> -->
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col">
-                                                <!-- <span th:text="${nestedCommentMap.freeboardNestedCommentDto.content}">본문</span> -->
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col">
-                                                삭제
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
 
                             </div>
 
@@ -257,8 +231,8 @@
     
                          <button class="btn form-control btn-dark text-center">등록</button>
     
-                        <input name="member_id" type="hidden" th:value="${session.sessionUserInfo.id}">
-                        <!-- <input name="post_id" type="hidden" th:value="${readPostMap.freeboardPostDto.id}"> -->
+                        <input name="user_id" type="hidden" th:value="${session.sessionUserInfo.id}">
+                        <input name="post_id" type="hidden" th:value="${map.clubPostDto.id}">
     
                     </div>
     
