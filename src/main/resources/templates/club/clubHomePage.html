@@ -16,8 +16,14 @@
                     <div class="col">
 
                         <div class="row py-4">
+                            <div class="col-auto">
+                                <span class=""><i class="bi bi-heart"></i> </span>
+                            </div>
                             <div class="col text-center fw-bold">
                                 CLUB HOME
+                            </div>
+                            <div class="col-auto">
+                                <span class="text-end"><i class="bi bi-three-dots"></i></span>
                             </div>
                         </div>
 
@@ -33,49 +39,138 @@
                             </div>
                         </div>
 
-                        <!-- 카테고리 나열 누르면 카테고리 해당되는 글만 보여주기 -->
-                        <div class="row py-2">
-                            <div class="col" style="font-size: 0.8em;">
-                                전체 공지 모임후기 가입인사.... 카테고리
-                            </div>
-                        </div>
-                        
-                        <!-- 공지사항 글 고정?  -->
-                        <div class="row pb-1 border-0 border-bottom">
+
+                        <div class="row pt-1 pb-2 border-0">
                             <div class="col" style="font-size: 0.8em;">
                                 [필독] (공지사항 고정하기 할 수 있을까..?)
                             </div>
                         </div>
 
-                        <!-- 여기서부터 게시글 목록 출력 -->
-                        <!-- 프로필 박스 -->
-                        <div class="row border-5 border-bottom">
-                            <div class="col">
-                                
-                                <div class="row pt-3">
-                                    <div class="col">
-                                        <div class="row pb-3">
-                                            <div class="col-3 pe-0">
-                                                <img src="/public/img/clubImage/mangleProfile.jpg" class="img-fluid rounded-circle" style="aspect-ratio: 1/1;">
-                                                <!-- <img th:src="|/image/${readPostMap.memberDto.profile_image}|" class="img-fluid rounded-circle" style="aspect-ratio: 1/1;"> -->
-                                            </div>
-                                            <div class="col align-self-center" style="font-size: 0.9em;">
-                                                <div class="row">
-                                                    <div class="col">
-                                                        닉네임
-                                                    </div>
-                                                </div>
-                                                <div class="row">
-                                                    <div class="col text-secondary" style="font-size: 0.8em;">
-                                                        7월 4일 오후 8:25
-                                                    </div>
-                                                </div>
-                                            </div>
+                       
+                        <div class="row border rounded mb-3">
+                            <div class="col text-center px-0">
+                                <div class="rectangles" style="display: flex; gap: 10px;">
+                                    <div class="rectangle" style="width: 25em; height: 10em; border: 1px solid #fff; overflow: hidden; position: relative;">
+                                        <img src="/public/img/clubImage/mangleProfile.jpg" alt="모임 이미지 1" style="width: 100%; height: 100%; object-fit: cover;">
+                                        <div class="badge" style="position: absolute; top: 5px; right: 5px; background-color: #f00; color: #fff; padding: 10px;">
+                                            <i class="bi bi-heart"></i><span> 25</span>
                                         </div>
                                     </div>
                                 </div>
+                            </div>
+                        </div>
 
-                                
+                         <!-- 소모임 홈 - 소모임 정보 카드부분 -->
+                        <div class="row border rounded py-2">
+                            <div class="col-auto">
+
+                             
+                                <div class="row pb-3">
+                                    <div class="col" style="font-size: 0.8em;">
+                                        <span class="badge text-bg-primary">서울</span>
+                                        <span class="badge text-bg-primary">멤버 20</span>
+                                        <span class="badge text-bg-primary">2024.07.19</span>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col fw-bold">
+                                        도넛맛집뿌시기
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col" style="font-size: 0.8em;">
+                                        서울의 도넛 맛집을 탐험하는 소모임입니다.
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col text-end text-secondary" style="font-size: 0.8em;">
+                                <i class="bi bi-people"></i>
+                                <i class="bi bi-gear"></i>
+                            </div>
+                        </div>
+                        <div class="row border-bottom border-4 py-2">
+                            <div class="col"></div>
+                        </div>
+
+                        <div class="row py-2">
+                            <div class="col fw-bold">
+                                <span>정기모임</span>
+                            </div>
+                        </div>
+
+                        <!-- 정기모임 박스 -->
+                        <div class="row py-2 border rounded">
+                            <div class="col">
+
+                                <div class="row">
+                                    <div class="col" style="font-size: 0.8em;">
+                                        7/8 (월) <span class="text-danger"> D-4</span>
+                                    </div>
+                                    <div class="col text-end text-secondary" style="font-size: 0.8em;">
+                                        <span>수정</span>
+                                    </div>
+                                </div>
+                                <div class="row pb-1">
+                                    <div class="col" style="font-size: 0.8em;">
+                                        연남동 카페 투어 정모
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col">
+                                        <div class="row">
+                                            <div class="col-3 pe-0">  
+                                                <div class="rectangles" style="display: flex; gap: 10px;">
+                                                    <div class="rectangle" style="width: 5em; height: 5em; border: 1px solid #fff;">
+                                                        <img src="/public/img/clubImage/mangleProfile.jpg" alt="모임 이미지 1" style="width: 100%; height: 100%; object-fit: cover;">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col" style="font-size: 0.8em;">
+                                                <div class="row">
+                                                    <div class="col">
+                                                        <span class="text-secondary">일시</span> 7/8 (일) 오후 10:00
+                                                    </div>   
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col">
+                                                        <span class="text-secondary">위치</span> 연남동
+                                                    </div>   
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col">
+                                                        <span class="text-secondary">비용</span> 20,000
+                                                    </div>   
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col">
+                                                        <span class="text-secondary">참석</span> 
+                                                        <span class="text-danger">2</span>/5 
+                                                        <span class="text-secondary"> (3자리 남음)</span>
+                                                    </div>   
+                                                </div>
+                                            </div>
+                                            <div class="col-3 align-self-center">
+                                                <div class="row">
+                                                    <div class="col">
+                                                        <button type="button" class="btn btn-outline-secondary">참석</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                       </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row pt-3">
+                            <div class="col">
+                                <a href="" class="btn form-control btn-dark">정모 만들기</a>
+                            </div>
+                        </div>
+
+                       
+
                                 
 
                             </div>
