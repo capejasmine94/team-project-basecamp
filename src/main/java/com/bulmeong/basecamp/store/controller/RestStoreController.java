@@ -52,11 +52,24 @@ public class RestStoreController {
         return restResponseDto;
     }
 
-    @RequestMapping("getStoreDtoByAccountInfo")
-    public StoreRestResponseDto getStoreDtoByAccountInfo(@RequestParam("account_id") String account_id, @RequestParam("account_pw") String account_pw){
-        StoreRestResponseDto restResponseDto = new StoreRestResponseDto();
+    //경로 수정
+    @RequestMapping("getSellerDtoByAccountInfo")
+    public RestResponseDto getStoreDtoByAccountInfo(
+            @RequestParam("account_id") String account_id, 
+            @RequestParam("account_pw") String account_pw,
+            @RequestParam("seller_type") String seller_type
+            ){
+        RestResponseDto restResponseDto = new RestResponseDto();
 
-        restResponseDto.add("storeDto", storeService.getStoreDtoByAccountInfo(account_id, account_pw));
+        if(seller_type.equals("Store")){
+            restResponseDto.add("storeDto", storeService.getStoreDtoByAccountInfo(account_id, account_pw));
+        }else if(seller_type.equals("Campsite")){
+            //여기 수정
+            restResponseDto.add("storeDto", storeService.getStoreDtoByAccountInfo(account_id, account_pw));
+        }else if(seller_type.equals("Caravan")){
+            //여기 수정
+            restResponseDto.add("storeDto", storeService.getStoreDtoByAccountInfo(account_id, account_pw));
+        }
 
         return restResponseDto;
     }

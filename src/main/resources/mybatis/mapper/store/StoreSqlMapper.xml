@@ -31,7 +31,7 @@
             email,
             name,
             crn,
-            post_code,
+            postcode,
             address,
             detail_address,
             description,
@@ -91,5 +91,10 @@
             #{account_holder}
         )
     </insert>
+
+    <select id="selectStoreBankAccountDtoByStoreId" resultType="com.bulmeong.basecamp.store.dto.StoreBankAccountDto">
+        select * from store_bank_account
+        where store_id = #{store_id}
+    </select>
 
 </mapper>

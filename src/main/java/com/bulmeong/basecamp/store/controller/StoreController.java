@@ -2,6 +2,7 @@ package com.bulmeong.basecamp.store.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -33,6 +34,13 @@ public class StoreController {
         return "redirect:/storeCenter/dashboard";
     }
 
+    @RequestMapping("logoutProcess")
+    public String logoutProcess(HttpSession session){
+        session.invalidate();
+
+        return "redirect:/storeCenter/login";
+    }
+
     @RequestMapping("storeRegister")
     public String storeRegister(){
         return "/store/storeRegisterPage";
@@ -62,8 +70,24 @@ public class StoreController {
     }
     
     @RequestMapping("sellerInfo")
-    public String sellerInfo(){
-        return "/store/sellerInfo";
+    public String sellerInfo(HttpSession session, Model model){
+
+        StoreDto sessionStore = (StoreDto)session.getAttribute("sessionStoreInfo");
+
+        if(sessionStore!=null){
+            StoreBankAccountDto storeBankAccountDto = storeService.getStoreBankAccountDtoByStoreId(sessionStore.getId());
+            model.addAttribute("storeBankAccountDto", storeBankAccountDto);
+
+            return "/store/sellerInfo";
+        }else{
+            return "redirect:/storeCenter/login";
+        }
+        
+    }
+
+    @RequestMapping("deliveryInfo")
+    public String deliveryInfo(){
+        return "/store/deliveryInfo";
     }
     
 //////////////////////////////////////////////////////////////////////////
@@ -71,11 +95,6 @@ public class StoreController {
     @RequestMapping("productManage")
     public String productManage(){
         return "/store/XproductManage";
-    }
-
-    @RequestMapping("deliveryInfo")
-    public String deliveryInfo(){
-        return "/store/XdeliveryInfo";
     }
 
     @RequestMapping("orderIntegration")

@@ -16,7 +16,10 @@ public interface StoreSqlMapper {
 
     public StoreDto selectStoreByAccountInfo(@Param("account_id") String account_id, @Param("account_pw") String account_pw);
 
+    //스토어 가입
     public void insertStoreDto(StoreDto storeDto);
     public void insertStoreDeliveryInfoDto(StoreDeliveryInfoDto storeDeliveryInfoDto);
     public void insertStoreBankAccountDto(StoreBankAccountDto storeBankAccountDto);
+
+    public StoreBankAccountDto selectStoreBankAccountDtoByStoreId(int store_id);
 }

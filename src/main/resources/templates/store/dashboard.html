@@ -95,13 +95,13 @@
                     <span class="fw-bold">BaseCamp</span> Store Center
                 </div>
                 <div class="col fs-5 text-end">
-                    <span class="fw-bold text-white">
+                    <span class="fw-bold text-white" th:if="${session.sessionStoreInfo!=null}" th:text="${session.sessionStoreInfo.account_id}">
                         Sacabambaspis
                     </span>
                 </div>
-                <div class="col-auto">
+                <form action="/storeCenter/logoutProcess" class="col-auto">
                     <button class="btn btn-outline-light btn-sm fw-bold">로그아웃</button>
-                </div>
+                </form>
             </div>
         </div>
 
@@ -116,12 +116,12 @@
                         <div class="col">
                             <div class="row">
                                 <div class="col seller_profile text-center">
-                                    <img src="https://img1.newsis.com/2023/07/12/NISI20230712_0001313626_web.jpg" class="rounded-circle">
+                                    <img src="/public/img/storeImage/userImg.jpeg" class="rounded-circle">
                                 </div>
                             </div>
                             <div class="row text-center pt-2 fw-bold">
                                 <div class="col">
-                                    <span>사카밤바스피스</span>
+                                    <span th:if="${session.sessionStoreInfo!=null}" th:text="${session.sessionStoreInfo.name}">사카밤바스피스</span>
                                 </div>
                             </div>
                         </div>
@@ -336,6 +336,18 @@
     
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
         <script>
+            function setSessionId() {
+                const url = "/api/store/getSessionStoreId";
+                fetch(url)
+                .then(response => response.json())
+                .then((response) => {
+                    const storeId = response.data.id;
+                    if (storeId == null) {
+                        window.location.href = "/storeCenter/login";
+                    }
+                })
+            }
+
 
             document.querySelectorAll('.toggle-icon').forEach(button => {
                 button.addEventListener('click', function () {
@@ -377,6 +389,10 @@
             // window.addEventListener("DOMContentLoaded", ()=> {
             //     openCollapse();
             // })
+
+            window.addEventListener("DOMContentLoaded", () => {
+                setSessionId();
+            })
         </script>
     </body>
 </html>

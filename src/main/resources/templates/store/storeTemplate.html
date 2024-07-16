@@ -88,6 +88,7 @@
     </head>
     <body>
 
+        <!-- top-navi -->
         <div class="container-fluid">
             <div id="topNaviSeller" class="row fixed-top align-items-center py-2 px-3 store-center">
                 <div class="col fs-3 text-white">
@@ -128,7 +129,7 @@
 
                     <div class="row category">
                         <div class="col pe-0 d-grid">
-                            <a href="/storeCenter/dashboard" type="button" class="py-3 fw-bold">
+                            <a href="/storeCenter/dashboard" type="button" class="py-3 fw-bold text-primary">
                                 Dashboard
                             </a>
                         </div>
@@ -237,7 +238,7 @@
                     
                     <div class="row category">
                         <div class="col pe-0 d-grid">
-                            <a href="/storeCenter/sellerInfo" type="button" class="py-3 fw-bold text-primary">
+                            <a href="/storeCenter/sellerInfo" type="button" class="py-3 fw-bold">
                                 판매자정보
                             </a>
                         </div>
@@ -329,137 +330,6 @@
                 
                 <!-- right -->
                 <div class="col bg-body-tertiary right" style="padding-top: 58px;">
-                    <div class="row py-3 px-4">
-                        <div class="col fs-3 fw-bold">
-                            판매자 정보
-                        </div>
-                    </div>
-
-                    <div class="row px-4 pb-4">
-                        <div class="col border bg-white rounded-2">
-                            <div class="row py-3 px-3 border-bottom">
-                                <div class="col fw-bold">
-                                    계정 정보
-                                </div>
-                            </div>
-
-                            <div class="row py-3 px-3">
-                                <div class="col-2">
-                                    아이디
-                                </div>
-                                <div class="col">
-                                    <span th:if="${session.sessionStoreInfo!=null}" th:text="${session.sessionStoreInfo.account_id}">아이디~~</span>
-                                </div>
-                            </div>
-                            <div class="row py-3 px-3 align-items-center">
-                                <div class="col-2">
-                                    비밀번호
-                                </div>
-                                <div class="col">
-                                    <button class="btn bg-white border rounded-0">
-                                        비밀번호 변경
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="row px-4 pb-4">
-                        <div class="col border bg-white rounded-2">
-                            <div class="row py-3 border-bottom px-3">
-                                <div class="col fw-bold">
-                                    셀러 정보
-                                </div>
-                            </div>
-
-                            <div class="row py-3 px-3">
-                                <div class="col-2">
-                                    담당자명
-                                </div>
-                                <div class="col">
-                                    <span th:if="${session.sessionStoreInfo!=null}" th:text="${session.sessionStoreInfo.seller}">
-                                        김첨지
-                                    </span>
-                                </div>
-                            </div>
-                            
-                            <div class="row py-3 px-3">
-                                <div class="col-2">
-                                    연락처
-                                </div>
-                                <div class="col">
-                                    <span th:if="${session.sessionStoreInfo!=null}" th:text="${session.sessionStoreInfo.phone}">
-                                        010-1234-5678
-                                    </span>
-                                </div>
-                            </div>
-
-                            <div class="row py-3 px-3">
-                                <div class="col-2">
-                                    이메일
-                                </div>
-                                <div class="col">
-                                    <span th:if="${session.sessionStoreInfo!=null}" th:text="${session.sessionStoreInfo.email}">
-                                        qwer@qwer.com
-                                    </span>
-                                </div>
-                            </div>
-
-                            <div class="row py-3 px-3">
-                                <div class="col-2">
-                                    소재지
-                                </div>
-                                <div class="col">
-                                    <span th:if="${session.sessionStoreInfo!=null}" th:text="|(${session.sessionStoreInfo.postcode}) ${session.sessionStoreInfo.address} ${session.sessionStoreInfo.detail_address}|">
-                                        서울시 어쩌구 무슨동 123-456
-                                    </span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="row px-4 pb-4">
-                        <div class="col border bg-white rounded-2">
-                            <div class="row py-3 border-bottom px-3">
-                                <div class="col fw-bold">
-                                    정산 정보
-                                </div>
-                            </div>
-
-                            <div class="row py-3 px-3">
-                                <div class="col-2">
-                                    은행명
-                                </div>
-                                <div class="col">
-                                    <span th:text="${storeBankAccountDto.bank_name}">
-                                        국민은행
-                                    </span>
-                                </div>
-                            </div>
-
-                            <div class="row py-3 px-3">
-                                <div class="col-2">
-                                    예금주
-                                </div>
-                                <div class="col">
-                                    <span th:text="${storeBankAccountDto.account_holder}">
-                                        김첨지
-                                    </span>
-                                </div>
-                            </div>
-
-                            <div class="row py-3 px-3">
-                                <div class="col-2">
-                                    계좌번호
-                                </div>
-                                <div class="col">
-                                    <span th:text="${storeBankAccountDto.account_number}">
-                                        123-456-7890
-                                    </span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
                 </div>
             </div>
         </div>

@@ -37,4 +37,8 @@ public class StoreService {
         storeSqlMapper.insertStoreDeliveryInfoDto(storeDeliveryInfoDto);
         storeSqlMapper.insertStoreBankAccountDto(storeBankAccountDto);
     }
+
+    public StoreBankAccountDto getStoreBankAccountDtoByStoreId(int store_id){
+        return storeSqlMapper.selectStoreBankAccountDtoByStoreId(store_id);
+    }
 }

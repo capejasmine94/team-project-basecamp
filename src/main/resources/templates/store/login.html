@@ -74,18 +74,38 @@
             a{
                 text-decoration: none;
             }
-            input:focus {
+            #inputId:focus, #inputPw:focus {
                 z-index: 1;
                 position: relative;
                 outline: 1px solid black;
             }
+            .seller-type .selected{
+                background-color: white;
+            }
+            .seller-type .unselected{
+                background-color: #F8F9FA;
+                color: #8D8F92;
+            }
         </style>
         <script>
+            function selectSellerType(button) {
+                const buttons = document.querySelectorAll('.seller-type input');
+                buttons.forEach(btn => btn.classList.remove('selected'));
+                buttons.forEach(btn => btn.classList.remove('border-primary'));
+                buttons.forEach(btn => btn.classList.add('unselected'));
+                button.classList.add('selected');
+                button.classList.add('border-primary');
+                button.classList.remove('unselected');
+                
+                document.getElementById('sellerType').value = button.value;
+            }
+            
             function formSubmit(){
                 const inputId = document.getElementById("inputId");
                 const inputPw = document.getElementById("inputPw");
+                const sellerType = document.getElementById("sellerType");
 
-                const url = `/api/store/getStoreDtoByAccountInfo?account_id=${inputId.value}&account_pw=${inputPw.value}`
+                const url = `/api/store/getSellerDtoByAccountInfo?account_id=${inputId.value}&account_pw=${inputPw.value}&seller_type=${sellerType.value}`
                 fetch(url)
                 .then(response => response.json())
                 .then((response) => {
@@ -105,8 +125,9 @@
     <body>
         <div class="container">
             <div class="row">
-
+                <!-- login.html 경로랑 form action 경로 수정 할 것 -->
                 <form id="loginForm" action="/storeCenter/loginProcess" class="col">
+                    <input type="hidden" id="sellerType" name="seller_type" value="Store">
                     <div class="row py-5"></div>
                     <div class="row pt-5 text-center">
                         <div class="col fs-1 fw-bold">
@@ -120,16 +141,16 @@
                     </div>
                     <div class="row pt-5">
                         <div class="col"></div>
-                        <div class="col rounded-1">
-                            <div class="row bg-body-tertiary">
+                        <div class="col">
+                            <div class="row rounded-3 seller-type">
                                 <div class="col d-grid px-0">
-                                    <input type="button" class="fw-bold border border-bottom-0 border-primary py-3 rounded-1 rounded-bottom-0 bg-white" value="Store" style="border-bottom: 0px;">
+                                    <input type="button" class="fw-bold border border-bottom-0 rounded-3 rounded-bottom-0 py-3 selected border-primary" value="Store" onclick="selectSellerType(this)">
                                 </div>
                                 <div class="col d-grid px-0">
-                                    <input type="button" class="fw-bold border border-bottom-0 rounded-1 rounded-bottom-0 bg-body-tertiary text-body-tertiary" value="Camp">
+                                    <input type="button" class="fw-bold border border-bottom-0 rounded-3 rounded-bottom-0 unselected" value="Campsite" onclick="selectSellerType(this)">
                                 </div>
                                 <div class="col d-grid px-0">
-                                    <input type="button" class="fw-bold border border-bottom-0 rounded-1 rounded-bottom-0 bg-body-tertiary text-body-tertiary" value="Caravan">
+                                    <input type="button" class="fw-bold border border-bottom-0 rounded-3 rounded-bottom-0 unselected" value="Caravan" onclick="selectSellerType(this)">
                                 </div>
                             </div>
                             <div class="row">
@@ -139,7 +160,7 @@
                             </div>
                             <div class="row">
                                 <div class="col d-grid px-0">
-                                    <input type="password" id="inputPw" name="account_pw" class="border rounded-1 rounded-top-0 py-3 px-3" placeholder="비밀번호">
+                                    <input type="password" id="inputPw" name="account_pw" class="border rounded-3 rounded-top-0 py-3 px-3" placeholder="비밀번호">
                                 </div>
                             </div>
                             <div class="row">
