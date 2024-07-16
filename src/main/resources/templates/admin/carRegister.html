@@ -129,7 +129,6 @@
 <body>
     <div class="container">
         <div class="row container-padding">
-            <div class="ps-2 fs-6 fw-bold" style="background-color: white;">일반</div>
             <div class="col px-0 pt-3">
                 <ul class="nav flex-column nav-pills" style="background-color: white;">
                     <li class="nav-item">
@@ -171,9 +170,9 @@
                 <div class="row">
                     <div class="col-6 ps-0 pe-2"> <!-- 등록 상품명 -->
                         <div class="card" style="height: 90%;">
-                            <div class="card-body pb-3">
+                            <div class="card-body">
                                 <div class="form-group">
-                                    <label for="productName" class="control-label fw-semibold">등록차량명</label>
+                                    <label for="productName" class="control-label fw-semibold pb-3">등록차량명</label>
                                     <input type="text" name="productName" class="form-control custom-bottom-border" placeholder="등록차량명을 입력하세요" id="productName" maxlength="200">
                                 </div>
                             </div>
@@ -205,7 +204,7 @@
                             <div class="card-body">
                                 <div class="form-group">
                                     <label for="shortDescription" class="control-label fw-semibold pb-3">한줄 소개</label>
-                                    <input type="text" class="form-control custom-bottom-border" placeholder="한줄 소개 입력하게요" id="shortDescription" maxlength="200">
+                                    <input type="text" class="form-control custom-bottom-border" placeholder="한줄 소개 입력하세요" id="shortDescription" maxlength="200">
                                 </div>
                             </div>
                         </div>
@@ -257,6 +256,15 @@
                             <div class="card-head fw-semibold py-3 px-3">
                                 <head>기본정보</head>
                                 <div class="card-body">
+                                    <!-- 차량 대여료-->
+                                    <div class="form-group">
+                                        <div class="row d-flex justify-content-between">
+                                            <div class="col">
+                                                <label for="rentalFee" class="control-label new-fs-85 fw-semibold pb-3">차량대여료</label>
+                                                <input type="number" class="form-control custom-bottom-border" id="rentalFee"  placeholder="예: 240,000원">
+                                            </div>
+                                        </div>
+                                    </div>
                                     <!-- 1박 시간 기준 표기 -->
                                     <div class="form-group">
                                         <div class="row d-flex justify-content-between">
