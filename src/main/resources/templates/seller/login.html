@@ -105,7 +105,7 @@
                 const inputPw = document.getElementById("inputPw");
                 const sellerType = document.getElementById("sellerType");
 
-                const url = `/api/store/getSellerDtoByAccountInfo?account_id=${inputId.value}&account_pw=${inputPw.value}&seller_type=${sellerType.value}`
+                const url = `/api/seller/getSellerDtoByAccountInfo?account_id=${inputId.value}&account_pw=${inputPw.value}&seller_type=${sellerType.value}`
                 fetch(url)
                 .then(response => response.json())
                 .then((response) => {
@@ -125,8 +125,7 @@
     <body>
         <div class="container">
             <div class="row">
-                <!-- login.html 경로랑 form action 경로 수정 할 것 -->
-                <form id="loginForm" action="/storeCenter/loginProcess" class="col">
+                <form id="loginForm" action="/seller/loginProcess" class="col">
                     <input type="hidden" id="sellerType" name="seller_type" value="Store">
                     <div class="row py-5"></div>
                     <div class="row pt-5 text-center">

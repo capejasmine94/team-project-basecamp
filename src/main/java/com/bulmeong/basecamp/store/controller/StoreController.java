@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+// import org.springframework.web.bind.annotation.RequestParam;
 
 import com.bulmeong.basecamp.store.dto.StoreBankAccountDto;
 import com.bulmeong.basecamp.store.dto.StoreDeliveryInfoDto;
@@ -20,25 +20,25 @@ public class StoreController {
     @Autowired
     private StoreService storeService;
 
-    @RequestMapping("login")
-    public String login(){
-        return "/seller/login";
-    }
+    // @RequestMapping("login")
+    // public String login(){
+    //     return "/seller/login";
+    // }
 
-    @RequestMapping("loginProcess")
-    public String loginProcess(@RequestParam("account_id") String account_id, @RequestParam("account_pw") String account_pw, HttpSession session){
+    // @RequestMapping("loginProcess")
+    // public String loginProcess(@RequestParam("account_id") String account_id, @RequestParam("account_pw") String account_pw, HttpSession session){
         
-        StoreDto storeDto = storeService.getStoreDtoByAccountInfo(account_id, account_pw);
-        session.setAttribute("sessionStoreInfo", storeDto);
+    //     StoreDto storeDto = storeService.getStoreDtoByAccountInfo(account_id, account_pw);
+    //     session.setAttribute("sessionStoreInfo", storeDto);
 
-        return "redirect:/storeCenter/dashboard";
-    }
+    //     return "redirect:/storeCenter/dashboard";
+    // }
 
     @RequestMapping("logoutProcess")
     public String logoutProcess(HttpSession session){
         session.invalidate();
 
-        return "redirect:/storeCenter/login";
+        return "redirect:/seller/login";
     }
 
     @RequestMapping("storeRegister")
