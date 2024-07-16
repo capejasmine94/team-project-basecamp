@@ -22,7 +22,7 @@ public class StoreController {
 
     @RequestMapping("login")
     public String login(){
-        return "/store/login";
+        return "/seller/login";
     }
 
     @RequestMapping("loginProcess")
