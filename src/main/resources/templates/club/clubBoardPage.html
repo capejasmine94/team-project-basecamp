@@ -44,6 +44,7 @@
                             </div>
                             <div class="col text-center fw-bold">
                                 CLUB BOARD
+
                             </div>
                             <div class="col-auto">
                                 <span class="text-end"><i class="bi bi-three-dots"></i></span>
@@ -63,19 +64,34 @@
                             </div>
                         </div>
 
+                            <!-- 공지사항 글 고정?  -->
+                            <div class="row py-1 border-0 border-bottom">
+                                <div class="col" style="font-size: 0.8em;">
+                                    [필독] (공지사항 고정하기 할 수 있을까..?)
+                                </div>
+                            </div>
+                        
+                        
                         <!-- 카테고리 나열 누르면 카테고리 해당되는 글만 보여주기 -->
-                        <div class="row py-2">
+                        <div class="row pt-1 pb-2">
                             <div class="col" style="font-size: 0.8em;">
                                 전체 공지 모임후기 가입인사.... 카테고리
                             </div>
                         </div>
-                        
-                        <!-- 공지사항 글 고정?  -->
-                        <div class="row pb-1 border-0 border-bottom">
-                            <div class="col" style="font-size: 0.8em;">
-                                [필독] (공지사항 고정하기 할 수 있을까..?)
+
+                        <div class="row">
+                            <div class="col">
+                                    <div class="row">
+                                        <div class="col px-0 input-group">
+                                        <input type="text" th:value="${param.searchWord}" name="searchWord" class="form-control bg-body-tertiary" placeholder="검색어를 입력하세요.">
+                                            <button class="btn bg-body-tertiary border col-auto">
+                                                <i class="bi bi-search"></i>
+                                            </button>
+                                        </div>
+                                    </div>
                             </div>
                         </div>
+                        
 
                         <!-- <div class="row pt-3 text-center">
                             <div class="col">

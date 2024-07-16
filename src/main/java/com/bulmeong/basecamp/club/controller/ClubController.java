@@ -163,6 +163,25 @@ public class ClubController {
             
         return "redirect:/club/readPost?id="+ clubPostCommentDto.getPost_id();
     }
+
+    @RequestMapping("newClubs")
+    public String newClubs(){
+
+        return "/club/newClubListPage";
+    }
+
+
+    @RequestMapping("localClubs")
+    public String localClubs(){
+
+        return "/club/localClubListPage";
+    }
+
+    @RequestMapping("myClubs")
+    public String myClubs(){
+
+        return "/club/myClubListPage";
+    }
 }
 
 
