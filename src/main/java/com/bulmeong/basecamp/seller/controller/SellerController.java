@@ -29,6 +29,24 @@ public class SellerController {
         return "/seller/registerComplete";
     }
 
+    @RequestMapping("sellerJoinType")
+    public String sellerJoinType(){
+        return "/seller/sellerJoinType";
+    }
+
+    @RequestMapping("sellerType")
+    public String sellerType(@RequestParam("selectOption") String selectOption){
+        if(selectOption.equals("camp")){
+            //여기 수정(캠핑장)
+            return "redirect:/";
+        }else if(selectOption.equals("store")){
+            return "redirect:/storeCenter/storeRegister";
+        }else{
+            //여기 수정(캠핑카)
+            return "redirect:/admin";
+        }
+    }
+
     @RequestMapping("login")
     public String login(){
         return "/seller/login";
