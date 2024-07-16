@@ -2,7 +2,6 @@
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <!-- Font Awesome -->
@@ -81,11 +80,11 @@
                 </div>
                 <div class="row accordion-collapse collapse p-0" id="first-collapse">
                     <div class="col">
-                        <a class="row accordion-body py-3 ps-4 subcategory" href="#" data-page="/reservation_status.html" data-target="dynamic-content">
-                            차량조회/수정
-                        </a>
-                        <a class="row accordion-body py-3 ps-4 subcategory" href="#" data-page="car_registration.html">
+                        <a class="row accordion-body py-3 ps-4 subcategory" href="#" data-page="/admin/carRegister" data-target="dynamic-content">
                             차량등록
+                        </a>
+                        <a class="row accordion-body py-3 ps-4 subcategory" href="#" data-page="/admin/.html" data-target="dynamic-content">
+                            차량조회/수정
                         </a>
                     </div>
                 </div>
@@ -109,16 +108,16 @@
                         <a class="row accordion-body py-3 ps-4 subcategory" href="#" data-page="/admin/reservation_status"  data-target="dynamic-content">
                             예약 현황
                         </a>
-                        <a class="row accordion-body py-3 ps-4 subcategory" href="#" data-page="/book_reservation.html" data-target="dynamic-content">
+                        <a class="row accordion-body py-3 ps-4 subcategory" href="#" data-page="/admin/book_reservation.html" data-target="dynamic-content">
                             예약신청
                         </a>
-                        <a class="row accordion-body py-3 ps-4 subcategory" href="#" data-page="option_settings" data-target="content">
+                        <a class="row accordion-body py-3 ps-4 subcategory" href="#" data-page="/admin/option_settings" data-target="content">
                             옵션설정
                         </a>
-                        <a class="row accordion-body py-3 ps-4 subcategory" href="#" data-page="peak_season" data-target="content">
+                        <a class="row accordion-body py-3 ps-4 subcategory" href="#" data-page="/admin/peak_season" data-target="content">
                             성수기·휴일
                         </a>
-                        <a class="row accordion-body py-3 ps-4 subcategory" href="#" data-page="settings" data-target="content">
+                        <a class="row accordion-body py-3 ps-4 subcategory" href="#" data-page="/admin/settings" data-target="content">
                             환경설정
                         </a>
                     </div>
@@ -138,10 +137,10 @@
                 </div>
                 <div class="row accordion-collapse collapse p-0" id="third-collapse">
                     <div class="col">
-                        <a class="row accordion-body py-3 ps-4 subcategory" href="#" data-page="/inquiry_manage.html" data-target="dynamic-content">
+                        <a class="row accordion-body py-3 ps-4 subcategory" href="#" data-page="/admin/inquiry_manage.html" data-target="dynamic-content">
                             문의관리
                         </a>
-                        <a class="row accordion-body py-3 ps-4 subcategory" href="#" data-page="/review_manage.html" data-target="dynamic-content">
+                        <a class="row accordion-body py-3 ps-4 subcategory" href="#" data-page="/admin/review_manage.html" data-target="dynamic-content">
                             리뷰관리
                         </a>
                     </div>
@@ -163,16 +162,16 @@
                 </div>
                 <div class="row accordion-collapse collapse p-0" id="fourth-collapse">
                     <div class="col">
-                        <a class="row accordion-body py-3 ps-4 subcategory" href="#" data-page="/inputform.html" data-target="dynamic-content">
+                        <a class="row accordion-body py-3 ps-4 subcategory" href="#" data-page="/admin/inputform.html" data-target="dynamic-content">
                             입력폼 
                         </a>
-                        <a class="row accordion-body py-3 ps-4 subcategory" href="#" data-page="/map.html" data-target="dynamic-content">
+                        <a class="row accordion-body py-3 ps-4 subcategory" href="#" data-page="/admin/map.html" data-target="dynamic-content">
                             지도 
                         </a>
-                        <a class="row accordion-body py-3 ps-4 subcategory" href="#" data-page="/schedule.html" data-target="dynamic-content">
+                        <a class="row accordion-body py-3 ps-4 subcategory" href="#" data-page="/admin/schedule.html" data-target="dynamic-content">
                             일정 
                         </a>
-                        <a class="row accordion-body py-3 ps-4 subcategory" href="#" data-page="/report_block.html" data-target="dynamic-content">
+                        <a class="row accordion-body py-3 ps-4 subcategory" href="#" data-page="/admin/report_block.html" data-target="dynamic-content">
                             신고·차단
                         </a>
                     </div>
@@ -194,31 +193,31 @@
                 </div>
                 <div class="row accordion-collapse collapse p-0" id="fifth-collapse">
                     <div class="col">
-                        <a class="row accordion-body py-3 ps-4 subcategory" href="#" data-page="/statistics_home.html" data-target="dynamic-content">
+                        <a class="row accordion-body py-3 ps-4 subcategory" href="#" data-page="/admin/statistics_home.html" data-target="dynamic-content">
                             홈
                         </a>
-                        <a class="row accordion-body py-3 ps-4 subcategory" href="#" data-page="/sales.html" data-target="dynamic-content">
+                        <a class="row accordion-body py-3 ps-4 subcategory" href="#" data-page="/admin/sales.html" data-target="dynamic-content">
                             매출
                         </a>
-                        <a class="row accordion-body py-3 ps-4 subcategory" href="#" data-page="/periodic_analysis.html" data-target="dynamic-content">
+                        <a class="row accordion-body py-3 ps-4 subcategory" href="#" data-page="/admin/periodic_analysis.html" data-target="dynamic-content">
                             기간별 분석
                         </a>
-                        <a class="row accordion-body py-3 ps-4 subcategory" href="#" data-page="/referral_sites.html" data-target="dynamic-content">
+                        <a class="row accordion-body py-3 ps-4 subcategory" href="#" data-page="/admin/referral_sites.html" data-target="dynamic-content">
                             유입 사이트
                         </a>
-                        <a class="row accordion-body py-3 ps-4 subcategory" href="#" data-page="/search_keywords.html" data-target="dynamic-content">
+                        <a class="row accordion-body py-3 ps-4 subcategory" href="#" data-page="/admin/search_keywords.html" data-target="dynamic-content">
                             유입 검색어
                         </a>
-                        <a class="row accordion-body py-3 ps-4 subcategory" href="#" data-page="/visitors.html" data-target="dynamic-content">
+                        <a class="row accordion-body py-3 ps-4 subcategory" href="#" data-page="/admin/visitors.html" data-target="dynamic-content">
                             방문자
                         </a>
-                        <a class="row accordion-body py-3 ps-4 subcategory" href="#" data-page="/top_visited_pages.html" data-target="dynamic-content">
+                        <a class="row accordion-body py-3 ps-4 subcategory" href="#" data-page="/admin/top_visited_pages.html" data-target="dynamic-content">
                             많이 방문한 페이지
                         </a>
-                        <a class="row accordion-body py-3 ps-4 subcategory" href="#" data-page="/rewardse.html" data-target="dynamic-content">
+                        <a class="row accordion-body py-3 ps-4 subcategory" href="#" data-page="/admin/rewardse.html" data-target="dynamic-content">
                             적립금
                         </a>
-                        <a class="row accordion-body py-3 ps-4 subcategory" href="#" data-page="/additional_services.html" data-target="dynamic-content">
+                        <a class="row accordion-body py-3 ps-4 subcategory" href="#" data-page="/admin/additional_services.html" data-target="dynamic-content">
                             부가 서비스
                         </a>
                     </div>
@@ -310,7 +309,7 @@
                 <div class="content-title-bar">
                     <div class="fs-6 fw-semibold" id="content-title">대시보드</div>
                 </div>
-                <div id="dynamic-content" class="content-body">
+                <div id="dynamic-content" class="content-body mt-5">
                     <!-- 여기에 오른쪽 콘텐츠가 표시됩니다 -->
                     <p>템플릿화할 콘텐츠를 여기에 추가하세요.</p>
                 </div>
@@ -320,9 +319,9 @@
 
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="/public/css/campingcar/adminmain.js"></script>
+    <script src="/public/js/campingcar/adminmain.js"></script>
+    <script src="/public/js/campingcar/carRegister.js"></script>
     <script>
-        
     // AJAX 콘텐츠 로딩
     document.querySelectorAll('.subcategory').forEach(link => {
         link.addEventListener('click', function(event) {

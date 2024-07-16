@@ -20,9 +20,9 @@ public class AdminController {
         return "admin/main";
     }
 // admin_main에 sub_category_예약현황 쓰는 방식
-    @RequestMapping(value = "/reservation_status", method = RequestMethod.POST)
+    @RequestMapping(value = "/carRegister", method = RequestMethod.POST)
     public String reservationStatus() {
-        return "admin/reservation_status";
+        return "admin/carRegister";
     }
 
 // 내가 만든 main용 
