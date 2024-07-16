@@ -128,9 +128,10 @@
 </head>
 <body>
     <div class="container">
+        <form method="post" action="/admin/carRegisterProgress" id="registrationForm">
         <div class="row container-padding">
             <div class="col px-0 pt-3">
-                <ul class="nav flex-column nav-pills" style="background-color: white;">
+                <ul class="nav flex-column nav-pills rounded-3 shadow-sm" style="background-color: white;">
                     <li class="nav-item">
                         <a class="nav-link active completed" id="nav-step-1" href="#">일반</a> <!-- 디폴트로 첫 번째 탭 활성화 및 체크 표시 -->
                     </li>
@@ -148,6 +149,7 @@
                     </li>
                 </ul>
             </div>
+
             <div id="step-1" class="step-container active container-padding font-roboto">
                 <div class="row">
                     <div class="col px-0 pt-2">
@@ -155,7 +157,7 @@
                             <div class="card-body">
                                 <div class="form-group">
                                     <label for="option" class="control-label fw-semibold pb-3">캠핑카 유형</label>
-                                    <select class="form-select" aria-label="Default select example" id="option">
+                                    <select class="form-select" aria-label="Default select example" id="option" name="option">
                                         <option selected>선택</option>
                                         <option value="1">모터홈</option>
                                         <option value="2">차박형(중형)</option>
@@ -173,7 +175,7 @@
                             <div class="card-body">
                                 <div class="form-group">
                                     <label for="productName" class="control-label fw-semibold pb-3">등록차량명</label>
-                                    <input type="text" name="productName" class="form-control custom-bottom-border" placeholder="등록차량명을 입력하세요" id="productName" maxlength="200">
+                                    <input name="productName" type="text" class="form-control custom-bottom-border" placeholder="등록차량명을 입력하세요" id="productName" maxlength="200">
                                 </div>
                             </div>
                         </div>
@@ -183,14 +185,14 @@
                             <div class="card-body">
                                 <div class="form-group">
                                     <div class="d-flex justify-content-between mb-3">
-                                        <label for="thumbnailUploadContainer" class="control-label fw-semibold pb-3"> 썸네일 이미지 </label>
-                                        <label class="btn btn-flat" for="thumbnailUpload" style="color:blue;">Image 추가</label>
-                                        <input type="file" id="thumbnailUpload" style="display: none;"> 
+                                        <label for="mainImg" class="control-label fw-semibold pb-3"> 썸네일 이미지 </label>
+                                        <label class="btn btn-flat" for="mainImg" style="color:blue;">Image 추가</label>
+                                        <input name="mainImg" type="file" id="mainImg" style="display: none;"> 
                                     </div>
-                                    <div class="upload-container" id="thumbnailUploadContainer">
-                                        <img id="thumbnailImage" src="#" alt="썸네일 이미지 미리보기" style="display:none;">
+                                    <div class="upload-container" id="mainImg">
+                                        <img id="mainImg" src="#" alt="썸네일 이미지 미리보기" style="display:none;">
                                         <div class="text-center upload-text">이미지를 여기로 드래그 또는 Image 추가를 클릭하세요</div>
-                                        <input type="file" id="thumbnailFileUpload" accept="image/*" style="display:none;">
+                                        <input name="mainImg" type="file" id="mainImg" accept="image/*" style="display:none;">
                                     </div>
                                 </div>
                             </div>
@@ -204,7 +206,7 @@
                             <div class="card-body">
                                 <div class="form-group">
                                     <label for="shortDescription" class="control-label fw-semibold pb-3">한줄 소개</label>
-                                    <input type="text" class="form-control custom-bottom-border" placeholder="한줄 소개 입력하세요" id="shortDescription" maxlength="200">
+                                    <input name="shortDescription" type="text" class="form-control custom-bottom-border" placeholder="한줄 소개 입력하세요" id="shortDescription" maxlength="200">
                                 </div>
                             </div>
                         </div>
@@ -217,7 +219,7 @@
                             <div class="card-body">
                                 <div class="form-group">
                                     <label for="detailedDescription" class="control-label fw-semibold pb-3">캠핑카 소개</label>
-                                    <textarea class="form-control" placeholder="해당 차량에 대해 상세하게 소개하세요" id="detailedDescription"></textarea>
+                                    <textarea name="detailedDescription" class="form-control" placeholder="해당 차량에 대해 상세하게 소개하세요" id="detailedDescription"></textarea>
                                 </div>
                             </div>
                         </div>
@@ -230,7 +232,7 @@
                             <div class="card-body">
                                 <div class="form-group">
                                     <label for="detailedImg" class="control-label fw-semibold pb-3">상세 이미지</label>
-                                    <input type="file" class="form-control" id="detailedImg"></input>
+                                    <input name="detailedImg" type="file" class="form-control" id="detailedImg"></input>
                                 </div>
                             </div>
                         </div>
@@ -243,7 +245,7 @@
                             <div class="card-body">
                                 <div class="form-group">
                                     <label for="garageAddress" class="control-label fw-semibold pb-3">차고지 주소</label>
-                                    <input type="text" class="form-control custom-bottom-border" placeholder="차고지 주소를 입력하세요" id="garageAddress" maxlength="200">
+                                    <input name="garageAddress" type="text" class="form-control custom-bottom-border" placeholder="차고지 주소를 입력하세요" id="garageAddress" maxlength="200">
                                 </div>
                             </div>
                         </div>
@@ -261,7 +263,7 @@
                                         <div class="row d-flex justify-content-between">
                                             <div class="col">
                                                 <label for="rentalFee" class="control-label new-fs-85 fw-semibold pb-3">차량대여료</label>
-                                                <input type="number" class="form-control custom-bottom-border" id="rentalFee"  placeholder="예: 240,000원">
+                                                <input name="rentalFee" type="number" class="form-control custom-bottom-border" id="rentalFee"  placeholder="예: 240,000원">
                                             </div>
                                         </div>
                                     </div>
@@ -270,7 +272,7 @@
                                         <div class="row d-flex justify-content-between">
                                             <div class="col">
                                                 <label for="overnightStay" class="control-label new-fs-85 fw-semibold pb-3">1박 시간 기준</label>
-                                                <input type="text" class="form-control custom-bottom-border" id="overnightStay" maxlength="5" placeholder="예: 24시간">
+                                                <input name="overnightStay" type="text" class="form-control custom-bottom-border" id="overnightStay" maxlength="5" placeholder="예: 24시간">
                                             </div>
                                         </div>
                                     </div>
@@ -279,12 +281,12 @@
                                         <div class="row d-flex justify-content-between">
                                             <div class="col">
                                                 <label for="seatingCapacity" class="control-label new-fs-85 fw-semibold pb-3">동승인원수</label>
-                                                <input type="number" class="form-control custom-bottom-border" id="seatingCapacity" min="1" max="5">
+                                                <input name="seatingCapacity" type="number" class="form-control custom-bottom-border" id="seatingCapacity" min="1" max="5">
                                                 <div class="new-fs-7" style="color: #7C7B7B;">기준 동승인원까지는 추가 요금을 받지 않습니다.</div>
                                             </div>
                                             <div class="col">
                                                 <label for="sleepingCapacity" class="control-label new-fs-85 fw-semibold pb-3">취침인원수</label>
-                                                <input type="number" class="form-control custom-bottom-border" id="sleepingCapacity" min="1" max="5">
+                                                <input name="sleepingCapacity" type="number" class="form-control custom-bottom-border" id="sleepingCapacity" min="1" max="5">
                                             </div>
                                         </div>
                                     </div>
@@ -293,11 +295,11 @@
                                         <div class="row d-flex justify-content-between">
                                             <div class="col">
                                                 <label for="avaidTime" class="control-label new-fs-85 fw-semibold pb-3">출고가능시간</label>
-                                                <input type="time" class="form-control custom-bottom-border" id="avaidTime">
+                                                <input name="avaidTime" type="time" class="form-control custom-bottom-border" id="avaidTime">
                                             </div>
                                             <div class="col">
                                                 <label for="returnDateTime" class="control-label new-fs-85 fw-semibold pb-3">반납가능시간</label>
-                                                <input type="time" class="form-control custom-bottom-border" id="returnDateTime">
+                                                <input name="returnDateTime" type="time" class="form-control custom-bottom-border" id="returnDateTime">
                                             </div>
                                         </div>
                                     </div>
@@ -306,7 +308,7 @@
                                         <div class="row d-flex justify-content-between">
                                             <div class="col">
                                                 <label for="driverAgeCondition" class="control-label new-fs-85 fw-semibold pb-3">운전자 최소 연령</label>
-                                                <select class="form-select" aria-label="Default select example" id="driverAgeCondition">
+                                                <select class="form-select" aria-label="Default select example" id="driverAgeCondition" name="driverAgeCondition">
                                                     <option selected>선택</option>
                                                     <option value="1">만 19세이상</option>
                                                     <option value="2">만 20세이상</option>
@@ -320,12 +322,11 @@
                                                     <option value="10">만 28세이상</option>
                                                     <option value="11">만 29세이상</option>
                                                     <option value="12">만 30세이상</option>
-
                                                 </select>
                                             </div>
                                             <div class="col">
                                                 <label for="driverLicenseCondition" class="control-label new-fs-85 fw-semibold pb-3">운전자 면허 종류</label>
-                                                <select class="form-select" aria-label="Default select example" id="driverLicenseCondition">
+                                                <select class="form-select" aria-label="Default select example" id="driverLicenseCondition" name="driverLicenseCondition">
                                                     <option selected>선택</option>
                                                     <option value="1">1종 대형</option>
                                                     <option value="2">1종 보통</option>
@@ -335,7 +336,7 @@
                                             </div>
                                             <div class="col">
                                                 <label for="driverExperienceCondition" class="control-label new-fs-85 fw-semibold pb-3">운전자 운전 경력</label>
-                                                <select class="form-select" aria-label="Default select example" id="driverExperienceCondition">
+                                                <select class="form-select" aria-label="Default select example" id="driverExperienceCondition" name="driverExperienceCondition">
                                                     <option selected>선택</option>
                                                     <option value="1">운전 경력 1년 이상</option>
                                                     <option value="2">운전 경력 2년 이상</option>
@@ -351,22 +352,26 @@
                                                 <label for="petFriendly" class="control-label new-fs-85 fw-semibold pb-3">반려동물 동승 가능 여부</label>
                                                 <div class="row d-flex justify-content-between">
                                                     <div class="col text-center border rounded-4">
-                                                        <input type="radio" id="petFriendly" checked value="동승가능">
-                                                        <div class="row">
-                                                            <div class="col">
-                                                                <span class="material-symbols-outlined">sentiment_excited</span>
-                                                                <div class="font-roboto">가능해요</div>
+                                                        <label for="petFriendlyYes">
+                                                            <input name="petFriendly" type="radio" id="petFriendlyYes" checked value="동승가능">
+                                                            <div class="row">
+                                                                <div class="col">
+                                                                    <span class="material-symbols-outlined">sentiment_excited</span>
+                                                                    <div class="font-roboto">가능해요</div>
+                                                                </div>
                                                             </div>
-                                                        </div>
+                                                        </label>
                                                     </div>
                                                     <div class="col text-center border rounded-4">
-                                                        <input type="radio" id="petFriendly" value="동승불가능">
-                                                        <div class="row">
-                                                            <div class="col">
-                                                                <span class="material-symbols-outlined">sentiment_sad</span>
-                                                                <div class="font-roboto">불가능해요</div>
+                                                        <label for="petFriendlyNo">
+                                                            <input name="petFriendly" type="radio" id="petFriendlyNo" value="동승불가능">
+                                                            <div class="row">
+                                                                <div class="col">
+                                                                    <span class="material-symbols-outlined">sentiment_sad</span>
+                                                                    <div class="font-roboto">불가능해요</div>
+                                                                </div>
                                                             </div>
-                                                        </div>
+                                                        </label>
                                                     </div>
                                                 </div>
                                             </div>
@@ -381,131 +386,195 @@
                 <div class="row pt-3">
                     <div class="col px-0">
                         <div class="card">
-                            <div class="card-head fw-semibold py-3 px-3">
+                            <div class="card-head py-3 px-3">
                                 <head>기본 보유 시설</head>
                                 <div class="card-body">
                                     <div class="form-check">
                                         <label class="form-check-label" for="option1">
                                             화장실
                                         </label>
-                                        <input class="form-check-input" type="checkbox" id="option1">
+                                        <input class="form-check-input" type="checkbox" id="option1" name="facilities" value="화장실">
                                     </div>
                                     <div class="form-check">
                                         <label class="form-check-label" for="option2">
                                             샤워실 
                                         </label>
-                                        <input class="form-check-input" type="checkbox" id="option2">
+                                        <input class="form-check-input" type="checkbox" id="option2" name="facilities" value="샤워실">
                                     </div>
                                     <div class="form-check">
                                         <label class="form-check-label" for="option3">
                                             침대
                                         </label>
-                                        <input class="form-check-input" type="checkbox" id="option3">
+                                        <input class="form-check-input" type="checkbox" id="option3" name="facilities" value="침대">
                                     </div>
                                     <div class="form-check">
                                         <label class="form-check-label" for="option4">
                                             싱크대
                                         </label>
-                                        <input class="form-check-input" type="checkbox" id="option4">
+                                        <input class="form-check-input" type="checkbox" id="option4" name="facilities" value="싱크대">
                                     </div>
                                     <div class="form-check">
                                         <label class="form-check-label" for="option5">
                                             인덕션
                                         </label>
-                                        <input class="form-check-input" type="checkbox" id="option5">
+                                        <input class="form-check-input" type="checkbox" id="option5" name="facilities" value="인덕션">
                                     </div>
                                     <div class="form-check">
                                         <label class="form-check-label" for="option6">
                                             가스레인지
                                         </label>
-                                        <input class="form-check-input" type="checkbox" id="option6">
+                                        <input class="form-check-input" type="checkbox" id="option6" name="facilities" value="가스레인지">
                                     </div>
                                     <div class="form-check">
                                         <label class="form-check-label" for="option7">
                                             전기레인지 
                                         </label>
-                                        <input class="form-check-input" type="checkbox" id="option7">
+                                        <input class="form-check-input" type="checkbox" id="option7" name="facilities" value="전기레인지">
                                     </div>
                                     <div class="form-check">
                                         <label class="form-check-label" for="option8">
                                             냉장고
                                         </label>
-                                        <input class="form-check-input" type="checkbox" id="option8">
+                                        <input class="form-check-input" type="checkbox" id="option8" name="facilities" value="냉장고">
                                     </div>
                                     <div class="form-check">
                                         <label class="form-check-label" for="option9">
                                             오디오 온수기 
                                         </label>
-                                        <input class="form-check-input" type="checkbox" id="option9">
+                                        <input class="form-check-input" type="checkbox" id="option9" name="facilities" value="오디오 온수기">
                                     </div>
                                     <div class="form-check">
                                         <label class="form-check-label" for="option10">
                                             테이블
                                         </label>
-                                        <input class="form-check-input" type="checkbox" id="option10">
+                                        <input class="form-check-input" type="checkbox" id="option10" name="facilities" value="테이블">
                                     </div>
                                     <div class="form-check">
                                         <label class="form-check-label" for="option11">
                                             TV
                                         </label>
-                                        <input class="form-check-input" type="checkbox" id="option11">
+                                        <input class="form-check-input" type="checkbox" id="option11" name="facilities" value="TV">
                                     </div>
                                     <div class="form-check">
                                         <label class="form-check-label" for="option12">
                                             에어컨
                                         </label>
-                                        <input class="form-check-input" type="checkbox" id="option12">
+                                        <input class="form-check-input" type="checkbox" id="option12" name="facilities" value="에어컨">
                                     </div>
                                     <div class="form-check">
                                         <label class="form-check-label" for="option13">
                                             무시동히터  
                                         </label>
-                                        <input class="form-check-input" type="checkbox" id="option13">
+                                        <input class="form-check-input" type="checkbox" id="option13" name="facilities" value="무시동히터">
                                     </div>
                                     <div class="form-check">
                                         <label class="form-check-label" for="option14">
-                                            인사철 베터리
+                                            인사철 배터리
                                         </label>
-                                        <input class="form-check-input" type="checkbox" id="option14">
+                                        <input class="form-check-input" type="checkbox" id="option14" name="facilities" value="인사철 배터리">
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-
+                <!-- 계속하기 -->
                 <div class="row pt-3">
                     <div class="col px-0">
-                        <button class="btn btn-dark float-end" onclick="nextStep()">계속하기</button>
+                        <button class="btn btn-dark float-end" onclick="nextStep(event)">계속하기</button>
                     </div>
                 </div>
             </div>
             <!-- 2단계 -->
             <div id="step-2" class="step-container container-padding">
-                <div class="row">
-                    <div class="col-12 px-0">
-                        <h3>Step 2: 가격</h3>
-                    </div>
-                    <div class="col-6 px-0">
-                        <div class="form-group">
-                            <label for="price">평일 가격</label>
-                            <input type="number" class="form-control" id="price">
+                <div class="row pt-3">
+                    <div class="col px-0">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="form-group">
+                                    <label for="rentalFee" class="control-label new-fs-85 fw-semibold pb-3">차량대여료</label>
+                                    <input name="rentalFee" type="number" class="form-control custom-bottom-border" id="rentalFee"  placeholder="예: 240,000원">
+                                </div>
+                            </div>
                         </div>
                     </div>
-                    <div class="col-12 px-0">
-                        <button class="btn btn-secondary" onclick="previousStep()">뒤로가기</button>
-                        <button class="btn btn-primary float-end" onclick="nextStep()">계속하기</button>
+                </div>
+                <!-- 뒤로가기 계속하기 -->
+                <div class="row pt-3">
+                    <div class="col px-0">
+                        <button class="btn btn-secondary" onclick="previousStep(event)">뒤로가기</button>
+                        <button class="btn btn-dark float-end" onclick="nextStep(event)">계속하기</button>
                     </div>
                 </div>
             </div>
             <div id="step-3" class="step-container container-padding">
-                <div class="row">
-                    <div class="col-12 px-0">
-                        <h3>Step 3: 예약</h3>
+                <div class="row pt-3">
+                    <div class="col px-0">
+                        <div class="card">
+                            <div class="card-head fw-semibold py-3 px-3">
+                                <head>예약하기</head>
+                                <div class="card-body">
+                                    <!-- 바로가기 예약하기 활성화 여부-->
+                                    <div class="form-group">
+                                        <div class="row">
+                                            <div class="col">
+                                                <label for="is_opened" class="control-label new-fs-85 fw-semibold pb-3">바로가기 예약하기</label>
+                                                <div class="row d-flex justify-content-between">
+                                                    <div class="col text-center border rounded-4">
+                                                        <input name="is_opened" type="radio" id="is_opened" checked value="Yes">
+                                                        <div class="row">
+                                                            <div class="col">
+                                                                <span class="material-symbols-outlined">event_available</span>
+                                                                <div class="font-roboto">Yes</div>
+                                                            </div>
+                                                        </div>
+                                                    </div>  
+                                                    <div class="col text-center border rounded-4">
+                                                        <input name="is_opened" type="radio" id="is_opened" value="No">
+                                                        <div class="row">
+                                                            <div class="col">
+                                                                <span class="material-symbols-outlined">sentiment_sad</span>
+                                                                <div class="font-roboto">불가능해요</div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- 1박 시간 기준 표기 -->
+                                    <div class="form-group">
+                                        <div class="row d-flex justify-content-between">
+                                            <div class="col">
+                                                <label for="overnightStay" class="control-label new-fs-85 fw-semibold pb-3">1박 시간 기준</label>
+                                                <input name="overnightStay" type="text" class="form-control custom-bottom-border" id="overnightStay" maxlength="5" placeholder="예: 24시간">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- 동승,취침인원 -->
+                                    <div class="form-group">
+                                        <div class="row d-flex justify-content-between">
+                                            <div class="col">
+                                                <label for="seatingCapacity" class="control-label new-fs-85 fw-semibold pb-3">동승인원수</label>
+                                                <input name="seatingCapacity" type="number" class="form-control custom-bottom-border" id="seatingCapacity" min="1" max="5">
+                                                <div class="new-fs-7" style="color: #7C7B7B;">기준 동승인원까지는 추가 요금을 받지 않습니다.</div>
+                                            </div>
+                                            <div class="col">
+                                                <label for="sleepingCapacity" class="control-label new-fs-85 fw-semibold pb-3">취침인원수</label>
+                                                <input name="sleepingCapacity" type="number" class="form-control custom-bottom-border" id="sleepingCapacity" min="1" max="5">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    <div class="col-12 px-0">
-                        <button class="btn btn-secondary" onclick="previousStep()">뒤로가기</button>
-                        <button class="btn btn-primary float-end" onclick="nextStep()">계속하기</button>
+                </div>
+                <!-- 뒤로가기 계속하기 -->
+                <div class="row pt-3">
+                    <div class="col px-0">
+                        <button class="btn btn-secondary" onclick="previousStep(event)">뒤로가기</button>
+                        <button class="btn btn-dark float-end" onclick="nextStep(event)">계속하기</button>
                     </div>
                 </div>
             </div>
@@ -515,8 +584,8 @@
                         <h3>Step 4: 완료</h3>
                     </div>
                     <div class="col-12 px-0">
-                        <button class="btn btn-secondary" onclick="previousStep()">뒤로가기</button>
-                        <button class="btn btn-primary float-end" onclick="nextStep()">계속하기</button>
+                        <button class="btn btn-secondary" onclick="previousStep(event)">뒤로가기</button>
+                        <button class="btn btn-dark float-end" onclick="nextStep(event)">계속하기</button>
                     </div>
                 </div>
             </div>
@@ -526,8 +595,8 @@
                         <h3>Step 5: 등록</h3>
                     </div>
                     <div class="col-12 px-0">
-                        <button class="btn btn-secondary" onclick="previousStep()">뒤로가기</button>
-                        <button class="btn btn-success float-end">등록 완료</button>
+                        <button class="btn btn-secondary" onclick="previousStep(event)">뒤로가기</button>
+                        <button class="btn btn-dark float-end" type="submit">등록 완료</button>
                     </div>
                 </div>
             </div>
@@ -539,11 +608,8 @@
                 </div>
             </div>
         </div>
+        </form>
     </div>
-
-
-
-
 
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
@@ -553,5 +619,5 @@
     <!-- 이미지 upload 공용 js -->
     <script src="/public/js/uploader.js"></script>
 
-    </body>
+</body>
 </html>

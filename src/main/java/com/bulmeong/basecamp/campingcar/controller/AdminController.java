@@ -20,6 +20,13 @@ public class AdminController {
         return "admin/carRegister";
     }
 
+// 차량등록 insert 
+    @RequestMapping("carRegisterProgress")
+    public String carRegisterProgress() {
+
+        return "redirect:/admin/main";
+    }
+
 
 
 

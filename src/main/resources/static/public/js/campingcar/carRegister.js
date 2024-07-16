@@ -24,13 +24,15 @@ function activateTab(step) {
     currentStep = step;
 }
 
-function previousStep() {
+function previousStep(event) {
+    event.preventDefault();
     if (currentStep > 1) {
         activateTab(currentStep - 1);
     }
 }
 
-function nextStep() {
+function nextStep(event) {
+    event.preventDefault();
     if (currentStep < 5) {
         activateTab(currentStep + 1);
     }
@@ -58,7 +60,7 @@ window.goToStep = goToStep;
 window.activateTab = activateTab;
 window.updateProgressBar = updateProgressBar;
 
-// 예약 현황 페이지가 로드될 때 초기화 작업 수행
+// 차량 등록 페이지가 로드될 때 초기화 작업 수행
 document.addEventListener('DOMContentLoaded', function() {
     activateTab(currentStep);
 });
