@@ -88,4 +88,34 @@ public class Utils {
     public void logOut() {
         request.getSession().invalidate();
     }
+
+    /** 현재 url의 페이지 이름을 가져옵니다.
+     * @return localhost/user/login의 경우 login을 가져온다
+    */
+    public String getPageDetail() {
+        
+        String url = request.getRequestURL().toString();
+         String[] parts = url.split("/");
+
+         if (parts.length >= 5) {
+             return parts[4];
+         } else {
+             return "URL에 세부 키워드가 없습니다.";
+         }
+    }
+
+     /** 현재 url의 카테고리 이름을 가져옵니다.
+     * @return localhost/user/login의 경우 user를 가져온다
+    */
+    public String getPageMain() {
+        
+        String url = request.getRequestURL().toString();
+         String[] parts = url.split("/");
+
+         if (parts.length >= 4) {
+             return parts[3];
+         } else {
+             return "URL에 메인 키워드가 없습니다.";
+         }
+    }
 }

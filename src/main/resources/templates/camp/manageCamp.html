@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="kr">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">    
+        <script src="https://kit.fontawesome.com/7b271bba58.js" crossorigin="anonymous"></script>
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
+        <link rel="stylesheet" href="/public/css/common.css">
+        
+        <script src="/public/js/calendar.js"></script>
+        <script src="/public/js/uploader.js"></script>
+        <script src="/public/js/util.js"></script>
+        <script src="/public/js/sellerPage.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    </head>
+    <body> 
+        <div th:replace="~{common/navi::topNaviSeller}"></div>
+        <div class="container-fluid">
+          <div class="row">
+
+            <!-- 메뉴 -->
+            <div th:replace="~{camp/campNavi::leftNavi}"></div>
+
+            <!-- 본문 -->
+            <div class="col right ms-2" style="padding-top: 58px; ">
+                <form id="registerCampProcess" action="/camp/registerCampProcess">
+                    <!-- 상단 바 -->
+                    <div th:replace="~{camp/campNavi::topNavi}"></div>
+
+                    <!-- 내용 -->
+                    <div class="row scroll-list-box" style="margin-top: 100px; width: 1600px;">
+                        <div class="col ps-5" style="margin-left: 6em;">
+                            <div class="row new-mt-45 justify-content-center">
+                                <div class="col border rounded-2 me-5">
+                                    <div class="row my-1">
+                                        <div class="col ms-3 my-1 fs-5 fw-bold">기본 정보</div>
+                                    </div>
+                                    <div class="row border-top pb-2">
+                                        <div class="col mx-2">
+                                            <div class="row mt-3 align-items-center">
+                                                <div class="col-1 text-secondary text-end">캠핑장 이름</div>
+                                                <div class="col-4 fw-semibold">베어그릴스와 행복한 캠핑타임</div>
+                                                <div class="col-auto">
+                                                    <i class="bi bi-pencil-square text-primary"></i>
+                                                </div>
+                                            </div>
+                                            <div class="row mt-4 align-items-center">
+                                                <div class="col-1 text-secondary text-end">주소</div>
+                                                <div class="col-4 fw-semibold">충북 제천시 백운면 구학산로 1038 (운학리)</div>
+                                                <div class="col-auto">
+                                                    <i class="bi bi-pencil-square text-primary"></i>
+                                                </div>
+                                            </div>
+                                            <div class="row mt-4 align-items-center">
+                                                <div class="col-1 text-secondary text-end">캠핑장 연락처</div>
+                                                <div class="col-4 fw-semibold">010-1234-1234</div>
+                                                <div class="col-auto">
+                                                    <i class="bi bi-pencil-square text-primary"></i>
+                                                </div>
+                                            </div>
+                                            <div class="row mt-4 align-items-center">
+                                                <div class="col-1 text-secondary text-end">홈페이지</div>
+                                                <a class="col-4 fw-semibold" href="https://www.google.com/">https://www.google.com/</a>
+                                                <div class="col-auto">
+                                                    <i class="bi bi-pencil-square text-primary"></i>
+                                                </div>
+                                            </div>
+                                            <div class="row mt-4 align-items-start">
+                                                <div class="col-1 text-secondary text-end">캠핑장 이메일</div>
+                                                <div class="col-4 fw-semibold">seller01@gamil.com</div>
+                                                <div class="col-auto">
+                                                    <i class="bi bi-pencil-square text-primary"></i>
+                                                </div>
+                                            </div>
+                                            <div class="row mt-4 mb-3">
+                                                <div class="col-1 text-secondary text-end">
+                                                    <span>캠핑장 소개</span>
+                                                </div>
+                                                <div class="col-4 fw-semibold">
+                                                    <div>누구도 고생하지 않는 캠핑리조트</div>
+                                                    <div>어디에도 없을 감성적인 카라반, 넓은 사이트,</div>
+                                                    <div>자연과 문화가 공존하는 가장 완벽한 가족형 캠핑리조트를 만날 수 있습니다.</div>
+                                                </div>
+                                                <div class="col-auto">
+                                                    <i class="bi bi-pencil-square text-primary"></i>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+
+
+
+                            <div class="row new-mt-45 justify-content-center">
+                                <div class="col border rounded-2 me-5">
+                                    <div class="row my-1">
+                                        <div class="col ms-3 my-1 fs-5 fw-bold">이미지 정보</div>
+                                    </div>
+                                    <div class="row border-top pb-2">
+                                        <div class="col mx-2">
+                                            <div class="row mt-3 flex-column">
+                                                <div class="col-auto text-secondary text-start ms-1">캠핑장 이미지</div>
+                                                <div class="col-8 pb-3">
+                                                    <div id="upload_main_image"></div>
+                                                    <span class="text-secondary new-fs-9">
+                                                        <div>사진을 드래그하여 위치를 바꿀 수 있습니다.</div>
+                                                        <div>맨 앞의 이미지는 대표 이미지로 지정되어 메인에 노출됩니다.</div>
+                                                        <div>캠핑장 이미지는 최대 10장, 용량은 최대 100MB까지 업로드 하실 수 있습니다.</div>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row border-top pb-2">
+                                        <div class="col mx-2">
+                                            <div class="row mt-3 flex-column">
+                                                <div class="col-auto text-secondary text-start ms-1">배치도 이미지</div>
+                                                <div class="col-8 pb-3">
+                                                    <div id="upload_map_image"></div>
+                                                    <span class="text-secondary new-fs-9">용량은 최대 100MB까지 한 장만 업로드 하실 수 있습니다.</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row border-top pb-2 pt-3">
+                                        <div class="col mx-2 mb-2">
+                                            <div class="row">
+                                                <div class="col">
+                                                    <span class="text-secondary new-fs-9">미리 보기를 통해 실제 사용자들이 어떻게 보이는지 확인할 수 있습니다.</span>
+                                                </div>
+                                            </div>
+                                            <div class="row mt-3">
+                                                <div class="col">
+                                                    <button class="btn btn-primary">미리 보기</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>  
+                                </div>
+                            </div>
+
+
+
+                            <div class="row new-mt-45 justify-content-center">
+                                <div class="col border rounded-2 me-5">
+                                    <div class="row my-1">
+                                        <div class="col ms-3 my-1 fs-5 fw-bold">시설 정보</div>
+                                    </div>
+                                    <div class="row border-top py-3">
+                                        <div class="row my-1">
+                                            <div class="col ms-3 my-1 pb-2 new-fs-85 text-secondary">
+                                                <div class="fs-6 mb-2">캠핑장의 특징이나 설비를 <span class="fw-bold">정확하게</span> 선택해주세요.</div>
+                                                <div>거짓된 정보로 고객들을 현혹 시, 신고사유가 될 수 있으며,</div>
+                                                <div>이후에 서비스 사용 재제, 영구 정지 또는 법적 조치로 이어질 수 있습니다.</div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-8 ms-3 mt-2 px-0">
+                                                <input name="campsite_category" type="checkbox" class="btn-check" id="1" autocomplete="off">
+                                                <label class="btn ms-2 mb-2 rounded-5 btn-outline-primary" for="1">카테고리1</label>
+        
+                                                <input name="campsite_category" type="checkbox" class="btn-check" id="2" autocomplete="off">
+                                                <label class="btn ms-2 mb-2 rounded-5 btn-outline-primary" for="2">카테고리2</label>
+        
+                                                <input name="campsite_category" type="checkbox" class="btn-check" id="3" autocomplete="off">
+                                                <label class="btn ms-2 mb-2 rounded-5 btn-outline-primary" for="3">카테고리3</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+
+
+                            <div class="row new-mt-45 justify-content-center">
+                                <div class="col border rounded-2 me-5">
+                                    <div class="row my-1">
+                                        <div class="col ms-3 my-1 fs-5 fw-bold">운영 정책</div>
+                                    </div>
+                                    <div class="row border-top py-3">
+                                        <div class="row my-1">
+                                            <div class="col ms-3 pb-2 new-fs-9 text-secondary">
+                                                <div>운영 정책 및 변경 요금은 관리자의 승인 이후 변경 내용이 반영됩니다.</div>
+                                                <div>잦은 변경은 관리자에 의해 장시간 그 변경 사항들이 보류될 수 있습니다.</div>
+                                            </div>
+                                        </div>
+                                        <div class="row mt-4">
+                                            <div class="col ms-3 fw-semibold">기능 정책</div>
+                                        </div>
+                                        <div class="row mt-2">
+                                            <div class="col-8 ms-3 mt-2 px-0">
+                                                <input name="alarm_empty_point" type="checkbox" class="btn-check" id="alarm_empty_point" autocomplete="off">
+                                                <label class="btn ms-2 mb-2 rounded-5 btn-outline-primary" for="alarm_empty_point">빈자리 알림</label>
+
+                                                <input name="cant_use_mileage" type="checkbox" class="btn-check" id="cant_use_mileage" autocomplete="off">
+                                                <label class="btn ms-2 mb-2 rounded-5 btn-outline-primary" for="cant_use_mileage">마일리지 사용불가</label>
+
+                                                <input name="no_online_pay" type="checkbox" class="btn-check" id="no_online_pay" autocomplete="off">
+                                                <label class="btn ms-2 mb-2 rounded-5 btn-outline-primary" for="no_online_pay">온라인 결제불가</label>
+                                            </div>
+                                        </div>
+
+                                        <div class="row mt-5">
+                                            <div class="col ms-3 pb-2 new-fs-9 text-secondary">
+                                                <div>아래 내용들은 고객들이 예약 시 확인할 수 있는 사항들입니다.</div>
+                                            </div>
+                                        </div>
+
+                                        <div class="row mt-2">
+                                            <div class="col ms-3 fw-semibold">예약 유의사항</div>
+                                        </div>
+                                        <div class="row mt-3">
+                                            <div class="col-8 mx-3">
+                                                <textarea class="form-control" rows="5"></textarea>
+                                            </div>
+                                        </div>
+
+                                        <div class="row mt-4">
+                                            <div class="col ms-3 fw-semibold">시설 이용안내</div>
+                                        </div>
+                                        <div class="row mt-3">
+                                            <div class="col-8 mx-3">
+                                                <textarea class="form-control" rows="5"></textarea>
+                                            </div>
+                                        </div>
+
+                                        <div class="row mt-4">
+                                            <div class="col ms-3 fw-semibold">환불 유의사항</div>
+                                        </div>
+                                        <div class="row mt-3 mb-3">
+                                            <div class="col-8 mx-3">
+                                                <textarea class="form-control" rows="5"></textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+
+
+                            <div class="row new-mt-45 justify-content-center">
+                                <div class="col border rounded-2 me-5">
+                                    <div class="row my-1">
+                                        <div class="col ms-3 my-1 fs-5 fw-bold">시간 설정</div>
+                                    </div>
+                                    
+                                    <div class="row">
+                                        <div class="col">
+                                            <div class="row border-top pb-1 pt-3">
+                                                <div class="col ms-2 fw-semibold">성수기 설정</div>
+                                            </div>
+                                            <div class="row mt-1">
+                                                <div class="col ms-2 pb-2 new-fs-9 text-secondary">
+                                                    <div>설정한 범위 내의 기간에는 성수기 요금이 추가됩니다.</div>
+                                                </div>
+                                            </div>
+                                            <div class="row mt-1">
+                                                <div class="col-5">
+                                                    <div id="calendar_peak"></div>
+                                                </div>
+                                            </div>
+                                        
+                                        </div>
+                                    </div>
+
+                                    <div class="row mt-5">
+                                        <div class="col">
+                                            <div class="row pt-3 pb-1">
+                                                <div class="col ms-2 fw-semibold">예약 마감 시간</div>
+                                            </div>
+                                            <div class="row mt-1">
+                                                <div class="col ms-2 pb-2 new-fs-9 text-secondary">
+                                                    <div>이 시간 이후에는 예약이 불가능합니다.</div>
+                                                </div>
+                                            </div>
+                                            <div class="row mt-1">
+                                                <div class="col-5">
+                                                    <div id="calendar_opentime"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row mt-5 mb-3">
+                                        <div class="col">
+                                            <div class="row pt-3 pb-1">
+                                                <div class="col ms-2 fw-semibold">최대 예약 기간</div>
+                                            </div>
+                                            <div class="row mt-1">
+                                                <div class="col ms-2 pb-2 new-fs-9 text-secondary">
+                                                    <div>고객들이 최대로 예약 가능한 일수입니다.</div>
+                                                </div>
+                                            </div>
+                                            <div class="row mt-2">
+                                                <div class="col-2 pe-0">
+                                                    <input name="opentime" class="form-control text-end" type="text" id="opentime" value="7">
+                                                </div>
+                                                <div class="col-auto mt-1 fw-semibold">
+                                                    일
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+
+
+                            <div class="row new-mt-45 justify-content-center">
+                                <div class="col border rounded-2 me-5">
+                                    <div class="row my-1">
+                                        <div class="col ms-3 my-1 fs-5 fw-bold">요금 설정</div>
+                                    </div>
+                                    
+                                    <div class="row mt-4">
+                                        <div class="col-auto pe-0 mt-1 ms-4 fw-semibold">
+                                            성수기 요금
+                                        </div>
+                                        <div class="col-2 ms-3 pe-0 ps-1">
+                                            <input name="peak_pay" class="form-control text-end numberInput" type="text" value="10,000" placeholder="0">
+                                        </div>
+                                        <div class="col-auto mt-1 fw-semibold">
+                                            원
+                                        </div>
+                                    </div>
+
+                                    <div class="row mt-5">
+                                        <div class="col-auto mt-1 ms-2 fw-semibold">
+                                            인원 추가 요금
+                                        </div>
+                                    </div>
+
+                                    <div class="row mt-4">
+                                        <div class="col-auto mt-1 ms-5">
+                                            성인
+                                        </div>
+                                        <div class="col-2 ms-3 pe-0">
+                                            <input name="adult_pay" class="form-control text-end numberInput" type="text" value="0">
+                                        </div>
+                                        <div class="col-auto mt-1">
+                                            원
+                                        </div>
+                                    </div>
+                                    <div class="row mt-3">
+                                        <div class="col-auto mt-1 ms-3">
+                                            미성년자
+                                        </div>
+                                        <div class="col-2 ms-3 pe-0">
+                                            <input name="kid_pay" class="form-control text-end numberInput" type="text" value="0">
+                                        </div>
+                                        <div class="col-auto mt-1">
+                                            원
+                                        </div>
+                                    </div>
+
+                                    <div class="row mt-5  mb-3">
+                                        <div class="col-auto pe-0 mt-1 fw-semibold">
+                                            차량 추가 요금
+                                        </div>
+                                        <div class="col-2 ms-3 pe-0 ps-1">
+                                            <input name="car_pay" class="form-control text-end numberInput" type="text" value="10,000" placeholder="0">
+                                        </div>
+                                        <div class="col-auto mt-1 fw-semibold">
+                                            원
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+          </div>
+        </div>
+        <div th:replace="~{common/navi::popup}"></div>
+        <script>
+            document.addEventListener('DOMContentLoaded', (event) => {
+                const inputNumbers = document.getElementsByClassName('numberInput');
+                for(const node of inputNumbers){
+                    node.addEventListener('input', function (e) {
+                        let input = e.target.value;
+
+                        // Remove all non-numeric characters except for period (.)
+                        input = input.replace(/[^0-9.]/g, '');
+
+                        // Split the input value into integer and decimal parts
+                        const parts = input.split('.');
+                        let integerPart = parts[0];
+                        const decimalPart = parts.length > 1 ? '.' + parts[1] : '';
+
+                        // Format the integer part with commas
+                        integerPart = integerPart.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+
+                        // Combine the formatted integer part and the decimal part
+                        e.target.value = integerPart + decimalPart;
+                    });
+                }
+            });
+
+            createUploader('main_image',true);
+            createUploader('map_image',false);
+            const date = new Date();
+            date.setFullYear(date.getFullYear() + 1);
+            createCalendar('opentime',date);
+            createRangeCalendar('peak',365, date);
+        </script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    </body>
+</html>
