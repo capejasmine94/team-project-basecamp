@@ -170,6 +170,7 @@ function createRangeCalendar(name, length, limit) {
     
                 // 범위 길이가 최대 길이를 초과하는 경우 경고 메시지 표시
                 if (rangeLength > data.length) {
+                    // import 
                     alert(`날짜 범위는 최대 ${data.length}일을 초과할 수 없습니다.`);
                     return; // 범위 지정 중단
                 }
