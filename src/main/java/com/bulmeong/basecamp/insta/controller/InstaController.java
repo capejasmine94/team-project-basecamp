@@ -1,8 +1,5 @@
 package com.bulmeong.basecamp.insta.controller;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 // import org.springframework.boot.autoconfigure.ssl.SslProperties.Bundles.Watch.File;
 import org.springframework.stereotype.Controller;
@@ -129,6 +126,12 @@ public class InstaController {
         System.out.println("instaAtricleImgDtoList : " + instaAtricleImgDtoList);
 
         return "redirect:./instaMainPage?user_id=" + instaArticleDto.getUser_id();
+    }
+
+    @RequestMapping("commentWritePage")
+    public String commentWritePage(){
+
+        return "insta/commentWritePage";
     }
 
 }

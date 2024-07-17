@@ -238,27 +238,27 @@
                 </div>
 
                 <!-- 해당글 이미지 List -->
-                <!-- <div id="carouselExampleIndicators" class="carousel slide mt-3">
+                <!-- <div id="carouselExampleIndicators" th:id="'carouselExampleIndicators' + ${stat.index}" class="carousel slide mt-3" data-bs-ride="carousel">
                     <div class="carousel-indicators">
-                        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
-                        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
-                        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
+                        <button type="button" data-bs-target="#carouselExampleIndicators" th:attr="data-bs-target|='#carouselExampleIndicators' + ${stat.index}" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+                        <button type="button" data-bs-target="#carouselExampleIndicators" th:attr="data-bs-target|='#carouselExampleIndicators' + ${stat.index}" data-bs-slide-to="1" aria-label="Slide 2"></button>
+                        <button type="button" data-bs-target="#carouselExampleIndicators" th:attr="data-bs-target|='#carouselExampleIndicators' + ${stat.index}" data-bs-slide-to="2" aria-label="Slide 3"></button>
                     </div>
                     <div class="carousel-inner">
-
                         <div th:classappend="${'carousel-item ' + (stat.index == 0 ? 'active' : '')}">
-                            <img th:src="..." class="img-fluid" alt="Article Image">
+                            <img src="/public/img/instaImage/basecamp (1).jpg" class="img-fluid" alt="Article Image">
                         </div>
                     </div>
-                    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+                    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" th:attr="data-bs-target|='#carouselExampleIndicators' + ${stat.index}" data-bs-slide="prev">
                         <span class="carousel-control-prev-icon" aria-hidden="true"></span>
                         <span class="visually-hidden">이전</span>
                     </button>
-                    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+                    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" th:attr="data-bs-target|='#carouselExampleIndicators' + ${stat.index}" data-bs-slide="next">
                         <span class="carousel-control-next-icon" aria-hidden="true"></span>
                         <span class="visually-hidden">다음</span>
                     </button>                   
                 </div> -->
+
 
                 <div class="row" style="height: 30px;">
                     <!-- 좋아요 -->
@@ -337,7 +337,8 @@
                         <!-- <img th:src="|/basecampImage/${session.instaUserInfoDto.insta_profile_img}|" class="img-fluid rounded-circle commentImage"> -->
                         <img src="/public/img/instaImage/hahaha4.jpg" class="img-fluid rounded-circle commentImage">
                     </div>
-                    <a class="col ps-1 link-dark link-offset-2 link-underline link-underline-opacity-0" href="./commentWritePage">
+                    <a class="col ps-1 link-dark link-offset-2 link-underline link-underline-opacity-0"
+                        th:href="@{./commentWritePage(user_id=${session.sessionUserInfo.id})}">
                         <span class="fontBasic" style="color: rgb(162, 162, 162);">댓글 달기...</span>
                     </a>
                 </div>
