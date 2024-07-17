@@ -26,7 +26,7 @@ public class CampingcarDto {
     private String petFriendly;
     private String cancellationPolicy;
     private String isOpened;
-    private Date createdAt;
+    private Date created_at;
     private Date updateDate;
 
 }

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.bulmeong.basecamp.campingcar.mapper.AdminSqlMapper">
+    <!-- 판매자 회원가입 -->
+    <insert id="createSeller">
+        insert into bc_rental_company_info(
+            location_category_id, account_id, account_pw, crn, comp_name, representative_name,
+		    comp_email, comp_address, contact_number, comp_profile_image, comp_nickname, comp_url
+        )values(
+            #{location_category_id}, #{account_id}, #{account_pw}, #{crn}, #{comp_name}, #{representative_name},
+		    #{comp_email}, #{comp_address}, #{contact_number}, #{comp_profile_image}, #{comp_nickname}, #{comp_url}
+        )
+    </insert>
+
+    <!-- 판매자 로그인시, id,password 확인 쿼리 -->
+    <select id="selectCompanyByAccountIdandPw" resultType="com.bulmeong.basecamp.campingcar.dto.RentalCompanyDto">
+        select * from bc_rental_company_info
+        where account_id=#{account_id} and account_pw=#{account_pw}
+    </select>
+
+    <!-- 지역Category -->
+    <select id="findLocationAll" resultType="com.bulmeong.basecamp.campingcar.dto.LocationDto"> 
+        select*from bc_location_category
+        order by id ASC
+    </select>
+
+</mapper>

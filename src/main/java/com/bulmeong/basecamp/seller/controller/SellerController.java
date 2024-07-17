@@ -7,6 +7,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.bulmeong.basecamp.camp.dto.CampsiteBankDto;
 import com.bulmeong.basecamp.camp.dto.CampsiteDto;
+import com.bulmeong.basecamp.campingcar.dto.RentalCompanyDto;
+import com.bulmeong.basecamp.campingcar.service.AdminService;
 import com.bulmeong.basecamp.store.dto.StoreDto;
 import com.bulmeong.basecamp.store.service.StoreService;
 
@@ -18,6 +20,8 @@ public class SellerController {
 
     @Autowired
     private StoreService storeService;
+    @Autowired
+    private AdminService adminService;
 
     @RequestMapping("registerCampsite")
     public String registerCampsite() {
@@ -43,7 +47,7 @@ public class SellerController {
             return "redirect:/storeCenter/storeRegister";
         }else{
             //여기 수정(캠핑카)
-            return "redirect:/admin";
+            return "redirect:/admin/nfRegisterPage";
         }
     }
 
@@ -72,10 +76,10 @@ public class SellerController {
             return "redirect:/storeCenter/dashboard";
         }else{
             //여기 수정(캠핑카)
-            StoreDto storeDto = storeService.getStoreDtoByAccountInfo(account_id, account_pw);
-            session.setAttribute("sessionStoreInfo", storeDto);
+            RentalCompanyDto rentalCompanyDto = adminService.getSellerByIdAndPw(account_id, account_pw);
+            session.setAttribute("sessionCaravanInfo", rentalCompanyDto);
     
-            return "redirect:/storeCenter/dashboard";
+            return "redirect:/admin/main";
         }
     }
 }

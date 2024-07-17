@@ -9,6 +9,6 @@ public class LocationDto  {
     
     private int id;
     private String name;
-    private Date createdAt;
+    private Date created_at;
     
 }
