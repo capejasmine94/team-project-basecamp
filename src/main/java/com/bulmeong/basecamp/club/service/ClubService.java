@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.bulmeong.basecamp.club.dto.ClubBookmarkDto;
 import com.bulmeong.basecamp.club.dto.ClubDto;
 import com.bulmeong.basecamp.club.dto.ClubJoinConditionDto;
 import com.bulmeong.basecamp.club.dto.ClubMemberDto;
@@ -162,4 +163,31 @@ public class ClubService {
             return commentDetailList;
         }    
 
+    // 소모임 홈 소모임 정보 카드
+        public Map<String, Object>  clubDetail(int id){
+            ClubDto clubDto = clubSqlMapper.selectClubDtoById(id);
+            ClubRegionCategoryDto clubRegionCategoryDto = clubSqlMapper.selectRegionCategoryDtoById(clubDto.getRegion_id());
+
+            Map<String, Object> map = new HashMap<>();
+            map.put("clubDto", clubDto);
+            map.put("clubRegionCategoryDto", clubRegionCategoryDto);
+
+            return map;
+        }
+
+        //  소모임 북마크 여부 확인
+        public int confirmBookmark(ClubBookmarkDto clubBookmarkDto){
+            int confirmBookmark  = clubSqlMapper.confirmBookmark(clubBookmarkDto);
+            return confirmBookmark;
+        }
+
+        //  소모임 북마크 삽입
+        public void insertBookmark(ClubBookmarkDto clubBookmarkDto){
+            clubSqlMapper.insertBookmark(clubBookmarkDto);
+        }
+
+        //  소모임 북마크 삭제
+        public void delteBookmarkDto(ClubBookmarkDto clubBookmarkDto){
+            clubSqlMapper.deleteBookmark(clubBookmarkDto);
+        }
 }

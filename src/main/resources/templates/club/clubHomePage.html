@@ -42,7 +42,12 @@
 
                         <div class="row py-4">
                             <div class="col-auto">
-                                <span class=""><i class="bi bi-heart"></i> </span>
+                                <a th:if="${confirmBookmark == 0}" th:href="@{/club/bookmarkProcess(club_id=${map.clubDto.id}, user_id=${session.sessionUserInfo.id})}">
+                                    <span><i class="bi bi-bookmark"></i></span>
+                                </a>
+                                <a th:unless="${confirmBookmark == 0}" th:href="@{/club/bookmarkProcess(club_id=${map.clubDto.id}, user_id=${session.sessionUserInfo.id})}">
+                                    <span><i class="bi bi-bookmark-fill"></i></span>
+                                </a>
                             </div>
                             <div class="col text-center fw-bold">
                                 CLUB HOME
@@ -78,7 +83,7 @@
                                     <div class="rectangle" style="width: 25em; height: 10em; border: 1px solid #fff; overflow: hidden; position: relative;">
                                         <img src="/public/img/clubImage/mangleProfile.jpg" alt="모임 이미지 1" style="width: 100%; height: 100%; object-fit: cover;">
                                         <div class="badge" style="position: absolute; top: 5px; right: 5px; background-color: #f00; color: #fff; padding: 10px;">
-                                            <i class="bi bi-heart"></i><span> 25</span>
+                                            <i class="bi bi-bookmark"></i><span> 25</span>
                                         </div>
                                     </div>
                                 </div>
@@ -93,18 +98,17 @@
                                 <div class="row pb-3">
                                     <div class="col" style="font-size: 0.8em;">
                                         <span class="badge text-bg-danger">NEW</span>
-                                        <span class="badge text-bg-primary">서울</span>
-                                        <span class="badge text-bg-primary">멤버 20</span>
-                                        <span class="badge text-bg-primary">2024.07.19</span>
+                                        <span class="badge text-bg-primary" th:text="${map.clubRegionCategoryDto.region_name}">서울</span>
+                                        <span class="badge text-bg-primary" th:text="'멤버 ' + ${map.clubDto.capacity}">20</span>
+                                        <span class="badge text-bg-primary" th:text="${#dates.format(map.clubDto.created_at, 'yyyy.MM.dd')}">2024.07.19</span>
                                     </div>
                                 </div>
                                 <div class="row pb-1">
-                                    <div class="col fw-bold">
-                                        도넛맛집뿌시기
+                                    <div class="col fw-bold" th:text="${map.clubDto.name}">
                                     </div>
                                 </div>
                                 <div class="row">
-                                    <div class="col" style="font-size: 0.8em;">
+                                    <div class="col" style="font-size: 0.8em;" th:text="${map.clubDto.description}">
                                         서울의 도넛 맛집 도장깨기 하는 소모임
                                     </div>
                                 </div>
@@ -175,7 +179,7 @@
                                                     </div>   
                                                 </div>
                                             </div>
-                                            <div class="col-3 align-self-center">
+                                            <div class="col-auto align-self-center">
                                                 <div class="row">
                                                     <div class="col">
                                                         <button type="button" class="btn btn-outline-secondary">참석</button>

@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.bulmeong.basecamp.club.dto.ClubBookmarkDto;
 import com.bulmeong.basecamp.club.dto.ClubDto;
 import com.bulmeong.basecamp.club.dto.ClubJoinConditionDto;
 import com.bulmeong.basecamp.club.dto.ClubMemberDto;
@@ -59,10 +60,20 @@ public class ClubController {
     }
 
     @RequestMapping("home")
-    public String clubHome(@RequestParam("id") int id, Model model){
+    public String clubHome(@RequestParam("id") int id, Model model, HttpSession session){
         model.addAttribute("id", id);
+        Map<String, Object>map = clubService.clubDetail(id);
+        model.addAttribute("map", map);
 
-        return "club/clubHomePage";
+        ClubBookmarkDto clubBookmarkDto = new ClubBookmarkDto();
+        UserDto userDto = (UserDto)session.getAttribute("sessionUserInfo");
+        
+            clubBookmarkDto.setUser_id(userDto.getId());
+            clubBookmarkDto.setClub_id(id);
+            int confirmBookmark = clubService.confirmBookmark(clubBookmarkDto);
+            model.addAttribute("confirmBookmark", confirmBookmark);
+                
+        return "/club/clubHomePage";
     }
 
     @RequestMapping("createNewClub")
@@ -79,9 +90,6 @@ public class ClubController {
     public String createClubProcess(ClubDto clubDto, ClubJoinConditionDto clubJoinConditionDto){
         clubService.createNewClub(clubDto, clubJoinConditionDto);
         util.loginUser();
-
-
-        System.out.println("모임생성페이지" + clubDto);
 
         return "redirect:/club/main";
     }
@@ -181,6 +189,19 @@ public class ClubController {
     public String myClubs(){
 
         return "/club/myClubListPage";
+    }
+
+    @RequestMapping("bookmarkProcess")
+    public String bookmarkProcess(ClubBookmarkDto clubBookmarkDto){
+        int bookmarkCount = clubService.confirmBookmark(clubBookmarkDto);
+
+        if(bookmarkCount == 0){
+            clubService.insertBookmark(clubBookmarkDto);
+        }else{
+            clubService.delteBookmarkDto(clubBookmarkDto);
+        }
+        return "redirect:/club/home?id="+ clubBookmarkDto.getClub_id();
+
     }
 }
 

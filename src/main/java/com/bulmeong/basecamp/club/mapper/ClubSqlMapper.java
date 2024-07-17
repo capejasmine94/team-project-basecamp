@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
 
+import com.bulmeong.basecamp.club.dto.ClubBookmarkDto;
 import com.bulmeong.basecamp.club.dto.ClubDto;
 import com.bulmeong.basecamp.club.dto.ClubJoinConditionDto;
 import com.bulmeong.basecamp.club.dto.ClubMemberDto;
@@ -33,4 +34,10 @@ public interface ClubSqlMapper {
     public ClubPostDto selectPostDtoById(int id);
     public void insertClubPostCommentDto(ClubPostCommentDto clubPostCommentDto);
     public List<ClubPostCommentDto> selectPostCommentDto(int post_id);
+    public ClubDto selectClubDtoById(int id);
+    public ClubRegionCategoryDto selectRegionCategoryDtoById(int id);
+    public int confirmBookmark(ClubBookmarkDto clubBookmarkDto);
+    public void deleteBookmark(ClubBookmarkDto clubBookmarkDto);
+    public void insertBookmark(ClubBookmarkDto clubBookmarkDto);
 }
+
