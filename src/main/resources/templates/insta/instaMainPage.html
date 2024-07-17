@@ -338,7 +338,7 @@
                         <img src="/public/img/instaImage/hahaha4.jpg" class="img-fluid rounded-circle commentImage">
                     </div>
                     <a class="col ps-1 link-dark link-offset-2 link-underline link-underline-opacity-0"
-                        th:href="@{./commentWritePage(user_id=${session.sessionUserInfo.id})}">
+                        th:href="@{./commentWritePage(user_id=${session.sessionUserInfo.id}, article_id=${instaArticleList.instaArticleDto.id})}">
                         <span class="fontBasic" style="color: rgb(162, 162, 162);">댓글 달기...</span>
                     </a>
                 </div>
