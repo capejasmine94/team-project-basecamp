@@ -9,7 +9,7 @@ import com.bulmeong.basecamp.insta.dto.InstaUserInfoDto;
 import com.bulmeong.basecamp.insta.mapper.InstaSqlMapper;
 import com.bulmeong.basecamp.user.dto.UserDto;
 
-import java.util.List;
+import java.util.*;
 
 @Service
 public class InstaService {
@@ -45,4 +45,42 @@ public class InstaService {
             instaSqlMapper.insertInstaArticleImg(instaArticleImgDto);
         }
     }
+
+    // 게시글 List
+    public List<Map<String, Object>> selectInstaArticleList(){
+        List<Map<String, Object>> result = new ArrayList<>();
+
+        List<InstaArticleDto> instaArticleDtoList = instaSqlMapper.selectArticleAll();
+
+        for(InstaArticleDto instaArticleDto : instaArticleDtoList){
+            Map<String, Object> map = new HashMap<>();
+            
+            map.put("instaArticleDto", instaArticleDto);
+
+            int article_id = instaArticleDto.getId();
+            int user_id = instaArticleDto.getUser_id();
+            InstaUserInfoDto instaUserInfoDto = instaSqlMapper.selectUserInfoByUserId(user_id);
+            map.put("instaUserInfoDto", instaUserInfoDto);
+
+            List<InstaArticleImgDto> instaArticleImgDtoList = instaSqlMapper.selectArticleImgByArticleId(article_id);
+            for(InstaArticleImgDto instaArticleImgDto : instaArticleImgDtoList){
+                map.put("instaArticleImgDto", instaArticleImgDto);
+            }
+
+            result.add(map);
+
+        }
+        
+        return result;
+
+    }
 }
+
+
+
+
+
+
+
+
+

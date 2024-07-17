@@ -10,8 +10,7 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap">
     <title>insta_mainPage</title>
 
-    <script src="/public/js/util.js">
-    </script>
+    <script src="/public/js/util.js"></script>
     
     <script>
         function action(){
@@ -19,6 +18,11 @@
         }
     </script>
     <style>
+        /* 고정 */
+        .fontBasic {
+            font-size: 0.8em;
+        }
+
         /* 상단바 높이 */
         .fixed-top {
             text-align: center;
@@ -40,8 +44,13 @@
             object-fit: cover; /* 이미지가 요소를 채우도록 조정 */
         }
         .profileImage {
-            width: 30px;  /* 원하는 너비 */
-            height: 30px; /* 원하는 높이 */
+            width: 35px;  /* 원하는 너비 */
+            height: 35px; /* 원하는 높이 */
+            object-fit: cover; /* 이미지가 요소를 채우도록 조정 */
+        }
+        .commentImage {
+            width: 20px;  /* 원하는 너비 */
+            height: 20px; /* 원하는 높이 */
             object-fit: cover; /* 이미지가 요소를 채우도록 조정 */
         }
 
@@ -65,7 +74,20 @@
             color: gray;
         }
 
-        
+        /* 글쓰기 버튼 */
+        .write-button-container {
+            position: fixed; /* 페이지의 특정 위치에 고정할 수 있음 */
+            bottom: 100px; /* 원하는 위치로 조정 가능 */
+            right: 20px;  /* 원하는 위치로 조정 가능 */  
+            border-radius: 3px;
+            z-index: 1000; /* 다른 요소들보다 위에 위치하도록 설정 */
+        }
+        /* .write-button {
+            border: 1px solid #ccc; 경계선 추가
+            border-radius:4px;
+            padding: 0%;
+            display: flex;
+        } */
     </style>
 
 </head>
@@ -101,12 +123,13 @@
                             <div class="col">
                                 <div class="row">
                                     <div class="col">
-                                        <img th:src="|/basecampImage/${session.instaUserInfoDto.insta_profile_img}|" class="img-fluid rounded-circle storyImage">
+                                        <!-- <img th:src="|/basecampImage/${instaUserInfoDto.insta_profile_img}|" class="img-fluid rounded-circle storyImage"> -->
+                                        <img src="/public/img/instaImage/hahaha4.jpg" class="img-fluid rounded-circle storyImage">
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="col px-1 text-center" style="font-size: 0.8em;">
-                                        <span th:text="${session.instaUserInfoDto.insta_nickname}">닉네임</span>                                                        
+                                        <span th:text="${instaUserInfoDto.insta_nickname}">닉네임</span>                                                        
                                     </div>
                                 </div>
                             </div>
@@ -118,7 +141,7 @@
                             <div class="col">
                                 <div class="row">
                                     <div class="col">
-                                        <img id="profileImage" src="/public/img/instaImage/userImg.jpeg" class="img-fluid rounded-circle storyImage" alt="Profile Image">
+                                        <img src="/public/img/instaImage/userImg.jpeg" class="img-fluid rounded-circle storyImage" alt="Profile Image">
                                     </div>
                                 </div>
                                 <div class="row">
@@ -134,7 +157,7 @@
                             <div class="col">
                                 <div class="row">
                                     <div class="col">
-                                        <img id="profileImage" src="/public/img/instaImage/userImg.jpeg" class="img-fluid rounded-circle storyImage" alt="Profile Image">
+                                        <img src="/public/img/instaImage/userImg.jpeg" class="img-fluid rounded-circle storyImage" alt="Profile Image">
                                     </div>
                                 </div>
                                 <div class="row">
@@ -150,7 +173,7 @@
                             <div class="col">
                                 <div class="row">
                                     <div class="col">
-                                        <img id="profileImage" src="/public/img/instaImage/userImg.jpeg" class="img-fluid rounded-circle storyImage" alt="Profile Image">
+                                        <img src="/public/img/instaImage/userImg.jpeg" class="img-fluid rounded-circle storyImage" alt="Profile Image">
                                     </div>
                                 </div>
                                 <div class="row">
@@ -166,7 +189,7 @@
                             <div class="col">
                                 <div class="row">
                                     <div class="col">
-                                        <img id="profileImage" src="/public/img/instaImage/userImg.jpeg" class="img-fluid rounded-circle storyImage" alt="Profile Image">
+                                        <img src="/public/img/instaImage/userImg.jpeg" class="img-fluid rounded-circle storyImage" alt="Profile Image">
                                     </div>
                                 </div>
                                 <div class="row">
@@ -182,7 +205,7 @@
                             <div class="col">
                                 <div class="row">
                                     <div class="col">
-                                        <img id="profileImage" src="/public/img/instaImage/userImg.jpeg" class="img-fluid rounded-circle storyImage" alt="Profile Image">
+                                        <img src="/public/img/instaImage/userImg.jpeg" class="img-fluid rounded-circle storyImage" alt="Profile Image">
                                     </div>
                                 </div>
                                 <div class="row">
@@ -197,83 +220,56 @@
             </div>
         </div>
 
-        <div class="row">
+        <!-- 게시글 List 출력 -->
+        <div class="row mb-4" th:each="instaArticleList : ${instaArticleListAll}">
             <div class="col">
                 <div class="row">
-                    <div class="col-auto pe-1">
-                        <img th:src="|/basecampImage/${session.instaUserInfoDto.insta_profile_img}|" class="img-fluid rounded-circle profileImage">
-                    </div>
-                    <div class="col-10 ps-0">
+                    <!-- 글 작성한 사람 프로필 이미지 -->
+                    <a class="col-auto pe-1 link-dark link-offset-2 link-underline link-underline-opacity-0" href="./instaUserPage">
+                        <!-- <img th:src="|/basecampImage/${instaArticleList.instaArticleDto.insta_profile_img}|" class="img-fluid rounded-circle commentImage"> -->
+                        <img src="/public/img/instaImage/hahaha4.jpg" class="img-fluid rounded-circle profileImage">
+                    </a>
+                    <!-- 글 작성한 사람 닉네임 -->
+                    <a class="col-auto ps-0 pt-1 link-dark link-offset-2 link-underline link-underline-opacity-0" href="./instaUserPage">
                         <!-- <span th:text="${session.sessionUserInfo.nickname}">aa</span> -->
-                        <span th:text="${session.instaUserInfoDto.insta_nickname}" style="font-size: 0.8em;"></span>
-                    </div>
+                        <span th:text="${instaArticleList.instaUserInfoDto.insta_nickname}" style="font-size: 0.8em;"></span>
+                    </a>
+                    <div class="col"></div>
                 </div>
 
-                <div id="carouselExampleIndicators" class="carousel slide mt-3">
+                <!-- 해당글 이미지 List -->
+                <!-- <div id="carouselExampleIndicators" class="carousel slide mt-3">
                     <div class="carousel-indicators">
                         <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
                         <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
                         <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
                     </div>
                     <div class="carousel-inner">
-                        <div class="carousel-item active">
-                            <img id="profileImage" src="/public/img/instaImage/userImg.jpeg" class="img-fluid" alt="">
-                        </div>
-                        <div class="carousel-item">
-                            <img id="profileImage" src="/public/img/instaImage/userImg.jpeg" class="img-fluid" alt="">
-                        </div>
-                        <div class="carousel-item">
-                            <img id="profileImage" src="/public/img/instaImage/userImg.jpeg" class="img-fluid" alt="">
+
+                        <div th:classappend="${'carousel-item ' + (stat.index == 0 ? 'active' : '')}">
+                            <img th:src="..." class="img-fluid" alt="Article Image">
                         </div>
                     </div>
                     <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
                         <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                        <span class="visually-hidden">Previous</span>
+                        <span class="visually-hidden">이전</span>
                     </button>
                     <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
                         <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                        <span class="visually-hidden">Next</span>
-                    </button>                    
-                </div>
+                        <span class="visually-hidden">다음</span>
+                    </button>                   
+                </div> -->
 
-                <!-- 지워야 됨 -->
-                <div id="carouselExampleIndicators" class="carousel slide mt-3">
-                    <div class="carousel-indicators">
-                        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
-                        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
-                        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
-                    </div>
-                    <div class="carousel-inner">
-                        <div class="carousel-item active">
-                            <img id="profileImage" src="/public/img/instaImage/userImg.jpeg" class="img-fluid" alt="">
-                        </div>
-                        <div class="carousel-item">
-                            <img id="profileImage" src="/public/img/instaImage/userImg.jpeg" class="img-fluid" alt="">
-                        </div>
-                        <div class="carousel-item">
-                            <img id="profileImage" src="/public/img/instaImage/userImg.jpeg" class="img-fluid" alt="">
-                        </div>
-                    </div>
-                    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
-                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                        <span class="visually-hidden">Previous</span>
-                    </button>
-                    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
-                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                        <span class="visually-hidden">Next</span>
-                    </button>                    
-                </div>
-
-                <div class="row">
+                <div class="row" style="height: 30px;">
                     <!-- 좋아요 -->
-                    <div class="col">
-                        <form action="./pushArticleLikeProcess" method="get">
+                    <!-- <div class="col-auto px-0">
+                        <form action="./pushArticleLikeDeleteProcess" method="get">
                             <button class="btn">
                                 <i class="fa-solid fa-heart"></i>
                             </button>
                         </form>
-                    </div>
-                    <div class="col">
+                    </div> -->
+                    <div class="col-auto px-0">
                         <form action="./pushArticleLikeProcess" method="get">
                             <button class="btn">
                                 <i class="fa-regular fa-heart"></i>
@@ -282,44 +278,104 @@
                     </div>
 
                     <!-- 댓글 -->
-                    <div class="col">
-                        <span>
-                            <i class="fa-regular fa-comment"></i>
-                        </span>
+                    <div class="col px-0">
+                        <form action="./commentPage" method="get">
+                            <button class="btn px-0">
+                                <i class="fa-regular fa-comment"></i>
+                            </button>
+                        </form>
                     </div>
 
                     <!-- 북마크 -->
-                    <div class="col">
-                        <form action="./pushArticleLikeProcess" method="get">
-                            <button class="btn">
+                    <div class="col text-end">
+                        <form action="./pushBookmarkProcess" method="get">
+                            <button class="btn pe-0">
                                 <i class="fa-regular fa-bookmark"></i>
                             </button>
                         </form>
                     </div>
-                    <div class="col">
-                        <form action="./pushArticleLikeProcess" method="get">
-                            <button class="btn">
+                    <!-- <div class="col text-end">
+                        <form action="./pushBookmarkDeleteProcess" method="get">
+                            <button class="btn pe-0">
                                 <i class="fa-solid fa-bookmark"></i>
                             </button>
                         </form>
+                    </div> -->
+                </div>
+
+                <!-- 좋아요 수 -->
+                <div class="row">
+                    <a class="col fontBasic link-dark link-offset-2 link-underline link-underline-opacity-0 " href="./pushLikeUserPage">
+                        <span>좋아요</span>
+                        <span>50,000개</span>
+                    </a>
+                </div>
+
+                <!-- 글 작성한 사람 닉네임,
+                     게시글 작성일,
+                     내용 -->
+                <div class="row">
+                    <a class="col-auto fontBasic pe-0 link-dark link-offset-2 link-underline link-underline-opacity-0" href="./instaUserPage">
+                        <span th:text="${instaArticleList.instaUserInfoDto.insta_nickname}"></span>
+                    </a>
+                    <div class="col fontBasic ps-2">                        
+                        <span th:text="${#dates.format(instaArticleList.instaArticleDto.created_at, 'yy.MM.dd')}" style="color: rgb(162, 162, 162);"></span><span style="color: rgb(162, 162, 162);">ㆍ</span><span th:text="${instaArticleList.instaArticleDto.content}">good day✨</span>                        
                     </div>
+                </div>
+
+                <!-- 댓글 -->
+                <div class="row">
+                    <a class="col link-dark link-offset-2 link-underline link-underline-opacity-0" href="./commentPage">
+                        <span class="fontBasic" style="color: rgb(162, 162, 162);">댓글 89개 모두 보기</span>
+                    </a>
+                </div>
+
+                <!-- 댓글 작성 -->
+                <div class="row">
+                    <div class="col-auto pe-0">
+                        <!-- 로그인한 유저 프로필 -->
+                        <!-- <img th:src="|/basecampImage/${session.instaUserInfoDto.insta_profile_img}|" class="img-fluid rounded-circle commentImage"> -->
+                        <img src="/public/img/instaImage/hahaha4.jpg" class="img-fluid rounded-circle commentImage">
+                    </div>
+                    <a class="col ps-1 link-dark link-offset-2 link-underline link-underline-opacity-0" href="./commentWritePage">
+                        <span class="fontBasic" style="color: rgb(162, 162, 162);">댓글 달기...</span>
+                    </a>
                 </div>
             </div>
         </div>
-        
-        
-        <!-- 글쓰기 페이지 -->
-        <form class="row fixed-bottom mb-5 pb-5" action="./instaWritePage" method="get">
-            <div class="col-10"></div>
-            <div class="col-2 ps-0">
-                <button class="btn" type="submit">
+
+        <!-- <div class="write-button-container">
+            <form action="./instaWritePage" method="get">
+                <button class="btn write-button" type="submit" style="background-color: white;">
                     <i class="bi bi-plus-square fs-2"></i>
                 </button>
+            </form>
+        </div> -->
+
+        <!-- 글쓰기 버튼 -->
+        <div class="write-button-container">
+            <!-- style="aspect-ratio: 1/1;" -> 익스펙토 주문 : 정방향을 만들어준다 -->
+            <form action="./instaWritePage" method="get">
+                <button class="btn bg-white rounded-2 border border-2 border-black px-2 py-1" type="submit">
+                    <i class="fa-solid fa-plus"></i>
+                    <input type="hidden" name="user_id" th:value="${session.sessionUserInfo.id}">
+                </button>
+            </form>
+        </div>
+
+        <!-- 글쓰기 페이지 -->
+        <!-- <form class="row fixed-bottom fixed-write-button" action="./instaWritePage" method="get">
+            <div class="col-10"></div>
+            <div class="col-2">
+                <button class="btn" type="submit">
+                    <i class="bi bi-plus-square fs-2 write-button"></i>
+                </button>
             </div>
-        </form>
+        </form> -->
+        
     </div>
 
-    <div class="container mt-5 pt-4">
+    <div class="container mt-5 pt-5">
         <!-- 하단바 -->
         <div class="row">
             <div class="col">
@@ -327,7 +383,7 @@
 
                     <div class="col">
                         <button onclick="popup(`당신의 선택은`,`과연`,`자바스크립트`,`타임리프`,function(){action()})" class="btn" type="submit">
-                            <i class="bi bi-airplane fs-2"></i>
+                            <span>홈</span>
                         </button>
                     </div>
                         

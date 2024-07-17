@@ -13,9 +13,9 @@
 
     <insert id="insertInstaUserInfo">
         insert into bc_insta_user_info(
-            user_id, insta_nickname, insta_profile_img, intro, is_private
+            user_id, insta_nickname, insta_profile_img, intro
         )values(
-            #{user_id}, #{insta_nickname}, #{insta_profile_img}, #{intro}, null
+            #{user_id}, #{insta_nickname}, #{insta_profile_img}, #{intro}
         )
     </insert>
 
@@ -24,8 +24,9 @@
         where user_id = #{user_id}
     </select>
 
+    <!-- 챗지피티 물어보니까 parameterType, useGeneratedKeys, keyProperty 얘네가 있어야만 article_id를 받아온다...? 왜 있어야되는지 모르겠음 -->
     <!-- 게시판 insert -->
-    <insert id="insertInstaArticle">
+    <insert id="insertInstaArticle" parameterType="com.bulmeong.basecamp.insta.dto.InstaArticleDto" useGeneratedKeys="true" keyProperty="id">
         insert into bc_insta_article(
             user_id, content
         )values(
@@ -34,7 +35,7 @@
     </insert>
 
     <!-- 게시판 이미지 insert -->
-    <insert id="insertInstaArticleImg">
+    <insert id="insertInstaArticleImg" parameterType="com.bulmeong.basecamp.insta.dto.InstaArticleImgDto">
         insert into bc_insta_article_img(
             article_id, img_link
         )values(
@@ -42,7 +43,13 @@
         )
     </insert>
 
-    
+    <select id="selectArticleAll" resultType="com.bulmeong.basecamp.insta.dto.InstaArticleDto">
+        select * from bc_insta_article order by id desc
+    </select>
+
+    <select id="selectArticleImgByArticleId" resultType="com.bulmeong.basecamp.insta.dto.InstaArticleImgDto">
+        select * from bc_insta_article_img where article_id = #{article_id}
+    </select>
 
 </mapper>
 

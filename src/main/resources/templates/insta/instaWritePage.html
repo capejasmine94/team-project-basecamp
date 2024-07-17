@@ -54,7 +54,7 @@
                 <!-- 상단바 -->
                 <div class="row mb-5 border-bottom fixed-top" style="background-color: white;">
                     <div class="col-2">
-                        <a th:href="@{./instaMainPage(user_id=${session.instaUserInfoDto.user_id})}" style="color: black;"><i class="bi bi-x-lg"></i></a>
+                        <a th:href="@{./instaMainPage(user_id=${session.sessionUserInfo.id})}" style="color: black;"><i class="bi bi-x-lg"></i></a>
                     </div>
                     <div class="col-10 pe-5 ps-0">
                         <span>새 게시물</span>
@@ -68,7 +68,7 @@
                             <div id="upload_insta">
 
                             </div>
-                            <input type="hidden" name="user_id" th:value="${session.instaUserInfoDto.user_id}">
+                            <input type="hidden" name="user_id" th:value="${session.sessionUserInfo.id}">
                             <!-- <label class="input-group-text" for="bowWow_image">Choose File</label> -->
                         </div>
                     </div>

@@ -11,6 +11,6 @@ public class InstaUserInfoDto {
     private String insta_nickname;
     private String insta_profile_img;
     private String intro;
-    private String is_private;
+    // private String is_private;
     private Date created_at;
 }

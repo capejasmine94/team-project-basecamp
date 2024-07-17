@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 // import org.springframework.boot.autoconfigure.ssl.SslProperties.Bundles.Watch.File;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
@@ -20,6 +21,8 @@ import com.bulmeong.basecamp.insta.service.InstaService;
 import com.bulmeong.basecamp.user.dto.UserDto;
 
 import jakarta.servlet.http.HttpSession;
+
+import java.util.*;
 
 @Controller
 @RequestMapping("insta")
@@ -79,15 +82,22 @@ public class InstaController {
         return "redirect:./instaMainPage?user_id=" + instaUserInfoDto.getUser_id();
     }
 
+    // 인스타 메인페이지
     @RequestMapping("instaMainPage")
-    public String instaMainPage(HttpSession session, @RequestParam("user_id") int user_id){
+    public String instaMainPage(Model model, @RequestParam("user_id") int user_id){
         InstaUserInfoDto instaUserInfoDto = instaService.userInfoByUserId(user_id);
+        model.addAttribute("instaUserInfoDto", instaUserInfoDto);
 
         // System.out.println(instaUserInfoDto.getInsta_profile_img());
 
-        // session에 로그인한 유저 정보를 받아 instaUserInfoDto정보 추가
-        session.setAttribute("instaUserInfoDto", instaUserInfoDto);
-        System.out.println("instaUserInfoDto" + instaUserInfoDto);
+
+        // session.setAttribute("instaUserInfoDto", instaUserInfoDto);
+        // System.out.println("instaUserInfoDto" + instaUserInfoDto);
+
+        List<Map<String, Object>> instaArticleListAll = instaService.selectInstaArticleList();
+        model.addAttribute("instaArticleListAll", instaArticleListAll);
+
+        System.out.println(instaArticleListAll);
 
         return "insta/instaMainPage";
     }
@@ -116,6 +126,7 @@ public class InstaController {
         instaService.writeArticleImg(instaAtricleImgDtoList);
 
         System.out.println("instaArticleDto : " + instaArticleDto);
+        System.out.println("instaAtricleImgDtoList : " + instaAtricleImgDtoList);
 
         return "redirect:./instaMainPage?user_id=" + instaArticleDto.getUser_id();
     }
