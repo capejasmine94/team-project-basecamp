@@ -1,3 +1,32 @@
+function isWebView() {
+    const userAgent = navigator.userAgent || navigator.vendor || window.opera;
+
+    // User-Agent 검사
+    const webViewUserAgents = [
+        'WebView',
+        'iPhone',
+        'iPod',
+        'iPad',
+        'Android',
+        'Mobile',
+        'Safari', // 웹뷰는 종종 모바일 사파리나 안드로이드의 기본 브라우저를 가장합니다.
+        'Chrome'  // 웹뷰는 종종 크롬을 가장합니다.
+    ];
+
+    for (let agent of webViewUserAgents) {
+        if (userAgent.indexOf(agent) > -1) {
+            return true;
+        }
+    }
+
+    // 특정 기능의 존재 여부 확인
+    if (window.ReactNativeWebView || window.flutter_inappwebview) {
+        return true;
+    }
+
+    return false;
+}
+
 function createUploadStructure(name, multiple) {
     const uploadNameDiv = document.createElement('div');
     uploadNameDiv.classList.add('row');
@@ -9,7 +38,8 @@ function createUploadStructure(name, multiple) {
     previewRow.classList.add('row', 'preview', 'd-flex', 'flex-wrap','ms-2');
 
     const fileUploadDiv = document.createElement('div');
-    fileUploadDiv.classList.add('col-auto','my-1','ms-1','me-2','mt-2','mb-1');
+    const mobile = isWebView() ? '1' : '3' 
+    fileUploadDiv.classList.add('col-auto','my-1','ms-' + mobile,'me-2','mt-2','mb-1');
     fileUploadDiv.classList.add('file-upload');
 
     const inputFile = document.createElement('input');
@@ -58,7 +88,12 @@ function createUploader(name, multiple) {
                     img.src = e.target.result;
                     img.draggable = true; // 드래그 가능 설정
                     img.classList.add('draggable'); // 클래스 추가
-                    img.classList.add('col-auto','me-2','my-1','mt-2','mb-3'); // 클래스 추가
+                    if(isWebView()){
+                        img.classList.add('col-auto','m-2','px-0'); // 클래스 추가
+                    }
+                    else{
+                        img.classList.add('col-auto','me-2','my-1','mt-2','mb-3'); // 클래스 추가
+                    }
                     addDragAndDropHandlers(img); // 드래그 앤 드롭 핸들러 추가
                     preview.appendChild(img);
                 }

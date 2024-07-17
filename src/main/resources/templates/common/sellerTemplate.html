@@ -18,7 +18,7 @@
 
             /* 아래의 모든 코드는 영역::코드로 사용 */
             .scrollBar::-webkit-scrollbar {
-                width: 7px;  /* 스크롤바의 너비 */
+                width: 4px;  /* 스크롤바의 너비 */
             }
 
             .scrollBar::-webkit-scrollbar-thumb {
@@ -57,34 +57,39 @@
         
                     <div class="row category">
                         <div class="col pe-0 d-grid">
-                            <a href="dashboard.html" type="button" class="py-3 fw-bold">
+                            <div href="dashboard.html" type="button" class="py-3 fw-bold">
                                 Dashboard
-                            </a>
+                            </div>
                         </div>
                     </div>
-                    <div class="row category toggle-icon" data-bs-toggle="collapse" data-bs-target="#first-collapse">
-                        <div class="col pe-0 d-grid fs-5">
-                            <button type="button" class="py-3 accordion-button collapsed fw-bold">
-                                캠핑장/구역관리
-                            </button>
+
+
+                    <div class="nav flex-column" id="v-pills-tab" aria-orientation="vertical">
+                        <div class="row category toggle-icon" data-bs-toggle="collapse" data-bs-target="#first-collapse">
+                            <div class="col pe-0 d-grid fs-5">
+                                <button type="button" class="py-3 accordion-button collapsed fw-bold">
+                                    캠핑장/구역관리
+                                </button>
+                            </div>
+                            <div class="col-auto ps-0 d-grid fs-5">
+                                <button type="button" class="py-3 accordion-button collapsed">
+                                    <i class="bi bi-chevron-up"></i>
+                                </button>
+                            </div>
                         </div>
-                        <div class="col-auto ps-0 d-grid fs-5">
-                            <button type="button" class="py-3 accordion-button collapsed">
-                                <i class="bi bi-chevron-up"></i>
-                            </button>
+                        <div class="row accordion-collapse collapse show p-0" id="first-collapse">
+                            <div class="col">
+                                <div class="row accordion-body py-3 ps-4 subcategory" href="http://www.naver.com">
+                                    <a class="nav-link active" id="v-pills-home-tab" data-bs-toggle="tab" data-bs-target="#v-pills-home" role="tab" aria-controls="v-pills-home" aria-selected="true">캠핑장등록</a>
+                                </div>
+                                <div class="row accordion-body py-3 ps-4 subcategory text-primary" href="productRegister.html" id="productRegister">
+                                    <a class="nav-link" id="v-pills-profile-tab" data-bs-toggle="tab" data-bs-target="#v-pills-profile" role="tab" aria-controls="v-pills-profile" aria-selected="false">캠핑장조회</a>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                    <div class="row accordion-collapse collapse show p-0" id="first-collapse">
-                        <div class="col">
-                            <a class="row accordion-body py-3 ps-4 subcategory" href="http://www.naver.com">
-                                캠핑장 등록/수정
-                            </a>
-                            <a class="row accordion-body py-3 ps-4 subcategory text-primary" href="productRegister.html" id="productRegister">
-                                구역 등록/수정
-                            </a>
-                        </div>
-                    </div>
-        
+
+
                     <div class="row category">
                         <div class="col py-3 pe-0 d-grid fs-5">
                             <button type="button" class="accordion-button collapsed fw-bold">
@@ -98,7 +103,7 @@
                             <button type="button" class="accordion-button collapsed fw-bold">
                                 리뷰관리
                             </button>
-                        </div>
+                        </div>`
                     </div>
         
                     <div class="row category">
@@ -209,7 +214,7 @@
                     </div>
                 </div>
                 <!-- 오른쪽 메뉴 -->
-                <div class="col right" style="padding-top: 58px;">
+                <div class="col right " style="padding-top: 58px;">
                     <div class="row py-3 px-4 justify-content-between">
                         <div class="col fs-3 fw-bold">
                             제목
@@ -231,47 +236,17 @@
                     </div>
                     
                     <div class="row px-4 pb-4">
-                        <div class="col border bg-white rounded-2">
-                            <div class="row py-3 border-bottom">
-                                <div class="col fw-bold">
-                                    소제목
-                                </div>
-                            </div>
-                            <div class="row py-3 px-3">
-                             <!-- 내용 -->
-                                <div class="col new-fs-9">
-                                    내용
-                                </div>
-                            </div>
-
-                        </div>
-                    </div>
-
-                    <div class="row px-4 pb-4">
-                        <div class="col border bg-white rounded-2">
-                            <div class="row py-3 border-bottom">
-                                <div class="col fw-bold">
-                                    이미지 등록
-                                </div>
-                            </div>
-                            <div class="row py-3 align-items-center border-bottom">
-                                <div class="col-sm-2">
-                                    대표 이미지
-                                </div>
-                                <div class="col seller_profile">
-                                    <img src="https://img1.newsis.com/2023/07/12/NISI20230712_0001313626_web.jpg">
-                                </div>
-                            </div>
-                            <div class="row py-3 align-items-center">
-                                <div class="col-2">
-                                    상세 이미지
-                                </div>
-                                <div class="col seller_profile">
-                                    <img src="https://img1.newsis.com/2023/07/12/NISI20230712_0001313626_web.jpg">
+                        <div class="col">
+                            <div class="tab-content" id="v-pills-tabContent">
+                                <div class="tab-pane fade show active" id="v-pills-home" role="tabpanel" aria-labelledby="v-pills-home-tab" tabindex="0">ㅁ</div>
+                                <div class="tab-pane fade" id="v-pills-profile" role="tabpanel" aria-labelledby="v-pills-profile-tab" tabindex="0">
+                                    <div th:replace="~{admin/carRegister::carRegister}"></div>
                                 </div>
                             </div>
                         </div>
                     </div>
+
+                   
                 </div>
             </div>
         </div>
