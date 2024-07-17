@@ -1,17 +1,24 @@
 package com.bulmeong.basecamp.config;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.context.annotation.RequestScope;
 import org.springframework.web.context.request.RequestAttributes;
 import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+
+import com.bulmeong.basecamp.camp.interceptor.CampsiteInterceptor;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletRequestWrapper;
 
 @Configuration
-public class AppConfig implements WebMvcConfigurer {
+public class WebConfig implements WebMvcConfigurer {
+    @Autowired
+    private CampsiteInterceptor campsiteInterceptor;
+
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry){
         if(System.getProperty("os.name").charAt(0) == 'W'){
@@ -25,5 +32,11 @@ public class AppConfig implements WebMvcConfigurer {
     @RequestScope
     public HttpServletRequest httpServletRequest() {
         return new HttpServletRequestWrapper((HttpServletRequest) RequestContextHolder.getRequestAttributes().resolveReference(RequestAttributes.REFERENCE_REQUEST));
+    }
+
+     @Override
+    public void addInterceptors(InterceptorRegistry registry) {
+        // 특정 컨트롤러 경로에 대해 인터셉터를 등록합니다.
+        registry.addInterceptor(campsiteInterceptor).addPathPatterns("/camp/**");
     }
 }

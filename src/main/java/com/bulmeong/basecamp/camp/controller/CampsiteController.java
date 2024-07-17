@@ -12,19 +12,56 @@ public class CampsiteController {
 
     //유틸 사용법 1 : 유틸을 선언한다
     @Autowired
-    private Utils util;
+    private Utils utils;
 
     @RequestMapping("unity")
     public String unity(){
-        //유틸 사용법 2 : 필요한 페이지에 로그인 유저를 추가한다 
-        //유틸 사용법 3 : 세션에서 'sessionUserInfo'로 UserDto를 가져올 수 있다
-        util.loginUser();
-
         return "camp/unity";
     }
 
-    @RequestMapping("mainPage")
+    @RequestMapping("main")
     public String mainPage(){
-        return "camp/mainPage";
+        return "camp/main";
+    }
+
+    @RequestMapping("registerUser")
+    public String registerUser(){
+        return "camp/registerUser";
+    }
+
+    @RequestMapping("registerCamp")
+    public String registerCampPage(){
+        return "camp/registerCamp";
+    }
+
+    @RequestMapping("manageCamp")
+    public String manageCampPage(){
+        return "camp/manageCamp";
+    }
+    
+    
+    @RequestMapping("manageArea")
+    public String manageAreaPage(){
+        return "camp/manageArea";
+    }
+
+    @RequestMapping("manageAsset")
+    public String manageAssetPage(){
+        return "camp/manageAsset";
+    }
+
+    @RequestMapping("statisticsCamp")
+    public String statisticsPage(){
+        return "camp/statisticsCamp";
+    }
+
+    @RequestMapping("manageCampReview")
+    public String reviewPage(){
+        return "camp/manageCampReview";
+    }
+
+    @RequestMapping("manageCampAccount")
+    public String manageAccountPage(){
+        return "camp/manageCampAccount";
     }
 }

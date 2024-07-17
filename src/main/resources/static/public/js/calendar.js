@@ -156,7 +156,9 @@ function createRangeCalendar(name, length, limit) {
                 data.startDate = cellDate; // 시작 날짜 설정
                 data.endDate = null; // 종료 날짜 초기화
                 } else if (cellDate.getTime() === data.startDate.getTime()) {
-                return;
+                    cell.classList.remove('selected-start');
+                    data.startDate = null;
+                    return;
                 } 
                 else if (cellDate < data.startDate) {
                 data.startDate = cellDate; // 클릭한 날짜가 시작 날짜보다 이전인 경우

@@ -9,7 +9,7 @@ function createUploadStructure(name, multiple) {
     previewRow.classList.add('row', 'preview', 'd-flex', 'flex-wrap','ms-2');
 
     const fileUploadDiv = document.createElement('div');
-    fileUploadDiv.classList.add('col-auto','my-1','ms-3','me-2','mt-2','mb-1');
+    fileUploadDiv.classList.add('col-auto','my-1','ms-1','me-2','mt-2','mb-1');
     fileUploadDiv.classList.add('file-upload');
 
     const inputFile = document.createElement('input');

@@ -493,6 +493,7 @@ a{
         margin: 1em;
         border: 0.2em solid #d3d3d3; /* 연한 회색 보더 */
         border-radius: 1em; /* 모서리 라운드 */
+        z-index: 1000px;
       }
       .file-upload {
         display: inline-flex;
@@ -506,6 +507,7 @@ a{
         align-items: center;
         cursor: pointer;
         transition: background-color 0.3s; /* 부드러운 전환 효과 */
+        z-index: 1000px;
       }
       .file-upload input[type="file"] {
         opacity: 0;
@@ -519,6 +521,7 @@ a{
       .file-upload:before {
         content: "+";
         font-size: 4em;
+        margin-bottom: 0.15em;
         color: #d3d3d3;
       }
       .file-upload:hover {
@@ -535,4 +538,5 @@ a{
       object-fit: cover;
       border: 0.2em solid #d3d3d3; /* 연한 회색 보더 */
       border-radius: 1em; /* 모서리 라운드 */
+      z-index: 1000px;
     }
