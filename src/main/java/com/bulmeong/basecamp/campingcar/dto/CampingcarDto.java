@@ -7,26 +7,27 @@ import lombok.Data;
 @Data
 public class CampingcarDto {
     private int id;
-    private int rentalCompanyId;
-    private int categoryId;
-    private String productName;
-    private String mainImg;
-    private String shortDescription;
-    private String detailedDescription;
-    private int rentalFee;
-    private String garageAddress;
-    private String overnightStay;
-    private int seatingCapacity;
-    private int sleepingCapacity;
-    private Date avaidTime;
-    private Date returnDateTime;
-    private int driverLicenseId;
-    private int driverExperienceId;
-    private int driverAgeId;
-    private String petFriendly;
-    private String cancellationPolicy;
-    private String isOpened;
+    private int rental_company_id;
+    private int category_id;
+    private String product_name;
+    private String main_img;
+    private String short_description;
+    private String detailed_description;
+    private int rental_fee;
+    private String garage_address;
+    private String overnight_stay;
+    private int seating_capacity;
+    private int sleeping_capacity;
+    private Date avaid_time;
+    private Date return_dateTime;
+    private int driver_license_id;
+    private int driver_experience_id;
+    private int driver_age_id;
+    private String pet_friendly;
+    private String cancellation_policy;
+    private String is_opened;
     private Date created_at;
-    private Date updateDate;
+    private Date update_date;
+
 
 }

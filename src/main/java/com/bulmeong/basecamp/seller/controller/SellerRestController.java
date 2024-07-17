@@ -28,13 +28,13 @@ public class SellerRestController {
         RestResponseDto restResponseDto = new RestResponseDto();
 
         if(seller_type.equals("Store")){
-            restResponseDto.add("storeDto", storeService.getStoreDtoByAccountInfo(account_id, account_pw));
+            restResponseDto.add("sellerDto", storeService.getStoreDtoByAccountInfo(account_id, account_pw));
         }else if(seller_type.equals("Campsite")){
             //여기 수정(캠핑장)
-            restResponseDto.add("storeDto", storeService.getStoreDtoByAccountInfo(account_id, account_pw));
+            restResponseDto.add("sellerDto", storeService.getStoreDtoByAccountInfo(account_id, account_pw));
         }else if(seller_type.equals("Caravan")){
             //여기 수정(캠핑카)
-            restResponseDto.add("rentalCompanyDto", adminService.getSellerByIdAndPw(account_id, account_pw));
+            restResponseDto.add("sellerDto", adminService.getSellerByIdAndPw(account_id, account_pw));
         }
 
         return restResponseDto;

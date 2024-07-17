@@ -113,7 +113,7 @@
 
                     const loginFail = document.getElementById("loginFail");
 
-                    if(response.data.storeDto==null){
+                    if(response.data.sellerDto==null){
                         loginFail.innerText = "로그인에 실패했습니다. 아이디(ID)와 비밀번호를 확인하고 다시 시도해 주세요.";
                     }else{
                         const loginForm = document.getElementById("loginForm");
@@ -126,7 +126,7 @@
     <body>
         <div class="container">
             <div class="row">
-                <form id="loginForm" action="/seller/loginProcess" class="col">
+                <form id="loginForm" method="post" action="/seller/loginProcess" class="col">
                     <input type="hidden" id="sellerType" name="seller_type" value="Store">
                     <div class="row py-5"></div>
                     <div class="row pt-5 text-center">

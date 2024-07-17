@@ -16,7 +16,8 @@
     <!-- 판매자 로그인시, id,password 확인 쿼리 -->
     <select id="selectCompanyByAccountIdandPw" resultType="com.bulmeong.basecamp.campingcar.dto.RentalCompanyDto">
         select * from bc_rental_company_info
-        where account_id=#{account_id} and account_pw=#{account_pw}
+        where account_id = #{account_id}
+        and account_pw = #{account_pw}
     </select>
 
     <!-- 지역Category -->
@@ -24,5 +25,32 @@
         select*from bc_location_category
         order by id ASC
     </select>
+
+    <!-- 차량 등록_캠핑카 유형, 운전면허증, 운전자 나이, 운전 경력 카테고리 select -->
+    <select id="findCarTypeAll" resultType="com.bulmeong.basecamp.campingcar.dto.CarTypeDto">
+        select * from bc_car_type_categories
+        order by id ASC
+    </select>
+    <select id="findDriverLicenseAll" resultType="com.bulmeong.basecamp.campingcar.dto.DriverLicenseDto">
+        select * from bc_driver_license_condition
+        order by id ASC
+    </select>
+
+    <select id="findDriverAgeAll" resultType="com.bulmeong.basecamp.campingcar.dto.DriverAgeCondDto">
+        select * from bc_driver_age_condition 
+        order by id ASC
+    </select>
+
+    <select id="findDriverExperienceAll" resultType="com.bulmeong.basecamp.campingcar.dto.DriverExperienceCondDto">
+        select * from bc_driver_experience_condition
+        order by id ASC    
+    </select>
+
+    <!-- 캠핑차 차량 기본 보유 시설 category  -->
+    <select id="findBasicFacilitiesAll" resultType="com.bulmeong.basecamp.campingcar.dto.BasicFacilitiesDto">
+        select * from bc_car_basic_facilities 
+        order by id ASC
+    </select> 
+
 
 </mapper>

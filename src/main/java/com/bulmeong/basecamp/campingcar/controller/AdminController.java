@@ -10,6 +10,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.bulmeong.basecamp.campingcar.dto.BasicFacilitiesDto;
+import com.bulmeong.basecamp.campingcar.dto.CarTypeDto;
+import com.bulmeong.basecamp.campingcar.dto.DriverAgeCondDto;
+import com.bulmeong.basecamp.campingcar.dto.DriverExperienceCondDto;
+import com.bulmeong.basecamp.campingcar.dto.DriverLicenseDto;
 import com.bulmeong.basecamp.campingcar.dto.LocationDto;
 import com.bulmeong.basecamp.campingcar.dto.RentalCompanyDto;
 import com.bulmeong.basecamp.campingcar.service.AdminService;
@@ -26,7 +31,7 @@ public class AdminController {
 // 판매자 회원가입 
     @RequestMapping("nfRegisterPage")
     public String nfRegisterPage(Model model) {
-
+        // 회원가입_회사지역 cate List
         List<LocationDto> locationData = adminService.getLocationAll();
         model.addAttribute("locationData", locationData);
         
@@ -50,7 +55,28 @@ public class AdminController {
     }
 // admin_main에 sub_category_쓰는 방식
     @RequestMapping(value = "/carRegister", method = RequestMethod.POST)
-    public String reservationStatus() {
+    public String reservationStatus(Model model) {
+        
+    // 차량등록_캠핑카 유형 Category List
+        List<CarTypeDto> carType = adminService.getCarTypeAll();
+        model.addAttribute("carType", carType);
+        
+    // 차량등록_운전자 나이 Category List
+        List<DriverAgeCondDto> driverAge = adminService.getDriverAgeAll(); 
+        model.addAttribute("driverAge", driverAge);
+
+    // 차량등록_운전 면허증 Category List
+        List<DriverLicenseDto> driverLicense = adminService.getDriverLicenseAll();
+        model.addAttribute("driverLicense", driverLicense);
+
+    // 차량등록_운전자 경력 Category List
+        List<DriverExperienceCondDto> driverExpericnece = adminService.getDriverExperienceAll();
+        model.addAttribute("driverExpericnece", driverExpericnece);
+        
+    // 캠핑카 기본 보유 시설 Category List
+        List<BasicFacilitiesDto> basicFacilities = adminService.getBasicFacilitiesAll();
+        model.addAttribute("basicFacilities", basicFacilities);
+        
         return "admin/carRegister";
     }
 
