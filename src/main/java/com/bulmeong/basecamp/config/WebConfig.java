@@ -26,6 +26,9 @@ public class WebConfig implements WebMvcConfigurer {
         } else if(System.getProperty("os.name").charAt(0) == 'M'){
             // * 들어가서 안된 걸 수도 있으니 문제 되면 삭제해보세요
             registry.addResourceHandler("/images/**").addResourceLocations("file:///Users/basecampImage/");
+        } else if(System.getProperty("os.name").charAt(0) == 'L'){
+            // * 들어가서 안된 걸 수도 있으니 문제 되면 삭제해보세요
+            registry.addResourceHandler("/images/**").addResourceLocations("file:///basecampImage/");
         }
     }
 
