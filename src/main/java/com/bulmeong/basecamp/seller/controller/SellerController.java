@@ -25,17 +25,17 @@ public class SellerController {
 
     @RequestMapping("registerCampsite")
     public String registerCampsite() {
-        return "/camp/registerPage";
+        return "camp/registerPage";
     }
 
     @RequestMapping("registerCampsiteProcess")
     public String registerCampsiteProcess(@RequestParam("sellerDto") CampsiteDto params1, @RequestParam("bankDto") CampsiteBankDto params2){
-        return "/seller/registerComplete";
+        return "seller/registerComplete";
     }
 
     @RequestMapping("sellerJoinType")
     public String sellerJoinType(){
-        return "/seller/sellerJoinType";
+        return "seller/sellerJoinType";
     }
 
     @RequestMapping("sellerType")
@@ -53,7 +53,7 @@ public class SellerController {
 
     @RequestMapping("login")
     public String login(){
-        return "/seller/login";
+        return "seller/login";
     }
 
     @RequestMapping("loginProcess")
