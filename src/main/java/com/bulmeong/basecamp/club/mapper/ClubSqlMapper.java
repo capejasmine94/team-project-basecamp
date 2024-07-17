@@ -39,5 +39,8 @@ public interface ClubSqlMapper {
     public int confirmBookmark(ClubBookmarkDto clubBookmarkDto);
     public void deleteBookmark(ClubBookmarkDto clubBookmarkDto);
     public void insertBookmark(ClubBookmarkDto clubBookmarkDto);
+    public void increaseReadCount(int id);
+    public int totalReadCount(int id);
+    public int countTotalBookmark(int id);
 }
 

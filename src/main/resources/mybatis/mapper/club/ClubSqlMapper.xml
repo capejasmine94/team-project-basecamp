@@ -186,6 +186,27 @@
             #{club_id}, #{user_id}
         ); 
     </insert>
+
+    <!-- 소모임 북마크 집계 -->
+    <select id="countTotalBookmark" resultType="int">
+        select count(*) from bc_club_bookmark
+        where club_id = #{club_id}
+    </select>
+
+
+    <!-- 소모임 게시글 조회수 -->
+    <select id="increaseReadCount" resultType="int">
+        update bc_club_post
+        set read_count = read_count + 1
+        where id = #{id}
+    </select>
+
+    <!-- 게시글 조회수 집계 -->
+    <select id="totalReadCount" resultType="int">
+        select read_count 
+        from bc_club_post where id=#{id}
+    </select>
+    
     
 
 

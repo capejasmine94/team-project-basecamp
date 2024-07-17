@@ -68,8 +68,8 @@
                                 </div>
                                 <div class="row">
                                     <div class="col text-secondary" style="font-size: 0.9em;">
-                                        <i class="bi bi-clock"></i><span th:text="${#dates.format(map.clubPostDto.created_at,'hh:mm')}">08:47</span>
-                                        <i class="bi bi-file-earmark-text"></i><span> 27</span>
+                                        <i class="bi bi-clock"></i><span th:text="' ' + ${#dates.format(map.clubPostDto.created_at,'hh:mm')}">08:47</span>
+                                        <i class="bi bi-file-earmark-text"></i><span th:text="' '+${totalReadCount}"> 27</span>
                                     </div>
                                 </div>
                             </div>

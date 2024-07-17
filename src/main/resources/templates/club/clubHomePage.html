@@ -41,7 +41,7 @@
                     <div class="col">
 
                         <div class="row py-4">
-                            <div class="col-auto">
+                            <div class="col-auto" th:if="${session.sessionUserInfo != null}">
                                 <a th:if="${confirmBookmark == 0}" th:href="@{/club/bookmarkProcess(club_id=${map.clubDto.id}, user_id=${session.sessionUserInfo.id})}">
                                     <span><i class="bi bi-bookmark"></i></span>
                                 </a>
@@ -49,7 +49,16 @@
                                     <span><i class="bi bi-bookmark-fill"></i></span>
                                 </a>
                             </div>
-                            <div class="col text-center fw-bold">
+
+                            <div class="col-auto" th:if="${session.sessionUserInfo == null}">
+                                <a>
+                                    <span><i class="bi bi-bookmark"></i></span>
+                                </a>
+                            </div>
+
+
+
+                            <div class="col text-center fw-bold" th:text="${map.clubDto.name}">
                                 CLUB HOME
                             </div>
                             <div class="col-auto">
@@ -81,9 +90,9 @@
                             <div class="col text-center px-0">
                                 <div class="rectangles" style="display: flex; gap: 10px;">
                                     <div class="rectangle" style="width: 25em; height: 10em; border: 1px solid #fff; overflow: hidden; position: relative;">
-                                        <img src="/public/img/clubImage/mangleProfile.jpg" alt="모임 이미지 1" style="width: 100%; height: 100%; object-fit: cover;">
-                                        <div class="badge" style="position: absolute; top: 5px; right: 5px; background-color: #f00; color: #fff; padding: 10px;">
-                                            <i class="bi bi-bookmark"></i><span> 25</span>
+                                        <img src="/public/img/clubImage/mountain.jpg" alt="모임 이미지 1" style="width: 100%; height: 100%; object-fit: cover;">
+                                        <div class="badge bg-opacity-25 bg-success" style="position: absolute; top: 5px; right: 5px;  color: #fff; padding: 10px;">
+                                            <i class="bi bi-bookmark" th:text="' ' + ${totalBookmark}"></i><span></span>
                                         </div>
                                     </div>
                                 </div>
@@ -283,7 +292,7 @@
                             </div>
                         </div>
 
-                        <a th:if="${session.sessionUserInfo != null}" th:href="@{/club/writePost(id=${id})}" class="fixed-button">
+                        <a th:if="${session.sessionUserInfo != null}" th:href="@{/club/createNewMeeting(id=${id})}" class="fixed-button">
                             <!-- <i class="bi bi-plus-circle-fill"></i> -->
                             <i class="bi bi-person-raised-hand"></i>
                         </a>
