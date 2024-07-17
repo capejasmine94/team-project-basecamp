@@ -4,6 +4,9 @@
 <mapper namespace="com.bulmeong.basecamp.campingcar.mapper.AdminSqlMapper">
     <!-- 판매자 회원가입 -->
     <insert id="createSeller">
+        <selectKey keyProperty="id" resultType="int" order="AFTER">
+            select max(id) from bc_campingcar
+        </selectKey>
         insert into bc_rental_company_info(
             location_category_id, account_id, account_pw, crn, comp_name, representative_name,
 		    comp_email, comp_address, contact_number, comp_profile_image, comp_nickname, comp_url

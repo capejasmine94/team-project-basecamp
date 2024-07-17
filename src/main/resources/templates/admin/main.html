@@ -4,14 +4,11 @@
     <meta charset="utf-8">
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-    <!-- Font Awesome -->
-    <script src="https://kit.fontawesome.com/7b271bba58.js" crossorigin="anonymous"></script>
     <!-- Google Material Icons -->
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet">
     <!-- admin_main css -->
     <link href="/public/css/campingcar/adminmain.css" rel="stylesheet">
     <link href="/public/css/common.css" rel="stylesheet">
-
 </head>
 <body class="main-page">
     <!-- 상단 고정 네비게이션 바 -->
@@ -32,7 +29,7 @@
     <div class="container-fluid">
         <div class="row font-roboto">
             <!-- 왼쪽 메뉴 -->
-            <div class="col border-end scrollable left">
+            <div class="col-md-3 border-end scrollable left">
                 <div class="row py-4">
                     <div class="col">
                         <div class="row">
@@ -48,9 +45,9 @@
                     </div>
                 </div>
                 <!-- 대시보드 -->
-                <div class="row category  fw-semibold">
+                <div class="row category fw-semibold">
                     <div class="col pe-0 d-grid">
-                        <button type="button" class="py-3 accordion-button collapsed fw-semibold fs-7">
+                        <button type="button" class="py-3 btn btn-link text-start fw-semibold fs-7">
                             <span class="material-symbols-outlined fs-7">
                                 dashboard
                             </span>Dashboard
@@ -64,166 +61,58 @@
                     </div>
                 </div>
                 <!-- 상품관리 섹션-->
-                <div class="row category toggle-icon" data-bs-toggle="collapse" data-bs-target="#first-collapse">
-                    <div class="col pe-0 d-grid"> 
-                        <button type="button" class="py-3 accordion-button collapsed fw-semibold">
-                            <span class="material-symbols-outlined">
-                                directions_car
-                            </span>차량관리
-                        </button>
+                <div class="accordion" id="accordionExample">
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="headingOne">
+                            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                <span class="material-symbols-outlined">
+                                    directions_car
+                                </span>차량관리
+                            </button>
+                        </h2>
+                        <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+                            <div class="accordion-body">
+                                <a class="nav-link" href="#" data-page="/admin/carRegister.html" data-target="dynamic-content">
+                                    차량등록
+                                </a>
+                                <a class="nav-link" href="#" data-page="/admin/carViewEdit.html" data-target="dynamic-content">
+                                    차량조회/수정
+                                </a>
+                            </div>
+                        </div>
                     </div>
-                    <div class="col-auto ps-0 d-grid fs-5">
-                        <button type="button" class="py-3 accordion-button collapsed">
-                            <span class="material-symbols-outlined dropdown-icon">arrow_drop_down</span>
-                        </button>
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="headingTwo">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                                <span class="material-symbols-outlined">
+                                    event_available
+                                </span>예약
+                            </button>
+                        </h2>
+                        <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
+                            <div class="accordion-body">
+                                <a class="nav-link" href="#" data-page="/admin/reservationStatus.html" data-target="dynamic-content">
+                                    예약 현황
+                                </a>
+                                <a class="nav-link" href="#" data-page="/admin/bookReservation.html" data-target="dynamic-content">
+                                    예약신청
+                                </a>
+                                <a class="nav-link" href="#" data-page="/admin/optionSettings.html" data-target="dynamic-content">
+                                    옵션설정
+                                </a>
+                                <a class="nav-link" href="#" data-page="/admin/peakSeason.html" data-target="dynamic-content">
+                                    성수기·휴일
+                                </a>
+                                <a class="nav-link" href="#" data-page="/admin/settings.html" data-target="dynamic-content">
+                                    환경설정
+                                </a>
+                            </div>
+                        </div>
                     </div>
-                </div>
-                <div class="row accordion-collapse collapse p-0" id="first-collapse">
-                    <div class="col">
-                        <a class="row accordion-body py-3 ps-4 subcategory" href="#" data-page="/admin/carRegister" data-target="dynamic-content">
-                            차량등록
-                        </a>
-                        <a class="row accordion-body py-3 ps-4 subcategory" href="#" data-page="/admin/.html" data-target="dynamic-content">
-                            차량조회/수정
-                        </a>
-                    </div>
-                </div>
-                <!-- 예약관리 섹션 -->
-                <div class="row category toggle-icon" data-bs-toggle="collapse" data-bs-target="#second-collapse">
-                    <div class="col pe-0 d-grid fs-5">
-                        <button type="button" class="py-3 accordion-button collapsed fw-semibold">
-                            <span class="material-symbols-outlined">
-                                event_available
-                            </span>예약
-                        </button>
-                    </div>
-                    <div class="col-auto ps-0 d-grid fs-5">
-                        <button type="button" class="py-3 accordion-button collapsed">
-                            <span class="material-symbols-outlined dropdown-icon">arrow_drop_down</span>
-                        </button>
-                    </div>
-                </div>
-                <div class="row accordion-collapse collapse p-0" id="second-collapse">
-                    <div class="col"> 
-                        <a class="row accordion-body py-3 ps-4 subcategory" href="#" data-page="/admin/reservation_status"  data-target="dynamic-content">
-                            예약 현황
-                        </a>
-                        <a class="row accordion-body py-3 ps-4 subcategory" href="#" data-page="/admin/book_reservation.html" data-target="dynamic-content">
-                            예약신청
-                        </a>
-                        <a class="row accordion-body py-3 ps-4 subcategory" href="#" data-page="/admin/option_settings" data-target="content">
-                            옵션설정
-                        </a>
-                        <a class="row accordion-body py-3 ps-4 subcategory" href="#" data-page="/admin/peak_season" data-target="content">
-                            성수기·휴일
-                        </a>
-                        <a class="row accordion-body py-3 ps-4 subcategory" href="#" data-page="/admin/settings" data-target="content">
-                            환경설정
-                        </a>
-                    </div>
-                </div>
-                <!-- 문의/리뷰 관리 섹션 -->
-                <div class="row category toggle-icon" data-bs-toggle="collapse" data-bs-target="#third-collapse">
-                    <div class="col pe-0 d-grid fs-5">
-                        <button type="button" class="py-3 accordion-button collapsed fw-semibold">
-                            <span class="material-symbols-outlined">feedback</span>문의/리뷰 관리
-                        </button>
-                    </div>
-                    <div class="col-auto ps-0 d-grid fs-5">
-                        <button type="button" class="py-3 accordion-button collapsed">
-                            <span class="material-symbols-outlined dropdown-icon">arrow_drop_down</span>
-                        </button>
-                    </div>
-                </div>
-                <div class="row accordion-collapse collapse p-0" id="third-collapse">
-                    <div class="col">
-                        <a class="row accordion-body py-3 ps-4 subcategory" href="#" data-page="/admin/inquiry_manage.html" data-target="dynamic-content">
-                            문의관리
-                        </a>
-                        <a class="row accordion-body py-3 ps-4 subcategory" href="#" data-page="/admin/review_manage.html" data-target="dynamic-content">
-                            리뷰관리
-                        </a>
-                    </div>
-                </div>
-                <!-- 컨텐츠 관리 섹션 -->
-                <div class="row category toggle-icon" data-bs-toggle="collapse" data-bs-target="#fourth-collapse">
-                    <div class="col pe-0 d-grid fs-5">
-                        <button type="button" class="py-3 accordion-button collapsed fw-semibold">
-                            <span class="material-symbols-outlined">
-                                edit_square
-                            </span> 컨텐츠 관리
-                        </button>
-                    </div>
-                    <div class="col-auto ps-0 d-grid fs-5">
-                        <button type="button" class="py-3 accordion-button collapsed">
-                            <span class="material-symbols-outlined dropdown-icon">arrow_drop_down</span>
-                        </button>
-                    </div>
-                </div>
-                <div class="row accordion-collapse collapse p-0" id="fourth-collapse">
-                    <div class="col">
-                        <a class="row accordion-body py-3 ps-4 subcategory" href="#" data-page="/admin/inputform.html" data-target="dynamic-content">
-                            입력폼 
-                        </a>
-                        <a class="row accordion-body py-3 ps-4 subcategory" href="#" data-page="/admin/map.html" data-target="dynamic-content">
-                            지도 
-                        </a>
-                        <a class="row accordion-body py-3 ps-4 subcategory" href="#" data-page="/admin/schedule.html" data-target="dynamic-content">
-                            일정 
-                        </a>
-                        <a class="row accordion-body py-3 ps-4 subcategory" href="#" data-page="/admin/report_block.html" data-target="dynamic-content">
-                            신고·차단
-                        </a>
-                    </div>
-                </div>
-                <!-- 통계 섹션 -->
-                <div class="row category toggle-icon" data-bs-toggle="collapse" data-bs-target="#fifth-collapse">
-                    <div class="col pe-0 d-grid fs-5">
-                        <button type="button" class="py-3 accordion-button collapsed fw-semibold">
-                            <span class="material-symbols-outlined">
-                                chart_data
-                            </span>통계
-                        </button>
-                    </div>
-                    <div class="col-auto ps-0 d-grid fs-5">
-                        <button type="button" class="py-3 accordion-button collapsed">
-                            <span class="material-symbols-outlined dropdown-icon">arrow_drop_down</span>
-                        </button>
-                    </div>
-                </div>
-                <div class="row accordion-collapse collapse p-0" id="fifth-collapse">
-                    <div class="col">
-                        <a class="row accordion-body py-3 ps-4 subcategory" href="#" data-page="/admin/statistics_home.html" data-target="dynamic-content">
-                            홈
-                        </a>
-                        <a class="row accordion-body py-3 ps-4 subcategory" href="#" data-page="/admin/sales.html" data-target="dynamic-content">
-                            매출
-                        </a>
-                        <a class="row accordion-body py-3 ps-4 subcategory" href="#" data-page="/admin/periodic_analysis.html" data-target="dynamic-content">
-                            기간별 분석
-                        </a>
-                        <a class="row accordion-body py-3 ps-4 subcategory" href="#" data-page="/admin/referral_sites.html" data-target="dynamic-content">
-                            유입 사이트
-                        </a>
-                        <a class="row accordion-body py-3 ps-4 subcategory" href="#" data-page="/admin/search_keywords.html" data-target="dynamic-content">
-                            유입 검색어
-                        </a>
-                        <a class="row accordion-body py-3 ps-4 subcategory" href="#" data-page="/admin/visitors.html" data-target="dynamic-content">
-                            방문자
-                        </a>
-                        <a class="row accordion-body py-3 ps-4 subcategory" href="#" data-page="/admin/top_visited_pages.html" data-target="dynamic-content">
-                            많이 방문한 페이지
-                        </a>
-                        <a class="row accordion-body py-3 ps-4 subcategory" href="#" data-page="/admin/rewardse.html" data-target="dynamic-content">
-                            적립금
-                        </a>
-                        <a class="row accordion-body py-3 ps-4 subcategory" href="#" data-page="/admin/additional_services.html" data-target="dynamic-content">
-                            부가 서비스
-                        </a>
-                    </div>
+                    <!-- Add more accordion items as needed -->
                 </div>
 
-                <!--  금융 서비스 및 판매 지원 프로그램 --> 
+                <!-- 금융 서비스 및 판매 지원 프로그램 -->
                 <div class="row py-4">
                     <div class="col">
                         <div class="row py-3">
@@ -277,7 +166,7 @@
                         </div>
                     </div>
                 </div>
-                
+
                 <!-- 도움말 및 고객센터 -->
                 <div class="row pb-5">
                     <div class="col">
@@ -303,15 +192,15 @@
                     </div>
                 </div>
             </div>
-            
+
             <!-- 오른쪽 콘텐츠 영역 -->
-            <div class="col right">
+            <div class="col-md-9 right">
                 <div class="content-title-bar">
                     <div class="fs-6 fw-semibold" id="content-title">대시보드</div>
                 </div>
                 <div id="dynamic-content" class="content-body mt-5">
                     <!-- 여기에 오른쪽 콘텐츠가 표시됩니다 -->
-                    <p>템플릿화할 콘텐츠를 여기에 추가하세요.</p>
+                    <div th:replace="~{admin/carRegister::carRegister}"></div>
                 </div>
             </div>
         </div>
@@ -319,39 +208,52 @@
 
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="/public/js/campingcar/adminmain.js"></script>
-    <script src="/public/js/campingcar/carRegister.js"></script>
+    <!-- <script src="/public/js/campingcar/adminmain.js"></script> -->
     <script>
-    // AJAX 콘텐츠 로딩
-    document.querySelectorAll('.subcategory').forEach(link => {
-        link.addEventListener('click', function(event) {
-            event.preventDefault();
-            const page = this.getAttribute('data-page');
-            const target = this.getAttribute('data-target');
-            const title = this.textContent.trim();
-            loadPage(page, target, title);
+    document.addEventListener("DOMContentLoaded", function() {
+        document.querySelectorAll('.nav-link').forEach(link => {
+            link.addEventListener('click', function(event) {
+                event.preventDefault();
+                const page = this.getAttribute('data-page');
+                const target = document.querySelector(`#${this.getAttribute('data-target')}`);
+                fetch(page).then(response => response.text()).then(html => {
+                    target.innerHTML = html;
+                }).catch(error => console.warn('Error loading page:', error));
+            });
+        });
+
+        document.querySelectorAll('.accordion-button').forEach(button => {
+            button.addEventListener('click', function() {
+                const isOpen = this.getAttribute('aria-expanded') === 'true';
+                if (isOpen) {
+                    const collapseId = this.getAttribute('data-bs-target');
+                    const collapseElement = document.querySelector(collapseId);
+                    if (collapseElement) {
+                        collapseElement.classList.remove('show');
+                    }
+                }
+            });
+        });
+
+        document.querySelectorAll('.toggle-icon').forEach(button => {
+            button.addEventListener('click', function() {
+                const icon = this.querySelector('.material-symbols-outlined.dropdown-icon');
+                const targetCollapse = document.querySelector(this.getAttribute('data-bs-target'));
+                const isOpen = targetCollapse.classList.contains('show');
+
+                document.querySelectorAll('.toggle-icon .material-symbols-outlined.dropdown-icon').forEach(icon => {
+                    icon.classList.remove('rotate-icon');
+                });
+
+                if (isOpen) {
+                    targetCollapse.classList.remove('show');
+                } else {
+                    icon.classList.add('rotate-icon');
+                    targetCollapse.classList.add('show');
+                }
+            });
         });
     });
-
-    function loadPage(page, targetId, title) {
-        console.log(`Loading page: ${page} into target: ${targetId}`); // 콘솔에 로딩 정보 출력
-        document.getElementById('content-title').textContent = title; // 상단 바 제목 변경
-        const xhr = new XMLHttpRequest();
-        xhr.open('POST', page); // Thymeleaf 템플릿 파일 경로를 입력
-        xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-        xhr.onload = function() {
-            if (xhr.status === 200) {
-                document.getElementById(targetId).innerHTML = xhr.responseText;
-                console.log('Page loaded successfully');
-            } else {
-                console.error(`Failed to load page: ${xhr.status} ${xhr.statusText}`);
-            }
-        };
-        xhr.onerror = function() {
-            console.error('Request failed.');
-        };
-        xhr.send();
-    }
     </script>
 </body>
 </html>

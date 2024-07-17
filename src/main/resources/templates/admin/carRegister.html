@@ -1,12 +1,10 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>차량 등록</title>
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-    <!-- Font Awesome -->
-    <script src="https://kit.fontawesome.com/7b271bba58.js" crossorigin="anonymous"></script>
     <!-- Google Material Icons -->
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet">
     
@@ -127,7 +125,7 @@
     </style>
 </head>
 <body>
-    <div class="container">
+    <div th:fragment="carRegister" id="carRegister" class="container tab-content">
         <form method="post" action="/admin/carRegisterProgress" id="registrationForm">
         <div class="row container-padding">
             <div class="col px-0 pt-3">
@@ -151,18 +149,18 @@
             </div>
 
             <div id="step-1" class="step-container active container-padding font-roboto">
+                
                 <div class="row">
                     <div class="col px-0 pt-2">
                         <div class="card">
                             <div class="card-body">
                                 <div class="form-group">
                                     <label for="option" class="control-label fw-semibold pb-3">캠핑카 유형</label>
-                                    <select class="form-select" aria-label="Default select example" id="option" name="option">
-                                        <option selected>선택</option>
-                                        <option value="1">모터홈</option>
-                                        <option value="2">차박형(중형)</option>
-                                        <option value="3">차박형(소형)</option>
-                                        <option value="4">카라반펜션</option>
+                                    <select class="form-select" aria-label="Default select example" id="option" name="category_id">
+                                        <option th:value="'selectPlease'" th:text="'캠핑카 유형 선택'"></option>
+                                        <option th:each="carTypeDto : ${carType}" 
+                                                th:value="${carTypeDto.id}" 
+                                                th:text="${carTypeDto.name}">
                                     </select>
                                 </div>
                             </div>
@@ -174,8 +172,8 @@
                         <div class="card" style="height: 90%;">
                             <div class="card-body">
                                 <div class="form-group">
-                                    <label for="productName" class="control-label fw-semibold pb-3">등록차량명</label>
-                                    <input name="productName" type="text" class="form-control custom-bottom-border" placeholder="등록차량명을 입력하세요" id="productName" maxlength="200">
+                                    <label for="product_name" class="control-label fw-semibold pb-3">등록차량명</label>
+                                    <input name="product_name" type="text" class="form-control custom-bottom-border" placeholder="등록차량명을 입력하세요" id="product_name" maxlength="200">
                                 </div>
                             </div>
                         </div>
@@ -185,14 +183,14 @@
                             <div class="card-body">
                                 <div class="form-group">
                                     <div class="d-flex justify-content-between mb-3">
-                                        <label for="mainImg" class="control-label fw-semibold pb-3"> 썸네일 이미지 </label>
-                                        <label class="btn btn-flat" for="mainImg" style="color:blue;">Image 추가</label>
-                                        <input name="mainImg" type="file" id="mainImg" style="display: none;"> 
+                                        <label for="main_img" class="control-label fw-semibold pb-3"> 썸네일 이미지 </label>
+                                        <label class="btn btn-flat" for="main_img" style="color:blue;">Image 추가</label>
+                                        <input name="main_img" type="file" id="main_img" style="display: none;"> 
                                     </div>
-                                    <div class="upload-container" id="mainImg">
-                                        <img id="mainImg" src="#" alt="썸네일 이미지 미리보기" style="display:none;">
+                                    <div class="upload-container" id="main_img">
+                                        <img id="main_img" src="#" alt="썸네일 이미지 미리보기" style="display:none;">
                                         <div class="text-center upload-text">이미지를 여기로 드래그 또는 Image 추가를 클릭하세요</div>
-                                        <input name="mainImg" type="file" id="mainImg" accept="image/*" style="display:none;">
+                                        <input name="main_img" type="file" id="main_img" accept="image/*" style="display:none;">
                                     </div>
                                 </div>
                             </div>
@@ -205,8 +203,8 @@
                         <div class="card">
                             <div class="card-body">
                                 <div class="form-group">
-                                    <label for="shortDescription" class="control-label fw-semibold pb-3">한줄 소개</label>
-                                    <input name="shortDescription" type="text" class="form-control custom-bottom-border" placeholder="한줄 소개 입력하세요" id="shortDescription" maxlength="200">
+                                    <label for="short_description" class="control-label fw-semibold pb-3">한줄 소개</label>
+                                    <input name="short_description" type="text" class="form-control custom-bottom-border" placeholder="한줄 소개 입력하세요" id="short_description" maxlength="200">
                                 </div>
                             </div>
                         </div>
@@ -218,8 +216,8 @@
                         <div class="card">
                             <div class="card-body">
                                 <div class="form-group">
-                                    <label for="detailedDescription" class="control-label fw-semibold pb-3">캠핑카 소개</label>
-                                    <textarea name="detailedDescription" class="form-control" placeholder="해당 차량에 대해 상세하게 소개하세요" id="detailedDescription"></textarea>
+                                    <label for="detailed_description" class="control-label fw-semibold pb-3">캠핑카 소개</label>
+                                    <textarea name="detailed_description" class="form-control" placeholder="해당 차량에 대해 상세하게 소개하세요" id="detailed_description"></textarea>
                                 </div>
                             </div>
                         </div>
@@ -244,8 +242,8 @@
                         <div class="card">
                             <div class="card-body">
                                 <div class="form-group">
-                                    <label for="garageAddress" class="control-label fw-semibold pb-3">차고지 주소</label>
-                                    <input name="garageAddress" type="text" class="form-control custom-bottom-border" placeholder="차고지 주소를 입력하세요" id="garageAddress" maxlength="200">
+                                    <label for="garage_address" class="control-label fw-semibold pb-3">차고지 주소</label>
+                                    <input name="garage_address" type="text" class="form-control custom-bottom-border" placeholder="차고지 주소를 입력하세요" id="garage_address" maxlength="200">
                                 </div>
                             </div>
                         </div>
@@ -258,21 +256,12 @@
                             <div class="card-head fw-semibold py-3 px-3">
                                 <head>기본정보</head>
                                 <div class="card-body">
-                                    <!-- 차량 대여료-->
-                                    <div class="form-group">
-                                        <div class="row d-flex justify-content-between">
-                                            <div class="col">
-                                                <label for="rentalFee" class="control-label new-fs-85 fw-semibold pb-3">차량대여료</label>
-                                                <input name="rentalFee" type="number" class="form-control custom-bottom-border" id="rentalFee"  placeholder="예: 240,000원">
-                                            </div>
-                                        </div>
-                                    </div>
                                     <!-- 1박 시간 기준 표기 -->
                                     <div class="form-group">
                                         <div class="row d-flex justify-content-between">
                                             <div class="col">
-                                                <label for="overnightStay" class="control-label new-fs-85 fw-semibold pb-3">1박 시간 기준</label>
-                                                <input name="overnightStay" type="text" class="form-control custom-bottom-border" id="overnightStay" maxlength="5" placeholder="예: 24시간">
+                                                <label for="overnight_stay" class="control-label new-fs-85 fw-semibold pb-3">1박 시간 기준</label>
+                                                <input name="overnight_stay" type="text" class="form-control custom-bottom-border" id="overnight_stay" maxlength="5" placeholder="예: 24시간">
                                             </div>
                                         </div>
                                     </div>
@@ -280,13 +269,13 @@
                                     <div class="form-group">
                                         <div class="row d-flex justify-content-between">
                                             <div class="col">
-                                                <label for="seatingCapacity" class="control-label new-fs-85 fw-semibold pb-3">동승인원수</label>
-                                                <input name="seatingCapacity" type="number" class="form-control custom-bottom-border" id="seatingCapacity" min="1" max="5">
+                                                <label for="seating_capacity" class="control-label new-fs-85 fw-semibold pb-3">동승인원수</label>
+                                                <input name="seating_capacity" type="number" class="form-control custom-bottom-border" id="seating_capacity" min="1" max="5">
                                                 <div class="new-fs-7" style="color: #7C7B7B;">기준 동승인원까지는 추가 요금을 받지 않습니다.</div>
                                             </div>
                                             <div class="col">
-                                                <label for="sleepingCapacity" class="control-label new-fs-85 fw-semibold pb-3">취침인원수</label>
-                                                <input name="sleepingCapacity" type="number" class="form-control custom-bottom-border" id="sleepingCapacity" min="1" max="5">
+                                                <label for="sleeping_capacity" class="control-label new-fs-85 fw-semibold pb-3">취침인원수</label>
+                                                <input name="sleeping_capacity" type="number" class="form-control custom-bottom-border" id="sleeping_capacity" min="1" max="5">
                                             </div>
                                         </div>
                                     </div>
@@ -294,12 +283,12 @@
                                     <div class="form-group">
                                         <div class="row d-flex justify-content-between">
                                             <div class="col">
-                                                <label for="avaidTime" class="control-label new-fs-85 fw-semibold pb-3">출고가능시간</label>
-                                                <input name="avaidTime" type="time" class="form-control custom-bottom-border" id="avaidTime">
+                                                <label for="avaid_time" class="control-label new-fs-85 fw-semibold pb-3">출고가능시간</label>
+                                                <input name="avaid_time" type="time" class="form-control custom-bottom-border" id="avaid_time">
                                             </div>
                                             <div class="col">
-                                                <label for="returnDateTime" class="control-label new-fs-85 fw-semibold pb-3">반납가능시간</label>
-                                                <input name="returnDateTime" type="time" class="form-control custom-bottom-border" id="returnDateTime">
+                                                <label for="return_dateTime" class="control-label new-fs-85 fw-semibold pb-3">반납가능시간</label>
+                                                <input name="return_dateTime" type="time" class="form-control custom-bottom-border" id="return_dateTime">
                                             </div>
                                         </div>
                                     </div>
@@ -307,40 +296,30 @@
                                     <div class="form-group">
                                         <div class="row d-flex justify-content-between">
                                             <div class="col">
-                                                <label for="driverAgeCondition" class="control-label new-fs-85 fw-semibold pb-3">운전자 최소 연령</label>
-                                                <select class="form-select" aria-label="Default select example" id="driverAgeCondition" name="driverAgeCondition">
-                                                    <option selected>선택</option>
-                                                    <option value="1">만 19세이상</option>
-                                                    <option value="2">만 20세이상</option>
-                                                    <option value="3">만 21세이상</option>
-                                                    <option value="4">만 22세이상</option>
-                                                    <option value="5">만 23세이상</option>
-                                                    <option value="6">만 24세이상</option>
-                                                    <option value="7">만 25세이상</option>
-                                                    <option value="8">만 26세이상</option>
-                                                    <option value="9">만 27세이상</option>
-                                                    <option value="10">만 28세이상</option>
-                                                    <option value="11">만 29세이상</option>
-                                                    <option value="12">만 30세이상</option>
+                                                <label for="driver_license_condition" class="control-label new-fs-85 fw-semibold pb-3">운전자 면허 종류</label>
+                                                <select class="form-select" aria-label="Default select example" id="driver_license_condition" name="driver_license_id">
+                                                    <option th:value="'selectPlease'" th:text="'운전자 면허증 선택'"></option>
+                                                    <option th:each="driverLicenseDto : ${driverLicense}" 
+                                                            th:value="${driverLicenseDto.id}" 
+                                                            th:text="${driverLicenseDto.name}">
                                                 </select>
                                             </div>
                                             <div class="col">
-                                                <label for="driverLicenseCondition" class="control-label new-fs-85 fw-semibold pb-3">운전자 면허 종류</label>
-                                                <select class="form-select" aria-label="Default select example" id="driverLicenseCondition" name="driverLicenseCondition">
-                                                    <option selected>선택</option>
-                                                    <option value="1">1종 대형</option>
-                                                    <option value="2">1종 보통</option>
-                                                    <option value="3">2종 보통</option>
-                                                    <option value="4">소형 견인차</option>
+                                                <label for="driver_age_condition" class="control-label new-fs-85 fw-semibold pb-3">운전자 최소 연령</label>
+                                                <select class="form-select" aria-label="Default select example" id="driver_age_condition" name="driver_age_id">
+                                                    <option th:value="'selectPlease'" th:text="'운전자 최소 연령 선택'"></option>
+                                                    <option th:each="driverAgeCondDto : ${driverAge}" 
+                                                            th:value="${driverAgeCondDto.id}" 
+                                                            th:text="${driverAgeCondDto.name}">
                                                 </select>
                                             </div>
                                             <div class="col">
-                                                <label for="driverExperienceCondition" class="control-label new-fs-85 fw-semibold pb-3">운전자 운전 경력</label>
-                                                <select class="form-select" aria-label="Default select example" id="driverExperienceCondition" name="driverExperienceCondition">
-                                                    <option selected>선택</option>
-                                                    <option value="1">운전 경력 1년 이상</option>
-                                                    <option value="2">운전 경력 2년 이상</option>
-                                                    <option value="3">운전 경력 3년 이상</option>
+                                                <label for="driver_experience_condition" class="control-label new-fs-85 fw-semibold pb-3">운전자 운전 경력</label>
+                                                <select class="form-select" aria-label="Default select example" id="driver_experience_condition" name="driver_experience_id">
+                                                    <option th:value="'selectPlease'" th:text="'운전자 운전 경력 선택'"></option>
+                                                    <option th:each="driverExpericneceConDto : ${driverExpericnece}" 
+                                                            th:value="${driverExpericneceConDto.id}" 
+                                                            th:text="${driverExpericneceConDto.name}">
                                                 </select>
                                             </div>
                                         </div>
@@ -349,11 +328,11 @@
                                     <div class="form-group">
                                         <div class="row">
                                             <div class="col">
-                                                <label for="petFriendly" class="control-label new-fs-85 fw-semibold pb-3">반려동물 동승 가능 여부</label>
+                                                <label for="pet_Friendly" class="control-label new-fs-85 fw-semibold pb-3">반려동물 동승 가능 여부</label>
                                                 <div class="row d-flex justify-content-between">
                                                     <div class="col text-center border rounded-4">
-                                                        <label for="petFriendlyYes">
-                                                            <input name="petFriendly" type="radio" id="petFriendlyYes" checked value="동승가능">
+                                                        <label for="pet_friendlyYes">
+                                                            <input name="pet_friendly" type="radio" id="petfriendlyYes" checked value="동승가능">
                                                             <div class="row">
                                                                 <div class="col">
                                                                     <span class="material-symbols-outlined">sentiment_excited</span>
@@ -363,8 +342,8 @@
                                                         </label>
                                                     </div>
                                                     <div class="col text-center border rounded-4">
-                                                        <label for="petFriendlyNo">
-                                                            <input name="petFriendly" type="radio" id="petFriendlyNo" value="동승불가능">
+                                                        <label for="pet_friendlyNo">
+                                                            <input name="pet_friendly" type="radio" id="pet_friendlyNo" value="동승불가능">
                                                             <div class="row">
                                                                 <div class="col">
                                                                     <span class="material-symbols-outlined">sentiment_sad</span>
@@ -387,91 +366,12 @@
                     <div class="col px-0">
                         <div class="card">
                             <div class="card-head py-3 px-3">
-                                <head>기본 보유 시설</head>
+                                <div class="fw-semibold">
+                                <head> 기본 보유 시설</head></div>
                                 <div class="card-body">
-                                    <div class="form-check">
-                                        <label class="form-check-label" for="option1">
-                                            화장실
-                                        </label>
-                                        <input class="form-check-input" type="checkbox" id="option1" name="facilities" value="화장실">
-                                    </div>
-                                    <div class="form-check">
-                                        <label class="form-check-label" for="option2">
-                                            샤워실 
-                                        </label>
-                                        <input class="form-check-input" type="checkbox" id="option2" name="facilities" value="샤워실">
-                                    </div>
-                                    <div class="form-check">
-                                        <label class="form-check-label" for="option3">
-                                            침대
-                                        </label>
-                                        <input class="form-check-input" type="checkbox" id="option3" name="facilities" value="침대">
-                                    </div>
-                                    <div class="form-check">
-                                        <label class="form-check-label" for="option4">
-                                            싱크대
-                                        </label>
-                                        <input class="form-check-input" type="checkbox" id="option4" name="facilities" value="싱크대">
-                                    </div>
-                                    <div class="form-check">
-                                        <label class="form-check-label" for="option5">
-                                            인덕션
-                                        </label>
-                                        <input class="form-check-input" type="checkbox" id="option5" name="facilities" value="인덕션">
-                                    </div>
-                                    <div class="form-check">
-                                        <label class="form-check-label" for="option6">
-                                            가스레인지
-                                        </label>
-                                        <input class="form-check-input" type="checkbox" id="option6" name="facilities" value="가스레인지">
-                                    </div>
-                                    <div class="form-check">
-                                        <label class="form-check-label" for="option7">
-                                            전기레인지 
-                                        </label>
-                                        <input class="form-check-input" type="checkbox" id="option7" name="facilities" value="전기레인지">
-                                    </div>
-                                    <div class="form-check">
-                                        <label class="form-check-label" for="option8">
-                                            냉장고
-                                        </label>
-                                        <input class="form-check-input" type="checkbox" id="option8" name="facilities" value="냉장고">
-                                    </div>
-                                    <div class="form-check">
-                                        <label class="form-check-label" for="option9">
-                                            오디오 온수기 
-                                        </label>
-                                        <input class="form-check-input" type="checkbox" id="option9" name="facilities" value="오디오 온수기">
-                                    </div>
-                                    <div class="form-check">
-                                        <label class="form-check-label" for="option10">
-                                            테이블
-                                        </label>
-                                        <input class="form-check-input" type="checkbox" id="option10" name="facilities" value="테이블">
-                                    </div>
-                                    <div class="form-check">
-                                        <label class="form-check-label" for="option11">
-                                            TV
-                                        </label>
-                                        <input class="form-check-input" type="checkbox" id="option11" name="facilities" value="TV">
-                                    </div>
-                                    <div class="form-check">
-                                        <label class="form-check-label" for="option12">
-                                            에어컨
-                                        </label>
-                                        <input class="form-check-input" type="checkbox" id="option12" name="facilities" value="에어컨">
-                                    </div>
-                                    <div class="form-check">
-                                        <label class="form-check-label" for="option13">
-                                            무시동히터  
-                                        </label>
-                                        <input class="form-check-input" type="checkbox" id="option13" name="facilities" value="무시동히터">
-                                    </div>
-                                    <div class="form-check">
-                                        <label class="form-check-label" for="option14">
-                                            인사철 배터리
-                                        </label>
-                                        <input class="form-check-input" type="checkbox" id="option14" name="facilities" value="인사철 배터리">
+                                    <div th:each="basicFacilitesDto : ${basicFacilities}"class="form-check">
+                                        <label class="form-check-label" th:for="'option' + ${basicFacilitesDto.id}" th:text="${basicFacilitesDto.name}"></label>
+                                        <input class="form-check-input" type="checkbox" th:id="'option' + ${basicFacilitesDto.id}" th:value="${basicFacilitesDto.name}">
                                     </div>
                                 </div>
                             </div>
@@ -492,8 +392,8 @@
                         <div class="card">
                             <div class="card-body">
                                 <div class="form-group">
-                                    <label for="rentalFee" class="control-label new-fs-85 fw-semibold pb-3">차량대여료</label>
-                                    <input name="rentalFee" type="number" class="form-control custom-bottom-border" id="rentalFee"  placeholder="예: 240,000원">
+                                    <label for="rental_fee" class="control-label new-fs-85 fw-semibold pb-3">차량대여료</label>
+                                    <input name="rental_fee" type="number" class="form-control custom-bottom-border" id="rental_fee"  placeholder="예: 240,000원">
                                 </div>
                             </div>
                         </div>
@@ -550,8 +450,8 @@
                                     <div class="form-group">
                                         <div class="row d-flex justify-content-between">
                                             <div class="col">
-                                                <label for="overnightStay" class="control-label new-fs-85 fw-semibold pb-3">1박 시간 기준</label>
-                                                <input name="overnightStay" type="text" class="form-control custom-bottom-border" id="overnightStay" maxlength="5" placeholder="예: 24시간">
+                                                <label for="overnight_stay" class="control-label new-fs-85 fw-semibold pb-3">1박 시간 기준</label>
+                                                <input name="overnight_stay" type="text" class="form-control custom-bottom-border" id="overnightStay" maxlength="5" placeholder="예: 24시간">
                                             </div>
                                         </div>
                                     </div>

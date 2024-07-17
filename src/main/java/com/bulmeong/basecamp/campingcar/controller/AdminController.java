@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -20,6 +19,8 @@ import com.bulmeong.basecamp.campingcar.dto.RentalCompanyDto;
 import com.bulmeong.basecamp.campingcar.service.AdminService;
 import com.bulmeong.basecamp.common.util.ImageUtil;
 import com.bulmeong.basecamp.common.util.Utils;
+
+import jakarta.servlet.http.HttpSession;
 
 
 @Controller
@@ -49,13 +50,16 @@ public class AdminController {
     }
 // 판매자페이지 main
     @RequestMapping("main")
-    public String main(){
+    public String main(HttpSession session, Model model){
+
+        RentalCompanyDto rentalCompanyDto = (RentalCompanyDto) session.getAttribute("sessionCaravanInfo");
+        model.addAttribute("rentalCompanyDto", rentalCompanyDto);
         
         return "admin/main";
     }
-// admin_main에 sub_category_쓰는 방식
-    @RequestMapping(value = "/carRegister", method = RequestMethod.POST)
-    public String reservationStatus(Model model) {
+    // admin_main에 sub_category_쓰는 방식
+    @RequestMapping("carRegister")
+    public String carRegister(Model model) {
         
     // 차량등록_캠핑카 유형 Category List
         List<CarTypeDto> carType = adminService.getCarTypeAll();
