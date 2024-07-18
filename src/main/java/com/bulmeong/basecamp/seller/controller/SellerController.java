@@ -78,6 +78,7 @@ public class SellerController {
             //여기 수정(캠핑카)
             RentalCompanyDto rentalCompanyDto = adminService.getSellerByIdAndPw(account_id, account_pw);
             session.setAttribute("sessionCaravanInfo", rentalCompanyDto);
+            System.out.println("11111111111"+  rentalCompanyDto);
     
             return "redirect:/admin/main";
         }

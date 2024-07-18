@@ -4,9 +4,6 @@
 <mapper namespace="com.bulmeong.basecamp.campingcar.mapper.AdminSqlMapper">
     <!-- 판매자 회원가입 -->
     <insert id="createSeller">
-        <selectKey keyProperty="id" resultType="int" order="AFTER">
-            select max(id) from bc_campingcar
-        </selectKey>
         insert into bc_rental_company_info(
             location_category_id, account_id, account_pw, crn, comp_name, representative_name,
 		    comp_email, comp_address, contact_number, comp_profile_image, comp_nickname, comp_url
@@ -23,11 +20,43 @@
         and account_pw = #{account_pw}
     </select>
 
-    <!-- 지역Category -->
+    <!-- 판매자회원가입_지역Category -->
     <select id="findLocationAll" resultType="com.bulmeong.basecamp.campingcar.dto.LocationDto"> 
         select*from bc_location_category
         order by id ASC
     </select>
+    <!--  펀매자 id 가지고 오는 쿼리 -->
+    <select id="getRentalCompanyInfoByid" resultType="com.bulmeong.basecamp.campingcar.dto.RentalCompanyDto">
+        select * from bc_rental_company_info
+        where id=#{id}
+    </select>
+    <select id="getCompingCarByid" resultType="com.bulmeong.basecamp.campingcar.dto.CampingcarDto">
+        select * from bc_campingcar
+        where id=#{id}
+    </select>
+
+    <!-- 차량 등록 -->
+    <insert id="createCamping">
+        <selectKey keyProperty="id" resultType="int" order="AFTER">
+            select max(id) from bc_campingcar
+        </selectKey>
+        insert into bc_campingcar (
+            rental_company_id, category_id, product_name, main_img, short_description, detailed_description,
+            rental_fee, garage_address, overnight_stay, seating_capacity, sleeping_capacity, avaid_time, 
+            return_dateTime, driver_license_id, driver_experience_id, driver_age_id, pet_friendly,
+            cancellation_policy, is_opened, update_date
+        )values(
+            #{rental_company_id}, #{category_id}, #{product_name}, #{main_img}, #{short_description}, #{detailed_description},
+            #{rental_fee}, #{garage_address}, #{overnight_stay}, #{seating_capacity}, #{sleeping_capacity}, #{avaid_time}, 
+            #{return_dateTime}, #{driver_license_id}, #{driver_experience_id}, #{driver_age_id}, #{pet_friendly},
+            #{cancellation_policy}, #{is_opened}, #{update_date}
+        )
+    </insert>
+    <!-- 차량등록X보유시설 -->
+    <insert id="createCarBasic">
+    insert into bc_product_x_basic_facilities (product_id,basic_facilities_id) 
+    values(#{product_id},#{basic_facilities_id})
+    </insert>
 
     <!-- 차량 등록_캠핑카 유형, 운전면허증, 운전자 나이, 운전 경력 카테고리 select -->
     <select id="findCarTypeAll" resultType="com.bulmeong.basecamp.campingcar.dto.CarTypeDto">

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<html lang="kr">
 <head>
     <meta charset="utf-8">
     <!-- Bootstrap CSS -->
@@ -10,11 +10,124 @@
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet">
     <!-- admin_main css
     <link href="/public/css/campingcar/adminmain.css" rel="stylesheet"> -->
-    <link href="/public/css/campingcar/camping.css" rel="stylesheet">
-    <link href="/public/css/common.css" rel="stylesheet">
-    <!-- 이미지 js -->
-    <script src="/public/js/util.js"></script>
 
+    <link href="/public/css/common.css" rel="stylesheet">
+
+    <style>
+/* 네비게이션 링크 */
+.nav-link {
+        display: block; /* 요소를 블록으로 표시하여 한 줄에 하나씩 표시 */
+        padding: 0.5em; /* 링크 주위에 패딩을 추가하여 클릭 가능한 영역을 늘림 */
+        text-decoration: none; /* 링크에 밑줄을 제거 */
+        color: black; /* 링크 텍스트 색상을 검정색으로 설정 */
+        position: relative; /* 상대적 위치 설정으로 자식 요소에 절대 위치를 지정할 수 있도록 함 */
+    }
+
+    /* 완료된 탭에 체크 표시 추가 */
+    .nav-link.completed::after {
+        content: '✔'; /* ::after 가상 요소를 사용하여 완료된 탭에 체크 표시를 추가 */
+        position: absolute; /* 절대 위치 설정으로 부모 요소 내에서 위치를 정확히 지정 */
+        right: 0.5em; /* 오른쪽 여백을 설정하여 텍스트와 체크 표시 사이의 간격을 조정 */
+        color: green; /* 체크 표시의 색상을 초록색으로 설정 */
+    }
+
+    /* 활성화된 탭 스타일 */
+    .nav-link.active {
+        font-weight: bold; /* 활성화된 탭의 텍스트를 굵게 표시 */
+        color: black !important; /* 중요도를 높여 기본 텍스트 색상을 검정색으로 유지 */
+        background-color: transparent !important; /* 중요도를 높여 배경색을 투명하게 유지 */
+    }
+
+    /* 단계 컨테이너 */
+    .step-container {
+        display: none; /* 초기에 숨김 처리되어 있음 */
+    }
+
+    /* 활성화된 단계 컨테이너 표시 */
+    .step-container.active {
+        display: block; /* 활성화된 단계 컨테이너를 블록 요소로 표시 */
+    }
+
+    /* 프로그레스 바 */
+    #progress-bar {
+        height: 20px; /* 프로그레스 바의 높이 설정 */
+        background-color: lightgrey; /* 프로그레스 바의 배경색을 연회색으로 설정 */
+        position: relative; /* 상대적 위치 설정으로 내부 요소의 절대 위치 지정 가능 */
+    }
+
+    /* 프로그레스 바의 완료 상태 스타일 */
+    #progress-bar::after {
+        content: ''; /* 가상 요소의 내용 없음 */
+        display: block; /* 블록 요소로 설정하여 너비와 높이를 지정 가능 */
+        height: 100%; /* 가상 요소의 높이를 100%로 설정하여 부모 요소의 높이와 동일하게 설정 */
+        background-color: green; /* 완료된 상태의 색상을 초록색으로 설정 */
+        width: 0; /* 초기에 가상 요소의 너비를 0으로 설정 */
+        transition: width 0.3s; /* 너비 변경 시 애니메이션 효과를 0.3초로 설정 */
+    }
+
+    /* 카드 스타일 */
+    .card {
+        margin-top: 10px; /* 카드 위쪽 여백을 10px로 설정 */
+        margin-bottom: 10px; /* 카드 아래쪽 여백을 10px로 설정 */
+        border: 1px solid #ddd; /* 카드의 테두리를 회색으로 설정 */
+        border-radius: 5px; /* 카드의 둥근 모서리를 5px로 설정 */
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* 카드에 약간의 그림자 효과를 추가 */
+    }
+
+    /* 폼 컨트롤 스타일 */
+    .form-control.custom-bottom-border {
+        border: none; /* 폼 컨트롤의 테두리를 없애고 */
+        border-bottom: 2px solid lightgray; /* 아래쪽 테두리를 회색으로 추가하여 입력 필드를 강조 */
+        border-radius: 0; /* 테두리의 둥근 모서리를 제거 */
+        outline: none; /* 포커스 시 아웃라인을 제거 */
+        box-shadow: none; /* 박스 쉐도우를 제거 */
+        height: 35px; /* 입력 필드의 높이를 35px로 설정 */
+    }
+    .form-control.custom-bottom-border:focus {
+        border-bottom: 2px solid green; /* 포커스 시 아래쪽 테두리를 초록색으로 변경하여 포커스 표시 */
+        outline: none; /* 포커스 시 아웃라인을 제거 */
+        box-shadow: none; /* 박스 쉐도우를 제거 */
+    }
+
+    /* 업로드 컨테이너 스타일 */
+    .upload-container {
+        display: flex; /* 플렉스 박스로 설정하여 내부 요소를 가로로 정렬 */
+        flex-direction: column; /* 컬럼 방향으로 정렬하여 업로드 영역을 세로로 배치 */
+        align-items: center; /* 가운데 정렬 */
+        justify-content: center; /* 가운데 정렬 */
+        border: 2px dashed lightgray; /* 점선 테두리를 회색으로 설정 */
+        border-radius: 5px; /* 둥근 모서리를 5px로 설정 */
+        padding: 20px; /* 안쪽 여백을 20px로 설정 */
+        text-align: center; /* 텍스트를 가운데로 정렬 */
+    }
+
+    /* 업로드 텍스트 스타일 */
+    .upload-text {
+        color: gray; /* 업로드 텍스트의 색상을 회색으로 설정 */
+    }
+
+    /* 폼 그룹 스타일 */
+    .form-group {
+        margin-bottom: 1.5rem; /* 폼 그룹의 아래쪽 여백을 1.5rem으로 설정 */
+    }
+
+    /* 컨테이너 패딩 스타일 */
+    /* .container-padding {
+        /* padding-left: 15px; 컨테이너의 왼쪽 패딩을 15px로 설정 */
+        /* padding-right: 15px; 컨테이너의 오른쪽 패딩을 15px로 설정 */
+        /* } */ 
+
+    /* 카드 바디 스타일 */
+    .card-body {
+        padding-left: 15px; /* 카드 바디의 왼쪽 패딩을 15px로 설정 */
+        padding-right: 15px; /* 카드 바디의 오른쪽 패딩을 15px로 설정 */
+    }
+
+    /* 카드 전체 너비 설정 */
+    .card {
+        width: 100%; /* 카드의 전체 너비를 설정하여 부모 요소에 맞춤 */
+    }
+    </style>
 </head>
 <body>
     <div th:replace="~{admin/carNavi::topNavi}"></div>
@@ -23,19 +136,17 @@
         <div class="row">
             <div th:replace="~{admin/carNavi::leftNavi}"></div>
             <!-- right -->
-            <div class="col right bg-body-secondary" style="padding-top: 55px;">
+            <div class="col right bg-body-secondary" style="padding-top: 58px;">
                 <div class="row py-3 px-4 d-flex align-items-center bg-white">
-                    <div class="col-0"></div>
-                    <div class="col fs-6 fw-semibold">
+                    <div class="col fs-3 fw-semibold">
                         차량등록
                     </div>
                 </div>
                 <!-- 본문내용(templets) -->
-                <div class="row px-4"th:if="${session.sessionCaravanInfo != null}">
-                    <form class="col" method="post" action="/admin/carRegisterProgress" id="registrationForm" enctype="multipart/form-data">
+                <div class="row px-4">
+                    <form class="col" method="post" action="/admin/carRegisterProgress" id="registrationForm">
                         <div class="row">
                             <div class="col pt-3">
-                                <input type="hidden" name="rental_company_id" th:value="${session.sessionCaravanInfo.id}">
                                 <ul class="nav flex-column nav-pills rounded-3 shadow-sm" style="background-color: white;">
                                     <li class="nav-item">
                                         <a class="nav-link active completed" id="nav-step-1" href="#">일반</a> <!-- 디폴트로 첫 번째 탭 활성화 및 체크 표시 -->
@@ -85,19 +196,19 @@
                                         </div>
                                     </div>
                                     <div class="col-6 px-0"> <!-- 썸네일 이미지 등록 -->
-                                        
                                         <div class="card">
                                             <div class="card-body">
                                                 <div class="form-group">
-                                                    <div class="">
+                                                    <div class="d-flex justify-content-between mb-3">
                                                         <label for="main_img" class="control-label fw-semibold pb-3"> 썸네일 이미지 </label>
-                                                        <div id="upload_main_image"></div>
-                                                    </div> 
-                                                    <!-- <div class="upload-container" id="main_img">
-                                                        <img id="main_img" alt="썸네일 이미지 미리보기" style="display:none;">
+                                                        <label class="btn btn-flat" for="main_img" style="color:blue;">Image 추가</label>
+                                                        <input name="main_img" type="file" id="main_img" style="display: none;"> 
+                                                    </div>
+                                                    <div class="upload-container" id="main_img">
+                                                        <img id="main_img" src="#" alt="썸네일 이미지 미리보기" style="display:none;">
                                                         <div class="text-center upload-text">이미지를 여기로 드래그 또는 Image 추가를 클릭하세요</div>
-                                                        <input name="car_img" type="file" id="car_img" accept="image/*" style="display:none;">
-                                                    </div> -->
+                                                        <input name="main_img" type="file" id="main_img" accept="image/*" style="display:none;">
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
@@ -132,12 +243,11 @@
                                 <!-- 상세이미지-->
                                 <div class="row pt-3">
                                     <div class="col px-0">
-                                        
                                         <div class="card">
                                             <div class="card-body">
                                                 <div class="form-group">
                                                     <label for="detailedImg" class="control-label fw-semibold pb-3">상세 이미지</label>
-                                                    <div id="upload_detailedImg"></div>
+                                                    <input name="detailedImg" type="file" class="form-control" id="detailedImg"></input>
                                                 </div>
                                             </div>
                                         </div>
@@ -278,7 +388,7 @@
                                                 <div class="card-body">
                                                     <div th:each="basicFacilitesDto : ${basicFacilities}"class="form-check">
                                                         <label class="form-check-label" th:for="'option' + ${basicFacilitesDto.id}" th:text="${basicFacilitesDto.name}"></label>
-                                                        <input class="form-check-input" name="basicFacilites_id" type="checkbox" th:id="'option' + ${basicFacilitesDto.id}" th:value="${basicFacilitesDto.id}">
+                                                        <input class="form-check-input" type="checkbox" th:id="'option' + ${basicFacilitesDto.id}" th:value="${basicFacilitesDto.name}">
                                                     </div>
                                                 </div>
                                             </div>
@@ -351,6 +461,15 @@
                                                                         </label>
                                                                     </div>
                                                                 </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <!-- 1박 시간 기준 표기 -->
+                                                    <div class="form-group">
+                                                        <div class="row d-flex justify-content-between">
+                                                            <div class="col">
+                                                                <label for="overnight_stay" class="control-label new-fs-85 fw-semibold pb-3">1박 시간 기준</label>
+                                                                <input name="overnight_stay" type="text" class="form-control custom-bottom-border" id="overnightStay" maxlength="5" placeholder="예: 24시간">
                                                             </div>
                                                         </div>
                                                     </div>
@@ -481,10 +600,7 @@
     <script src="/public/js/campingcar/carRegister.js"></script>
     <!-- 이미지 upload 공용 js -->
     <script src="/public/js/uploader.js"></script>
-    <script>
-    createUploader("main_image");
-    createMultipleUploader("detailedImg");
-    </script>
+
 
 </body>
 </html>

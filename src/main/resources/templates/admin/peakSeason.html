@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <!-- Font Awesome -->
+    <script src="https://kit.fontawesome.com/7b271bba58.js" crossorigin="anonymous"></script>
+    <!-- Google Material Icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet">
+    <!-- admin_main css
+    <link href="/public/css/campingcar/adminmain.css" rel="stylesheet"> -->
+    <link href="/public/css/campingcar/camping.css" rel="stylesheet">
+    <link href="/public/css/common.css" rel="stylesheet">
+    <!-- 이미지 js -->
+    <script src="/public/js/util.js"></script>
+    <!-- 캘린더 js -->
+    <script src="/public/js/calendar.js"></script>
+   
+</head>
+<body>
+    <div th:replace="~{admin/carNavi::topNavi}"></div>
+    <div class="container-fluid">
+        <div class="row">
+            <div th:replace="~{admin/carNavi::leftNavi}"></div>
+            <!-- right -->
+            <div class="col right bg-body-secondary" style="padding-top: 55px;">
+                <div class="row py-3 px-4 d-flex align-items-center bg-white">
+                    <div class="col fs-6 fw-semibold">
+                        성수기·휴일
+                    </div>
+                </div>
+                <!-- 본문내용(templets) -->
+                <div class="row px-4 pt-3">
+                    <div class="col px-0">
+                        <div class="card">
+                            <div class="card-head fw-semibold py-3 px-3">
+                                <head>성수기/휴무 관리</head>
+                                <div class="card-body">
+                                    <div class="form-group">
+                                        <div class="row font-robot">
+                                            <div class="col margin-0">
+                                                <div class="alert alert-info border-5 border-top-0 border-end-0 border-bottom-0 border-primary-subtle fw-medium" style="background: #FAFAFA;">
+                                                    기간이 겹칠 경우 하위에 배치된 기간이 우선으로 적용됩니다. (드래그로 순서 변경 가능)
+                                                    <div class="fw-medium"><span style="color: red;">단 타입이 휴무로 설정된 경우,</span> 우선순위와 관계 없이 휴무일로 적용됩니다.</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="row font-roboto">
+                                            <div class="col">
+                                                <table class="table table-hover" style="text-align: center;">
+                                                    <thead>
+                                                      <tr>
+                                                        <th scope="col">no</th>
+                                                        <th scope="col">타입</th>
+                                                        <th scope="col">기간명</th>
+                                                        <th scope="col">기간</th>
+                                                        <th scope="col">수정/삭제</th>
+                                                      </tr>
+                                                    </thead>
+                                                    <tbody style="font-weight:normal;">
+                                                        <tr>
+                                                            <th scope="row" style="font-weight:normal;">1</th>
+                                                            <td >성수기</td>
+                                                            <td>성수기</td>
+                                                            <td>2024-07-17~2024-07-17</td>
+                                                            <td>
+                                                                <a href="/admin/peekEdit"><span class="material-symbols-outlined">edit</span></a>
+                                                                <a href="/admin/peekdelete"><span class="ps-2 material-symbols-outlined">delete</span></a>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th scope="row" style="font-weight:normal;">2</th>
+                                                            <td>성수기</td>
+                                                            <td>성수기</td>
+                                                            <td>2024-07-18~2024-07-18</td>
+                                                            <td>
+                                                                <a href="/admin/peekEdit"><span class="material-symbols-outlined">edit</span> </a>
+                                                                <a href="/admin/peekdelete"><span class="ps-2 material-symbols-outlined">delete</span></a>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th scope="row" style="font-weight:normal;">3</th>
+                                                            <td>성수기</td>
+                                                            <td>성수기</td>
+                                                            <td>2024-07-19~2024-07-19</td>
+                                                            <td> 
+                                                                <a href="/admin/editPeriod"><span class="material-symbols-outlined">edit</span> </a>
+                                                                <a href="/admin/deletePeriod"><span class="ps-2 material-symbols-outlined">delete</span></a>
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col">
+                                                <a href="admin/peekAddPeriod">기간설정 추가</a>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <div class="row">
+                                            <div class="col">
+                                                
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row px-4 pt-3">
+                    <div class="col px-0">
+                        <div class="card">
+                            <div class="card-head fw-semibold py-3 px-3">
+                                <head>기간 및 가격 확인</head>
+                                <div class="card-body">
+                                    <div class="form-group">
+                                        <div class="row font-robot">
+                                            <div class="col margin-0">
+                                                <div class="alert alert-info border-5 border-top-0 border-end-0 border-bottom-0 border-primary-subtle fw-medium" style="background: #FAFAFA;">
+                                                    달력에서 날짜를 눌러 요금 타입을 변경하실 수 있습니다. 
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="row font-robot">
+                                            <div class="col margin-0">
+                                                <div id="calendar_peak"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+ 
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js"></script>
+    <script src="/public/js/campingcar/adminmain.js"></script>
+    <script>
+        // 현재 날짜와 시간을 포함하는 Date 객체 생성
+        const nextYear = new Date();
+
+        // Date 객체의 연도를 현재 연도에서 1년 더한 값으로 설정
+        nextYear.setFullYear(nextYear.getFullYear() + 1);
+
+        // "peak"라는 식별자로, 다음 해부터 365일간의 달력 데이터 생성 또는 처리
+        createRangeCalendar("peak", 365, nextYear);
+    </script>
+
+</body>
+</html>

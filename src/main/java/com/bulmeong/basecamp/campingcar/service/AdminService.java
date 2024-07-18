@@ -1,11 +1,14 @@
 package com.bulmeong.basecamp.campingcar.service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.bulmeong.basecamp.campingcar.dto.BasicFacilitiesDto;
+import com.bulmeong.basecamp.campingcar.dto.CampingcarDto;
 import com.bulmeong.basecamp.campingcar.dto.CarTypeDto;
 import com.bulmeong.basecamp.campingcar.dto.DriverAgeCondDto;
 import com.bulmeong.basecamp.campingcar.dto.DriverExperienceCondDto;
@@ -26,9 +29,29 @@ public class AdminService {
     public RentalCompanyDto getSellerByIdAndPw (String account_id, String account_pw) {
         return adminSqlMapper.selectCompanyByAccountIdandPw(account_id, account_pw);
     } 
-    // 지역 카테고리 List
+    // 판매자회원가입_지역 카테고리 List
     public List<LocationDto> getLocationAll() {
         return adminSqlMapper.findLocationAll();
+    }
+    // 판매자 id 가지고 오기 
+    public Map<String,Object> getcampingCarandSellerInfo (int id){
+        Map<String,Object> map = new HashMap<>();
+        RentalCompanyDto rentalCompanyDto = adminSqlMapper.getRentalCompanyInfoByid(id);
+        map.put("rentalCompanyDto", rentalCompanyDto);
+        CampingcarDto compingCarDto = adminSqlMapper.getCompingCarByid(id);
+        map.put("compingCarDto", compingCarDto);
+
+        return map;
+    }
+
+
+    // 차량등록 
+    public void registerCamping(CampingcarDto campingCar, List<Integer> basicFacilites_id) {
+        adminSqlMapper.createCamping(campingCar);
+        int product_id = campingCar.getId();
+        for(int basic_facilities_id :basicFacilites_id) {
+            adminSqlMapper.createCarBasic(basic_facilities_id,product_id);
+        }
     }
 
     // 차량등록_캠핑카 유형 Category List

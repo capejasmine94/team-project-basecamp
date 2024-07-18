@@ -1,0 +1,282 @@
+<!-- top Navi -->
+<div class="container-fluid" th:fragment="topNavi">
+    <div id="topNaviSeller" class="row fixed-top align-items-center py-2 px-3 store-center bg-white text-black">
+        <div class="col fs-3">
+            <span class="fw-bold">BaseCamp</span> <span class="fw-semibold">Natural_Forest Center🌿</span>
+        </div>
+        <div class="col fs-5 text-end">
+            <span class="fw-bold" th:if="${session.sessionCaravanInfo!=null}" th:text="${session.sessionCaravanInfo.comp_nickname}">
+                Sacabambaspis
+            </span>
+            <span th:unless="${session.sessionCaravanInfo!=null}">비회원</span>
+        </div>
+        <form action="/admin/logoutProcess" class="col-auto">
+            <button class="btn btn-outline-light btn-sm fw-bold text-black">로그아웃</button>
+        </form>
+    </div>
+</div>
+
+
+<!-- left Navi -->
+<div th:fragment="leftNavi" class="col border-end scrollable scrollBar left" 
+id="leftAccordion" style="color: white; padding-top: 58px; background-color: #304156;">
+        
+    <div class="row py-4">
+        <div class="col">
+            <div class="row">
+                <div class="col seller_profile text-center">
+                     <!-- 올바른 변수명을 사용하고, Thymeleaf 문자열 연결 구문을 정확하게 적용 -->
+                    <img th:if="${session.sessionCaravanInfo != null}" th:src="@{/images/${session.sessionCaravanInfo.comp_profile_image}}" class="rounded-circle">
+                    <img th:unless="${session.sessionCaravanInfo != null}" src="/public/img/campingCarImage/default_profile.jpg" class="rounded-circle">
+                </div>
+            </div>
+            <div class="row text-center pt-2 fw-bold">
+                <div class="col">
+                    <span th:if="${session.sessionCaravanInfo!=null}" th:text="${session.sessionCaravanInfo.comp_nickname}">사카밤바스피스</span>
+                    <span th:unless="${session.sessionCaravanInfo!=null}">로그인 후 이용 가능합니다</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- 대쉬보드 -->
+    <div class="row category">
+        <div class="col  ps-3 pe-0 d-grid">
+            <a class="py-3 accordion-button collapsed fw-semibold fs-7" href="/admin/dashboard">
+                <span class="material-symbols-outlined fs-7">dashboard</span>
+                <div class="ps-2">Dashboard</div>
+            </a>
+        </div>
+    </div>
+    <!-- 1. 차량등록 섹션 -->
+    <div class="row category toggle-icon" data-bs-toggle="collapse" data-bs-target="#first-collapse">
+        <div class="col ps-3 pe-0 d-grid fs-5">
+            <button type="button" class="py-3 accordion-button collapsed fw-semibold">
+                <span class="material-symbols-outlined">directions_car</span>
+                <div class="ps-2">차량 등록</div>
+            </button>
+        </div>
+        <div class="col-auto ps-0 d-grid fs-5">
+            <button type="button" class="py-3 accordion-button collapsed">
+                <i class="bi bi-chevron-down"></i>
+            </button>
+        </div>
+    </div>
+    <!-- 차량등록_서브카테고리 -->
+    <div class="row accordion-collapse collapse show p-0" id="first-collapse" data-bs-parent="#leftAccordion">
+        <div class="col">
+            <a class="row accordion-body py-3 ps-5 subcategory" href="/admin/carRegister">
+                차량 등록
+            </a>
+            <a class="row accordion-body py-3 ps-5 subcategory" href="/admin/viewEdit" id="productRegister">
+                차량 조회/수정
+            </a>
+        </div>
+    </div>
+    <!-- 2. 예약관리 섹션 -->
+    <div class="row category toggle-icon"  data-bs-toggle="collapse" data-bs-target="#second-collapse">
+        <div class="col ps-3 pe-0 d-grid fs-5">
+            <button type="button" class="py-3 accordion-button collapsed fw-semibold">
+                <span class="material-symbols-outlined">event_available</span> 
+                <div class="ps-2">예약</div>
+            </button>
+        </div>
+        <div class="col-auto ps-0 d-grid fs-5">
+            <button type="button" class="py-3 accordion-button collapsed">
+                <i class="bi bi-chevron-down"></i>
+            </button>
+        </div>
+    </div>
+    <!-- 예약관리_서브카테고리 -->
+    <div class="row accordion-collapse collapse p-0" id="second-collapse" data-bs-parent="#leftAccordion">
+        <div class="col">
+            <a class="row accordion-body py-3 ps-5 subcategory" href="/admin/reservation_status">
+                예약 현황
+            </a>
+            <a class="row accordion-body py-3 ps-5 subcategory" href="/admin/bookReservation">
+                예약 신청
+            </a>
+            <a class="row accordion-body py-3 ps-5 subcategory" href="/admin/optionSettings">
+                옵션신청
+            </a>
+            <a class="row accordion-body py-3 ps-5 subcategory" href="/admin/peakSeason">
+                성수기·휴일
+            </a>
+            <a class="row accordion-body py-3 ps-5 subcategory" href="/admin/settings">
+                환경 설정
+            </a>
+        </div>
+    </div>
+    <!-- 3. 문의/리뷰 관리 섹션 -->
+    <div class="row category toggle-icon" data-bs-toggle="collapse" data-bs-target="#third-collapse">
+        <div class="col ps-3 pe-0 d-grid fs-5">
+            <button type="button" class="py-3 accordion-button collapsed fw-semibold">
+                <span class="material-symbols-outlined">feedback</span>
+                <div class="ps-2">문의/리뷰 관리</div>
+            </button>
+        </div>
+        <div class="col-auto ps-0 d-grid fs-5">
+            <button type="button" class="py-3 accordion-button collapsed">
+                <i class="bi bi-chevron-down"></i>
+            </button>
+        </div>
+    </div>
+    <!-- 문의/리뷰_서브카테고리 -->
+    <div class="row accordion-collapse collapse p-0" id="third-collapse" data-bs-parent="#leftAccordion">
+        <div class="col">
+            <a class="row accordion-body py-3 ps-5 subcategory" href="/admin/inquiryManage">
+                문의관리
+            </a>
+            <a class="row accordion-body py-3 ps-5 subcategory" href="/admin/review_manage">
+                리뷰관리
+            </a>
+        </div>
+    </div>
+    <!-- 4. 컨텐츠 관리 -->
+    <div class="row category toggle-icon" data-bs-toggle="collapse" data-bs-target="#fourth-collapse">
+        <div class="col ps-3 pe-0 d-grid fs-5">
+            <button type="button" class="py-3 accordion-button collapsed fw-semibold">
+                <span class="material-symbols-outlined">edit_square</span> 
+                <div class="ps-2">컨텐츠 관리</div>
+            </button>
+        </div>
+        <div class="col-auto ps-0 d-grid fs-5">
+            <button type="button" class="py-3 accordion-button collapsed">
+                <i class="bi bi-chevron-down"></i>
+            </button>
+        </div>
+    </div>
+    <!-- 컨텐츠관리_서브카테고리 -->
+    <div class="row accordion-collapse collapse p-0" id="third-collapse" data-bs-parent="#leftAccordion">
+        <div class="col">
+            <a class="row accordion-body py-3 ps-5 subcategory" href="/admin/inputForm">
+                입력폼
+            </a>
+            <a class="row accordion-body py-3 ps-5 subcategory" href="/admin/map">
+                지도
+            </a>
+            <a class="row accordion-body py-3 ps-5 subcategory" href="/admin/schedule">
+                일정
+            </a>
+            <a class="row accordion-body py-3 ps-5 subcategory" href="/admin/reportBlock">
+                신고·차단
+            </a>
+        </div>
+    </div>
+    <!-- 5. 통계 섹션 -->
+    <div class="row category toggle-icon" data-bs-toggle="collapse" data-bs-target="#fifth-collapse">
+        <div class="col ps-3 pe-0 d-grid fs-5">
+            <button type="button" class="py-3 accordion-button collapsed fw-semibold">
+                <span class="material-symbols-outlined">chart_data</span>
+                <div class="ps-2">통계</div>
+            </button>
+        </div>
+        <div class="col-auto ps-0 d-grid fs-5">
+            <button type="button" class="py-3 accordion-button collapsed">
+                <i class="bi bi-chevron-down"></i>
+            </button>
+        </div>
+    </div>
+    <!-- 통계_서브카테고리  -->
+    <div class="row accordion-collapse collapse p-0" id="third-collapse" data-bs-parent="#leftAccordion">
+        <div class="col">
+            <a class="row accordion-body py-3 ps-5 subcategory" href="/admin/statistics">
+                홈
+            </a>
+            <a class="row accordion-body py-3 ps-5 subcategory" href="/admin/sales">
+                매출 통계     
+            </a>
+            <a class="row accordion-body py-3 ps-5 subcategory" href="/admin/periodicAnalysis">
+                기간별 분석
+            </a>
+            <a class="row accordion-body py-3 ps-5 subcategory" href="/admin/referralSites">
+                유입 사이트
+            </a>
+            <a class="row accordion-body py-3 ps-5 subcategory" href="/admin/searchKeywords">
+                유입 검색어
+            </a>
+            <a class="row accordion-body py-3 ps-5 subcategory" href="/admin/visitors">
+                방문자
+            </a>
+            <a class="row accordion-body py-3 ps-5 subcategory" href="/admin/topVisitedPages">
+                많이 방문한 페이지
+            </a>
+            <a class="row accordion-body py-3 ps-5 subcategory" href="/admin/rewardse">
+                적립금
+            </a>
+            <a class="row accordion-body py-3 ps-5 subcategory" href="/admin/additionalServices">
+                부가 서비스
+            </a>
+        </div>
+    </div>
+    <!-- 판매자 정보 -->
+    <div class="row ps-1 category">
+        <div class="col ps-3 pe-0 d-grid">
+            <a href="/storeCenter/sellerInfo" type="button" class="py-3 fw-bold">
+                판매자정보
+            </a>
+        </div>
+    </div>
+    <!-- 판매자 관련된 섹션 -->
+    <div class="row ps-1 py-4">
+        <div class="col">
+            <div class="row py-3">
+                <div class="col ps-3">
+                    <div class="row f08 text-tertiary">
+                        <div class="col">
+                            판매 지원 프로그램
+                        </div>
+                    </div>
+                    <div class="row pt-2">
+                        <div class="col">
+                            파트너센터 <i class="fa-solid fa-arrow-up-right-from-square"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row  py-3">
+                <div class="col ps-3">
+                    <div class="row f08 text-tertiary">
+                        <div class="col">
+                            판매 지원 프로그램
+                        </div>
+                    </div>
+                    <div class="row pt-2">
+                        <div class="col">
+                            판매 가이드 <i class="fa-solid fa-arrow-up-right-from-square"></i>
+                        </div>
+                    </div>
+                    <div class="row pt-2">
+                        <div class="col">
+                            온라인 교육 <i class="fa-solid fa-arrow-up-right-from-square"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--  도움/고객센터 -->
+    <div class="row pb-5">
+        <div class="col ps-3">
+            <div class="row">
+                <div class="col">
+                    도움이 필요하신가요?
+                </div>
+            </div>
+            <div class="row pt-3">
+                <div class="col d-grid">
+                    <button class="btn btn-outline-light py-2">
+                        <i class="fa-solid fa-headset"></i> 고객센터 바로가기
+                    </button>
+                </div>
+            </div>
+            <div class="row pt-3">
+                <div class="col d-grid">
+                    <button class="btn btn-outline-light py-2">
+                        카테고리 담당자 찾기
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

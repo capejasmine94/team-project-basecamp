@@ -2,6 +2,8 @@ package com.bulmeong.basecamp.campingcar.dto;
 
 import java.util.Date;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import lombok.Data;
 
 @Data
@@ -18,7 +20,9 @@ public class CampingcarDto {
     private String overnight_stay;
     private int seating_capacity;
     private int sleeping_capacity;
+    @DateTimeFormat(pattern = "HH:mm")
     private Date avaid_time;
+    @DateTimeFormat(pattern = "HH:mm")
     private Date return_dateTime;
     private int driver_license_id;
     private int driver_experience_id;

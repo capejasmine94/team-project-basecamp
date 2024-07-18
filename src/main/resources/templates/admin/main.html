@@ -4,256 +4,36 @@
     <meta charset="utf-8">
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <!-- Font Awesome -->
+    <script src="https://kit.fontawesome.com/7b271bba58.js" crossorigin="anonymous"></script>
     <!-- Google Material Icons -->
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet">
-    <!-- admin_main css -->
-    <link href="/public/css/campingcar/adminmain.css" rel="stylesheet">
+    <!-- admin_main css
+    <link href="/public/css/campingcar/adminmain.css" rel="stylesheet"> -->
+    <link href="/public/css/campingcar/camping.css" rel="stylesheet">
     <link href="/public/css/common.css" rel="stylesheet">
+    <script src="/public/js/util.js"></script>
 </head>
-<body class="main-page">
-    <!-- 상단 고정 네비게이션 바 -->
-    <div class="row fixed-top align-items-center py-2 px-3 center top-nav font-roboto">
-        <div class="col fs-3 text-black">
-            <span class="fw-bold">BaseCamp_</span><span>Natural Forest Center🌿</span>
-        </div>
-        <div class="col fs-5 text-end">
-            <span class="fw-semibold text-black">
-                Sacabambaspis
-            </span>
-        </div>
-        <div class="col-auto">
-            <button class="btn btn-outline-light btn-sm fw-semibold text-black">로그아웃</button>
-        </div>
-    </div>
+<div class="main">
+    <div th:replace="~{admin/carNavi::topNavi}"></div>
 
     <div class="container-fluid">
-        <div class="row font-roboto">
-            <!-- 왼쪽 메뉴 -->
-            <div class="col-md-3 border-end scrollable left">
-                <div class="row py-4">
-                    <div class="col">
-                        <div class="row">
-                            <div class="col seller_profile text-center">
-                                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTuSIY57GfjG6GdkHgMtdJU0p3L8F-JHp3QHg&s" class="rounded-circle">
-                            </div>
-                        </div>
-                        <div class="row text-center pt-2 fw-semibold">
-                            <div class="col">
-                                렌트의 왕🫅🏻
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!-- 대시보드 -->
-                <div class="row category fw-semibold">
-                    <div class="col pe-0 d-grid">
-                        <button type="button" class="py-3 btn btn-link text-start fw-semibold fs-7">
-                            <span class="material-symbols-outlined fs-7">
-                                dashboard
-                            </span>Dashboard
-                        </button>
-                    </div>
-                </div>
-
-                <div class="row f08 text-tertiary">
-                    <div class="col">
-                        서비스 관리
-                    </div>
-                </div>
-                <!-- 상품관리 섹션-->
-                <div class="accordion" id="accordionExample">
-                    <div class="accordion-item">
-                        <h2 class="accordion-header" id="headingOne">
-                            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                                <span class="material-symbols-outlined">
-                                    directions_car
-                                </span>차량관리
-                            </button>
-                        </h2>
-                        <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
-                            <div class="accordion-body">
-                                <a class="nav-link" href="#" data-page="/admin/carRegister.html" data-target="dynamic-content">
-                                    차량등록
-                                </a>
-                                <a class="nav-link" href="#" data-page="/admin/carViewEdit.html" data-target="dynamic-content">
-                                    차량조회/수정
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="accordion-item">
-                        <h2 class="accordion-header" id="headingTwo">
-                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                                <span class="material-symbols-outlined">
-                                    event_available
-                                </span>예약
-                            </button>
-                        </h2>
-                        <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
-                            <div class="accordion-body">
-                                <a class="nav-link" href="#" data-page="/admin/reservationStatus.html" data-target="dynamic-content">
-                                    예약 현황
-                                </a>
-                                <a class="nav-link" href="#" data-page="/admin/bookReservation.html" data-target="dynamic-content">
-                                    예약신청
-                                </a>
-                                <a class="nav-link" href="#" data-page="/admin/optionSettings.html" data-target="dynamic-content">
-                                    옵션설정
-                                </a>
-                                <a class="nav-link" href="#" data-page="/admin/peakSeason.html" data-target="dynamic-content">
-                                    성수기·휴일
-                                </a>
-                                <a class="nav-link" href="#" data-page="/admin/settings.html" data-target="dynamic-content">
-                                    환경설정
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- Add more accordion items as needed -->
-                </div>
-
-                <!-- 금융 서비스 및 판매 지원 프로그램 -->
-                <div class="row py-4">
-                    <div class="col">
-                        <div class="row py-3">
-                            <div class="col">
-                                <div class="row f08 text-tertiary">
-                                    <div class="col">
-                                        금융 서비스 바로가기
-                                    </div>
-                                </div>
-                                <div class="row pt-2">
-                                    <div class="col">
-                                        선정산 서비스 <i class="fa-solid fa-arrow-up-right-from-square"></i>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="row py-3">
-                            <div class="col">
-                                <div class="row f08 text-tertiary">
-                                    <div class="col">
-                                        판매 지원 프로그램
-                                    </div>
-                                </div>
-                                <div class="row pt-2">
-                                    <div class="col">
-                                        파트너센터 <i class="fa-solid fa-arrow-up-right-from-square"></i>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="row py-3">
-                            <div class="col">
-                                <div class="row f08 text-tertiary">
-                                    <div class="col">
-                                        판매 지원 프로그램
-                                    </div>
-                                </div>
-                                <div class="row pt-2">
-                                    <div class="col">
-                                        판매 가이드 <i class="fa-solid fa-arrow-up-right-from-square"></i>
-                                    </div>
-                                </div>
-                                <div class="row pt-2">
-                                    <div class="col">
-                                        온라인 교육 <i class="fa-solid fa-arrow-up-right-from-square"></i>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- 도움말 및 고객센터 -->
-                <div class="row pb-5">
-                    <div class="col">
-                        <div class="row">
-                            <div class="col">
-                                도움이 필요하신가요?
-                            </div>
-                        </div>
-                        <div class="row pt-3">
-                            <div class="col d-grid">
-                                <button class="btn btn-outline-light py-2">
-                                    <i class="fa-solid fa-headset"></i> 고객센터 바로가기
-                                </button>
-                            </div>
-                        </div>
-                        <div class="row pt-3">
-                            <div class="col d-grid">
-                                <button class="btn btn-outline-light py-2">
-                                    카테고리 담당자 찾기
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
+        <div class="row font-roboto nav nav-tabs">
+            <div th:replace="~{admin/carNavi::leftNavi}"></div>
             <!-- 오른쪽 콘텐츠 영역 -->
-            <div class="col-md-9 right">
-                <div class="content-title-bar">
-                    <div class="fs-6 fw-semibold" id="content-title">대시보드</div>
-                </div>
-                <div id="dynamic-content" class="content-body mt-5">
-                    <!-- 여기에 오른쪽 콘텐츠가 표시됩니다 -->
-                    <div th:replace="~{admin/carRegister::carRegister}"></div>
-                </div>
+            <div class="col right">
+
             </div>
         </div>
     </div>
 
     <!-- Bootstrap JS -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-    <!-- <script src="/public/js/campingcar/adminmain.js"></script> -->
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js"></script>
+    <script src="/public/js/campingcar/adminmain.js"></script>
     <script>
-    document.addEventListener("DOMContentLoaded", function() {
-        document.querySelectorAll('.nav-link').forEach(link => {
-            link.addEventListener('click', function(event) {
-                event.preventDefault();
-                const page = this.getAttribute('data-page');
-                const target = document.querySelector(`#${this.getAttribute('data-target')}`);
-                fetch(page).then(response => response.text()).then(html => {
-                    target.innerHTML = html;
-                }).catch(error => console.warn('Error loading page:', error));
-            });
-        });
-
-        document.querySelectorAll('.accordion-button').forEach(button => {
-            button.addEventListener('click', function() {
-                const isOpen = this.getAttribute('aria-expanded') === 'true';
-                if (isOpen) {
-                    const collapseId = this.getAttribute('data-bs-target');
-                    const collapseElement = document.querySelector(collapseId);
-                    if (collapseElement) {
-                        collapseElement.classList.remove('show');
-                    }
-                }
-            });
-        });
-
-        document.querySelectorAll('.toggle-icon').forEach(button => {
-            button.addEventListener('click', function() {
-                const icon = this.querySelector('.material-symbols-outlined.dropdown-icon');
-                const targetCollapse = document.querySelector(this.getAttribute('data-bs-target'));
-                const isOpen = targetCollapse.classList.contains('show');
-
-                document.querySelectorAll('.toggle-icon .material-symbols-outlined.dropdown-icon').forEach(icon => {
-                    icon.classList.remove('rotate-icon');
-                });
-
-                if (isOpen) {
-                    targetCollapse.classList.remove('show');
-                } else {
-                    icon.classList.add('rotate-icon');
-                    targetCollapse.classList.add('show');
-                }
-            });
-        });
-    });
+        // 아이콘 회전하기 수정하기
+        // 로그인 검사하는 api 수정하기 
     </script>
 </body>
 </html>

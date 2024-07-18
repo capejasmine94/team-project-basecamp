@@ -1,6 +1,6 @@
 package com.bulmeong.basecamp.campingcar.controller;
 
-import java.util.List;
+import java.util.List; 
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.bulmeong.basecamp.campingcar.dto.BasicFacilitiesDto;
+import com.bulmeong.basecamp.campingcar.dto.CampingcarDto;
 import com.bulmeong.basecamp.campingcar.dto.CarTypeDto;
 import com.bulmeong.basecamp.campingcar.dto.DriverAgeCondDto;
 import com.bulmeong.basecamp.campingcar.dto.DriverExperienceCondDto;
@@ -48,19 +49,25 @@ public class AdminController {
         adminService.registerSeller(rentalCompanyDto);
         return "redirect:/seller/login";
     }
+// 판매자 로그아웃 
+    @RequestMapping("logoutProcess")
+    public String logoutProcess(HttpSession session) {
+        session.invalidate();
+        return "redirect:/seller/login";
+    }
 // 판매자페이지 main
     @RequestMapping("main")
     public String main(HttpSession session, Model model){
 
         RentalCompanyDto rentalCompanyDto = (RentalCompanyDto) session.getAttribute("sessionCaravanInfo");
         model.addAttribute("rentalCompanyDto", rentalCompanyDto);
-        
-        return "admin/main";
+            return "admin/main";
+    
     }
     // admin_main에 sub_category_쓰는 방식
     @RequestMapping("carRegister")
-    public String carRegister(Model model) {
-        
+    public String carRegister(Model model, HttpSession session) {
+
     // 차량등록_캠핑카 유형 Category List
         List<CarTypeDto> carType = adminService.getCarTypeAll();
         model.addAttribute("carType", carType);
@@ -84,11 +91,19 @@ public class AdminController {
         return "admin/carRegister";
     }
 
-// 차량등록 insert 
+    // 차량등록 insert 
     @RequestMapping("carRegisterProgress")
-    public String carRegisterProgress() {
-
+    public String carRegisterProgress(CampingcarDto campingcarDto,@RequestParam("main_image")MultipartFile main_image
+                                     ,@RequestParam(value = "basicFacilites_id") List<Integer> basicFacilites_id) {
+            campingcarDto.setMain_img(ImageUtil.saveImageAndReturnLocation(main_image));
+            adminService.registerCamping(campingcarDto,basicFacilites_id);
         return "redirect:/admin/main";
+    }
+
+    @RequestMapping("peakSeason")
+    public String peakSeason(){
+
+        return "admin/peakSeason";
     }
 
 
@@ -108,12 +123,10 @@ public class AdminController {
 
 
 
-
-
     
-// // 내가 만든 main용 
-//     @RequestMapping("maintest")
-//     public String maintest() {
-//         return "admin/maintest";
-//     }
+// 내가 만든 main용 
+    @RequestMapping("maintest")
+    public String maintest() {
+        return "admin/maintest";
+    }
 }
