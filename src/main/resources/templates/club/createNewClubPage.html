@@ -22,7 +22,7 @@
                         </div>
                     </div>
 
-                    <form action="/club/createNewClubProcess" class="row" method="post">
+                    <form action="/club/createNewClubProcess" class="row" method="post" enctype="multipart/form-data">
                         <div class="col">
                             <input name="user_id" type="hidden" th:value="${session.sessionUserInfo.id}" >
 
@@ -58,7 +58,7 @@
                         <div class="col">
                             <div class="row">
                                 <div class="col">
-                                    <input class="form-control" name="main_image" type="file" multiple accept="image/*">
+                                    <input class="form-control" name="inputImage" type="file" multiple accept="image/*">
                                 </div>
                             </div>
         

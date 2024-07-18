@@ -88,7 +88,10 @@ public class ClubController {
     @RequestMapping("createNewClub")
     public String createNewClub(Model model){
         util.loginUser();
+
         
+
+
         List<ClubRegionCategoryDto> regionCategoryDtoList = clubService.findRegionCategory();
         model.addAttribute("regionCategoryDtoList", regionCategoryDtoList);
         
@@ -96,8 +99,8 @@ public class ClubController {
     }
     
     @RequestMapping("createNewClubProcess")
-    public String createClubProcess(ClubDto clubDto, ClubJoinConditionDto clubJoinConditionDto){
-        clubService.createNewClub(clubDto, clubJoinConditionDto);
+    public String createClubProcess(ClubDto clubDto, ClubJoinConditionDto clubJoinConditionDto, @RequestParam("inputImage") MultipartFile inputImage){
+        clubService.createNewClub(clubDto, clubJoinConditionDto, inputImage);
         util.loginUser();
 
         return "redirect:/club/main";
@@ -116,7 +119,6 @@ public class ClubController {
     public String writePostProcess(ClubPostDto clubPostDto, @RequestParam("main_image") MultipartFile[]main_image){
     
         List<ImageDto> imgList = ImageUtil.saveImageAndReturnDtoList(main_image);
-
 
         clubService.writeClubPost(clubPostDto, imgList);
 
