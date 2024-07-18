@@ -96,7 +96,7 @@ function createUploader(name) {
                     img.draggable = true; // 드래그 가능 설정
                     img.classList.add('draggable'); // 클래스 추가
                     if (isWebView()) {
-                        img.classList.add('col-auto', 'm-2', 'px-0'); // 클래스 추가
+                        img.classList.add('col-auto', 'm-1', 'px-0'); // 클래스 추가
                     } else {
                         img.classList.add('col-auto', 'me-2', 'my-1', 'mt-2', 'mb-3'); // 클래스 추가
                     }
@@ -109,10 +109,7 @@ function createUploader(name) {
                     preview.appendChild(img);
 
                     // 이미지가 버튼 위에 겹쳐지도록 스타일 조정
-                    button.style.position = 'absolute';
-                    button.style.top = '50%';
-                    button.style.left = '50%';
-                    button.style.transform = 'translate(-50%, -50%)';
+                    button.classList.add('d-none')
                 }
                 reader.readAsDataURL(file);
             } else {
