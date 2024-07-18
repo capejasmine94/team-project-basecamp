@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import com.bulmeong.basecamp.insta.dto.InstaArticleCommentDto;
 import com.bulmeong.basecamp.insta.dto.InstaArticleDto;
 import com.bulmeong.basecamp.insta.dto.InstaArticleImgDto;
+import com.bulmeong.basecamp.insta.dto.InstaArticleLikeDto;
 import com.bulmeong.basecamp.insta.dto.InstaUserInfoDto;
 import com.bulmeong.basecamp.insta.mapper.InstaSqlMapper;
 import com.bulmeong.basecamp.user.dto.UserDto;
@@ -102,6 +103,25 @@ public class InstaService {
 
     public void deleteComment(int id){
         instaSqlMapper.deleteComment(id);
+    }
+
+
+    // 좋아요
+    public void like(InstaArticleLikeDto instaArticleLikeDto){
+        instaSqlMapper.createLike(instaArticleLikeDto);
+    }
+
+    public void unLike(InstaArticleLikeDto instaArticleLikeDto){
+        instaSqlMapper.deleteLikeByArticleIdAndUserId(instaArticleLikeDto);
+    }
+
+    public int getLikeTotalCount(int article_id){
+        return instaSqlMapper.countLikeByArticleId(article_id);
+    }
+
+    // 0보다 크면 true(=Like)
+    public boolean isLiked(InstaArticleLikeDto instaArticleLikeDto){
+        return instaSqlMapper.countLikeByArticleIdAndUserId(instaArticleLikeDto) > 0;
     }
 }
 

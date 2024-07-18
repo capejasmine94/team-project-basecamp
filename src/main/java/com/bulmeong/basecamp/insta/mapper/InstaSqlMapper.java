@@ -5,6 +5,7 @@ import org.apache.ibatis.annotations.Mapper;
 import com.bulmeong.basecamp.insta.dto.InstaArticleCommentDto;
 import com.bulmeong.basecamp.insta.dto.InstaArticleDto;
 import com.bulmeong.basecamp.insta.dto.InstaArticleImgDto;
+import com.bulmeong.basecamp.insta.dto.InstaArticleLikeDto;
 import com.bulmeong.basecamp.insta.dto.InstaUserInfoDto;
 import com.bulmeong.basecamp.user.dto.UserDto;
 
@@ -24,4 +25,10 @@ public interface InstaSqlMapper {
     public void createComment(InstaArticleCommentDto instaArticleCommentDto);
     public List<InstaArticleCommentDto> getCommentList(int article_id);
     public void deleteComment(int id);
+
+    // 좋아요
+    public void createLike(InstaArticleLikeDto instaArticleLikeDto);
+    public int countLikeByArticleId(int article_id);
+    public int countLikeByArticleIdAndUserId(InstaArticleLikeDto instaArticleLikeDto);
+    public void deleteLikeByArticleIdAndUserId(InstaArticleLikeDto instaArticleLikeDto);
 }

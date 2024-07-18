@@ -70,6 +70,32 @@
         delete from bc_insta_article_comment where id = #{id}
     </delete>
 
+    <!-- 게시글 좋아요 -->
+    <insert id="createLike">
+        insert into bc_insta_article_like(
+            article_id, user_id
+        )values(
+            #{article_id}, #{user_id}
+        )
+    </insert>
+
+    <select id="countLikeByArticleId" resultType="int">
+        select count(*) from bc_insta_article_like
+        where article_id = #{article_id}
+    </select>
+
+    <select id="countLikeByArticleIdAndUserId" resultType="int">
+        select count(*) from bc_insta_article_like
+        where article_id = #{article_id}
+        and user_id = #{user_id}
+    </select>
+
+    <delete id="deleteLikeByArticleIdAndUserId">
+        delete from bc_insta_article_like
+        where article_id = #{article_id}
+        and user_id = #{user_id}
+    </delete>
+
 </mapper>
 
 
