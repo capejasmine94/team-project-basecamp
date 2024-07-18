@@ -99,9 +99,10 @@ public class ClubController {
     }
     
     @RequestMapping("createNewClubProcess")
-    public String createClubProcess(ClubDto clubDto, ClubJoinConditionDto clubJoinConditionDto, @RequestParam("inputImage") MultipartFile inputImage){
-        clubService.createNewClub(clubDto, clubJoinConditionDto, inputImage);
-        util.loginUser();
+    public String createClubProcess(ClubDto clubDto, ClubJoinConditionDto clubJoinConditionDto, @RequestParam("main_img") MultipartFile main_img){
+        clubDto.setMain_image(ImageUtil.saveImageAndReturnLocation(main_img));
+        clubService.createNewClub(clubDto, clubJoinConditionDto);
+        // util.loginUser();
 
         return "redirect:/club/main";
     }

@@ -1,9 +1,6 @@
 package com.bulmeong.basecamp.club.service;
-
-// import org.checkerframework.checker.units.qual.radians;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-// import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.bulmeong.basecamp.club.dto.ClubBookmarkDto;
@@ -34,10 +31,8 @@ public class ClubService {
 
     // 소모임 개설하기
 
-    public void createNewClub(ClubDto clubDto, ClubJoinConditionDto clubJoinConditionDto, MultipartFile inputImage ){
+    public void createNewClub(ClubDto clubDto, ClubJoinConditionDto clubJoinConditionDto){
         clubSqlMapper.insertClubDto(clubDto);
-        String img = ImageUtil.saveImageAndReturnLocation(inputImage);
-        clubDto.setMain_image(img);
 
         int club_id = clubDto.getId();
         // ClubJoinConditionDto clubJoinConditionDtoIncludeClubId  = new ClubJoinConditionDto();
