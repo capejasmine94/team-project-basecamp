@@ -324,7 +324,7 @@
                                             성수기 요금
                                         </div>
                                         <div class="col-2 ms-3 pe-0 ps-1">
-                                            <input name="peak_pay" class="form-control text-end numberInput" type="text" value="10,000" placeholder="0">
+                                            <input name="peak_pay" class="form-control text-end moneyInput" type="text" value="10,000" placeholder="0">
                                         </div>
                                         <div class="col-auto mt-1 fw-semibold">
                                             원
@@ -342,7 +342,7 @@
                                             성인
                                         </div>
                                         <div class="col-2 ms-3 pe-0">
-                                            <input name="adult_pay" class="form-control text-end numberInput" type="text" value="0">
+                                            <input name="adult_pay" class="form-control text-end moneyInput" type="text" value="0">
                                         </div>
                                         <div class="col-auto mt-1">
                                             원
@@ -353,7 +353,7 @@
                                             미성년자
                                         </div>
                                         <div class="col-2 ms-3 pe-0">
-                                            <input name="kid_pay" class="form-control text-end numberInput" type="text" value="0">
+                                            <input name="kid_pay" class="form-control text-end moneyInput" type="text" value="0">
                                         </div>
                                         <div class="col-auto mt-1">
                                             원
@@ -365,7 +365,7 @@
                                             차량 추가 요금
                                         </div>
                                         <div class="col-2 ms-3 pe-0 ps-1">
-                                            <input name="car_pay" class="form-control text-end numberInput" type="text" value="10,000" placeholder="0">
+                                            <input name="car_pay" class="form-control text-end moneyInput" type="text" value="10,000" placeholder="0">
                                         </div>
                                         <div class="col-auto mt-1 fw-semibold">
                                             원
@@ -382,31 +382,10 @@
         </div>
         <div th:replace="~{common/navi::popup}"></div>
         <script>
-            document.addEventListener('DOMContentLoaded', (event) => {
-                const inputNumbers = document.getElementsByClassName('numberInput');
-                for(const node of inputNumbers){
-                    node.addEventListener('input', function (e) {
-                        let input = e.target.value;
-
-                        // Remove all non-numeric characters except for period (.)
-                        input = input.replace(/[^0-9.]/g, '');
-
-                        // Split the input value into integer and decimal parts
-                        const parts = input.split('.');
-                        let integerPart = parts[0];
-                        const decimalPart = parts.length > 1 ? '.' + parts[1] : '';
-
-                        // Format the integer part with commas
-                        integerPart = integerPart.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
-
-                        // Combine the formatted integer part and the decimal part
-                        e.target.value = integerPart + decimalPart;
-                    });
-                }
-            });
-
-            createUploader('main_image',true);
-            createUploader('map_image',false);
+           
+            initMoneyInput();
+            createMultipleUploader('main_image');
+            createUploader('map_image');
             const date = new Date();
             date.setFullYear(date.getFullYear() + 1);
             createCalendar('opentime',date);

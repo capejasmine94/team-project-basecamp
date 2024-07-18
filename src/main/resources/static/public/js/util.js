@@ -75,5 +75,29 @@ function checkMustLogin() {
    });
 }
 
+function initMoneyinput() {
+   document.addEventListener('DOMContentLoaded', (event) => {
+      const inputNumbers = document.getElementsByClassName('moneyInput');
+      for(const node of inputNumbers){
+          node.addEventListener('input', function (e) {
+              let input = e.target.value;
+
+              // Remove all non-numeric characters except for period (.)
+              input = input.replace(/[^0-9.]/g, '');
+
+              // Split the input value into integer and decimal parts
+              const parts = input.split('.');
+              let integerPart = parts[0];
+              const decimalPart = parts.length > 1 ? '.' + parts[1] : '';
+
+              // Format the integer part with commas
+              integerPart = integerPart.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+
+              // Combine the formatted integer part and the decimal part
+              e.target.value = integerPart + decimalPart;
+          });
+      }
+  });
+}
 
 
