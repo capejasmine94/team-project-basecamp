@@ -97,4 +97,13 @@
         where store_id = #{store_id}
     </select>
 
+    <select id="selectProductCategoryAll" resultType="com.bulmeong.basecamp.store.dto.StoreProductCategoryDto">
+        select * from product_category
+    </select>
+
+    <select id="selectProductSubcategoryByCategoryId" resultType="com.bulmeong.basecamp.store.dto.ProductSubcategoryDto">
+        select * from product_subcategory
+        where category_id = #{category_id}
+    </select>
+
 </mapper>

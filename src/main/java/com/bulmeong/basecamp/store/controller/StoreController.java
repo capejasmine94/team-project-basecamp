@@ -65,7 +65,8 @@ public class StoreController {
     }
 
     @RequestMapping("productRegister")
-    public String productRegister(){
+    public String productRegister(Model model){
+        model.addAttribute("productCategoryDtoList", storeService.getProductCategoryAll());
         return "store/productRegister";
     }
     

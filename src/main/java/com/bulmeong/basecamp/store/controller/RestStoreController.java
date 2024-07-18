@@ -51,6 +51,15 @@ public class RestStoreController {
 
         return restResponseDto;
     }
+    
+    @RequestMapping("getProductSubcategoryDto")
+    public RestResponseDto getProductSubcategoryDto(@RequestParam("category_id") int category_id){
+        RestResponseDto restResponseDto = new RestResponseDto();
+        
+        restResponseDto.add("subcategoryDtoList", storeService.getProductSubcategoryByCategoryId(category_id));
+
+        return restResponseDto;
+    }
 
     // @RequestMapping("getSellerDtoByAccountInfo")
     // public RestResponseDto getStoreDtoByAccountInfo(

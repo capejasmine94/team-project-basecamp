@@ -106,7 +106,7 @@
                 background-color: #f0f0f0;
             }
 
-            .categoryRow:hover{
+            .categoryRow:hover, .subcategoryRow:hover{
                 background-color: #f0f0f0;
                 color: blue;
             }
@@ -372,87 +372,35 @@
                             <div class="row py-3 px-4 product-category f09">
                                 <div class="col-3 border overflow-y-auto" style="height: 15em;">
                                     <!-- 대분류 -->
-                                    <div class="row py-2 categoryRow">
+                                    <div class="row py-2 categoryRow" th:each="productCategoryDto : ${productCategoryDtoList}" onclick="getProductSubcategoryList(this)">
                                         <div class="col">
-                                            텐트/타프
-                                        </div>
-                                        <div class="col-auto">
-                                            <i class="bi bi-chevron-right f08"></i>
-                                        </div>
-                                    </div>
-                                    <div class="row py-2 categoryRow">
-                                        <div class="col">
-                                            캠핑 가구
-                                        </div>
-                                        <div class="col-auto">
-                                            <i class="bi bi-chevron-right f08"></i>
-                                        </div>
-                                    </div>
-                                    <div class="row py-2 categoryRow">
-                                        <div class="col">
-                                            취침 용품
-                                        </div>
-                                        <div class="col-auto">
-                                            <i class="bi bi-chevron-right f08"></i>
-                                        </div>
-                                    </div>
-                                    <div class="row py-2 categoryRow">
-                                        <div class="col">
-                                            배낭
-                                        </div>
-                                        <div class="col-auto">
-                                            <i class="bi bi-chevron-right f08"></i>
-                                        </div>
-                                    </div>
-                                    <div class="row py-2 categoryRow">
-                                        <div class="col">
-                                            주방 용품
-                                        </div>
-                                        <div class="col-auto">
-                                            <i class="bi bi-chevron-right f08"></i>
-                                        </div>
-                                    </div>
-                                    <div class="row py-2 categoryRow">
-                                        <div class="col">
-                                            밀키트
-                                        </div>
-                                        <div class="col-auto">
-                                            <i class="bi bi-chevron-right f08"></i>
-                                        </div>
-                                    </div>
-                                    <div class="row py-2 categoryRow">
-                                        <div class="col">
-                                            계절 용품
+                                            <span class="productCategoryName" th:text="${productCategoryDto.name}"></span>
+                                            <input type="hidden" class="inputProductCategoryId" th:value="${productCategoryDto.id}">
                                         </div>
                                         <div class="col-auto">
                                             <i class="bi bi-chevron-right f08"></i>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-3 border overflow-y-auto" style="height: 15em;">
-                                    <div class="row">
-                                        <div class="col">
-                                            <a href="">
-                                                선택하는 대분류에 따라 소분류 바뀌도록
-                                            </a>
-                                        </div>
-                                    </div>
+                                <div class="col-3 border overflow-y-auto" style="height: 15em;" id="subcategoryBox">
+                                    
                                 </div>
                             </div>
 
-                            <div class="row px-4 align-items-center">
+                            <div class="row px-4 align-items-center d-none" id="selectedCategoryRow">
                                 <div class="col-auto px-0 f09">
                                     선택한 카테고리 :
                                 </div>
-                                <div class="col-auto pe-0 fw-bold">
+                                <div class="col-auto pe-0 fw-bold" id="selectedProductCategory">
                                     대분류
                                 </div>
                                 <div class="col-auto pe-0 fw-bold">
                                     <i class="bi bi-chevron-right"></i>
                                 </div>
-                                <div class="col fw-bold">
+                                <div class="col fw-bold" id="selectedSubcategory">
                                     소분류
                                 </div>
+                                <input type="hidden" name="subcategory_id" id="subcategoryId">
                             </div>
 
                             <div class="row px-4 pt-2 pb-3">
@@ -474,7 +422,7 @@
                                 <div class="col d-grid">
                                     <div class="row">
                                         <div class="col input-group">
-                                            <input onkeyup="checkDescriptionLength()" id="inputName" name="name" type="text" class="form-control bg-body-tertiary" placeholder="100자 이내로 작성">
+                                            <input onkeyup="checkProductNameLength()" id="inputName" name="name" type="text" class="form-control bg-body-tertiary" placeholder="100자 이내로 작성">
                                             <span class="input-group-text bg-body-tertiary" id="nameCount">0/100</span>
                                         </div>
                                     </div>
@@ -1014,6 +962,14 @@
             </div>
         </div>
 
+        <div id="template" class="d-none">
+            <div class="row py-2 subcategoryRow" onclick="setSelectedCategory(this)">
+                <div class="col subcategoryName">
+                </div>
+                <input type="hidden" class="inputSubcategoryId">
+            </div>
+        </div>
+
         <!-- modal -->
         <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog">
@@ -1055,6 +1011,79 @@
                     }
                 });
             });
+
+            function getProductSubcategoryList(categoryRow){
+                const selectedCategoryRow = document.getElementById("selectedCategoryRow");
+                // selectedCategoryRow.classList.add("d-none");
+
+                const selectedSubcategory = document.getElementById("selectedSubcategory");
+                selectedSubcategory.innerText = "";
+
+                const subcategoryId = document.getElementById("subcategoryId");
+                subcategoryId.value = "";
+
+                const categoryRows =  document.querySelectorAll(".categoryRow");
+                categoryRows.forEach(a => a.classList.remove('bg-body-secondary'));
+
+                categoryRow.classList.add("bg-body-secondary")
+
+                const selectedProductCategory = document.getElementById("selectedProductCategory");
+                selectedProductCategory.innerText = categoryRow.querySelector(".productCategoryName").innerText;
+
+                const categoryId = categoryRow.querySelector(".inputProductCategoryId").value;
+                const url = `/api/store/getProductSubcategoryDto?category_id=${categoryId}`;
+                fetch(url)
+                .then(response => response.json())
+                .then((response) => {
+
+                    const subcategoryBox = document.getElementById("subcategoryBox");
+                    subcategoryBox.innerHTML = "";
+
+                    const subcategoryRow = document.querySelector("#template .subcategoryRow");
+
+                    for(e of response.data.subcategoryDtoList){
+                        const newSubcategoryRow = subcategoryRow.cloneNode(true);
+                        const subcategoryName = newSubcategoryRow.querySelector(".subcategoryName");
+                        subcategoryName.innerText = e.name;
+
+                        const inputSubcategoryId = newSubcategoryRow.querySelector(".inputSubcategoryId");
+                        inputSubcategoryId.value = e.id;
+
+                        subcategoryBox.appendChild(newSubcategoryRow);
+                    }
+
+                })
+            }
+
+            function setSelectedCategory(subcategoryRow){
+                const subcategoryRows =  document.querySelectorAll(".subcategoryRow");
+                subcategoryRows.forEach(row => row.classList.remove('bg-body-secondary'));
+
+                subcategoryRow.classList.add('bg-body-secondary');
+
+                const selectedCategoryRow = document.getElementById("selectedCategoryRow");
+                const selectedSubcategory = document.getElementById("selectedSubcategory");
+
+                selectedSubcategory.innerText = subcategoryRow.querySelector(".subcategoryName").innerText;
+
+                const subcategoryId = document.getElementById("subcategoryId");
+                subcategoryId.value = subcategoryRow.querySelector(".inputSubcategoryId").value;
+
+                selectedCategoryRow.classList.remove("d-none");
+            }
+
+            function checkProductNameLength() {
+                const inputName = document.getElementById("inputName");
+                const nameCount = document.getElementById("nameCount");
+                const currentLength = inputName.value.length;
+                
+                if (currentLength > 100) {
+                    inputName.value = inputName.value.substring(0, 100);
+                    currentLength = 100;
+                }
+                
+                nameCount.textContent = currentLength + "/100";
+            }
 
             function validateDiscountRate(input) {
                 if (input.value.length > 2) {

@@ -3,9 +3,13 @@ package com.bulmeong.basecamp.store.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
+import com.bulmeong.basecamp.store.dto.ProductSubcategoryDto;
 import com.bulmeong.basecamp.store.dto.StoreBankAccountDto;
 import com.bulmeong.basecamp.store.dto.StoreDeliveryInfoDto;
 import com.bulmeong.basecamp.store.dto.StoreDto;
+import com.bulmeong.basecamp.store.dto.StoreProductCategoryDto;
 import com.bulmeong.basecamp.store.mapper.StoreSqlMapper;
 
 @Service
@@ -40,5 +44,13 @@ public class StoreService {
 
     public StoreBankAccountDto getStoreBankAccountDtoByStoreId(int store_id){
         return storeSqlMapper.selectStoreBankAccountDtoByStoreId(store_id);
+    }
+
+    public List<StoreProductCategoryDto> getProductCategoryAll(){
+        return storeSqlMapper.selectProductCategoryAll();
+    }
+
+    public List<ProductSubcategoryDto> getProductSubcategoryByCategoryId(int category_id){
+        return storeSqlMapper.selectProductSubcategoryByCategoryId(category_id);
     }
 }
