@@ -128,9 +128,15 @@ public class ClubService {
 
 
     // 앨범 이미지
-        public List<ClubPostImageDto> clubPostImageDtoList(){
-            List<ClubPostImageDto>clubPostImageDtoList = clubSqlMapper.seleClubPostImageDtoList();
+        public List<ClubPostImageDto> getPostImageDtoList(){
+            List<ClubPostImageDto>clubPostImageDtoList = clubSqlMapper.selectPostImageDtoList();
             // 반복문 돌려서 뺴온 아이디로 또 필요한 데이터 찾기
+            return clubPostImageDtoList;
+        }
+
+        public List<ClubPostImageDto> getPostImageDtoListById(int id){
+            List<ClubPostImageDto> clubPostImageDtoList = clubSqlMapper.selectPostImageDtoListById(id);
+
             return clubPostImageDtoList;
         }
 
@@ -175,6 +181,8 @@ public class ClubService {
 
             return map;
         }
+
+        
 
         //  소모임 북마크 여부 확인
         public int confirmBookmark(ClubBookmarkDto clubBookmarkDto){

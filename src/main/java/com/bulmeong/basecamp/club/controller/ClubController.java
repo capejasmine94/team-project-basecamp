@@ -18,6 +18,7 @@ import com.bulmeong.basecamp.club.dto.ClubMemberDto;
 import com.bulmeong.basecamp.club.dto.ClubPostCategoryDto;
 import com.bulmeong.basecamp.club.dto.ClubPostCommentDto;
 import com.bulmeong.basecamp.club.dto.ClubPostDto;
+import com.bulmeong.basecamp.club.dto.ClubPostImageDto;
 import com.bulmeong.basecamp.club.dto.ClubRegionCategoryDto;
 import com.bulmeong.basecamp.club.service.ClubService;
 import com.bulmeong.basecamp.common.dto.ImageDto;
@@ -67,6 +68,8 @@ public class ClubController {
 
         ClubBookmarkDto clubBookmarkDto = new ClubBookmarkDto();
         UserDto userDto = (UserDto)session.getAttribute("sessionUserInfo");
+
+        
         
         if(userDto != null){
             clubBookmarkDto.setUser_id(userDto.getId());
@@ -151,11 +154,11 @@ public class ClubController {
         return "club/clubBoardPage";
     }
 
-    // @RequestMapping("album")
-    // public String clubAlbum(){
+    @RequestMapping("album")
+    public String clubAlbum(){
 
-    //     return "club/clubAlbumPage";
-    // }
+        return "club/clubAlbumPage";
+    }
 
     @RequestMapping("readPost")
     public String readPost(@RequestParam("id") int id, Model model, HttpSession session){
@@ -163,8 +166,11 @@ public class ClubController {
         Map<String, Object> map = clubService.getClubPostData(id);
         model.addAttribute("map", map);
         List<Map<String, Object>> postCommentDetailList = clubService.getPostCommentDetailList(id);
-
         clubService.increaseReadCount(id);
+
+       List<ClubPostImageDto> clubPostImageDtoList = clubService.getPostImageDtoListById(id);
+       model.addAttribute("clubPostImageDtoList", clubPostImageDtoList);
+
 
         int totalReadCount = clubService.totalReadCount(id);
         model.addAttribute("totalReadCount", totalReadCount);

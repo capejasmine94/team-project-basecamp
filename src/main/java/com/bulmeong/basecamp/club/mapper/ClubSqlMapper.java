@@ -30,7 +30,8 @@ public interface ClubSqlMapper {
     public UserDto selectUserDtoById(int id);
     public ClubPostCategoryDto selectPostCategoryDtoById(int id);
     public List<ClubPostCategoryDto> selectPostCategoryDto();
-    public List<ClubPostImageDto> seleClubPostImageDtoList();
+    public List<ClubPostImageDto> selectPostImageDtoList();
+    public List<ClubPostImageDto> selectPostImageDtoListById(int id);
     public ClubPostDto selectPostDtoById(int id);
     public void insertClubPostCommentDto(ClubPostCommentDto clubPostCommentDto);
     public List<ClubPostCommentDto> selectPostCommentDto(int post_id);

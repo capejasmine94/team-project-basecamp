@@ -130,6 +130,16 @@
         select * from bc_club_post_image;
     </select>
 
+    <!-- selectPostImageDto by id -->
+
+    <select id="selectPostImageDtoListById" resultType="com.bulmeong.basecamp.club.dto.ClubPostImageDto" >
+        select * from bc_club_post_image
+        where post_id = #{post_id}
+    </select>
+    
+
+
+
     <!-- 게시글DTO 가져오기 -->
     <select id="selectPostDtoById" resultType="com.bulmeong.basecamp.club.dto.ClubPostDto">
         select * from bc_club_post
