@@ -1,3 +1,5 @@
+let fileSaved = new Map();
+
 function isWebView() {
     const userAgent = navigator.userAgent || navigator.vendor || window.opera;
 
@@ -67,8 +69,71 @@ function createUploadStructure(name, multiple) {
     return uploadNameDiv;
 }
 
-function createUploader(name, multiple) {
-    const container = createUploadStructure(name, multiple);
+function createUploader(name) {
+    const container = createUploadStructure(name, false);
+    const input = container.querySelector(`#customFile_${name}`);
+    const preview = container.querySelector('.preview');
+    const alert = container.querySelector(`#alert_${name}`);
+    const upload = container.querySelector('.upload-container');
+
+    input.style.display = 'none'; // 파일 입력 필드를 숨깁니다.
+
+    const button = preview.querySelector('.file-upload');
+    button.addEventListener('click', function() {
+        input.click(); // 버튼 클릭 시 파일 입력 필드를 트리거합니다.
+    });
+
+    input.addEventListener('change', function() {
+        preview.innerHTML = ''; // 이전 미리보기를 삭제합니다
+        alert.style.display = 'none'; // 경고를 숨깁니다
+
+        Array.from(this.files).forEach(file => {
+            if (file.type.startsWith('image/')) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const img = document.createElement('img');
+                    img.src = e.target.result;
+                    img.draggable = true; // 드래그 가능 설정
+                    img.classList.add('draggable'); // 클래스 추가
+                    if (isWebView()) {
+                        img.classList.add('col-auto', 'm-2', 'px-0'); // 클래스 추가
+                    } else {
+                        img.classList.add('col-auto', 'me-2', 'my-1', 'mt-2', 'mb-3'); // 클래스 추가
+                    }
+                    addDragAndDropHandlers(img); // 드래그 앤 드롭 핸들러 추가
+
+                    img.addEventListener('click', function() {
+                        input.click(); // 이미지 클릭 시 파일 입력 필드를 트리거합니다.
+                    });
+
+                    preview.appendChild(img);
+
+                    // 이미지가 버튼 위에 겹쳐지도록 스타일 조정
+                    button.style.position = 'absolute';
+                    button.style.top = '50%';
+                    button.style.left = '50%';
+                    button.style.transform = 'translate(-50%, -50%)';
+                }
+                reader.readAsDataURL(file);
+            } else {
+                alert.style.display = 'block'; // 경고를 표시합니다
+            }
+        });
+
+        preview.appendChild(button);
+    });
+}
+
+function createFileList(files) {
+    const dataTransfer = new DataTransfer();
+    files.forEach(file => {
+        dataTransfer.items.add(file);
+    });
+    return dataTransfer.files;
+}
+
+function createMultipleUploader(name) {
+    const container = createUploadStructure(name, true);
     const input = container.querySelector(`#customFile_${name}`);
     const preview = container.querySelector('.preview');
     const alert = container.querySelector(`#alert_${name}`);
@@ -79,35 +144,69 @@ function createUploader(name, multiple) {
         upload.appendChild(button);
         preview.innerHTML = ''; // Clear previous previews
         alert.style.display = 'none'; // Hide alert
-
+        if(!fileSaved.has(name)){
+            fileSaved.set(name, []);
+        }
         Array.from(this.files).forEach(file => {
             if (file.type.startsWith('image/')) {
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    const img = document.createElement('img');
-                    img.src = e.target.result;
-                    img.draggable = true; // 드래그 가능 설정
-                    img.classList.add('draggable'); // 클래스 추가
-                    if(isWebView()){
-                        img.classList.add('col-auto','m-2','px-0'); // 클래스 추가
-                    }
-                    else{
-                        img.classList.add('col-auto','me-2','my-1','mt-2','mb-3'); // 클래스 추가
-                    }
-                    addDragAndDropHandlers(img); // 드래그 앤 드롭 핸들러 추가
-                    preview.appendChild(img);
-                }
-                reader.readAsDataURL(file);
+                fileSaved.get(name).push(file);
             } else {
                 alert.style.display = 'block'; // Show alert
             }
         });
-
+        updatePreview(name, preview);
+        updateFileInput(name, input);
         preview.appendChild(button);
-        if (preview.children.length > 1) {
-            preview.insertBefore(preview.lastElementChild, preview.firstElementChild);
-        }
     });
+
+    function updatePreview(name, preview) {
+        preview.innerHTML = ''; // Clear previous previews
+        fileSaved.get(name).forEach(file => {
+            if (file.type.startsWith('image/')) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const imgWrapper = document.createElement('div');
+                    imgWrapper.classList.add('position-relative', 'd-inline-block','col-auto');
+
+                    const img = document.createElement('img');
+                    img.src = e.target.result;
+                    img.draggable = true; // 드래그 가능 설정
+                    img.classList.add('draggable'); // 클래스 추가
+                    if (isWebView()) {
+                        img.classList.add('col-auto', 'm-2', 'mb-1', 'px-0'); // 클래스 추가
+                    } else {
+                        img.classList.add('col-auto', 'me-2', 'my-1', 'mt-2', 'mb-3'); // 클래스 추가
+                    }
+                    addDragAndDropHandlers(img); // 드래그 앤 드롭 핸들러 추가
+
+                    // 삭제 버튼
+                    const closeButton = document.createElement('i');
+                    closeButton.innerHTML = '&times;';
+                    closeButton.classList.add('position-absolute', 'bi', 'bi-close','text-danger');
+                    closeButton.style.cursor = 'pointer';
+                    closeButton.style.bottom = '5em';
+                    closeButton.style.left = '5.75em';
+                    closeButton.style.translate = '(50%,50%)';
+                    closeButton.style.fontSize = '1rem';
+                    closeButton.addEventListener('click', () => {
+                        imgWrapper.remove();
+                        fileSaved.get(name).splice(fileSaved.get(name).indexOf(file), 1); // 배열에서 파일 제거
+                        updateFileInput(name, input); // 파일 입력 필드 업데이트
+                    });
+
+                    imgWrapper.appendChild(img);
+                    imgWrapper.appendChild(closeButton);
+                    preview.appendChild(imgWrapper);
+                }
+                reader.readAsDataURL(file);
+            }
+        });
+    }
+
+    function updateFileInput(name, input) {
+        const files = fileSaved.get(name);
+        input.files = createFileList(files);
+    }
 }
 
 function addDragAndDropHandlers(element) {
