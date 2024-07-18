@@ -3,6 +3,7 @@ package com.bulmeong.basecamp.insta.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.bulmeong.basecamp.insta.dto.InstaArticleCommentDto;
 import com.bulmeong.basecamp.insta.dto.InstaArticleDto;
 import com.bulmeong.basecamp.insta.dto.InstaArticleImgDto;
 import com.bulmeong.basecamp.insta.dto.InstaUserInfoDto;
@@ -74,7 +75,65 @@ public class InstaService {
         return result;
 
     }
+
+    // 댓글
+    public void registerComment(InstaArticleCommentDto instaArticleCommentDto){
+        instaSqlMapper.createComment(instaArticleCommentDto);
+    }
+
+    public List<Map<String, Object>> getCommentList(int article_id){
+        List<Map<String, Object>> result = new ArrayList<>();
+
+        List<InstaArticleCommentDto> commentList = instaSqlMapper.getCommentList(article_id);
+
+        for(InstaArticleCommentDto instaArticleCommentDto : commentList){
+            Map<String, Object> map = new HashMap<>();
+
+            map.put("instaArticleCommentDto", instaArticleCommentDto);
+
+            InstaUserInfoDto instaUserInfoDto = instaSqlMapper.selectUserInfoByUserId(instaArticleCommentDto.getUser_id());
+            map.put("instaUserInfoDto", instaUserInfoDto);
+
+            result.add(map);
+        }
+
+        return result;
+    }
+
+    public void deleteComment(int id){
+        instaSqlMapper.deleteComment(id);
+    }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

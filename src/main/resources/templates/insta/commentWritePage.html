@@ -60,13 +60,47 @@
             .instaButtonColor {
                 color: #0095f6;
             }
-
         </style>
+
+        <script>
+            const urlParams = new URL(window.location.href).searchParams;
+            const articleId = urlParams.get("id");
+
+            let myId = null;
+
+            // 댓글 _ post방식으로 작성
+            function registerComment(){
+                if(myId == null){
+                    if(confirm("로그인 하셔야 이용 가능합니다. 로그인 페이지로 이동하시겠습니까?")){
+                        location.href = "/insta/instaLoginPage";
+                    }
+                    return;
+                }
+
+                const inputText = document.getElementById("inputText");
+
+                const url = "/api/insta/registerComment";
+                fetch(url, {
+                    method: "post",
+                    headers: {
+                        "Content-Type": "application/x-www-form-urlencoded" // 나중에 필요시 multipart/formdata, json
+                    },
+                    body: `article_id=${articleId}&comment=${inputText.value}`
+                })
+                .then(response => response.json())
+                .then(response => {
+
+                })
+                ;
+
+            }
+        </script>
+
     </head>
     <body>
         <div class="container">
             <!-- 상단바 -->
-            <div class="row mb-5 border-bottom fixed-top" style="background-color: white;">
+            <div class="row border-bottom fixed-top" style="background-color: white;">
                 <div class="col-2">
                     <a th:href="@{./instaMainPage(user_id=${session.sessionUserInfo.id})}" style="color: black;"><i class="bi bi-x-lg"></i></a>
                 </div>
@@ -75,26 +109,94 @@
                 </div>
             </div>
 
-            <div class="container mt-5 pt-5">
-                <!-- 하단바 -->
-                <div class="row border-top fixed-bottom px-3" style="background-color: white;">
-                    <!-- 로그인 한 유저 프로필 사진 -->
-                    <div class="col-auto pe-0">
-                        <img src="/public/img/instaImage/userImg.jpeg" class="img-fluid rounded-circle commentWriteImage" alt="Profile Image">
-                    </div>
+            <!-- 댓글 List -->
+            <div class="row mt-5 pt-3">
+                <div class="col">
+                    <!-- 댓글 목록 List 박스 -->
+                    <div class="row pb-3">
+                        <div class="col fontBasic">
+                            <!-- 하나의 댓글 -->
+                            <div class="row">
+                                <a class="col-auto pe-0 align-self-center link-dark link-offset-2 link-underline link-underline-opacity-0" href="./instaUserPage">
+                                    <img src="/public/img/instaImage/hahaha4.jpg" class="img-fluid rounded-circle commentWriteImage">
+                                </a>
+                                <div class="col align-self-center">
+                                    <div class="row">
+                                        <a class="col-auto pe-0 link-dark link-offset-2 link-underline link-underline-opacity-0" href="./instaUserPage">
+                                            닉네임
+                                        </a>
+                                        <div class="col-auto ps-1" style="color: rgb(162, 162, 162);">날짜</div>
+                                        <div class="col"></div>                                                                                
+                                    </div>
+                                    <div class="row">
+                                        <div class="col pe-0">내용</div>
+                                    </div>
+                                </div>
+                                <div class="col-auto align-self-center">
+                                    <div class="row">
+                                        <!-- 좋아요 -->
+                                        <!-- <div class="col px-0">
+                                            <form action="./pushCommentLikeDeleteProcess" method="get">
+                                                <button class="btn">
+                                                    <i class="fa-solid fa-heart"></i>
+                                                </button>
+                                            </form>
+                                        </div> -->
+                                        <div class="col px-0">
+                                            <form action="./pushCommentLikeProcess" method="get">
+                                                <button class="btn">
+                                                    <i class="fa-regular fa-heart"></i>
+                                                </button>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
 
-                    <!-- 댓글 작성 form -->
-                    <div class="col">
-                        <form class="row">
-                            <div class="col align-self-center pe-0">
-                                <input value="" name="searchWord" type="text" class="rounded-5 form-control form-control-sm py-2" placeholder="댓글 추가..." style="font-size: 0.8em;">
+                                <!-- col이 row 안에 꽉차게 만들어줌 -->
+                                <a class="col-auto align-self-stretch fs-5 bg-danger px-1 d-flex align-items-center" href="./commentDeleteProcess" style="color: white;">
+                                    <i class="fa-solid fa-trash"></i>
+                                    <!-- <i class="bi bi-trash3"></i> -->
+                                </a>
                             </div>
-                            <div class="col-auto align-self-center ps-1">
-                                <button class="btn rounded-5 px-3 py-1" type="submit" style="color: white; background-color: #0095f6;">
-                                    <i class="fa-solid fa-arrow-up"></i>
-                                </button>
+                            <div class="row">
+                                <div class="col-2"></div>
+                                <a class="col fw-bold pe-0 link-offset-2 link-underline link-underline-opacity-0" href="./instaCommentReplyPage" style="padding-left: 6px; color: rgb(162, 162, 162); font-size: 0.9em;">
+                                    답글 달기
+                                </a>
                             </div>
-                        </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 하단바 -->
+            <div class="row border-top fixed-bottom px-3" style="background-color: white;">
+                <!-- 로그인 한 유저 프로필 사진 -->
+                <div class="col-auto pe-0">
+                    <img src="/public/img/instaImage/hahaha4.jpg" class="img-fluid rounded-circle commentWriteImage" alt="Profile Image">
+                </div>
+
+                <!-- 댓글 작성 form -->
+                <!-- <div class="col">
+                    <form class="row">
+                        <div class="col align-self-center pe-0">
+                            <input id="inputText" type="text" class="rounded-5 form-control form-control-sm py-2" placeholder="댓글 추가..." style="font-size: 0.8em;">
+                        </div>
+                        <div class="col-auto align-self-center ps-1">
+                            <button onclick="registerComment()" class="btn rounded-5 px-3 py-1" type="submit" style="color: white; background-color: #0095f6;">
+                                <i class="fa-solid fa-arrow-up"></i>
+                            </button>
+                        </div>
+                    </form>
+                </div> -->
+                <div class="col">
+                    <div class="row">
+                        <div class="col">
+                            <textarea id="inputText" class="form-control"></textarea>
+                        </div>
+                        <div class="col-auto d-grid ps-0">
+                            <input onclick="registerComment()" type="button" class="btn btn-primary" value="등록">
+                        </div>
                     </div>
                 </div>
             </div>

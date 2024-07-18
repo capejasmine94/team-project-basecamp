@@ -1,5 +1,6 @@
 package com.bulmeong.basecamp.club.service;
 
+import org.checkerframework.checker.units.qual.radians;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -189,5 +190,25 @@ public class ClubService {
         //  소모임 북마크 삭제
         public void delteBookmarkDto(ClubBookmarkDto clubBookmarkDto){
             clubSqlMapper.deleteBookmark(clubBookmarkDto);
+        }
+
+        // 소모임 북마크 집계
+        public int countTotalBookmark(int id){
+            int totalBookmark = clubSqlMapper.countTotalBookmark(id);
+
+            return totalBookmark;
+        }
+
+
+        // 게시글 조회수 증가
+        public void increaseReadCount(int id){
+            clubSqlMapper.increaseReadCount(id);
+        }
+
+        //  게시글 조회수 집계
+        public int totalReadCount(int id){
+           int totalReadCount = clubSqlMapper.totalReadCount(id);
+
+            return totalReadCount;
         }
 }

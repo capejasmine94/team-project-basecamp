@@ -68,12 +68,18 @@ public class ClubController {
         ClubBookmarkDto clubBookmarkDto = new ClubBookmarkDto();
         UserDto userDto = (UserDto)session.getAttribute("sessionUserInfo");
         
+        if(userDto != null){
             clubBookmarkDto.setUser_id(userDto.getId());
             clubBookmarkDto.setClub_id(id);
             int confirmBookmark = clubService.confirmBookmark(clubBookmarkDto);
             model.addAttribute("confirmBookmark", confirmBookmark);
+        }
+
+        int totalBookmark = clubService.countTotalBookmark(id);
+        model.addAttribute("totalBookmark", totalBookmark);
+        
                 
-        return "/club/clubHomePage";
+        return "club/clubHomePage";
     }
 
     @RequestMapping("createNewClub")
@@ -83,7 +89,7 @@ public class ClubController {
         List<ClubRegionCategoryDto> regionCategoryDtoList = clubService.findRegionCategory();
         model.addAttribute("regionCategoryDtoList", regionCategoryDtoList);
         
-        return "/club/createNewClubPage";
+        return "club/createNewClubPage";
     }
     
     @RequestMapping("createNewClubProcess")
@@ -100,7 +106,7 @@ public class ClubController {
         List<ClubPostCategoryDto> postCategoryDtoList = clubService.findPostCategory();
         model.addAttribute("id", id);
         model.addAttribute("postCategoryDtoList", postCategoryDtoList);
-        return "/club/writePostPage";
+        return "club/writePostPage";
     }
 
     @RequestMapping("writePostProcess")
@@ -142,7 +148,6 @@ public class ClubController {
         List<Map<String,Object>> postDetailList = clubService.getClubPostDtoList(id);
         model.addAttribute("postDetailList", postDetailList);
 
-        
         return "club/clubBoardPage";
     }
 
@@ -158,9 +163,16 @@ public class ClubController {
         Map<String, Object> map = clubService.getClubPostData(id);
         model.addAttribute("map", map);
         List<Map<String, Object>> postCommentDetailList = clubService.getPostCommentDetailList(id);
+
+        clubService.increaseReadCount(id);
+
+        int totalReadCount = clubService.totalReadCount(id);
+        model.addAttribute("totalReadCount", totalReadCount);
+
+
         model.addAttribute("postCommentDetailList", postCommentDetailList);
 
-        return "/club/readPostPage";
+        return "club/readPostPage";
     }
 
     @RequestMapping("writeCommentProcess")
@@ -175,20 +187,20 @@ public class ClubController {
     @RequestMapping("newClubs")
     public String newClubs(){
 
-        return "/club/newClubListPage";
+        return "club/newClubListPage";
     }
 
 
     @RequestMapping("localClubs")
     public String localClubs(){
 
-        return "/club/localClubListPage";
+        return "club/localClubListPage";
     }
 
     @RequestMapping("myClubs")
     public String myClubs(){
 
-        return "/club/myClubListPage";
+        return "club/myClubListPage";
     }
 
     @RequestMapping("bookmarkProcess")
@@ -203,6 +215,12 @@ public class ClubController {
         return "redirect:/club/home?id="+ clubBookmarkDto.getClub_id();
 
     }
+    @RequestMapping("createNewMeeting")
+    public String createNewMeeting(){
+
+        return "club/createNewMeetingPage";
+    }
+
 }
 
 

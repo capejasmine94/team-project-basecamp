@@ -43,7 +43,7 @@ public class StoreController {
 
     @RequestMapping("storeRegister")
     public String storeRegister(){
-        return "/store/storeRegisterPage";
+        return "store/storeRegisterPage";
     }
 
     @RequestMapping("storeRegisterProcess")
@@ -56,17 +56,17 @@ public class StoreController {
 
     @RequestMapping("registerComplete")
     public String registerComplete(){
-        return "/store/registerComplete";
+        return "store/registerComplete";
     }
 
     @RequestMapping("dashboard")
     public String dashboard(){
-        return "/store/dashboard";
+        return "store/dashboard";
     }
 
     @RequestMapping("productRegister")
     public String productRegister(){
-        return "/store/productRegister";
+        return "store/productRegister";
     }
     
     @RequestMapping("sellerInfo")
@@ -78,7 +78,7 @@ public class StoreController {
             StoreBankAccountDto storeBankAccountDto = storeService.getStoreBankAccountDtoByStoreId(sessionStore.getId());
             model.addAttribute("storeBankAccountDto", storeBankAccountDto);
 
-            return "/store/sellerInfo";
+            return "store/sellerInfo";
         }else{
             return "redirect:/storeCenter/login";
         }
@@ -87,58 +87,58 @@ public class StoreController {
 
     @RequestMapping("deliveryInfo")
     public String deliveryInfo(){
-        return "/store/deliveryInfo";
+        return "store/deliveryInfo";
     }
     
 //////////////////////////////////////////////////////////////////////////
 
     @RequestMapping("productManage")
     public String productManage(){
-        return "/store/XproductManage";
+        return "store/XproductManage";
     }
 
     @RequestMapping("orderIntegration")
     public String orderIntegration(){
-        return "/store/XorderIntegration";
+        return "store/XorderIntegration";
     }
 
     @RequestMapping("sendProcessing")
     public String sendProcessing(){
-        return "/store/XsendProcessing";
+        return "store/XsendProcessing";
     }
 
     @RequestMapping("cancelManage")
     public String cancelManage(){
-        return "/store/XcancelManage";
+        return "store/XcancelManage";
     }
 
     @RequestMapping("returnManage")
     public String returnManage(){
-        return "/store/XreturnManage";
+        return "store/XreturnManage";
     }
 
     @RequestMapping("manageQnA")
     public String manageQnA(){
-        return "/store/XmanageQnA";
+        return "store/XmanageQnA";
     }
 
     @RequestMapping("manageReview")
     public String manageReview(){
-        return "/store/XmanageReview";
+        return "store/XmanageReview";
     }
 
     @RequestMapping("balanceAccountsList")
     public String balanceAccountsList(){
-        return "/store/XbalanceAccountsList";
+        return "store/XbalanceAccountsList";
     }
 
     @RequestMapping("statistics")
     public String statistics(){
-        return "/store/Xstatistics";
+        return "store/Xstatistics";
     }
 
     @RequestMapping("storeInfo")
     public String storeInfo(){
-        return "/store/XstoreInfo";
+        return "store/XstoreInfo";
     }
 }

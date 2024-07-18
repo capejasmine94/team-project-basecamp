@@ -51,6 +51,25 @@
         select * from bc_insta_article_img where article_id = #{article_id}
     </select>
 
+    <!-- 댓글 관련 (자바스크립트 사용) -->
+    <insert id="createComment">
+        insert into bc_insta_article_comment(
+            user_id, article_id, comment
+        )values(
+            #{user_id}, #{article_id}, #{comment}
+        )
+    </insert>
+
+    <select id="getCommentList" resultType="com.bulmeong.basecamp.insta.dto.InstaArticleCommentDto">
+        select * from bc_insta_article_comment
+        where article_id = #{article_id}
+        order by id desc
+    </select>
+
+    <delete id="deleteComment">
+        delete from bc_insta_article_comment where id = #{id}
+    </delete>
+
 </mapper>
 
 

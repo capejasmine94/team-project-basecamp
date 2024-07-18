@@ -44,6 +44,7 @@ public class InstaController {
     public String instaLoginProcess(HttpSession session, @RequestParam("id") int id){
         util.loginUser(id);
         UserDto userDto = (UserDto) session.getAttribute("sessionUserInfo");
+        System.out.println("userDto" + userDto);
 
         int userC = instaService.instaUserC(userDto);
 
@@ -135,6 +136,35 @@ public class InstaController {
     }
 
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
