@@ -262,6 +262,12 @@
         where club_id = #{club_id}
     </select>
 
+    <!-- 특정 소모임에 가입한 회원수 집계 -->
+    <select id="countTotalClubMember" resultType="int">
+        select count(*) from bc_club_member
+        where club_id = #{club_id}
+    </select>
+
 
 
 

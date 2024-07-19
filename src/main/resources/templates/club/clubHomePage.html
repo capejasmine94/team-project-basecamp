@@ -107,9 +107,9 @@
                                 <div class="row pb-3">
                                     <div class="col" style="font-size: 0.8em;">
                                         <span class="badge text-bg-danger">NEW</span>
-                                        <span class="badge text-bg-primary" th:text="${map.clubRegionCategoryDto.region_name}">서울</span>
-                                        <span class="badge text-bg-primary" th:text="'멤버 ' + ${map.clubDto.capacity}">20</span>
-                                        <span class="badge text-bg-primary" th:text="${#dates.format(map.clubDto.created_at, 'yyyy.MM.dd')}">2024.07.19</span>
+                                        <span class="badge text-bg-primary" th:text="${map.clubRegionCategoryDto.region_name}"></span>
+                                        <span class="badge text-bg-primary" th:text="'멤버 ' + ${map.totalClubMember}"></span>
+                                        <span class="badge text-bg-primary" th:text="${#dates.format(map.clubDto.created_at, 'yyyy.MM.dd')}"></span>
                                     </div>
                                 </div>
                                 <div class="row pb-1">
@@ -256,26 +256,6 @@
                                         </div>
                                     </div>
                                 </div>
-
-                                <!-- 출력 테스트용 삭제 시작 -->
-                                <div class="row pt-2 pb-3">
-                                    <div class="col-1 px-0">
-                                        <!-- <img src="/public/img/clubImage/mangleProfile.jpg" class="img-fluid rounded-circle" style="aspect-ratio: 1/1;"> -->
-                                        <img th:src="|/image/${clubMemberData.userDto.profile_image}|" class="img-fluid rounded-circle" style="aspect-ratio: 1/1;">
-                                    </div>
-                                    <div class="col align-self-center" style="font-size: 0.9em;">
-                                        <div class="row">
-                                            <div class="col">
-                                                <span>망곰이</span>
-                                            </div>
-                                            <div class="col text-end">
-                                                <i class="bi bi-send"></i>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- 여기까지 삭제하기 -->
-
 
                             </div>
                         </div>

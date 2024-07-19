@@ -60,6 +60,8 @@ public interface ClubSqlMapper {
     public void increaseReadCount(int id);
     public int totalReadCount(int id);
 
+    public int countTotalClubMember(int id);
+
     
 }
 

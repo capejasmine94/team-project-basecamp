@@ -199,10 +199,13 @@ public class ClubService {
         public Map<String, Object>  clubDetail(int id){
             ClubDto clubDto = clubSqlMapper.selectClubDtoById(id);
             ClubRegionCategoryDto clubRegionCategoryDto = clubSqlMapper.selectRegionCategoryDtoById(clubDto.getRegion_id());
+            int totalClubMember = clubSqlMapper.countTotalClubMember(id);
 
             Map<String, Object> map = new HashMap<>();
             map.put("clubDto", clubDto);
             map.put("clubRegionCategoryDto", clubRegionCategoryDto);
+            map.put("totalClubMember", totalClubMember);
+
 
             return map;
         }
