@@ -61,6 +61,9 @@
             .f09{
                 font-size: 0.9em;
             }
+            .f40{
+                font-size: 4em;
+            }
             .top-nav{
                 height: 58px;
             }
@@ -109,6 +112,9 @@
             .categoryRow:hover, .subcategoryRow:hover{
                 background-color: #f0f0f0;
                 color: blue;
+            }
+            .optionQuantityInput:focus, .optionPriceInput:focus{
+                outline: 1px solid blue;
             }
         </style>
     </head>
@@ -606,24 +612,28 @@
                                                     옵션값
                                                 </div>
                                             </div>
-                                            <div class="row px-3 pb-3 align-items-center">
-                                                <div class="col-2"></div>
-                                                <div class="col-2 pe-0">
-                                                    <input type="text" class="form-control">
-                                                </div>
-                                                <div class="col-5">
-                                                    <input type="text" class="form-control">
-                                                </div>
-                                                <div class="col p-0">
-                                                    <input type="button" class="btn bg-white border pb-2" value="+">
+                                            <div class="row">
+                                                <div class="col" id="optionBox">
+                                                    <div class="row px-3 pb-3 align-items-center optionInputRow">
+                                                        <div class="col-2"></div>
+                                                        <div class="col-2 pe-0">
+                                                            <input type="text" class="form-control inputOptionName" placeholder="예시:컬러">
+                                                        </div>
+                                                        <div class="col-5">
+                                                            <input type="text" class="form-control inputOptionValue" placeholder="예시:빨강,노랑(,로 구분)">
+                                                        </div>
+                                                        <div class="col-auto ps-0 addOptionRowButton">
+                                                            <input type="button" class="btn btn-secondary pb-2" value="+" onclick="addOptionRow()">
+                                                        </div>
+                                                    </div>
                                                 </div>
                                             </div>
                                             <div class="row px-3 pb-3">
                                                 <div class="col-2"></div>
                                                 <div class="col">
-                                                    <button class="btn bg-white border py-2 f09">
+                                                    <a type="button" id="optionAddButton" class="btn bg-white border py-2 f09" onclick="addToOptionList()">
                                                         옵션 목록으로 적용 <i class="fa-solid fa-arrow-down"></i>
-                                                    </button>
+                                                    </a>
                                                 </div>
                                             </div>
 
@@ -631,8 +641,8 @@
                                                 <div class="col-auto f09 px-0 text-secondary">
                                                     옵션 목록
                                                 </div>
-                                                <div class="col f09">
-                                                    (총 7개)
+                                                <div class="col f09" id="optionListCount">
+                                                    (총 0개)
                                                 </div>
                                                 <div class="col-auto px-0">
                                                     <input type="button" class="btn bg-white border rounded-0 f09" value="선택삭제">
@@ -640,10 +650,10 @@
                                             </div>
 
                                             <div class="row px-3 f09">
-                                                <div class="col border" style="height: 20em; overflow-y: auto;">
+                                                <div class="col border bg-white" style="height: 20em; overflow-y: auto;">
                                                     <div class="row d-flex align-items-stretch border-bottom text-center align-items-center bg-body-tertiary" style="position: sticky; top: 0; z-index: 1;">
                                                         <div class="col-auto align-items-center justify-content-center d-flex">
-                                                            <input type="checkbox" class="form-check-input">
+                                                            <input id="allOptionsSelectCheckBox" type="checkbox" class="form-check-input">
                                                         </div>
                                                         <div class="col border-start">
                                                             <div class="row">
@@ -651,13 +661,8 @@
                                                                     옵션명
                                                                 </div>
                                                             </div>
-                                                            <div class="row">
-                                                                <div class="col py-2 border-end">
-                                                                    뭔가 적음
-                                                                </div>
-                                                                <div class="col py-2 border-end">
-                                                                    또 적음
-                                                                </div>
+                                                            <div class="row" id="optionNameRow">
+                                                                <div class="col py-2 border-end optionNameCol"></div>
                                                             </div>
                                                         </div>
                                                         <div class="col align-items-center justify-content-center d-flex border-end">
@@ -675,14 +680,14 @@
                                                     </div>
 
                                                     <div class="row">
-                                                        <div class="col bg-white">
+                                                        <div class="col" id="optionListBox">
                                                             <!-- 옵션 하나의 정보 -->
-                                                            <div class="row d-flex align-items-stretch border-bottom text-center align-items-center bg-white">
+                                                            <!-- <div class="row d-flex align-items-stretch border-bottom text-center align-items-center bg-white">
                                                                 <div class="col-auto align-items-center justify-content-center d-flex">
                                                                     <input type="checkbox" class="form-check-input">
                                                                 </div>
                                                                 <div class="col border-start">
-                                                                    <div class="row">
+                                                                    <div class="row optionValueRow">
                                                                         <div class="col py-2 align-items-center justify-content-center d-flex border-end">
                                                                             무언가
                                                                         </div>
@@ -691,189 +696,36 @@
                                                                         </div>
                                                                     </div>
                                                                 </div>
-                                                                <div class="col align-items-center justify-content-center d-flex border-end">
-                                                                    옵션가
-                                                                </div>
-                                                                <div class="col align-items-center justify-content-center d-flex border-end">
-                                                                    재고수량
-                                                                </div>
+
+                                                                <input type="number" class="optionPriceInput border-0 col rounded-0 d-grid align-items-center justify-content-center d-flex border-end">
+                                                                <input type="number" class="optionQuantityInput border-0 col rounded-0 d-grid align-items-center justify-content-center d-flex border-end">
+
                                                                 <div class="col align-items-center justify-content-center d-flex border-end">
                                                                     판매상태
                                                                 </div>
                                                                 <div class="col-1 align-items-center justify-content-center d-flex">
                                                                     <input type="button" class="btn bg-white border rounded-0 text-danger f08" value="X">
                                                                 </div>
-                                                            </div>
-
-                                                            <div class="row d-flex align-items-stretch border-bottom text-center align-items-center bg-white">
-                                                                <div class="col-auto align-items-center justify-content-center d-flex">
-                                                                    <input type="checkbox" class="form-check-input">
-                                                                </div>
-                                                                <div class="col border-start">
+                                                            </div> -->
+                                                            
+                                                            <div class="row py-5">
+                                                                <div class="col">
                                                                     <div class="row">
-                                                                        <div class="col py-2 align-items-center justify-content-center d-flex border-end">
-                                                                            무언가
+                                                                        <div class="col align-items-center text-center">
+                                                                            <span class="material-symbols-outlined f40 text-body-tertiary">
+                                                                                error
+                                                                            </span>
                                                                         </div>
-                                                                        <div class="col py-2 align-items-center justify-content-center d-flex border-end">
-                                                                            또 적음
+                                                                    </div>
+                                                                    <div class="row">
+                                                                        <div class="col align-items-center text-center">
+                                                                            데이터가 존재하지 않습니다
                                                                         </div>
                                                                     </div>
                                                                 </div>
-                                                                <div class="col align-items-center justify-content-center d-flex border-end">
-                                                                    옵션가
-                                                                </div>
-                                                                <div class="col align-items-center justify-content-center d-flex border-end">
-                                                                    재고수량
-                                                                </div>
-                                                                <div class="col align-items-center justify-content-center d-flex border-end">
-                                                                    판매상태
-                                                                </div>
-                                                                <div class="col-1 align-items-center justify-content-center d-flex">
-                                                                    <input type="button" class="btn bg-white border rounded-0 text-danger f08" value="X">
-                                                                </div>
                                                             </div>
 
-                                                            <div class="row d-flex align-items-stretch border-bottom text-center align-items-center bg-white">
-                                                                <div class="col-auto align-items-center justify-content-center d-flex">
-                                                                    <input type="checkbox" class="form-check-input">
-                                                                </div>
-                                                                <div class="col border-start">
-                                                                    <div class="row">
-                                                                        <div class="col py-2 align-items-center justify-content-center d-flex border-end">
-                                                                            무언가
-                                                                        </div>
-                                                                        <div class="col py-2 align-items-center justify-content-center d-flex border-end">
-                                                                            또 적음
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="col align-items-center justify-content-center d-flex border-end">
-                                                                    옵션가
-                                                                </div>
-                                                                <div class="col align-items-center justify-content-center d-flex border-end">
-                                                                    재고수량
-                                                                </div>
-                                                                <div class="col align-items-center justify-content-center d-flex border-end">
-                                                                    판매상태
-                                                                </div>
-                                                                <div class="col-1 align-items-center justify-content-center d-flex">
-                                                                    <input type="button" class="btn bg-white border rounded-0 text-danger f08" value="X">
-                                                                </div>
-                                                            </div>
-
-                                                            <div class="row d-flex align-items-stretch border-bottom text-center align-items-center bg-white">
-                                                                <div class="col-auto align-items-center justify-content-center d-flex">
-                                                                    <input type="checkbox" class="form-check-input">
-                                                                </div>
-                                                                <div class="col border-start">
-                                                                    <div class="row">
-                                                                        <div class="col py-2 align-items-center justify-content-center d-flex border-end">
-                                                                            무언가
-                                                                        </div>
-                                                                        <div class="col py-2 align-items-center justify-content-center d-flex border-end">
-                                                                            또 적음
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="col align-items-center justify-content-center d-flex border-end">
-                                                                    옵션가
-                                                                </div>
-                                                                <div class="col align-items-center justify-content-center d-flex border-end">
-                                                                    재고수량
-                                                                </div>
-                                                                <div class="col align-items-center justify-content-center d-flex border-end">
-                                                                    판매상태
-                                                                </div>
-                                                                <div class="col-1 align-items-center justify-content-center d-flex">
-                                                                    <input type="button" class="btn bg-white border rounded-0 text-danger f08" value="X">
-                                                                </div>
-                                                            </div>
-
-                                                            <div class="row d-flex align-items-stretch border-bottom text-center align-items-center bg-white">
-                                                                <div class="col-auto align-items-center justify-content-center d-flex">
-                                                                    <input type="checkbox" class="form-check-input">
-                                                                </div>
-                                                                <div class="col border-start">
-                                                                    <div class="row">
-                                                                        <div class="col py-2 align-items-center justify-content-center d-flex border-end">
-                                                                            무언가
-                                                                        </div>
-                                                                        <div class="col py-2 align-items-center justify-content-center d-flex border-end">
-                                                                            또 적음
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="col align-items-center justify-content-center d-flex border-end">
-                                                                    옵션가
-                                                                </div>
-                                                                <div class="col align-items-center justify-content-center d-flex border-end">
-                                                                    재고수량
-                                                                </div>
-                                                                <div class="col align-items-center justify-content-center d-flex border-end">
-                                                                    판매상태
-                                                                </div>
-                                                                <div class="col-1 align-items-center justify-content-center d-flex">
-                                                                    <input type="button" class="btn bg-white border rounded-0 text-danger f08" value="X">
-                                                                </div>
-                                                            </div>
-
-                                                            <div class="row d-flex align-items-stretch border-bottom text-center align-items-center bg-white">
-                                                                <div class="col-auto align-items-center justify-content-center d-flex">
-                                                                    <input type="checkbox" class="form-check-input">
-                                                                </div>
-                                                                <div class="col border-start">
-                                                                    <div class="row">
-                                                                        <div class="col py-2 align-items-center justify-content-center d-flex border-end">
-                                                                            무언가
-                                                                        </div>
-                                                                        <div class="col py-2 align-items-center justify-content-center d-flex border-end">
-                                                                            또 적음
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="col align-items-center justify-content-center d-flex border-end">
-                                                                    옵션가
-                                                                </div>
-                                                                <div class="col align-items-center justify-content-center d-flex border-end">
-                                                                    재고수량
-                                                                </div>
-                                                                <div class="col align-items-center justify-content-center d-flex border-end">
-                                                                    판매상태
-                                                                </div>
-                                                                <div class="col-1 align-items-center justify-content-center d-flex">
-                                                                    <input type="button" class="btn bg-white border rounded-0 text-danger f08" value="X">
-                                                                </div>
-                                                            </div>
-
-                                                            <div class="row d-flex align-items-stretch border-bottom text-center align-items-center bg-white">
-                                                                <div class="col-auto align-items-center justify-content-center d-flex">
-                                                                    <input type="checkbox" class="form-check-input">
-                                                                </div>
-                                                                <div class="col border-start">
-                                                                    <div class="row">
-                                                                        <div class="col py-2 align-items-center justify-content-center d-flex border-end">
-                                                                            무언가
-                                                                        </div>
-                                                                        <div class="col py-2 align-items-center justify-content-center d-flex border-end">
-                                                                            또 적음
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="col align-items-center justify-content-center d-flex border-end">
-                                                                    옵션가
-                                                                </div>
-                                                                <div class="col align-items-center justify-content-center d-flex border-end">
-                                                                    재고수량
-                                                                </div>
-                                                                <div class="col align-items-center justify-content-center d-flex border-end">
-                                                                    판매상태
-                                                                </div>
-                                                                <div class="col-1 align-items-center justify-content-center d-flex">
-                                                                    <input type="button" class="btn bg-white border rounded-0 text-danger f08" value="X">
-                                                                </div>
-                                                            </div>
-
-                                                            <div class="row py-3"></div>
+                                                            <!-- <div class="row py-3"></div> -->
                                                         </div>
                                                     </div>
 
@@ -948,7 +800,7 @@
                         <div class="col"></div>
                         <div class="col-2 d-grid">
                             <button class="btn btn-secondary py-2" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                                미리보기
+                                미리보기(하지말까?)
                             </button>
                         </div>
                         <div class="col-2 d-grid">
@@ -963,11 +815,60 @@
         </div>
 
         <div id="template" class="d-none">
+
+            <!-- 소분류 목록 -->
             <div class="row py-2 subcategoryRow" onclick="setSelectedCategory(this)">
                 <div class="col subcategoryName">
                 </div>
                 <input type="hidden" class="inputSubcategoryId">
             </div>
+
+            <!-- 옵션입력란 -->
+            <div class="row px-3 pb-3 align-items-center optionInputRow">
+                <div class="col-2"></div>
+                <div class="col-2 pe-0">
+                    <input type="text" class="form-control inputOptionName" placeholder="예시:컬러">
+                </div>
+                <div class="col-5">
+                    <input type="text" class="form-control inputOptionValue" placeholder="예시:빨강,노랑(,로 구분)">
+                </div>
+                <div class="col-auto ps-0 addOptionRowButton d-none">
+                    <input type="button" class="btn btn btn-secondary pb-2" value="+" onclick="addOptionRow()">
+                </div>
+                <div class="col ps-0 deleteOptionRowbutton">
+                    <input type="button" class="btn bg-white border text-danger pb-2" value="x" onclick="deleteOptionRow()">
+                </div>
+            </div>
+
+            <!-- 옵션명 -->
+            <div class="col py-2 border-end optionNameCol"></div>
+
+            <!-- 옵션 하나의 정보 -->
+            <div class="row optionValueTemplate d-flex align-items-stretch border-bottom text-center align-items-center bg-white">
+                <div class="col-auto align-items-center justify-content-center d-flex">
+                    <input type="checkbox" class="form-check-input optionsSelectCheckBox">
+                </div>
+                <div class="col border-start">
+                    <div class="row optionValueRow">
+                    </div>
+                </div>
+
+                <input type="number" class="optionPriceInput border-0 col rounded-0 d-grid align-items-center justify-content-center d-flex border-end">
+                <input type="number" class="optionQuantityInput border-0 col rounded-0 d-grid align-items-center justify-content-center d-flex border-end">
+
+                <div class="col align-items-center justify-content-center d-flex border-end">
+                    판매상태
+                </div>
+                <div class="col-1 align-items-center justify-content-center d-flex">
+                    <input type="button" class="btn bg-white border rounded-0 text-danger f08" value="X">
+                </div>
+            </div>
+
+            <!-- 옵션 값 -->
+            <div class="col optionValueCol py-2 align-items-center justify-content-center d-flex border-end">
+                무언가
+            </div>
+
         </div>
 
         <!-- modal -->
@@ -1012,9 +913,92 @@
                 });
             });
 
+            function optionListCount(){
+                const optionListCount = document.getElementById("optionListCount");
+                const optionValueTemplates = document.querySelectorAll("#optionListBox .optionValueTemplate");
+                optionListCount.innerText = "(총 "+ optionValueTemplates.length + "개)"
+            }
+
+            function selectAllOptions(){
+                const allOptionsSelectCheckBox = document.getElementById("allOptionsSelectCheckBox");
+                const optionsSelectCheckBoxList = document.querySelectorAll("#optionListBox .optionsSelectCheckBox");
+                if(allOptionsSelectCheckBox.checked){
+                    for(e of optionsSelectCheckBoxList){
+                        e.checked = true;
+                    }
+                }else{
+                    for(e of optionsSelectCheckBoxList){
+                        e.checked = false;
+                    }
+                }
+            }
+
+            // function activeOptionAddbutton(){
+            //     const optionAddButton = document.getElementById("optionAddButton");
+
+            //     const inputOptionNames = document.querySelectorAll("#optionBox .inputOptionName");
+            //     const inputOptionValues = document.querySelectorAll("#optionBox .inputOptionValue");
+            // }
+
+            function addToOptionList(){
+                const optionNameRow = document.getElementById("optionNameRow");
+                optionNameRow.innerHTML = "";
+
+                const optionNameCol = document.querySelector("#template .optionNameCol");
+                const inputOptionNames = document.querySelectorAll("#optionBox .inputOptionName");
+
+                for(e of inputOptionNames){
+                    const newOptionNameCol = optionNameCol.cloneNode(true);
+                    newOptionNameCol.innerText = e.value;
+
+                    optionNameRow.appendChild(newOptionNameCol);
+                }
+
+                const inputOptionValues = document.querySelectorAll("#optionBox .inputOptionValue");
+                const values = [];
+
+                inputOptionValues.forEach(input => {
+                    const splitValues = input.value.split(',');
+                    values.push(splitValues);
+                })
+
+                const combinations = [];
+                function createCombinations(prefix, index) {
+                    if (index === values.length) {
+                        combinations.push(prefix);
+                        return;
+                    }
+                    values[index].forEach(value => {
+                        createCombinations(prefix.concat(value), index + 1);
+                    });
+                }
+
+                createCombinations([], 0);
+
+                const optionListBox = document.getElementById("optionListBox");
+                optionListBox.innerHTML = "";
+
+                const optionValueTemplate = document.querySelector("#template .optionValueTemplate");
+
+                combinations.forEach(comb => {
+                    const newOptionValueTemplate = optionValueTemplate.cloneNode(true);
+                    const optionValueRow = newOptionValueTemplate.querySelector(".optionValueRow")
+
+                    comb.forEach(value => {
+                        const newOptionValueCol = document.querySelector("#template .optionValueCol").cloneNode(true);
+                        newOptionValueCol.innerText = value;
+
+                        optionValueRow.appendChild(newOptionValueCol);
+                    })
+                    optionListBox.appendChild(newOptionValueTemplate);
+                })
+
+                optionListCount();
+            }
+
             function getProductSubcategoryList(categoryRow){
                 const selectedCategoryRow = document.getElementById("selectedCategoryRow");
-                // selectedCategoryRow.classList.add("d-none");
+                selectedCategoryRow.classList.add("d-none");
 
                 const selectedSubcategory = document.getElementById("selectedSubcategory");
                 selectedSubcategory.innerText = "";
@@ -1170,11 +1154,45 @@
                 if(button.value=="설정함"){
                     optionSettingRow.classList.remove('d-none');
                     inputQuantity.disabled = true;
-                    // inputQuantity.value = ;
+
+                    const optionValueTemplates = document.querySelectorAll("#optionListBox .optionValueTemplate");
+                    const optionListCount = document.querySelectorAll("#optionListBox .optionValueTemplate").length;
+
+                    if(optionListCount==0){
+                        inputQuantity.value = 0;
+                    }else{
+                        let optionQuantityInput = 0;
+                        for(optionValueTemplate of optionValueTemplates){
+                            const optionQuantityValue = parseInt(optionValueTemplate.querySelector(".optionQuantityInput").value)
+                            optionQuantityInput += optionQuantityValue;
+                        }
+                        inputQuantity.value = optionQuantityInput;
+                    }
                 }else{
                     optionSettingRow.classList.add('d-none');
                     inputQuantity.disabled = false;
                 }
+            }
+
+            function addOptionRow(){
+                const buttons = document.querySelectorAll(".addOptionRowButton")
+                buttons.forEach(btn => btn.classList.add('d-none'));
+
+                const optionBox = document.getElementById("optionBox");
+
+                const optionInputRow = document.querySelector("#template .optionInputRow");
+                const newOptionInputRow = optionInputRow.cloneNode(true);
+                newOptionInputRow.querySelector(".deleteOptionRowbutton").classList.remove("d-nonde");
+
+                optionBox.appendChild(newOptionInputRow);
+            }
+
+            function deleteOptionRow(){
+                const optionInputRow = event.target.closest(".optionInputRow");
+                optionInputRow.parentNode.removeChild(optionInputRow);
+
+                const buttons = document.querySelectorAll(".addOptionRowButton");
+                buttons.forEach(btn => btn.classList.remove('d-none'));
             }
 
             function setSessionId() {
@@ -1210,7 +1228,6 @@
             function onResize(){
                 const topNaviSeller = document.getElementById("topNaviSeller");
                 const height = topNaviSeller.offsetHeight;
-                console.log(height);
                 const leftMenu = document.getElementById("leftAccordion");
                 leftMenu.style.paddingTop = height + 'px';
             }
@@ -1232,6 +1249,9 @@
 
             window.addEventListener("DOMContentLoaded", () => {
                 setSessionId();
+
+                const allOptionsSelectCheckBox = document.getElementById("allOptionsSelectCheckBox");
+                allOptionsSelectCheckBox.addEventListener("change", selectAllOptions);
             })
         </script>
     </body>
