@@ -1,0 +1,267 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="/public/css/secondHandProductCss/style.css">
+    <style>
+        .postDetailImage-custom {
+            width: 100vw;
+            height: 20rem;
+        }
+        .postDetailImage-custom img {
+            width: 100%;
+            height: 100%;
+        }
+        .carousel-indicators {
+            bottom: 10px; /* 사진 하단 중앙에 위치 */
+        }
+        .carousel-indicators button {
+            background-color: #000;
+        }
+        .carousel-indicators .active {
+            background-color: #fff;
+        }
+        .fixed-background {
+            background-color: white !important; /* 원하는 배경색으로 변경 */
+        }
+
+        .fixed-background .icon {
+            color: black !important; /* 아이콘 색상 변경 */
+        }
+    </style>
+</head>
+<body>
+<!--상단네비-->
+<div class="container g-0 py-3 fixed-top" id="topNav">
+    <div class="row mx-2">
+        <a href="javascript:history.back()" class="col-auto icon pe-0" style="color: white">
+            <span style="font-size: 1.3rem">
+                <i class="bi bi-chevron-left"></i>
+            </span>
+        </a>
+        <a href="/secondhandProduct/mainPage" class="col icon" style="color: white">
+            <span style="font-size: 1.3rem">
+                <i class="bi bi-house"></i>
+            </span>
+        </a>
+    </div>
+</div>
+<!-- 게시글 상세 이미지 -->
+<form action="/secondhandProduct/productChatRoomPage" class="container-fluid g-0 form-container">
+    <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
+        <div class="carousel-inner">
+            <th:block th:each="imageDto, stat : ${productTotalDtoList.imageDtoList}">
+                <div class="carousel-item" th:classappend="${stat.index == 0} ? ' active'">
+                    <div class="row">
+                        <div class="col postDetailImage-custom">
+                            <img th:src="@{/images/{image}(image=${imageDto.image_url})}" class="d-block w-100" alt="...">
+                        </div>
+                    </div>
+                </div>
+            </th:block>
+        </div>
+        <div class="carousel-indicators">
+            <th:block th:each="imageDto, stat : ${productTotalDtoList.imageDtoList}">
+                <button type="button" data-bs-target="#carouselExampleIndicators" th:data-bs-slide-to="${stat.index}" th:classappend="${stat.index == 0} ? ' active'" aria-current="true" th:aria-label="'Slide ' + (${stat.index} + 1)"></button>
+            </th:block>
+        </div>
+    </div>
+    <!-- 게시글 판매자 -->
+    <div class="row mx-2 py-3 border-bottom" id="sellerInfo">
+        <div class="col-auto pe-0 profileImage-custom">
+            <img src="/public/img/secondHandProductImage/기본이미지.png">
+        </div>
+        <div class="col">
+            <div class="row-auto">
+                <div class="col">
+                    <span th:text="${productTotalDtoList.userDto.nickname}" class="font-custom2 fw-bold">닉네임~~</span>
+                </div>
+                <div class="col" style="font-size: 0.9rem">
+                    <span>내동네~~</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- 게시글 제목 -->
+    <div class="row mx-2 mt-4">
+        <div class="col">
+            <span class="fs-3 fw-bold" th:text="${productTotalDtoList.AllContentsDto.title}">제목</span>
+        </div>
+    </div>
+    <!-- 게시글 카테고리,생성일 -->
+    <div class="row mx-2 mt-2">
+        <div class="col font-custom3">
+            <a href="" th:text="${productTotalDtoList.AllContentsDto.category_name}" style="color: #ADB1BA">카테고리이름</a>
+            <span>・</span>
+            <span th:text="${T(com.bulmeong.basecamp.common.util.TimeUtil).timeAgo(productTotalDtoList.AllContentsDto.created_at)}">생성일</span>
+        </div>
+    </div>
+    <!-- 게시글 설명 -->
+    <div class="row mx-2 mt-3">
+        <div class="col">
+            <span th:text="${productTotalDtoList.AllContentsDto.explanation}">설명~~~</span>
+        </div>
+    </div>
+    <!-- 거래희망장소-->
+    <div class="row mx-2 mt-3">
+        <div class="col fw-bold">거래희망장소</div>
+        <div class="col text-end"><i class="bi bi-chevron-right"></i></div>
+    </div>
+    <div class="row mx-2 mt-2">
+        <div class="col postDetailMapImage-custom">
+            <img src="/public/img/secondHandProductImage/이벤트3.png">
+        </div>
+    </div>
+    <!--관심,조회수 -->
+    <div class="row mx-2 mt-4">
+        <div class="col font-custom3">
+            <span>채팅</span><span class="ms-1">3</span>
+            <span>・</span>
+            <span>관심</span><span class="ms-1" id="likeCount"></span>
+            <span>・</span>
+            <span>조회수</span><span class="ms-1" th:text="${productTotalDtoList.AllContentsDto.read_count}"></span>
+        </div>
+    </div>
+    <!--하단네비-->
+    <div class="container-fluid border-top py-3 g-0 bg-light fixed-bottom">
+        <div class="row mx-2">
+            <div class="col-auto pt-1 border-end">
+               <span class="fs-4">
+                <i class="bi bi-heart" onclick="like()" id="heart" style="color: #FF6F0F"></i>
+            </span>
+            </div>
+            <div class="col pt-1">
+                <span th:text="|${#numbers.formatInteger(productTotalDtoList.AllContentsDto.price, 0, 'COMMA')}원|" class="fw-bold fs-5">금액</span>
+            </div>
+            <div class="col text-center d-grid">
+                <button type="submit" class="btn" style="background-color: #FF6F0F; color: white">채팅하기</button>
+            </div>
+        </div>
+    </div>
+</form>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+
+<script>
+<!-- 좋아요    -->
+    const urlParams = new URL(window.location.href).searchParams;
+    const productId = urlParams.get("product_id");
+    let myId = null;
+    //
+    const carousel = document.querySelector('#carouselExampleIndicators');
+    const sellerInfo = document.querySelector('#sellerInfo');
+    const topNav = document.querySelector('#topNav');
+    let startX, endX;
+
+
+    carousel.addEventListener('touchstart', function(event) {
+        startX = event.touches[0].clientX;
+    });
+
+    carousel.addEventListener('touchmove', function(event) {
+        endX = event.touches[0].clientX;
+    });
+
+    carousel.addEventListener('touchend', function(event) {
+        const threshold = 50;
+        if (startX - endX > threshold) {
+
+            $(this).carousel('next');
+        } else if (endX - startX > threshold) {
+
+            $(this).carousel('prev');
+        }
+    });
+
+    window.addEventListener('scroll', function() {
+        if (window.scrollY >= sellerInfo.offsetTop - topNav.offsetHeight) {
+            topNav.classList.add('fixed-background');
+        } else {
+            topNav.classList.remove('fixed-background');
+        }
+    });
+    // js 로그인여부
+    function setSessionUserId() {
+        const url = "/api/user/getSessionUserId"
+        fetch(url)
+            .then(response => response.json())
+            .then((response) => {
+                myId = response.data.userId;
+                productByUserLike();
+            })
+        ;
+    }
+    // 좋아요 인서트
+    function like() {
+        const url = "/api/secondhandProduct/like?product_id=" + productId;
+        fetch(url)
+            .then(response => response.json())
+            .then(response => {
+                productByUserLike();
+                totalLikeCount();
+            });
+    }
+    // 좋아요 취소
+    function unLike() {
+        const url = "/api/secondhandProduct/unLike?product_id=" + productId;
+        fetch(url)
+            .then(response => response.json())
+            .then(response => {
+                productByUserLike();
+                totalLikeCount();
+            });
+    }
+    // 게시글 -> 유저 좋아요 여부
+    function productByUserLike() {
+        if (myId == null) {
+            return;
+        }
+        const url = "/api/secondhandProduct/productByUserLike?product_id=" + productId
+        fetch(url)
+            .then(response => response.json())
+            .then(response => {
+
+                const heart = document.getElementById("heart");
+
+                if (response.data.byUserLike == true) {
+                    heart.classList.remove("bi-heart")
+                    heart.classList.add("bi-heart-fill");
+
+                    heart.onclick = unLike;
+                } else {
+                    heart.classList.remove("bi-heart-fill")
+                    heart.classList.add("bi-heart");
+
+                    heart.onclick = like;
+                }
+            })
+            ;
+    }
+    // 좋아요 전체 카운트
+    function totalLikeCount() {
+        const url = "/api/secondhandProduct/totalLikeCount?product_id=" + productId
+        fetch(url)
+            .then(response => response.json())
+            .then(response => {
+                const likeCount = document.getElementById("likeCount");
+                likeCount.innerText = response.data.count;
+            })
+    }
+
+
+    window.addEventListener("DOMContentLoaded", () => {
+        setSessionUserId();
+        totalLikeCount();
+    });
+
+</script>
+</body>
+</html>

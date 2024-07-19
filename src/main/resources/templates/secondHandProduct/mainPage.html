@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org" >
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport"
@@ -8,66 +8,135 @@
     <title>Document</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
-    <link rel="stylesheet" href="/static/public/css/secondHandProductCss/style.css">
-
+    <link rel="stylesheet" href="/public/css/secondHandProductCss/style.css">
+    <style>
+        .floating-btn {
+            position: fixed;
+            bottom: 5rem;
+            right: 1.5rem;
+            background-color: #FF6F0F;
+            color: white;
+            border-radius: 50%;
+            width: 3.5rem;
+            height: 3.5rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 3rem;
+            z-index: 1000;
+            cursor: pointer;
+        }
+        .floating-btn .plus-icon {
+            position: absolute;
+            top: 2rem;
+            left: 1.9rem;
+            transform: translate(-50%, -50%);
+        }
+        .floating-menu {
+            position: fixed;
+            bottom: 9rem;
+            right: 1.8rem;
+            display: none;
+            flex-direction: column;
+        }
+        .floating-menu .menu-item {
+            display: flex;
+            align-items: center;
+            background-color: white;
+            padding: 0.5rem;
+            border-radius: 0.5rem;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+            cursor: pointer;
+        }
+        .floating-menu .menu-item i {
+            margin-right: 0.5rem;
+        }
+        .floating-menu .menu-item span {
+            margin-left: 5px;
+        }
+    </style>
 </head>
 <body>
 <!--상단네비-->
-<div class="container py-3 bg-light fixed-top">
-    <div class="row">
+<div class="container g-0 py-3 bg-light fixed-top">
+    <div class="row mx-2">
         <div class="col-auto">로고</div>
         <div class="col">중고장터</div>
     </div>
-</div>
-<!--하단네비-->
-<div class="container py-3 bg-light fixed-bottom">
-    <div class="row">
-        <a href="/secondhandProduct/mainPage" class="col">
-            홈
-        </a>
-        <a href="/secondhandProduct/transactionListPage" class="col">
-            거래
-        </a>
-        <a href="/secondhandProduct/productRegistrationPage" class="col">
-            등록
-        </a>
-        <div class="col">채팅</div>
-        <a href="/secondhandProduct/myPage" class="col">
-            MY
-        </a>
+    <div class="row mx-2 mt-2">
+        <a href="/secondhandProduct/mainPage" class="col-auto">홈</a>
+        <a href="/secondhandProduct/transactionListPage" class="col-auto">x</a>
+        <a href="/secondhandProduct/productRegistrationPage" class="col-auto">등록</a>
+        <div class="col-auto">채팅</div>
+        <a href="/secondhandProduct/myPage" class="col-auto">MY</a>
     </div>
 </div>
-<div class="container" style="margin-top: 4rem">
-    <div class="row carousel slide" id="carouselExampleIndicators" data-bs-ride="carousel">
-        <div class="col carousel-inner">
-            <div class="row">
-                <div class="col carousel-item active" data-bs-interval="3000">
-                    <img src="/static/public/img/secondHandProductImage/이벤트1.png" class="d-block w-100 rounded-4">
+<div class="container-fluid g-0" style="margin-top: 7rem; padding-bottom: 5rem">
+    <div class="row mx-2">
+        <a href="/secondhandProduct/selectCategoryPage" class="col-auto mainPostLink-custom">
+            <span class="bg-custom1 main-span-custom"><span class="me-1"><i class="bi bi-list"></i></span>전체</span>
+        </a>
+    </div>
+    <a th:href="@{/secondhandProduct/postDetailsPage(product_id=${productList.product_id})}" class="row mx-2 py-3 border-bottom mainPostLink-custom" th:each="productList : ${productDtoList}">
+        <div class="col-4 me-2" style="height: 7rem;">
+            <img class="mainPostImg-custom" th:src="@{/images/{image}(image=${productList.main_image})}">
+        </div>
+        <div class="col">
+            <div class="row-auto">
+                <div class="col">
+                    <span th:text="${productList.title}" class="font-custom2">제목~</span>
                 </div>
-                <div class="col carousel-item" data-bs-interval="3000">
-                    <img src="/static/public/img/secondHandProductImage/이벤트2.png" class="d-block w-100 rounded-4">
+                <div class="col font-custom1">
+                    <span th:text="${productList.category_name}">카테고리</span><span>・</span>
+                    <span>위치</span><span>・</span>
+                    <span th:text="${T(com.bulmeong.basecamp.common.util.TimeUtil).timeAgo(productList.created_at)}">생성일</span>
                 </div>
-                <div class="col carousel-item" data-bs-interval="3000">
-                    <img src="/static/public/img/secondHandProductImage/이벤트3.png" class="d-block w-100 rounded-4">
+                <div class="col">
+                    <span th:text="|${#numbers.formatInteger(productList.price, 0, 'COMMA')}원|" class="font-custom2 fw-bold">금액</span>
                 </div>
-                <div class="col carousel-item" data-bs-interval="3000">
-                    <img src="/static/public/img/secondHandProductImage/이벤트4.png" class="d-block w-100 rounded-4">
-                </div>
-                <div class="col carousel-item" data-bs-interval="3000">
-                    <img src="/static/public/img/secondHandProductImage/이벤트5.png" class="d-block w-100 rounded-4">
+                <div class="col pt-3 text-end font-custom1">
+                    <span><i class="bi bi-chat"></i></span><span class="ms-1">1</span>
+                    <span><i class="bi bi-heart"></i></span><span class="ms-1" th:text="${productList.wish_list_count}">1</span>
                 </div>
             </div>
         </div>
-        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
-            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Previous</span>
-        </button>
-        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
-            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Next</span>
-        </button>
+    </a>
+</div>
+
+<!-- 플로팅 버튼 및 메뉴 -->
+<div class="floating-btn" id="floatingBtn">
+    <span class="plus-icon">+</span>
+</div>
+<div class="floating-menu" id="floatingMenu">
+    <div class="menu-item" onclick="location.href='/secondhandProduct/productRegistrationPage'">
+        <i class="bi bi-pencil"></i><span>글쓰기</span>
+    </div>
+    <div class="menu-item" onclick="location.href='/secondhandProduct/otherPage1'">
+        <i class="bi bi-car-front"></i><span>중고차</span>
+    </div>
+    <div class="menu-item" onclick="location.href='/secondhandProduct/otherPage2'">
+        <i class="bi bi-house-door"></i><span>부동산</span>
+    </div>
+    <div class="menu-item" onclick="location.href='/secondhandProduct/otherPage3'">
+        <i class="bi bi-briefcase"></i><span>알바</span>
     </div>
 </div>
+
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+    document.getElementById('floatingBtn').addEventListener('click', function () {
+        var menu = document.getElementById('floatingMenu');
+        if (menu.style.display === 'none' || menu.style.display === '') {
+            menu.style.display = 'flex';
+        } else {
+            menu.style.display = 'none';
+        }
+    });
+    window.addEventListener('scroll', function() {
+        if (window.scrollY === 0) {
+            location.reload();
+        }
+    });
+</script>
 </body>
 </html>

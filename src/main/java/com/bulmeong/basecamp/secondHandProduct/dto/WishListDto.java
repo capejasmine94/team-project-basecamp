@@ -7,4 +7,5 @@ public class WishListDto {
     private int wish_list_id;
     private int user_id;
     private int product_id;
+    private int wish_list_count;
 }
