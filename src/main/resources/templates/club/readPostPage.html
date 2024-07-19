@@ -77,21 +77,22 @@
                                 <img th:src="|/image/${map.userDto.profile_image}|" class="img-fluid rounded-circle" style="aspect-ratio: 1/1;">
                             </div>
                             <div class="col">
-                                <div class="row">
+                                <div class="row pb-1">
                                     <div class="col text-secondary" style="font-size: 0.9em;">
                                         <span th:text="${map.userDto.nickname}"></span>
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="col text-secondary" style="font-size: 0.9em;">
-                                        <i class="bi bi-clock"></i><span th:text="' ' + ${#dates.format(map.clubPostDto.created_at,'hh:mm')}">08:47</span>
-                                        <i class="bi bi-file-earmark-text"></i><span th:text="' '+${totalReadCount}"> 27</span>
+                                        <i class="bi bi-clock"></i>&nbsp;<span th:text="${#dates.format(map.clubPostDto.created_at,'hh:mm')}">08:47</span>
+                                        &nbsp;
+                                        <i class="bi bi-file-earmark-text"></i>&nbsp;<span th:text="${totalReadCount}"> 27</span>
                                     </div>
                                 </div>
                             </div>
                             <div class="col d-flex justify-content-end align-items-center">
                                 <div class="centered-circle">
-                                    <span>1</span> 
+                                    <span th:text="${map.totalComment}">1</span> 
                                 </div>
                             </div>
                         </div>
@@ -108,7 +109,7 @@
                         </div>
 
                         <!-- 사진 출력 -->
-                        <div class="row">
+                        <div class="row pt-2">
                             <div class="col">
                                 <img
                                     th:each="clubPostImageDto : ${clubPostImageDtoList}"

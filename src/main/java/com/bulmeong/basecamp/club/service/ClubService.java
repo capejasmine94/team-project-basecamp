@@ -61,6 +61,26 @@ public class ClubService {
         clubSqlMapper.insertClubMemberDto(clubMemberDto);
     }
 
+    // 소모임 가입된 멤버 리스트 뽑기
+    public List<Map<String, Object>> findClubMemerDataList(int id){
+        List<ClubMemberDto> clubMemberDtoList = clubSqlMapper.selectClubMemberDtoList(id);
+        List<Map<String, Object>> clubMemberDataList = new ArrayList<>();
+
+        for(ClubMemberDto clubMemberDto : clubMemberDtoList){
+            UserDto userDto = clubSqlMapper.selectUserDtoById(clubMemberDto.getUser_id());
+
+            Map<String, Object> joinMemberMap = new HashMap<>();
+            joinMemberMap.put("clubMemberDto", clubMemberDto);
+            joinMemberMap.put("userDto", userDto);
+
+            clubMemberDataList.add(joinMemberMap);
+        }
+            
+
+        return clubMemberDataList;
+    }
+
+
     // 지역 카테고리
     public List<ClubRegionCategoryDto> findRegionCategory(){
 
@@ -99,11 +119,16 @@ public class ClubService {
             int userPk = clubPostDto.getUser_id();
             UserDto userDto = clubSqlMapper.selectUserDtoById(userPk);
             ClubPostCategoryDto clubPostCategoryDto = clubSqlMapper.selectPostCategoryDtoById(clubPostDto.getCategory_id());
+            int totalComment = clubSqlMapper.countTotalComment(clubPostDto.getId());
+            int totalPostLike = clubSqlMapper.countTotalPostLike(clubPostDto.getId());
 
             Map<String, Object> postDetailMap = new HashMap<>();
             postDetailMap.put("clubPostDto", clubPostDto);
             postDetailMap.put("userDto", userDto);
             postDetailMap.put("clubPostCategoryDto", clubPostCategoryDto);
+            postDetailMap.put("totalComment", totalComment);
+            postDetailMap.put("totalPostLike", totalPostLike);
+            
 
             postDetailList.add(postDetailMap);
         }
@@ -115,10 +140,12 @@ public class ClubService {
     public Map<String, Object> getClubPostData(int id){
         ClubPostDto clubPostDto = clubSqlMapper.selectPostDtoById(id);
         UserDto userDto = clubSqlMapper.selectUserDtoById(clubPostDto.getUser_id());
+        int totalComment = clubSqlMapper.countTotalComment(id);
 
         Map<String, Object> map = new HashMap<>();
         map.put("clubPostDto", clubPostDto);
         map.put("userDto", userDto);
+        map.put("totalComment", totalComment);
 
         return map ;
     }

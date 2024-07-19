@@ -147,8 +147,9 @@
                                         </div> -->
                                         <div class="row py-2" style="font-size: 0.8em;">
                                             <div class="col-auto">
-                                                <i class="bi bi-bookmark"></i><span> 스크랩 <span class="text-primary fw-bold" th:text="">2</span></span>
-                                                <i class="bi bi-chat"></i><span> 댓글 <span class="text-primary fw-bold">5</span></span>
+                                                <i class="bi bi-bookmark"></i><span> 스크랩 <span class="text-primary fw-bold" th:text="${postDetail.totalPostLike}"></span></span>
+                                                &nbsp;&nbsp;
+                                                <i class="bi bi-chat"></i><span> 댓글 <span class="text-primary fw-bold" th:text="${postDetail.totalComment}"></span></span>
                                             </div>
                                             <div class="col text-end">
                                                 <span th:text="${postDetail.clubPostCategoryDto.category_name}"></span>

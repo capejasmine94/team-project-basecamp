@@ -55,6 +55,7 @@ public class ClubController {
         List<ClubDto> joinClubDtoList = clubService.findJoinClubDtoList(userDto.getId());
         model.addAttribute("joinClubDtoList", joinClubDtoList);
 
+
         // 새로운 소모임 목록
         List<ClubDto> clubDtoList = clubService.findClubDtoList();
         model.addAttribute("clubDtoList", clubDtoList);
@@ -70,8 +71,6 @@ public class ClubController {
 
         ClubBookmarkDto clubBookmarkDto = new ClubBookmarkDto();
         UserDto userDto = (UserDto)session.getAttribute("sessionUserInfo");
-
-        
         
         if(userDto != null){
             clubBookmarkDto.setUser_id(userDto.getId());
@@ -82,7 +81,10 @@ public class ClubController {
 
         int totalBookmark = clubService.countTotalBookmark(id);
         model.addAttribute("totalBookmark", totalBookmark);
-        
+
+        List<Map<String, Object>> clubMemberDataList = clubService.findClubMemerDataList(id);
+        model.addAttribute("clubMemberDataList", clubMemberDataList);
+
                 
         return "club/clubHomePage";
     }
@@ -90,9 +92,6 @@ public class ClubController {
     @RequestMapping("createNewClub")
     public String createNewClub(Model model){
         util.loginUser();
-
-        
-
 
         List<ClubRegionCategoryDto> regionCategoryDtoList = clubService.findRegionCategory();
         model.addAttribute("regionCategoryDtoList", regionCategoryDtoList);
@@ -128,8 +127,6 @@ public class ClubController {
         }
 
         clubService.writeClubPost(clubPostDto, imgList);
-
-        
 
         return "redirect:/club/board?id=" + clubPostDto.getClub_id();
     }

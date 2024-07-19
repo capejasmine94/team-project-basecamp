@@ -29,15 +29,20 @@ public interface ClubSqlMapper {
     public List<ClubDto> selectJoinClubList(int user_id);
     public List<ClubPostDto> selectClubPostDtoList(int club_id);
     public UserDto selectUserDtoById(int id);
+    public List<ClubMemberDto> selectClubMemberDtoList(int id);
     public ClubPostCategoryDto selectPostCategoryDtoById(int id);
     public List<ClubPostCategoryDto> selectPostCategoryDto();
     public List<ClubPostImageDto> selectPostImageDtoList();
     public List<ClubPostImageDto> selectPostImageDtoListById(int id);
     public ClubPostDto selectPostDtoById(int id);
+
     public void insertClubPostCommentDto(ClubPostCommentDto clubPostCommentDto);
+    public int countTotalComment(int id); 
+
     public List<ClubPostCommentDto> selectPostCommentDto(int post_id);
     public ClubDto selectClubDtoById(int id);
     public ClubRegionCategoryDto selectRegionCategoryDtoById(int id);
+    
     
     // 소모임 북마크
     public int confirmBookmark(ClubBookmarkDto clubBookmarkDto);
@@ -54,6 +59,7 @@ public interface ClubSqlMapper {
 
     public void increaseReadCount(int id);
     public int totalReadCount(int id);
+
     
 }
 

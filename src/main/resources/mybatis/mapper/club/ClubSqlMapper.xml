@@ -219,8 +219,8 @@
     
 
 
-    <!-- 소모임 게시글당 스크랩 개숙 집계  select count -->
-    <select id="countTotalLike" resultType="int">
+    <!-- 소모임 게시글당 스크랩 개수 집계  select count -->
+    <select id="countTotalPostLike" resultType="int">
        select count(*) from bc_club_post_like
        where post_id = #{post_id}
     </select>
@@ -249,6 +249,18 @@
         )
 
     </insert>
+
+    <!-- 소모임 댓글 총개수 집계 -->
+    <select id="countTotalComment" resultType="int">
+    select COUNT(*) from bc_club_post_comment
+    where post_id = #{post_id}
+    </select>
+
+    <!-- 특정 소모임에 가입된 회원 뽑아오기 -->
+    <select id="selectClubMemberDtoList" resultType="com.bulmeong.basecamp.club.dto.ClubMemberDto">
+        select * from bc_club_member
+        where club_id = #{club_id}
+    </select>
 
 
 
