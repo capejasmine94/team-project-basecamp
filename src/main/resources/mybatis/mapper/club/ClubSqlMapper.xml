@@ -260,6 +260,7 @@
     <select id="selectClubMemberDtoList" resultType="com.bulmeong.basecamp.club.dto.ClubMemberDto">
         select * from bc_club_member
         where club_id = #{club_id}
+        order by id desc
     </select>
 
     <!-- 특정 소모임에 가입한 회원수 집계 -->
