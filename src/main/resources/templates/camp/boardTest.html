@@ -4,156 +4,258 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <style>
-        .board-cell {
-            width: 30px;
-            height: 30px;
-            border: 1px solid black;
-        }
-        .board-row {
-            display: flex;
-        }
-        .board-container {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-        .control-button {
-            width: 30px;
-            height: 30px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            background-color: #007bff;
-            color: white;
-            cursor: pointer;
-            border: 1px solid black;
-        }
-        .control-button:hover {
-            background-color: #0056b3;
-        }
+        .uploader-container {
+            outline: none;
+            border: 1.5px dashed #ccc;
+            padding: 5px;
+            border-radius: 0.5rem;
+            box-sizing: border-box;
+            text-align: center;
+            transition: border-color 0.3s;
+        }    
+    .preview-image {
+        width: 5em;
+        height: 5em;
+        border: 2px solid;
+        color: #ccc;
+        border-radius: 0.5em;
+        object-fit: cover;
+        position: relative;
+    }
+    .preview-container {
+        position: relative;
+        display: inline-block;
+    }
+    .btn-delete {
+        position: absolute;
+        top: -1px;
+        right: 0px;
+        border-radius: 50%;
+        padding: 0.25em 0.25em;
+        font-size: 0.75em;
+        line-height: 1;
+    }
     </style>
     <title>Dynamic Go Board</title>
 </head>
 <body>
-    <div class="container mt-5">
-        <h1>Create a Go Board</h1>
-        <form id="boardForm" class="mb-3">
-            <div class="form-row">
-                <div class="form-group col-md-6">
-                    <label for="rows">Rows</label>
-                    <input type="number" class="form-control" id="rows" placeholder="Enter number of rows" required>
+    <div class="container-fluid">
+        <div id="upload_main_image" class="row">
+            <div class="col">
+                <div class="row">
+                    <input name="main_image" type="file" multiple accept="image/*" id="main_image_input" style="display: none;">
+                    <label class="col m-2 uploader-container" id="uploader">
+                        <div class="row justify-content-center">
+                            <div class="col-auto my-3">
+                                클릭하여 이미지 업로드 / 이미지를 드래그하여 업로드
+                            </div>
+                        </div>
+                    </label>
                 </div>
-                <div class="form-group col-md-6">
-                    <label for="columns">Columns</label>
-                    <input type="number" class="form-control" id="columns" placeholder="Enter number of columns" required>
-                </div>
+                <div id="imgList_main_image" class="row"></div>
             </div>
-            <button type="submit" class="btn btn-primary">Create Board</button>
-        </form>
-        <div id="boardContainer" class="board-container"></div>
+        </div>
     </div>
 
     <script>
-        document.getElementById('boardForm').addEventListener('submit', function(e) {
-            e.preventDefault();
+        const MAX_UPLOADS = 5;
+let curFiles = [];
 
-            const rows = parseInt(document.getElementById('rows').value);
-            const columns = parseInt(document.getElementById('columns').value);
-            const boardContainer = document.getElementById('boardContainer');
+function createUploader(name) {
+    
+}
 
-            // Clear any previous board
-            boardContainer.innerHTML = '';
+function createMultipleUploader(name) {
+    function createUploadStructure(name) {
+        // Container element to append the new elements to
+        const container = document.getElementById('upload_' + name);
+    
+        // Create main div element
+        const uploadMainImageDiv = document.createElement('div');
+        uploadMainImageDiv.classList.add('row');
+    
+        // Create inner column div
+        const innerColDiv = document.createElement('div');
+        innerColDiv.classList.add('col');
+    
+        // Create row div for file input and label
+        const rowDiv = document.createElement('div');
+        rowDiv.classList.add('row');
+    
+        // Create file input element
+        const fileInput = document.createElement('input');
+        fileInput.name = name;
+        fileInput.type = 'file';
+        fileInput.multiple = true;
+        fileInput.accept = 'image/*';
+        fileInput.id = name + '_input';
+        fileInput.style.display = 'none';
+    
+        // Create label element
+        const label = document.createElement('label');
+        label.classList.add('col', 'm-2', 'uploader-container');
+        label.id = 'uploader';
+    
+        // Create inner row div for label text
+        const innerRowDiv = document.createElement('div');
+        innerRowDiv.classList.add('row', 'justify-content-center');
+    
+        // Create inner column div for label text
+        const innerColAutoDiv = document.createElement('div');
+        innerColAutoDiv.classList.add('col-auto', 'my-3');
+        innerColAutoDiv.textContent = '클릭하여 이미지 업로드 / 이미지를 드래그하여 업로드';
+    
+        // Append inner column to inner row
+        innerRowDiv.appendChild(innerColAutoDiv);
+    
+        // Append inner row to label
+        label.appendChild(innerRowDiv);
+    
+        // Append file input and label to row div
+        rowDiv.appendChild(fileInput);
+        rowDiv.appendChild(label);
+    
+        // Create image list container
+        const imgListDiv = document.createElement('div');
+        imgListDiv.id = 'imgList_' + name;
+        imgListDiv.classList.add('row');
+    
+        // Append row div and image list container to inner column div
+        innerColDiv.appendChild(rowDiv);
+        innerColDiv.appendChild(imgListDiv);
+    
+        // Append inner column div to main div
+        uploadMainImageDiv.appendChild(innerColDiv);
+    
+        // Append main div to container
+        container.appendChild(uploadMainImageDiv);
+        return container;
+    }
+    const container = createUploadStructure(name);
+    const uploader = container.querySelector('#uploader');
+    const input = container.querySelector('#' + name + '_input');
+    const imgList = container.querySelector('#imgList_' + name);
 
-            // Create the board with control buttons
-            createBoard(rows, columns);
+    uploader.addEventListener('click', () => {
+        input.click();
+    });
+
+    input.addEventListener('change', handleFiles);
+
+    uploader.addEventListener('dragover', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        uploader.classList.add('dragover');
+    });
+
+    uploader.addEventListener('dragleave', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        uploader.classList.remove('dragover');
+    });
+
+    uploader.addEventListener('drop', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        uploader.classList.remove('dragover');
+        const files = e.dataTransfer.files;
+        handleFiles({ target: { files } });
+    });
+
+    function handleFiles(event) {
+        const fileList = Array.from(event.target.files);
+
+        if (curFiles.length + fileList.length > MAX_UPLOADS) {
+            alert(`최대 ${MAX_UPLOADS}개의 이미지만 업로드할 수 있습니다.`);
+            return;
+        }
+
+        fileList.forEach(file => {
+            if (!file.type.startsWith('image/')) {
+                alert('이미지 파일만 업로드할 수 있습니다.');
+                return;
+            }
+
+            curFiles.push(file);
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const col = document.createElement('div');
+                col.classList.add('col-auto', 'px-0');
+                col.setAttribute('draggable', true);
+                col.addEventListener('dragstart', handleDragStart);
+                col.addEventListener('dragover', handleDragOver);
+                col.addEventListener('drop', handleDrop);
+                col.addEventListener('dragend', handleDragEnd);
+
+                const previewContainer = document.createElement('div');
+                previewContainer.classList.add('preview-container');
+
+                const img = document.createElement('img');
+                img.src = e.target.result;
+                img.classList.add('preview-image', 'm-2');
+
+                const deleteBtn = document.createElement('button');
+                deleteBtn.innerHTML = '&times;';
+                deleteBtn.classList.add('btn', 'btn-danger', 'btn-sm', 'btn-delete');
+                deleteBtn.onclick = () => {
+                    imgList.removeChild(col);
+                    curFiles = curFiles.filter(f => f !== file);
+                };
+
+                previewContainer.appendChild(img);
+                previewContainer.appendChild(deleteBtn);
+                col.appendChild(previewContainer);
+                imgList.appendChild(col);
+            };
+            reader.readAsDataURL(file);
         });
+    }
 
-        function createBoard(rows, columns) {
-            const boardContainer = document.getElementById('boardContainer');
+    let dragSrcEl = null;
 
-            // Create control row for adding and removing columns
-            const controlRow = document.createElement('div');
-            controlRow.classList.add('board-row');
-            controlRow.appendChild(createControlButton('add-column'));
-            for (let i = 0; i < columns; i++) {
-                const emptyCell = document.createElement('div');
-                emptyCell.classList.add('board-cell');
-                controlRow.appendChild(emptyCell);
-            }
-            controlRow.appendChild(createControlButton('remove-column'));
-            boardContainer.appendChild(controlRow);
+    function handleDragStart(e) {
+        dragSrcEl = this;
+        e.dataTransfer.effectAllowed = 'move';
+        e.dataTransfer.setData('text/html', this.innerHTML);
+    }
 
-            // Create each row with cells and row control buttons
-            for (let i = 0; i < rows; i++) {
-                addRow(columns);
-            }
+    function handleDragOver(e) {
+        if (e.preventDefault) {
+            e.preventDefault();
         }
+        e.dataTransfer.dropEffect = 'move';
+        return false;
+    }
 
-        function createControlButton(action) {
-            const button = document.createElement('div');
-            button.classList.add('control-button');
-            button.innerText = action.includes('add') ? '+' : '-';
-            button.addEventListener('click', function() {
-                if (action === 'add-row') {
-                    const columns = document.querySelector('.board-row').children.length - 2; // Exclude control buttons
-                    addRow(columns);
-                } else if (action === 'remove-row') {
-                    removeRow();
-                } else if (action === 'add-column') {
-                    addColumn();
-                } else if (action === 'remove-column') {
-                    removeColumn();
-                }
-            });
-            return button;
+    function handleDrop(e) {
+        if (e.stopPropagation) {
+            e.stopPropagation();
         }
-
-        function addRow(columns) {
-            const boardContainer = document.getElementById('boardContainer');
-            const row = document.createElement('div');
-            row.classList.add('board-row');
-
-            const addRowButton = createControlButton('add-row');
-            row.appendChild(addRowButton);
-
-            for (let j = 0; j < columns; j++) {
-                const cell = document.createElement('div');
-                cell.classList.add('board-cell');
-                row.appendChild(cell);
-            }
-
-            const removeRowButton = createControlButton('remove-row');
-            row.appendChild(removeRowButton);
-
-            boardContainer.appendChild(row);
+        if (dragSrcEl !== this) {
+            dragSrcEl.innerHTML = this.innerHTML;
+            this.innerHTML = e.dataTransfer.getData('text/html');
+            const newDragSrcEl = dragSrcEl.querySelector('.preview-container');
+            const newThis = this.querySelector('.preview-container');
+            newDragSrcEl.addEventListener('dragstart', handleDragStart);
+            newDragSrcEl.addEventListener('dragover', handleDragOver);
+            newDragSrcEl.addEventListener('drop', handleDrop);
+            newThis.addEventListener('dragstart', handleDragStart);
+            newThis.addEventListener('dragover', handleDragOver);
+            newThis.addEventListener('drop', handleDrop);
         }
+        return false;
+    }
 
-        function removeRow() {
-            const boardContainer = document.getElementById('boardContainer');
-            if (boardContainer.children.length > 2) { // Keep control row and at least one data row
-                boardContainer.removeChild(boardContainer.lastElementChild);
-            }
-        }
+    function handleDragEnd(e) {
+        this.style.opacity = '1';
+    }
+};
 
-        function addColumn() {
-            const boardContainer = document.getElementById('boardContainer');
-            const rows = boardContainer.querySelectorAll('.board-row');
-            rows.forEach(row => {
-                const cell = document.createElement('div');
-                cell.classList.add('board-cell');
-                row.insertBefore(cell, row.children[row.children.length - 1]);
-            });
-        }
+  
 
-        function removeColumn() {
-            const boardContainer = document.getElementById('boardContainer');
-            const rows = boardContainer.querySelectorAll('.board-row');
-            rows.forEach(row => {
-                if (row.children.length > 3) { // Keep at least one column besides control buttons
-                    row.removeChild(row.children[row.children.length - 2]);
-                }
-            });
-        }
+
+        createMultipleUploader('main_image');
     </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 </body>
 </html>

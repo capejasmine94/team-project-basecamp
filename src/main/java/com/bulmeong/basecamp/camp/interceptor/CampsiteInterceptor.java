@@ -66,6 +66,11 @@ public class CampsiteInterceptor implements HandlerInterceptor {
                 pageDetail = "계정 관리";
                 isButtonActive = true;
                 break;
+
+            case "manageReservation":
+                pageDetail = "예약 관리";
+                isButtonActive = true;
+                break;
         }
         resultMap.put("pageDetail", pageDetail);
         resultMap.put("isButtonActive", isButtonActive ? "T" : "F");

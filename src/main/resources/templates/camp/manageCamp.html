@@ -26,7 +26,7 @@
 
             <!-- 본문 -->
             <div class="col right ms-2" style="padding-top: 58px; ">
-                <form id="registerCampProcess" action="/camp/registerCampProcess">
+                <form id="registerCampProcess" method="post" action="/camp/registerCampProcess">
                     <!-- 상단 바 -->
                     <div th:replace="~{camp/campNavi::topNavi}"></div>
 
@@ -105,7 +105,7 @@
                                         <div class="col mx-2">
                                             <div class="row mt-3 flex-column">
                                                 <div class="col-auto text-secondary text-start ms-1">캠핑장 이미지</div>
-                                                <div class="col-8 pb-3">
+                                                <div class="col-8 pb-3 mb-2">
                                                     <div id="upload_main_image"></div>
                                                     <span class="text-secondary new-fs-9">
                                                         <div>사진을 드래그하여 위치를 바꿀 수 있습니다.</div>
@@ -384,7 +384,7 @@
         <script>
            
             initMoneyInput();
-            createMultipleUploader('main_image');
+            createMultipleUploader('main_image',10);
             createUploader('map_image');
             const date = new Date();
             date.setFullYear(date.getFullYear() + 1);

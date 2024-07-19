@@ -1,5 +1,5 @@
 <!-- 메뉴 -->
-<div th:fragment="leftNavi" class="col border-end scrollable scrollBar left resizeMenu" id="leftAccordion" style="color: #F4F4F5; padding-top: 58px; background-color: #304156;">
+<div th:fragment="leftNavi" class="col border-end scrollable scrollBar left resizeMenu" id="leftAccordion" style="color: #F4F4F5; padding-top: 58px; background-color: #304156; z-index: 3;">
     <!-- 프로필 -->
     <div class="row py-4">
         <div class="col">
@@ -32,6 +32,12 @@
     <a href="/camp/manageArea" type="button" class="row category fw-bold py-3">
         <div class="col-auto pe-0 material-symbols-outlined">flag </div>
         <div class="col-auto">구역관리</div>
+    </a>
+
+    <!-- 예약 관리 -->
+    <a href="/camp/manageReservation" type="button" class="row category fw-bold py-3">
+        <div class="col-auto pe-0 material-symbols-outlined">schedule</div>
+        <div class="col-auto">예약관리</div>
     </a>
 
     <!-- 재무 관리 -->

@@ -75,7 +75,7 @@ function checkMustLogin() {
    });
 }
 
-function initMoneyinput() {
+function initMoneyInput() {
    document.addEventListener('DOMContentLoaded', (event) => {
       const inputNumbers = document.getElementsByClassName('moneyInput');
       for(const node of inputNumbers){

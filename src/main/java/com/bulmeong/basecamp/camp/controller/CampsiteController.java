@@ -45,6 +45,11 @@ public class CampsiteController {
         return "camp/manageArea";
     }
 
+    @RequestMapping("manageReservation")
+    public String manageReservationPage(){
+        return "camp/manageReservation";
+    }
+
     @RequestMapping("manageAsset")
     public String manageAssetPage(){
         return "camp/manageAsset";

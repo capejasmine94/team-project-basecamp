@@ -1,269 +1,238 @@
-let fileSaved = new Map();
-
-function isWebView() {
-    const userAgent = navigator.userAgent || navigator.vendor || window.opera;
-
-    // User-Agent 검사
-    const webViewUserAgents = [
-        'WebView',
-        'iPhone',
-        'iPod',
-        'iPad',
-        'Android',
-        'Mobile',
-        'Safari', // 웹뷰는 종종 모바일 사파리나 안드로이드의 기본 브라우저를 가장합니다.
-        'Chrome'  // 웹뷰는 종종 크롬을 가장합니다.
-    ];
-
-    for (let agent of webViewUserAgents) {
-        if (userAgent.indexOf(agent) > -1) {
-            return true;
-        }
-    }
-
-    // 특정 기능의 존재 여부 확인
-    if (window.ReactNativeWebView || window.flutter_inappwebview) {
-        return true;
-    }
-
-    return false;
-}
-
 function createUploadStructure(name, multiple) {
-    const uploadNameDiv = document.createElement('div');
-    uploadNameDiv.classList.add('row');
+    const container = document.getElementById('upload_' + name);
+    const uploadMainImageDiv = document.createElement('div');
+    uploadMainImageDiv.classList.add('row');
 
-    const colDiv = document.createElement('div');
-    colDiv.classList.add('col', 'upload-container','px-0');
+    const innerColDiv = document.createElement('div');
+    innerColDiv.classList.add('col');
 
-    const previewRow = document.createElement('div');
-    previewRow.classList.add('row', 'preview', 'd-flex', 'flex-wrap','ms-2');
+    const rowDiv = document.createElement('div');
+    rowDiv.classList.add('row');
 
-    const fileUploadDiv = document.createElement('div');
-    const mobile = isWebView() ? '1' : '3' 
-    fileUploadDiv.classList.add('col-auto','my-1','ms-' + mobile,'me-2','mt-2','mb-1');
-    fileUploadDiv.classList.add('file-upload');
+    const fileInput = document.createElement('input');
+    fileInput.name = name;
+    fileInput.type = 'file';
+    fileInput.multiple = multiple;
+    fileInput.accept = 'image/*';
+    fileInput.id = name + '_input';
+    fileInput.style.display = 'none';
 
-    const inputFile = document.createElement('input');
-    inputFile.name = name;
-    inputFile.type = 'file';
-    inputFile.id = `customFile_${name}`; // 동적으로 ID 설정
-    inputFile.lang = 'en';
-    inputFile.multiple = multiple;
+    const label = document.createElement('label');
+    label.classList.add('col', 'm-2', 'uploader-container');
+    label.id = 'uploader';
 
-    fileUploadDiv.appendChild(inputFile);
+    const innerRowDiv = document.createElement('div');
+    innerRowDiv.classList.add('row', 'justify-content-center');
 
-    previewRow.appendChild(fileUploadDiv);
+    const innerColAutoDiv = document.createElement('div');
+    innerColAutoDiv.classList.add('col-auto', 'my-3');
+    innerColAutoDiv.textContent = '클릭하여 이미지 업로드 / 이미지를 드래그하여 업로드';
 
-    const alertRow = document.createElement('div');
-    alertRow.classList.add('row', 'alert', 'alert-danger', 'mx-1', 'mt-3');
-    alertRow.id = `alert_${name}`; // 동적으로 ID 설정
-    alertRow.innerText = '이미지 파일만 업로드할 수 있습니다.';
+    innerRowDiv.appendChild(innerColAutoDiv);
+    label.appendChild(innerRowDiv);
+    rowDiv.appendChild(fileInput);
+    rowDiv.appendChild(label);
 
-    colDiv.appendChild(previewRow);
-    colDiv.appendChild(alertRow);
+    const imgListDiv = document.createElement('div');
+    imgListDiv.id = 'imgList_' + name;
+    imgListDiv.classList.add('row');
 
-    uploadNameDiv.appendChild(colDiv);
-
-    document.getElementById(`upload_${name}`).appendChild(uploadNameDiv);
-    return uploadNameDiv;
+    innerColDiv.appendChild(rowDiv);
+    innerColDiv.appendChild(imgListDiv);
+    uploadMainImageDiv.appendChild(innerColDiv);
+    container.appendChild(uploadMainImageDiv);
+    return container;
 }
 
-function createUploader(name) {
+
+function createUploader(name) 
+{
+    let curFiles = [];
+    const MAX_UPLOADS = 1;
     const container = createUploadStructure(name, false);
-    const input = container.querySelector(`#customFile_${name}`);
-    const preview = container.querySelector('.preview');
-    const alert = container.querySelector(`#alert_${name}`);
-    const upload = container.querySelector('.upload-container');
+    const uploader = container.querySelector('#uploader');
+    const input = container.querySelector('#' + name + '_input');
+    const imgList = container.querySelector('#imgList_' + name);
 
-    input.style.display = 'none'; // 파일 입력 필드를 숨깁니다.
-
-    const button = preview.querySelector('.file-upload');
-    button.addEventListener('click', function() {
-        input.click(); // 버튼 클릭 시 파일 입력 필드를 트리거합니다.
+    uploader.addEventListener('click', () => {
+        input.click();
     });
+    input.addEventListener('change', handleFiles);
 
-    input.addEventListener('change', function() {
-        preview.innerHTML = ''; // 이전 미리보기를 삭제합니다
-        alert.style.display = 'none'; // 경고를 숨깁니다
-
-        Array.from(this.files).forEach(file => {
-            if (file.type.startsWith('image/')) {
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    const img = document.createElement('img');
-                    img.src = e.target.result;
-                    img.draggable = true; // 드래그 가능 설정
-                    img.classList.add('draggable'); // 클래스 추가
-                    if (isWebView()) {
-                        img.classList.add('col-auto', 'm-1', 'px-0'); // 클래스 추가
-                    } else {
-                        img.classList.add('col-auto', 'me-2', 'my-1', 'mt-2', 'mb-3'); // 클래스 추가
-                    }
-                    addDragAndDropHandlers(img); // 드래그 앤 드롭 핸들러 추가
-
-                    img.addEventListener('click', function() {
-                        input.click(); // 이미지 클릭 시 파일 입력 필드를 트리거합니다.
-                    });
-
-                    preview.appendChild(img);
-
-                    // 이미지가 버튼 위에 겹쳐지도록 스타일 조정
-                    button.classList.add('d-none')
-                }
-                reader.readAsDataURL(file);
-            } else {
-                alert.style.display = 'block'; // 경고를 표시합니다
-            }
-        });
-
-        preview.appendChild(button);
-    });
-}
-
-function createFileList(files) {
-    const dataTransfer = new DataTransfer();
-    files.forEach(file => {
-        dataTransfer.items.add(file);
-    });
-    return dataTransfer.files;
-}
-
-function createMultipleUploader(name) {
-    const container = createUploadStructure(name, true);
-    const input = container.querySelector(`#customFile_${name}`);
-    const preview = container.querySelector('.preview');
-    const alert = container.querySelector(`#alert_${name}`);
-    const upload = container.querySelector('.upload-container');
-
-    input.addEventListener('change', function() {
-        const button = preview.querySelector('.file-upload');
-        upload.appendChild(button);
-        preview.innerHTML = ''; // Clear previous previews
-        alert.style.display = 'none'; // Hide alert
-        if(!fileSaved.has(name)){
-            fileSaved.set(name, []);
-        }
-        Array.from(this.files).forEach(file => {
-            if (file.type.startsWith('image/')) {
-                fileSaved.get(name).push(file);
-            } else {
-                alert.style.display = 'block'; // Show alert
-            }
-        });
-        updatePreview(name, preview);
-        updateFileInput(name, input);
-        preview.appendChild(button);
-    });
-
-    function updatePreview(name, preview) {
-        preview.innerHTML = ''; // Clear previous previews
-        fileSaved.get(name).forEach(file => {
-            if (file.type.startsWith('image/')) {
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    const imgWrapper = document.createElement('div');
-                    imgWrapper.classList.add('position-relative', 'd-inline-block','col-auto');
-
-                    const img = document.createElement('img');
-                    img.src = e.target.result;
-                    img.draggable = true; // 드래그 가능 설정
-                    img.classList.add('draggable'); // 클래스 추가
-                    if (isWebView()) {
-                        img.classList.add('col-auto', 'm-2', 'mb-1', 'px-0'); // 클래스 추가
-                    } else {
-                        img.classList.add('col-auto', 'me-2', 'my-1', 'mt-2', 'mb-3'); // 클래스 추가
-                    }
-                    addDragAndDropHandlers(img); // 드래그 앤 드롭 핸들러 추가
-
-                    // 삭제 버튼
-                    const closeButton = document.createElement('i');
-                    closeButton.innerHTML = '&times;';
-                    closeButton.classList.add('position-absolute', 'bi', 'bi-close','text-danger');
-                    closeButton.style.cursor = 'pointer';
-                    closeButton.style.bottom = '5em';
-                    closeButton.style.left = '5.75em';
-                    closeButton.style.translate = '(50%,50%)';
-                    closeButton.style.fontSize = '1rem';
-                    closeButton.addEventListener('click', () => {
-                        imgWrapper.remove();
-                        fileSaved.get(name).splice(fileSaved.get(name).indexOf(file), 1); // 배열에서 파일 제거
-                        updateFileInput(name, input); // 파일 입력 필드 업데이트
-                    });
-
-                    imgWrapper.appendChild(img);
-                    imgWrapper.appendChild(closeButton);
-                    preview.appendChild(imgWrapper);
-                }
-                reader.readAsDataURL(file);
-            }
-        });
-    }
-
-    function updateFileInput(name, input) {
-        const files = fileSaved.get(name);
-        input.files = createFileList(files);
-    }
-}
-
-function addDragAndDropHandlers(element) {
-    element.addEventListener('dragstart', handleDragStart, false);
-    element.addEventListener('dragover', handleDragOver, false);
-    element.addEventListener('dragenter', handleDragEnter, false);
-    element.addEventListener('dragleave', handleDragLeave, false);
-    element.addEventListener('drop', handleDrop, false);
-    element.addEventListener('dragend', handleDragEnd, false);
-}
-
-let dragSrcEl = null;
-
-function handleDragStart(e) {
-    this.style.opacity = '0.4';
-    dragSrcEl = this;
-
-    e.dataTransfer.effectAllowed = 'move';
-    e.dataTransfer.setData('text/html', this.outerHTML);
-}
-
-function handleDragOver(e) {
-    if (e.preventDefault) {
+    uploader.addEventListener('dragover', (e) => {
         e.preventDefault();
-    }
-    e.dataTransfer.dropEffect = 'move';
-    return false;
-}
-
-function handleDragEnter(e) {
-    this.classList.add('over');
-}
-
-function handleDragLeave(e) {
-    this.classList.remove('over');
-}
-
-function handleDrop(e) {
-    if (e.stopPropagation) {
         e.stopPropagation();
-    }
-
-    if (dragSrcEl !== this) {
-        const temp = document.createElement('div');
-        this.parentNode.insertBefore(temp, this);
-
-        dragSrcEl.parentNode.insertBefore(this, dragSrcEl);
-        temp.parentNode.insertBefore(dragSrcEl, temp);
-        temp.parentNode.removeChild(temp);
-    }
-    this.classList.remove('over');
-    return false;
-}
-
-function handleDragEnd(e) {
-    this.style.opacity = '1'; // 드래그가 끝나면 이미지의 투명도를 복원
-    const items = document.querySelectorAll('.draggable');
-    items.forEach(item => {
-        item.classList.remove('over');
-        item.style.opacity = '1'; // 모든 드래그 가능한 이미지의 투명도를 복원
+        uploader.classList.add('dragover');
     });
+
+    uploader.addEventListener('dragleave', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        uploader.classList.remove('dragover');
+    });
+
+    uploader.addEventListener('drop', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        uploader.classList.remove('dragover');
+        const files = e.dataTransfer.files;
+        handleFiles({ target: { files } });
+    });
+
+    function handleFiles(event) {
+        const fileList = Array.from(event.target.files);
+        imgList.innerHTML = '';
+        const file = fileList[0];
+        curFiles = [];
+        curFiles.push(file);
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            const col = document.createElement('div');
+            col.classList.add('col-auto', 'px-0');
+
+            const previewContainer = document.createElement('div');
+            previewContainer.classList.add('preview-container');
+
+            const img = document.createElement('img');
+            img.src = e.target.result;
+            img.classList.add('preview-image', 'm-2');
+            previewContainer.appendChild(img);
+            col.appendChild(previewContainer);
+            imgList.appendChild(col);
+        };
+        reader.readAsDataURL(file);
+    }
+
 }
 
+function createMultipleUploader(name, max) {
+    let curFiles = [];
+    const MAX_UPLOADS = max;
+   
+    const container = createUploadStructure(name, true);
+    const uploader = container.querySelector('#uploader');
+    const input = container.querySelector('#' + name + '_input');
+    const imgList = container.querySelector('#imgList_' + name);
+
+    uploader.addEventListener('click', () => {
+        input.click();
+    });
+
+    input.addEventListener('change', handleFiles);
+
+    uploader.addEventListener('dragover', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        uploader.classList.add('dragover');
+    });
+
+    uploader.addEventListener('dragleave', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        uploader.classList.remove('dragover');
+    });
+
+    uploader.addEventListener('drop', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        uploader.classList.remove('dragover');
+        const files = e.dataTransfer.files;
+        handleFiles({ target: { files } });
+    });
+
+    function handleFiles(event) {
+        const fileList = Array.from(event.target.files);
+
+        if (curFiles.length + fileList.length > MAX_UPLOADS) {
+            alert(`최대 ${MAX_UPLOADS}개의 이미지만 업로드할 수 있습니다.`);
+            return;
+        }
+
+        fileList.forEach(file => {
+            if (!file.type.startsWith('image/') || curFiles.some(f => f.name === file.name)) {
+                alert('이미지 파일만 업로드할 수 있으며, 동일한 파일은 중복 업로드할 수 없습니다.');
+                return;
+            }
+
+            curFiles.push(file);
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const col = document.createElement('div');
+                col.classList.add('col-auto', 'px-0');
+                col.setAttribute('draggable', true);
+                col.addEventListener('dragstart', handleDragStart);
+                col.addEventListener('dragover', handleDragOver);
+                col.addEventListener('drop', handleDrop);
+
+                const previewContainer = document.createElement('div');
+                previewContainer.classList.add('preview-container');
+
+                const img = document.createElement('img');
+                img.src = e.target.result;
+                img.classList.add('preview-image', 'm-2');
+
+                const deleteBtn = document.createElement('button');
+                deleteBtn.innerHTML = '&times;';
+                deleteBtn.classList.add('btn', 'btn-danger', 'btn-sm', 'btn-delete');
+                deleteBtn.type = 'button';
+                deleteBtn.onclick = (event) => {
+                    event.preventDefault();
+                    imgList.removeChild(col);
+                    curFiles = curFiles.filter(f => f !== file);
+                };
+
+                previewContainer.appendChild(img);
+                previewContainer.appendChild(deleteBtn);
+                col.appendChild(previewContainer);
+                imgList.appendChild(col);
+            };
+            reader.readAsDataURL(file);
+        });
+    }
+
+    let dragSrcEl = null;
+
+    function handleDragStart(e) {
+        dragSrcEl = this;
+        e.dataTransfer.effectAllowed = 'move';
+        e.dataTransfer.setData('text/html', this.innerHTML);
+    }
+
+    function handleDragOver(e) {
+        if (e.preventDefault) {
+            e.preventDefault();
+        }
+        e.dataTransfer.dropEffect = 'move';
+        return false;
+    }
+
+    function handleDrop(e) {
+        if (e.stopPropagation) {
+            e.stopPropagation();
+        }
+
+        if (dragSrcEl !== this) {
+            const dragSrcIndex = Array.from(dragSrcEl.parentNode.children).indexOf(dragSrcEl);
+            const dropTargetIndex = Array.from(this.parentNode.children).indexOf(this);
+
+            const tempHTML = dragSrcEl.innerHTML;
+            dragSrcEl.innerHTML = this.innerHTML;
+            this.innerHTML = tempHTML;
+
+            [curFiles[dragSrcIndex], curFiles[dropTargetIndex]] = [curFiles[dropTargetIndex], curFiles[dragSrcIndex]];
+
+            dragSrcEl.querySelector('.btn-delete').onclick = (event) => {
+                event.preventDefault();
+                imgList.removeChild(dragSrcEl);
+                curFiles = curFiles.filter(f => f !== curFiles[dragSrcIndex]);
+            };
+
+            this.querySelector('.btn-delete').onclick = (event) => {
+                event.preventDefault();
+                imgList.removeChild(this);
+                curFiles = curFiles.filter(f => f !== curFiles[dropTargetIndex]);
+            };
+        }
+        return false;
+    }
+}
