@@ -497,25 +497,6 @@
                 }).open();
             }
 
-            function formatPhoneNumber(input) {
-                let value = input.value.replace(/[^0-9]/g, ''); // 숫자 외의 문자 제거
-                let formattedValue = '';
-
-                if (value.length > 3) {
-                    formattedValue += value.substring(0, 3) + '-';
-                    if (value.length > 7) {
-                        formattedValue += value.substring(3, 7) + '-';
-                        formattedValue += value.substring(7, 11);
-                    } else {
-                        formattedValue += value.substring(3, 7);
-                    }
-                } else {
-                    formattedValue += value;
-                }
-
-                input.value = formattedValue;
-            }
-
             document.addEventListener('DOMContentLoaded', (event) => {
                 const inputNumbers = document.getElementsByClassName('numberInput');
                 for(const node of inputNumbers){

@@ -16,7 +16,7 @@
         <div class="container">
             <div class="row py-5">
                 <div class="col"></div>
-                <form id="storeRegisterForm" action="/seller/storeRegisterProcess" class="col-7">
+                <form id="storeRegisterForm" method="post" action="/camp/registerProcess" class="col-7">
                     <div class="row">
                         <div class="col-auto pe-0 fw-bold">
                             BaseCamp 
@@ -54,7 +54,7 @@
                                             아이디
                                         </div>
                                         <div class="col position-ralative">
-                                            <input onblur="checkSellerAccountID()" id="inputId" name="account_id" type="text" class="form-control" placeholder="로그인 아이디">
+                                            <input onblur="checkSellerAccount()" id="inputId" name="account" type="text" class="form-control" placeholder="로그인 아이디">
                                             <div id="confirmResult" class="position-absolute f08 text-danger"></div>
                                         </div>
                                     </div>
@@ -63,7 +63,7 @@
                                             비밀번호
                                         </div>
                                         <div class="col">
-                                            <input id="inputPw" name="account_pw" type="password" class="form-control" placeholder="비밀번호">
+                                            <input id="inputPw" name="password" type="password" class="form-control" placeholder="비밀번호">
                                         </div>
                                     </div>
                                     <div class="row pb-4 align-items-center">
@@ -80,7 +80,7 @@
                                             이름
                                         </div>
                                         <div class="col">
-                                            <input id="inputSeller" name="seller" type="text" class="form-control" placeholder="이름">
+                                            <input id="inputSeller" name="seller" type="text" class="form-control" placeholder="욕설 또는 타인을 비방하는 단어는 자제해주세요">
                                         </div>
                                     </div>
                                     <div class="row pb-4 align-items-center">
@@ -88,7 +88,7 @@
                                             전화번호
                                         </div>
                                         <div class="col">
-                                            <input type="text" id="inputPhone" name="phone" class="form-control" placeholder="전화번호">
+                                            <input type="text" id="inputPhone" name="phone" class="form-control " maxlength="13" oninput="formatPhoneNumber(this)" placeholder="하이폰 '-' 없이 입력">
                                         </div>
                                     </div>
                                     <div class="row pb-4 align-items-center">
@@ -96,7 +96,7 @@
                                             이메일
                                         </div>
                                         <div class="col">
-                                            <input type="email" id="inputEmail" name="email" class="form-control" placeholder="이메일">
+                                            <input type="email" id="inputEmail" name="email" class="form-control" placeholder="username@domain.com">
                                         </div>
                                     </div>
                                 </div>
@@ -118,8 +118,8 @@
                                             캠핑장명
                                         </div>
                                         <div class="col position-ralative">
-                                            <input onblur="checkStoreName()" type="text" id="inputName" name="name" class="form-control" placeholder="캠핑장명">
-                                            <div id="confirmStoreName" class="position-absolute f08 text-danger"></div>
+                                            <input onblur="checkCampName()" type="text" id="inputName" name="name" class="form-control" placeholder="캠핑장명">
+                                            <div id="confirmCampName" class="position-absolute f08 text-danger"></div>
                                         </div>
                                     </div>
                                     <div class="row pb-4 align-items-center">
@@ -155,38 +155,9 @@
                                                 <div class="col">
                                                     <input type="text" name="detail_address" class="form-control" id="detailAddress" placeholder="상세주소">
                                                 </div>
-                                                <!-- <div class="col">
-                                                    <input type="text" class="form-control" id="extraAddress" placeholder="참고항목">
-                                                </div> -->
                                             </div>
                                         </div>
                                     </div>
-                                    <!-- 
-                                    <div class="row align-items-center">
-                                        <div class="col">
-                                            <div class="row pb-2">
-                                                <div class="col-3">
-                                                    스토어 url
-                                                </div>
-                                                <div class="col">
-                                                    https://www.basecamp.com/
-                                                </div>
-                                            </div>
-                                            <div class="row pb-2">
-                                                <div class="col-3"></div>
-                                                <div class="col">
-                                                    <input type="text" class="form-control" placeholder="이거 그냥 뺄까? 어차피 안될텐데">
-                                                </div>
-                                            </div>
-                                            <div class="row pb-4">
-                                                <div class="col-3"></div>
-                                                <div class="col f08 text-secondary">
-                                                    https://www.basecamp.com/ 뒤에 사용할 스토어 고유의 주소이며, 가입 후 수정이 불가능합니다.
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                     -->
                                 </div>
                             </div>
                         </div>
@@ -272,59 +243,10 @@
                 <div class="col"></div>
             </div>
         </div>
+        <div th:replace="~{common/navi::popup}"></div>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
         <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
         <script>
-            document.addEventListener("DOMContentLoaded", function() {
-                const originAddressCheckBox = document.getElementById("originAddressCheckBox");
-                originAddressCheckBox.addEventListener("change", automaticallyInputOriginAddress);
-
-                const returnAddressCheckBox = document.getElementById("returnAddressCheckBox");
-                returnAddressCheckBox.addEventListener("change", automaticallyInputReturnAddress);
-            });
-
-            function automaticallyInputOriginAddress(){
-                const originAddressCheckBox = document.getElementById("originAddressCheckBox");
-                const origin_postcode = document.getElementById("origin_postcode");
-                const origin_address = document.getElementById("origin_address");
-                const origin_detailAddress = document.getElementById("origin_detailAddress");
-
-                const postcode = document.getElementById("postcode");
-                const address = document.getElementById("address");
-                const detail_address = document.getElementById("detailAddress");
-
-                if(originAddressCheckBox.checked){
-                    origin_postcode.value = postcode.value;
-                    origin_address.value = address.value;
-                    origin_detailAddress.value = detail_address.value;
-                }else{
-                    origin_postcode.value = '';
-                    origin_address.value = '';
-                    origin_detailAddress.value = '';
-                }
-            }
-
-            function automaticallyInputReturnAddress(){
-                const returnAddressCheckBox = document.getElementById("returnAddressCheckBox");
-                const return_postcode = document.getElementById("return_postcode");
-                const return_address = document.getElementById("return_address");
-                const return_detailAddress = document.getElementById("return_detailAddress");
-
-                const postcode = document.getElementById("postcode");
-                const address = document.getElementById("address");
-                const detail_address = document.getElementById("detailAddress");
-
-                if(returnAddressCheckBox.checked){
-                    return_postcode.value = postcode.value;
-                    return_address.value = address.value;
-                    return_detailAddress.value = detail_address.value;
-                }else{
-                    return_postcode.value = '';
-                    return_address.value = '';
-                    return_detailAddress.value = '';
-                }
-            }
-
             function formSubmit(){
 
                 const inputId = document.getElementById("inputId");
@@ -367,8 +289,8 @@
                 }
 
                 const inputName = document.getElementById("inputName");
-                const confirmStoreName = document.getElementById("confirmStoreName");
-                if(inputName.value == '' || confirmStoreName.innerText=="이미 사용중인 캠핑장 이름입니다"){
+                const confirmCampName = document.getElementById("confirmCampName");
+                if(inputName.value == '' || confirmCampName.innerText=="이미 사용중인 캠핑장 이름입니다"){
                     inputName.focus();
                     return;
                 }
@@ -385,22 +307,6 @@
                 if(postcode.value == '' || address.value == ''){
                     // alert("주소를 입력해주세요");
                     postcodeButton.focus();
-                    return;
-                }
-
-                const origin_postcode = document.getElementById("origin_postcode");
-                const origin_address = document.getElementById("origin_address");
-                const originPostcodeButton = document.getElementById("originPostcodeButton");
-                if(origin_postcode.value == '' || origin_address.value == ''){
-                    originPostcodeButton.focus();
-                    return;
-                }
-
-                const return_postcode = document.getElementById("return_postcode");
-                const return_address = document.getElementById("return_address");
-                const returnPostcodeButton = document.getElementById("returnPostcodeButton");
-                if(return_postcode.value == '' || return_address.value == ''){
-                    returnPostcodeButton.focus();
                     return;
                 }
 
@@ -427,16 +333,16 @@
 
             }
 
-            function checkSellerAccountID(){
+            function checkSellerAccount(){
                 const inputId = document.getElementById("inputId");
 
-                const url = "/api/store/isExistStoreAccountId?account_id=" + inputId.value;
+                const url = "/api/camp/isExistAccount?account=" + inputId.value;
                 fetch(url)
                 .then(response => response.json())
                 .then((response) => {
                     const confirmResult = document.getElementById("confirmResult");
 
-                    if(response.data.isExistAccountID == true){
+                    if(response.data.isExistAccount == true){
                         // confirmResult.style.color = "red";
                         confirmResult.innerText = "이미 사용중인 아이디입니다";
                     }else{
@@ -458,20 +364,20 @@
                 }
             }
 
-            function checkStoreName(){
+            function checkCampName(){
                 const inputName = document.getElementById("inputName");
 
-                const url = "/api/store/isExistStoreName?name=" + inputName.value;
+                const url = "/api/camp/isExistCampName?name=" + inputName.value;
                 fetch(url)
                 .then(response => response.json())
                 .then((response) => {
-                    const confirmStoreName = document.getElementById("confirmStoreName");
+                    const confirmCampName = document.getElementById("confirmCampName");
 
                     if(response.data.isExistName == true){
-                        // confirmStoreName.style.color = "red";
-                        confirmStoreName.innerText = "이미 사용중인 캠핑장 이름입니다";
+                        // confirmCampName.style.color = "red";
+                        confirmCampName.innerText = "이미 사용중인 캠핑장 이름입니다";
                     }else{
-                        confirmStoreName.innerText = "";
+                        confirmCampName.innerText = "";
                     }
                 })
             }
@@ -489,40 +395,6 @@
                 descriptionCount.textContent = currentLength + "/50";
             }
 
-            function origin_execDaumPostcode() {
-                new daum.Postcode({
-                    oncomplete: function(data) {
-
-                        var addr = '';
-                        var extraAddr = '';
-
-                        if (data.userSelectedType === 'R') {
-                            addr = data.roadAddress;
-                        } else {
-                            addr = data.jibunAddress;
-                        }
-
-                        if(data.userSelectedType === 'R'){
-                            if(data.bname !== '' && /[동|로|가]$/g.test(data.bname)){
-                                extraAddr += data.bname;
-                            }
-
-                            if(data.buildingName !== '' && data.apartment === 'Y'){
-                                extraAddr += (extraAddr !== '' ? ', ' + data.buildingName : data.buildingName);
-                            }
-
-                            if(extraAddr !== ''){
-                                extraAddr = ' (' + extraAddr + ')';
-                            }
-                        }
-
-                        document.getElementById('origin_postcode').value = data.zonecode;
-                        document.getElementById("origin_address").value = addr+extraAddr;
-
-                        document.getElementById("origin_detailAddress").focus();
-                    }
-                }).open();
-            }
 
             function return_execDaumPostcode() {
                 new daum.Postcode({

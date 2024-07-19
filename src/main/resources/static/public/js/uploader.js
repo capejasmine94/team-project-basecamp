@@ -142,7 +142,6 @@ function createMultipleUploader(name, max) {
 
     function handleFiles(event) {
         const fileList = Array.from(event.target.files);
-        console.log(curFiles.length + fileList.length )
         
         if (curFiles.length + fileList.length > MAX_UPLOADS) {
             alert(`최대 ${MAX_UPLOADS}개의 이미지만 업로드할 수 있습니다.`);

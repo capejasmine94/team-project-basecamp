@@ -5,8 +5,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.bulmeong.basecamp.camp.dto.CampsiteBankDto;
 import com.bulmeong.basecamp.camp.dto.CampsiteDto;
+import com.bulmeong.basecamp.camp.service.CampsiteService;
 import com.bulmeong.basecamp.campingcar.dto.RentalCompanyDto;
 import com.bulmeong.basecamp.campingcar.service.AdminService;
 import com.bulmeong.basecamp.store.dto.StoreDto;
@@ -22,16 +22,8 @@ public class SellerController {
     private StoreService storeService;
     @Autowired
     private AdminService adminService;
-
-    @RequestMapping("registerCampsite")
-    public String registerCampsite() {
-        return "camp/registerPage";
-    }
-
-    @RequestMapping("registerCampsiteProcess")
-    public String registerCampsiteProcess(@RequestParam("sellerDto") CampsiteDto params1, @RequestParam("bankDto") CampsiteBankDto params2){
-        return "seller/registerComplete";
-    }
+    @Autowired
+    private CampsiteService campsiteService;
 
     @RequestMapping("sellerJoinType")
     public String sellerJoinType(){
@@ -41,8 +33,7 @@ public class SellerController {
     @RequestMapping("sellerType")
     public String sellerType(@RequestParam("selectOption") String selectOption){
         if(selectOption.equals("camp")){
-            //여기 수정(캠핑장)
-            return "redirect:/";
+            return "redirect:/camp/registerUser";
         }else if(selectOption.equals("store")){
             return "redirect:/storeCenter/storeRegister";
         }else{
@@ -70,8 +61,8 @@ public class SellerController {
             return "redirect:/storeCenter/dashboard";
         }else if(seller_type.equals("Campsite")){
             //여기 수정(캠핑장)
-            StoreDto storeDto = storeService.getStoreDtoByAccountInfo(account_id, account_pw);
-            session.setAttribute("sessionStoreInfo", storeDto);
+            CampsiteDto campsiteDto = campsiteService.getCampsiteDtoByAccountInfo(account_id, account_pw);
+            session.setAttribute("campsite", campsiteDto);
     
             return "redirect:/storeCenter/dashboard";
         }else{

@@ -69,10 +69,28 @@ function checkMustLogin() {
    .then(response => response.json())
    .then((response) => {
        if(response.data.needLogin)
-       popup('로그인이 필요합니다','로그인이 필요합니다.','확인', function(){
          location.href = '/user/loginPage';
-      });
+      
    });
+}
+
+function formatPhoneNumber(input) {
+   let value = input.value.replace(/[^0-9]/g, ''); // 숫자 외의 문자 제거
+   let formattedValue = '';
+
+   if (value.length > 3) {
+       formattedValue += value.substring(0, 3) + '-';
+       if (value.length > 7) {
+           formattedValue += value.substring(3, 7) + '-';
+           formattedValue += value.substring(7, 11);
+       } else {
+           formattedValue += value.substring(3, 7);
+       }
+   } else {
+       formattedValue += value;
+   }
+
+   input.value = formattedValue;
 }
 
 function initMoneyInput() {

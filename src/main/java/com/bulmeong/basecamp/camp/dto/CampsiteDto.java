@@ -11,7 +11,9 @@ public class CampsiteDto {
     private String password;
     private String name;
     private String seller;
+    private String postcode;
     private String address;
+    private String detail_address;
     private String phone;
     private String email;
     private String url;
