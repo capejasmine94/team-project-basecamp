@@ -29,6 +29,8 @@ public class ImageUtil {
             return result;
         for(MultipartFile inputImage : inputImages){
             ImageDto dto = saveImageAndReturnDto(inputImage);
+            if(dto == null)
+                break;
             result.add(dto);
         }
         return result;
@@ -36,6 +38,8 @@ public class ImageUtil {
 
     // 이미지를 정리하는데 필요한 함수
     static private ImageDto saveImageAndReturnDto(MultipartFile inputImage){
+        if(inputImage.isEmpty() || inputImage == null)
+            return null;
         String originalFilename = inputImage.getOriginalFilename();
         String extention = originalFilename.substring(originalFilename.lastIndexOf("."));
         LocalDateTime localDateTime = LocalDateTime.now();
