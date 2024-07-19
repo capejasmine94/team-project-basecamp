@@ -1,7 +1,6 @@
 package com.bulmeong.basecamp.club.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
 
 import com.bulmeong.basecamp.club.dto.ClubBookmarkDto;
 import com.bulmeong.basecamp.club.dto.ClubDto;
@@ -11,10 +10,10 @@ import com.bulmeong.basecamp.club.dto.ClubPostCategoryDto;
 import com.bulmeong.basecamp.club.dto.ClubPostCommentDto;
 import com.bulmeong.basecamp.club.dto.ClubPostDto;
 import com.bulmeong.basecamp.club.dto.ClubPostImageDto;
+import com.bulmeong.basecamp.club.dto.ClubPostLikeDto;
 import com.bulmeong.basecamp.club.dto.ClubRegionCategoryDto;
 import com.bulmeong.basecamp.club.mapper.ClubSqlMapper;
 import com.bulmeong.basecamp.common.dto.ImageDto;
-import com.bulmeong.basecamp.common.util.ImageUtil;
 import com.bulmeong.basecamp.user.dto.UserDto;
 import com.bulmeong.basecamp.user.mapper.UserSqlMapper;
 
@@ -199,7 +198,7 @@ public class ClubService {
             clubSqlMapper.deleteBookmark(clubBookmarkDto);
         }
 
-        // 소모임 북마크 집계
+        // 소모임 북마크 개수 집계
         public int countTotalBookmark(int id){
             int totalBookmark = clubSqlMapper.countTotalBookmark(id);
 
@@ -217,5 +216,29 @@ public class ClubService {
            int totalReadCount = clubSqlMapper.totalReadCount(id);
 
             return totalReadCount;
+        }
+
+        // 게시글 스크랩 유무 확인
+        public int confirmPostLike(ClubPostLikeDto clubPostLikeDto){
+            int confirmPostLike = clubSqlMapper.confirmPostLike(clubPostLikeDto);
+            
+            return confirmPostLike;
+        }
+
+        // 게시글 스크랩 삽입
+        public void insertPostLike(ClubPostLikeDto clubPostLikeDto){
+            clubSqlMapper.insertPostLike(clubPostLikeDto);
+        }
+
+        // 게시글 스크랩 삭제
+        public void deletePostLike(ClubPostLikeDto clubPostLikeDto){
+            clubSqlMapper.deletePostLike(clubPostLikeDto);
+        }
+
+        // 게시글 스크랩 개수 집계
+        public int countTotalPostLike(int id){
+            int totalPostLike = clubSqlMapper.countTotalPostLike(id);
+
+            return totalPostLike;
         }
 }

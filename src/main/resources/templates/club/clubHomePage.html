@@ -43,10 +43,10 @@
                         <div class="row py-4">
                             <div class="col-auto" th:if="${session.sessionUserInfo != null}">
                                 <a th:if="${confirmBookmark == 0}" th:href="@{/club/bookmarkProcess(club_id=${map.clubDto.id}, user_id=${session.sessionUserInfo.id})}">
-                                    <span><i class="bi bi-bookmark"></i></span>
+                                    <span><i class="bi bi-heart"></i></span>
                                 </a>
                                 <a th:unless="${confirmBookmark == 0}" th:href="@{/club/bookmarkProcess(club_id=${map.clubDto.id}, user_id=${session.sessionUserInfo.id})}">
-                                    <span><i class="bi bi-bookmark-fill"></i></span>
+                                    <span><i class="bi bi-heart-fill"></i></span>
                                 </a>
                             </div>
 
