@@ -1,5 +1,6 @@
 package com.bulmeong.basecamp.club.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -19,6 +20,7 @@ import com.bulmeong.basecamp.club.dto.ClubPostCategoryDto;
 import com.bulmeong.basecamp.club.dto.ClubPostCommentDto;
 import com.bulmeong.basecamp.club.dto.ClubPostDto;
 import com.bulmeong.basecamp.club.dto.ClubPostImageDto;
+import com.bulmeong.basecamp.club.dto.ClubPostLikeDto;
 import com.bulmeong.basecamp.club.dto.ClubRegionCategoryDto;
 import com.bulmeong.basecamp.club.service.ClubService;
 import com.bulmeong.basecamp.common.dto.ImageDto;
@@ -119,7 +121,11 @@ public class ClubController {
     @RequestMapping("writePostProcess")
     public String writePostProcess(ClubPostDto clubPostDto, @RequestParam("main_image") MultipartFile[]main_image){
     
+
         List<ImageDto> imgList = ImageUtil.saveImageAndReturnDtoList(main_image);
+        if(imgList == null || imgList.isEmpty()){
+            imgList = new ArrayList<>();
+        }
 
         clubService.writeClubPost(clubPostDto, imgList);
 
@@ -181,6 +187,16 @@ public class ClubController {
 
         model.addAttribute("postCommentDetailList", postCommentDetailList);
 
+        ClubPostLikeDto clubPostLikeDto = new ClubPostLikeDto();
+        UserDto userDto = (UserDto)session.getAttribute("sessionUserInfo");
+        if(userDto != null){
+            clubPostLikeDto.setUser_id(userDto.getId());
+            clubPostLikeDto.setPost_id(id);
+            int confirmPostLike = clubService.confirmPostLike(clubPostLikeDto);
+            model.addAttribute("confirmPostLike", confirmPostLike);
+        }
+
+
         return "club/readPostPage";
     }
 
@@ -230,6 +246,22 @@ public class ClubController {
         return "club/createNewMeetingPage";
     }
 
+    @RequestMapping("postLikeProcess")
+    public String postLikeProcess(ClubPostLikeDto clubPostLikeDto){
+
+        System.out.println(clubPostLikeDto);
+        int postLikeCount = clubService.confirmPostLike(clubPostLikeDto);
+        System.out.println(postLikeCount);
+
+        if(postLikeCount == 0){
+            clubService.insertPostLike(clubPostLikeDto);
+        }else{
+            clubService.deletePostLike(clubPostLikeDto);
+        }
+        
+        return "redirect:/club/readPost?id=" + clubPostLikeDto.getPost_id();
+        
+    }
 }
 
 

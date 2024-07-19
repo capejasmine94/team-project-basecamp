@@ -107,7 +107,7 @@
                                 <div class="row pt-3">
                                     <div class="col">
                                         <div class="row pb-3">
-                                            <div class="col-3 pe-0">
+                                            <div class="col-2 pe-0">
                                                 <img src="/public/img/clubImage/mangleProfile.jpg" class="img-fluid rounded-circle" style="aspect-ratio: 1/1;">
                                                 <!-- <img th:src="|/image/${readPostMap.memberDto.profile_image}|" class="img-fluid rounded-circle" style="aspect-ratio: 1/1;"> -->
                                             </div>
@@ -132,22 +132,22 @@
                                     <div class="col">
 
                                         <div class="row">
-                                            <div class="col fw-semi-bold">
+                                            <div class="col pb-2 fw-semi-bold">
                                                 <a th:href="@{/club/readPost(id=${postDetail.clubPostDto.id})}" style="text-decoration: none; color: black;">
                                                     <span th:text="${postDetail.clubPostDto.title}"></span>
                                                 </a>
                                             </div>
                                         </div>
-                                        <div class="row border-2 border-bottom pb-3" style="font-size: 0.9em;">
+                                        <!-- <div class="row border-2 border-bottom pb-3 text-truncate" style="font-size: 0.8em;">
                                             <div class="col">
                                                 <a th:href="@{/club/readPost(id=${postDetail.clubPostDto.id})}" style="text-decoration: none; color: black;">
                                                     <span th:text="${postDetail.clubPostDto.content}"></span>
                                                 </a>
                                             </div>
-                                        </div>
+                                        </div> -->
                                         <div class="row py-2" style="font-size: 0.8em;">
                                             <div class="col-auto">
-                                                <i class="bi bi-heart"></i><span> 좋아요 <span class="text-primary fw-bold">2</span></span>
+                                                <i class="bi bi-bookmark"></i><span> 스크랩 <span class="text-primary fw-bold" th:text="">2</span></span>
                                                 <i class="bi bi-chat"></i><span> 댓글 <span class="text-primary fw-bold">5</span></span>
                                             </div>
                                             <div class="col text-end">
