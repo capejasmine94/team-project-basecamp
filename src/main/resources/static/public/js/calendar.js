@@ -90,7 +90,7 @@ function createCalendarStructure(name) {
 
     const thead = document.createElement('thead');
     const theadRow = document.createElement('tr');
-    const days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+    const days = ['일', '월', '화', '수', '목', '금', '토'];
     days.forEach(day => {
       const th = document.createElement('th');
       th.textContent = day;

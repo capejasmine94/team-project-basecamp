@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.bulmeong.basecamp.common.util.Utils;
 
-@RequestMapping("camp/")
+@RequestMapping("camp")
 @Controller
 public class CampsiteController {
 
@@ -19,53 +19,63 @@ public class CampsiteController {
         return "camp/unity";
     }
 
-    @RequestMapping("main")
+    @RequestMapping("")
+    public String mainPageByEmpty(){
+        return "redirect:/camp/main";
+    }
+
+    @RequestMapping("/")
+    public String mainPageBySlash(){
+        return "redirect:/camp/main";
+    }
+
+    @RequestMapping("/main")
     public String mainPage(){
         return "camp/main";
     }
 
-    @RequestMapping("registerUser")
+    @RequestMapping("/registerUser")
     public String registerUser(){
         return "camp/registerUser";
     }
 
-    @RequestMapping("registerCamp")
+    @RequestMapping("/registerCamp")
     public String registerCampPage(){
         return "camp/registerCamp";
     }
 
-    @RequestMapping("manageCamp")
+    @RequestMapping("/manageCamp")
     public String manageCampPage(){
         return "camp/manageCamp";
     }
     
     
-    @RequestMapping("manageArea")
+    @RequestMapping("/manageArea")
     public String manageAreaPage(){
         return "camp/manageArea";
     }
 
-    @RequestMapping("manageReservation")
+    @RequestMapping("/manageReservation")
     public String manageReservationPage(){
         return "camp/manageReservation";
     }
 
-    @RequestMapping("manageAsset")
+    @RequestMapping("/manageAsset")
     public String manageAssetPage(){
         return "camp/manageAsset";
     }
 
-    @RequestMapping("statisticsCamp")
+    @RequestMapping("/statisticsCamp")
     public String statisticsPage(){
         return "camp/statisticsCamp";
     }
 
-    @RequestMapping("manageCampReview")
+    @RequestMapping("/manageCampReview")
     public String reviewPage(){
         return "camp/manageCampReview";
     }
 
-    @RequestMapping("manageCampAccount")
+    @RequestMapping("/manageCampAccount")
     public String manageAccountPage(){
         return "camp/manageCampAccount";
     }

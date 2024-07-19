@@ -25,6 +25,8 @@ public class ImageUtil {
     // input에서 받아온 여러 파일을 모두 서버에 저장하고 그걸 ImageDto로 반환합니다. 여러개의 이미지를 불러올 때 유용합니다. 
     static public List<ImageDto> saveImageAndReturnDtoList(MultipartFile[] inputImages) {
         List<ImageDto> result = new ArrayList<>();
+        if(inputImages == null) 
+            return result;
         for(MultipartFile inputImage : inputImages){
             ImageDto dto = saveImageAndReturnDto(inputImage);
             result.add(dto);

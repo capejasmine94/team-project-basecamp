@@ -12,6 +12,7 @@ public class CampsiteOrderDto {
     private Date end_Date;
     private String customer_name;
     private int prise;
+    private int sale;
     private String customer_phone;
     private int adult_count;
     private int kid_count;
