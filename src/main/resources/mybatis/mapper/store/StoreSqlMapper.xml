@@ -106,4 +106,81 @@
         where category_id = #{category_id}
     </select>
 
+    <insert id="insertDiscountInfo">
+        <selectKey resultType="int" keyProperty="id" order="AFTER">
+            select max(id) from store_product_discount
+        </selectKey>
+        insert into store_product_discount(percentage)values(#{percentage})
+    </insert>
+
+    <insert id="insertProduct">
+        <selectKey resultType="int" keyProperty="id" order="AFTER">
+            select max(id) from store_product
+        </selectKey>
+        insert into store_product(
+            store_id,
+            subcategory_id,
+            discount_id,
+            name,
+            description,
+            main_image,
+            price,
+            quantity
+        )values(
+            #{store_id},
+            #{subcategory_id},
+            #{discount_id},
+            #{name},
+            #{description},
+            #{main_image},
+            #{price},
+            #{quantity}
+        )
+    </insert>
+
+    <insert id="insertOptionName">
+        <selectKey resultType="int" keyProperty="id" order="AFTER">
+            select max(id) from product_option_name
+        </selectKey>
+        insert into product_option_name(
+            product_id, name
+        )values(
+            #{product_id}, #{name}
+        )
+    </insert>
+
+    <insert id="insertOptionValue">
+        insert into product_option_value(
+            option_id, name
+        )values(
+            #{option_id}, #{name}
+        )
+    </insert>
+
+    <insert id="insertAdditionalInfo">
+        <selectKey resultType="int" keyProperty="id" order="AFTER">
+            select max(id) from additional_info
+        </selectKey>
+        insert into additional_info(
+            additional_price, quantity
+        )values(
+            #{additional_price}, #{quantity}
+        )
+    </insert>
+
+    <select id="selectOptionValueIdByName" resultType="int">
+        select id from product_option_value
+        where name = #{name}
+    </select>
+
+    <insert id="insertOptionValueAdditionalInfo">
+        insert into option_value_additional_info(
+            option_value_id,
+            additional_info_id
+        )values(
+            #{option_value_id},
+            #{additional_info_id}
+        )
+    </insert>
+
 </mapper>

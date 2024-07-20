@@ -4,9 +4,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.bulmeong.basecamp.common.dto.RestResponseDto;
+import com.bulmeong.basecamp.common.util.ImageUtil;
+import com.bulmeong.basecamp.store.dto.AdditionalInfoDto;
+import com.bulmeong.basecamp.store.dto.ProductOptionNameDto;
 import com.bulmeong.basecamp.store.dto.StoreDto;
+import com.bulmeong.basecamp.store.dto.StoreProductDto;
 import com.bulmeong.basecamp.store.dto.StoreRestResponseDto;
 import com.bulmeong.basecamp.store.service.StoreService;
 
@@ -61,24 +66,58 @@ public class RestStoreController {
         return restResponseDto;
     }
 
-    // @RequestMapping("getSellerDtoByAccountInfo")
-    // public RestResponseDto getStoreDtoByAccountInfo(
-    //         @RequestParam("account_id") String account_id, 
-    //         @RequestParam("account_pw") String account_pw,
-    //         @RequestParam("seller_type") String seller_type
-    //         ){
-    //     RestResponseDto restResponseDto = new RestResponseDto();
+    @RequestMapping("registerProduct")
+    public RestResponseDto registerProduct(
+        StoreProductDto storeProductDto,
+        @RequestParam("uploadMainImage") MultipartFile uploadMainImage, 
+        @RequestParam("percentage") double percentage,
+        HttpSession session
+    ){
+        RestResponseDto restResponseDto = new RestResponseDto();
 
-    //     if(seller_type.equals("Store")){
-    //         restResponseDto.add("storeDto", storeService.getStoreDtoByAccountInfo(account_id, account_pw));
-    //     }else if(seller_type.equals("Campsite")){
-    //         //여기 수정(캠핑장)
-    //         restResponseDto.add("storeDto", storeService.getStoreDtoByAccountInfo(account_id, account_pw));
-    //     }else if(seller_type.equals("Caravan")){
-    //         //여기 수정(캠핑카)
-    //         restResponseDto.add("storeDto", storeService.getStoreDtoByAccountInfo(account_id, account_pw));
-    //     }
+        StoreDto storeDto = (StoreDto)session.getAttribute("sessionStoreInfo");
 
-    //     return restResponseDto;
-    // }
+        storeProductDto.setMain_image(ImageUtil.saveImageAndReturnLocation(uploadMainImage));
+        storeProductDto.setStore_id(storeDto.getId());
+
+        int product_id = storeService.registerProductAndReturnId(storeProductDto,percentage);
+
+        restResponseDto.add("product_id", product_id);
+
+        return restResponseDto;
+    }
+
+    @RequestMapping("registerProductOption")
+    public RestResponseDto registerProductOption(
+        @RequestParam("product_id") int product_id,
+        @RequestParam("name") String name,
+        @RequestParam("optionValues") String[] optionValues
+    ){
+        RestResponseDto restResponseDto = new RestResponseDto();
+        
+        ProductOptionNameDto productOptionNameDto = new ProductOptionNameDto();
+        productOptionNameDto.setProduct_id(product_id);
+        productOptionNameDto.setName(name);
+
+        storeService.registerProductOptionNameAndValue(productOptionNameDto, optionValues);
+
+        return restResponseDto;
+    }
+
+    @RequestMapping("registerAdditionalInfo")
+    public RestResponseDto registerAdditionalInfo(
+        @RequestParam("valueNames") String[] valueNames, 
+        @RequestParam("additional_price") int additional_price, 
+        @RequestParam("quantity") int quantity
+    ){
+        RestResponseDto restResponseDto = new RestResponseDto();
+
+        AdditionalInfoDto additionalInfoDto = new AdditionalInfoDto();
+        additionalInfoDto.setAdditional_price(additional_price);
+        additionalInfoDto.setQuantity(quantity);
+
+        storeService.registerProductAddtionalInfo(valueNames, additionalInfoDto);
+
+        return restResponseDto;
+    }
 }

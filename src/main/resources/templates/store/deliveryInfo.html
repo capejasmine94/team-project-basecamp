@@ -367,18 +367,125 @@
                                     조건부 무료
                                 </div>
                             </div>
-                            <div class="row py-3 px-3 align-items-center">
-                                <div class="col-2">
-                                    내용
-                                </div>
+                            <div class="row py-3 px-3 border-top rounded-2 rounded-top-0 bg-body-tertiary" id="discountSettingRow">
                                 <div class="col">
-                                    <button class="btn bg-white border rounded-0">
-                                        내용
-                                    </button>
+                                    <div class="row pb-3 align-items-center">
+                                        <div class="col-2">
+                                            기본 배송비
+                                        </div>
+                                        <div class="col-3 d-grid">
+                                            <div class="row">
+                                                <div class="col input-group">
+                                                    <input type="number" value="0" min="0" class="form-control" id="inputDiscountRate" onkeyup="checkPrice()" oninput="validateDiscountRate(this)">
+                                                    <span class="input-group-text bg-white">원</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row pb-3 align-items-center">
+                                        <div class="col-2">
+                                            배송비 조건
+                                        </div>
+                                        <div class="col d-grid">
+                                            <div class="row align-items-center">
+                                                <div class="col-3">
+                                                    <input type="number" value="0" min="0" class="form-control" id="inputDiscountRate" onkeyup="checkPrice()" oninput="validateDiscountRate(this)">
+                                                </div>
+                                                <div class="col ps-0">
+                                                    원 이상 무료
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
                                 </div>
                             </div>
                         </div>
                     </div>
+
+                    <div class="row px-4 pb-4">
+                        <div class="col border bg-white rounded-2">
+                            <div class="row py-3 px-3 border-bottom">
+                                <div class="col fw-bold">
+                                    출고지
+                                </div>
+                            </div>
+                            <div class="row py-3 px-3 align-items-center">
+                                <div class="col-2">
+                                    주소
+                                </div>
+                                <div class="col-auto fw-bold">
+                                    (55162)서울특별시 어쩌구 무슨동 123-456
+                                </div>
+                                <div class="col-auto">
+                                    <input type="button" class="form-control" value="주소수정">
+                                </div>
+                            </div>
+                            <div class="row py-3 px-3 align-items-center">
+                                <div class="col-2">
+                                    전화번호
+                                </div>
+                                <div class="col-auto fw-bold">
+                                    010-1234-5678
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <div class="row px-4 pb-4">
+                        <div class="col border bg-white rounded-2">
+                            <div class="row py-3 px-3 border-bottom">
+                                <div class="col fw-bold">
+                                    반품 배송비
+                                </div>
+                            </div>
+
+                            <div class="row py-3 px-3">
+                                <div class="col-3 position-ralative">
+                                    <div class="row">
+                                        <div class="col input-group">
+                                            <input onkeyup="checkPrice()" onblur="checkPrice()" oninput="validateInput(this)" id="inputPrice" type="number" min="0" class="form-control bg-body-tertiary">
+                                            <span class="input-group-text bg-body-tertiary">원</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row px-4 pb-4">
+                        <div class="col border bg-white rounded-2">
+                            <div class="row py-3 px-3 border-bottom">
+                                <div class="col fw-bold">
+                                    반품/교환지
+                                </div>
+                            </div>
+                            <div class="row py-3 px-3 align-items-center">
+                                <div class="col-2">
+                                    주소
+                                </div>
+                                <div class="col-auto fw-bold">
+                                    (55162)서울특별시 어쩌구 무슨동 123-456
+                                </div>
+                                <div class="col-auto">
+                                    <input type="button" class="form-control" value="주소수정">
+                                </div>
+                            </div>
+                            <div class="row py-3 px-3 align-items-center">
+                                <div class="col-2">
+                                    전화번호
+                                </div>
+                                <div class="col-auto fw-bold">
+                                    010-1234-5678
+                                </div>
+                            </div>
+                            
+                        </div>
+                    </div>
+
                 </div>
             </div>
         </div>
@@ -395,6 +502,41 @@
                         window.location.href = "/seller/login";
                     }
                 })
+            }
+
+            function origin_execDaumPostcode() {
+                new daum.Postcode({
+                    oncomplete: function(data) {
+
+                        var addr = '';
+                        var extraAddr = '';
+
+                        if (data.userSelectedType === 'R') {
+                            addr = data.roadAddress;
+                        } else {
+                            addr = data.jibunAddress;
+                        }
+
+                        if(data.userSelectedType === 'R'){
+                            if(data.bname !== '' && /[동|로|가]$/g.test(data.bname)){
+                                extraAddr += data.bname;
+                            }
+
+                            if(data.buildingName !== '' && data.apartment === 'Y'){
+                                extraAddr += (extraAddr !== '' ? ', ' + data.buildingName : data.buildingName);
+                            }
+
+                            if(extraAddr !== ''){
+                                extraAddr = ' (' + extraAddr + ')';
+                            }
+                        }
+
+                        document.getElementById('origin_postcode').value = data.zonecode;
+                        document.getElementById("origin_address").value = addr+extraAddr;
+
+                        document.getElementById("origin_detailAddress").focus();
+                    }
+                }).open();
             }
 
             document.querySelectorAll('.toggle-icon').forEach(button => {
@@ -425,18 +567,6 @@
             onResize();
 
             window.addEventListener("resize",function(){onResize();});
-
-            // function openCollapse(){
-            //     const a = new bootstrap.Collapse('#first-collapse', {
-            //         toggle: false
-            //     })
-            //     document.getElementById("productRegister").classList.add("text-primary");
-            //     a.show();
-            // }
-
-            // window.addEventListener("DOMContentLoaded", ()=> {
-            //     openCollapse();
-            // })
 
             window.addEventListener("DOMContentLoaded", () => {
                 setSessionId();
