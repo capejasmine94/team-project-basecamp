@@ -105,6 +105,7 @@
     <!-- 소모임 목록 뽑기 -->
     <select id="selectClubList" resultType="com.bulmeong.basecamp.club.dto.ClubDto">
         select * from bc_club
+        order by id desc
     </select>
 
     <!-- 가입한 소모임 목록 뽑기 (by user_id) -->
@@ -284,6 +285,16 @@
 	        select id from bc_club_post
 	        where club_id = #{club_id}
         )
+    </select>
+
+    <!-- 북마크한 소모임 뽑아오기 -->
+    <select id="selectBookmarkedClubDtoList" resultType="com.bulmeong.basecamp.club.dto.ClubDto">
+        select * from bc_club
+        where id in (
+	        select club_id from bc_club_bookmark
+	        where user_id = #{user_id}
+        );
+
     </select>
 
 

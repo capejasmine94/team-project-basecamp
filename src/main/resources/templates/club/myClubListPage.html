@@ -22,10 +22,13 @@
                         </div>
                     </div>
 
-                    <div class="row pb-3" th:each="myClubsData : ${myClubsDataList}">
+                    <div class="row">
                         <div class="col">
 
-                            <a class="text-decoration-none" th:href="@{/club/home(id=${myClubsData.clubDto.id})}">
+                            <div class="row pb-3" th:each="myClubsData : ${myClubsDataList}">
+                                <div class="col">
+
+                                    <a class="text-decoration-none" th:href="@{/club/home(id=${myClubsData.clubDto.id})}">
 
                             <div class="row">
                                 <div class="col-5">

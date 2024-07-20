@@ -53,6 +53,10 @@ public class ClubController {
         List<ClubRegionCategoryDto> regionCategoryDtoList = clubService.findRegionCategory();
         model.addAttribute("regionCategoryDtoList", regionCategoryDtoList);
 
+        // 북마크한 소모임 목록
+        List<Map<String, Object>> bookmarkedClubDataList = clubService.getBookmarkedClubDtoList(userDto.getId());
+        model.addAttribute("bookmarkedClubDataList", bookmarkedClubDataList);
+
         //  내가 가입한 소모임 목록
         List<ClubDto> joinClubDtoList = clubService.findJoinClubDtoList(userDto.getId());
         List<ClubDto> limitedJoinClubDtoList = joinClubDtoList.stream()
@@ -161,9 +165,6 @@ public class ClubController {
         // util.loginUser();
         clubService.joinClub(clubMemberDto);
 
-        List<ClubDto> clubDtoList = clubService.findClubDtoList();
-        model.addAttribute("clubDtoList", clubDtoList);
-
         return "redirect:/club/main";
     }
 
@@ -226,14 +227,19 @@ public class ClubController {
     }
 
     @RequestMapping("newClubs")
-    public String newClubs(){
+    public String newClubs(Model model){
+        List<ClubDto> clubDtoList = clubService.findClubDtoList();
+        model.addAttribute("clubDtoList", clubDtoList);
 
         return "club/newClubListPage";
     }
 
 
     @RequestMapping("bookmarkClubs")
-    public String localClubs(){
+    public String localClubs(HttpSession session, Model model){
+        UserDto userDto = (UserDto)session.getAttribute("sessionUserInfo");
+        List<Map<String, Object>> bookmarkedClubDataList = clubService.getBookmarkedClubDtoList(userDto.getId());
+        model.addAttribute("bookmarkedClubDataList", bookmarkedClubDataList);
 
         return "club/bookmarkClubListPage";
     }

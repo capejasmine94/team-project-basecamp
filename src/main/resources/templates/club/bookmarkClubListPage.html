@@ -17,41 +17,48 @@
 
                     <div class="row py-4 pb-5">
                         <div class="col text-center fw-bold">
-                            BOOKMARK CLUBS
+                            BOOKMARKED CLUBS
                         </div>
                     </div>
 
                     <div class="row">
                         <div class="col">
 
-                            <div class="row">
-                                <div class="col-5">
-                                    <div class="rectangles" style="display: flex; gap: 10px;">
-                                        <div class="rectangle" style="width: 10em; height: 5em; border: 1px solid #fff;">
-                                            <img src="/public/img/clubImage/mangleProfile.jpg" alt="모임 이미지 1" style="width: 100%; height: 100%; object-fit: cover;">
-                                        </div>
-                                    </div>
-                                </div>
-    
-                                <div class="col align-self-center">
+                            <div class="row pb-3" th:each="bookmarkedClubData : ${bookmarkedClubDataList}">
+                                <div class="col">
+                                    <a class="col text-decoration-none text-black" th:href="@{/club/home(id=${bookmarkedClubData.bookmarkedClubDto.id})}">
                                     <div class="row">
-                                        <div class="col fw-bold">
-                                            소모임명
+                                        <div class="col-5">
+                                            <div class="rectangles" style="display: flex; gap: 10px;">
+                                                <div class="rectangle" style="width: 10em; height: 5em; border: 1px solid #fff;">
+                                                    <img th:src="|/images/${bookmarkedClubData.bookmarkedClubDto.main_image}|" alt="모임 이미지 1" style="width: 100%; height: 100%; object-fit: cover;">
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col align-self-center">
+                                            <div class="row">
+                                                <div class="col fw-bold" th:text="${bookmarkedClubData.bookmarkedClubDto.name}">
+                                                    소모임명
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col" style="font-size: 0.8em;" th:text="${bookmarkedClubData.bookmarkedClubDto.description}">
+                                                    설명
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col" style="font-size: 0.8em;">
+                                                    <span th:text="${bookmarkedClubData.clubRegionCategoryDto.region_name}"></span> | <span th:text="'멤버 ' + ${bookmarkedClubData.totalClubMember}"></span> | <span>정모 3</span>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
-                                    <div class="row">
-                                        <div class="col" style="font-size: 0.8em;">
-                                            설명
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col" style="font-size: 0.8em;">
-                                            서울 | 멤버 20 | <span class="text-primary">정모 3</span>
-                                        </div>
-                                    </div>
+                                    </a>
+
                                 </div>
                             </div>
-                         
+
                         </div>
                     </div>
 

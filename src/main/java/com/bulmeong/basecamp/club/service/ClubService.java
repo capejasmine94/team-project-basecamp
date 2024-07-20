@@ -125,6 +125,33 @@ public class ClubService {
         return clubDtoList;
     }
 
+    // 북마크한 소모임 목록 뽑기
+    public List<Map<String, Object>> getBookmarkedClubDtoList(int id){
+        List<Map<String, Object>> bookmarkedClubDataList = new ArrayList<>();
+        List<ClubDto> bookmarkedClubDtoList = clubSqlMapper.selectBookmarkedClubDtoList(id);
+        
+        for(ClubDto bookmarkedClubDto : bookmarkedClubDtoList){
+            int clubPk = bookmarkedClubDto.getId();
+            int regionId = bookmarkedClubDto.getRegion_id();
+        
+            ClubRegionCategoryDto clubRegionCategoryDto = clubSqlMapper.selectRegionCategoryDtoById(regionId);
+            int totalClubMember = clubSqlMapper.countTotalClubMember(clubPk);
+
+            Map<String, Object> bookmarkedClubMap = new HashMap<>();
+            bookmarkedClubMap.put("bookmarkedClubDto", bookmarkedClubDto);
+            bookmarkedClubMap.put("clubRegionCategoryDto", clubRegionCategoryDto);
+            bookmarkedClubMap.put("totalClubMember", totalClubMember);
+
+            bookmarkedClubDataList.add(bookmarkedClubMap);
+        }
+
+        return bookmarkedClubDataList;
+    }
+
+
+
+
+
     // 각 소모임 게시글 목록 뽑기 (by club_id)
     public  List<Map<String, Object>> getClubPostDtoList(int club_id){
         List<Map<String, Object>>postDetailList = new ArrayList<>();

@@ -64,7 +64,7 @@ public interface ClubSqlMapper {
     public int checkClubMembership(ClubMemberDto clubMemberDto);
 
     public List<ClubPostImageDto> selectPostImageDtoByPostId(int id);
-
+    public List<ClubDto> selectBookmarkedClubDtoList(int id);
     
 }
 

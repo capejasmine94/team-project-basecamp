@@ -63,21 +63,21 @@
                                 </div>
 
                                 <div class="row">
-                                    <div class="col" th:each="joinClubDto : ${joinClubDtoList}">
+                                    <div class="col" th:each="bookmarkedClubData : ${bookmarkedClubDataList}">
 
                                         <div class="row justify-content-center">
                                             <div class="col">
 
                                                 <div class="row">
-                                                    <a th:href="@{/club/home(id=${joinClubDto.id})}" class="col text-decoration-none; text-black" style="display:flex; justify-content: center; align-items: center; width: 5em; height: 5em; border: 1px solid #fff; border-radius: 50%; overflow: hidden;">
-                                                        <img th:src="|/images/${joinClubDto.main_image}|" style="width: 5em; height: 5em; object-fit: cover; border-radius: 50%;">
+                                                    <a th:href="@{/club/home(id=${bookmarkedClubData.bookmarkedClubDto.id})}" class="col text-decoration-none; text-black" style="display:flex; justify-content: center; align-items: center; width: 5em; height: 5em; border: 1px solid #fff; border-radius: 50%; overflow: hidden;">
+                                                        <img th:src="|/images/${bookmarkedClubData.bookmarkedClubDto.main_image}|" style="width: 5em; height: 5em; object-fit: cover; border-radius: 50%;">
                                                     </a>
                                                 </div>
 
                                                 <div class="row text-center">
                                                     <div class="col ellipsis" style="font-size: 0.8em;">
-                                                        <a th:href="@{/club/home(id=${joinClubDto.id})}">
-                                                            <span th:text="${joinClubDto.name}">소모임명</span>
+                                                        <a th:href="@{/club/home(id=${bookmarkedClubData.bookmarkedClubDto.id})}">
+                                                            <span th:text="${bookmarkedClubData.bookmarkedClubDto.name}">소모임명</span>
                                                         </a>
                                                     </div>
                                                 </div>
