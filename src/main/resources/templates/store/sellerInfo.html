@@ -388,7 +388,7 @@
                                     연락처
                                 </div>
                                 <div class="col">
-                                    <span th:if="${session.sessionStoreInfo!=null}" th:text="${session.sessionStoreInfo.phone}">
+                                    <span id="phoneNumber" th:if="${session.sessionStoreInfo!=null}" th:text="${session.sessionStoreInfo.phone}"}>
                                         010-1234-5678
                                     </span>
                                 </div>
@@ -499,7 +499,6 @@
             function onResize(){
                 const topNaviSeller = document.getElementById("topNaviSeller");
                 const height = topNaviSeller.offsetHeight;
-                console.log(height);
                 const leftMenu = document.getElementById("leftAccordion");
                 leftMenu.style.paddingTop = height + 'px';
             }
@@ -507,17 +506,25 @@
 
             window.addEventListener("resize",function(){onResize();});
 
-            // function openCollapse(){
-            //     const a = new bootstrap.Collapse('#first-collapse', {
-            //         toggle: false
-            //     })
-            //     document.getElementById("productRegister").classList.add("text-primary");
-            //     a.show();
-            // }
-
-            // window.addEventListener("DOMContentLoaded", ()=> {
-            //     openCollapse();
-            // })
+            function formatPhoneNumber(phoneNumber) {
+                if (phoneNumber.length === 11) {
+                    return phoneNumber.substring(0, 3) + '-' +
+                        phoneNumber.substring(3, 7) + '-' +
+                        phoneNumber.substring(7);
+                } else if (phoneNumber.length === 10) {
+                    return phoneNumber.substring(0, 3) + '-' +
+                        phoneNumber.substring(3, 6) + '-' +
+                        phoneNumber.substring(6);
+                }
+                return phoneNumber;
+            }
+            
+            document.addEventListener("DOMContentLoaded", function() {
+                const phoneElement = document.getElementById("phoneNumber");
+                const rawPhoneNumber = phoneElement.innerText;
+                console.log(rawPhoneNumber.length)
+                phoneElement.innerText = formatPhoneNumber(rawPhoneNumber);
+            });
 
             window.addEventListener("DOMContentLoaded", () => {
                 setSessionId();

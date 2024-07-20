@@ -360,7 +360,7 @@
                 </div>
                 
                 <!-- right -->
-                <div class="col right bg-body-secondary" style="padding-top: 58px;">
+                <form id="productRegisterForm" class="col right bg-body-secondary" style="padding-top: 58px;">
                     <div class="row py-3 px-4">
                         <div class="col fs-3 fw-bold">
                             상품 등록
@@ -369,7 +369,7 @@
                     
                     <div class="row px-4 pb-4">
                         <div class="col border bg-white rounded-2">
-                            <div class="row py-3 px-3 border-bottom">
+                            <div class="row py-3 px-3 border-bottom" id="titleOfProductCategory">
                                 <div class="col fw-bold">
                                     상품 카테고리
                                 </div>
@@ -397,15 +397,13 @@
                                 <div class="col-auto px-0 f09">
                                     선택한 카테고리 :
                                 </div>
-                                <div class="col-auto pe-0 fw-bold" id="selectedProductCategory">
-                                    대분류
-                                </div>
+                                <div class="col-auto pe-0 fw-bold" id="selectedProductCategory"></div>
+                                
                                 <div class="col-auto pe-0 fw-bold">
                                     <i class="bi bi-chevron-right"></i>
                                 </div>
-                                <div class="col fw-bold" id="selectedSubcategory">
-                                    소분류
-                                </div>
+                                
+                                <div class="col fw-bold" id="selectedSubcategory"></div>
                                 <input type="hidden" name="subcategory_id" id="subcategoryId">
                             </div>
 
@@ -461,7 +459,7 @@
                                         <div class="col-3 position-ralative">
                                             <div class="row">
                                                 <div class="col input-group">
-                                                    <input onkeyup="checkPrice()" onblur="checkPrice()" oninput="validateInput(this)" id="inputPrice" type="number" min="0" class="form-control bg-body-tertiary">
+                                                    <input name="price" onkeyup="checkPrice()" onblur="checkPrice()" oninput="validateInput(this)" id="inputPrice" type="number" min="0" class="form-control bg-body-tertiary">
                                                     <span class="input-group-text bg-body-tertiary">원</span>
                                                 </div>
                                             </div>
@@ -497,7 +495,7 @@
                                                 <div class="col-3 d-grid">
                                                     <div class="row">
                                                         <div class="col input-group">
-                                                            <input type="number" value="0" min="0" class="form-control" id="inputDiscountRate" onkeyup="checkPrice()" oninput="validateDiscountRate(this)">
+                                                            <input type="number" name="percentage" value="0" min="0" class="form-control" id="inputDiscountRate" onkeyup="checkPrice()" oninput="validateDiscountRate(this)">
                                                             <span class="input-group-text bg-white">%</span>
                                                         </div>
                                                     </div>
@@ -561,7 +559,7 @@
                                 <div class="col">
                                     <div class="row pb-3 align-items-center">
                                         <div class="col-3 d-grid">
-                                            <input id="inputQuantity" type="number" value="0" min="0" class="form-control">
+                                            <input id="inputQuantity" name="quantity" type="number" value="0" min="0" class="form-control">
                                         </div>
                                         <div class="col">
                                             개
@@ -742,7 +740,7 @@
 
                     <div class="row px-4 pb-4">
                         <div class="col border bg-white rounded-2">
-                            <div class="row py-3 px-3 border-bottom">
+                            <div class="row py-3 px-3 border-bottom" id="titleOfImage">
                                 <div class="col fw-bold">
                                     이미지 등록
                                 </div>
@@ -766,7 +764,7 @@
                                     상세 이미지
                                 </div>
                                 <div class="col imageAddButton">
-                                    <input id="detailImages" type="file" name="uploadDetailImages" accept="image/*" multiple class="d-none">
+                                    <input id="detailImages" type="file" accept="image/*" multiple class="d-none">
                                     <span onclick="document.getElementById('detailImages').click()" class=" justify-content-center d-flex">
                                         <i class="bi bi-plus"></i>
                                     </span>
@@ -785,9 +783,133 @@
                             <div class="row py-3 px-3 align-items-center">
                                 <div class="col d-grid">
                                     <!-- <input type="text" class="form-control"> -->
-                                    <textarea name="" class="form-control" style="height: 100px;"></textarea>
+                                    <textarea name="description" class="form-control" style="height: 100px;"></textarea>
                                 </div>
                             </div>
+                        </div>
+                    </div>
+
+                    <div class="row px-4 pb-4">
+                        <div class="col border bg-white rounded-2">
+                            <div class="row py-3 px-3 border-bottom">
+                                <div class="col fw-bold">
+                                    배송
+                                </div>
+                            </div>
+                            <div class="row py-3 px-3 align-items-center">
+                                <div class="col-2">
+                                    배송비 선택
+                                </div>
+                                <div class="col-3 fw-bold">
+                                    <select class="form-select" id="deliveryFeeType">
+                                        <option value="">
+                                            무료
+                                        </option>
+                                        <option value="" selected>
+                                            조건부 무료
+                                        </option>
+                                        <option value="">
+                                            유료
+                                        </option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="row f09 py-3 px-3 border-top border-bottom bg-body-tertiary">
+                                <div class="col">
+                                    <div class="row pb-3 align-items-center">
+                                        <div class="col-2">
+                                            기본 배송비
+                                        </div>
+                                        <div class="col-3 d-grid">
+                                            <div class="row">
+                                                <div class="col input-group">
+                                                    <input type="number" value="0" min="0" class="form-control" id="inputDiscountRate" onkeyup="checkPrice()" oninput="validateDiscountRate(this)">
+                                                    <span class="input-group-text bg-white">원</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row align-items-center">
+                                        <div class="col-2">
+                                            배송비 조건
+                                        </div>
+                                        <div class="col d-grid">
+                                            <div class="row align-items-center">
+                                                <div class="col-3">
+                                                    <input type="number" value="0" min="0" class="form-control" id="inputDiscountRate" onkeyup="checkPrice()" oninput="validateDiscountRate(this)">
+                                                </div>
+                                                <div class="col ps-0">
+                                                    원 이상 무료
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                            <div class="row py-3 px-3 align-items-center">
+                                <div class="col-2">
+                                    출고지
+                                </div>
+                                <div class="col-auto text-primary">
+                                    (55162)서울특별시 어쩌구 무슨동 123-456
+                                </div>
+                                <div class="col-auto">
+                                    <input type="button" class="form-control" value="주소수정">
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <div class="row px-4 pb-4">
+                        <div class="col border bg-white rounded-2">
+                            <div class="row py-3 px-3 border-bottom">
+                                <div class="col fw-bold">
+                                    반품/교환
+                                </div>
+                            </div>
+                            <div class="row py-3 px-3 align-items-center">
+                                <div class="col-2">
+                                    반품 배송비(왕복)
+                                </div>
+                                <div class="col-3 d-grid">
+                                    <div class="row">
+                                        <div class="col input-group">
+                                            <input type="number" value="0" min="0" class="form-control" id="inputDiscountRate" onkeyup="checkPrice()" oninput="validateDiscountRate(this)">
+                                            <span class="input-group-text bg-white">원</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row py-3 px-3 align-items-center">
+                                <div class="col-2">
+                                    교환 배송비(편도)
+                                </div>
+                                <div class="col-3 d-grid">
+                                    <div class="row">
+                                        <div class="col input-group">
+                                            <input type="number" value="0" min="0" class="form-control" id="inputDiscountRate" onkeyup="checkPrice()" oninput="validateDiscountRate(this)">
+                                            <span class="input-group-text bg-white">원</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row py-3 px-3 align-items-center">
+                                <div class="col-2">
+                                    반품/교환지
+                                </div>
+                                <div class="col-auto text-primary">
+                                    (55162)서울특별시 어쩌구 무슨동 123-456
+                                </div>
+                                <div class="col-auto">
+                                    <input type="button" class="form-control" value="주소수정">
+                                </div>
+                            </div>
+
                         </div>
                     </div>
 
@@ -799,18 +921,14 @@
                         </div> -->
                         <div class="col"></div>
                         <div class="col-2 d-grid">
-                            <button class="btn btn-secondary py-2" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                                미리보기(하지말까?)
-                            </button>
+                            <input type="button" class="btn btn-secondary py-2" data-bs-toggle="modal" data-bs-target="#exampleModal" value="미리보기(하지말까)">
                         </div>
                         <div class="col-2 d-grid">
-                            <button class="btn btn-primary border py-2">
-                                등록하기
-                            </button>
+                            <input type="button" class="btn btn-primary border py-2" onclick="registerProduct()" value="등록하기">
                         </div>
                     </div>
 
-                </div>
+                </form>
             </div>
         </div>
 
@@ -853,8 +971,8 @@
                     </div>
                 </div>
 
-                <input type="number" class="optionPriceInput border-0 col rounded-0 d-grid align-items-center justify-content-center d-flex border-end">
-                <input type="number" class="optionQuantityInput border-0 col rounded-0 d-grid align-items-center justify-content-center d-flex border-end">
+                <input type="number" value="0" onblur="isInputTypeNumberEmpty(this)" class="optionPriceInput border-0 col rounded-0 d-grid align-items-center justify-content-center d-flex border-end">
+                <input type="number" value="0" onblur="isInputTypeNumberEmpty(this)" class="optionQuantityInput border-0 col rounded-0 d-grid align-items-center justify-content-center d-flex border-end" onkeyup="inputOptionQuantity()">
 
                 <div class="col align-items-center justify-content-center d-flex border-end">
                     판매상태
@@ -913,6 +1031,112 @@
                 });
             });
 
+            function isInputTypeNumberEmpty(input){
+                if(input.value==''){
+                    input.value=0;
+                }
+            }
+
+            function registerProduct(){
+
+                const selectedSubcategory = document.getElementById("selectedSubcategory");
+                if(selectedSubcategory.innerText == ''){
+                    alert("카테고리를 선택해주세요");
+                    const titleOfProductCategory = document.getElementById("titleOfProductCategory");
+                    titleOfProductCategory.scrollIntoView({ behavior: 'smooth' });
+                    return;
+                }
+
+                const inputName = document.getElementById("inputName");
+                if(inputName.value == ""){
+                    alert("상품명을 입력해주세요");
+                    inputName.focus();
+                    return;
+                }
+
+                const inputPrice = document.getElementById("inputPrice");
+                const priceConfirm = document.getElementById("priceConfirm");
+                if(inputPrice.value == "" || priceConfirm.innerText != ""){
+                    inputPrice.focus();
+                    return;
+                }
+
+                const inputQuantity = document.getElementById("inputQuantity");
+                if(inputQuantity.value==""){
+                    inputQuantity.focus();
+                    return;
+                }
+
+                const mainImageInput = document.getElementById("mainImageInput");
+                if(mainImageInput.value==""){
+                    alert("상품 메인 이미지를 등록해주세요");
+                    const titleOfImage = document.getElementById("titleOfImage");
+                    titleOfImage.scrollIntoView({ behavior: 'smooth' });
+                    return;
+                }
+
+                const productRegisterForm = new FormData(document.getElementById("productRegisterForm"));
+
+                const url = "/api/store/registerProduct";
+                fetch(url, {
+                    method: "post",
+                    body: productRegisterForm
+                })
+                .then(response => response.json())
+                .then(async response => {
+                    const product_id = response.data.product_id;
+                    const optionValueTemplates = document.querySelectorAll("#optionListBox .optionValueTemplate");
+
+                    if(optionValueTemplates.length==0){
+                        alert("상품 등록이 완료되었습니다.(이거 나중에 상품페이지로 가거나 조회수정페이지로 가는거 고를 수 있게)")
+                        location.href = "/storeCenter/productManage";
+                    }
+
+                    const optionInputRows = document.querySelectorAll("#optionBox .optionInputRow");
+
+                    for(e of optionInputRows){
+                        const productOptionName = e.querySelector(".inputOptionName").value;
+                        
+                        const inputOptionValues = e.querySelector(".inputOptionValue").value;
+                        const productOptionValues = inputOptionValues.split(',')
+
+                        const url = `/api/store/registerProductOption?product_id=${product_id}&name=${productOptionName}&optionValues=${productOptionValues}`
+                        await fetch(url, {
+                            method: "post"
+                        })
+                    }
+
+                    for(e of optionValueTemplates){
+                        const optionValueCols = e.querySelectorAll(".optionValueCol");
+                        
+                        const valueNames = []
+                        for(optionValueCol of optionValueCols){
+                            const valueName = optionValueCol.innerText;
+                            valueNames.push(valueName);
+                        }
+
+                        const additional_price = e.querySelector(".optionPriceInput").value;
+                        const quantity = e.querySelector(".optionQuantityInput").value;
+
+                        const url = `/api/store/registerAdditionalInfo?valueNames=${valueNames}&additional_price=${additional_price}&quantity=${quantity}`
+                        await fetch(url, {
+                            method: "post"
+                        })
+                    }
+
+                    alert("상품 등록이 완료되었습니다.(이거 나중에 상품페이지로 가거나 조회수정페이지로 가는거 고를 수 있게)")
+                    location.href = "/storeCenter/productManage";
+                })
+            }
+
+            
+            // function activeOptionAddbutton(){
+            //     const optionAddButton = document.getElementById("optionAddButton");
+
+            //     const inputOptionNames = document.querySelectorAll("#optionBox .inputOptionName");
+            //     const inputOptionValues = document.querySelectorAll("#optionBox .inputOptionValue");
+            // }
+
             function optionListCount(){
                 const optionListCount = document.getElementById("optionListCount");
                 const optionValueTemplates = document.querySelectorAll("#optionListBox .optionValueTemplate");
@@ -933,12 +1157,6 @@
                 }
             }
 
-            // function activeOptionAddbutton(){
-            //     const optionAddButton = document.getElementById("optionAddButton");
-
-            //     const inputOptionNames = document.querySelectorAll("#optionBox .inputOptionName");
-            //     const inputOptionValues = document.querySelectorAll("#optionBox .inputOptionValue");
-            // }
 
             function addToOptionList(){
                 const optionNameRow = document.getElementById("optionNameRow");
@@ -1080,7 +1298,7 @@
             }
 
             function checkPrice(){
-                const inputPrice = document.getElementById("inputPrice");
+                const inputPrice = document.getElementById("inputPrice");//판매가
                 const priceConfirm = document.getElementById("priceConfirm");
 
                 if(inputPrice.value==""){
@@ -1097,10 +1315,10 @@
                 const inputDiscountRate = document.getElementById("inputDiscountRate");
 
                 const discountedPrice = inputPrice.value - (inputPrice.value * inputDiscountRate.value / 100);
-                finalSalePrice.innerText = Math.round(discountedPrice);
+                finalSalePrice.innerText = Math.round(discountedPrice);//최종판매가
 
                 const discountAmount = document.getElementById("discountAmount");
-                const innerText = inputPrice.value - discountedPrice;
+                const innerText = inputPrice.value - Math.round(discountedPrice);
                 discountAmount.innerText = `(${innerText}원 할인)`
             }
 
@@ -1155,22 +1373,26 @@
                     optionSettingRow.classList.remove('d-none');
                     inputQuantity.disabled = true;
 
-                    const optionValueTemplates = document.querySelectorAll("#optionListBox .optionValueTemplate");
-                    const optionListCount = document.querySelectorAll("#optionListBox .optionValueTemplate").length;
-
-                    if(optionListCount==0){
-                        inputQuantity.value = 0;
-                    }else{
-                        let optionQuantityInput = 0;
-                        for(optionValueTemplate of optionValueTemplates){
-                            const optionQuantityValue = parseInt(optionValueTemplate.querySelector(".optionQuantityInput").value)
-                            optionQuantityInput += optionQuantityValue;
-                        }
-                        inputQuantity.value = optionQuantityInput;
-                    }
+                    inputOptionQuantity();
                 }else{
                     optionSettingRow.classList.add('d-none');
                     inputQuantity.disabled = false;
+                }
+            }
+
+            function inputOptionQuantity(){
+                const optionValueTemplates = document.querySelectorAll("#optionListBox .optionValueTemplate");
+                const optionListCount = document.querySelectorAll("#optionListBox .optionValueTemplate").length;
+
+                if(optionListCount==0){
+                    inputQuantity.value = 0;
+                }else{
+                    let optionQuantityInput = 0;
+                    for(optionValueTemplate of optionValueTemplates){
+                        const optionQuantityValue = parseInt(optionValueTemplate.querySelector(".optionQuantityInput").value)||0
+                        optionQuantityInput += optionQuantityValue;
+                    }
+                    inputQuantity.value = optionQuantityInput;
                 }
             }
 
@@ -1234,18 +1456,6 @@
             onResize();
 
             window.addEventListener("resize",function(){onResize();});
-
-            // function openCollapse(){
-            //     const a = new bootstrap.Collapse('#first-collapse', {
-            //         toggle: false
-            //     })
-            //     document.getElementById("productRegister").classList.add("text-primary");
-            //     a.show();
-            // }
-
-            // window.addEventListener("DOMContentLoaded", ()=> {
-            //     openCollapse();
-            // })
 
             window.addEventListener("DOMContentLoaded", () => {
                 setSessionId();

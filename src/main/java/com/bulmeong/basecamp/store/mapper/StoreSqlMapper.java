@@ -5,11 +5,17 @@ import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
+import com.bulmeong.basecamp.store.dto.AdditionalInfoDto;
+import com.bulmeong.basecamp.store.dto.OptionValueAdditionalInfoDto;
+import com.bulmeong.basecamp.store.dto.ProductOptionNameDto;
+import com.bulmeong.basecamp.store.dto.ProductOptionValueDto;
 import com.bulmeong.basecamp.store.dto.ProductSubcategoryDto;
 import com.bulmeong.basecamp.store.dto.StoreBankAccountDto;
 import com.bulmeong.basecamp.store.dto.StoreDeliveryInfoDto;
 import com.bulmeong.basecamp.store.dto.StoreDto;
 import com.bulmeong.basecamp.store.dto.StoreProductCategoryDto;
+import com.bulmeong.basecamp.store.dto.StoreProductDiscountDto;
+import com.bulmeong.basecamp.store.dto.StoreProductDto;
 
 @Mapper
 public interface StoreSqlMapper {
@@ -30,4 +36,14 @@ public interface StoreSqlMapper {
     //카테고리 출력
     public List<StoreProductCategoryDto> selectProductCategoryAll();
     public List<ProductSubcategoryDto> selectProductSubcategoryByCategoryId(int category_id);
+
+    public void insertDiscountInfo(StoreProductDiscountDto storeProductDiscountDto);
+    public void insertProduct(StoreProductDto storeProductDto);
+
+    public void insertOptionName(ProductOptionNameDto productOptionNameDto);
+    public void insertOptionValue(ProductOptionValueDto productOptionValueDto);
+
+    public void insertAdditionalInfo(AdditionalInfoDto additionalInfoDto);
+    public int selectOptionValueIdByName(String name);
+    public void insertOptionValueAdditionalInfo(OptionValueAdditionalInfoDto optionValueAdditionalInfoDto);
 }
