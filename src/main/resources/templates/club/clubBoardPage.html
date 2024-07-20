@@ -35,7 +35,7 @@
         <div class="container">
 
             <!-- 전체 박스 -->
-                <div class="row px-4">
+                <div class="row px-4 pb-5 mb-5">
                     <div class="col">
 
                         <div class="row py-4">
@@ -101,7 +101,7 @@
 
                         <!-- 여기서부터 게시글 목록 출력 -->
                         <!-- 프로필 박스 -->
-                        <div class="row border-5 border-bottom" th:each="postDetail : ${postDetailList}">
+                        <div class="row border-3 border-top mt-3" th:each="postDetail : ${postDetailList}">
                             <div class="col">
                                 
                                 <div class="row pt-3">
@@ -119,7 +119,7 @@
                                                 </div>
                                                 <div class="row">
                                                     <div class="col text-secondary" style="font-size: 0.8em;">
-                                                        <span th:text="${postDetail.clubPostDto.created_at}"></span>
+                                                        <span th:text="${#dates.format(postDetail.clubPostDto.created_at, 'yyyy.MM.dd')}"></span>
                                                     </div>
                                                 </div>
                                             </div>

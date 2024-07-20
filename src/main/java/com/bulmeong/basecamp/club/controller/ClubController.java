@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -54,12 +55,18 @@ public class ClubController {
 
         //  내가 가입한 소모임 목록
         List<ClubDto> joinClubDtoList = clubService.findJoinClubDtoList(userDto.getId());
-        model.addAttribute("joinClubDtoList", joinClubDtoList);
+        List<ClubDto> limitedJoinClubDtoList = joinClubDtoList.stream()
+        .limit(3)
+        .collect(Collectors.toList());
+        model.addAttribute("joinClubDtoList", limitedJoinClubDtoList);
 
 
         // 새로운 소모임 목록
         List<ClubDto> clubDtoList = clubService.findClubDtoList();
-        model.addAttribute("clubDtoList", clubDtoList);
+        List<ClubDto> limitedClubDtoList = clubDtoList.stream()
+        .limit(3)
+        .collect(Collectors.toList());
+        model.addAttribute("clubDtoList", limitedClubDtoList);
 
         return "club/clubMainPage";
     }
@@ -173,17 +180,6 @@ public class ClubController {
     @RequestMapping("album")
     public String clubAlbum(@RequestParam("id") int id, Model model){
         model.addAttribute("id", id);
-
-        // List<ClubPostImageDto> clubPostImageDtoList = clubService.getPostImageDtoList();
-
-        // for(ClubPostImageDto clubPostImageDto : clubPostImageDtoList){
-        //     int postId = clubPostImageDto.getPost_id();
-        //     model.addAttribute("postId", postId);
-        // }
-    
-
-        // model.addAttribute("clubPostImageDtoList", clubPostImageDtoList);
-
         List<ClubPostImageDto> postImageDtoList = clubService.selectPostImageDtoByPostId(id);
         model.addAttribute("postImageDtoList", postImageDtoList);
 
@@ -244,6 +240,7 @@ public class ClubController {
 
     @RequestMapping("myClubs")
     public String myClubs(){
+       
 
         return "club/myClubListPage";
     }

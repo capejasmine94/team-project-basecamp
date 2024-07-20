@@ -70,14 +70,14 @@
 
                                                 <div class="row">
                                                     <a th:href="@{/club/home(id=${joinClubDto.id})}" class="col" style="display:flex; justify-content: center; align-items: center; width: 5em; height: 5em; border: 1px solid #fff; border-radius: 50%; overflow: hidden;">
-                                                        <img src="/public/img/clubImage/mangleProfile.jpg" style="width: 5em; height: 5em; object-fit: cover; border-radius: 50%;">
+                                                        <img th:src="|/images/${joinClubDto.main_image}|" style="width: 5em; height: 5em; object-fit: cover; border-radius: 50%;">
                                                     </a>
                                                 </div>
 
                                                 <div class="row text-center">
                                                     <div class="col ellipsis" style="font-size: 0.8em;">
                                                         <a th:href="@{/club/home(id=${joinClubDto.id})}">
-                                                            <span th:text="${joinClubDto.name}">소모임 이름</span>
+                                                            <span th:text="${joinClubDto.name}">소모임명</span>
                                                         </a>
                                                     </div>
                                                 </div>
@@ -108,7 +108,7 @@
                                                 <a th:href="@{/club/home(id=${clubDto.id})}">
                                                     <div class="rectangles">
                                                         <div class="rectangle" style="width: 5em; height: 3em; border: 1px solid #fff;" >
-                                                            <img src="/public/img/clubImage/mangleProfile.jpg" alt="모임 이미지 1" style="width: 6em; height: 3em; object-fit: cover;">
+                                                            <img th:src="|/images/${clubDto.main_image}|" alt="모임 이미지 1" style="width: 6em; height: 3em; object-fit: cover;">
                                                         </div>
                                                     </div>
                                                 </a>
@@ -141,7 +141,7 @@
                                                 <a th:href="@{/club/home(id=${clubDto.id})}">
                                                     <div class="rectangles">
                                                         <div class="rectangle" style="width: 5em; height: 3em; border: 1px solid #fff;">
-                                                            <img src="/public/img/clubImage/mangleProfile.jpg" alt="모임 이미지 1" style="width: 6em; height: 3em; object-fit: cover;">
+                                                            <img th:src="|/images/${clubDto.main_image}|" alt="모임 이미지 1" style="width: 6em; height: 3em; object-fit: cover;">
                                                         </div>
                                                     </div>
                                                 </a>

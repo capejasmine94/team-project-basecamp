@@ -41,7 +41,7 @@
 <body>
     <div class="container">
         <!-- 전체 박스 -->
-        <div class="row px-4">
+        <div class="row px-4 pb-5 mb-5">
             <div class="col">
 
                 <div class="row py-5">
@@ -130,9 +130,10 @@
                     <div class="row">
                         <div class="col">
 
-                            <div class="row pb-1">
+                            <div class="row pb-2">
                                 <div class="col-8 fw-semibold">
-                                    <span style="font-size: 0.8em">댓글 </span>
+                                    <span style="font-size: 0.8em;">댓글 </span>
+                                    <span class="fw-bold" style="font-size: 0.8em; color:crimson;" th:text=" ${map.totalComment}"></span>
                                     <!-- <span style="font-size: 0.8em" th:text="${readPostMap.totalCommentEachPost}"></span> -->
                                 </div>
                                 <div class="col ms-0">
@@ -162,7 +163,7 @@
                             <div class="row" th:each="postCommentDetail : ${postCommentDetailList}">
                                 <div class="col">
 
-                                    <div class="row py-3 border-bottom">
+                                    <div class="row py-3 border-top">
                                         <div class="col-2" >
                                             <!-- <img src="/public/img/clubImage/mangleProfile.jpg" class="img-fluid rounded-circle" style="aspect-ratio: 1/1;"> -->
                                             <img th:src="|/image/${postCommentDetail.userDto.profile_image}|" class="img-fluid rounded-circle"  style="aspect-ratio: 1/1;">
