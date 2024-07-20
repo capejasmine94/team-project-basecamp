@@ -154,6 +154,41 @@ public class InstaController {
         return "insta/commentWritePage";
     }
 
+    @RequestMapping("instaMyPage")
+    public String instaMyPage(){
+
+        return "insta/instaMyPage";
+    }
+
+    @RequestMapping("instaBookmarkPage")
+    public String instaBookmarkPage(){
+
+        return "insta/instaBookmarkPage";
+    }
+    
+    @RequestMapping("instaUserPage")
+    public String instaUserPage(){
+
+        return "insta/instaUserPage";
+    }
+    
+    @RequestMapping("instaUserDetailPage")
+    public String instaUserDetailPage(){
+
+        return "insta/instaUserDetailPage";
+    }
+
+    @RequestMapping("pushLikeUserPage")
+    public String pushLikeUserPage(){
+
+        return "insta/pushLikeUserPage";
+    }
+
+    @RequestMapping("userFollowersPage")
+    public String userFollowersPage(){
+
+        return "insta/userFollowersPage";
+    }
 }
 
 

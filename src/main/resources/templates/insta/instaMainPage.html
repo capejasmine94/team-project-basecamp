@@ -204,7 +204,7 @@
             <!-- 스크롤 바 없애는 거 scrollbar-width: none; _ overflow있는 곳에 넣어주기 -->
             <div class="col overflow-x-auto" style="scrollbar-width: none;">
                 <div class="row" style="width: 150%;">
-                    <a class="col-auto link-dark link-offset-2 link-underline link-underline-opacity-0 " href="./instaMyPage">
+                    <a class="col-auto link-dark link-offset-2 link-underline link-underline-opacity-0 " th:href="@{./instaMyPage(user_id=${session.sessionUserInfo.id})}">
                         <div class="row">
                             <!-- <div class="col">
                                 <img class="rounded" th:src="|/bowWow_image/${e.productDto.product_main_img_link}|" style="height: 7em; width: 100%;" >
@@ -376,10 +376,12 @@
 
                     <!-- 댓글 -->
                     <div class="col px-0">
-                        <form action="./commentPage" method="get">
+                        <form action="./commentWritePage" method="get">
                             <button class="btn px-0">
                                 <i class="fa-regular fa-comment"></i>
                             </button>
+                            <input type="hidden" name="user_id" th:value="${session.sessionUserInfo.id}">
+                            <input type="hidden" name="article_id" th:value="${instaArticleList.instaArticleDto.id}">
                         </form>
                     </div>
 
@@ -422,7 +424,8 @@
 
                 <!-- 댓글 -->
                 <div class="row">
-                    <a class="col link-dark link-offset-2 link-underline link-underline-opacity-0" href="./commentPage">
+                    <a class="col link-dark link-offset-2 link-underline link-underline-opacity-0"
+                        th:href="@{./commentWritePage(user_id=${session.sessionUserInfo.id}, article_id=${instaArticleList.instaArticleDto.id})}">
                         <span class="fontBasic" style="color: rgb(162, 162, 162);">댓글 89개 모두 보기</span>
                     </a>
                 </div>
