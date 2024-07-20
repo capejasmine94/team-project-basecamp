@@ -49,7 +49,7 @@ public class InstaService {
     }
 
     // 게시글 List
-    public List<Map<String, Object>> selectInstaArticleList(){
+    public List<Map<String, Object>> selectInstaArticleList(int s_user_id){
         List<Map<String, Object>> result = new ArrayList<>();
 
         List<InstaArticleDto> instaArticleDtoList = instaSqlMapper.selectArticleAll();
@@ -63,6 +63,19 @@ public class InstaService {
             int user_id = instaArticleDto.getUser_id();
             InstaUserInfoDto instaUserInfoDto = instaSqlMapper.selectUserInfoByUserId(user_id);
             map.put("instaUserInfoDto", instaUserInfoDto);
+
+            InstaArticleLikeDto instaArticleLikeDto = new InstaArticleLikeDto();
+            instaArticleLikeDto.setArticle_id(article_id);
+            instaArticleLikeDto.setUser_id(s_user_id);
+            int like = instaSqlMapper.countLikeByArticleIdAndUserId(instaArticleLikeDto);
+
+            // instaSqlMapper.deleteLikeByArticleIdAndUserId(instaArticleLikeDto);
+
+            int likeCount = instaSqlMapper.countLikeByArticleId(article_id);
+            map.put("likeCount", likeCount);
+
+            map.put("like", like);
+            // System.out.println("like:" + like);
 
             List<InstaArticleImgDto> instaArticleImgDtoList = instaSqlMapper.selectArticleImgByArticleId(article_id);
             for(InstaArticleImgDto instaArticleImgDto : instaArticleImgDtoList){
@@ -88,11 +101,11 @@ public class InstaService {
         List<InstaArticleCommentDto> commentList = instaSqlMapper.getCommentList(article_id);
 
         for(InstaArticleCommentDto instaArticleCommentDto : commentList){
+            InstaUserInfoDto instaUserInfoDto = instaSqlMapper.selectUserInfoByUserId(instaArticleCommentDto.getUser_id());
+
             Map<String, Object> map = new HashMap<>();
 
             map.put("instaArticleCommentDto", instaArticleCommentDto);
-
-            InstaUserInfoDto instaUserInfoDto = instaSqlMapper.selectUserInfoByUserId(instaArticleCommentDto.getUser_id());
             map.put("instaUserInfoDto", instaUserInfoDto);
 
             result.add(map);
@@ -115,35 +128,17 @@ public class InstaService {
         instaSqlMapper.deleteLikeByArticleIdAndUserId(instaArticleLikeDto);
     }
 
+    // 어떤 글에 몇명이 좋아요 했는지 
     public int getLikeTotalCount(int article_id){
         return instaSqlMapper.countLikeByArticleId(article_id);
     }
 
     // 0보다 크면 true(=Like)
+    // 몇번 회원이 몇번 글에 좋아요 했는지
     public boolean isLiked(InstaArticleLikeDto instaArticleLikeDto){
         return instaSqlMapper.countLikeByArticleIdAndUserId(instaArticleLikeDto) > 0;
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

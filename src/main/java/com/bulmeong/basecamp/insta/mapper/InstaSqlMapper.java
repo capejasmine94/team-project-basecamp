@@ -27,8 +27,8 @@ public interface InstaSqlMapper {
     public void deleteComment(int id);
 
     // 좋아요
-    public void createLike(InstaArticleLikeDto instaArticleLikeDto);
-    public int countLikeByArticleId(int article_id);
-    public int countLikeByArticleIdAndUserId(InstaArticleLikeDto instaArticleLikeDto);
+    public void createLike(InstaArticleLikeDto instaArticleLikeDto); // 좋아요 insert
+    public int countLikeByArticleId(int article_id); // 어떤 글에 몇명이 좋아요 했는지 
+    public int countLikeByArticleIdAndUserId(InstaArticleLikeDto instaArticleLikeDto); // 몇번 회원이 몇번 글에 좋아요 했는지
     public void deleteLikeByArticleIdAndUserId(InstaArticleLikeDto instaArticleLikeDto);
 }

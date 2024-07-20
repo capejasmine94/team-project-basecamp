@@ -13,6 +13,7 @@ import com.bulmeong.basecamp.common.util.ImageUtil;
 import com.bulmeong.basecamp.common.util.Utils;
 import com.bulmeong.basecamp.insta.dto.InstaArticleDto;
 import com.bulmeong.basecamp.insta.dto.InstaArticleImgDto;
+import com.bulmeong.basecamp.insta.dto.InstaArticleLikeDto;
 import com.bulmeong.basecamp.insta.dto.InstaUserInfoDto;
 import com.bulmeong.basecamp.insta.service.InstaService;
 import com.bulmeong.basecamp.user.dto.UserDto;
@@ -82,8 +83,8 @@ public class InstaController {
 
     // 인스타 메인페이지
     @RequestMapping("instaMainPage")
-    public String instaMainPage(Model model, @RequestParam("user_id") int user_id){
-        InstaUserInfoDto instaUserInfoDto = instaService.userInfoByUserId(user_id);
+    public String instaMainPage(Model model, @RequestParam("user_id") int s_user_id){
+        InstaUserInfoDto instaUserInfoDto = instaService.userInfoByUserId(s_user_id);
         model.addAttribute("instaUserInfoDto", instaUserInfoDto);
 
         // System.out.println(instaUserInfoDto.getInsta_profile_img());
@@ -92,12 +93,30 @@ public class InstaController {
         // session.setAttribute("instaUserInfoDto", instaUserInfoDto);
         // System.out.println("instaUserInfoDto" + instaUserInfoDto);
 
-        List<Map<String, Object>> instaArticleListAll = instaService.selectInstaArticleList();
+        InstaArticleLikeDto instaArticleLikeDto = new InstaArticleLikeDto();
+        instaArticleLikeDto.setUser_id(s_user_id);
+
+        List<Map<String, Object>> instaArticleListAll = instaService.selectInstaArticleList(s_user_id);
         model.addAttribute("instaArticleListAll", instaArticleListAll);
 
-        System.out.println(instaArticleListAll);
+        // System.out.println(instaArticleListAll);
 
         return "insta/instaMainPage";
+    }
+
+    // 좋아요
+    @RequestMapping("pushArticleLikeProcess")
+    public String pushArticleLikeProcess(InstaArticleLikeDto instaArticleLikeDto){
+        instaService.like(instaArticleLikeDto);
+
+        return "redirect:./instaMainPage?user_id=" + instaArticleLikeDto.getUser_id();
+    }
+
+    @RequestMapping("pushArticleLikeDeleteProcess")
+    public String pushArticleLikeDeleteProcess(InstaArticleLikeDto instaArticleLikeDto){
+        instaService.unLike(instaArticleLikeDto);
+
+        return "redirect:./instaMainPage?user_id=" + instaArticleLikeDto.getUser_id();
     }
 
     @RequestMapping("instaWritePage")
@@ -123,8 +142,8 @@ public class InstaController {
 
         instaService.writeArticleImg(instaAtricleImgDtoList);
 
-        System.out.println("instaArticleDto : " + instaArticleDto);
-        System.out.println("instaAtricleImgDtoList : " + instaAtricleImgDtoList);
+        // System.out.println("instaArticleDto : " + instaArticleDto);
+        // System.out.println("instaAtricleImgDtoList : " + instaAtricleImgDtoList);
 
         return "redirect:./instaMainPage?user_id=" + instaArticleDto.getUser_id();
     }

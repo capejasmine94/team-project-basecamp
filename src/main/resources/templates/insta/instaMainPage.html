@@ -10,9 +10,98 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap">
     <title>insta_mainPage</title>
 
-    <script src="/public/js/util.js"></script>
+    <!-- <script src="/public/js/util.js"></script> -->
     
     <script>
+        const urlParams = new URL(window.location.href).searchParams;
+        const articleId = urlParams.get("article_id");
+
+        // myId =  session아이디 _ 글로벌 변수 
+        let myId = null;
+
+        function setSessionId(){
+            const url = "/api/user/getSessionUserId";
+            fetch(url)
+            .then(response => response.json())
+            .then((response) => { // 응답 받은 시점
+
+                myId = response.data.userId;
+                reloadHeart();
+                console.log("Session ID has been set:", myId); // 콘솔에 찍힐 세션 id
+            });
+        }
+
+        function like(){
+            const url = "/api/insta/like?article_id=" + articleId;
+            if(myId == null){
+                if(confirm("로그인 후 이용부탁드립니다. 로그인 페이지로 이동하시겠습니까?")){
+                    location.href = "/insta/instaLoginPage";
+                }
+                return;
+            }
+
+            fetch(url)
+                .then(response => response.json())
+                .then(response => {
+                    reloadHeart();
+                })
+                ;
+        }
+
+        function reloadHeart() {
+            if(myId == null){
+                return;
+            }
+            
+            const url = "/api/insta/isLiked?article_id=" + articleId;
+            fetch(url)
+                .then(response => response.json())
+                .then(response => {
+
+                    const heart = document.getElementById("heart");
+
+                    if(response.data.isLiked == true){ // 내가 이 article에 좋아요를 누른거
+                        heart.classList.remove("bi-heart"); // 'fa-regular fa-heart' => 공백 제거를 위해 쉼표로 나눠서 작성
+                        heart.classList.add("bi-heart-fill");
+
+                        heart.onclick = unLike;
+                    }else{ // 좋아요 안 누른거
+                        heart.classList.remove("bi-heart-fill");
+                        heart.classList.add("bi-heart");
+
+                        heart.onclick = like;
+                    }
+                })
+                ;
+
+        }
+
+        function unLike(){
+
+            if(myId == null){
+                if(confirm("로그인 후 이용부탁드립니다. 로그인 페이지로 이동하시겠습니까?")){
+                    location.href = "/insta/instaLoginPage";
+                }
+                return;
+            }
+
+            const url = "/api/insta/unLike?article_id=" + articleId;
+
+            fetch(url)
+            .then(response => response.json())
+            .then(response => {
+                reloadHeart();
+            })
+            ;
+        }
+
+        window.addEventListener("DOMContentLoaded", () => {
+            // 페이지 로드 후 사실상 시작 지점
+            setSessionId();
+
+        });
+
+        
         function action(){
             alert("껄끄럽네~")
         }
@@ -112,7 +201,8 @@
         <!-- 스토리 -->
         <!-- overflow-x: auto; 이 클래스가 적용된 요소는 내용이 요소의 크기를 초과할 때, x축 방향으로 스크롤할 수 있게 됩니다. -->
         <div class="row border-bottom pb-1 mb-3" >
-            <div class="col overflow-x-auto">
+            <!-- 스크롤 바 없애는 거 scrollbar-width: none; _ overflow있는 곳에 넣어주기 -->
+            <div class="col overflow-x-auto" style="scrollbar-width: none;">
                 <div class="row" style="width: 150%;">
                     <a class="col-auto link-dark link-offset-2 link-underline link-underline-opacity-0 " href="./instaMyPage">
                         <div class="row">
@@ -262,17 +352,24 @@
 
                 <div class="row" style="height: 30px;">
                     <!-- 좋아요 -->
-                    <!-- <div class="col-auto px-0">
+                    <div class="col-auto px-0" th:if="${instaArticleList.like == 1}">
                         <form action="./pushArticleLikeDeleteProcess" method="get">
                             <button class="btn">
                                 <i class="fa-solid fa-heart"></i>
                             </button>
+
+                            <input type="hidden" name="user_id" th:value="${session.sessionUserInfo.id}">
+                            <input type="hidden" name="article_id" th:value="${instaArticleList.instaArticleDto.id}">
                         </form>
-                    </div> -->
-                    <div class="col-auto px-0">
+                    </div>
+                    <div class="col-auto px-0" th:if="${instaArticleList.like != 1}">
                         <form action="./pushArticleLikeProcess" method="get">
                             <button class="btn">
-                                <i class="fa-regular fa-heart"></i>
+                                <!-- onclick="like(/*[[${instaArticleList.instaArticleDto.id}]]*/)" -->
+                                <i id="heart" onclick="like()" class="fa-regular fa-heart"></i>
+
+                                <input type="hidden" name="user_id" th:value="${session.sessionUserInfo.id}">
+                                <input type="hidden" name="article_id" th:value="${instaArticleList.instaArticleDto.id}">
                             </button>
                         </form>
                     </div>
@@ -307,7 +404,7 @@
                 <div class="row">
                     <a class="col fontBasic link-dark link-offset-2 link-underline link-underline-opacity-0 " href="./pushLikeUserPage">
                         <span>좋아요</span>
-                        <span>50,000개</span>
+                        <span th:text="${instaArticleList.likeCount}"></span><span>개</span>
                     </a>
                 </div>
 

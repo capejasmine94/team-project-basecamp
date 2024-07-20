@@ -62,8 +62,8 @@ public class RestInstaController {
         return instaRestResponseDto; 
     }
 
-    @RequestMapping("isLike") // 해당 게시글에 내가 좋아요를 눌렀냐
-    public InstaRestResponseDto isLike(InstaArticleLikeDto params, HttpSession session){
+    @RequestMapping("isLiked") // 해당 게시글에 내가 좋아요를 눌렀냐
+    public InstaRestResponseDto isLiked(InstaArticleLikeDto params, HttpSession session){
         InstaRestResponseDto instaRestResponseDto = new InstaRestResponseDto();
         instaRestResponseDto.setResult("success");
 
@@ -81,12 +81,12 @@ public class RestInstaController {
 
 
     // 댓글
-    @RequestMapping("registerComment")
+    @RequestMapping("registerComment") // insert
     public InstaRestResponseDto registerComment(InstaArticleCommentDto params, HttpSession session){
         InstaRestResponseDto instaRestResponseDto = new InstaRestResponseDto();
         instaRestResponseDto.setResult("success");
 
-        UserDto userDto = (UserDto) session.getAttribute("sessionUserInfo");
+        UserDto userDto = (UserDto)session.getAttribute("sessionUserInfo");
         params.setUser_id(userDto.getId());
 
         instaService.registerComment(params);
@@ -95,17 +95,17 @@ public class RestInstaController {
     }
 
     @RequestMapping("getCommentList")
-    public InstaRestResponseDto getCommentList(int article_id){
+    public InstaRestResponseDto getCommentList(@RequestParam("article_id") int article_id){
         InstaRestResponseDto instaRestResponseDto = new InstaRestResponseDto();
         instaRestResponseDto.setResult("success");
 
-        // instaRestResponseDto.add("commentList", instaService.getCommentList(article_id));
+        instaRestResponseDto.add("commentList", instaService.getCommentList(article_id));
 
         return instaRestResponseDto;
     }
 
     @RequestMapping("deleteComment")
-    public InstaRestResponseDto deleteComment(int id){
+    public InstaRestResponseDto deleteComment(@RequestParam("id") int id){
         InstaRestResponseDto instaRestResponseDto = new InstaRestResponseDto();
         instaRestResponseDto.setResult("success");
 
@@ -114,3 +114,22 @@ public class RestInstaController {
         return instaRestResponseDto;
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
