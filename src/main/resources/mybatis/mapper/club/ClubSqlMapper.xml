@@ -164,7 +164,7 @@
         where id = #{id}
     </select>
 
-    <!-- 카테고리 DTO 가져오기 by id-->
+    <!-- 지역카테고리 DTO 가져오기 by id-->
     <select id="selectRegionCategoryDtoById" resultType="com.bulmeong.basecamp.club.dto.ClubRegionCategoryDto">
         select * from bc_club_region_category
         where id=#{id}

@@ -232,15 +232,29 @@ public class ClubController {
     }
 
 
-    @RequestMapping("localClubs")
+    @RequestMapping("bookmarkClubs")
     public String localClubs(){
 
-        return "club/localClubListPage";
+        return "club/bookmarkClubListPage";
     }
 
     @RequestMapping("myClubs")
-    public String myClubs(){
-       
+    public String myClubs(HttpSession session, Model model){
+        List<Map<String,Object>> myClubsDataList = new ArrayList<>();
+        UserDto userDto = (UserDto)session.getAttribute("sessionUserInfo");
+        List<ClubDto> joinClubDtoList = clubService.findJoinClubDtoList(userDto.getId());
+        
+        for(ClubDto clubDto : joinClubDtoList){
+            Map<String, Object> myClubListMap = new HashMap<>();
+           int region_id = clubDto.getRegion_id();
+           ClubRegionCategoryDto clubRegionCategoryDto = clubService.findRegionCategoryDtoById(region_id);
+            myClubListMap.put("clubRegionCategoryDto", clubRegionCategoryDto);
+            myClubListMap.put("clubDto", clubDto);
+            myClubsDataList.add(myClubListMap);
+        }
+        model.addAttribute("myClubsDataList", myClubsDataList);
+        model.addAttribute("userDto", userDto);
+        
 
         return "club/myClubListPage";
     }

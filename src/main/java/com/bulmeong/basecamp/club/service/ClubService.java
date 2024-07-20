@@ -89,6 +89,13 @@ public class ClubService {
         return regionCategroyDtoList;
     }
 
+    public ClubRegionCategoryDto findRegionCategoryDtoById(int id){
+        ClubRegionCategoryDto clubRegionCategoryDto = clubSqlMapper.selectRegionCategoryDtoById(id);
+
+        
+        return clubRegionCategoryDto;
+    }
+
     // 소모임 게시글 카테고리
     public List<ClubPostCategoryDto> findPostCategory(){
         List<ClubPostCategoryDto> postCategoryDtoList = clubSqlMapper.selectPostCategoryDto();

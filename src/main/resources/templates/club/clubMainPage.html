@@ -52,13 +52,13 @@
                             </div>
                         </div>
 
-                        <!-- 내 모임 limit 걸어서 반복 횟수 제한하기-->
+                        <!-- 즐겨찾기한 모임 -->
                         <div class="row">
                             <div class="col">
 
                                 <div class="row pt-4 pb-1">
                                     <div class="col fw-semi-bold" style="font-size: 0.9em;">
-                                        <a href="/club/myClubs"><span>내모임 ></span></a>
+                                        <a href="/club/bookmarkClubs"><span>즐겨찾기 ></span></a>
                                     </div>
                                 </div>
 
@@ -69,7 +69,7 @@
                                             <div class="col">
 
                                                 <div class="row">
-                                                    <a th:href="@{/club/home(id=${joinClubDto.id})}" class="col" style="display:flex; justify-content: center; align-items: center; width: 5em; height: 5em; border: 1px solid #fff; border-radius: 50%; overflow: hidden;">
+                                                    <a th:href="@{/club/home(id=${joinClubDto.id})}" class="col text-decoration-none; text-black" style="display:flex; justify-content: center; align-items: center; width: 5em; height: 5em; border: 1px solid #fff; border-radius: 50%; overflow: hidden;">
                                                         <img th:src="|/images/${joinClubDto.main_image}|" style="width: 5em; height: 5em; object-fit: cover; border-radius: 50%;">
                                                     </a>
                                                 </div>
@@ -91,9 +91,8 @@
                             </div>
                         </div>
 
-                        <!-- ///////////////////////////////////     지금은 모든 소모임 출력      /////////////////////////////////// -->
 
-                         <!-- 새로운 소모임 -->
+                         <!-- 새로운 소모임  -->
                          <div class="row">
                             <div class="col">
                                 <div class="row pt-4 pb-2">
@@ -126,22 +125,23 @@
                             </div>
                         </div>
 
-                         <!-- 우리동네 모임 -->
+                         <!-- 내 모임-->
                          <div class="row">
                             <div class="col">
                                 <div class="row pt-4 pb-2">
                                     <div class="col fw-semi-bold" style="font-size: 0.9em;">
-                                        <a href="/club/localClubs"><span>우리동네 모임 ></span></a>
+                                        <a href="/club/myClubs"><span>내모임 ></span></a>
                                     </div>
                                 </div>
                                 <div class="row">
-                                    <div class="col" th:each="clubDto : ${clubDtoList}">
+                                    <div class="col" th:each="joinClubDto : ${joinClubDtoList}">
                                         <div class="row">
                                             <div class="col">
-                                                <a th:href="@{/club/home(id=${clubDto.id})}">
+                                                
+                                                <a th:href="@{/club/home(id=${joinClubDto.id})}">
                                                     <div class="rectangles">
                                                         <div class="rectangle" style="width: 5em; height: 3em; border: 1px solid #fff;">
-                                                            <img th:src="|/images/${clubDto.main_image}|" alt="모임 이미지 1" style="width: 6em; height: 3em; object-fit: cover;">
+                                                            <img th:src="|/images/${joinClubDto.main_image}|" alt="모임 이미지 1" style="width: 6em; height: 3em; object-fit: cover;">
                                                         </div>
                                                     </div>
                                                 </a>
@@ -149,8 +149,8 @@
                                         </div>
                                         <div class="row">
                                             <div class="col text-center ellipsis" style="font-size: 0.8em;" >
-                                                <a th:href="@{/club/home(id=${clubDto.id})}">
-                                                    <span th:text="${clubDto.name}">소모임 이름</span>
+                                                <a th:href="@{/club/home(id=${joinClubDto.id})}">
+                                                    <span th:text="${joinClubDto.name}">소모임 이름</span>
                                                 </a>
                                             </div>
                                         </div>

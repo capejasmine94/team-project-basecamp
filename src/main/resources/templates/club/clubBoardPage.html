@@ -108,8 +108,8 @@
                                     <div class="col">
                                         <div class="row pb-3">
                                             <div class="col-2 pe-0">
-                                                <img src="/public/img/clubImage/mangleProfile.jpg" class="img-fluid rounded-circle" style="aspect-ratio: 1/1;">
-                                                <!-- <img th:src="|/image/${readPostMap.memberDto.profile_image}|" class="img-fluid rounded-circle" style="aspect-ratio: 1/1;"> -->
+                                                <img th:if="${postDetail.userDto.profile_image == 'default'}" src="/public/img/clubImage/profile.jpg" class="img-fluid rounded-circle"  style="aspect-ratio: 1/1;">
+                                                <img th:unless="${postDetail.userDto.profile_image == 'default'}" th:src="|/images/${postDetail.userDto.profile_image}|" class="img-fluid rounded-circle"  style="aspect-ratio: 1/1;">
                                             </div>
                                             <div class="col align-self-center" style="font-size: 0.9em;">
                                                 <div class="row">
