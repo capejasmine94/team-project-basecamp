@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+import org.checkerframework.checker.units.qual.m;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.stereotype.Controller;
@@ -17,6 +18,8 @@ import org.springframework.web.multipart.MultipartFile;
 import com.bulmeong.basecamp.club.dto.ClubBookmarkDto;
 import com.bulmeong.basecamp.club.dto.ClubDto;
 import com.bulmeong.basecamp.club.dto.ClubJoinConditionDto;
+import com.bulmeong.basecamp.club.dto.ClubMeetingDto;
+import com.bulmeong.basecamp.club.dto.ClubMeetingMemberDto;
 import com.bulmeong.basecamp.club.dto.ClubMemberDto;
 import com.bulmeong.basecamp.club.dto.ClubPostCategoryDto;
 import com.bulmeong.basecamp.club.dto.ClubPostCommentDto;
@@ -47,7 +50,7 @@ public class ClubController {
 
     @RequestMapping("main")
     public String clubMain(HttpSession session, Model model){
-        util.loginUser(3);
+        util.loginUser(4);
 
         UserDto userDto = (UserDto)session.getAttribute("sessionUserInfo");
         List<ClubRegionCategoryDto> regionCategoryDtoList = clubService.findRegionCategory();
@@ -80,6 +83,10 @@ public class ClubController {
         model.addAttribute("id", id);
         Map<String, Object>map = clubService.clubDetail(id);
         model.addAttribute("map", map);
+
+        List<Map<String,Object>>  clubMeetingDataList =clubService.selectClubMeetingDtoList(id);
+        model.addAttribute("clubMeetingDataList", clubMeetingDataList);
+
 
         ClubBookmarkDto clubBookmarkDto = new ClubBookmarkDto();
         UserDto userDto = (UserDto)session.getAttribute("sessionUserInfo");
@@ -277,15 +284,6 @@ public class ClubController {
         return "redirect:/club/home?id="+ clubBookmarkDto.getClub_id();
     }
 
-
-
-
-    @RequestMapping("createNewMeeting")
-    public String createNewMeeting(){
-
-        return "club/createNewMeetingPage";
-    }
-
     @RequestMapping("postLikeProcess")
     public String postLikeProcess(ClubPostLikeDto clubPostLikeDto){
 
@@ -302,6 +300,47 @@ public class ClubController {
         return "redirect:/club/readPost?id=" + clubPostLikeDto.getPost_id();
         
     }
+
+
+
+//  정모 개설하기
+    @RequestMapping("createNewMeeting")
+    public String createNewMeeting(@RequestParam("id") int id, Model model){
+        model.addAttribute("clubId", id);
+        return "club/createNewMeetingPage";
+    }
+
+    @RequestMapping("createNewMeetingProcess")
+    public String createNewMeetingProcess(ClubMeetingDto clubMeetingDto,
+                                          Model model,
+                                          @RequestParam("main_img")
+                                          MultipartFile main_img){
+        String mainImageUrl = ImageUtil.saveImageAndReturnLocation(main_img);
+        clubMeetingDto.setMain_image(mainImageUrl);
+        clubService.insertClubMeetingDto(clubMeetingDto);
+
+        ClubMeetingMemberDto meetingMemberDto = new ClubMeetingMemberDto();
+        meetingMemberDto.setMeeting_id(clubMeetingDto.getId());
+        meetingMemberDto.setUser_id(clubMeetingDto.getUser_id());
+
+        clubService.insertClubMeetingMemberDto(meetingMemberDto);
+
+        ClubDto clubDto = clubService.selectClubDtoById(clubMeetingDto.getClub_id());
+        model.addAttribute("clubDto", clubDto);
+        return "redirect:/club/home?id="+clubMeetingDto.getClub_id();
+    }
+
+    // 정모 회원가입
+
+    // public String joinMeetingProcess(ClubMeetingMemberDto clubMeetingMemberDto){
+    //     clubService.insertClubMeetingMemberDto(clubMeetingMemberDto);
+        
+
+    //     return "redirect:/club/home?id=";
+    // }
+    
+
+   
 
 
 }

@@ -293,12 +293,60 @@
         where id in (
 	        select club_id from bc_club_bookmark
 	        where user_id = #{user_id}
-        );
+        )
 
     </select>
 
+    <!-- 정모 개설하기 -->
+    <insert id="insertClubMeetingDto">
 
+    <selectKey resultType="int" keyProperty="id" order="AFTER">
+            select max(id) from bc_club_meeting
+    </selectKey>
 
+        insert into bc_club_meeting(
+            club_id,
+            user_id,
+            main_image,
+            name,
+            description,
+            location,
+            meeting_date,
+            fee,
+            capacity
+         )values(
+	        #{club_id}, 
+            #{user_id}, 
+            #{main_image}, 
+            #{name}, 
+            #{description}, 
+            #{location}, 
+            #{meeting_date}, 
+            #{fee}, 
+            #{capacity}
+        )
+    </insert>
+
+    <!-- 정모 회원 등록하기 -->
+    <insert id="insertClubMeetingMemberDto">
+        insert into bc_club_meeting_member(
+	        meeting_id, user_id
+        )values(
+	        #{meeting_id}, #{user_id}
+        )
+    </insert>
+
+    <!-- 정모 카드 출력하기 -->
+    <select id="selectClubMeetingDtoList" resultType="com.bulmeong.basecamp.club.dto.ClubMeetingDto">
+        select * from bc_club_meeting
+        where club_id = #{club_id}
+    </select>
+
+    <!-- 정모 지원 인원 -->
+    <select id="countTotalMeetingMember" resultType="int">
+        select count(*)from bc_club_meeting_member
+        where meeting_id = #{meeting_id}
+    </select>
 
 
 

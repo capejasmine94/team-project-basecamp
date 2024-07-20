@@ -2,6 +2,8 @@ package com.bulmeong.basecamp.club.dto;
 
 import java.util.Date;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import lombok.Data;
 
 @Data
@@ -13,6 +15,7 @@ public class ClubMeetingDto {
     private String name;
     private String description;
     private String location;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date meeting_date;
     private int fee;
     private int capacity;

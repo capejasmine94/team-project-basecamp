@@ -7,6 +7,8 @@ import org.apache.ibatis.annotations.Mapper;
 import com.bulmeong.basecamp.club.dto.ClubBookmarkDto;
 import com.bulmeong.basecamp.club.dto.ClubDto;
 import com.bulmeong.basecamp.club.dto.ClubJoinConditionDto;
+import com.bulmeong.basecamp.club.dto.ClubMeetingDto;
+import com.bulmeong.basecamp.club.dto.ClubMeetingMemberDto;
 import com.bulmeong.basecamp.club.dto.ClubMemberDto;
 import com.bulmeong.basecamp.club.dto.ClubPostCategoryDto;
 import com.bulmeong.basecamp.club.dto.ClubPostCommentDto;
@@ -66,5 +68,12 @@ public interface ClubSqlMapper {
     public List<ClubPostImageDto> selectPostImageDtoByPostId(int id);
     public List<ClubDto> selectBookmarkedClubDtoList(int id);
     
+    //  정모 개설하기
+    public void insertClubMeetingDto(ClubMeetingDto clubMeetingDto);
+    public void insertClubMeetingMemberDto(ClubMeetingMemberDto clubMeetingMemberDto);
+    
+    // 홈화면에 정모 정보 출력
+    public List<ClubMeetingDto> selectClubMeetingDtoList(int id);
+    public int countTotalMeetingMember(int id);
 }
 

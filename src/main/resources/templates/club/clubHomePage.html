@@ -138,7 +138,7 @@
                         </div>
 
                         <!-- 정기모임 박스 -->
-                        <div class="row py-2 border rounded shadow-sm">
+                        <div class="row pt-2 pb-3 border mb-3 rounded shadow-sm" th:each="meetingData : ${clubMeetingDataList}">
                             <div class="col">
 
                                 <div class="row">
@@ -149,11 +149,17 @@
                                         <span>수정</span>
                                     </div>
                                 </div>
-                                <div class="row pb-1">
-                                    <div class="col" style="font-size: 0.8em;">
-                                        설악산 오색코스 탐방
+                                <div class="row pb-1 pt-1">
+                                    <div class="col fw-bold" style="font-size: 0.9em;">
+                                        <span th:text="${meetingData.clubMeetingDto.name}"></span>
                                     </div>
                                 </div>
+                                <div class="row pb-2 mb-2">
+                                    <div class="col" style="font-size: 0.8em;">
+                                        <span th:text="${meetingData.clubMeetingDto.description}"></span>설명이 길어지면 어떤 느낌? 삭제하기
+                                    </div>
+                                </div>
+
                                 <div class="row">
                                     <div class="col">
                                         <div class="row">
@@ -172,19 +178,19 @@
                                                 </div>
                                                 <div class="row">
                                                     <div class="col">
-                                                        <span class="text-secondary">위치</span> 강원도
+                                                        <span class="text-secondary">위치</span> <span th:text="${meetingData.clubMeetingDto.location}"></span>
                                                     </div>   
                                                 </div>
                                                 <div class="row">
                                                     <div class="col">
-                                                        <span class="text-secondary">비용</span> 0,000
+                                                        <span class="text-secondary">비용</span>  <span th:text="${meetingData.clubMeetingDto.fee}"></span>
                                                     </div>   
                                                 </div>
                                                 <div class="row">
                                                     <div class="col">
                                                         <span class="text-secondary">참석</span> 
-                                                        <span class="text-danger">2</span>/5 
-                                                        <span class="text-secondary"> (3자리 남음)</span>
+                                                        <span class="text-danger" th:text="${meetingData.totalJoinMember}"></span>/<span th:text="${meetingData.clubMeetingDto.capacity}"></span> 
+                                                        <span class="text-secondary"> (<span th:text="${meetingData.clubMeetingDto.capacity}-${meetingData.totalJoinMember}"></span>자리 남음)</span>
                                                     </div>   
                                                 </div>
                                             </div>

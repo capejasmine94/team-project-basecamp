@@ -5,6 +5,8 @@ import org.springframework.stereotype.Service;
 import com.bulmeong.basecamp.club.dto.ClubBookmarkDto;
 import com.bulmeong.basecamp.club.dto.ClubDto;
 import com.bulmeong.basecamp.club.dto.ClubJoinConditionDto;
+import com.bulmeong.basecamp.club.dto.ClubMeetingDto;
+import com.bulmeong.basecamp.club.dto.ClubMeetingMemberDto;
 import com.bulmeong.basecamp.club.dto.ClubMemberDto;
 import com.bulmeong.basecamp.club.dto.ClubPostCategoryDto;
 import com.bulmeong.basecamp.club.dto.ClubPostCommentDto;
@@ -326,8 +328,41 @@ public class ClubService {
             List<ClubPostImageDto> postImageDtoList = clubSqlMapper.selectPostImageDtoByPostId(id);
 
             return postImageDtoList;
+        }
 
-
+        // 정모 DTO insert
+        public void insertClubMeetingDto(ClubMeetingDto clubMeetingDto){
+            clubSqlMapper.insertClubMeetingDto(clubMeetingDto);
 
         }
-}
+
+        // Pk로 ClubDto 찾기
+        public ClubDto selectClubDtoById(int id){
+            ClubDto clubDto = clubSqlMapper.selectClubDtoById(id);
+
+            return clubDto;
+        }
+
+        // 정모 회원 DTO insert
+        public void insertClubMeetingMemberDto(ClubMeetingMemberDto clubMeetingMemberDto){
+            clubSqlMapper.insertClubMeetingMemberDto(clubMeetingMemberDto);
+
+        }
+
+        // 홈화면 정모 정보 출력하기
+        public List<Map<String, Object>> selectClubMeetingDtoList(int id){
+            List<ClubMeetingDto> clubMeetingDtoList = clubSqlMapper.selectClubMeetingDtoList(id);
+            List<Map<String, Object>> meetingDataList = new ArrayList<>();
+            for(ClubMeetingDto clubMeetingDto : clubMeetingDtoList){
+                int meetingPk = clubMeetingDto.getId();
+                int totalJoinMember = clubSqlMapper.countTotalMeetingMember(meetingPk);
+
+                Map<String, Object> meetingDataMap = new HashMap<>();
+                meetingDataMap.put("clubMeetingDto", clubMeetingDto);
+                meetingDataMap.put("totalJoinMember", totalJoinMember);
+
+                meetingDataList.add(meetingDataMap);
+            }
+            return meetingDataList;
+        }
+    }
