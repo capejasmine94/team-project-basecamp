@@ -26,7 +26,7 @@ public interface ClubSqlMapper {
     public void insertClubMemberDto(ClubMemberDto clubMemberDto);
     public List<ClubRegionCategoryDto> selectRegionCategory();
     public List<ClubDto> selectClubList();
-    public List<ClubDto> selectJoinClubList(int user_id);
+    public List<ClubMemberDto> selectJoinClubList(int user_id);
     public List<ClubPostDto> selectClubPostDtoList(int club_id);
     public UserDto selectUserDtoById(int id);
     public List<ClubMemberDto> selectClubMemberDtoList(int id);
@@ -61,6 +61,9 @@ public interface ClubSqlMapper {
     public int totalReadCount(int id);
 
     public int countTotalClubMember(int id);
+    public int checkClubMembership(ClubMemberDto clubMemberDto);
+
+    public List<ClubPostImageDto> selectPostImageDtoByPostId(int id);
 
     
 }

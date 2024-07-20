@@ -108,17 +108,17 @@
                                     <div class="col" style="font-size: 0.8em;">
                                         <span class="badge text-bg-danger">NEW</span>
                                         <span class="badge text-bg-primary" th:text="${map.clubRegionCategoryDto.region_name}"></span>
-                                        <span class="badge text-bg-primary" th:text="'멤버 ' + ${map.totalClubMember}"></span>
+                                        <span class="badge text-bg-primary" th:text="'멤버 ' + ${map.totalClubMember} + ' / ' + ${map.clubDto.capacity}"></span>
                                         <span class="badge text-bg-primary" th:text="${#dates.format(map.clubDto.created_at, 'yyyy.MM.dd')}"></span>
                                     </div>
                                 </div>
                                 <div class="row pb-1">
-                                    <div class="col fw-bold" th:text="${map.clubDto.name}">
-                                    </div>
+                                    <div class="col fw-bold" th:text="${map.clubDto.name}" >
+                                    </div> 
                                 </div>
                                 <div class="row">
                                     <div class="col" style="font-size: 0.8em;" th:text="${map.clubDto.description}">
-                                        서울의 도넛 맛집 도장깨기 하는 소모임
+                                        소모임 설명
                                     </div>
                                 </div>
                             </div>
@@ -261,18 +261,16 @@
                         </div>
 
 
-                      
-                       
-                        <div class="row pt-5 text-center">
+                        <div class="row  pt-2 pb-5 text-center" th:if="${isMemberInClub != 1}">
                             <div class="col">
                                 <a th:href="@{/club/joinClub(id=${id})}" class="btn form-control btn-dark">가입하기</a>
                             </div>
                         </div>
 
-                            </div>
-                        </div>
+                    </div>
+                </div>
 
-                        <a th:if="${session.sessionUserInfo != null}" th:href="@{/club/createNewMeeting(id=${id})}" class="fixed-button">
+                        <a th:if="${isMemberInClub == 1}" th:href="@{/club/createNewMeeting(id=${id})}" class="fixed-button">
                             <!-- <i class="bi bi-plus-circle-fill"></i> -->
                             <i class="bi bi-person-raised-hand"></i>
                         </a>

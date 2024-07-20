@@ -108,8 +108,8 @@
     </select>
 
     <!-- 가입한 소모임 목록 뽑기 (by user_id) -->
-    <select id="selectJoinClubList" resultType="com.bulmeong.basecamp.club.dto.ClubDto">
-        select * from bc_club
+    <select id="selectJoinClubList" resultType="com.bulmeong.basecamp.club.dto.ClubMemberDto">
+        select * from bc_club_member
         where user_id = #{user_id}
     </select>
 
@@ -269,7 +269,22 @@
         where club_id = #{club_id}
     </select>
 
+    <!-- 소모임 가입 여부 확인  -->
+    <select id="checkClubMembership" resultType="int">        
+        select count(*) from bc_club_member
+        where club_id = #{club_id}
+        and user_id = #{user_id}
+    </select>
 
+
+    <!-- 특정 클럽의 사진만 뽑아오기 -->
+    <select id="selectPostImageDtoByPostId" resultType="com.bulmeong.basecamp.club.dto.ClubPostImageDto">
+        select * from bc_club_post_image
+        where post_id in (
+	        select id from bc_club_post
+	        where club_id = #{club_id}
+        )
+    </select>
 
 
 

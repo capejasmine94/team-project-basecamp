@@ -105,9 +105,17 @@ public class ClubService {
 
     // 가입한 소모임 목록 뽑기 (by user_id)
     public List<ClubDto> findJoinClubDtoList(int user_id){
+        List<ClubDto> clubDtoList = new ArrayList<>();
 
-        List<ClubDto> joinClubDtoList =  clubSqlMapper.selectJoinClubList(user_id);
-        return joinClubDtoList;
+        List<ClubMemberDto> joinClubDtoList =  clubSqlMapper.selectJoinClubList(user_id);
+        for(ClubMemberDto joinClubDto  : joinClubDtoList){
+           int clubPk = joinClubDto.getClub_id();
+           ClubDto clubDto = clubSqlMapper.selectClubDtoById(clubPk);
+
+           clubDtoList.add(clubDto);
+        }
+
+        return clubDtoList;
     }
 
     // 각 소모임 게시글 목록 뽑기 (by club_id)
@@ -152,7 +160,7 @@ public class ClubService {
 
 
 
-    // 앨범 이미지
+    // 이미지
         public List<ClubPostImageDto> getPostImageDtoList(){
             List<ClubPostImageDto>clubPostImageDtoList = clubSqlMapper.selectPostImageDtoList();
             // 반복문 돌려서 뺴온 아이디로 또 필요한 데이터 찾기
@@ -270,5 +278,22 @@ public class ClubService {
             int totalPostLike = clubSqlMapper.countTotalPostLike(id);
 
             return totalPostLike;
+        }
+
+        // 소모임 가입 여부 확인
+        public int checkClubMembership(ClubMemberDto clubMemberDto){
+            int isMemberInClub = clubSqlMapper.checkClubMembership(clubMemberDto);
+
+            return isMemberInClub;
+        }
+
+        // 앨범
+        public List<ClubPostImageDto> selectPostImageDtoByPostId(int id){
+            List<ClubPostImageDto> postImageDtoList = clubSqlMapper.selectPostImageDtoByPostId(id);
+
+            return postImageDtoList;
+
+
+
         }
 }

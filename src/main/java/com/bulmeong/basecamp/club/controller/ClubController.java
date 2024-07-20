@@ -1,6 +1,7 @@
 package com.bulmeong.basecamp.club.controller;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -45,7 +46,7 @@ public class ClubController {
 
     @RequestMapping("main")
     public String clubMain(HttpSession session, Model model){
-        util.loginUser();
+        util.loginUser(3);
 
         UserDto userDto = (UserDto)session.getAttribute("sessionUserInfo");
         List<ClubRegionCategoryDto> regionCategoryDtoList = clubService.findRegionCategory();
@@ -85,13 +86,22 @@ public class ClubController {
         List<Map<String, Object>> clubMemberDataList = clubService.findClubMemerDataList(id);
         model.addAttribute("clubMemberDataList", clubMemberDataList);
 
-                
+        ClubMemberDto clubMemberDto = new ClubMemberDto();
+        UserDto userDto2 = (UserDto)session.getAttribute("sessionUserInfo");
+
+        if(userDto != null){
+            clubMemberDto.setClub_id(id);
+            clubMemberDto.setUser_id(userDto2.getId());
+            int isMemberInClub = clubService.checkClubMembership(clubMemberDto);
+            model.addAttribute("isMemberInClub", isMemberInClub);
+        }
+
         return "club/clubHomePage";
     }
 
     @RequestMapping("createNewClub")
     public String createNewClub(Model model){
-        util.loginUser();
+        // util.loginUser();
 
         List<ClubRegionCategoryDto> regionCategoryDtoList = clubService.findRegionCategory();
         model.addAttribute("regionCategoryDtoList", regionCategoryDtoList);
@@ -110,7 +120,7 @@ public class ClubController {
 
     @RequestMapping("writePost")
     public String writePost(@RequestParam("id") int id, Model model){
-        util.loginUser();
+        // util.loginUser();
         List<ClubPostCategoryDto> postCategoryDtoList = clubService.findPostCategory();
         model.addAttribute("id", id);
         model.addAttribute("postCategoryDtoList", postCategoryDtoList);
@@ -134,14 +144,14 @@ public class ClubController {
     // 소모임 회원가입
     @RequestMapping("joinClub")
     public String joinClub(@RequestParam("id") int id, Model model){
-        util.loginUser();
+        // util.loginUser();
         model.addAttribute("id", id);
         return "club/joinClubPage";
     }
 
     @RequestMapping("joinClubProcess")
     public String joinClubProcess(ClubMemberDto clubMemberDto, Model model){
-        util.loginUser();
+        // util.loginUser();
         clubService.joinClub(clubMemberDto);
 
         List<ClubDto> clubDtoList = clubService.findClubDtoList();
@@ -161,7 +171,22 @@ public class ClubController {
     }
 
     @RequestMapping("album")
-    public String clubAlbum(){
+    public String clubAlbum(@RequestParam("id") int id, Model model){
+        model.addAttribute("id", id);
+
+        // List<ClubPostImageDto> clubPostImageDtoList = clubService.getPostImageDtoList();
+
+        // for(ClubPostImageDto clubPostImageDto : clubPostImageDtoList){
+        //     int postId = clubPostImageDto.getPost_id();
+        //     model.addAttribute("postId", postId);
+        // }
+    
+
+        // model.addAttribute("clubPostImageDtoList", clubPostImageDtoList);
+
+        List<ClubPostImageDto> postImageDtoList = clubService.selectPostImageDtoByPostId(id);
+        model.addAttribute("postImageDtoList", postImageDtoList);
+
 
         return "club/clubAlbumPage";
     }
@@ -200,9 +225,7 @@ public class ClubController {
     @RequestMapping("writeCommentProcess")
     public String writeComment(ClubPostCommentDto clubPostCommentDto){
         clubService.writeClubPostComment(clubPostCommentDto);
-        
-        
-            
+    
         return "redirect:/club/readPost?id="+ clubPostCommentDto.getPost_id();
     }
 
@@ -235,8 +258,11 @@ public class ClubController {
             clubService.delteBookmarkDto(clubBookmarkDto);
         }
         return "redirect:/club/home?id="+ clubBookmarkDto.getClub_id();
-
     }
+
+
+
+
     @RequestMapping("createNewMeeting")
     public String createNewMeeting(){
 
@@ -259,6 +285,8 @@ public class ClubController {
         return "redirect:/club/readPost?id=" + clubPostLikeDto.getPost_id();
         
     }
+
+
 }
 
 
