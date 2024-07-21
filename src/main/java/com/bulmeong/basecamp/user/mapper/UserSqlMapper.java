@@ -8,6 +8,7 @@ import com.bulmeong.basecamp.user.dto.UserDto;
 
 @Mapper
 public interface UserSqlMapper {
+    public void insertUser(UserDto userDto);
     public UserDto getUserByAccountAndPassword(UserDto userDto);
     public UserDto getUserById(UserDto userDto);
     public UserDto getUserByAccount(UserDto userDto);

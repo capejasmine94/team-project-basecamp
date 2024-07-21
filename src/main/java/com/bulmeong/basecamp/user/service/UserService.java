@@ -18,6 +18,10 @@ public class UserService {
     //  유저 Dto 가져오기
     //============================================================
 
+    // 유저등록
+    public void insertUser(UserDto userDto) {
+        userSqlMapper.insertUser(userDto);
+    }
     //아이디 / 비밀번호
     public UserDto getUserByAccountAndPassword(UserDto userDto){
         return userSqlMapper.getUserByAccountAndPassword(userDto);

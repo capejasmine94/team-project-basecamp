@@ -30,11 +30,11 @@ public class UserRestController {
         RestResponseDto result = new RestResponseDto();
         result.setResult("success");
 
-        if (utils.isNeedLogin()) {
-            utils.loginUser(1);
-        }
         UserDto userDto = (UserDto) session.getAttribute("sessionUserInfo");
-        result.add("userId", userDto.getId());
+
+        if (userDto != null) {
+            result.add("userId", userDto.getId());
+        }
 
         return result;
     }

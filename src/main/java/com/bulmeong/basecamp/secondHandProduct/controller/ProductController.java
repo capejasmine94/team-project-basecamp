@@ -6,6 +6,9 @@ import com.bulmeong.basecamp.secondHandProduct.dto.ImageDto;
 import com.bulmeong.basecamp.secondHandProduct.dto.AllContentsProductDto;
 import com.bulmeong.basecamp.secondHandProduct.dto.SecondhandProductDto;
 import com.bulmeong.basecamp.secondHandProduct.service.ProductService;
+import com.bulmeong.basecamp.user.dto.UserDto;
+import com.bulmeong.basecamp.user.service.UserService;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -34,9 +37,11 @@ public class ProductController {
     }
 
     @GetMapping("productRegistrationPage")
-    public String productRegistrationPage(Model model) {
+    public String productRegistrationPage(HttpSession session,
+                                          Model model) {
 
-        utils.loginUser(1);
+        UserDto sessionUserInfo = (UserDto) session.getAttribute("sessionUserInfo");
+        model.addAttribute("sessionUserInfo", sessionUserInfo);
 
         List<CategoryDto> categoryDtoList = productService.selectCategoryList();
         model.addAttribute("categoryDtoList", categoryDtoList);
@@ -51,9 +56,12 @@ public class ProductController {
     }
 
     @GetMapping("myPage")
-    public String myPage() {
+    public String myPage(HttpSession session,
+                         Model model) {
 
-        utils.loginUser(1);
+        UserDto sessionUserInfo = (UserDto) session.getAttribute("sessionUserInfo");
+        model.addAttribute("sessionUserInfo", sessionUserInfo);
+
         return "/secondhandProduct/myPage";
     }
 

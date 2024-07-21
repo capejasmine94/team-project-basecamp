@@ -4,169 +4,42 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/public/css/common.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="stylesheet" href="/public/css/basecamp.css">
-    <style>
-        .input-group .btn-verify {
-            margin-left: 0.5rem;
-            flex: 0 0 auto;
-            width: 50px; /* 버튼 크기를 반으로 줄임 */
-        }
-        .input-group {
-            display: flex;
-            align-items: center;
-            margin-bottom: 0.5rem;
-        }
-        .input-group .form-control,
-        .input-group .input-group-text,
-        .input-group .form-select {
-            flex: 1;
-            height: calc(2.25rem + 2px); /* 기본 높이에 맞춤 */
-        }
-        .input-group .input-group-text {
-            width: auto; /* width를 auto로 설정하여 칸에 맞추기 */
-            padding: 1rem 0; /* 패딩 조정 */
-        }
-        .domain-group {
-            display: flex;
-            align-items: center;
-        }
-    </style>
 </head>
-<body>
-<div id="container" class="container">
-    <div class="row">
-        <div class="col align-items-center flex-col sign-up" style="z-index: 10;">
-            <div class="form-wrapper align-items-center" style="overflow-y: auto;"> <!-- 스크롤 추가 -->
-                <!-- 회원가입 -->
-                <div class="form sign-up">
-                    <!-- 아이디 -->
-                    <div class="input-group">
-                        <i class='bx bxs-user'></i>
-                        <input type="text" placeholder="아이디" class="form-control">
-                        <button class="btn btn-outline-secondary btn-verify">인증</button>
-                    </div>
-                    <!-- 비밀번호 -->
-                    <div class="input-group">
-                        <i class='bx bxs-user'></i>
-                        <input type="text" placeholder="닉네임" class="form-control">
-                        <button class="btn btn-outline-secondary btn-verify">인증</button>
-                    </div>
-                    <!-- 이메일 -->
-                    <div class="input-group">
-                        <i class='bx bx-mail-send'></i>
-                        <input type="text" placeholder="이메일 아이디" class="form-control">
-                        <div class="border" style="padding: 0.4rem 0.9rem; border-top-right-radius: 0.7rem; border-bottom-right-radius: 0.7rem; background-color: #EFEFEF">
-                            <span style="font-size: 1.4rem">@</span>
-                        </div>
-                    </div>
-                    <!-- 이메일 주소 -->
-                    <div class="input-group domain-group">
-                        <input type="text" placeholder="도메인 주소" class="form-control">
-                        <button class="btn btn-outline-secondary btn-verify">인증</button>
-                    </div>
-                    <!-- 비밀번호 -->
-                    <div class="input-group">
-                        <i class='bx bxs-lock-alt'></i>
-                        <input type="password" placeholder="비밀번호" class="form-control">
-                    </div>
-                    <!-- 비밀번호 확인 -->
-                    <div class="input-group">
-                        <i class='bx bxs-lock-alt'></i>
-                        <input type="password" placeholder="비밀번호 확인" class="form-control">
-                    </div>
-                    <!-- 전화번호 -->
-                    <div class="input-group">
-                        <i class='bx bxs-phone'></i>
-                        <input type="tel" placeholder="전화번호" class="form-control">
-                    </div>
-                    <!-- 성별 -->
-                    <div class="input-group">
-                        <i class='bx bxs-user' style="margin-right: 0.5rem;"></i>
-                        <select class="form-select" aria-label="성별 선택" style="flex: 1;">
-                            <option value="" disabled selected>성별 선택</option>
-                            <option value="male">남</option>
-                            <option value="female">여</option>
-                        </select>
-                    </div>
-                    <!-- 생일 -->
-                    <div class="input-group">
-                        <input type="date" placeholder="생년월일" class="form-control">
-                    </div>
-                    <button onclick="toggle()" class="pointer">
-                        회원가입
-                    </button>
-                </div>
-            </div>
-        </div>
-        <!-- END SIGN UP -->
-        <!-- 로그인 -->
-        <div class="col align-items-center flex-col sign-in">
-            <div class="form-wrapper align-items-center">
-                <div class="form sign-in">
-                    <div class="input-group">
-                        <i class='bx bxs-user'></i>
-                        <input type="text" placeholder="아이디" class="form-control">
-                    </div>
-                    <div class="input-group">
-                        <i class='bx bxs-lock-alt'></i>
-                        <input type="password" placeholder="비밀번호" class="form-control">
-                    </div>
-                    <button>
-                        로그인
-                    </button>
-                    <p>
-                        <span>
-                            계정이 없으신가요?
-                        </span>
-                        <b onclick="toggle()" class="pointer">
-                            <span>회원가입</span>
-                        </b>
-                    </p>
-                </div>
-            </div>
-        </div>
-        <!-- END SIGN IN -->
+<body style="background-color: #52AD8B">
+<div class="container-fluid">
+    <div class="row" style="padding-top: 10rem">
+        <a href="/common/basecampPublicPage" class="col text-center" style="font-family: 'EF_jejudoldam', sans-serif; font-size: 2.5rem; color: white">
+            BASECAMP
+        </a>
     </div>
-    <!-- END FORM SECTION -->
-    <!-- CONTENT SECTION -->
-    <div class="row content-row">
-        <!-- SIGN IN CONTENT -->
-        <div class="col align-items-center flex-col">
-            <div class="text sign-in">
-                <span class="basecamp-font">BASECAMP</span>
-            </div>
-            <div class="img sign-in">
+    <form action="/common/loginProcess" method="post">
+        <div class="row mx-2" style="margin-top: 6.5rem">
+            <div class="col d-grid text-center">
+                <input name="account" type="text" placeholder="아이디" class="py-3 ps-3 border border-0 rounded bg-light d-inline-flex focus-ring focus-ring-success">
             </div>
         </div>
-        <!-- END SIGN IN CONTENT -->
-        <!-- SIGN UP CONTENT -->
-        <div class="col align-items-center flex-col">
-            <div class="img sign-up">
-            </div>
-            <div class="text sign-up">
+        <div class="row mx-2 mt-2">
+            <div class="col d-grid text-center">
+                <input name="password" type="text" placeholder="비밀번호" class="py-3 ps-3 border border-0 rounded bg-light d-inline-flex focus-ring focus-ring-success">
             </div>
         </div>
-        <!-- END SIGN UP CONTENT -->
+        <div class="row mx-2 mt-2">
+            <div class="col d-grid text-center">
+                <button type="submit" class="py-2 border border-0 rounded bg-success">
+                    <span class="fs-2" style="color: white;">로그인</span>
+                </button>
+            </div>
+        </div>
+    </form>
+    <div class="row mx-2 mt-2">
+        <div class="text-center" style="font-size: 0.8rem;">
+            <span>계정이 없으신가요?</span>
+            <a href="/common/basecampSignPage" class="text-decoration-underline">회원가입</a>
+        </div>
     </div>
-    <!-- END CONTENT SECTION -->
 </div>
-<script>
-    let container = document.getElementById('container');
 
-    function toggle() {
-        container.classList.toggle('sign-in');
-        container.classList.toggle('sign-up');
-        document.querySelector('.basecamp-font').style.display = container.classList.contains('sign-in') ? 'block' : 'none';
-    }
-
-    setTimeout(() => {
-        container.classList.add('sign-in');
-        document.querySelector('.basecamp-font').style.display = 'block';
-    }, 200)
-</script>
 <!-- 네비가 추가됨 -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://kit.fontawesome.com/7b271bba58.js" crossorigin="anonymous"></script>

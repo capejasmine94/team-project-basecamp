@@ -18,6 +18,8 @@ import jakarta.servlet.http.HttpServletRequestWrapper;
 public class WebConfig implements WebMvcConfigurer {
     @Autowired
     private CampsiteInterceptor campsiteInterceptor;
+    @Autowired
+    private SessionInterceptor sessionInterceptor;
 
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry){
@@ -41,5 +43,11 @@ public class WebConfig implements WebMvcConfigurer {
     public void addInterceptors(InterceptorRegistry registry) {
         // 특정 컨트롤러 경로에 대해 인터셉터를 등록합니다.
         registry.addInterceptor(campsiteInterceptor).addPathPatterns("/camp/**");
+
+         // .addPathPatterns 본인 시작경로 추가
+         registry.addInterceptor(sessionInterceptor)
+                 .addPathPatterns("/common/**", "/secondhandProduct/**")
+                 .excludePathPatterns("/common/basecampLoginPage", "/common/basecampSignPage", "/common/signProcess", "/common/loginProcess");
     }
+
 }

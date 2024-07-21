@@ -3,6 +3,7 @@ package com.bulmeong.basecamp.user.dto;
 import java.util.Date;
 
 import lombok.Data;
+import org.springframework.format.annotation.DateTimeFormat;
 
 @Data
 public class UserDto {
@@ -15,6 +16,7 @@ public class UserDto {
     private String profile_image;
     private int point;
     private String gender;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date birth;
     private Date created_at;
 }
