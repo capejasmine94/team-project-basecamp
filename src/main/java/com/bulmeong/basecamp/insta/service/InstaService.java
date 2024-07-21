@@ -64,6 +64,10 @@ public class InstaService {
             InstaUserInfoDto instaUserInfoDto = instaSqlMapper.selectUserInfoByUserId(user_id);
             map.put("instaUserInfoDto", instaUserInfoDto);
 
+            // 댓글 수 카운트
+            int commentCount = instaSqlMapper.commentCountByArticleId(article_id);
+            map.put("commentCount", commentCount);
+
             InstaArticleLikeDto instaArticleLikeDto = new InstaArticleLikeDto();
             instaArticleLikeDto.setArticle_id(article_id);
             instaArticleLikeDto.setUser_id(s_user_id);

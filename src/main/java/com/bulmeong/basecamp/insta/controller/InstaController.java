@@ -189,6 +189,12 @@ public class InstaController {
 
         return "insta/userFollowersPage";
     }
+
+    @RequestMapping("userFollowingPage")
+    public String userFollowingPage(){
+
+        return "insta/userFollowingPage";
+    }
 }
 
 

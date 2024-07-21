@@ -426,7 +426,9 @@
                 <div class="row">
                     <a class="col link-dark link-offset-2 link-underline link-underline-opacity-0"
                         th:href="@{./commentWritePage(user_id=${session.sessionUserInfo.id}, article_id=${instaArticleList.instaArticleDto.id})}">
-                        <span class="fontBasic" style="color: rgb(162, 162, 162);">댓글 89개 모두 보기</span>
+                        <span class="fontBasic" style="color: rgb(162, 162, 162);">댓글
+                            <span th:text="${instaArticleList.commentCount}"></span>개 모두 보기
+                        </span>
                     </a>
                 </div>
 

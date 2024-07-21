@@ -25,6 +25,7 @@ public interface InstaSqlMapper {
     public void createComment(InstaArticleCommentDto instaArticleCommentDto);
     public List<InstaArticleCommentDto> getCommentList(int article_id);
     public void deleteComment(int id);
+    public int commentCountByArticleId(int article_id);
 
     // 좋아요
     public void createLike(InstaArticleLikeDto instaArticleLikeDto); // 좋아요 insert

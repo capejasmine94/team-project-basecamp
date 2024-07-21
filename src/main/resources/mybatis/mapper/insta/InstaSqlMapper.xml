@@ -70,6 +70,11 @@
         delete from bc_insta_article_comment where id = #{id}
     </delete>
 
+    <select id="commentCountByArticleId" resultType="int">
+        select count(*) from bc_insta_article_comment
+        where article_id = #{article_id}
+    </select>
+
     <!-- 게시글 좋아요 -->
     <insert id="createLike">
         insert into bc_insta_article_like(
