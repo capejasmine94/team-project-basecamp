@@ -90,9 +90,15 @@ public class CampsiteController {
 
 
 
-    @RequestMapping("registerProcess")
-    public String registerProcess(@ModelAttribute CampsiteDto campsiteDto, @ModelAttribute CampsiteBankDto bankDto, @RequestParam("profileImage")MultipartFile profileImage){
+    @RequestMapping("/registerUserProcess")
+    public String registerUserProcess(@ModelAttribute CampsiteDto campsiteDto, @ModelAttribute CampsiteBankDto bankDto, @RequestParam("profileImage")MultipartFile profileImage){
         campsiteService.insertCampsite(campsiteDto, bankDto, profileImage);
         return "store/registerComplete";
+    }
+
+    @RequestMapping("/registerCampProcess")
+    public String registerCampProcess(CampsiteDto campsiteDto, @RequestParam("mainImage")MultipartFile[] mainImage, @RequestParam("mapImage")MultipartFile mapImage){
+        campsiteService.updateCampsite(campsiteDto, mainImage, mapImage);
+        return "store/main";
     }
 }

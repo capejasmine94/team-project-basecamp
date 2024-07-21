@@ -24,8 +24,11 @@ public class CampsiteInterceptor implements HandlerInterceptor {
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         String pageDetail = utils.getPageDetail();
         request.getSession().setAttribute("pageInfo", pageInfo(pageDetail));
+        request.getSession().setAttribute("campsiteCategory", campsiteService.getCampsiteCategory());
        
         String requestURI = request.getRequestURI();
+        if(requestURI.equals("/camp/registerUser"))
+            return true;
         if (request.getSession() == null || request.getSession().getAttribute("campsite") == null) {
             response.sendRedirect("/seller/login");
             return false;

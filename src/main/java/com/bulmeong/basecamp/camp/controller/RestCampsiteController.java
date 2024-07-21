@@ -43,4 +43,5 @@ public class RestCampsiteController {
         restResponseDto.add("needLogin", utils.getSession("campsite") == null);
         return restResponseDto;
     }
+    
 }

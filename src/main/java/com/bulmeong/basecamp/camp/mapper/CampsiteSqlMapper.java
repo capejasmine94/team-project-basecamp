@@ -1,8 +1,11 @@
 package com.bulmeong.basecamp.camp.mapper;
 
+import java.util.List;
+
 import org.apache.ibatis.annotations.Mapper;
 
 import com.bulmeong.basecamp.camp.dto.CampsiteBankDto;
+import com.bulmeong.basecamp.camp.dto.CampsiteCategoryDto;
 import com.bulmeong.basecamp.camp.dto.CampsiteDto;
 import com.bulmeong.basecamp.camp.dto.CampsiteImageDto;
 
@@ -17,4 +20,5 @@ public interface CampsiteSqlMapper {
     public void insertCampMainImage(CampsiteImageDto campsiteImageDto);
     public void insertCampsiteBank(CampsiteBankDto campsiteBankDto);
     public int newCampsiteID();
+    public List<CampsiteCategoryDto> getCampsiteCategory();
 }

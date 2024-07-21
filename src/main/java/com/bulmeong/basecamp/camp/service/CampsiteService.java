@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.bulmeong.basecamp.camp.dto.CampsiteBankDto;
+import com.bulmeong.basecamp.camp.dto.CampsiteCategoryDto;
 import com.bulmeong.basecamp.camp.dto.CampsiteDto;
 import com.bulmeong.basecamp.camp.dto.CampsiteImageDto;
 import com.bulmeong.basecamp.camp.mapper.CampsiteSqlMapper;
@@ -20,6 +21,7 @@ public class CampsiteService {
 
     //캠핑장 판매자 아이디 추가
     public void insertCampsite(CampsiteDto campsiteDto, CampsiteBankDto campsiteBankDto, MultipartFile profileImage) {
+        if(profileImage != null && !profileImage.isEmpty())
         campsiteDto.setProfile_image(ImageUtil.saveImageAndReturnLocation(profileImage));
         campsiteSqlMapper.insertCampsite(campsiteDto);
         campsiteBankDto.setCampsite_id(campsiteDto.getId());
@@ -30,7 +32,7 @@ public class CampsiteService {
     public void updateCampsite(CampsiteDto campsiteDto, MultipartFile[] main_images, MultipartFile map_image) {
         // 이미지 추가
         List<ImageDto> mainImages = ImageUtil.saveImageAndReturnDtoList(main_images);
-        campsiteDto.setMap_image(null);
+        campsiteDto.setMap_image(ImageUtil.saveImageAndReturnLocation(map_image));
         for(ImageDto image : mainImages) {
             CampsiteImageDto imageDto = new CampsiteImageDto();
             imageDto.setCampsite_id(campsiteDto.getId());
@@ -77,11 +79,21 @@ public class CampsiteService {
         return campsiteSqlMapper.getCampsiteDtoByName(campsiteDto);
     }
 
+
+    // 캠프 등록이 된 유저인지 확인
     public boolean isAuthed(CampsiteDto campsiteDto) {
         return campsiteDto.getIs_authenticated().equals("T");
     }
 
+
+    // (회원가입용) 판매회원 제일 마지막 순서
     public int newCampsiteID() {
         return campsiteSqlMapper.newCampsiteID();
+    }
+
+
+    // 캠핑장 카테고리
+    public List<CampsiteCategoryDto> getCampsiteCategory() {
+        return campsiteSqlMapper.getCampsiteCategory();
     }
 }

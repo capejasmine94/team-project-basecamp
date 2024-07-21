@@ -13,14 +13,23 @@
 
 
 class CalendarData{ 
-    constructor(length,limit) {
+    constructor(length,limit,isRange) {
         this.length = length;
         this.limit = limit;
         this.currentDate = new Date();
+        this.isRange = isRange;
     }
 }
 
 const calendarDataList = new Map();
+
+function checkRequiredCalendar(calendarName) {
+    if(getCalendarData(calendarName).isRange) {
+        return getStartDate(calendarName) != null && getEndDate(calendarName) != null;
+    }
+    else
+        return getStartDate(calendarName) != null;
+}
 
 function getCalendarData(calendarName){
     const data = calendarDataList.get(calendarName);
@@ -150,7 +159,6 @@ function createCalendarStructure(name) {
     return container;
 }
 function createRangeCalendar(name, length, limit) {
-    console.log(limit);
     const calendarDocument = createCalendarStructure(name);
     const calendarBody = calendarDocument.querySelector('#calendarBody');
     const monthYear = calendarDocument.querySelector('#monthYear');
@@ -158,7 +166,7 @@ function createRangeCalendar(name, length, limit) {
     const nextMonth = calendarDocument.querySelector('#nextMonth');
    
 
-    const data = new CalendarData(length,limit);
+    const data = new CalendarData(length,limit,true);
     calendarDataList.set(name, data);
     const today = new Date(); // 오늘 날짜 객체
 
@@ -344,7 +352,7 @@ function createCalendar(name, limit) {
     const prevMonth = calendarDocument.querySelector('#prevMonth');
     const nextMonth = calendarDocument.querySelector('#nextMonth');
 
-    const data = new CalendarData(1,limit);
+    const data = new CalendarData(1,limit,false);
     calendarDataList.set(name, data);
     const today = new Date(); // 오늘 날짜 객체
 

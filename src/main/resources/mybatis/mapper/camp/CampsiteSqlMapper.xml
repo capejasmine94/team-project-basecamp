@@ -124,4 +124,7 @@
     <select id="newCampsiteID" resultType="int">
         select COALESCE(MAX(id) + 1, 1) from bc_campsite
     </select>
+    <select id="getCampsiteCategory" resultType="com.bulmeong.basecamp.camp.dto.CampsiteCategoryDto">
+        select * from bc_campsite_category
+    </select>
 </mapper>
