@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="kr">
     <head>
+        <title>BaseCamp</title>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">    
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
@@ -9,6 +10,7 @@
         <script src="https://kit.fontawesome.com/7b271bba58.js" crossorigin="anonymous"></script>
         <link rel="stylesheet" href="/public/css/common.css">
         <script src="/public/js/util.js"></script>
+        <script src="/public/js/uploader.js"></script>
         <style>
         </style>
     </head>
@@ -16,7 +18,7 @@
         <div class="container">
             <div class="row py-5">
                 <div class="col"></div>
-                <form id="storeRegisterForm" method="post" action="/camp/registerProcess" class="col-7">
+                <form id="storeRegisterForm" method="post" enctype="multipart/form-data" action="/camp/registerProcess" class="col-7">
                     <div class="row">
                         <div class="col-auto pe-0 fw-bold">
                             BaseCamp 
@@ -39,121 +41,138 @@
                             3 가입 신청 완료
                         </div>
                     </div>
-
-                    <div class="row pb-3">
-                        <div class="col px-4 border bg-white">
-                            <div class="row py-3 border-bottom">
-                                <div class="col fw-bold">
-                                    회원정보 입력
-                                </div>
-                            </div>
-                            <div class="row pt-4">
-                                <div class="col">
-                                    <div class="row pb-4 align-items-center">
-                                        <div class="col-3">
-                                            아이디
-                                        </div>
-                                        <div class="col position-ralative">
-                                            <input onblur="checkSellerAccount()" id="inputId" name="account" type="text" class="form-control" placeholder="로그인 아이디">
-                                            <div id="confirmResult" class="position-absolute f08 text-danger"></div>
+                    <div class="row pb-3"  th:object="${campsiteDto}">
+                        <div class="col">
+                            <div class="row">
+                                <div class="col px-4 border bg-white">
+                                    <div class="row py-3 border-bottom">
+                                        <div class="col fw-bold">
+                                            회원정보 입력
                                         </div>
                                     </div>
-                                    <div class="row pb-4 align-items-center">
-                                        <div class="col-3">
-                                            비밀번호
-                                        </div>
+                                    <div class="row pt-4">
                                         <div class="col">
-                                            <input id="inputPw" name="password" type="password" class="form-control" placeholder="비밀번호">
-                                        </div>
-                                    </div>
-                                    <div class="row pb-4 align-items-center">
-                                        <div class="col-3">
-                                            비밀번호 확인
-                                        </div>
-                                        <div class="col">
-                                            <input onkeyup="checkAccountPwConfirm()" id="inputPwConfirm" type="password" class="form-control" placeholder="비밀번호 확인">
-                                            <div id="confirmAccountPw" class="position-absolute f08 text-danger"></div>
-                                        </div>
-                                    </div>
-                                    <div class="row pb-4 align-items-center">
-                                        <div class="col-3">
-                                            이름
-                                        </div>
-                                        <div class="col">
-                                            <input id="inputSeller" name="seller" type="text" class="form-control" placeholder="욕설 또는 타인을 비방하는 단어는 자제해주세요">
-                                        </div>
-                                    </div>
-                                    <div class="row pb-4 align-items-center">
-                                        <div class="col-3">
-                                            전화번호
-                                        </div>
-                                        <div class="col">
-                                            <input type="text" id="inputPhone" name="phone" class="form-control " maxlength="13" oninput="formatPhoneNumber(this)" placeholder="하이폰 '-' 없이 입력">
-                                        </div>
-                                    </div>
-                                    <div class="row pb-4 align-items-center">
-                                        <div class="col-3">
-                                            이메일
-                                        </div>
-                                        <div class="col">
-                                            <input type="email" id="inputEmail" name="email" class="form-control" placeholder="username@domain.com">
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="row pb-4">
-                        <div class="col px-4 border bg-white">
-                            <div class="row py-3 border-bottom">
-                                <div class="col fw-bold">
-                                    캠핑장 기본정보
-                                </div>
-                            </div>
-                            <div class="row pt-4">
-                                <div class="col">
-                                    <div class="row pb-4 align-items-center">
-                                        <div class="col-3">
-                                            캠핑장명
-                                        </div>
-                                        <div class="col position-ralative">
-                                            <input onblur="checkCampName()" type="text" id="inputName" name="name" class="form-control" placeholder="캠핑장명">
-                                            <div id="confirmCampName" class="position-absolute f08 text-danger"></div>
-                                        </div>
-                                    </div>
-                                    <div class="row pb-4 align-items-center">
-                                        <div class="col-3">
-                                            사업자 등록번호
-                                        </div>
-                                        <div class="col">
-                                            <input type="text" id="inputCRN" name="crn" class="form-control" placeholder="사업자 등록번호">
-                                        </div>
-                                    </div>
-
-                                    <div class="row pb-4 align-items-center">
-                                        <div class="col">
-                                            <div class="row pb-2 align-items-center">
+                                            <div class="row pb-4 align-items-center">
                                                 <div class="col-3">
-                                                    주소
+                                                    아이디
                                                 </div>
-                                                <div class="col pe-0">
-                                                    <input type="text" class="form-control bg-white" name="postcode" id="postcode" placeholder="우편번호">
-                                                </div>
-                                                <div class="col-auto">
-                                                    <input type="button" id="postcodeButton" class="form-control" onclick="execDaumPostcode()" value="우편번호 찾기">
+                                                <div class="col position-ralative">
+                                                    <input onblur="checkSellerAccount()" id="inputId" name="account" type="text" class="form-control" placeholder="로그인 아이디" th:value="'campsite' + ${newCampsiteID}">
+                                                    <div id="confirmResult" class="position-absolute f08 text-danger"></div>
                                                 </div>
                                             </div>
-                                            <div class="row pb-2">
-                                                <div class="col-3"></div>
+                                            <div class="row pb-4 align-items-center">
+                                                <div class="col-3">
+                                                    비밀번호
+                                                </div>
                                                 <div class="col">
-                                                    <input type="text" name="address" class="form-control bg-white" id="address" placeholder="주소">
+                                                    <input id="inputPw" name="password" type="password" class="form-control" placeholder="비밀번호" value="1234">
                                                 </div>
                                             </div>
-                                            <div class="row">
-                                                <div class="col-3"></div>
+                                            <div class="row pb-4 align-items-center">
+                                                <div class="col-3">
+                                                    비밀번호 확인
+                                                </div>
                                                 <div class="col">
-                                                    <input type="text" name="detail_address" class="form-control" id="detailAddress" placeholder="상세주소">
+                                                    <input onkeyup="checkAccountPwConfirm()" id="inputPwConfirm" type="password" class="form-control" placeholder="비밀번호 확인" value="1234">
+                                                    <div id="confirmAccountPw" class="position-absolute f08 text-danger"></div>
+                                                </div>
+                                            </div>
+                                            <div class="row pb-4 align-items-center">
+                                                <div class="col-3">
+                                                    이름
+                                                </div>
+                                                <div class="col">
+                                                    <input id="inputSeller" name="seller" type="text" class="form-control" placeholder="성함을 입력하세요" th:value="'캠핑장판매자' + ${newCampsiteID}">
+                                                </div>
+                                            </div>
+                                            <div class="row pb-4 align-items-center">
+                                                <div class="col-3">
+                                                    전화번호
+                                                </div>
+                                                <div class="col">
+                                                    <input type="text" id="inputPhone" name="phone" class="form-control " maxlength="13" oninput="formatPhoneNumber(this)" placeholder="하이폰 '-' 없이 입력">
+                                                </div>
+                                            </div>
+                                            <div class="row pb-4 align-items-center">
+                                                <div class="col-3">
+                                                    이메일
+                                                </div>
+                                                <div class="col">
+                                                    <input type="email" id="inputEmail" name="email" class="form-control" placeholder="username@domain.com" th:value="'camp' + ${newCampsiteID} + '@email.com'">
+                                                </div>
+                                            </div>
+                                            <div class="row pb-4 align-items-center">
+                                                <div class="col-3">
+                                                    프로필 이미지
+                                                </div>
+                                                <div id="upload_profileImage" class="col">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+        
+                            <div class="row pb-4">
+                                <div class="col px-4 border bg-white">
+                                    <div class="row py-3 border-bottom">
+                                        <div class="col fw-bold">
+                                            캠핑장 기본정보
+                                        </div>
+                                    </div>
+                                    <div class="row pt-4">
+                                        <div class="col">
+                                            <div class="row pb-4 align-items-center">
+                                                <div class="col-3">
+                                                    캠핑장명
+                                                </div>
+                                                <div class="col position-ralative">
+                                                    <input onblur="checkCampName()" type="text" id="inputName" name="name" class="form-control" placeholder="캠핑장명" th:value="'캠핑장' + ${newCampsiteID}">
+                                                    <div id="confirmCampName" class="position-absolute f08 text-danger"></div>
+                                                </div>
+                                            </div>
+                                            <div class="row pb-4 align-items-center">
+                                                <div class="col-3">
+                                                    사업자 등록번호
+                                                </div>
+                                                <div class="col">
+                                                    <input type="text" id="inputCRN" name="crn" class="form-control" placeholder="사업자 등록번호" th:value="${newCampsiteID + newCampsiteID + newCampsiteID + newCampsiteID + newCampsiteID}">
+                                                </div>
+                                            </div>
+                                            <div class="row pb-4 align-items-center">
+                                                <div class="col">
+                                                    <div class="row pb-2 align-items-center">
+                                                        <div class="col-3">
+                                                            주소
+                                                        </div>
+                                                        <div class="col pe-0">
+                                                            <input type="text" class="form-control bg-white" name="postcode" id="postcode" placeholder="우편번호">
+                                                        </div>
+                                                        <div class="col-auto">
+                                                            <input type="button" id="postcodeButton" class="form-control" onclick="execDaumPostcode()" value="우편번호 찾기">
+                                                        </div>
+                                                    </div>
+                                                    <div class="row pb-2">
+                                                        <div class="col-3"></div>
+                                                        <div class="col">
+                                                            <input type="text" name="address" class="form-control bg-white" id="address" placeholder="주소">
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-3"></div>
+                                                        <div class="col">
+                                                            <input type="text" name="detail_address" class="form-control" id="detailAddress" placeholder="상세주소">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row pb-4 align-items-center">
+                                                <div class="col-3">
+                                                    캠핑장 전화번호
+                                                </div>
+                                                <div class="col">
+                                                    <input type="text" name="camp_phone" id="inputCampPhone"  class="form-control " maxlength="13" oninput="formatPhoneNumber(this)" placeholder="하이폰 '-' 없이 입력" th:value="'010-' + ${newCampsiteID + newCampsiteID} + '-' + ${newCampsiteID + newCampsiteID}">
                                                 </div>
                                             </div>
                                         </div>
@@ -162,9 +181,8 @@
                             </div>
                         </div>
                     </div>
-
-                    
-                    <div class="row pb-3">
+                        
+                    <div class="row pb-3" th:object="${bankDto}">
                         <div class="col px-4 border bg-white">
                             <div class="row py-3 border-bottom">
                                 <div class="col fw-bold">
@@ -210,10 +228,10 @@
                                     <div class="row pb-4">
                                         <div class="col-3"></div>
                                         <div class="col pe-0">
-                                            <input type="text" class="form-control" name="account_holder" id="account_holder" placeholder="예금주명">
+                                            <input type="text" class="form-control" name="holder" id="account_holder" placeholder="예금주명" th:value="'캠핑장판매자' + ${newCampsiteID}">
                                         </div>
                                         <div class="col">
-                                            <input type="text" class="form-control" name="account_number" id="account_number" placeholder="계좌번호 (-없이 입력)">
+                                            <input type="text" class="form-control" name="bank_account" id="bank_account" placeholder="계좌번호 (-없이 입력)" th:value="'000-' + ${newCampsiteID} + ${newCampsiteID} + '-' + ${newCampsiteID} + ${newCampsiteID} + '-' + ${newCampsiteID}">
                                         </div>
                                     </div>
                                 </div>
@@ -280,6 +298,12 @@
                 if(inputPhone.value == '') {
                     inputPhone.focus();
                     return;
+                }   
+
+                const inputCampPhone = document.getElementById("inputCampPhone");
+                if(inputCampPhone.value == '') {
+                    inputCampPhone.focus();
+                    return;
                 }
 
                 const inputEmail = document.getElementById("inputEmail");
@@ -322,9 +346,9 @@
                     return;
                 }
 
-                const account_number = document.getElementById("account_number");
-                if(account_number.value==''){
-                    account_number.focus();
+                const bank_account = document.getElementById("bank_account");
+                if(bank_account.value==''){
+                    bank_account.focus();
                     return;
                 }
 
@@ -462,6 +486,7 @@
                     }
                 }).open();
             }
+            createUploader('profileImage');
         </script>
     </body>
 </html>

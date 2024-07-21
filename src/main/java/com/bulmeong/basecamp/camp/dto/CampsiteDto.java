@@ -15,15 +15,18 @@ public class CampsiteDto {
     private String address;
     private String detail_address;
     private String phone;
+    private String camp_phone;
     private String email;
     private String url;
-    private String main_image;
     private String map_image;
+    private String profile_image;
     private String description;
     private Date manner_start;
     private Date manner_end;
     private Date check_in;
     private Date check_out;
+    private Date peak_startDate;
+    private Date peak_endDate;
     private String notice;
     private int adult_pay;
     private int kid_pay;
@@ -33,4 +36,5 @@ public class CampsiteDto {
     private int read_count;
     private Date opentime;
     private Date created_at;
+    private String is_authenticated;
 }

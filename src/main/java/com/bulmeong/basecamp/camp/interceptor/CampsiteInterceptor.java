@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
 
+import com.bulmeong.basecamp.camp.service.CampsiteService;
 import com.bulmeong.basecamp.common.util.Utils;
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -15,13 +16,28 @@ import jakarta.servlet.http.HttpServletResponse;
 public class CampsiteInterceptor implements HandlerInterceptor {
     @Autowired
     private Utils utils;
-    
+    @Autowired
+    private CampsiteService campsiteService;
+
+
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-        // 특정 함수를 호출
         String pageDetail = utils.getPageDetail();
         request.getSession().setAttribute("pageInfo", pageInfo(pageDetail));
-        // 계속 진행하려면 true 반환, 요청을 중단하려면 false 반환
+       
+        String requestURI = request.getRequestURI();
+        if (request.getSession() == null || request.getSession().getAttribute("campsite") == null) {
+            response.sendRedirect("/seller/login");
+            return false;
+        }
+        if (requestURI.equals("/camp/registerCamp") || requestURI.equals("/seller/login") || requestURI.equals("registerCampProcess")) {
+            return true;
+        }
+        if(!campsiteService.isAuthed(utils.getSession("campsite"))){
+            response.sendRedirect("/camp/registerCamp");
+            request.getSession().setAttribute("pageInfo", pageInfo("registerCamp"));
+            return false;
+        }
         return true;
     }
 

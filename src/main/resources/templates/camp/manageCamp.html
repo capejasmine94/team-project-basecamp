@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="kr">
     <head>
+        <title>BaseCamp</title>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">    
         <script src="https://kit.fontawesome.com/7b271bba58.js" crossorigin="anonymous"></script>
@@ -13,6 +14,7 @@
         <script src="/public/js/calendar.js"></script>
         <script src="/public/js/uploader.js"></script>
         <script src="/public/js/util.js"></script>
+        <script src="/public/js/camp/campsite.js"></script>
         <script src="/public/js/sellerPage.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     </head>
@@ -289,6 +291,62 @@
                                     <div class="row mt-5 mb-3">
                                         <div class="col">
                                             <div class="row pt-3 pb-1">
+                                                <div class="col ms-2 fw-semibold">체크인 / 체크 아웃</div>
+                                            </div>
+                                            <div class="row mt-1">
+                                                <div class="col ms-2 pb-2 new-fs-9 text-secondary">
+                                                    <div>캠핑장의 체크인과 체크아웃 시간을 설정합니다.</div>
+                                                </div>
+                                            </div>
+                                            <div class="row mt-2">
+                                                <div class="col-1 mt-1 text-end">
+                                                    체크인
+                                                </div>
+                                                <div class="col-2 pe-0">
+                                                    <input name="check_in" class="form-control text-end" type="time" id="max_ordertime">
+                                                </div>
+                                            </div>
+                                            <div class="row mt-2">
+                                                <div class="col-1 mt-1 text-end">
+                                                    체크아웃
+                                                </div>
+                                                <div class="col-2 pe-0">
+                                                    <input name="check_out" class="form-control text-end" type="time" id="max_ordertime">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row mt-5 mb-3">
+                                        <div class="col">
+                                            <div class="row pt-3 pb-1">
+                                                <div class="col ms-2 fw-semibold">매너 타임</div>
+                                            </div>
+                                            <div class="row mt-1">
+                                                <div class="col ms-2 pb-2 new-fs-9 text-secondary">
+                                                    <div>캠핑장 에티켓을 위해 설정할 수 있습니다.</div>
+                                                </div>
+                                            </div>
+                                            <div class="row mt-2">
+                                                <div class="col-2 pe-0">
+                                                    <input name="manner_start" class="form-control text-end" type="time" id="max_ordertime">
+                                                </div>
+                                                <div class="col-auto mt-1 fw-semibold">
+                                                    부터
+                                                </div>
+                                                <div class="col-2 pe-0">
+                                                    <input name="manner_end" class="form-control text-end" type="time" id="max_ordertime">
+                                                </div>
+                                                <div class="col-auto mt-1 fw-semibold">
+                                                    까지
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row mt-5 mb-3">
+                                        <div class="col">
+                                            <div class="row pt-3 pb-1">
                                                 <div class="col ms-2 fw-semibold">최대 예약 기간</div>
                                             </div>
                                             <div class="row mt-1">
@@ -382,8 +440,6 @@
         </div>
         <div th:replace="~{common/navi::popup}"></div>
         <script>
-           
-            initMoneyInput();
             createMultipleUploader('main_image',10);
             createUploader('map_image');
             const date = new Date();

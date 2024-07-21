@@ -2,13 +2,126 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.bulmeong.basecamp.camp.mapper.CampsiteSqlMapper">
+    <insert id="insertCampsite">
+        <selectKey resultType="int" keyProperty="id" order="AFTER">
+            select max(id) from bc_campsite
+        </selectKey>
+        INSERT into bc_campsite (
+            account,
+            password, 
+            name,    
+            seller,
+            address,
+            postcode,
+            detail_address,
+            phone,
+            camp_phone,
+            email,
+            profile_image,
+            url,
+            description,
+            manner_start,
+            manner_end,
+            check_in,
+            check_out,
+            notice
+        ) values (
+            #{account},
+            #{password}, 
+            #{name},    
+            #{seller},
+            #{address},
+            #{postcode},
+            #{detail_address},
+            #{phone},
+            #{camp_phone},
+            #{email},
+            #{profile_image},
+            #{url},
+            #{description},
+            #{manner_start},
+            #{manner_end},
+            #{check_in},
+            #{check_out},
+            #{notice}
+        )
+    </insert>
+    <insert id="insertCampsiteBank">
+        <selectKey resultType="int" keyProperty="id" order="AFTER">
+            select max(id) from bc_campsite_bank
+        </selectKey>
+        INSERT into bc_campsite_bank (
+            campsite_id,
+            bank_name,
+            bank_account,
+            holder
+        ) 
+        values(
+            #{campsite_id},
+            #{bank_name},
+            #{bank_account},
+            #{holder}
+        )
+    </insert>
+    <insert id="insertCampMainImage">
+        INSERT into bc_campsite_image (
+            campsite_id,
+	        location,
+	        origin_filename
+        )
+        values(
+            #{campsite_id},
+	        #{location},
+	        #{origin_filename}
+        )
+    </insert>
+
+    <update id="updateCampsite">
+        UPDATE bc_campsite set
+            account = #{account},
+            password = #{password },
+            name = #{name},
+            seller = #{seller},
+            address = #{address},
+            postcode = #{postcode},
+            detail_address = #{detail_address},
+            phone = #{phone},
+            email = #{email},
+            url = #{url},
+            description = #{description},
+            manner_start = #{manner_start},
+            manner_end = #{manner_end},
+            check_in = #{check_in},
+            check_out = #{check_out},
+            notice = #{notice},
+            main_image = #{main_image},
+            map_image = #{map_image},
+            adult_pay = #{adult_pay},
+            kid_pay = #{kid_pay},
+            car_pay = #{car_pay},
+            peak_pay = #{peak_pay},
+            peak_startDate = #{peak_startDate},
+            peak_endDate = #{peak_endDate},
+            max_ordertime = #{max_ordertime}
+        where id = #{id}
+    </update>
+
+    <update id="authCampSite">
+        UPDATE bc_campsite set
+            is_authenticated = 'T'
+        where id = #{id}
+    </update>
+    
     <select id="getCampsiteDtoByAccountInfo" resultType="com.bulmeong.basecamp.camp.dto.CampsiteDto">
-        select * from bc_campsite where account = ${account} and password = ${password}
+        select * from bc_campsite where account = #{account} and password = #{password}
     </select>
     <select id="getCampsiteDtoByAccount" resultType="com.bulmeong.basecamp.camp.dto.CampsiteDto">
-        select * from bc_campsite where account = ${account}
+        select * from bc_campsite where account = #{account}
     </select>
     <select id="getCampsiteDtoByName" resultType="com.bulmeong.basecamp.camp.dto.CampsiteDto">
-        select * from bc_campsite where name = ${name}
+        select * from bc_campsite where name = #{name}
+    </select>
+    <select id="newCampsiteID" resultType="int">
+        select COALESCE(MAX(id) + 1, 1) from bc_campsite
     </select>
 </mapper>

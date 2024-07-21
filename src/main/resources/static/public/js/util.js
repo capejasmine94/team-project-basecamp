@@ -8,6 +8,7 @@
 
 function popup(title,content,yes,no,action) {
    const node = document.getElementById('popup');
+   bootstrap.Modal.getOrCreateInstance('#popup',{backdrop: 'true', keyboard: true})  
    let text = node.querySelector("#popup-title");
    text.innerText = title;
    text = node.querySelector("#popup-content");
@@ -21,8 +22,9 @@ function popup(title,content,yes,no,action) {
    bootstrap.Modal.getOrCreateInstance('#popup').show();
 }
 
-function popup(title,content,accept,action) {
+function popupForce(title,content,accept,action) {
    const node = document.getElementById('popup');
+   bootstrap.Modal.getOrCreateInstance('#popup',{backdrop: 'static', keyboard: false})  
    let text = node.querySelector("#popup-title");
    text.innerText = title;
    text = node.querySelector("#popup-content");
@@ -35,16 +37,13 @@ function popup(title,content,accept,action) {
    bootstrap.Modal.getOrCreateInstance('#popup').show();
 }
 
-//팝업 백드롭 클릭 방지
-document.addEventListener('DOMContentLoaded', function() {
-   var modalElement = document.getElementById('popup');
 
-   modalElement.addEventListener('hide.bs.modal', function(event) {
-     if (event.target === modalElement) {
-       event.preventDefault();
-     }
-   });
- });
+
+function popupClose() {
+  const c = bootstrap.Modal.getOrCreateInstance('#popup');
+  c.hide();
+}
+
 
 
 
@@ -93,29 +92,29 @@ function formatPhoneNumber(input) {
    input.value = formattedValue;
 }
 
-function initMoneyInput() {
-   document.addEventListener('DOMContentLoaded', (event) => {
-      const inputNumbers = document.getElementsByClassName('moneyInput');
-      for(const node of inputNumbers){
-          node.addEventListener('input', function (e) {
-              let input = e.target.value;
+document.addEventListener('DOMContentLoaded', (event) => {
+  const inputNumbers = document.getElementsByClassName('moneyInput');
+  if(inputNumbers.length <= 0 || inputNumbers == null)
+    return;
+  for(const node of inputNumbers){
+      node.addEventListener('input', function (e) {
+          let input = e.target.value;
 
-              // Remove all non-numeric characters except for period (.)
-              input = input.replace(/[^0-9.]/g, '');
+          // Remove all non-numeric characters except for period (.)
+          input = input.replace(/[^0-9.]/g, '');
 
-              // Split the input value into integer and decimal parts
-              const parts = input.split('.');
-              let integerPart = parts[0];
-              const decimalPart = parts.length > 1 ? '.' + parts[1] : '';
+          // Split the input value into integer and decimal parts
+          const parts = input.split('.');
+          let integerPart = parts[0];
+          const decimalPart = parts.length > 1 ? '.' + parts[1] : '';
 
-              // Format the integer part with commas
-              integerPart = integerPart.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+          // Format the integer part with commas
+          integerPart = integerPart.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
 
-              // Combine the formatted integer part and the decimal part
-              e.target.value = integerPart + decimalPart;
-          });
-      }
-  });
-}
+          // Combine the formatted integer part and the decimal part
+          e.target.value = integerPart + decimalPart;
+      });
+  }
+});
 
 

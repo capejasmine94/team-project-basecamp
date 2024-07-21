@@ -7,12 +7,15 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.bulmeong.basecamp.camp.service.CampsiteService;
 import com.bulmeong.basecamp.common.dto.RestResponseDto;
+import com.bulmeong.basecamp.common.util.Utils;
 
 @RestController
 @RequestMapping("/api/camp/")
 public class RestCampsiteController {
     @Autowired
     private CampsiteService campsiteService;
+    @Autowired
+    private Utils utils;
 
     @RequestMapping("isExistAccount")
     public RestResponseDto isExistAccount(@RequestParam("account") String account) {
@@ -33,5 +36,11 @@ public class RestCampsiteController {
         return restResponseDto;
     }
 
-    
+    @RequestMapping("checkNeedLogin")
+    public RestResponseDto checkNeedLogin() {
+        RestResponseDto restResponseDto = new RestResponseDto();
+        restResponseDto.setResult("success");
+        restResponseDto.add("needLogin", utils.getSession("campsite") == null);
+        return restResponseDto;
+    }
 }

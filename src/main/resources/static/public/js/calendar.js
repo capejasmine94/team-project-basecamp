@@ -25,7 +25,6 @@ const calendarDataList = new Map();
 function getCalendarData(calendarName){
     const data = calendarDataList.get(calendarName);
     if(data == null) {
-        console.log(`${calendarName}의 이름을 가진 캘린더가 존재하지 않습니다.`);
         return null;
     }
     return data;
@@ -44,6 +43,34 @@ function getDate(calendarName) {
     const data = getCalendarData(calendarName);
     if(data == null) return;
     return data.startDate;
+}
+function setStartDate(calendarName, date) {
+    const data = getCalendarData(calendarName);
+    if(data == null) return;
+    data.startDate = date;
+    const startDate = document.querySelector('#' + calendarName + '_start_date');
+    const endDate = document.querySelector('#' + calendarName + '_end_date');
+    startDate.value = data.startDate;
+    endDate.value = null;
+}
+function setEndDate(calendarName, date) {
+    const data = getCalendarData(calendarName);
+    if(data == null) return;
+    data.endDate = date;
+    const startDate = document.querySelector('#' + calendarName + '_start_date');
+    const endDate = document.querySelector('#' + calendarName + '_end_date');
+    startDate.value = data.startDate;
+    endDate.value = null;
+}
+function setDate(calendarName, date) {
+    const data = getCalendarData(calendarName);
+    if(data == null) return;
+    data.startDate = date;
+    data.endDate = null;
+    const startDate = document.querySelector('#' + calendarName + '_start_date');
+    const endDate = document.querySelector('#' + calendarName + '_end_date');
+    startDate.value = data.startDate;
+    endDate.value = null;
 }
 function createCalendarStructure(name) {
     const container = document.getElementById('calendar_' + name);
@@ -69,13 +96,15 @@ function createCalendarStructure(name) {
     const startDateData = document.createElement('input');
     startDateData.type ='hidden';
     startDateData.classList.add("startDate");
-    startDateData.name = 'startDate';
+    startDateData.name = name + '_start_date';
+    startDateData.id = name + '_start_date';
     getCalendarData(name)
 
     const endDateData = document.createElement('input');
     endDateData.type ='hidden';
     endDateData.classList.add("endDate");
-    endDateData.name = 'endDate';
+    endDateData.name = name + '_end_date';
+    endDateData.id = name + '_end_date';
 
     navCol.appendChild(startDateData);
     navCol.appendChild(endDateData);
@@ -127,6 +156,7 @@ function createRangeCalendar(name, length, limit) {
     const monthYear = calendarDocument.querySelector('#monthYear');
     const prevMonth = calendarDocument.querySelector('#prevMonth');
     const nextMonth = calendarDocument.querySelector('#nextMonth');
+   
 
     const data = new CalendarData(length,limit);
     calendarDataList.set(name, data);
@@ -153,16 +183,16 @@ function createRangeCalendar(name, length, limit) {
             return;
             cell.addEventListener('click', function() {
                 if (!data.startDate || (data.startDate && data.endDate)) {
-                data.startDate = cellDate; // 시작 날짜 설정
-                data.endDate = null; // 종료 날짜 초기화
+                setStartDate(name, cellDate); // 시작 날짜 설정
+                setEndDate(name,null); // 종료 날짜 초기화
                 } else if (cellDate.getTime() === data.startDate.getTime()) {
                     cell.classList.remove('selected-start');
-                    data.startDate = null;
+                    setStartDate(name, null);
                     return;
                 } 
                 else if (cellDate < data.startDate) {
-                data.startDate = cellDate; // 클릭한 날짜가 시작 날짜보다 이전인 경우
-                data.endDate = null; // 종료 날짜 초기화
+                    setStartDate(name, cellDate); // 클릭한 날짜가 시작 날짜보다 이전인 경우
+                    setEndDate(name,null); // 종료 날짜 초기화
                 } 
                 else {
                 const tempEndDate = cellDate; // 임시 종료 날짜 설정
@@ -175,7 +205,7 @@ function createRangeCalendar(name, length, limit) {
                     return; // 범위 지정 중단
                 }
     
-                data.endDate = cellDate; // 종료 날짜 설정
+                setEndDate(name, cellDate); // 종료 날짜 설정
                 }
                 renderCalendar(data.currentDate); // 달력 다시 렌더링
                 //데이터 정보 입력
@@ -339,7 +369,7 @@ function createCalendar(name, limit) {
                 return;
             }
             cell.addEventListener('click', function() {
-                data.startDate = cellDate; // 시작 날짜 설정
+                setStartDate(name,cellDate); // 시작 날짜 설정
                 //calendarBody.querySelector('startDate').value = cellDate;
                 renderCalendar(data.currentDate); // 달력 다시 렌더링
                 //데이터 정보 입력

@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="kr">
     <head>
+        <title>BaseCamp</title>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">    
         <script src="https://kit.fontawesome.com/7b271bba58.js" crossorigin="anonymous"></script>
@@ -14,6 +15,7 @@
         <script src="/public/js/uploader.js"></script>
         <script src="/public/js/util.js"></script>
         <script src="/public/js/sellerPage.js"></script>
+        <script src="/public/js/camp/campsite.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     </head>
     <body> 
@@ -513,6 +515,43 @@
                                             </div>
                                         </div>
                                     </div>
+                                </div>
+                            </div>
+
+
+                            <!-- 구역 삭제 요청 -->
+                            <div class="row new-mt-45 justify-content-center">
+                                <div class="col border rounded-2 me-5">
+                                    <div class="row my-1">
+                                        <div class="col ms-3 my-1 fs-5 fw-bold">구역 삭제</div>
+                                    </div>
+                                    <div class="row border-top pt-3">
+                                        <div class="col-auto ms-3 mt-2 px-0">
+                                            </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col ms-2 my-1 new-fs-85 text-secondary">
+                                            <div>삭제 요청 후 삭제까지는 1 ~ 3일 정도 시간이 소요됩니다.</div>
+                                            <div>삭제 완료 시 고객에게서 구역이 보이지 않으며, 예약이 불가능합니다.</div>
+                                            <div>삭제 전 해당 구역을 이용했던 고객들의 과거 기록들은 남아있습니다.</div>
+                                            <div class="mt-4 fw-semibold">삭제를 원하시면 아래 문구를 정확히 작성해야합니다.</div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row mt-2">
+                                        <div class="col-4 ms-3 pe-0 ps-1">
+                                            <input name="request_delete_area" class="form-control" type="text" value="" placeholder="'${session.area.name}'구역을 삭제합니다.">
+                                        </div>
+                                    </div>
+
+                                    <div class="row mt-5 mb-3">
+                                        <div class="col-2 mx-2 ">
+                                            <button class="btn btn-danger">삭제</button>
+                                        </div>
+                                    </div>
+
+                                  
                                 </div>
                             </div>
                         </div>

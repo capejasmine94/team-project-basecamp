@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="kr">
     <head>
+        <title>BaseCamp</title>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">    
         <script src="https://kit.fontawesome.com/7b271bba58.js" crossorigin="anonymous"></script>
@@ -14,6 +15,7 @@
         <script src="/public/js/uploader.js"></script>
         <script src="/public/js/util.js"></script>
         <script src="/public/js/sellerPage.js"></script>
+        <script src="/public/js/camp/campsite.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     </head>
     <body> 
@@ -26,7 +28,7 @@
 
             <!-- 본문 -->
             <div class="col right ms-2" style="padding-top: 58px; ">
-                <form id="registerCampProcess" action="/camp/registerCampProcess">
+                <form id="registerCampProcess" method="post" enctype="multipart/form-data" action="/camp/registerCampProcess">
                     <!-- 상단 바 -->
                     <div th:replace="~{camp/campNavi::topNavi}"></div>
 
@@ -43,7 +45,7 @@
                                             <div class="row mt-3 align-items-center">
                                                 <div class="col-1 text-secondary text-end">캠핑장 이름</div>
                                                 <div class="col-4 text-secondary text-end">
-                                                    <input type="text" class="form-control" placeholder="욕설 또는 타인을 비방하는 단어는 자제해주세요">
+                                                    <input name="name" type="text" class="form-control" placeholder="욕설 또는 타인을 비방하는 단어는 자제해주세요">
                                                 </div>
                                                 
                                             </div>
@@ -69,28 +71,25 @@
                                                         <div class="col-4">
                                                             <input type="text" name="detail_address" class="form-control" id="detailAddress" placeholder="상세주소">
                                                         </div>
-                                                        <!-- <div class="col">
-                                                            <input type="text" class="form-control" id="extraAddress" placeholder="참고항목">
-                                                        </div> -->
                                                     </div>
                                                 </div>
                                             </div>
                                             <div class="row mt-4 align-items-center">
                                                 <div class="col-1 text-secondary text-end">캠핑장 연락처</div>
                                                 <div class="col-4">
-                                                    <input class="form-control" type="text" maxlength="13" oninput="formatPhoneNumber(this)" placeholder="하이폰 '-' 없이 입력">
+                                                    <input class="form-control" name="camp_phone" type="text" maxlength="13" oninput="formatPhoneNumber(this)" placeholder="하이폰 '-' 없이 입력">
                                                 </div>
                                             </div>
                                             <div class="row mt-4 align-items-center">
                                                 <div class="col-1 text-secondary text-end">홈페이지</div>
                                                 <div class="col-4">
-                                                    <input class="form-control" type="text" placeholder="url 입력">
+                                                    <input name="url" class="form-control" type="text" placeholder="url 입력">
                                                 </div>
                                             </div>
                                             <div class="row mt-4 align-items-center">
                                                 <div class="col-1 text-secondary text-end">캠핑장 이메일</div>
                                                 <div class="col-4">
-                                                    <input class="form-control" type="text" placeholder="username@domain.com">
+                                                    <input name="email" class="form-control" type="text" placeholder="username@domain.com">
                                                 </div>
                                             </div>
                                             <div class="row mt-4 mb-3">
@@ -302,6 +301,35 @@
                                     <div class="row mt-5 mb-3">
                                         <div class="col">
                                             <div class="row pt-3 pb-1">
+                                                <div class="col ms-2 fw-semibold">체크인 / 체크 아웃</div>
+                                            </div>
+                                            <div class="row mt-1">
+                                                <div class="col ms-2 pb-2 new-fs-9 text-secondary">
+                                                    <div>캠핑장의 체크인과 체크아웃 시간을 설정합니다.</div>
+                                                </div>
+                                            </div>
+                                            <div class="row mt-2">
+                                                <div class="col-1 mt-1 text-end">
+                                                    체크인
+                                                </div>
+                                                <div class="col-2 pe-0">
+                                                    <input name="check_in" class="form-control text-end" type="time" id="max_ordertime">
+                                                </div>
+                                            </div>
+                                            <div class="row mt-2">
+                                                <div class="col-1 mt-1 text-end">
+                                                    체크아웃
+                                                </div>
+                                                <div class="col-2 pe-0">
+                                                    <input name="check_out" class="form-control text-end" type="time" id="max_ordertime">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row mt-5 mb-3">
+                                        <div class="col">
+                                            <div class="row pt-3 pb-1">
                                                 <div class="col ms-2 fw-semibold">최대 예약 기간</div>
                                             </div>
                                             <div class="row mt-1">
@@ -315,6 +343,33 @@
                                                 </div>
                                                 <div class="col-auto mt-1 fw-semibold">
                                                     일
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row mt-5 mb-3">
+                                        <div class="col">
+                                            <div class="row pt-3 pb-1">
+                                                <div class="col ms-2 fw-semibold">매너 타임</div>
+                                            </div>
+                                            <div class="row mt-1">
+                                                <div class="col ms-2 pb-2 new-fs-9 text-secondary">
+                                                    <div>캠핑장 에티켓을 위해 설정할 수 있습니다.</div>
+                                                </div>
+                                            </div>
+                                            <div class="row mt-2">
+                                                <div class="col-2 pe-0">
+                                                    <input name="manner_start" class="form-control text-end" type="time" id="max_ordertime">
+                                                </div>
+                                                <div class="col-auto mt-1 fw-semibold">
+                                                    부터
+                                                </div>
+                                                <div class="col-2 pe-0">
+                                                    <input name="manner_end" class="form-control text-end" type="time" id="max_ordertime">
+                                                </div>
+                                                <div class="col-auto mt-1 fw-semibold">
+                                                    까지
                                                 </div>
                                             </div>
                                         </div>
@@ -394,140 +449,144 @@
           </div>
         </div>
         <div th:replace="~{common/navi::popup}"></div>
-        <script>
-             function origin_execDaumPostcode() {
-                new daum.Postcode({
-                    oncomplete: function(data) {
-
-                        var addr = '';
-                        var extraAddr = '';
-
-                        if (data.userSelectedType === 'R') {
-                            addr = data.roadAddress;
-                        } else {
-                            addr = data.jibunAddress;
-                        }
-
-                        if(data.userSelectedType === 'R'){
-                            if(data.bname !== '' && /[동|로|가]$/g.test(data.bname)){
-                                extraAddr += data.bname;
-                            }
-
-                            if(data.buildingName !== '' && data.apartment === 'Y'){
-                                extraAddr += (extraAddr !== '' ? ', ' + data.buildingName : data.buildingName);
-                            }
-
-                            if(extraAddr !== ''){
-                                extraAddr = ' (' + extraAddr + ')';
-                            }
-                        }
-
-                        document.getElementById('origin_postcode').value = data.zonecode;
-                        document.getElementById("origin_address").value = addr+extraAddr;
-
-                        document.getElementById("origin_detailAddress").focus();
-                    }
-                }).open();
-            }
-
-            function return_execDaumPostcode() {
-                new daum.Postcode({
-                    oncomplete: function(data) {
-
-                        var addr = '';
-                        var extraAddr = '';
-
-                        if (data.userSelectedType === 'R') {
-                            addr = data.roadAddress;
-                        } else {
-                            addr = data.jibunAddress;
-                        }
-
-                        if(data.userSelectedType === 'R'){
-                            if(data.bname !== '' && /[동|로|가]$/g.test(data.bname)){
-                                extraAddr += data.bname;
-                            }
-
-                            if(data.buildingName !== '' && data.apartment === 'Y'){
-                                extraAddr += (extraAddr !== '' ? ', ' + data.buildingName : data.buildingName);
-                            }
-
-                            if(extraAddr !== ''){
-                                extraAddr = ' (' + extraAddr + ')';
-                            }
-                        }
-
-                        document.getElementById('return_postcode').value = data.zonecode;
-                        document.getElementById("return_address").value = addr+extraAddr;
-
-                        document.getElementById("return_detailAddress").focus();
-                    }
-                }).open();
-            }
-
-            function execDaumPostcode() {
-                new daum.Postcode({
-                    oncomplete: function(data) {
-                        var addr = '';
-                        var extraAddr = '';
-
-                        if (data.userSelectedType === 'R') {
-                            addr = data.roadAddress;
-                        } else {
-                            addr = data.jibunAddress;
-                        }
-
-                        if(data.userSelectedType === 'R'){
-
-                            if(data.bname !== '' && /[동|로|가]$/g.test(data.bname)){
-                                extraAddr += data.bname;
-                            }
-                            if(data.buildingName !== '' && data.apartment === 'Y'){
-                                extraAddr += (extraAddr !== '' ? ', ' + data.buildingName : data.buildingName);
-                            }
-                            if(extraAddr !== ''){
-                                extraAddr = ' (' + extraAddr + ')';
-                            }
-                        }
-
-                        document.getElementById('postcode').value = data.zonecode;
-                        document.getElementById("address").value = addr+extraAddr;
-                        document.getElementById("detailAddress").focus();
-                    }
-                }).open();
-            }
-
-            document.addEventListener('DOMContentLoaded', (event) => {
-                const inputNumbers = document.getElementsByClassName('numberInput');
-                for(const node of inputNumbers){
-                    node.addEventListener('input', function (e) {
-                        let input = e.target.value;
-
-                        // Remove all non-numeric characters except for period (.)
-                        input = input.replace(/[^0-9.]/g, '');
-
-                        // Split the input value into integer and decimal parts
-                        const parts = input.split('.');
-                        let integerPart = parts[0];
-                        const decimalPart = parts.length > 1 ? '.' + parts[1] : '';
-
-                        // Format the integer part with commas
-                        integerPart = integerPart.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
-
-                        // Combine the formatted integer part and the decimal part
-                        e.target.value = integerPart + decimalPart;
-                    });
-                }
-            });
-
-            createMultipleUploader('main_image');
-            createUploader('map_image');
-            const date = new Date();
-            date.setFullYear(date.getFullYear() + 1);
-            createCalendar('opentime',date);
-            createRangeCalendar('peak',365, date);
-        </script>
+        
         <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+        <script>
+        function origin_execDaumPostcode() {
+            new daum.Postcode({
+                oncomplete: function(data) {
+
+                    var addr = '';
+                    var extraAddr = '';
+
+                    if (data.userSelectedType === 'R') {
+                        addr = data.roadAddress;
+                    } else {
+                        addr = data.jibunAddress;
+                    }
+
+                    if(data.userSelectedType === 'R'){
+                        if(data.bname !== '' && /[동|로|가]$/g.test(data.bname)){
+                            extraAddr += data.bname;
+                        }
+
+                        if(data.buildingName !== '' && data.apartment === 'Y'){
+                            extraAddr += (extraAddr !== '' ? ', ' + data.buildingName : data.buildingName);
+                        }
+
+                        if(extraAddr !== ''){
+                            extraAddr = ' (' + extraAddr + ')';
+                        }
+                    }
+
+                    document.getElementById('origin_postcode').value = data.zonecode;
+                    document.getElementById("origin_address").value = addr+extraAddr;
+
+                    document.getElementById("origin_detailAddress").focus();
+                }
+            }).open();
+        }
+
+        function return_execDaumPostcode() {
+            new daum.Postcode({
+                oncomplete: function(data) {
+
+                    var addr = '';
+                    var extraAddr = '';
+
+                    if (data.userSelectedType === 'R') {
+                        addr = data.roadAddress;
+                    } else {
+                        addr = data.jibunAddress;
+                    }
+
+                    if(data.userSelectedType === 'R'){
+                        if(data.bname !== '' && /[동|로|가]$/g.test(data.bname)){
+                            extraAddr += data.bname;
+                        }
+
+                        if(data.buildingName !== '' && data.apartment === 'Y'){
+                            extraAddr += (extraAddr !== '' ? ', ' + data.buildingName : data.buildingName);
+                        }
+
+                        if(extraAddr !== ''){
+                            extraAddr = ' (' + extraAddr + ')';
+                        }
+                    }
+
+                    document.getElementById('return_postcode').value = data.zonecode;
+                    document.getElementById("return_address").value = addr+extraAddr;
+
+                    document.getElementById("return_detailAddress").focus();
+                }
+            }).open();
+        }
+
+        function execDaumPostcode() {
+            new daum.Postcode({
+                oncomplete: function(data) {
+                    var addr = '';
+                    var extraAddr = '';
+
+                    if (data.userSelectedType === 'R') {
+                        addr = data.roadAddress;
+                    } else {
+                        addr = data.jibunAddress;
+                    }
+
+                    if(data.userSelectedType === 'R'){
+
+                        if(data.bname !== '' && /[동|로|가]$/g.test(data.bname)){
+                            extraAddr += data.bname;
+                        }
+                        if(data.buildingName !== '' && data.apartment === 'Y'){
+                            extraAddr += (extraAddr !== '' ? ', ' + data.buildingName : data.buildingName);
+                        }
+                        if(extraAddr !== ''){
+                            extraAddr = ' (' + extraAddr + ')';
+                        }
+                    }
+
+                    document.getElementById('postcode').value = data.zonecode;
+                    document.getElementById("address").value = addr+extraAddr;
+                    document.getElementById("detailAddress").focus();
+                }
+            }).open();
+        }
+
+        document.addEventListener('DOMContentLoaded', (event) => {
+            const inputNumbers = document.getElementsByClassName('numberInput');
+            for(const node of inputNumbers){
+                node.addEventListener('input', function (e) {
+                    let input = e.target.value;
+
+                    // Remove all non-numeric characters except for period (.)
+                    input = input.replace(/[^0-9.]/g, '');
+
+                    // Split the input value into integer and decimal parts
+                    const parts = input.split('.');
+                    let integerPart = parts[0];
+                    const decimalPart = parts.length > 1 ? '.' + parts[1] : '';
+
+                    // Format the integer part with commas
+                    integerPart = integerPart.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+
+                    // Combine the formatted integer part and the decimal part
+                    e.target.value = integerPart + decimalPart;
+                });
+            }
+        });
+
+        createMultipleUploader('main_image');
+        createUploader('map_image');
+        const date = new Date();
+        date.setFullYear(date.getFullYear() + 1);
+        createCalendar('opentime',date);
+        createRangeCalendar('peak',365, date);
+        //    alert('서비스를 사용하시려면 캠핑장 등록이 필요합니다.');
+        popupForce('캠핑장 등록','서비스를 사용하시려면 캠핑장 등록이 필요합니다.','확인',popupClose);
+            
+       </script>
     </body>
 </html>

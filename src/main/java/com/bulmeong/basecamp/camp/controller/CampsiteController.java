@@ -1,14 +1,25 @@
 package com.bulmeong.basecamp.camp.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.bulmeong.basecamp.camp.dto.CampsiteBankDto;
 import com.bulmeong.basecamp.camp.dto.CampsiteDto;
+import com.bulmeong.basecamp.camp.service.CampsiteService;
+import com.bulmeong.basecamp.common.util.Utils;
 
 @RequestMapping("camp")
 @Controller
 public class CampsiteController {
+    @Autowired
+    private CampsiteService campsiteService;
+    @Autowired
+    private Utils utils;
 
     @RequestMapping("unity")
     public String unity(){
@@ -31,7 +42,11 @@ public class CampsiteController {
     }
 
     @RequestMapping("/registerUser")
-    public String registerUser(){
+    public String registerUser(Model model){
+        String id = String.format("%02d", campsiteService.newCampsiteID());
+        model.addAttribute("campsiteDto", new CampsiteDto());
+        model.addAttribute("bankDto", new CampsiteBankDto());
+        model.addAttribute("newCampsiteID", id);
         return "camp/registerUser";
     }
 
@@ -76,8 +91,8 @@ public class CampsiteController {
 
 
     @RequestMapping("registerProcess")
-    public String registerProcess(CampsiteDto campsiteDto, CampsiteBankDto bankDto){
-        
+    public String registerProcess(@ModelAttribute CampsiteDto campsiteDto, @ModelAttribute CampsiteBankDto bankDto, @RequestParam("profileImage")MultipartFile profileImage){
+        campsiteService.insertCampsite(campsiteDto, bankDto, profileImage);
         return "store/registerComplete";
     }
 }
