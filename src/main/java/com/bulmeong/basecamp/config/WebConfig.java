@@ -44,7 +44,7 @@ public class WebConfig implements WebMvcConfigurer {
         // 특정 컨트롤러 경로에 대해 인터셉터를 등록합니다.
         registry.addInterceptor(campsiteInterceptor).addPathPatterns("/camp/**");
 
-         // .addPathPatterns 본인 시작경로 추가
+         // 공용네비 .addPathPatterns 본인 시작경로 추가
          registry.addInterceptor(sessionInterceptor)
                  .addPathPatterns("/common/**", "/secondhandProduct/**")
                  .excludePathPatterns("/common/basecampLoginPage", "/common/basecampSignPage", "/common/signProcess", "/common/loginProcess");
