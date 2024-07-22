@@ -33,7 +33,7 @@ public class ProductController {
         List<AllContentsProductDto> productDtoList = productService.selectSecondhandProductList();
         model.addAttribute("productDtoList", productDtoList);
 
-        return "/secondhandProduct/mainPage";
+        return "secondhandProduct/mainPage";
     }
 
     @GetMapping("productRegistrationPage")
@@ -46,13 +46,13 @@ public class ProductController {
         List<CategoryDto> categoryDtoList = productService.selectCategoryList();
         model.addAttribute("categoryDtoList", categoryDtoList);
 
-        return "/secondhandProduct/productRegistrationPage";
+        return "secondhandProduct/productRegistrationPage";
     }
 
     @GetMapping("transactionListPage")
     public String transactionListPage() {
 
-        return "/secondhandProduct/transactionListPage";
+        return "secondhandProduct/transactionListPage";
     }
 
     @GetMapping("myPage")
@@ -62,7 +62,7 @@ public class ProductController {
         UserDto sessionUserInfo = (UserDto) session.getAttribute("sessionUserInfo");
         model.addAttribute("sessionUserInfo", sessionUserInfo);
 
-        return "/secondhandProduct/myPage";
+        return "secondhandProduct/myPage";
     }
 
     @PostMapping("productProcess")
@@ -78,7 +78,7 @@ public class ProductController {
                 if (image.isEmpty()) {
                     continue;
                 }
-                String rootPath = "/Users/simgyujin/basecampImage/";
+                String rootPath = "Users/simgyujin/basecampImage/";
 
                 // 날짜 폴더
                 SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd/");
@@ -131,13 +131,13 @@ public class ProductController {
 
         productService.updateSecondhandDetailProductCount(product_id);
 
-        return "/secondhandProduct/postDetailsPage";
+        return "secondhandProduct/postDetailsPage";
     }
 
     @GetMapping("productChatRoomPage")
     public String productChatRoomPage() {
 
-        return "/secondhandProduct/productChatRoomPage";
+        return "secondhandProduct/productChatRoomPage";
     }
 
     @GetMapping("selectCategoryPage")
@@ -146,7 +146,7 @@ public class ProductController {
         List<CategoryDto> categoryDtoList = productService.selectCategoryList();
         model.addAttribute("categoryDtoList", categoryDtoList);
 
-        return "/secondhandProduct/selectCategoryPage";
+        return "secondhandProduct/selectCategoryPage";
     }
 
     @GetMapping("selectCategoryDetailListPage")
@@ -159,7 +159,7 @@ public class ProductController {
         model.addAttribute("categoryName", categoryName);
 
 
-        return "/secondhandProduct/selectCategoryDetailListPage";
+        return "secondhandProduct/selectCategoryDetailListPage";
     }
 
     @GetMapping("watchlistPage")
@@ -168,25 +168,25 @@ public class ProductController {
 
         List<AllContentsProductDto> userByWishList = productService.selectSecondhandProductByWishList(user_id);
         model.addAttribute("userByWishList", userByWishList);
-        return "/secondhandProduct/watchlistPage";
+        return "secondhandProduct/watchlistPage";
     }
 
     @GetMapping("purchaseHistoryPage")
     public String purchaseHistoryPage() {
 
-        return "/secondhandProduct/purchaseHistoryPage";
+        return "secondhandProduct/purchaseHistoryPage";
     }
 
     @GetMapping("myNeighborhoodSettingsPage")
     public String myNeighborhoodSettingsPage() {
 
-        return "/secondhandProduct/myNeighborhoodSettingsPage";
+        return "secondhandProduct/myNeighborhoodSettingsPage";
     }
 
     @GetMapping("neighborhoodCertificationPage")
     public String neighborhoodCertificationPage() {
 
-        return "/secondhandProduct/neighborhoodCertificationPage";
+        return "secondhandProduct/neighborhoodCertificationPage";
     }
 
 
