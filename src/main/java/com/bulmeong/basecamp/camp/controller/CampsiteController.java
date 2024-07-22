@@ -1,5 +1,5 @@
 package com.bulmeong.basecamp.camp.controller;
-
+import java.util.Date;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,6 +18,8 @@ import com.bulmeong.basecamp.common.util.Utils;
 public class CampsiteController {
     @Autowired
     private CampsiteService campsiteService;
+    @Autowired
+    private Utils utils;
 
     @RequestMapping("unity")
     public String unity(){
@@ -26,16 +28,25 @@ public class CampsiteController {
 
     @RequestMapping("")
     public String mainPageByEmpty(){
+        utils.setSession("campsiteCategory", campsiteService.getCampsiteCategory());
+        CampsiteDto dto = utils.getSession("campsite");
+        utils.setSession("selectCategory", campsiteService.getCampsiteCategoriesByCampsiteId(dto.getId()));
         return "redirect:/camp/main";
     }
 
     @RequestMapping("/")
     public String mainPageBySlash(){
+        utils.setSession("campsiteCategory", campsiteService.getCampsiteCategory());
+        CampsiteDto dto = utils.getSession("campsite");
+        utils.setSession("selectCategory", campsiteService.getCampsiteCategoriesByCampsiteId(dto.getId()));
         return "redirect:/camp/main";
     }
 
     @RequestMapping("/main")
     public String mainPage(){
+        utils.setSession("campsiteCategory", campsiteService.getCampsiteCategory());
+        CampsiteDto dto = utils.getSession("campsite");
+        utils.setSession("selectCategory", campsiteService.getCampsiteCategoriesByCampsiteId(dto.getId()));
         return "camp/main";
     }
 
@@ -86,10 +97,12 @@ public class CampsiteController {
 
 
 
-
-
     @RequestMapping("/registerUserProcess")
-    public String registerUserProcess(@ModelAttribute CampsiteDto campsiteDto, @ModelAttribute CampsiteBankDto bankDto, @RequestParam("profileImage")MultipartFile profileImage){
+    public String registerUserProcess(
+        @ModelAttribute CampsiteDto campsiteDto, 
+        @ModelAttribute CampsiteBankDto bankDto, 
+        @RequestParam("profileImage")MultipartFile profileImage
+    ){
         campsiteService.insertCampsite(campsiteDto, bankDto, profileImage);
         return "store/registerComplete";
     }
@@ -97,8 +110,7 @@ public class CampsiteController {
     @RequestMapping("/registerCampProcess")
     public String registerCampProcess(CampsiteDto campsiteDto, @RequestParam("mainImage")MultipartFile[] mainImage, @RequestParam("mapImage")MultipartFile mapImage, @RequestParam("campsite_category") String[] categories){
         campsiteService.updateCampsite(campsiteDto, categories, mainImage, mapImage);
+        utils.setSession("campsite", campsiteService.getCampsiteDtoByAccount(campsiteDto));
         return "camp/main";
     }
-
-    
 }

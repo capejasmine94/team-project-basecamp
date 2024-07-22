@@ -23,17 +23,13 @@ public class CampsiteDto {
     private String map_image;
     private String profile_image;
     private String description;
-     @DateTimeFormat(pattern = "HH:mm")
-    private Date manner_start;
-    @DateTimeFormat(pattern = "HH:mm")
-    private Date manner_end;
-    @DateTimeFormat(pattern = "HH:mm")
-    private Date check_in;
-    @DateTimeFormat(pattern = "HH:mm")
-    private Date check_out;
-    @DateTimeFormat(pattern = "YYYY:MM:dd")
+    private String manner_start;
+    private String manner_end;
+    private String check_in;
+    private String check_out;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date peak_start_date;
-    @DateTimeFormat(pattern = "YYYY:MM:dd")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date peak_end_date;
     private String notice;
     private int adult_pay;
@@ -42,7 +38,10 @@ public class CampsiteDto {
     private int peak_pay;
     private int max_ordertime;
     private int read_count;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date opentime;
     private Date created_at;
+    private String facility_notice;
+    private String refund_notice;
     private String is_authenticated;
 }

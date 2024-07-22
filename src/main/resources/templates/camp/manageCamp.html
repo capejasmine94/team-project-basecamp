@@ -44,37 +44,46 @@
                                         <div class="col mx-2">
                                             <div class="row mt-3 align-items-center">
                                                 <div class="col-1 text-secondary text-end">캠핑장 이름</div>
-                                                <div class="col-4 fw-semibold">베어그릴스와 행복한 캠핑타임</div>
+                                                <div class="col-4">
+                                                    <span class= "fw-semibold" id="text_name" th:text="${session.campsite.name}">베어그릴스와 행복한 캠핑타임</span>
+                                                    <input class="form-control d-none" id="editable_name" name="name">
+                                                </div>
                                                 <div class="col-auto">
-                                                    <i class="bi bi-pencil-square text-primary"></i>
+                                                    <i class="bi bi-pencil-square text-primary" onclick="editableText('name')"></i>
                                                 </div>
                                             </div>
                                             <div class="row mt-4 align-items-center">
                                                 <div class="col-1 text-secondary text-end">주소</div>
-                                                <div class="col-4 fw-semibold">충북 제천시 백운면 구학산로 1038 (운학리)</div>
-                                                <div class="col-auto">
-                                                    <i class="bi bi-pencil-square text-primary"></i>
-                                                </div>
+                                                <div class="col-4 fw-semibold" th:text="${session.campsite.address} + ' ' + ${session.campsite.detail_address}">충북 제천시 백운면 구학산로 1038 (운학리)</div>
                                             </div>
                                             <div class="row mt-4 align-items-center">
                                                 <div class="col-1 text-secondary text-end">캠핑장 연락처</div>
-                                                <div class="col-4 fw-semibold">010-1234-1234</div>
+                                                <div class="col-4 fw-semibold"> 
+                                                    <span id="text_camp_phone" name="camp_phone" th:text="${session.campsite.camp_phone}">010-1234-1234</span>
+                                                    <input class="form-control d-none" id="editable_camp_phone" name="camp_phone">
+                                                </div>
                                                 <div class="col-auto">
-                                                    <i class="bi bi-pencil-square text-primary"></i>
+                                                    <i class="bi bi-pencil-square text-primary" onclick="editableText('camp_phone')"></i>
                                                 </div>
                                             </div>
                                             <div class="row mt-4 align-items-center">
                                                 <div class="col-1 text-secondary text-end">홈페이지</div>
-                                                <a class="col-4 fw-semibold" href="https://www.google.com/">https://www.google.com/</a>
+                                                <div class="col-4 fw-semibold">
+                                                    <a th:href="@{${session.campsite.url}}" id="text_url" th:text="${session.campsite.url}">https://www.google.com/</a>
+                                                    <input class="form-control d-none" id="editable_url" name="url">
+                                                </div>
                                                 <div class="col-auto">
-                                                    <i class="bi bi-pencil-square text-primary"></i>
+                                                    <i class="bi bi-pencil-square text-primary" onclick="editableText('url')"></i>
                                                 </div>
                                             </div>
                                             <div class="row mt-4 align-items-start">
                                                 <div class="col-1 text-secondary text-end">캠핑장 이메일</div>
-                                                <div class="col-4 fw-semibold">seller01@gamil.com</div>
+                                                <div class="col-4 fw-semibold">
+                                                    <span id="text_email" th:text="${session.campsite.email}"></span>
+                                                    <input class="form-control d-none" id="editable_email" name="email">
+                                                </div>
                                                 <div class="col-auto">
-                                                    <i class="bi bi-pencil-square text-primary"></i>
+                                                    <i class="bi bi-pencil-square text-primary" onclick="editableText('email')"></i>
                                                 </div>
                                             </div>
                                             <div class="row mt-4 mb-3">
@@ -82,12 +91,11 @@
                                                     <span>캠핑장 소개</span>
                                                 </div>
                                                 <div class="col-4 fw-semibold">
-                                                    <div>누구도 고생하지 않는 캠핑리조트</div>
-                                                    <div>어디에도 없을 감성적인 카라반, 넓은 사이트,</div>
-                                                    <div>자연과 문화가 공존하는 가장 완벽한 가족형 캠핑리조트를 만날 수 있습니다.</div>
+                                                    <div id="text_description" th:text="${session.campsite.description}"></div>
+                                                    <textarea class="form-control d-none" name="description" id="editable_description" cols="30" rows="5"></textarea>
                                                 </div>
                                                 <div class="col-auto">
-                                                    <i class="bi bi-pencil-square text-primary"></i>
+                                                    <i class="bi bi-pencil-square text-primary" onclick="editableText('description')"></i>
                                                 </div>
                                             </div>
                                         </div>
@@ -161,16 +169,12 @@
                                                 <div>이후에 서비스 사용 재제, 영구 정지 또는 법적 조치로 이어질 수 있습니다.</div>
                                             </div>
                                         </div>
-                                        <div class="row">
+                                        <div class="row justify-content-between">
                                             <div class="col-8 ms-3 mt-2 px-0">
-                                                <input name="campsite_category" type="checkbox" class="btn-check" id="1" autocomplete="off">
-                                                <label class="btn ms-2 mb-2 rounded-5 btn-outline-primary" for="1">카테고리1</label>
-        
-                                                <input name="campsite_category" type="checkbox" class="btn-check" id="2" autocomplete="off">
-                                                <label class="btn ms-2 mb-2 rounded-5 btn-outline-primary" for="2">카테고리2</label>
-        
-                                                <input name="campsite_category" type="checkbox" class="btn-check" id="3" autocomplete="off">
-                                                <label class="btn ms-2 mb-2 rounded-5 btn-outline-primary" for="3">카테고리3</label>
+                                                <span th:each="camp_category : ${session.campsiteCategory}">
+                                                    <input name="campsite_category" type="checkbox" class="btn-check" th:id="'campCategory' + ${camp_category.id}" th:value="${camp_category.id}" autocomplete="off" th:checked="${session.selectCategory.contains(camp_category.id)}">
+                                                    <label class="btn ms-2 mb-2 rounded-5 btn-outline-primary" th:for="'campCategory' + ${camp_category.id}"><span th:text="${camp_category.name}"></span></label>
+                                                </span>
                                             </div>
                                         </div>
                                     </div>
@@ -218,7 +222,7 @@
                                         </div>
                                         <div class="row mt-3">
                                             <div class="col-8 mx-3">
-                                                <textarea class="form-control" rows="5"></textarea>
+                                                <textarea class="form-control" rows="5" th:text="${session.campsite.notice}"></textarea>
                                             </div>
                                         </div>
 
@@ -227,7 +231,7 @@
                                         </div>
                                         <div class="row mt-3">
                                             <div class="col-8 mx-3">
-                                                <textarea class="form-control" rows="5"></textarea>
+                                                <textarea class="form-control" rows="5" th:text="${session.campsite.facility_notice}"></textarea>
                                             </div>
                                         </div>
 
@@ -236,7 +240,7 @@
                                         </div>
                                         <div class="row mt-3 mb-3">
                                             <div class="col-8 mx-3">
-                                                <textarea class="form-control" rows="5"></textarea>
+                                                <textarea class="form-control" rows="5" th:text="${session.campsite.refund_notice}"></textarea>
                                             </div>
                                         </div>
                                     </div>
@@ -303,7 +307,7 @@
                                                     체크인
                                                 </div>
                                                 <div class="col-2 pe-0">
-                                                    <input name="check_in" class="form-control text-end" type="time" id="max_ordertime">
+                                                    <input name="check_in" class="form-control text-end" type="time" id="check_in" th:value="${session.campsite.check_in}">
                                                 </div>
                                             </div>
                                             <div class="row mt-2">
@@ -311,7 +315,7 @@
                                                     체크아웃
                                                 </div>
                                                 <div class="col-2 pe-0">
-                                                    <input name="check_out" class="form-control text-end" type="time" id="max_ordertime">
+                                                    <input name="check_out" class="form-control text-end" type="time" id="check_out" th:value="${session.campsite.check_out}">
                                                 </div>
                                             </div>
                                         </div>
@@ -329,13 +333,13 @@
                                             </div>
                                             <div class="row mt-2">
                                                 <div class="col-2 pe-0">
-                                                    <input name="manner_start" class="form-control text-end" type="time" id="max_ordertime">
+                                                    <input name="manner_start" class="form-control text-end" type="time" id="manner_start" th:value="${session.campsite.manner_start}">
                                                 </div>
                                                 <div class="col-auto mt-1 fw-semibold">
                                                     부터
                                                 </div>
                                                 <div class="col-2 pe-0">
-                                                    <input name="manner_end" class="form-control text-end" type="time" id="max_ordertime">
+                                                    <input name="manner_end" class="form-control text-end" type="time" id="manner_end" th:value="${session.campsite.manner_end}">
                                                 </div>
                                                 <div class="col-auto mt-1 fw-semibold">
                                                     까지
@@ -356,7 +360,7 @@
                                             </div>
                                             <div class="row mt-2">
                                                 <div class="col-2 pe-0">
-                                                    <input name="max_ordertime" class="form-control text-end" type="text" id="max_ordertime" value="7">
+                                                    <input name="max_ordertime" class="form-control text-end" type="text" id="max_ordertime" th:value="${session.campsite.max_ordertime}">
                                                 </div>
                                                 <div class="col-auto mt-1 fw-semibold">
                                                     일

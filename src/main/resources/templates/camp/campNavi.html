@@ -161,22 +161,22 @@
 </div>
 
  <!-- 상단 바 -->
- <div th:fragment="topNavi" class="resizeMenu row fixed-top ms-2 right"  style="z-index: 2;">
+<div th:fragment="topNavi" class="resizeMenu row fixed-top ms-2 right"  style="z-index: 2;">
     <div class="col bg-white">
-         <div class="row flex-column ">
-              <!-- 공지 (뻥이지롱) -->
-             <div class="col border-bottom border-top mt-1 pt-1 pb-1 fw-bold">
-                 <span class="text-danger me-2">[공지]</span><span>멸종 위기 사카밤바스피스 보호 시급</span>
-             </div>
-             <!-- 본문 상단 바 -->
-             <div class="col pb-3 pt-3 border-bottom">
-                 <div class="row justify-content-between">
-                     <div id="title" th:text="${session.pageInfo.pageDetail}" class="col-auto fs-3 fw-bold ms-2">마이 페이지</div>
-                     <div class="col-auto me-3" th:if="${session.pageInfo.isButtonActive == 'T'}">
-                         <button id="saveStateButton" type="button" class="btn btn-primary px-3 me-2">저장</button>
-                     </div>
-                 </div>
-             </div>
-         </div>
+        <div class="row flex-column ">
+            <!-- 공지 (뻥이지롱) -->
+            <div class="col border-bottom border-top mt-1 pt-1 pb-1 fw-bold">
+                <span class="text-danger me-2">[공지]</span><span>멸종 위기 사카밤바스피스 보호 시급</span>
+            </div>
+            <!-- 본문 상단 바 -->
+            <div class="col pb-3 pt-3 border-bottom">
+                <div class="row justify-content-between">
+                    <div id="title" th:text="${session.pageInfo.pageDetail}" class="col-auto fs-3 fw-bold ms-2">마이 페이지</div>
+                    <div class="col-auto me-3" th:if="${session.pageInfo.isButtonActive == 'T'}">
+                        <button id="saveStateButton" type="button" class="btn btn-primary px-3 me-2">저장</button>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </div>

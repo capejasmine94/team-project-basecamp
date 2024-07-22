@@ -136,3 +136,23 @@ function logOut() {
       location.href = '/seller/login';
     });
 }
+
+function editableText(name) {
+  const node = document.getElementById('editable_' + name);
+  const text = document.getElementById('text_' + name);
+  if(node.classList.contains('d-none')){
+    node.classList.remove('d-none');
+    node.value = text.innerText;
+    text.classList.add('d-none');
+  }
+  else { 
+    node.classList.add('d-none');
+    text.innerText = node.value;
+    if(name == 'url'){
+      console.log("아니");
+      text.href = text.innerText;
+    }
+    text.classList.remove('d-none');
+  }
+}
+

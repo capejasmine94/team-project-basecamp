@@ -99,14 +99,8 @@ public class CampsiteService {
         return campsiteSqlMapper.newCampsiteID();
     }
 
-    public List<CampsiteCategoryDto> getCampsiteCategoriesByCampsiteId(int id) { 
-        List<CampsiteSelectCategoryDto> list = campsiteSqlMapper.getSelectCategoriesByCampsiteId(id);
-        List<CampsiteCategoryDto> result = new ArrayList<>();
-        for(CampsiteSelectCategoryDto catrgory : list) {
-            CampsiteCategoryDto categoryDto = campsiteSqlMapper.getCategoryBySelectCategoryId(catrgory.getId());
-            result.add(categoryDto);
-        }
-        return result;
+    public List<Integer> getCampsiteCategoriesByCampsiteId(int id) { 
+        return campsiteSqlMapper.getSelectCategoriesByCampsiteId(id);
     }
 
     // 캠핑장 카테고리

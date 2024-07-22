@@ -85,7 +85,7 @@
             address = #{address},
             postcode = #{postcode},
             detail_address = #{detail_address},
-            phone = #{phone},
+            camp_phone = #{camp_phone},
             email = #{email},
             url = #{url},
             description = #{description},
@@ -129,7 +129,7 @@
     <select id="getCategoryBySelectCategoryId" resultType="com.bulmeong.basecamp.camp.dto.CampsiteCategoryDto">
         select * from bc_campsite_category where id = #{id}
     </select>
-    <select id="getSelectCategoriesByCampsiteId" resultType="com.bulmeong.basecamp.camp.dto.CampsiteSelectCategoryDto">
-        select * from bc_campsite_select_category where campsite_id = #{id}
+    <select id="getSelectCategoriesByCampsiteId" resultType="int">
+        select category_id from bc_campsite_select_category where campsite_id = #{id}
     </select>
 </mapper>

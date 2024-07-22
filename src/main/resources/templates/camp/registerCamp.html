@@ -219,7 +219,25 @@
                                     </div>
                                     <div class="row mt-3">
                                         <div class="col-8 mx-3">
-                                            <textarea name="notice" class="form-control" rows="5"></textarea>
+                                            <textarea class="form-control" rows="5" th:text="${session.campsite.notice}"></textarea>
+                                        </div>
+                                    </div>
+
+                                    <div class="row mt-4">
+                                        <div class="col ms-3 fw-semibold">시설 이용안내</div>
+                                    </div>
+                                    <div class="row mt-3">
+                                        <div class="col-8 mx-3">
+                                            <textarea class="form-control" rows="5" th:text="${session.campsite.facility_notice}"></textarea>
+                                        </div>
+                                    </div>
+
+                                    <div class="row mt-4">
+                                        <div class="col ms-3 fw-semibold">환불 유의사항</div>
+                                    </div>
+                                    <div class="row mt-3 mb-3">
+                                        <div class="col-8 mx-3">
+                                            <textarea class="form-control" rows="5" th:text="${session.campsite.refund_notice}"></textarea>
                                         </div>
                                     </div>
                                 </div>

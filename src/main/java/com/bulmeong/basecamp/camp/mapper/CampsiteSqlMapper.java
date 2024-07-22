@@ -25,5 +25,5 @@ public interface CampsiteSqlMapper {
     public int newCampsiteID();
     public List<CampsiteCategoryDto> getCampsiteCategory();
     public CampsiteCategoryDto getCategoryBySelectCategoryId(int id);
-    public List<CampsiteSelectCategoryDto> getSelectCategoriesByCampsiteId(@Param("id") int campsite_id);
+    public List<Integer> getSelectCategoriesByCampsiteId(@Param("id") int campsite_id);
 }
