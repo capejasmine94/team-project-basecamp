@@ -44,8 +44,8 @@ public class ImageUtil {
         String extention = originalFilename.substring(originalFilename.lastIndexOf("."));
         LocalDateTime localDateTime = LocalDateTime.now();
         DateTimeFormatter format = DateTimeFormatter.ofPattern("yyyy/MM/dd");
-
-        String filePath = (System.getProperty("os.name").charAt(0) == 'M' ? "Users" : "") + "/basecampImage/";
+        String userHome = System.getProperty("user.home");
+        String filePath = (System.getProperty("os.name").charAt(0) == 'M' ? userHome +  "Users" : "") + "/basecampImage/";
 
         String existDate = localDateTime.format(format);
         String Path = filePath + existDate + "/";
