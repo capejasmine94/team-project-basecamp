@@ -16,6 +16,8 @@ public class CampingcarDto {
     private String short_description;
     private String detailed_description;
     private int rental_fee;
+    private int rental_fee_weekdays;
+    private int rental_fee_weekend;
     private String garage_address;
     private String overnight_stay;
     private int seating_capacity;

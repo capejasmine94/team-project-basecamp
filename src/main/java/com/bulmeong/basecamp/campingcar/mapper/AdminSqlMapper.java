@@ -43,6 +43,10 @@ public interface AdminSqlMapper {
     public List<DriverExperienceCondDto> findDriverExperienceAll();
     // 캠핑카 기본 보유 시설 Category 
     public List<BasicFacilitiesDto> findBasicFacilitiesAll();
-    
 
+    // 차량등록_차량등록 세부 이미지
+    public void createDetailImg(@Param("product_id")int product_id, 
+                                @Param("location")String location,
+                                @Param("original_filename")String original_filename);
+    
 }

@@ -79,19 +79,24 @@
                                             <div class="card-body">
                                                 <div class="form-group">
                                                     <label for="product_name" class="control-label fw-semibold pb-3">등록차량명</label>
-                                                    <input name="product_name" type="text" class="form-control custom-bottom-border" placeholder="등록차량명을 입력하세요" id="product_name" maxlength="200">
+                                                    <input name="product_name" type="text" class="form-control custom-bottom-border ps-0" placeholder="등록차량명을 입력하세요" id="product_name" maxlength="200">
+                                                    <div class="new-fs-7" style="color: #7C7B7B;">차량 명칭은 <span class="fw-bold text-danger">최대 200자 내로</span> 입력해 주세요. 간결하고 명확한 명칭이 고객에게 더욱 직관적입니다.</div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="col-6 px-0"> <!-- 썸네일 이미지 등록 -->
-                                        
                                         <div class="card">
                                             <div class="card-body">
                                                 <div class="form-group">
                                                     <div class="">
                                                         <label for="main_img" class="control-label fw-semibold pb-3"> 썸네일 이미지 </label>
                                                         <div id="upload_main_image"></div>
+                                                        <div class="new-fs-7">
+                                                            <div style="color: #7C7B7B;">최대 업로드 사이즈 : <span class="fw-bold text-dark">256 MB. 파일</span>을 첨부하세요.</div>
+                                                            <div style="color: #7C7B7B;">파일은 <span class="fw-bold text-dark">JPEG, PNG 형식</span>으로 업로드해 주세요.</div>
+                                                            <div style="color: #7C7B7B;">※ 업로드하는 모든 이미지는 <sapn class="fw-bold text-danger">저작권법을 준수</sapn>해야 하며, <div class="fst-italic fw-bold text-decoration-underline">저작권 침해가 의심되는 경우, <span class="fw-bold text-danger">해당 이미지는 제거</span>될 수 있습니다.</div></div>
+                                                        </div>
                                                     </div> 
                                                     <!-- <div class="upload-container" id="main_img">
                                                         <img id="main_img" alt="썸네일 이미지 미리보기" style="display:none;">
@@ -110,7 +115,8 @@
                                             <div class="card-body">
                                                 <div class="form-group">
                                                     <label for="short_description" class="control-label fw-semibold pb-3">한줄 소개</label>
-                                                    <input name="short_description" type="text" class="form-control custom-bottom-border" placeholder="한줄 소개 입력하세요" id="short_description" maxlength="200">
+                                                    <input name="short_description" type="text" class="form-control custom-bottom-border ps-0" placeholder="한줄 소개 입력하세요" id="short_description" maxlength="200">
+                                                    <div class="new-fs-7" style="color: #7C7B7B;">한 줄 소개는 <span class="fw-bold text-danger">최대 100자까지</span> 입력 가능합니다. 차량의 핵심 매력을 간단명료하게 표현해 주세요.</div>
                                                 </div>
                                             </div>
                                         </div>
@@ -124,6 +130,9 @@
                                                 <div class="form-group">
                                                     <label for="detailed_description" class="control-label fw-semibold pb-3">캠핑카 소개</label>
                                                     <textarea name="detailed_description" class="form-control" placeholder="해당 차량에 대해 상세하게 소개하세요" id="detailed_description"></textarea>
+                                                    <div class="new-fs-7" style="color: #7C7B7B;">차량의 상세 정보를 입력할 때는 정확성을 기해 주십시오. 해당 정보는 고객이 차량을 선택하는 중요한 기준이 됩니다.</div>
+                                                    <div class="new-fs-7" style="color: #7C7B7B;">모든 필드를 완성하고 정보가 최신 상태인지 확인하세요. 정확하지 않은 정보는 고객의 실망을 초래할 수 있습니다.</div>
+                                                    <div class="new-fs-7" style="color: #7C7B7B;"> <span class="fw-bold text-danger">최대 1000자까지</span> 입력 가능합니다.</div>
                                                 </div>
                                             </div>
                                         </div>
@@ -138,6 +147,11 @@
                                                 <div class="form-group">
                                                     <label for="detailedImg" class="control-label fw-semibold pb-3">상세 이미지</label>
                                                     <div id="upload_detailedImg"></div>
+                                                    <div class="new-fs-7">
+                                                        <div style="color: #7C7B7B;">최대 업로드 사이즈 : <span class="fw-bold text-dark">256 MB. 파일</span>을 첨부하세요.</div>
+                                                        <div style="color: #7C7B7B;">파일은 <span class="fw-bold text-dark">JPEG, PNG 형식</span>으로 업로드해 주세요.</div>
+                                                        <div style="color: #7C7B7B;">※ 업로드하는 모든 이미지는 <sapn class="fw-bold text-danger">저작권법을 준수</sapn>해야 하며, <div class="fst-italic fw-bold text-decoration-underline">저작권 침해가 의심되는 경우, <span class="fw-bold text-danger">해당 이미지는 제거</span>될 수 있습니다.</div></div>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
@@ -150,7 +164,8 @@
                                             <div class="card-body">
                                                 <div class="form-group">
                                                     <label for="garage_address" class="control-label fw-semibold pb-3">차고지 주소</label>
-                                                    <input name="garage_address" type="text" class="form-control custom-bottom-border" placeholder="차고지 주소를 입력하세요" id="garage_address" maxlength="200">
+                                                    <input name="garage_address" type="text" class="form-control custom-bottom-border ps-0" placeholder="차고지 주소를 입력하세요" id="garage_address" maxlength="200">
+                                                    <div class="new-fs-7" style="color: #7C7B7B;">차고지 주소는 정확하게 입력해 주세요. 부정확한 주소는 예약시 고객의 혼란을 야기할 수 있습니다.</div>
                                                 </div>
                                             </div>
                                         </div>
@@ -168,7 +183,7 @@
                                                         <div class="row d-flex justify-content-between">
                                                             <div class="col">
                                                                 <label for="overnight_stay" class="control-label new-fs-85 fw-semibold pb-3">1박 시간 기준</label>
-                                                                <input name="overnight_stay" type="text" class="form-control custom-bottom-border" id="overnight_stay" maxlength="5" placeholder="예: 24시간">
+                                                                <input name="overnight_stay" type="text" class="form-control custom-bottom-border ps-0" id="overnight_stay" maxlength="5" placeholder="예: 24시간">
                                                             </div>
                                                         </div>
                                                     </div>
@@ -177,12 +192,13 @@
                                                         <div class="row d-flex justify-content-between">
                                                             <div class="col">
                                                                 <label for="seating_capacity" class="control-label new-fs-85 fw-semibold pb-3">동승인원수</label>
-                                                                <input name="seating_capacity" type="number" class="form-control custom-bottom-border" id="seating_capacity" min="1" max="5">
+                                                                <input name="seating_capacity" type="number" class="form-control custom-bottom-border new-fs-85 ps-0" id="seating_capacity" min="1" max="5">
                                                                 <div class="new-fs-7" style="color: #7C7B7B;">기준 동승인원까지는 추가 요금을 받지 않습니다.</div>
                                                             </div>
                                                             <div class="col">
                                                                 <label for="sleeping_capacity" class="control-label new-fs-85 fw-semibold pb-3">취침인원수</label>
-                                                                <input name="sleeping_capacity" type="number" class="form-control custom-bottom-border" id="sleeping_capacity" min="1" max="5">
+                                                                <input name="sleeping_capacity" type="number" class="form-control custom-bottom-border new-fs-85 ps-0" id="sleeping_capacity" min="1" max="5">
+                                                                <div class="new-fs-7" style="color: #7C7B7B;">기준 취침인원수까지는 추가 요금을 받지 않습니다.</div>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -191,11 +207,11 @@
                                                         <div class="row d-flex justify-content-between">
                                                             <div class="col">
                                                                 <label for="avaid_time" class="control-label new-fs-85 fw-semibold pb-3">출고가능시간</label>
-                                                                <input name="avaid_time" type="time" class="form-control custom-bottom-border" id="avaid_time">
+                                                                <input name="avaid_time" type="time" class="form-control custom-bottom-border ps-0" id="avaid_time">
                                                             </div>
                                                             <div class="col">
                                                                 <label for="return_dateTime" class="control-label new-fs-85 fw-semibold pb-3">반납가능시간</label>
-                                                                <input name="return_dateTime" type="time" class="form-control custom-bottom-border" id="return_dateTime">
+                                                                <input name="return_dateTime" type="time" class="form-control custom-bottom-border ps-0" id="return_dateTime">
                                                             </div>
                                                         </div>
                                                     </div>
@@ -294,13 +310,119 @@
                             </div>
                             <!-- 2단계 -->
                             <div id="step-2" class="step-container px-4">
+                                <!-- 캠핑카 기본 정보 -->
                                 <div class="row pt-3">
                                     <div class="col px-0">
                                         <div class="card">
-                                            <div class="card-body">
-                                                <div class="form-group">
-                                                    <label for="rental_fee" class="control-label new-fs-85 fw-semibold pb-3">차량대여료</label>
-                                                    <input name="rental_fee" type="number" class="form-control custom-bottom-border" id="rental_fee"  placeholder="예: 240,000원">
+                                            <div class="card-head fw-semibold py-3 px-3">
+                                                <head>기본정보</head>
+                                                <div class="card-body">
+                                                    <!-- 각종 기간 설정 안내 고지  -->
+                                                    <div class="form-group">
+                                                        <div class="row font-robot">
+                                                            <div class="col margin-0">
+                                                                <div class="alert alert-info border-5 border-top-0 border-end-0 border-bottom-0 border-primary-subtle fw-normal new-fs-9" style="background: #FAFAFA;">
+                                                                    성수기 등 각종 기간 설정은 <span style="color: blue;">성수기/휴일 관리</span>에서 가능합니다.
+                                                                    기간명에 체크하지 않으면 해당 기간으로 설정되어도 비수기 가격으로 설정됩니다.
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <!-- 차량 대여료(비수기,성수기) -->
+                                                    <div class="form-group">
+                                                        <div class="row new-fs-85 fw-normal text-secondary d-flex justify-content-between">
+                                                            <div class="col-1"></div>
+                                                            <div class="col text-start">
+                                                                <label for="rental_fee_weekdays" class="control-label new-fs-85 fw-bold">주중/평일</label>
+                                                                <span class="new-fs-7 text-dark">(평일은 월요일~목요일까지 해당됩니다.)</span>
+                                                            </div>
+                                                            <div class="col text-start">
+                                                                <label for="rental_fee_weekend" class="control-label new-fs-85 fw-bold">주말</label>
+                                                                <span class="new-fs-7" style="color: #7C7B7B;">(평일 금요일~주말 일요일까지 해당됩니다.)</span>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row mt-2 new-fs-85 pb-3">
+                                                            <div class="col-1 py-2">
+                                                                <div class="form-check">
+                                                                    <input class="form-check-input" type="checkbox" checked value="비수기" id="offSeason">
+                                                                    <label class="form-check-label" for="offSeason">
+                                                                        비수기
+                                                                    </label>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col">
+                                                                <input name="rental_fee_weekdays" type="text" class="form-control custom-bottom-border new-fs-85 ps-0" id="rental_fee_weekdays_off" placeholder="KRW 0">
+
+                                                            </div>
+                                                            <div class="col">
+                                                                <input name="rental_fee_weekend" type="text" class="form-control custom-bottom-border new-fs-85 ps-0" id="rental_fee_weekend_off" placeholder="KRW 0">
+                                                            </div>
+                                                        </div>
+                                                        <div class="row mt-2 new-fs-85 pb-3">
+                                                            <div class="col-1 py-2">
+                                                                <div class="form-check">
+                                                                    <input class="form-check-input" type="checkbox" value="성수기" id="peakSeason">
+                                                                    <label class="form-check-label" for="peakSeason">
+                                                                        성수기
+                                                                    </label>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col">
+                                                                <input name="weekdays_price" type="text" class="form-control custom-bottom-border new-fs-85 ps-0" id="rental_fee_weekdays_peak" placeholder="KRW 0">
+                                                            </div>
+                                                            <div class="col">
+                                                                <input name="weekend_price" type="text"  class="form-control custom-bottom-border new-fs-85 ps-0" id="rental_fee_weekend_peak" placeholder="KRW 0">
+                                                            </div>
+                                                        </div>
+                                                        <div class="row mt-2 new-fs-85 pb-3">
+                                                            <div class="col-1 py-2">
+                                                                <div class="form-check">
+                                                                    <input class="form-check-input" type="checkbox" value="준성수기" id="semiPeakSeason">
+                                                                    <label class="form-check-label" for="semiPeakSeason">
+                                                                        준성수기
+                                                                    </label>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col">
+                                                                <input type="text" class="form-control custom-bottom-border new-fs-85 ps-0" id="rental_fee_weekdays_semi_peak" placeholder="KRW 0">
+                                                            </div>
+                                                            <div class="col">
+                                                                <input type="text" class="form-control custom-bottom-border new-fs-85 ps-0" id="rental_fee_weekend_semi_peak" placeholder="KRW 0">
+                                                            </div>
+                                                        </div>
+                                                        <div class="row mt-2 new-fs-85 pb-3">
+                                                            <div class="col-1 py-2">
+                                                                <div class="form-check">
+                                                                    <input class="form-check-input" type="checkbox" value="할인기간" id="discountPeriod">
+                                                                    <label class="form-check-label" for="discountPeriod">
+                                                                        할인기간
+                                                                    </label>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col">
+                                                                <input type="text" class="form-control custom-bottom-border new-fs-85 ps-0" id="rental_fee_weekdays_discount" placeholder="KRW 0">
+                                                            </div>
+                                                            <div class="col">
+                                                                <input type="text" class="form-control custom-bottom-border new-fs-85 ps-0" id="rental_fee_weekend_discount" placeholder="KRW 0">
+                                                            </div>
+                                                        </div>
+                                                        <div class="row mt-2 new-fs-85">
+                                                            <div class="col-1 py-2">
+                                                                <div class="form-check">
+                                                                    <input class="form-check-input" type="checkbox" value="" id="designatedPeriod">
+                                                                    <label class="form-check-label" for="designatedPeriod">
+                                                                        지정기간
+                                                                    </label>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col">
+                                                                <input type="text" class="form-control custom-bottom-border new-fs-85 ps-0" id="rental_fee_weekdays_designated" placeholder="KRW 0">
+                                                            </div>
+                                                            <div class="col">
+                                                                <input type="text" class="form-control custom-bottom-border new-fs-85 ps-0" id="rental_fee_weekend_designated" placeholder="KRW 0">
+                                                            </div>
+                                                        </div>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
@@ -359,14 +481,14 @@
                                                         <div class="row d-flex justify-content-between">
                                                             <div class="col">
                                                                 <label for="min" class="control-label new-fs-85 fw-semibold pb-3">최소 예약 일수</label>
-                                                                    <input type="number" class="form-control custom-bottom-border" id="min" min="1" max="5">
-                                                                    <div class="new-fs-7" style="color: #7C7B7B;">허용 가능한 최소 예약 기간을 입력합니다.</div>
+                                                                    <input type="number" class="form-control custom-bottom-border new-fs-85 ps-0" id="min" min="1" max="5">
+                                                                    <div class="new-fs-7" style="color: #7C7B7B;">허용 가능한 <span class="text-danger">최소 예약 기간</span>을 입력합니다.</div>
                                                                 </label>
                                                             </div>
                                                             <div class="col">
                                                                 <label for="max" class="control-label new-fs-85 fw-semibold pb-3">최대 예약 일수</label>
-                                                                    <input type="number" class="form-control custom-bottom-border" id="max" min="1" max="5">
-                                                                    <div class="new-fs-7" style="color: #7C7B7B;">허용 가능한 최대 예약 기간을 입력합니다.</div>
+                                                                    <input type="number" class="form-control custom-bottom-border new-fs-85 ps-0" id="max" min="1" max="5">
+                                                                    <div class="new-fs-7" style="color: #7C7B7B;">허용 가능한 <span class="text-danger">최대 예약 기간</span>을 입력합니다.</div>
                                                                 </label> 
                                                             </div>
                                                         </div>
@@ -383,14 +505,14 @@
                                             <div class="card-body">
                                                 <!-- 취소 규정-->
                                                 <div class="form-group">
-                                                    <div class="row d-flex justify-content-between">
+                                                    <div class="row">
                                                         <div class="col" name="cancellation _policy">
-                                                            <label for="overnightStay" class="control-label fw-semibold pb-3">취소 규정</label>
-                                                            <div class="fs">
-                                                                <div class="new-fs-9">- 출발일 기준 7일전 취소시 : 80% 환불</div>
-                                                                <div class="new-fs-9">- 출발일 기준 6일~4일전 취소시 : 50% 환불</div>
-                                                                <div class="new-fs-9">- 출발일 기준 3일~당일 취소시 : 환불 불가</div>
-                                                            </div>
+                                                            <label for="cancellationPolicy" class="control-label fw-semibold pb-3">취소 규정</label>
+                                                            <textarea id="cancellationPolicy" class="form-control" rows="3" cols="50" name="cancellationPolicy" readonly>
+                                                            - 출발일 기준 7일전 취소시: 80% 환불
+                                                            - 출발일 기준 6일~4일전 취소시: 50% 환불
+                                                            - 출발일 기준 3일~당일 취소시: 환불 불가
+                                                            </textarea>
                                                         </div>
                                                     </div>
                                                 </div>

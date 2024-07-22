@@ -94,9 +94,13 @@ public class AdminController {
     // 차량등록 insert 
     @RequestMapping("carRegisterProgress")
     public String carRegisterProgress(CampingcarDto campingcarDto,@RequestParam("main_image")MultipartFile main_image
+                                     ,@RequestParam("detailedImg") MultipartFile[] detailedImg
                                      ,@RequestParam(value = "basicFacilites_id") List<Integer> basicFacilites_id) {
             campingcarDto.setMain_img(ImageUtil.saveImageAndReturnLocation(main_image));
-            adminService.registerCamping(campingcarDto,basicFacilites_id);
+
+
+            adminService.registerCamping(campingcarDto,basicFacilites_id,detailedImg);
+            System.out.println("111111111111"+ campingcarDto+basicFacilites_id+detailedImg);
         return "redirect:/admin/main";
     }
 

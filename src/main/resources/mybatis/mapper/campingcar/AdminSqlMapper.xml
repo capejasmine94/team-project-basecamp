@@ -42,12 +42,12 @@
         </selectKey>
         insert into bc_campingcar (
             rental_company_id, category_id, product_name, main_img, short_description, detailed_description,
-            rental_fee, garage_address, overnight_stay, seating_capacity, sleeping_capacity, avaid_time, 
+            rental_fee_weekdays, rental_fee_weekend, garage_address, overnight_stay, seating_capacity, sleeping_capacity, avaid_time, 
             return_dateTime, driver_license_id, driver_experience_id, driver_age_id, pet_friendly,
             cancellation_policy, is_opened, update_date
         )values(
             #{rental_company_id}, #{category_id}, #{product_name}, #{main_img}, #{short_description}, #{detailed_description},
-            #{rental_fee}, #{garage_address}, #{overnight_stay}, #{seating_capacity}, #{sleeping_capacity}, #{avaid_time}, 
+            #{rental_fee_weekdays}, #{rental_fee_weekend}, #{garage_address}, #{overnight_stay}, #{seating_capacity}, #{sleeping_capacity}, #{avaid_time}, 
             #{return_dateTime}, #{driver_license_id}, #{driver_experience_id}, #{driver_age_id}, #{pet_friendly},
             #{cancellation_policy}, #{is_opened}, #{update_date}
         )
@@ -83,6 +83,15 @@
         select * from bc_car_basic_facilities 
         order by id ASC
     </select> 
+
+    <!-- 차량등록_상세이미지 -->
+    <insert id="createDetailImg">
+    insert into bc_product_detail_img(
+        product_id,location,original_filename
+    ) values(
+    #{product_id}, #{location}, #{original_filename}
+    )
+    </insert>
 
 
 </mapper>

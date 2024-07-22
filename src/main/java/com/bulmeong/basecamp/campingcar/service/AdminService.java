@@ -1,11 +1,13 @@
 package com.bulmeong.basecamp.campingcar.service;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.bulmeong.basecamp.campingcar.dto.BasicFacilitiesDto;
 import com.bulmeong.basecamp.campingcar.dto.CampingcarDto;
@@ -14,8 +16,11 @@ import com.bulmeong.basecamp.campingcar.dto.DriverAgeCondDto;
 import com.bulmeong.basecamp.campingcar.dto.DriverExperienceCondDto;
 import com.bulmeong.basecamp.campingcar.dto.DriverLicenseDto;
 import com.bulmeong.basecamp.campingcar.dto.LocationDto;
+import com.bulmeong.basecamp.campingcar.dto.ProductDetailImgDto;
 import com.bulmeong.basecamp.campingcar.dto.RentalCompanyDto;
 import com.bulmeong.basecamp.campingcar.mapper.AdminSqlMapper;
+import com.bulmeong.basecamp.common.dto.ImageDto;
+import com.bulmeong.basecamp.common.util.ImageUtil;
 
 @Service
 public class AdminService {
@@ -46,12 +51,32 @@ public class AdminService {
 
 
     // 차량등록 
-    public void registerCamping(CampingcarDto campingCar, List<Integer> basicFacilites_id) {
+    public void registerCamping(CampingcarDto campingCar, List<Integer> basicFacilites_id, MultipartFile[] detailedImg) {
         adminSqlMapper.createCamping(campingCar);
         int product_id = campingCar.getId();
         for(int basic_facilities_id :basicFacilites_id) {
             adminSqlMapper.createCarBasic(basic_facilities_id,product_id);
         }
+
+        // 최종 DetailImageList 담을 인스턴스 생성
+        List<ProductDetailImgDto> productImageList = new ArrayList<>();
+
+        List<ImageDto> ImgeDtoList = ImageUtil.saveImageAndReturnDtoList(detailedImg);
+        for(ImageDto imgeDto : ImgeDtoList){
+            ProductDetailImgDto productDetailImgDto = new ProductDetailImgDto();
+            productDetailImgDto.setLocation(imgeDto.getLocation());
+            productDetailImgDto.setOriginal_filename(imgeDto.getOrigin_filename());
+            productDetailImgDto.setProduct_id(campingCar.getId());
+
+            productImageList.add(productDetailImgDto);
+            
+            adminSqlMapper.createDetailImg(productDetailImgDto.getProduct_id(), 
+                                           productDetailImgDto.getLocation(),
+                                           productDetailImgDto.getOriginal_filename());
+                                           
+            System.out.println("insert" + productDetailImgDto);
+        }
+
     }
 
     // 차량등록_캠핑카 유형 Category List
