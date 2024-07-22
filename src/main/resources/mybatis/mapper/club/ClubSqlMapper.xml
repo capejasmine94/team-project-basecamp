@@ -348,6 +348,12 @@
         where meeting_id = #{meeting_id}
     </select>
 
+    <!-- 정모 개수 카운트 -->
+    <select id="countTotalMeeting" resultType="int">
+        select count(*) from bc_club_meeting
+        where club_id = #{club_id}     
+    </select>
+
 
 
 </mapper>

@@ -10,21 +10,16 @@
       
   
         <div class="container">
-            <span>소모임 가입 페이지</span>
+
 
             <!-- 전체 박스 -->
             <div class="row px-4">
                 <div class="col">
 
-                    <form action="/club/joinClubProcess">
-<!-- ////////////////////////club_id 수정 필요/////////////////////////////// -->
+                    <form action="/club/joinClubProcess" method="post">
                         <div class="row">
                             <div class="col">
                                 <input name="club_id" type="hidden" th:value="${id}" >
-                                <input name="user_id" type="hidden" th:value="${session.sessionUserInfo.id}" >
-                                <input name="role_id" type="hidden" value="3" >
-                                <!-- hidden으로 넘어와야 할 부분 club_id, user_id, role_id(default로 3 스태프) -->
-                                <!-- 클럽에 가입할 때 한 아이디로 2번 가입을 못하게 하려면? user_id가 존재하는지 확인? -->
                                 <button class="form-control btn btn-success">가입하기</button>  
                             </div>
                         </div>

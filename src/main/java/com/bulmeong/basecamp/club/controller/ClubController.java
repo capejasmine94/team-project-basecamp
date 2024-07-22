@@ -49,7 +49,7 @@ public class ClubController {
 
     @RequestMapping("main")
     public String clubMain(HttpSession session, Model model){
-        util.loginUser(4);
+        util.loginUser(3);
 
         UserDto userDto = (UserDto)session.getAttribute("sessionUserInfo");
         List<ClubRegionCategoryDto> regionCategoryDtoList = clubService.findRegionCategory();
@@ -85,6 +85,9 @@ public class ClubController {
 
         List<Map<String,Object>>  clubMeetingDataList =clubService.selectClubMeetingDtoList(id);
         model.addAttribute("clubMeetingDataList", clubMeetingDataList);
+
+        int totalMeetings = clubService.countTotalMeeting(id);
+        model.addAttribute("totalMeetings", totalMeetings);
 
 
         ClubBookmarkDto clubBookmarkDto = new ClubBookmarkDto();
@@ -127,13 +130,42 @@ public class ClubController {
     }
     
     @RequestMapping("createNewClubProcess")
-    public String createClubProcess(ClubDto clubDto, ClubJoinConditionDto clubJoinConditionDto, @RequestParam("main_img") MultipartFile main_img){
+    public String createClubProcess(ClubDto clubDto, @RequestParam("main_img") MultipartFile main_img){
         clubDto.setMain_image(ImageUtil.saveImageAndReturnLocation(main_img));
-        clubService.createNewClub(clubDto, clubJoinConditionDto);
+        clubService.createNewClub(clubDto);
+
+        ClubMemberDto clubMemberDto = new ClubMemberDto();
+        clubMemberDto.setUser_id(clubDto.getUser_id());
+        clubMemberDto.setRole_id(1);
+        clubMemberDto.setClub_id(clubDto.getId());
+        clubService.joinClub(clubMemberDto);
         // util.loginUser();
 
         return "redirect:/club/main";
     }
+
+    // 소모임 회원가입
+    @RequestMapping("joinClub")
+    public String joinClub(@RequestParam("id") int id, Model model){
+        // util.loginUser();
+        model.addAttribute("id", id);
+        return "club/joinClubPage";
+    }
+
+    @RequestMapping("joinClubProcess")
+    public String joinClubProcess(@RequestParam("club_id") int id, Model model, HttpSession session){
+
+        // util.loginUser();
+        UserDto userDto = (UserDto)session.getAttribute("sessionUserInfo");
+        ClubMemberDto clubMemberDtoForRoleId3 = new ClubMemberDto();
+        clubMemberDtoForRoleId3.setClub_id(id);
+        clubMemberDtoForRoleId3.setUser_id(userDto.getId());
+        clubMemberDtoForRoleId3.setRole_id(3);
+        clubService.joinClub(clubMemberDtoForRoleId3);
+
+        return "redirect:/club/home?id=" + id;
+    }
+
 
     @RequestMapping("writePost")
     public String writePost(@RequestParam("id") int id, Model model){
@@ -158,22 +190,7 @@ public class ClubController {
         return "redirect:/club/board?id=" + clubPostDto.getClub_id();
     }
 
-    // 소모임 회원가입
-    @RequestMapping("joinClub")
-    public String joinClub(@RequestParam("id") int id, Model model){
-        // util.loginUser();
-        model.addAttribute("id", id);
-        return "club/joinClubPage";
-    }
-
-    @RequestMapping("joinClubProcess")
-    public String joinClubProcess(ClubMemberDto clubMemberDto, Model model){
-        // util.loginUser();
-        clubService.joinClub(clubMemberDto);
-
-        return "redirect:/club/main";
-    }
-
+    
     @RequestMapping("board")
     public String clubBoard(@RequestParam("id") int id, Model model){
         model.addAttribute("id", id);
@@ -259,11 +276,19 @@ public class ClubController {
         for(ClubDto clubDto : joinClubDtoList){
             Map<String, Object> myClubListMap = new HashMap<>();
            int region_id = clubDto.getRegion_id();
+           int totalMeetings = clubService.countTotalMeeting( clubDto.getId());
+
            ClubRegionCategoryDto clubRegionCategoryDto = clubService.findRegionCategoryDtoById(region_id);
             myClubListMap.put("clubRegionCategoryDto", clubRegionCategoryDto);
             myClubListMap.put("clubDto", clubDto);
+            myClubListMap.put("totalMeetings", totalMeetings);
+
             myClubsDataList.add(myClubListMap);
+
+
         }
+        
+
         model.addAttribute("myClubsDataList", myClubsDataList);
         model.addAttribute("userDto", userDto);
         

@@ -75,5 +75,8 @@ public interface ClubSqlMapper {
     // 홈화면에 정모 정보 출력
     public List<ClubMeetingDto> selectClubMeetingDtoList(int id);
     public int countTotalMeetingMember(int id);
+
+    // 정모 개수 집계
+    public int countTotalMeeting(int id);
 }
 

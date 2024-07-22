@@ -32,14 +32,14 @@ public class ClubService {
 
     // 소모임 개설하기
 
-    public void createNewClub(ClubDto clubDto, ClubJoinConditionDto clubJoinConditionDto){
+    public void createNewClub(ClubDto clubDto){
         clubSqlMapper.insertClubDto(clubDto);
 
-        int club_id = clubDto.getId();
+        // int club_id = clubDto.getId();
         // ClubJoinConditionDto clubJoinConditionDtoIncludeClubId  = new ClubJoinConditionDto();
-        clubJoinConditionDto.setClub_id(club_id);
+        // clubJoinConditionDto.setClub_id(club_id);
         
-        clubSqlMapper.insertClubJoinCondition(clubJoinConditionDto);
+        // clubSqlMapper.insertClubJoinCondition(clubJoinConditionDto);
         }
 
     //  소모임 게시판 글 작성하기
@@ -364,5 +364,12 @@ public class ClubService {
                 meetingDataList.add(meetingDataMap);
             }
             return meetingDataList;
+        }
+
+        // 정모 개수 집계하기
+        public int countTotalMeeting(int id){
+            int totalMeeting = clubSqlMapper.countTotalMeeting(id);
+
+            return totalMeeting;
         }
     }
