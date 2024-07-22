@@ -24,25 +24,25 @@ public class UserController {
         UserDto sessionUserInfo = (UserDto) session.getAttribute("sessionUserInfo");
         model.addAttribute("sessionUserInfo", sessionUserInfo);
 
-        return "/common/basecampPublicPage";
+        return "common/basecampPublicPage";
     }
 
     @GetMapping("basecampLoginPage")
     public String basecampLoginPage() {
 
-        return "/common/basecampLoginPage";
+        return "common/basecampLoginPage";
     }
 
     @GetMapping("basecampMyInfoPage")
     public String basecampMyInfoPage() {
 
-        return "/common/basecampMyInfoPage";
+        return "common/basecampMyInfoPage";
     }
 
     @GetMapping("basecampSignPage")
     public String basecampSignPage() {
 
-        return "/common/basecampSignPage";
+        return "common/basecampSignPage";
     }
 
     @PostMapping("signProcess")
@@ -57,7 +57,7 @@ public class UserController {
 
         UserDto sessionUserInfo = userService.getUserByAccountAndPassword(userDto);
         if (sessionUserInfo == null) {
-            return "/common/basecampLoginFailPage";
+            return "common/basecampLoginFailPage";
         } else {
             session.setAttribute("sessionUserInfo", sessionUserInfo);
             // 프로젝트 끝나면 지워

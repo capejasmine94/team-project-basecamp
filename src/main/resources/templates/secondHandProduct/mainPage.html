@@ -14,7 +14,7 @@
         .floating-btn {
             position: fixed;
             bottom: 5rem;
-            right: 1.5rem;
+            right: 0.5rem;
             background-color: #FF6F0F;
             color: white;
             border-radius: 50%;
@@ -30,24 +30,30 @@
         .floating-btn .plus-icon {
             position: absolute;
             top: 2rem;
-            left: 1.9rem;
+            left: 1.7rem;
             transform: translate(-50%, -50%);
         }
         .floating-menu {
             position: fixed;
             bottom: 9rem;
-            right: 1.8rem;
+            right: 0.5rem;
             display: none;
             flex-direction: column;
+            background-color: white;
+            border-radius: 0.5rem;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+            z-index: 999;
+            padding: 0.5rem;
         }
         .floating-menu .menu-item {
             display: flex;
             align-items: center;
-            background-color: white;
-            padding: 0.5rem;
-            border-radius: 0.5rem;
-            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+            padding: 0.5rem 1rem;
+            border-bottom: 1px solid #ddd;
             cursor: pointer;
+        }
+        .floating-menu .menu-item:last-child {
+            border-bottom: none;
         }
         .floating-menu .menu-item i {
             margin-right: 0.5rem;
@@ -61,7 +67,7 @@
 <!--하단네비-->
 <div th:replace="common/navi::bottomNaviBasecamp"></div>
 <!--상단네비-->
-<div class="container g-0 py-3 bg-light fixed-top">
+<div class="container g-0 py-3 bg-white fixed-top border-bottom">
     <div class="row mx-2">
         <div class="col-auto">로고</div>
         <div class="col">중고장터</div>
@@ -69,9 +75,6 @@
     <div class="row mx-2 mt-2">
         <a href="/secondhandProduct/mainPage" class="col-auto">홈</a>
         <a href="/secondhandProduct/transactionListPage" class="col-auto">x</a>
-        <a href="/secondhandProduct/productRegistrationPage" class="col-auto">등록</a>
-        <div class="col-auto">채팅</div>
-        <a href="/secondhandProduct/myPage" class="col-auto">MY</a>
     </div>
 </div>
 <div class="container-fluid g-0" style="margin-top: 7rem; padding-bottom: 5rem">
@@ -112,16 +115,14 @@
 </div>
 <div class="floating-menu" id="floatingMenu">
     <div class="menu-item" onclick="location.href='/secondhandProduct/productRegistrationPage'">
-        <i class="bi bi-pencil"></i><span>글쓰기</span>
+        <i class="bi bi-pencil"></i><span>내 물건 팔기</span>
     </div>
     <div class="menu-item" onclick="location.href='/secondhandProduct/otherPage1'">
-        <i class="bi bi-car-front"></i><span>중고차</span>
+        <i class="bi bi-chat-dots"></i><span>채팅</span>
     </div>
-    <div class="menu-item" onclick="location.href='/secondhandProduct/otherPage2'">
-        <i class="bi bi-house-door"></i><span>부동산</span>
-    </div>
-    <div class="menu-item" onclick="location.href='/secondhandProduct/otherPage3'">
-        <i class="bi bi-briefcase"></i><span>알바</span>
+    <div class="menu-item" onclick="location.href='/secondhandProduct/myPage'">
+        <i class="bi bi-person"></i><span>내정보</span>
+
     </div>
 </div>
 
