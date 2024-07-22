@@ -16,7 +16,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.bulmeong.basecamp.club.dto.ClubBookmarkDto;
 import com.bulmeong.basecamp.club.dto.ClubDto;
-import com.bulmeong.basecamp.club.dto.ClubJoinConditionDto;
 import com.bulmeong.basecamp.club.dto.ClubMeetingDto;
 import com.bulmeong.basecamp.club.dto.ClubMeetingMemberDto;
 import com.bulmeong.basecamp.club.dto.ClubMemberDto;
@@ -49,7 +48,7 @@ public class ClubController {
 
     @RequestMapping("main")
     public String clubMain(HttpSession session, Model model){
-        util.loginUser(3);
+        util.loginUser(4);
 
         UserDto userDto = (UserDto)session.getAttribute("sessionUserInfo");
         List<ClubRegionCategoryDto> regionCategoryDtoList = clubService.findRegionCategory();
@@ -154,7 +153,7 @@ public class ClubController {
 
     @RequestMapping("joinClubProcess")
     public String joinClubProcess(@RequestParam("club_id") int id, Model model, HttpSession session){
-
+        model.addAttribute("id", id);
         // util.loginUser();
         UserDto userDto = (UserDto)session.getAttribute("sessionUserInfo");
         ClubMemberDto clubMemberDtoForRoleId3 = new ClubMemberDto();

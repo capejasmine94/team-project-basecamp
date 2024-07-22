@@ -35,11 +35,6 @@ public class ClubService {
     public void createNewClub(ClubDto clubDto){
         clubSqlMapper.insertClubDto(clubDto);
 
-        // int club_id = clubDto.getId();
-        // ClubJoinConditionDto clubJoinConditionDtoIncludeClubId  = new ClubJoinConditionDto();
-        // clubJoinConditionDto.setClub_id(club_id);
-        
-        // clubSqlMapper.insertClubJoinCondition(clubJoinConditionDto);
         }
 
     //  소모임 게시판 글 작성하기
