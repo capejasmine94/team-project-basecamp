@@ -18,8 +18,6 @@ import com.bulmeong.basecamp.common.util.Utils;
 public class CampsiteController {
     @Autowired
     private CampsiteService campsiteService;
-    @Autowired
-    private Utils utils;
 
     @RequestMapping("unity")
     public String unity(){
@@ -97,8 +95,10 @@ public class CampsiteController {
     }
 
     @RequestMapping("/registerCampProcess")
-    public String registerCampProcess(CampsiteDto campsiteDto, @RequestParam("mainImage")MultipartFile[] mainImage, @RequestParam("mapImage")MultipartFile mapImage){
-        campsiteService.updateCampsite(campsiteDto, mainImage, mapImage);
-        return "store/main";
+    public String registerCampProcess(CampsiteDto campsiteDto, @RequestParam("mainImage")MultipartFile[] mainImage, @RequestParam("mapImage")MultipartFile mapImage, @RequestParam("campsite_category") String[] categories){
+        campsiteService.updateCampsite(campsiteDto, categories, mainImage, mapImage);
+        return "camp/main";
     }
+
+    
 }

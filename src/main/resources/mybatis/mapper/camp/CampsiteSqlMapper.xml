@@ -63,6 +63,9 @@
             #{holder}
         )
     </insert>
+    <insert id="insertCampsiteCategory">
+        insert into bc_campsite_select_category (campsite_id, category_id) values (#{campsite_id},#{category_id});
+    </insert>
     <insert id="insertCampMainImage">
         INSERT into bc_campsite_image (
             campsite_id,
@@ -78,10 +81,7 @@
 
     <update id="updateCampsite">
         UPDATE bc_campsite set
-            account = #{account},
-            password = #{password },
             name = #{name},
-            seller = #{seller},
             address = #{address},
             postcode = #{postcode},
             detail_address = #{detail_address},
@@ -94,14 +94,13 @@
             check_in = #{check_in},
             check_out = #{check_out},
             notice = #{notice},
-            main_image = #{main_image},
             map_image = #{map_image},
             adult_pay = #{adult_pay},
             kid_pay = #{kid_pay},
             car_pay = #{car_pay},
             peak_pay = #{peak_pay},
-            peak_startDate = #{peak_startDate},
-            peak_endDate = #{peak_endDate},
+            peak_start_date = #{peak_start_date},
+            peak_end_date = #{peak_end_date},
             max_ordertime = #{max_ordertime}
         where id = #{id}
     </update>
@@ -126,5 +125,11 @@
     </select>
     <select id="getCampsiteCategory" resultType="com.bulmeong.basecamp.camp.dto.CampsiteCategoryDto">
         select * from bc_campsite_category
+    </select>
+    <select id="getCategoryBySelectCategoryId" resultType="com.bulmeong.basecamp.camp.dto.CampsiteCategoryDto">
+        select * from bc_campsite_category where id = #{id}
+    </select>
+    <select id="getSelectCategoriesByCampsiteId" resultType="com.bulmeong.basecamp.camp.dto.CampsiteSelectCategoryDto">
+        select * from bc_campsite_select_category where campsite_id = #{id}
     </select>
 </mapper>

@@ -2,6 +2,8 @@ package com.bulmeong.basecamp.camp.dto;
 
 import java.util.Date;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import lombok.Data;
 
 @Data
@@ -21,12 +23,18 @@ public class CampsiteDto {
     private String map_image;
     private String profile_image;
     private String description;
+     @DateTimeFormat(pattern = "HH:mm")
     private Date manner_start;
+    @DateTimeFormat(pattern = "HH:mm")
     private Date manner_end;
+    @DateTimeFormat(pattern = "HH:mm")
     private Date check_in;
+    @DateTimeFormat(pattern = "HH:mm")
     private Date check_out;
-    private Date peak_startDate;
-    private Date peak_endDate;
+    @DateTimeFormat(pattern = "YYYY:MM:dd")
+    private Date peak_start_date;
+    @DateTimeFormat(pattern = "YYYY:MM:dd")
+    private Date peak_end_date;
     private String notice;
     private int adult_pay;
     private int kid_pay;

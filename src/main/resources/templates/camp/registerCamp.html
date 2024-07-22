@@ -29,7 +29,8 @@
 
         <!-- 본문 -->
         <div class="col right ms-2" style="padding-top: 58px;">
-            <form id="registerCampProcess" method="post" enctype="multipart/form-data" action="/camp/registerUserProcess">
+            <form id="registerCampProcess" method="post" enctype="multipart/form-data" action="/camp/registerCampProcess">
+                <input type="hidden" name ="id" th:value="${session.campsite.id}">
                 <!-- 상단 바 -->
                 <div th:replace="~{camp/campNavi::topNavi}"></div>
 
@@ -360,7 +361,7 @@
                                         성수기 요금
                                     </div>
                                     <div class="col-2 ms-3 pe-0 ps-1">
-                                        <input name="peak_pay" class="form-control text-end numberInput" type="text" value="10,000" placeholder="0">
+                                        <input name="peak_pay" class="form-control text-end moneyInput" type="text" value="10,000" placeholder="0">
                                     </div>
                                     <div class="col-auto mt-1 fw-semibold">
                                         원
@@ -378,7 +379,7 @@
                                         성인
                                     </div>
                                     <div class="col-2 ms-3 pe-0">
-                                        <input name="adult_pay" class="form-control text-end numberInput" type="text" value="0">
+                                        <input name="adult_pay" class="form-control text-end moneyInput" type="text" value="0">
                                     </div>
                                     <div class="col-auto mt-1">
                                         원
@@ -389,7 +390,7 @@
                                         미성년자
                                     </div>
                                     <div class="col-2 ms-3 pe-0">
-                                        <input name="kid_pay" class="form-control text-end numberInput" type="text" value="0">
+                                        <input name="kid_pay" class="form-control text-end moneyInput" type="text" value="0">
                                     </div>
                                     <div class="col-auto mt-1">
                                         원
@@ -401,7 +402,7 @@
                                         차량 추가 요금
                                     </div>
                                     <div class="col-2 ms-3 pe-0 ps-1">
-                                        <input name="car_pay" class="form-control text-end numberInput" type="text" value="10,000" placeholder="0">
+                                        <input name="car_pay" class="form-control text-end moneyInput" type="text" value="10,000" placeholder="0">
                                     </div>
                                     <div class="col-auto mt-1 fw-semibold">
                                         원
@@ -521,29 +522,6 @@
         }).open();
     }
 
-    document.addEventListener('DOMContentLoaded', (event) => {
-        const inputNumbers = document.getElementsByClassName('numberInput');
-        for (const node of inputNumbers) {
-            node.addEventListener('input', function (e) {
-                let input = e.target.value;
-
-                // Remove all non-numeric characters except for period (.)
-                input = input.replace(/[^0-9.]/g, '');
-
-                // Split the input value into integer and decimal parts
-                const parts = input.split('.');
-                let integerPart = parts[0];
-                const decimalPart = parts.length > 1 ? '.' + parts[1] : '';
-
-                // Format the integer part with commas
-                integerPart = integerPart.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
-
-                // Combine the formatted integer part and the decimal part
-                e.target.value = integerPart + decimalPart;
-            });
-        }
-    });
-
     createMultipleUploader('mainImage');
     createUploader('mapImage');
     const date = new Date();
@@ -553,9 +531,28 @@
     // alert('서비스를 사용하시려면 캠핑장 등록이 필요합니다.');
     popupForce('캠핑장 등록', '서비스를 사용하시려면 캠핑장 등록이 필요합니다.', '확인', popupClose);
 
+    document.getElementById('registerCampProcess').addEventListener('submit', function(event) {
+        const form = event.target;
+        const categoryInputs = form.querySelectorAll('input[name="campsite_category"]:checked');
+        if (categoryInputs.length === 0) {
+            alert('캠핑장 카테고리를 하나 이상 선택해주세요.');
+            event.preventDefault();
+            return;
+        }
+        
+        const categoryIds = Array.from(categoryInputs).map(input => input.value);
+        const hiddenInput = document.createElement('input');
+        hiddenInput.type = 'hidden';
+        hiddenInput.name = 'campsite_category';
+        hiddenInput.value = JSON.stringify(categoryIds);
+        form.appendChild(hiddenInput);
+    });
+
+
     const stateButton = document.getElementById('saveStateButton');
-    stateButton.onclick = () => {
-        const form = document.getElementById('registerCampProcess');
+    const form = document.getElementById('registerCampProcess');
+    stateButton.onclick = () => { validateAndSubmitForm(); };
+    function validateAndSubmitForm() {
         const requiredFields = [
             'car_pay', 'kid_pay', 'adult_pay', 'peak_pay', 'max_ordertime', 
             'manner_end', 'manner_start', 'check_out', 'check_in',  
@@ -563,33 +560,31 @@
         ];
 
         let allValid = true;
-
-        const openTime = checkRequiredCalendar('opentime');
-        const peak = checkRequiredCalendar('peak');
-        if (!peak) {
-            document.getElementById('calendar_peak').scrollIntoView({ behavior: 'smooth', block: 'center' });
-            allValid = false;
-            return;
-        }
-        if (!openTime) {
-            document.getElementById('calendar_opentime').scrollIntoView({ behavior: 'smooth', block: 'center' });
-            allValid = false;
-            return;
-        }
         
         requiredFields.forEach((fieldName) => {
             const field = form.querySelector(`[name="${fieldName}"]`);
             if (!field.value) {
                 field.focus();
                 allValid = false;
-                return;
+                return false;  // 종료
             }
         });
+
+        const categoryInputs = form.querySelectorAll('input[name="campsite_category"]:checked');
+        if (categoryInputs.length === 0) {
+            alert('캠핑장 카테고리를 하나 이상 선택해주세요.');
+            allValid = false;
+        }
+
         if (allValid) {
+            replaceMoneyInput();
             form.submit();
         }
-    };
-
+    }
+        form.addEventListener('submit', function(event) {
+        event.preventDefault();  // 기본 제출 동작 방지
+        validateAndSubmitForm(); // 유효성 검사 후 제출
+    });
 </script>
 </body>
 </html>

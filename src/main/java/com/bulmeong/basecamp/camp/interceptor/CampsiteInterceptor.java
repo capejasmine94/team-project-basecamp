@@ -33,7 +33,7 @@ public class CampsiteInterceptor implements HandlerInterceptor {
             response.sendRedirect("/seller/login");
             return false;
         }
-        if (requestURI.equals("/camp/registerCamp") || requestURI.equals("/seller/login") || requestURI.equals("registerCampProcess")) {
+        if (requestURI.equals("/camp/registerCamp") || requestURI.equals("/seller/login") || requestURI.equals("/camp/registerCampProcess")) {
             return true;
         }
         if(!campsiteService.isAuthed(utils.getSession("campsite"))){

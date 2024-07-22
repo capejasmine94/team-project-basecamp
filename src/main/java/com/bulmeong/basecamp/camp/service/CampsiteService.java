@@ -10,6 +10,7 @@ import com.bulmeong.basecamp.camp.dto.CampsiteBankDto;
 import com.bulmeong.basecamp.camp.dto.CampsiteCategoryDto;
 import com.bulmeong.basecamp.camp.dto.CampsiteDto;
 import com.bulmeong.basecamp.camp.dto.CampsiteImageDto;
+import com.bulmeong.basecamp.camp.dto.CampsiteSelectCategoryDto;
 import com.bulmeong.basecamp.camp.mapper.CampsiteSqlMapper;
 import com.bulmeong.basecamp.common.dto.ImageDto;
 import com.bulmeong.basecamp.common.util.ImageUtil;
@@ -29,10 +30,11 @@ public class CampsiteService {
     }
 
     //캠핑장 부가 정보 추가
-    public void updateCampsite(CampsiteDto campsiteDto, MultipartFile[] main_images, MultipartFile map_image) {
+    public void updateCampsite(CampsiteDto campsiteDto, String[] campsiteCategoryDtos, MultipartFile[] main_images, MultipartFile map_image) {
         // 이미지 추가
         List<ImageDto> mainImages = ImageUtil.saveImageAndReturnDtoList(main_images);
-        campsiteDto.setMap_image(ImageUtil.saveImageAndReturnLocation(map_image));
+        if(map_image != null && !map_image.isEmpty())
+            campsiteDto.setMap_image(ImageUtil.saveImageAndReturnLocation(map_image));
         for(ImageDto image : mainImages) {
             CampsiteImageDto imageDto = new CampsiteImageDto();
             imageDto.setCampsite_id(campsiteDto.getId());
@@ -40,7 +42,13 @@ public class CampsiteService {
             imageDto.setOrigin_filename(image.getOrigin_filename());
             campsiteSqlMapper.insertCampMainImage(imageDto);
         }
-        if(campsiteDto.getIs_authenticated().equals('F'))    
+        for(String category : campsiteCategoryDtos) {
+            CampsiteSelectCategoryDto categorySelect = new CampsiteSelectCategoryDto();
+            categorySelect.setCategory_id(Integer.parseInt(category));
+            categorySelect.setCampsite_id(campsiteDto.getId());
+            campsiteSqlMapper.insertCampsiteCategory(categorySelect);
+        }
+        if(campsiteDto.getIs_authenticated() == null)    
             campsiteSqlMapper.authCampSite(campsiteDto);
         
         campsiteSqlMapper.updateCampsite(campsiteDto);
@@ -91,6 +99,15 @@ public class CampsiteService {
         return campsiteSqlMapper.newCampsiteID();
     }
 
+    public List<CampsiteCategoryDto> getCampsiteCategoriesByCampsiteId(int id) { 
+        List<CampsiteSelectCategoryDto> list = campsiteSqlMapper.getSelectCategoriesByCampsiteId(id);
+        List<CampsiteCategoryDto> result = new ArrayList<>();
+        for(CampsiteSelectCategoryDto catrgory : list) {
+            CampsiteCategoryDto categoryDto = campsiteSqlMapper.getCategoryBySelectCategoryId(catrgory.getId());
+            result.add(categoryDto);
+        }
+        return result;
+    }
 
     // 캠핑장 카테고리
     public List<CampsiteCategoryDto> getCampsiteCategory() {

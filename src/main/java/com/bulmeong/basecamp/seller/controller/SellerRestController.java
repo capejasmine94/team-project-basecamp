@@ -8,12 +8,14 @@ import org.springframework.web.bind.annotation.RestController;
 import com.bulmeong.basecamp.camp.service.CampsiteService;
 import com.bulmeong.basecamp.campingcar.service.AdminService;
 import com.bulmeong.basecamp.common.dto.RestResponseDto;
+import com.bulmeong.basecamp.common.util.Utils;
 import com.bulmeong.basecamp.store.service.StoreService;
 
 @RestController
 @RequestMapping("/api/seller")
 public class SellerRestController {
-
+    @Autowired
+    private Utils utils;
     @Autowired
     private StoreService storeService;
 
@@ -39,6 +41,13 @@ public class SellerRestController {
             restResponseDto.add("sellerDto", adminService.getSellerByIdAndPw(account_id, account_pw));
         }
 
+        return restResponseDto;
+    }
+
+    @RequestMapping("logOut")
+    public RestResponseDto logOut() {
+        RestResponseDto restResponseDto = new RestResponseDto();
+        utils.logOut();
         return restResponseDto;
     }
 

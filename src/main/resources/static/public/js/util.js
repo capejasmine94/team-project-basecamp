@@ -55,7 +55,7 @@ function checkLogin() {
    .then((response) => {
        if(response.data.needLogin)
        popup('로그인이 필요합니다','로그인이 필요한 서비스입니다. 로그인하시겠습니까?','예','아니오',function(){
-         location.href = '/user/loginPage';
+         location.href = '/user/login';
       });
    });
 }
@@ -67,7 +67,7 @@ function checkMustLogin() {
    .then(response => response.json())
    .then((response) => {
        if(response.data.needLogin)
-         location.href = '/user/loginPage';
+         location.href = '/seller/login';
       
    });
 }
@@ -116,4 +116,23 @@ document.addEventListener('DOMContentLoaded', (event) => {
   }
 });
 
+function replaceMoneyInput() {
+  const inputNumbers = document.getElementsByClassName('moneyInput');
+  for(const node of inputNumbers){
+          // 쉼표 제거
+    let textWithoutComma = node.value.replace(/,/g, '');
 
+    // 문자열을 정수로 변환
+    let parsedInt = parseInt(textWithoutComma, 10);
+    node.value = parsedInt;
+  }
+}
+
+function logOut() {
+    const url ='/api/user/logOut';
+    fetch(url)
+    .then(response => response.json())
+    .then((response) => {
+      location.href = '/seller/login';
+    });
+}
