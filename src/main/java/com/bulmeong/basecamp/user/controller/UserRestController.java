@@ -34,6 +34,8 @@ public class UserRestController {
 
         if (userDto != null) {
             result.add("userId", userDto.getId());
+        } else {
+            result.add("userId", null);
         }
 
         return result;
