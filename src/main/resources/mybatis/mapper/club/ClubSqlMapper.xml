@@ -354,6 +354,12 @@
         where club_id = #{club_id}     
     </select>
 
+    <!-- 소모임 정원 카운트 -->
+    <select id="confirmCapacity" resultType="int">
+        select capacity from bc_club
+        where id = #{id}
+    </select>
+
 
 
 </mapper>

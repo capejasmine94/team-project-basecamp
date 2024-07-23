@@ -48,7 +48,7 @@ public class ClubController {
 
     @RequestMapping("main")
     public String clubMain(HttpSession session, Model model){
-        util.loginUser(4);
+        util.loginUser(2);
 
         UserDto userDto = (UserDto)session.getAttribute("sessionUserInfo");
         List<ClubRegionCategoryDto> regionCategoryDtoList = clubService.findRegionCategory();
@@ -88,7 +88,6 @@ public class ClubController {
         int totalMeetings = clubService.countTotalMeeting(id);
         model.addAttribute("totalMeetings", totalMeetings);
 
-
         ClubBookmarkDto clubBookmarkDto = new ClubBookmarkDto();
         UserDto userDto = (UserDto)session.getAttribute("sessionUserInfo");
         
@@ -100,20 +99,26 @@ public class ClubController {
         }
 
         int totalBookmark = clubService.countTotalBookmark(id);
-        model.addAttribute("totalBookmark", totalBookmark);
+        model.addAttribute("totalBookmark", totalBookmark);       
+
 
         List<Map<String, Object>> clubMemberDataList = clubService.findClubMemerDataList(id);
         model.addAttribute("clubMemberDataList", clubMemberDataList);
 
         ClubMemberDto clubMemberDto = new ClubMemberDto();
-        UserDto userDto2 = (UserDto)session.getAttribute("sessionUserInfo");
+        
 
         if(userDto != null){
             clubMemberDto.setClub_id(id);
-            clubMemberDto.setUser_id(userDto2.getId());
+            clubMemberDto.setUser_id(userDto.getId());
             int isMemberInClub = clubService.checkClubMembership(clubMemberDto);
             model.addAttribute("isMemberInClub", isMemberInClub);
         }
+        int totalClubMember = clubService.countTotalClubMember(id);
+        int confirmCapacity = clubService.confirmCapacity(id);
+
+        model.addAttribute("totalClubMember", totalClubMember);
+        model.addAttribute("confirmCapacity", confirmCapacity);
 
         return "club/clubHomePage";
     }
@@ -161,7 +166,7 @@ public class ClubController {
         clubMemberDtoForRoleId3.setUser_id(userDto.getId());
         clubMemberDtoForRoleId3.setRole_id(3);
         clubService.joinClub(clubMemberDtoForRoleId3);
-
+       
         return "redirect:/club/home?id=" + id;
     }
 
