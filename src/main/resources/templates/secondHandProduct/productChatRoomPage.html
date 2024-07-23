@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org" >
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport"
@@ -11,62 +11,189 @@
     <link rel="stylesheet" href="/public/css/secondHandProductCss/style.css">
     <style>
         .custom-input {
-            border: 2px solid #FF6F0F; /* 원하는 테두리 색상 */
             border-radius: 1rem;
+            background-color: #F8F9FA;
+            border: none;
         }
         .custom-input:focus {
-            border-color: white; /* 포커스 시에도 같은 테두리 색상 */
-            box-shadow: none; /* 파란색 테두리 제거 */
-            outline: none; /* 기본 포커스 스타일 제거 */
+            box-shadow: none;
+            outline: none;
+        }
+        .chat-message {
+            display: flex;
+            margin-top: 1rem;
+            align-items: flex-start;
+        }
+        .img-profile {
+            height: 2rem;
+            width: 2rem;
+            border-radius: 50%;
+        }
+        .img-send {
+            height: 15rem;
+            width: 14.2rem;
+            border-radius: 1rem;
+        }
+        .message-box {
+            max-width: 85%;
+            word-wrap: break-word;
+            display: flex;
+            align-items: flex-end;
+        }
+        .message-content {
+            border-radius: 1rem;
+            background-color: #F2F3F6;
+            padding: 0.5rem 0.5rem 0.5rem 0.6rem;
+            border: none;
+            word-wrap: break-word;
+            max-width: 100%;
+            position: relative;
+        }
+        .message-time {
+            color: #ADB1BA;
+            font-size: 0.7rem;
+            white-space: nowrap;
+            margin-left: 0.5rem;
+            align-self: flex-end;
+        }
+        .sender {
+            justify-content: flex-end;
+        }
+        .sender .message-box {
+            max-width: 100%;
+            display: flex;
+            flex-direction: row-reverse;
+            justify-content: flex-end;
+            width: auto;
+        }
+        .sender .message-content {
+            background-color: #FF6F0F;
+            color: white;
+        }
+        .sender .message-time {
+            margin-left: 0;
+            margin-right: 0.5rem;
+            align-self: flex-end;
+            white-space: nowrap;
         }
     </style>
 </head>
 <body>
 <!--상단네비-->
-<div class="container g-0 pt-3 pb-1 bg-light border-bottom fixed-top">
+<div class="container g-0 pt-3 pb-1 bg-white border-bottom fixed-top">
     <div class="row mx-2 pb-2 border-bottom">
         <a href="javascript:history.back()" class="col" style="color: black">
             <i class="bi bi-chevron-left"></i>
         </a>
         <div class="col text-center">
-            <span>판매자 아이디</span>
+            <span th:text="${session.sessionUserInfo.nickname}">판매자 아이디</span>
         </div>
         <div class="col"></div>
     </div>
     <div class="row mx-2 pt-2 pb-1">
         <div class="col-auto pe-0">
-            <img class="chatProductImg-custom" src="/public/img/secondHandProductImage/이벤트1.png">
+            <img class="chatProductImg-custom" th:src="@{/images/{image}(image=${ProductDto.main_image})}">
         </div>
         <div class="col">
             <div class="row-auto">
                 <div class="col">
-                    <span class="me-2">판매중</span><span>상품이름</span>
+                    <span class="me-2" th:text="${ProductDto.status}">판매중</span><span th:text="${ProductDto.title}">상품이름</span>
                 </div>
                 <div class="col">
-                    <span>가격~</span>
+                    <span th:text="|${#numbers.formatInteger(ProductDto.price, 0, 'COMMA')}원|"></span>
                 </div>
             </div>
         </div>
     </div>
 </div>
 <!-- 채팅방 -->
-<div class="container-fluid g-0" style="margin-top: 8rem">
+<div class="container-fluid g-0" style="margin-top: 8rem; padding-bottom: 5rem">
+    <!--채팅 시작 날짜 -->
     <div class="row mx-2">
-        <div class="col">
-            채팅시작~~
+        <div class="col text-center" style="font-size: 0.8rem">
+            <span>202년 7월 15일</span>
         </div>
     </div>
-<!--하단네비-->
-<div class="container g-0 py-2 fixed-bottom border-top">
-    <div class="row mx-2">
+    <!-- 수신자긴글 -->
+    <div class="row mx-2 mt-3 chat-message">
         <div class="col-auto pe-0">
-            <span class="fs-4"><i class="bi bi-image"></i></span>
+            <img class="img-profile" src="/public/img/secondHandProductImage/기본이미지.png">
+        </div>
+        <div class="message-box">
+            <span class="message-content">수신긴글테스트!수신긴글테스트!수신긴글테스트!수신긴글테스트!수신긴글테스트!수신긴글테스트!</span>
+            <span class="message-time">오후 3:55</span>
+        </div>
+    </div>
+    <!--수신짧은글 -->
+    <div class="row mx-2 mt-3 chat-message">
+        <div class="col-auto pe-0">
+            <img class="img-profile" src="/public/img/secondHandProductImage/기본이미지.png">
+        </div>
+        <div class="message-box">
+            <span class="message-content">수신짧은글테스트!</span>
+            <span class="message-time">오후 3:55</span>
+        </div>
+    </div>
+    <!--수신중간글 테스트 -->
+    <div class="row mx-2 mt-3 chat-message">
+        <div class="col-auto pe-0">
+            <img class="img-profile" src="/public/img/secondHandProductImage/기본이미지.png">
+        </div>
+        <div class="message-box">
+            <span class="message-content">수신중간글테스트!수신중간글테스트!</span>
+            <span class="message-time">오후 3:55</span>
+        </div>
+    </div>
+    <!-- 수신 사진테스트 -->
+    <div class="row mx-2 mt-3 chat-message">
+        <div class="col-auto pe-0">
+            <img class="img-profile" src="/public/img/secondHandProductImage/기본이미지.png">
+        </div>
+        <div class="message-box">
+            <img class="img-send" src="/public/img/secondHandProductImage/이벤트1.png">
+            <span class="message-time">오후 3:55</span>
+        </div>
+    </div>
+    <!-- 발신자 긴글테스트 -->
+    <div class="row mx-2 mt-3 chat-message sender">
+        <div class="message-box">
+            <span class="message-content">발신긴글테스트!발신긴글테스트!발신긴글테스트!발신긴글테스트!발신긴글테스트!발신긴글테스트!</span>
+            <span class="message-time">오후 3:55</span>
+        </div>
+    </div>
+    <!-- 발신자 짧은글테스트 -->
+    <div class="row mx-2 mt-3 chat-message sender">
+        <div class="message-box">
+            <span class="message-content">!발신짧은글테스트</span>
+            <span class="message-time">오후 3:55</span>
+        </div>
+    </div>
+    <!-- 발신자 중간글테스트 -->
+    <div class="row mx-2 mt-3 chat-message sender">
+        <div class="message-box">
+            <span class="message-content">!발신중간글테스트!발신중간글테스트</span>
+            <span class="message-time">오후 3:55</span>
+        </div>
+    </div>
+    <!-- 발신 사진 테스트 -->
+    <div class="row mx-2 mt-3 chat-message sender">
+        <div class="message-box">
+            <img class="img-send" src="/public/img/secondHandProductImage/이벤트1.png">
+            <span class="message-time">오후 3:55</span>
+        </div>
+    </div>
+</div>
+<!-- 하단 네비 -->
+<div class="container g-0 py-2 fixed-bottom border-top bg-white">
+    <div class="row mx-2">
+        <div class="col-auto pe-0" style="padding-top: 0.1rem">
+            <span class="fs-4" style="opacity: 75%;"><i class="bi bi-image"></i></span>
         </div>
         <div class="col d-grid">
-            <input type="text" class="ps-2 custom-input" style="border-radius: 1rem" placeholder="메시지 보내기">
+            <input type="text" class="ps-3 custom-input" placeholder="메시지 보내기">
         </div>
-        <div class="col-auto pt-1 ps-0">
-            <span class="fs-4"><i class="bi bi-send"></i></span>
+        <div class="col-auto ps-0" style="padding-top: 0.1rem">
+            <span class="fs-4" style="opacity: 50%"><i class="bi bi-send"></i></span>
         </div>
     </div>
 </div>

@@ -116,5 +116,10 @@
         WHERE user_id = #{user_id}
         AND product_id = #{product_id}
     </select>
+    <!--채팅방 상풍정보-->
+    <select id="selectChatRoomProductInformation" resultType="com.bulmeong.basecamp.secondHandProduct.dto.SecondhandProductDto">
+        SELECT * FROM bc_secondhand_product WHERE product_id = #{product_id}
+    </select>
+
 
 </mapper>

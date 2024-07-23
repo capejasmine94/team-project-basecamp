@@ -7,7 +7,6 @@ import com.bulmeong.basecamp.secondHandProduct.dto.AllContentsProductDto;
 import com.bulmeong.basecamp.secondHandProduct.dto.SecondhandProductDto;
 import com.bulmeong.basecamp.secondHandProduct.service.ProductService;
 import com.bulmeong.basecamp.user.dto.UserDto;
-import com.bulmeong.basecamp.user.service.UserService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -51,7 +50,6 @@ public class ProductController {
 
     @GetMapping("transactionListPage")
     public String transactionListPage() {
-
         return "secondhandProduct/transactionListPage";
     }
 
@@ -78,7 +76,7 @@ public class ProductController {
                 if (image.isEmpty()) {
                     continue;
                 }
-                String rootPath = "Users/simgyujin/basecampImage/";
+                String rootPath = "/Users/simgyujin/basecampImage/";
 
                 // 날짜 폴더
                 SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd/");
@@ -135,7 +133,17 @@ public class ProductController {
     }
 
     @GetMapping("productChatRoomPage")
-    public String productChatRoomPage() {
+    public String productChatRoomPage(HttpSession session,
+                                      Model model,
+                                      @RequestParam(name = "product_id") int product_id) {
+
+        UserDto sessionUserInfo = (UserDto) session.getAttribute("sessionUserInfo");
+        model.addAttribute("sessionUserInfo", sessionUserInfo);
+
+        SecondhandProductDto secondhandProductDto = productService.selectChatRoomProductInformation(product_id);
+        model.addAttribute("ProductDto", secondhandProductDto);
+
+
 
         return "secondhandProduct/productChatRoomPage";
     }

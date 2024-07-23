@@ -34,4 +34,8 @@ public interface ProductSqlMapper {
     public int selectProductTotalLikeCount(int product_id);
     public int selectProductByUserLike(WishListDto wishListDto);
     public List<AllContentsProductDto> selectSecondhandProductByWishList(int user_id);
+
+    // 채팅방
+    public SecondhandProductDto selectChatRoomProductInformation(int product_id);
 }
+

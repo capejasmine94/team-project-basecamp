@@ -81,4 +81,9 @@ public class ProductService {
     }
 
 
+    // 채팅방
+    public SecondhandProductDto selectChatRoomProductInformation(int product_id) {
+        return productSqlMapper.selectChatRoomProductInformation(product_id);
+    }
+
 }

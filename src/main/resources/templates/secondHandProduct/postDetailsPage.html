@@ -140,6 +140,7 @@
                 <span th:text="|${#numbers.formatInteger(productTotalDtoList.AllContentsDto.price, 0, 'COMMA')}원|" class="fw-bold fs-5">금액</span>
             </div>
             <div class="col text-center d-grid">
+                <input type="hidden" name="product_id" th:value="${productTotalDtoList.AllContentsDto.product_id}">
                 <button type="submit" class="btn" style="background-color: #FF6F0F; color: white">채팅하기</button>
             </div>
         </div>
