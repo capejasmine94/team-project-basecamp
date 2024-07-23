@@ -78,5 +78,8 @@ public interface ClubSqlMapper {
 
     // 정모 개수 집계
     public int countTotalMeeting(int id);
+
+    // 소모임 정원 확인
+    public int confirmCapacity(int id);
 }
 

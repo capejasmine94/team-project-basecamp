@@ -4,7 +4,6 @@ import org.springframework.stereotype.Service;
 
 import com.bulmeong.basecamp.club.dto.ClubBookmarkDto;
 import com.bulmeong.basecamp.club.dto.ClubDto;
-import com.bulmeong.basecamp.club.dto.ClubJoinConditionDto;
 import com.bulmeong.basecamp.club.dto.ClubMeetingDto;
 import com.bulmeong.basecamp.club.dto.ClubMeetingMemberDto;
 import com.bulmeong.basecamp.club.dto.ClubMemberDto;
@@ -366,5 +365,19 @@ public class ClubService {
             int totalMeeting = clubSqlMapper.countTotalMeeting(id);
 
             return totalMeeting;
+        }
+
+        // 소모임 정원 확인
+        public int confirmCapacity(int id){
+            int capacity = clubSqlMapper.confirmCapacity(id);
+
+            return capacity;
+        }
+
+        // 소모임 가입한 회원수 확인
+        public int countTotalClubMember(int id){
+            int totalMember = clubSqlMapper.countTotalClubMember(id);
+
+            return totalMember;
         }
     }
