@@ -209,10 +209,11 @@
         <div class="row mb-5 pb-2">
             <div class="col">
                 <div class="row border-bottom fixed-top px-2" style="background-color: white;">
-                    <div class="col-1 pe-0 fs-1">
-                        <i class="fa-brands fa-square-instagram" style="color: #E1306C;"></i>
+                    <div class="col-3 pe-0">
+                        <img src="/public/img/instaImage/instagram.png" class="img-fluid">
+                        <!-- <i class="fa-brands fa-square-instagram" style="color: #E1306C;"></i> -->
                     </div>
-                    <div class="col search-container">
+                    <div class="col search-container ps-1">
                         <i class="bi bi-search ps-2"></i>         
                         <input value="" name="searchWord" type="text" class="form-control form-control-sm" placeholder="검색">
                     </div>    
@@ -236,12 +237,13 @@
                                 <div class="row">
                                     <div class="col">
                                         <!-- <img th:src="|/basecampImage/${instaUserInfoDto.insta_profile_img}|" class="img-fluid rounded-circle storyImage"> -->
-                                        <img src="/public/img/instaImage/hahaha4.jpg" class="img-fluid rounded-circle storyImage">
+                                        <img th:src="|/images/${instaUserInfoDto.insta_profile_img}|" class="img-fluid rounded-circle storyImage">
                                     </div>
                                 </div>
                                 <div class="row">
-                                    <div class="col px-1 text-center" style="font-size: 0.8em;">
-                                        <span th:text="${instaUserInfoDto.insta_nickname}">닉네임</span>                                                        
+                                    <div class="col px-1 py-1 text-center" style="font-size: 0.7em;">
+                                        <!-- <span th:text="${instaUserInfoDto.insta_nickname}">닉네임</span> -->
+                                        <span>내 프로필</span>
                                     </div>
                                 </div>
                             </div>
@@ -257,7 +259,7 @@
                                     </div>
                                 </div>
                                 <div class="row">
-                                    <div class="col px-1 text-center" style="font-size: 0.8em;">
+                                    <div class="col px-1 py-1 text-center" style="font-size: 0.7em;">
                                         <span>닉네임</span>
                                     </div>
                                 </div>
@@ -273,7 +275,7 @@
                                     </div>
                                 </div>
                                 <div class="row">
-                                    <div class="col px-1 text-center" style="font-size: 0.8em;">
+                                    <div class="col px-1 py-1 text-center" style="font-size: 0.7em;">
                                         <span>닉네임</span>
                                     </div>
                                 </div>
@@ -289,7 +291,7 @@
                                     </div>
                                 </div>
                                 <div class="row">
-                                    <div class="col px-1 text-center" style="font-size: 0.8em;">
+                                    <div class="col px-1 py-1 text-center" style="font-size: 0.7em;">
                                         <span>닉네임</span>
                                     </div>
                                 </div>
@@ -305,7 +307,7 @@
                                     </div>
                                 </div>
                                 <div class="row">
-                                    <div class="col px-1 text-center" style="font-size: 0.8em;">
+                                    <div class="col px-1 py-1 text-center" style="font-size: 0.7em;">
                                         <span>닉네임</span>
                                     </div>
                                 </div>
@@ -321,7 +323,7 @@
                                     </div>
                                 </div>
                                 <div class="row">
-                                    <div class="col px-1 text-center" style="font-size: 0.8em;">
+                                    <div class="col px-1 py-1 text-center" style="font-size: 0.7em;">
                                         <span>닉네임</span>
                                     </div>
                                 </div>
@@ -341,7 +343,7 @@
                                 th:href="${session.sessionUserInfo.id == instaArticleList.instaUserInfoDto.user_id} ?
                                             @{./instaMyPage(user_id=${instaArticleList.instaUserInfoDto.id})} : @{./instaUserPage(user_id=${instaArticleList.instaUserInfoDto.id})}">
                         <!-- <img th:src="|/basecampImage/${instaArticleList.instaArticleDto.insta_profile_img}|" class="img-fluid rounded-circle commentImage"> -->
-                        <img src="/public/img/instaImage/hahaha4.jpg" class="img-fluid rounded-circle profileImage">
+                        <img th:src="|/images/${instaArticleList.instaUserInfoDto.insta_profile_img}|" class="img-fluid rounded-circle profileImage">
                     </a>
                     <!-- 글 작성한 사람 닉네임 -->
                     <a class="col-auto ps-0 pt-1 link-dark link-offset-2 link-underline link-underline-opacity-0"
@@ -350,18 +352,32 @@
                         <span th:text="${instaArticleList.instaUserInfoDto.insta_nickname}" style="font-size: 0.8em;"></span>
                     </a>
                     <div class="col text-end align-self-center">
-                        <span>
+                        <button class="btn p-0" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasBottom" aria-controls="offcanvasBottom">
                             <i class="bi bi-three-dots"></i>
-                        </span>
+                        </button>
+
+                        <div class="offcanvas offcanvas-bottom" tabindex="-1" id="offcanvasBottom" aria-labelledby="offcanvasBottomLabel">
+                            <div class="offcanvas-header">
+                                <h5 class="offcanvas-title" id="offcanvasBottomLabel">Offcanvas bottom</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                            </div>
+                            <div class="offcanvas-body small">
+                                ...
+                            </div>
+                        </div>
+
+                        <!-- <span>
+                            <i class="bi bi-three-dots"></i>
+                        </span> -->
                     </div>
                 </div>
 
                 <!-- 해당글 이미지 List -->
-                <div class="row mt-3">
+                <div class="row mt-2">
                     <div class="col px-0">
                         <div th:id="'carouselExampleInterval' + ${instaArticleList.instaArticleDto.id}" class="carousel slide"> <!-- data-bs-ride="carousel" _ 자동 슬라이드를 활성화 -->
-                            <!-- 인디케이터 추가 -->
-                            <ol class="carousel-indicators">
+                            <!-- 인디케이터 추가 (이미지가 두 개 이상일 때만 표시) _ 이미지 리스트의 크기가 1보다 큰 경우에만 인디케이터와 버튼을 렌더링 -->                            
+                            <ol class="carousel-indicators" th:if="${#lists.size(instaArticleList.instaArticleImgDtoList) > 1}">
                                 <!-- 이미지 개수만큼 점 생성 -->
                                 <li th:each="image, iterStat : ${instaArticleList.instaArticleImgDtoList}"
                                     th:classappend="${iterStat.index == 0 ? 'active' : ''}"
@@ -380,11 +396,15 @@
                                 </div>
                             </div>
                             
-                            <button class="carousel-control-prev" type="button" th:data-bs-target="'#carouselExampleInterval' + ${instaArticleList.instaArticleDto.id}" data-bs-slide="prev">
+                            <button class="carousel-control-prev" type="button" th:data-bs-target="'#carouselExampleInterval' + ${instaArticleList.instaArticleDto.id}"
+                                    data-bs-slide="prev" th:if="${#lists.size(instaArticleList.instaArticleImgDtoList) > 1}">
+                                    <!-- 이미지 리스트의 크기가 1보다 큰 경우에만 인디케이터와 버튼을 렌더링 -->
                                 <span class="carousel-control-prev-icon" aria-hidden="true"></span>
                                 <span class="visually-hidden">Previous</span>
                             </button>
-                            <button class="carousel-control-next" type="button" th:data-bs-target="'#carouselExampleInterval' + ${instaArticleList.instaArticleDto.id}" data-bs-slide="next">
+                            <button class="carousel-control-next" type="button" th:data-bs-target="'#carouselExampleInterval' + ${instaArticleList.instaArticleDto.id}"
+                                    data-bs-slide="next" th:if="${#lists.size(instaArticleList.instaArticleImgDtoList) > 1}">
+                                    <!-- 이미지 리스트의 크기가 1보다 큰 경우에만 인디케이터와 버튼을 렌더링 -->
                                 <span class="carousel-control-next-icon" aria-hidden="true"></span>
                                 <span class="visually-hidden">Next</span>
                             </button>
@@ -429,7 +449,7 @@
                     <div class="col-auto px-0" th:if="${instaArticleList.like == 1}">
                         <form action="./pushArticleLikeDeleteProcess" method="get">
                             <button class="btn">
-                                <i class="fa-solid fa-heart"></i>
+                                <i class="fa-solid fa-heart" style="color: #F23054;"></i>
                             </button>
 
                             <input type="hidden" name="user_id" th:value="${session.sessionUserInfo.id}">
@@ -520,7 +540,7 @@
                     <div class="col-auto pe-0">
                         <!-- 로그인한 유저 프로필 -->
                         <!-- <img th:src="|/basecampImage/${session.instaUserInfoDto.insta_profile_img}|" class="img-fluid rounded-circle commentImage"> -->
-                        <img src="/public/img/instaImage/hahaha4.jpg" class="img-fluid rounded-circle commentImage">
+                        <img th:src="|/images/${instaUserInfoDto.insta_profile_img}|" class="img-fluid rounded-circle commentImage">
                     </div>
                     <a class="col ps-1 link-dark link-offset-2 link-underline link-underline-opacity-0"
                         th:href="@{./commentWritePage(user_id=${session.sessionUserInfo.id}, article_id=${instaArticleList.instaArticleDto.id})}">
