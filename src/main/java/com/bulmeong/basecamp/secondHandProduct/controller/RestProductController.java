@@ -1,7 +1,6 @@
 package com.bulmeong.basecamp.secondHandProduct.controller;
 
 import com.bulmeong.basecamp.common.dto.RestResponseDto;
-import com.bulmeong.basecamp.common.util.Utils;
 import com.bulmeong.basecamp.secondHandProduct.dto.WishListDto;
 import com.bulmeong.basecamp.secondHandProduct.service.ProductService;
 import com.bulmeong.basecamp.user.controller.UserRestController;
@@ -17,8 +16,6 @@ public class RestProductController {
     @Autowired
     private ProductService productService;
     @Autowired
-    private Utils utils;
-    @Autowired
     private UserRestController userRestController;
 
     @RequestMapping("like")
@@ -29,10 +26,6 @@ public class RestProductController {
         restResponseDto.setResult("success");
 
         UserDto userDto = (UserDto) session.getAttribute("sessionUserInfo");
-//        if (userDto == null) {
-//            utils.loginUser(1);
-//            userDto = (UserDto) session.getAttribute("sessionUserInfo");
-//        }
 
         wishListDto.setUser_id(userDto.getId());
         productService.insertProductLike(wishListDto);
@@ -48,10 +41,6 @@ public class RestProductController {
         restResponseDto.setResult("success");
 
         UserDto userDto = (UserDto) session.getAttribute("sessionUserInfo");
-//        if (userDto == null) {
-//            utils.loginUser(1);
-//            userDto = (UserDto) session.getAttribute("sessionUserInfo");
-//        }
 
         wishListDto.setUser_id(userDto.getId());
         productService.deleteProductByUserLike(wishListDto);
@@ -77,10 +66,6 @@ public class RestProductController {
         restResponseDto.setResult("success");
 
         UserDto userDto = (UserDto) session.getAttribute("sessionUserInfo");
-//        if (userDto == null) {
-//            utils.loginUser(1);
-//            userDto = (UserDto) session.getAttribute("sessionUserInfo");
-//        }
         wishListDto.setUser_id(userDto.getId());
 
         boolean byUserLike = productService.selectProductByUserLike(wishListDto);

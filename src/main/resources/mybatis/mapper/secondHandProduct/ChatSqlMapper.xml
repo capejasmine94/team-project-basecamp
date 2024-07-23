@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.bulmeong.basecamp.secondHandProduct.mapper.ProductSqlMapper">
+
+    <insert id="insertChatRoomMessage">
+        INSERT INTO bc_secondhand_product_chat_room
+            (product_id, buyer_user_id, message)
+        values
+            (#{product_id}, #{buyer_user_id}, #{message})
+    </insert>
+
+
+</mapper>
