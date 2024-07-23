@@ -183,4 +183,62 @@
         )
     </insert>
 
+    <select id="selectAllProducts" resultType="com.bulmeong.basecamp.store.dto.StoreProductDto">
+        select * from store_product
+    </select>
+
+    <select id="selectStoreDtoById" resultType="com.bulmeong.basecamp.store.dto.StoreDto">
+        select * from store
+        where id = #{id}
+    </select>
+
+    <select id="selectDiscountById" resultType="com.bulmeong.basecamp.store.dto.StoreProductDiscountDto">
+        select * from store_product_discount
+        where id = #{id}
+    </select>
+
+    <select id="selectProductCategoryById" resultType="com.bulmeong.basecamp.store.dto.StoreProductCategoryDto">
+        select * from product_category
+        where id = #{id}
+    </select>
+
+    <select id="selectProductDtoListByCategoryId" resultType="com.bulmeong.basecamp.store.dto.StoreProductDto">
+        select * from store_product sp 
+        inner join product_subcategory ps on sp.subcategory_id = ps.id 
+        where ps.category_id = #{id}
+        <if test="subcategory_id != null">
+            and ps.id = #{subcategory_id}
+        </if>
+    </select>
+
+    <select id="countProductDtoByCategoryId" resultType="int">
+        select count(*) from store_product sp 
+        inner join product_subcategory ps on sp.subcategory_id = ps.id 
+        where ps.category_id = #{id}
+        <if test="subcategory_id != null">
+            and ps.id = #{subcategory_id}
+        </if>
+    </select>
+
+    <select id="selectProductDtoByID" resultType="com.bulmeong.basecamp.store.dto.StoreProductDto">
+        select * from store_product
+        where id = #{id}
+    </select>
+
+    <select id="selectDeliveryInfoDtoByStoreId" resultType="com.bulmeong.basecamp.store.dto.StoreDeliveryInfoDto">
+        select * from delivery_info
+        where store_id = #{store_id}
+    </select>
+
+    <select id="selectProductWishCount" resultType="int">
+        select count(*) from product_wish
+        where proudct_id = #{proudct_id}
+    </select>
+
+    <select id="selectProductWishCountByUserId" resultType="int">
+        select count(*) from product_wish
+        where user_id = #{user_id}
+        and product_id = #{product_id}
+    </select>
+
 </mapper>

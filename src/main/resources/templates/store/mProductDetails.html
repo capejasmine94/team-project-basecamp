@@ -69,7 +69,7 @@
 <body class="bg-body-tertiary">
 
     <!-- top-nav -->
-    <div class="fixed-top px-4 row border-bottom shadow-sm bg-white">
+    <div class="fixed-top px-4 row border-bottom bg-white">
         <div class="col">
             <div class="row py-3">
                 <div class="col-auto ps-0">
@@ -119,12 +119,12 @@
             <div class="col">
                 <div class="row px-3">
                     <div class="col px-0 py-2 fw-bold f08 border-bottom">
-                        GamjaStore
+                        <span th:text="${productData.storeDto.name}">GamjaStore</span>
                     </div>
                 </div>
                 <div class="row px-3 py-3">
                     <div class="col px-0 fw-bold">
-                        진짜 맛있는 납작복숭아
+                        <span th:text="${productData.storeProductDto.name}">진짜 맛있는 납작복숭아</span>
                     </div>
                     <div class="col-auto px-0">
                         <span class="material-symbols-outlined">
@@ -134,26 +134,26 @@
                 </div>
                 <div class="row px-3">
                     <div class="col px-0 f08 text-body-tertiary" style="text-decoration: line-through;">
-                        <span>40,000원</span>
+                        <span th:text="|${#numbers.formatDecimal(productData.storeProductDto.price, 1, 'COMMA', 0, 'POINT')}원|">40,000원</span>
                     </div>
                 </div>
                 <div class="row px-3 pb-3">
                     <div class="col px-0 d-flex align-items-center">
-                        <span class="fw-bold f12" style="color: orangered;">30%</span>
-                        <span class="fw-bold f12">&nbsp;28,000</span>
+                        <span class="fw-bold f12" style="color: orangered;" th:text="|${productData.percentage}%|">30%</span>
+                        &nbsp;&nbsp;<span class="fw-bold f12" th:text="|${#numbers.formatDecimal(productData.salePrice, 1, 'COMMA', 0, 'POINT')}|">28,000</span>
                         <span class="f08">원</span>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="row f08 bg-white mb-3">
+        <div class="row f08 bg-white mb-2">
             <div class="col">
                 <div class="row px-3 py-3">
                     <div class="col-2 p-0 text-body-tertiary fw-bold">
                         B.POINT
                     </div>
                     <div class="col">
-                        40P 적립
+                        <span th:text="|${(productData.salePrice)/1000}P|">40P</span> 적립
                     </div>
                 </div>
                 <div class="row px-3 pb-3">
@@ -162,9 +162,12 @@
                     </div>
                     <div class="col">
                         <div class="row pb-1">
-                            <div class="col">
-                                <span>3,000원</span>
+                            <div class="col" th:if="${productData.storeDeliveryInfoDto.fee!=0}">
+                                <span th:text="|${productData.storeDeliveryInfoDto.fee}원|"></span>
                                 <span>(12,000원 이상 무료배송)</span>
+                            </div>
+                            <div class="col" th:unless="${productData.storeDeliveryInfoDto.fee!=0}">
+                                무료배송
                             </div>
                         </div>
                         <div class="row">
@@ -177,10 +180,59 @@
             </div>
         </div>
 
-        
+        <div class="row bg-white sticky-top text-center border-bottom fw-bold f09" style="top: 58px;">
+            <div class="col py-3" style="color: orangered; border-bottom: orangered solid 2px;">
+                상품정보
+            </div>
+            <div class="col py-3">
+                리뷰
+            </div>
+            <div class="col py-3">
+                문의
+            </div>
+        </div>
+
+        <div class="row py-5"></div>
+        <div class="row py-5"></div>
+        <div class="row py-5"></div>
+
+        <div class="row bg-white px-3 f09 fw-bold">
+            <div class="col px-0 py-3 border-bottom d-flex align-items-center justify-content-between">
+                <span>교환/환불 안내</span>
+                <span class="material-symbols-outlined">
+                    keyboard_arrow_down
+                </span>
+            </div>
+        </div>
+        <div class="row bg-white px-3 f09 fw-bold">
+            <div class="col px-0 py-3 border-bottom d-flex align-items-center justify-content-between">
+                <span>배송 안내</span>
+                <span class="material-symbols-outlined">
+                    keyboard_arrow_down
+                </span>
+            </div>
+        </div>
+        <div class="row bg-white px-3 mb-2 f09 fw-bold">
+            <div class="col px-0 py-3 d-flex align-items-center justify-content-between">
+                <span>판매자 정보</span>
+                <span class="material-symbols-outlined">
+                    keyboard_arrow_down
+                </span>
+            </div>
+        </div>
+
+        <div class="row bg-white">
+            <div class="col">
+                <div class="row py-3 px-3 f09 fw-bold">
+                    <div class="col p-0">
+                        최근 본 상품
+                    </div>
+                </div>
+            </div>
+        </div>
 
         <!-- footer -->
-        <div class="row py-2 bg-secondary text-white text-center f09">
+        <div class="row py-2 bg-dark-subtle text-white text-center f09">
             <div class="col fw-bold border-end">
                 로그아웃
             </div>
@@ -191,7 +243,7 @@
                 NEWS
             </div>
         </div>
-        <div class="row py-4 px-3 bg-dark text-white">
+        <div class="row py-4 px-3 bg-body-secondary text-secondary">
             <div class="col">
                 <div class="row pb-2">
                     <div class="col-auto p-0">
@@ -211,7 +263,7 @@
 
                 <div class="row pt-3 py-3 border-bottom border-2">
                     <div class="col-auto p-0">
-                        <button class="btn btn-sm btn-secondary fw-bold f08 d-flex align-items-center">
+                        <button class="btn btn-sm bg-dark-subtle text-white fw-bold f08 d-flex align-items-center">
                             <span class="material-symbols-outlined f12">
                                 phone_in_talk
                             </span>
@@ -219,7 +271,7 @@
                         </button>
                     </div>
                     <div class="col-auto">
-                        <button class="btn btn-sm btn-secondary fw-bold f08">
+                        <button class="btn btn-sm bg-dark-subtle text-white fw-bold f08">
                             카카오 1:1 문의
                         </button>
                     </div>
@@ -243,13 +295,13 @@
                 </div>
 
                 <div class="row pt-3 align-items-center">
-                    <div class="col-auto me-2 bg-secondary rounded-circle d-flex align-items-center" style="aspect-ratio: 1/1;">
+                    <div class="col-auto me-2 bg-dark-subtle rounded-circle d-flex align-items-center" style="aspect-ratio: 1/1;">
                         <i class="bi bi-google-play"></i>
                     </div>
-                    <div class="col-auto me-2 bg-secondary rounded-circle d-flex align-items-center" style="aspect-ratio: 1/1;">
+                    <div class="col-auto me-2 bg-dark-subtle rounded-circle d-flex align-items-center" style="aspect-ratio: 1/1;">
                         <i class="bi bi-youtube"></i>
                     </div>
-                    <div class="col-auto me-2 bg-secondary rounded-circle d-flex align-items-center" style="aspect-ratio: 1/1;">
+                    <div class="col-auto me-2 bg-dark-subtle rounded-circle d-flex align-items-center" style="aspect-ratio: 1/1;">
                         <i class="bi bi-instagram"></i>
                     </div>
                     <div class="col-auto pe-0 f08">
@@ -280,7 +332,7 @@
                 </div>
             </div>
             <div class="col d-grid">
-                <button type="button" class="btn btn-dark rounded-0 py-2" data-bs-toggle="offcanvas" data-bs-target="#offcanvasBottom">
+                <button type="button" class="btn btn-dark rounded-0 py-3" data-bs-toggle="offcanvas" data-bs-target="#offcanvasBottom">
                     구매하기
                 </button>
             </div>
@@ -363,7 +415,7 @@
                     </a>
                 </div>
                 <div class="col py-3 d-grid">
-                    <a type="button" class="btn btn-dark rounded-0 py-2">
+                    <a href="/store/ordersheet" type="button" class="btn btn-dark rounded-0 py-2">
                         구매하기
                     </a>
                 </div>

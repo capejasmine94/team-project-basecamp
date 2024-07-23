@@ -46,4 +46,18 @@ public interface StoreSqlMapper {
     public void insertAdditionalInfo(AdditionalInfoDto additionalInfoDto);
     public int selectOptionValueIdByName(String name);
     public void insertOptionValueAdditionalInfo(OptionValueAdditionalInfoDto optionValueAdditionalInfoDto);
+
+    public List<StoreProductDto> selectAllProducts();
+    public StoreDto selectStoreDtoById(int id);
+    public StoreProductDiscountDto selectDiscountById(int id);
+
+    public StoreProductCategoryDto selectProductCategoryById(int id);
+    public List<StoreProductDto> selectProductDtoListByCategoryId(@Param("id")int id, @Param("subcategory_id") Integer subcategory_id);
+    public int countProductDtoByCategoryId(@Param("id")int id, @Param("subcategory_id") Integer subcategory_id);
+
+    public StoreProductDto selectProductDtoByID(int id);
+    public StoreDeliveryInfoDto selectDeliveryInfoDtoByStoreId(int store_id);
+    public int selectProductWishCount(int product_id);
+
+    public int selectProductWishCountByUserId(int user_id, int product_id);
 }

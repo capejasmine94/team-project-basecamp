@@ -1,5 +1,7 @@
 package com.bulmeong.basecamp.store.controller;
 
+import java.util.*;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -120,4 +122,32 @@ public class RestStoreController {
 
         return restResponseDto;
     }
+
+    @RequestMapping("getProductDataByCategoryId")
+    public RestResponseDto getProductDataByCategoryId(
+        @RequestParam("category_id") int category_id,
+        @RequestParam(value="subcategory_id", required = false) Integer subcategory_id
+    ){
+        RestResponseDto restResponseDto = new RestResponseDto();
+
+        List<Map<String, Object>> productDataList = storeService.getProductDataByCategoryId(category_id, subcategory_id);
+
+        restResponseDto.add("productDataList", productDataList);
+
+        return restResponseDto;
+    }
+
+    @RequestMapping("countProductByCategoryId")
+    public RestResponseDto countProductByCategoryId(
+        @RequestParam("category_id") int category_id,
+        @RequestParam(value="subcategory_id", required = false) Integer subcategory_id
+    ){
+        RestResponseDto restResponseDto = new RestResponseDto();
+
+        int productCount = storeService.countProductDtoByCategoryId(category_id, subcategory_id);
+        restResponseDto.add("productCount", productCount);
+
+        return restResponseDto;
+    }
+
 }

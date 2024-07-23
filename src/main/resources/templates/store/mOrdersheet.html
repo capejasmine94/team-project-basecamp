@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">    
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+    <script src="https://kit.fontawesome.com/7b271bba58.js" crossorigin="anonymous"></script>
+
+    <style>
+        .fill-on {
+            font-variation-settings: 'FILL' 1;
+        }
+        .fill-off {
+            font-variation-settings: 'FILL' 0;
+        }
+        .seller_profile img{
+            aspect-ratio: 1/1;
+            width: 100px;
+            object-fit: cover;
+            object-position: center;
+        }
+        .icon-col img{
+            aspect-ratio: 1/1;
+            width: 100%;
+            object-fit: cover;
+            object-position: center;
+        }
+        .product-col img{
+            aspect-ratio: 1/1;
+            width: 100%;
+            object-fit: cover;
+            object-position: center;
+        }
+        a{
+            text-decoration: none;
+            color: black;
+        }
+        .f05{
+            font-size: 0.5em;
+        }
+        .f08{
+            font-size: 0.8em;
+        }
+        .f09{
+            font-size: 0.9em;
+        }
+        .f12{
+            font-size: 1.2em;
+        }
+        .f17{
+            font-size: 1.7em;
+        }
+        .f20{
+            font-size: 2em;
+        }
+        .f40{
+            font-size: 4em;
+        }
+    </style>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            document.getElementById('backButton').addEventListener('click', function() {
+                history.back();
+            });
+        });
+    </script>
+</head>
+<body class="bg-body-secondary">
+
+    <!-- top-nav -->
+    <div class="fixed-top px-4 row border-bottom bg-white shadow-sm" style="z-index: 2000;">
+        <div class="col">
+            <div class="row py-3">
+                <div class="col text-start fw-bold f12">
+                    주문/결제
+                </div>
+                <div class="col-auto pe-0">
+                    <button id="backButton" class="border-0 bg-transparent d-flex align-items-center">
+                        <span class="material-symbols-outlined">
+                            close
+                        </span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container" style="margin-top: 60.792px;">
+
+        <div class="row px-3 bg-body-tertiary">
+            <div class="col">
+
+                <div class="row pb-2 pt-3 fw-bold f12">
+                    <div class="col p-0">
+                        배송지
+                    </div>
+                </div>
+
+                <div class="row pb-3">
+                    <div class="col py-3 rounded-3 bg-white shadow-sm">
+                        <div class="row">
+                            <div class="col">
+                                <div class="row pb-1 align-items-center">
+                                    <div class="col fw-bold">
+                                        김첨지
+                                    </div>
+                                </div>
+                                <div class="row pb-1 text-secondary">
+                                    <div class="col">
+                                        010-1234-5678
+                                    </div>
+                                </div>
+                                <div class="row pb-1">
+                                    <div class="col">
+                                        서울특별시 강남구 테헤란로 7길 7 (무슨 빌딩) 6층 (12345)
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-auto">
+                                <a href="" type="button" class="btn btn-sm btn-light border">
+                                    변경
+                                </a>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="row py-2 fw-bold f12">
+                    <div class="col p-0">
+                        주문 상품
+                    </div>
+                </div>
+
+                <div class="row pb-3">
+                    <div class="col py-3 rounded-3 bg-white shadow-sm">
+
+                        <div class="row pb-2 pb-1 align-items-center">
+                            <div class="col fw-bold">
+                                모이세농원
+                            </div>
+                        </div>
+                        <div class="row pb-1">
+                            <div class="col-3 pe-0 product-col">
+                                <img class="border" src="/public/img/storeImage/productImg1.jpg">
+                            </div>
+                            <div class="col">
+                                <div class="row">
+                                    <div class="col">
+                                        진짜 맛있는 납작복숭아
+                                    </div>
+                                </div>
+                                <div class="row text-body-tertiary f09">
+                                    <div class="col-auto pe-0">
+                                        <span class="badge text-bg-light border text-body-tertiary">
+                                            옵션
+                                        </span>
+                                    </div>
+                                    <div class="col">
+                                        색상: 검정 / 사이즈: M / 또 무슨 옵션: 짜라잔
+                                        <span class="border-start border-2 px-1">1개</span>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col">
+                                        <span class="fw-bold">28,000원</span>
+                                        <span class="text-body-tertiary" style="text-decoration: line-through;">40,000</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="row pb-3">
+                    <div class="col pt-3 rounded-3 bg-white shadow-sm">
+
+                        <div class="row pb-2 pb-1 align-items-center text-body-tertiary">
+                            <div class="col">
+                                상품금액
+                            </div>
+                            <div class="col text-end">
+                                40,000원
+                            </div>
+                        </div>
+
+                        <div class="row pb-2 pb-1 align-items-center text-body-tertiary">
+                            <div class="col">
+                                배송비
+                            </div>
+                            <div class="col text-end">
+                                +3,000원
+                            </div>
+                        </div>
+
+                        <div class="row pb-2 pb-1 align-items-center text-body-tertiary">
+                            <div class="col">
+                                할인금액
+                            </div>
+                            <div class="col text-end">
+                                -12,000원
+                            </div>
+                        </div>
+
+                        <div class="row rounded-3 rounded-top-0 py-3 fw-bold f12 border-top">
+                            <div class="col">
+                                총 주문금액
+                            </div>
+                            <div class="col text-end" style="color: orangered;">
+                                28,000원
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="row py-2 fw-bold f12">
+                    <div class="col p-0">
+                        포인트 사용
+                    </div>
+                </div>
+
+                <div class="row pb-3">
+                    <div class="col py-3 rounded-3 bg-white shadow-sm">
+
+                        <div class="row pb-2 text-body-tertiary">
+                            <div class="col">
+                                보유
+                            </div>
+                            <div class="col text-end">
+                                4,000원
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col">
+                                <input type="text" class="form-control" placeholder="사용">
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="row py-2 fw-bold f12">
+                    <div class="col p-0">
+                        결제 수단
+                    </div>
+                </div>
+
+                <div class="row pb-3">
+                    <div class="col py-3 rounded-3 bg-white shadow-sm">
+
+                        <div class="row pb-2">
+                            <div class="col">
+                                카드결제랑
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col">
+                                무통장 입금이랑 뭐 그런 거
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="row py-2 fw-bold f12">
+                    <div class="col p-0">
+                        적립 예정 포인트
+                    </div>
+                </div>
+
+                <div class="row pb-3">
+                    <div class="col py-3 fw-bold rounded-3 bg-white shadow-sm">
+
+                        <div class="row pb-2">
+                            <div class="col">
+                                구매적립
+                            </div>
+                            <div class="col text-end">
+                                280원
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col">
+                                리뷰적립
+                            </div>
+                            <div class="col text-end">
+                                최대 500원
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="row px-3 bg-body-tertiary" style="padding-bottom: 107.333px;">
+            <div class="col px-0 py-3">
+                <span class="f08 text-body-tertiary">
+                    개별 판매자가 등록한 상품에 대한 광고, 상품주문, 배송, 환불의 의무와 책임은 각 판매자에게 있으며, 개별 판매자의 상품에 대하여 BASECAMP는 통신판매중개자로서 통신판매의 당사자가 아닙니다.
+                </span>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="row px-3 bg-white fixed-bottom border-top pt-2 pb-4">
+        <div class="col">
+            <div class="row pt-2">
+                <div class="col d-grid">
+                    <a href="/store/orderComplete" type="button" class="btn btn-dark py-2 fw-bold">
+                        31,000원 결제하기
+                    </a>
+                </div>
+            </div>
+            <div class="row pt-2">
+                <div class="col" style="font-size: 0.75em;">
+                    약관 및 주문 내용을 확인하였으며, 정보 제공 등에 동의합니다.
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+</body>
+</html>

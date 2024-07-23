@@ -87,15 +87,15 @@
         <!-- carousel -->
         <div class="row">
             <div class="col p-0">
-                <div id="carouselExample" class="carousel slide">
+                <div id="carouselExample" class="carousel slide" data-bs-ride="carousel">
                     <div class="carousel-inner">
-                        <div class="carousel-item active">
+                        <div class="carousel-item active" data-bs-interval="3000">
                             <img src="https://www.graega.com/_next/image?url=https%3A%2F%2Fdul339flcqmyl.cloudfront.net%2Fbanner_images%2F20240326180516_%25EC%259D%25B4%25EB%25B2%25A4%25ED%258A%25B8_%25EB%25B0%25B0%25EB%2584%2588_%25EB%25A6%25AC%25EB%25B7%25B0%25EC%259D%25B4%25EB%25B2%25A4%25ED%258A%25B8.jpg&w=2048&q=75" class="d-block w-100">
                         </div>
-                        <div class="carousel-item">
+                        <div class="carousel-item" data-bs-interval="3000">
                             <img src="https://www.graega.com/_next/image?url=https%3A%2F%2Fdul339flcqmyl.cloudfront.net%2Fbanner_images%2F20240531175701_240531_%25EA%25B7%25B8%25EB%259E%2598%25EA%25B0%2580_%25EC%259D%25B4%25EB%25B2%25A4%25ED%258A%25B8_%25EB%25A9%2594%25EC%259D%25B8%25EB%25B0%25B0%25EB%2584%2588_%25EC%259D%25B4%25EB%258B%25AC%25EC%259D%2598%25EC%25BA%25A0%25ED%2595%2591%25EC%259E%25A5_%25EA%25B3%2584%25EA%25B3%25A1%25EC%25BA%25A0%25ED%2595%2591_2.jpg&w=2048&q=75" class="d-block w-100">
                         </div>
-                        <div class="carousel-item">
+                        <div class="carousel-item" data-bs-interval="3000">
                             <img src="https://www.graega.com/_next/image?url=https%3A%2F%2Fdul339flcqmyl.cloudfront.net%2Fbanner_images%2F20240719184049_240719_%25EA%25B7%25B8%25EB%259E%2598%25EA%25B0%2580_%25EC%259D%25B4%25EB%25B2%25A4%25ED%258A%25B8_%25EB%25A9%2594%25EC%259D%25B8%25EB%25B0%25B0%25EB%2584%2588_%25EC%2595%25A0%25EA%25B2%25AC%25EB%258F%2599%25EB%25B0%2598.jpg&w=2048&q=75" class="d-block w-100">
                         </div>
                     </div>
@@ -116,7 +116,7 @@
             <div class="col">
 
                 <div class="row pt-3 px-3">
-                    <a href="/store/category" class="col-3 pb-4">
+                    <a href="/store/category?category_id=1" class="col-3 pb-4">
                         <div class="row">
                             <div class="col icon-col">
                                 <img src="/public/img/storeImage/icon001.png">
@@ -128,7 +128,7 @@
                             </div>
                         </div>
                     </a>
-                    <div class="col-3 pb-4">
+                    <a href="/store/category?category_id=2" class="col-3 pb-4">
                         <div class="row">
                             <div class="col icon-col">
                                 <img src="/public/img/storeImage/icon001.png">
@@ -139,8 +139,8 @@
                                 타프
                             </div>
                         </div>
-                    </div>
-                    <div class="col-3 pb-4">
+                    </a>
+                    <a href="/store/category?category_id=3" class="col-3 pb-4">
                         <div class="row">
                             <div class="col icon-col">
                                 <img src="/public/img/storeImage/icon002.png">
@@ -151,8 +151,8 @@
                                 캠핑가구
                             </div>
                         </div>
-                    </div>
-                    <div class="col-3 pb-4">
+                    </a>
+                    <a href="/store/category?category_id=4" class="col-3 pb-4">
                         <div class="row">
                             <div class="col icon-col">
                                 <img src="/public/img/storeImage/icon007.png">
@@ -163,8 +163,8 @@
                                 취침용품
                             </div>
                         </div>
-                    </div>
-                    <div class="col-3 pb-4">
+                    </a>
+                    <a href="/store/category?category_id=5" class="col-3 pb-4">
                         <div class="row">
                             <div class="col icon-col">
                                 <img src="/public/img/storeImage/icon003.png">
@@ -175,8 +175,8 @@
                                 주방용품
                             </div>
                         </div>
-                    </div>
-                    <div class="col-3 pb-4">
+                    </a>
+                    <a href="/store/category?category_id=6" class="col-3 pb-4">
                         <div class="row">
                             <div class="col icon-col">
                                 <img src="/public/img/storeImage/icon004.png">
@@ -187,8 +187,8 @@
                                 계절용품
                             </div>
                         </div>
-                    </div>
-                    <div class="col-3 pb-4">
+                    </a>
+                    <a href="/store/category?category_id=7" class="col-3 pb-4">
                         <div class="row">
                             <div class="col icon-col">
                                 <img src="/public/img/storeImage/icon001.png">
@@ -199,7 +199,7 @@
                                 밀키트...
                             </div>
                         </div>
-                    </div>
+                    </a>
                     <div class="col-3 pb-4">
                         <div class="row">
                             <div class="col icon-col">
@@ -380,173 +380,37 @@
             </div>
         </div>
         <div class="row bg-white pb-5 pe-3">
-            <div class="col-6 py-3 pe-0 ps-3">
+
+            <!-- 상품 하나의 정보 -->
+            <div class="col-6 py-3 pe-0 ps-3" th:each="productData : ${allProductDataList}">
                 <div class="row">
                     <div class="col product-col">
-                        <img class="border rounded-2" src="/public/img/storeImage/productImg1.jpg">
+                        <img class="border rounded-2" th:src="|/images/${productData.storeProductDto.main_image}|">
                     </div>
                 </div>
                 <div class="row pt-1 f08 fw-bold">
                     <div class="col">
-                        GogumaStore
+                        <span th:text="${productData.storeDto.name}">GogumaStore</span>
                     </div>
                 </div>
                 <div class="row f09">
                     <div class="col">
-                        진짜 맛있는 납작복숭아
+                        <span th:text="${productData.storeProductDto.name}">진짜 맛있는 납작복숭아</span>
                     </div>
                 </div>
                 <div class="row fw-bold f08 text-body-tertiary">
                     <div class="col" style="text-decoration: line-through;">
-                        40,000
+                        <span th:text="${#numbers.formatDecimal(productData.storeProductDto.price, 1, 'COMMA', 0, 'POINT')}">40,000</span>
                     </div>
                 </div>
                 <div class="row fw-bold">
                     <div class="col">
-                        <span style="color: orangered;">30% </span><span>28,000</span>
+                        <span style="color: orangered;" th:text="|${productData.percentage}%|">30% </span>
+                        <span th:text="${#numbers.formatDecimal(productData.salePrice, 1, 'COMMA', 0, 'POINT')}">28,000</span>
                     </div>
                 </div>
             </div>
 
-            <div class="col-6 py-3 pe-0 ps-3">
-                <div class="row">
-                    <div class="col product-col">
-                        <img class="border rounded-2" src="/public/img/storeImage/productImg2.jpg">
-                    </div>
-                </div>
-                <div class="row pt-1 f08 fw-bold">
-                    <div class="col">
-                        GogumaStore
-                    </div>
-                </div>
-                <div class="row f09">
-                    <div class="col">
-                        진짜 맛있는 납작복숭아
-                    </div>
-                </div>
-                <div class="row fw-bold f08 text-body-tertiary">
-                    <div class="col" style="text-decoration: line-through;">
-                        40,000
-                    </div>
-                </div>
-                <div class="row fw-bold">
-                    <div class="col">
-                        <span style="color: orangered;">30% </span><span>28,000</span>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-6 py-3 pe-0 ps-3">
-                <div class="row">
-                    <div class="col product-col">
-                        <img class="border rounded-2" src="/public/img/storeImage/productImg1.jpg">
-                    </div>
-                </div>
-                <div class="row pt-1 f08 fw-bold">
-                    <div class="col">
-                        GogumaStore
-                    </div>
-                </div>
-                <div class="row f09">
-                    <div class="col">
-                        진짜 맛있는 납작복숭아
-                    </div>
-                </div>
-                <div class="row fw-bold f08 text-body-tertiary">
-                    <div class="col" style="text-decoration: line-through;">
-                        40,000
-                    </div>
-                </div>
-                <div class="row fw-bold">
-                    <div class="col">
-                        <span style="color: orangered;">30% </span><span>28,000</span>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-6 py-3 pe-0 ps-3">
-                <div class="row">
-                    <div class="col product-col">
-                        <img class="border rounded-2" src="/public/img/storeImage/productImg2.jpg">
-                    </div>
-                </div>
-                <div class="row pt-1 f08 fw-bold">
-                    <div class="col">
-                        GogumaStore
-                    </div>
-                </div>
-                <div class="row f09">
-                    <div class="col">
-                        진짜 맛있는 납작복숭아
-                    </div>
-                </div>
-                <div class="row fw-bold f08 text-body-tertiary">
-                    <div class="col" style="text-decoration: line-through;">
-                        40,000
-                    </div>
-                </div>
-                <div class="row fw-bold">
-                    <div class="col">
-                        <span style="color: orangered;">30% </span><span>28,000</span>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-6 py-3 pe-0 ps-3">
-                <div class="row">
-                    <div class="col product-col">
-                        <img class="border rounded-2" src="/public/img/storeImage/productImg1.jpg">
-                    </div>
-                </div>
-                <div class="row pt-1 f08 fw-bold">
-                    <div class="col">
-                        GogumaStore
-                    </div>
-                </div>
-                <div class="row f09">
-                    <div class="col">
-                        진짜 맛있는 납작복숭아
-                    </div>
-                </div>
-                <div class="row fw-bold f08 text-body-tertiary">
-                    <div class="col" style="text-decoration: line-through;">
-                        40,000
-                    </div>
-                </div>
-                <div class="row fw-bold">
-                    <div class="col">
-                        <span style="color: orangered;">30% </span><span>28,000</span>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-6 py-3 pe-0 ps-3">
-                <div class="row">
-                    <div class="col product-col">
-                        <img class="border rounded-2" src="/public/img/storeImage/productImg2.jpg">
-                    </div>
-                </div>
-                <div class="row pt-1 f08 fw-bold">
-                    <div class="col">
-                        GogumaStore
-                    </div>
-                </div>
-                <div class="row f09">
-                    <div class="col">
-                        진짜 맛있는 납작복숭아
-                    </div>
-                </div>
-                <div class="row fw-bold f08 text-body-tertiary">
-                    <div class="col" style="text-decoration: line-through;">
-                        40,000
-                    </div>
-                </div>
-                <div class="row fw-bold">
-                    <div class="col">
-                        <span style="color: orangered;">30% </span><span>28,000</span>
-                    </div>
-                </div>
-            </div>
         </div>
 
         <!-- footer -->

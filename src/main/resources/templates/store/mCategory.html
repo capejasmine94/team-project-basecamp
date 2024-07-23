@@ -58,13 +58,88 @@
         .f40{
             font-size: 4em;
         }
+        .active{
+            font-weight: bold;
+            border-bottom: 2px solid black;
+        }
     </style>
     <script>
+        const urlParams = new URL(window.location.href).searchParams;
+        const category_id = urlParams.get("category_id");
+
+        let subcategory = 'ALL';
+        
         document.addEventListener('DOMContentLoaded', function() {
             document.getElementById('backButton').addEventListener('click', function() {
                 history.back();
             });
+            reloadProductList();
         });
+
+        document.addEventListener('DOMContentLoaded', function(){
+            const tabs = document.querySelectorAll('.tab');
+            
+            tabs.forEach(tab => {
+                tab.addEventListener('click', function(){
+                    subcategory = this.dataset.subcategory;
+
+                    tabs.forEach(t => t.classList.remove('active'));
+
+                    this.classList.add('active');
+
+                    reloadProductList();
+                })
+            })
+        })
+
+        function reloadProductList(){
+            let url = ""
+
+            if(subcategory=='ALL'){
+                url = `/api/store/getProductDataByCategoryId?category_id=${category_id}`
+            }else{
+                url = `/api/store/getProductDataByCategoryId?category_id=${category_id}&subcategory_id=${subcategory}`;
+            }
+
+            fetch(url)
+            .then(response => response.json())
+            .then((response) => {
+                const contentBox = document.getElementById("contentBox");
+                contentBox.innerHTML = "";
+
+                const productCol = document.querySelector("#template .productCol");
+
+                for(e of response.data.productDataList){
+                    const newProductCol = productCol.cloneNode(true);
+
+                    newProductCol.setAttribute("href", `/store/productDetails?id=${e.storeProductDto.id}`)
+                    newProductCol.querySelector(".storeName").innerText = e.storeDto.name;
+                    newProductCol.querySelector(".productName").innerText = e.storeProductDto.name;
+                    newProductCol.querySelector(".price").innerText = e.storeProductDto.price.toLocaleString();
+                    newProductCol.querySelector(".percentage").innerText = `${e.percentage}%`;
+                    newProductCol.querySelector(".salePrice").innerText = e.salePrice.toLocaleString();
+                    newProductCol.querySelector(".mainImage").setAttribute("src", `/images/${e.storeProductDto.main_image}`)
+
+                    contentBox.appendChild(newProductCol);
+                }
+            })
+            
+            let countUrl = ""
+
+            if(subcategory=='ALL'){
+                countUrl = `/api/store/countProductByCategoryId?category_id=${category_id}`
+            }else{
+                countUrl = `/api/store/countProductByCategoryId?category_id=${category_id}&subcategory_id=${subcategory}`;
+            }
+
+            fetch(countUrl)
+            .then(response => response.json())
+            .then((response) => {
+                const productCount = document.getElementById("productCount");
+                productCount.innerText = `총 ${response.data.productCount}개`;
+            })
+        }
+        
     </script>
 </head>
 <body class="bg-body-tertiary">
@@ -81,7 +156,7 @@
                     </button>
                 </div>
                 <div class="col ps-0 fw-bold f12 text-center">
-                    텐트
+                    <span th:text="${productCategoryData.storeProductCategoryDto.name}">텐트</span>
                 </div>
                 <div class="col-auto pe-0 d-flex align-items-center">
                     <span class="material-symbols-outlined">
@@ -90,17 +165,13 @@
                 </div>
             </div>
             <div class="row text-center f08">
-                <div class="col-auto py-2 fw-bold border-bottom border-2 border-black">
+                <div class="col-auto py-2 tab active" data-subcategory="ALL">
                     전체
                 </div>
-                <div class="col-auto py-2">
-                    에어텐트
-                </div>
-                <div class="col-auto py-2">
-                    백패킹텐트
-                </div>
-                <div class="col-auto py-2">
-                    차량용텐트
+                <div class="col-auto py-2 tab" th:data-subcategory="${productSubcategoryDto.id}" th:each="productSubcategoryDto : ${productCategoryData.productSubcategoryDtoList}">
+                    <span th:text="${productSubcategoryDto.name}">
+                        에어텐트
+                    </span>
                 </div>
             </div>
         </div>
@@ -108,9 +179,9 @@
 
     <div class="container" style="padding-top: 97.99px;">
 
-        <div class="row px-3 bg-white pt-5 f09 fw-bold align-items-center">
+        <div class="row px-3 bg-white pt-4 f09 fw-bold align-items-center">
             <div class="col p-0">
-                총 186개
+                <span id="productCount">총 186개</span>
             </div>
             <div class="col-auto p-0">
                 <select class="form-select f09 border-0">
@@ -122,124 +193,7 @@
             </div>
         </div>
 
-        <div class="row pb-5 bg-white pe-3">
-
-            <!-- 상품하나의 정보 -->
-            <a href="/store/productDetails" class="col-6 py-3 pe-0 ps-3">
-                <div class="row">
-                    <div class="col product-col">
-                        <img class="border rounded-2" src="/public/img/storeImage/productImg1.jpg">
-                    </div>
-                </div>
-                <div class="row pt-1 f08 fw-bold">
-                    <div class="col">
-                        GogumaStore
-                    </div>
-                </div>
-                <div class="row f09">
-                    <div class="col">
-                        진짜 맛있는 납작복숭아
-                    </div>
-                </div>
-                <div class="row fw-bold f08 text-body-tertiary">
-                    <div class="col" style="text-decoration: line-through;">
-                        40,000
-                    </div>
-                </div>
-                <div class="row fw-bold">
-                    <div class="col">
-                        <span style="color: orangered;">30% </span><span>28,000</span>
-                    </div>
-                </div>
-            </a>
-
-            <!-- 상품하나의 정보 -->
-            <div class="col-6 py-3 pe-0 ps-3">
-                <div class="row">
-                    <div class="col product-col">
-                        <img class="border rounded-2" src="/public/img/storeImage/productImg2.jpg">
-                    </div>
-                </div>
-                <div class="row pt-1 f08 fw-bold">
-                    <div class="col">
-                        GogumaStore
-                    </div>
-                </div>
-                <div class="row f09">
-                    <div class="col">
-                        진짜 맛있는 납작복숭아
-                    </div>
-                </div>
-                <div class="row fw-bold f08 text-body-tertiary">
-                    <div class="col" style="text-decoration: line-through;">
-                        40,000
-                    </div>
-                </div>
-                <div class="row fw-bold">
-                    <div class="col">
-                        <span style="color: orangered;">30% </span><span>28,000</span>
-                    </div>
-                </div>
-            </div>
-
-            <!-- 상품하나의 정보 -->
-            <div class="col-6 py-3 pe-0 ps-3">
-                <div class="row">
-                    <div class="col product-col">
-                        <img class="border rounded-2" src="/public/img/storeImage/productImg1.jpg">
-                    </div>
-                </div>
-                <div class="row pt-1 f08 fw-bold">
-                    <div class="col">
-                        GogumaStore
-                    </div>
-                </div>
-                <div class="row f09">
-                    <div class="col">
-                        진짜 맛있는 납작복숭아
-                    </div>
-                </div>
-                <div class="row fw-bold f08 text-body-tertiary">
-                    <div class="col" style="text-decoration: line-through;">
-                        40,000
-                    </div>
-                </div>
-                <div class="row fw-bold">
-                    <div class="col">
-                        <span style="color: orangered;">30% </span><span>28,000</span>
-                    </div>
-                </div>
-            </div>
-
-            <!-- 상품하나의 정보 -->
-            <div class="col-6 py-3 pe-0 ps-3">
-                <div class="row">
-                    <div class="col product-col">
-                        <img class="border rounded-2" src="/public/img/storeImage/productImg2.jpg">
-                    </div>
-                </div>
-                <div class="row pt-1 f08 fw-bold">
-                    <div class="col">
-                        GogumaStore
-                    </div>
-                </div>
-                <div class="row f09">
-                    <div class="col">
-                        진짜 맛있는 납작복숭아
-                    </div>
-                </div>
-                <div class="row fw-bold f08 text-body-tertiary">
-                    <div class="col" style="text-decoration: line-through;">
-                        40,000
-                    </div>
-                </div>
-                <div class="row fw-bold">
-                    <div class="col">
-                        <span style="color: orangered;">30% </span><span>28,000</span>
-                    </div>
-                </div>
-            </div>
-        </div>
+        <div class="row pb-5 bg-white pe-3" id="contentBox"></div>
 
         <!-- footer -->
         <div class="row py-2 bg-secondary text-white text-center f09">
@@ -326,6 +280,67 @@
             </div>
         </div>
 
+    </div>
+
+    <div id="template" class="d-none">
+        <a class="col-6 py-3 pe-0 ps-3 productCol">
+            <div class="row">
+                <div class="col product-col">
+                    <img class="border rounded-2 mainImage" src="">
+                </div>
+            </div>
+            <div class="row pt-1 f08 fw-bold">
+                <div class="col storeName">
+                    GogumaStore
+                </div>
+            </div>
+            <div class="row f09">
+                <div class="col productName">
+                    진짜 맛있는 납작복숭아
+                </div>
+            </div>
+            <div class="row fw-bold f08 text-body-tertiary">
+                <div class="col price" style="text-decoration: line-through;">
+                    40,000
+                </div>
+            </div>
+            <div class="row fw-bold">
+                <div class="col">
+                    <span style="color: orangered;" class="percentage">30% </span>
+                    <span class="salePrice">28,000</span>
+                </div>
+            </div>
+        </a>
+
+        <!-- 상품하나의 정보 -->
+        <!-- <a href="/store/productDetails" class="col-6 py-3 pe-0 ps-3" th:if="${productDataList.size!=0}" th:each="productData : ${productDataList}">
+            <div class="row">
+                <div class="col product-col">
+                    <img class="border rounded-2" th:src="|/images/${productData.storeProductDto.main_image}|">
+                </div>
+            </div>
+            <div class="row pt-1 f08 fw-bold">
+                <div class="col">
+                    <span th:text="${productData.storeDto.name}">GogumaStore</span>
+                </div>
+            </div>
+            <div class="row f09">
+                <div class="col">
+                    <span th:text="${productData.storeProductDto.name}">진짜 맛있는 납작복숭아</span>
+                </div>
+            </div>
+            <div class="row fw-bold f08 text-body-tertiary">
+                <div class="col" style="text-decoration: line-through;">
+                    <span th:text="${#numbers.formatDecimal(productData.storeProductDto.price, 1, 'COMMA', 0, 'POINT')}">40,000</span>
+                </div>
+            </div>
+            <div class="row fw-bold">
+                <div class="col">
+                    <span style="color: orangered;" th:text="|${productData.percentage}%|">30% </span>
+                    <span th:text="${#numbers.formatDecimal(productData.salePrice, 1, 'COMMA', 0, 'POINT')}">28,000</span>
+                </div>
+            </div>
+        </a> -->
     </div>
 
     <!-- bottom-nav(임시) -->
