@@ -55,7 +55,7 @@
                     <a th:href="@{./instaMainPage(user_id=${session.sessionUserInfo.id})}" style="color: black;"><i class="bi bi-x-lg"></i></a>
                 </div>
                 <div class="col-8 pe-1">
-                    <span>user닉네임</span>
+                    <span th:text="${instaUserInfoDto.insta_nickname}">user닉네임</span>
                 </div>
                 <div class="col-2"></div>
             </div>
@@ -67,7 +67,7 @@
                 <div class="col align-self-center">
                     <div class="row text-center fw-bold">
                         <div class="col">
-                            <span>13</span>
+                            <span th:text="${articleCount}">13</span>
                         </div>
                         <a class="col" href="./userFollowersPage" style="text-decoration: none; color: black;">
                             <span>254</span>
@@ -92,7 +92,7 @@
 
             <div class="row mt-3">
                 <div class="col fontBasic">
-                    <span>소개글 _ intro</span>
+                    <span th:text="${instaUserInfoDto.intro}">소개글 _ intro</span>
                 </div>
             </div>
 

@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap">
-    <title>insta_mainPage</title>
+    <title>campstagram</title>
 
     <!-- <script src="/public/js/util.js"></script> -->
     
@@ -177,6 +177,28 @@
             padding: 0%;
             display: flex;
         } */
+
+        /* 이미지 하단 사진 개수 */
+        /* Bootstrap Carousel 기본 스타일을 유지하면서 점 모양 인디케이터 스타일링 */
+        .carousel-indicators {
+            bottom: 1px; /* 인디케이터 위치 조정 */
+        }
+
+        .carousel-indicators .active {
+            background-color: #fff; /* 활성화된 점 색상 설정 (흰색) */
+        }
+
+        /* 인디케이터 숫자 제거 */
+        .carousel-indicators li {
+            list-style: none; /* 기본 리스트 스타일 제거 */
+            width: 6px; /* 점의 너비 */
+            height: 6px; /* 점의 높이 */
+            background-color: #dbdada93; /* 점의 색상 */
+            border-radius: 50%; /* 둥근 점 모양 */
+            margin: 0 2px; /* 점 사이 간격 */
+            cursor: pointer; /* 클릭 가능 표시 */
+            display: inline-block; /* 인라인 블록으로 나란히 배치 */
+        }
     </style>
 
 </head>
@@ -204,7 +226,7 @@
             <!-- 스크롤 바 없애는 거 scrollbar-width: none; _ overflow있는 곳에 넣어주기 -->
             <div class="col overflow-x-auto" style="scrollbar-width: none;">
                 <div class="row" style="width: 150%;">
-                    <a class="col-auto link-dark link-offset-2 link-underline link-underline-opacity-0 " th:href="@{./instaMyPage(user_id=${session.sessionUserInfo.id})}">
+                    <a class="col-auto link-dark link-offset-2 link-underline link-underline-opacity-0 " th:href="@{./instaMyPage(user_id=${instaUserInfoDto.id})}">
                         <div class="row">
                             <!-- <div class="col">
                                 <img class="rounded" th:src="|/bowWow_image/${e.productDto.product_main_img_link}|" style="height: 7em; width: 100%;" >
@@ -315,38 +337,90 @@
             <div class="col">
                 <div class="row">
                     <!-- 글 작성한 사람 프로필 이미지 -->
-                    <a class="col-auto pe-1 link-dark link-offset-2 link-underline link-underline-opacity-0" href="./instaUserPage">
+                    <a class="col-auto pe-1 link-dark link-offset-2 link-underline link-underline-opacity-0"
+                                th:href="${session.sessionUserInfo.id == instaArticleList.instaUserInfoDto.user_id} ?
+                                            @{./instaMyPage(user_id=${instaArticleList.instaUserInfoDto.id})} : @{./instaUserPage(user_id=${instaArticleList.instaUserInfoDto.id})}">
                         <!-- <img th:src="|/basecampImage/${instaArticleList.instaArticleDto.insta_profile_img}|" class="img-fluid rounded-circle commentImage"> -->
                         <img src="/public/img/instaImage/hahaha4.jpg" class="img-fluid rounded-circle profileImage">
                     </a>
                     <!-- 글 작성한 사람 닉네임 -->
-                    <a class="col-auto ps-0 pt-1 link-dark link-offset-2 link-underline link-underline-opacity-0" href="./instaUserPage">
-                        <!-- <span th:text="${session.sessionUserInfo.nickname}">aa</span> -->
+                    <a class="col-auto ps-0 pt-1 link-dark link-offset-2 link-underline link-underline-opacity-0"
+                                th:href="${session.sessionUserInfo.id == instaArticleList.instaUserInfoDto.user_id} ?
+                                            @{./instaMyPage(user_id=${instaArticleList.instaUserInfoDto.id})} : @{./instaUserPage(user_id=${instaArticleList.instaUserInfoDto.id})}">
                         <span th:text="${instaArticleList.instaUserInfoDto.insta_nickname}" style="font-size: 0.8em;"></span>
                     </a>
-                    <div class="col"></div>
+                    <div class="col text-end align-self-center">
+                        <span>
+                            <i class="bi bi-three-dots"></i>
+                        </span>
+                    </div>
                 </div>
 
                 <!-- 해당글 이미지 List -->
-                <!-- <div id="carouselExampleIndicators" th:id="'carouselExampleIndicators' + ${stat.index}" class="carousel slide mt-3" data-bs-ride="carousel">
-                    <div class="carousel-indicators">
-                        <button type="button" data-bs-target="#carouselExampleIndicators" th:attr="data-bs-target|='#carouselExampleIndicators' + ${stat.index}" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
-                        <button type="button" data-bs-target="#carouselExampleIndicators" th:attr="data-bs-target|='#carouselExampleIndicators' + ${stat.index}" data-bs-slide-to="1" aria-label="Slide 2"></button>
-                        <button type="button" data-bs-target="#carouselExampleIndicators" th:attr="data-bs-target|='#carouselExampleIndicators' + ${stat.index}" data-bs-slide-to="2" aria-label="Slide 3"></button>
-                    </div>
-                    <div class="carousel-inner">
-                        <div th:classappend="${'carousel-item ' + (stat.index == 0 ? 'active' : '')}">
-                            <img src="/public/img/instaImage/basecamp (1).jpg" class="img-fluid" alt="Article Image">
+                <div class="row mt-3">
+                    <div class="col px-0">
+                        <div th:id="'carouselExampleInterval' + ${instaArticleList.instaArticleDto.id}" class="carousel slide"> <!-- data-bs-ride="carousel" _ 자동 슬라이드를 활성화 -->
+                            <!-- 인디케이터 추가 -->
+                            <ol class="carousel-indicators">
+                                <!-- 이미지 개수만큼 점 생성 -->
+                                <li th:each="image, iterStat : ${instaArticleList.instaArticleImgDtoList}"
+                                    th:classappend="${iterStat.index == 0 ? 'active' : ''}"
+                                    th:data-bs-slide-to="${iterStat.index}"></li>
+                                    <!-- iterStat은 Thymeleaf에서 반복문을 사용할 때 제공되는 변수로, 반복 상태를 나타내는 객체입니다.
+                                        iterStat을 사용하면 반복문에서 현재 반복의 상태를 추적하고, 인덱스나 반복 횟수와 같은 정보를 얻을 수 있습니다. -->
+                            </ol>
+                            
+                            <div class="carousel-inner">
+                                <!-- 이미지도 반복문 -->
+                                <div th:each="image, iterStat : ${instaArticleList.instaArticleImgDtoList}"
+                                     class="carousel-item"
+                                     th:classappend="${iterStat.index == 0 ? 'active' : ''}"> <!-- data-bs-interval="5000" _ 5초에 한번씩 사진 슬라이드 -->
+                                     <!-- 타임리프에서 classappend라는 구문을 사용하여 HTML 요소의 class 속성에 동적으로 클래스를 추가할 수 있습니다. -->
+                                    <img th:src="|/images/${image.img_link}|" class="d-block w-100">
+                                </div>
+                            </div>
+                            
+                            <button class="carousel-control-prev" type="button" th:data-bs-target="'#carouselExampleInterval' + ${instaArticleList.instaArticleDto.id}" data-bs-slide="prev">
+                                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                <span class="visually-hidden">Previous</span>
+                            </button>
+                            <button class="carousel-control-next" type="button" th:data-bs-target="'#carouselExampleInterval' + ${instaArticleList.instaArticleDto.id}" data-bs-slide="next">
+                                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                <span class="visually-hidden">Next</span>
+                            </button>
                         </div>
                     </div>
-                    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" th:attr="data-bs-target|='#carouselExampleIndicators' + ${stat.index}" data-bs-slide="prev">
-                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                        <span class="visually-hidden">이전</span>
-                    </button>
-                    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" th:attr="data-bs-target|='#carouselExampleIndicators' + ${stat.index}" data-bs-slide="next">
-                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                        <span class="visually-hidden">다음</span>
-                    </button>                   
+                </div>
+
+                <!-- 잘못 만든거 -->
+                <!-- <div class="row mt-3">
+                    <div class="col px-0">
+                        <div th:id="'carouselExampleInterval' + ${instaArticleList.instaArticleDto.id}" class="carousel slide"> 
+
+                            <ol class="carousel-indicators">
+                                
+                                <li th:each="image, iterStat : ${instaArticleList.instaArticleImgDtoList}"
+                                    th:classappend="${iterStat.index == 0 ? 'active' : ''}"
+                                    th:data-bs-slide-to="${iterStat.index}"></li>
+                            </ol>
+                            
+                            <div class="carousel-inner">
+                                
+                              <div class="carousel-item active"
+                                   th:each="image : ${instaArticleList.instaArticleImgDtoList}"> 
+                                   <img th:src="|/images/${image.img_link}|" class="d-block w-100">
+                              </div>
+                            </div>
+                            <button class="carousel-control-prev" type="button" th:data-bs-target="'#carouselExampleInterval' + ${instaArticleList.instaArticleDto.id}" data-bs-slide="prev">
+                              <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                              <span class="visually-hidden">Previous</span>
+                            </button>
+                            <button class="carousel-control-next" type="button" th:data-bs-target="'#carouselExampleInterval' + ${instaArticleList.instaArticleDto.id}" data-bs-slide="next">
+                              <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                              <span class="visually-hidden">Next</span>
+                            </button>
+                          </div>
+                    </div>
                 </div> -->
 
 
@@ -413,12 +487,21 @@
                 <!-- 글 작성한 사람 닉네임,
                      게시글 작성일,
                      내용 -->
-                <div class="row">
-                    <a class="col-auto fontBasic pe-0 link-dark link-offset-2 link-underline link-underline-opacity-0" href="./instaUserPage">
+                <div class="row justify-content-center">
+                    <!-- <a class="col-auto fontBasic pe-0 link-dark link-offset-2 link-underline link-underline-opacity-0" href="./instaUserPage">
                         <span th:text="${instaArticleList.instaUserInfoDto.insta_nickname}"></span>
+                    </a> -->
+                    <a class="col-auto d-flex align-items-center pe-0 link-dark link-offset-2 link-underline link-underline-opacity-0"
+                                th:href="${session.sessionUserInfo.id == instaArticleList.instaUserInfoDto.user_id} ?
+                                            @{./instaMyPage(user_id=${instaArticleList.instaUserInfoDto.id})} : @{./instaUserPage(user_id=${instaArticleList.instaUserInfoDto.id})}">
+                        <!-- <span class="fontBasic">saram</span> -->
+                        <span th:text="${instaArticleList.instaUserInfoDto.insta_nickname}" style="font-size: 0.8em;"></span>
                     </a>
-                    <div class="col fontBasic ps-2">                        
-                        <span th:text="${#dates.format(instaArticleList.instaArticleDto.created_at, 'yy.MM.dd')}" style="color: rgb(162, 162, 162);"></span><span style="color: rgb(162, 162, 162);">ㆍ</span><span th:text="${instaArticleList.instaArticleDto.content}">good day✨</span>                        
+                    <div class="col-auto fontBasic ps-1 pe-0">
+                        <span th:text="${T(com.bulmeong.basecamp.common.util.TimeUtil).timeAgo(instaArticleList.instaArticleDto.created_at)}" style="color: rgb(162, 162, 162); font-size: 0.9em;"></span>                                             
+                    </div>
+                    <div class="col ps-1 fontBasic">
+                        <span th:text="${instaArticleList.instaArticleDto.content}" style="font-size: 0.92em;">good day✨</span>   
                     </div>
                 </div>
 
@@ -461,7 +544,7 @@
             <form action="./instaWritePage" method="get">
                 <button class="btn bg-white rounded-2 border border-2 border-black px-2 py-1" type="submit">
                     <i class="fa-solid fa-plus"></i>
-                    <input type="hidden" name="user_id" th:value="${session.sessionUserInfo.id}">
+                    <input type="hidden" name="user_id" th:value="${instaUserInfoDto.id}">
                 </button>
             </form>
         </div>

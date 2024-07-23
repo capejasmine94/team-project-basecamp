@@ -50,6 +50,7 @@
 <body>    
     <div class="container">
         <div class="row">
+            <!-- enctype사용할때는 method를 get으로 하면 안되나..? -->
             <form class="col" action="./instaWriteProcess" method="post" enctype="multipart/form-data">
                 <!-- 상단바 -->
                 <div class="row mb-5 border-bottom fixed-top" style="background-color: white;">
@@ -68,7 +69,7 @@
                             <div id="upload_insta">
 
                             </div>
-                            <input type="hidden" name="user_id" th:value="${session.sessionUserInfo.id}">
+                            <input type="hidden" name="user_id" th:value="${instaUserInfoDto.id}">
                             <!-- <label class="input-group-text" for="bowWow_image">Choose File</label> -->
                         </div>
                     </div>

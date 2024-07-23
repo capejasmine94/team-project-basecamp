@@ -20,6 +20,8 @@ public interface InstaSqlMapper {
     public void insertInstaArticleImg(InstaArticleImgDto instaArticleImgDto);
     public List<InstaArticleDto> selectArticleAll();
     public List<InstaArticleImgDto> selectArticleImgByArticleId(int article_id);
+    public InstaUserInfoDto selectUserInfoById(int id);
+    public int selectArticleCountByUserId(int user_id);
 
     // 댓글
     public void createComment(InstaArticleCommentDto instaArticleCommentDto);

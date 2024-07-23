@@ -9,12 +9,12 @@
         <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap">
         <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap">
 
-        <!-- <link rel="stylesheet" href="styles.css"> -->
+        <link rel="stylesheet" href="styles.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 
         <title>commentWritePage</title>
 
-        <!-- <script src="/public/js/util.js"></script> -->
+        <script src="/public/js/util.js"></script>
 
         <style>
             /* 고정 */
@@ -59,6 +59,21 @@
 
             .instaButtonColor {
                 color: #0095f6;
+            }
+
+            /* 전송버튼 */
+            .send-icon {
+                width: 10%;
+                height: 39%;
+                position: absolute;
+                right: 2.1rem;
+                top: 1.32rem;
+                /* opacity: 50%; */
+            }
+            .send-icon i {
+                position: absolute;
+                top: 25%;
+                left: 35%;
             }
         </style>
 
@@ -264,13 +279,13 @@
                 <div class="col">
                     <div class="row">
                         <div class="col">
-                            <input id="inputText" class="form-control rounded-5 fontBasic" placeholder="검색">
+                            <input id="inputText" class="py-2 form-control rounded-5 fontBasic" placeholder="검색">
                             <!-- <textarea  class="form-control "></textarea> -->
                         </div>
-                        <div class="col-auto d-grid ps-0">
+                        <div class="col-auto p-0">
                             <!-- <input onclick="registerComment()" type="button" class="btn btn-primary" value="등록"> -->
-                            <button onclick="registerComment()" class="btn rounded-5 px-3 py-1" type="submit" style="color: white; background-color: #0095f6;">
-                                <i class="fa-solid fa-arrow-up"></i>
+                            <button onclick="registerComment()" class="send-icon btn rounded-5 px-3 py-1" type="submit" style="color: white; background-color: #0095f6;">
+                                <i class="fa-solid fa-arrow-up send-icon i" style="padding-right: 20%;"></i>
                             </button>
                         </div>
                     </div>
@@ -296,6 +311,11 @@
                         </a>
                         <div class="col align-self-center">
                             <div class="row">
+                                <!-- <a class="col-auto commentName ps-0 link-dark link-offset-2 link-underline link-underline-opacity-0"
+                                            th:href="${session.sessionUserInfo.id == instaArticleList.instaUserInfoDto.user_id} ?
+                                                        @{./instaMyPage(user_id=${instaArticleList.instaUserInfoDto.id})} : @{./instaUserPage(user_id=${instaArticleList.instaUserInfoDto.id})}">
+                                    <span th:text="${instaArticleList.instaUserInfoDto.insta_nickname}" style="font-size: 0.8em;"></span>
+                                </a> -->
                                 <a class="commentName col-auto pe-0 link-dark link-offset-2 link-underline link-underline-opacity-0" href="./instaUserPage">
                                     닉네임
                                 </a>

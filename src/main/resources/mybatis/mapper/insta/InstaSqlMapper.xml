@@ -19,9 +19,21 @@
         )
     </insert>
 
+    <!-- 세션 id로 인스타유저 정보 뽑는 쿼리 -->
     <select id="selectUserInfoByUserId" resultType="com.bulmeong.basecamp.insta.dto.InstaUserInfoDto">
         select * from bc_insta_user_info
         where user_id = #{user_id}
+    </select>
+
+    <!-- 인스타 id로 인스타유저 정보 뽑는 쿼리 -->
+    <select id="selectUserInfoById" resultType="com.bulmeong.basecamp.insta.dto.InstaUserInfoDto">
+        select * from bc_insta_user_info
+        where id = #{id}
+    </select>
+
+    <!-- 유저가 작성한 게시글 카운트 -->
+    <select id="selectArticleCountByUserId" resultType="int">
+        select count(*) from bc_insta_article where user_id = #{user_id}
     </select>
 
     <!-- 챗지피티 물어보니까 parameterType, useGeneratedKeys, keyProperty 얘네가 있어야만 article_id를 받아온다...? 왜 있어야되는지 모르겠음 -->
@@ -100,6 +112,7 @@
         where article_id = #{article_id}
         and user_id = #{user_id}
     </delete>
+
 
 </mapper>
 

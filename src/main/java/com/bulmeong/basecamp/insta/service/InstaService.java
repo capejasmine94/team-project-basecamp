@@ -36,6 +36,18 @@ public class InstaService {
         return instaUserInfoDto;
     }
 
+    public InstaUserInfoDto selectUserInfo(int id){
+        InstaUserInfoDto instaUserInfoDto = instaSqlMapper.selectUserInfoById(id);
+
+        return instaUserInfoDto;
+    }
+
+    public int selectArticleCountByUserId(int user_id){
+        int articleCount = instaSqlMapper.selectArticleCountByUserId(user_id);
+        
+        return articleCount;
+    }
+
     // 게시판 글 작성
     public void writeArticle(InstaArticleDto instaArticleDto){
         instaSqlMapper.insertInstaArticle(instaArticleDto);
@@ -61,7 +73,7 @@ public class InstaService {
 
             int article_id = instaArticleDto.getId();
             int user_id = instaArticleDto.getUser_id();
-            InstaUserInfoDto instaUserInfoDto = instaSqlMapper.selectUserInfoByUserId(user_id);
+            InstaUserInfoDto instaUserInfoDto = instaSqlMapper.selectUserInfoById(user_id);
             map.put("instaUserInfoDto", instaUserInfoDto);
 
             // 댓글 수 카운트
@@ -82,9 +94,12 @@ public class InstaService {
             // System.out.println("like:" + like);
 
             List<InstaArticleImgDto> instaArticleImgDtoList = instaSqlMapper.selectArticleImgByArticleId(article_id);
-            for(InstaArticleImgDto instaArticleImgDto : instaArticleImgDtoList){
-                map.put("instaArticleImgDto", instaArticleImgDto);
-            }
+            map.put("instaArticleImgDtoList", instaArticleImgDtoList); // 이미지 리스트를 map에 추가
+            // for(InstaArticleImgDto instaArticleImgDto : instaArticleImgDtoList){
+            //     map.put("instaArticleImgDto", instaArticleImgDto);
+            // } 이렇게 작성하면 instaArticleImgDto라는 키로 여러 이미지가 덮어쓰여짐
+
+            // System.out.println(instaArticleImgDtoList);
 
             result.add(map);
 

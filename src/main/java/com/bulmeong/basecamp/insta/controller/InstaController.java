@@ -120,7 +120,9 @@ public class InstaController {
     }
 
     @RequestMapping("instaWritePage")
-    public String instaWritePage(){
+    public String instaWritePage(Model model, @RequestParam("user_id") int id){
+        InstaUserInfoDto instaUserInfoDto = instaService.selectUserInfo(id);
+        model.addAttribute("instaUserInfoDto", instaUserInfoDto);
 
         return "insta/instaWritePage";
     }
@@ -130,6 +132,8 @@ public class InstaController {
         instaService.writeArticle(instaArticleDto);
         System.out.println("instaArticleDto : " + instaArticleDto);
         // System.out.println("instaId" + instaArticleDto.getId());
+
+        InstaUserInfoDto instaUserInfoDto = instaService.selectUserInfo(instaArticleDto.getUser_id());
 
         List<InstaArticleImgDto> instaAtricleImgDtoList = new ArrayList<>();
         List<ImageDto> instaImgList = ImageUtil.saveImageAndReturnDtoList(insta_article_img);
@@ -145,7 +149,7 @@ public class InstaController {
         // System.out.println("instaArticleDto : " + instaArticleDto);
         // System.out.println("instaAtricleImgDtoList : " + instaAtricleImgDtoList);
 
-        return "redirect:./instaMainPage?user_id=" + instaArticleDto.getUser_id();
+        return "redirect:./instaMainPage?user_id=" + instaUserInfoDto.getUser_id();
     }
 
     @RequestMapping("commentWritePage")
@@ -155,19 +159,35 @@ public class InstaController {
     }
 
     @RequestMapping("instaMyPage")
-    public String instaMyPage(){
+    public String instaMyPage(Model model, @RequestParam("user_id") int id){ // id = userInfoDto id
+        InstaUserInfoDto instaUserInfoDto = instaService.selectUserInfo(id);
+        model.addAttribute("instaUserInfoDto", instaUserInfoDto);
+
+        int articleCount = instaService.selectArticleCountByUserId(id);
+        model.addAttribute("articleCount", articleCount);
 
         return "insta/instaMyPage";
     }
 
     @RequestMapping("instaBookmarkPage")
-    public String instaBookmarkPage(){
+    public String instaBookmarkPage(Model model, @RequestParam("user_id") int id){
+        InstaUserInfoDto instaUserInfoDto = instaService.selectUserInfo(id);
+        model.addAttribute("instaUserInfoDto", instaUserInfoDto);
+
+        int articleCount = instaService.selectArticleCountByUserId(id);
+        model.addAttribute("articleCount", articleCount);
 
         return "insta/instaBookmarkPage";
     }
     
     @RequestMapping("instaUserPage")
-    public String instaUserPage(){
+    public String instaUserPage(Model model, @RequestParam("user_id") int id){ // id = userInfoDto id
+        InstaUserInfoDto instaUserInfoDto = instaService.selectUserInfo(id);
+
+        int articleCount = instaService.selectArticleCountByUserId(id);
+        model.addAttribute("articleCount", articleCount);
+
+        model.addAttribute("instaUserInfoDto", instaUserInfoDto);
 
         return "insta/instaUserPage";
     }

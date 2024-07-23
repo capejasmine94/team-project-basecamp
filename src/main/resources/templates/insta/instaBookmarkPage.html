@@ -55,7 +55,7 @@
                     <a th:href="@{./instaMainPage(user_id=${session.sessionUserInfo.id})}" style="color: black;"><i class="bi bi-x-lg"></i></a>
                 </div>
                 <div class="col-8 pe-1">
-                    <span>my닉네임</span>
+                    <span th:text="${instaUserInfoDto.insta_nickname}">my닉네임</span>
                 </div>
                 <div class="col">
                     <a class="" href="./instaUserDetailPage" style="color: black;">
@@ -71,7 +71,7 @@
                 <div class="col align-self-center">
                     <div class="row text-center fw-bold">
                         <div class="col">
-                            <span>13</span>
+                            <span th:text="${articleCount}">13</span>
                         </div>
                         <a class="col" href="./userFollowersPage" style="text-decoration: none; color: black;">
                             <span>254</span>
@@ -96,7 +96,7 @@
 
             <div class="row mt-3">
                 <div class="col fontBasic">
-                    <span>소개글 _ intro</span>
+                    <span th:text="${instaUserInfoDto.intro}">소개글 _ intro</span>
                 </div>
             </div>
 
@@ -110,7 +110,7 @@
 
             <!-- 일단은 링크이동 어차피 두가지 템플릿이 다 필요해 그러니까 나중에 자바스크립트로 바꾸기~~~ 라고 원숭이가 그랬음 우끼끼 -->
             <div class="row mt-4 fontNine">
-                <a class="col text-center border-bottom pb-2" href="./instaMyPage" style="text-decoration: none; color: black;">
+                <a class="col text-center border-bottom pb-2" th:href="@{./instaMyPage(user_id=${instaUserInfoDto.id})}" style="text-decoration: none; color: black;">
                     <span>내 게시물</span>
                 </a>
                 <div class="col text-center fw-bold" style="border-bottom: 1px solid;">
