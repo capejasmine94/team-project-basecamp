@@ -1,6 +1,6 @@
 package com.bulmeong.basecamp.campingcar.mapper;
-
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -32,7 +32,6 @@ public interface AdminSqlMapper {
 
     // 차량등록X기본보유시설 
     public void createCarBasic(@Param("basic_facilities_id")int basic_facilities_id, @Param("product_id")int product_id);
-
     // 차량등록_캠핑카 유형 Category
     public List<CarTypeDto> findCarTypeAll();
     // 차량등록_운전 면허증 Category
@@ -43,10 +42,15 @@ public interface AdminSqlMapper {
     public List<DriverExperienceCondDto> findDriverExperienceAll();
     // 캠핑카 기본 보유 시설 Category 
     public List<BasicFacilitiesDto> findBasicFacilitiesAll();
-
     // 차량등록_차량등록 세부 이미지
     public void createDetailImg(@Param("product_id")int product_id, 
                                 @Param("location")String location,
                                 @Param("original_filename")String original_filename);
     
+    
+     // 차량 등록 list(차량등록에 관한 모든 테이블을 엮음) : 
+    //  차량등록, 회사,회사지역카태고리,캠핑카유형,세부이미지, 상품X기본보유옵션, 기본보유옵션, 운전자조건(면허증,경력,나이),좋아요, 성수기 가격
+    public List<Map<String,Object>> findCampingCarAll();
+
+
 }

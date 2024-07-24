@@ -49,18 +49,18 @@ public class AdminService {
         return map;
     }
 
-
     // 차량등록 
     public void registerCamping(CampingcarDto campingCar, List<Integer> basicFacilites_id, MultipartFile[] detailedImg) {
+        // 기본 차량등록 insert
         adminSqlMapper.createCamping(campingCar);
+        // 차량등록X기본보유옵션 테이블 insert
         int product_id = campingCar.getId();
         for(int basic_facilities_id :basicFacilites_id) {
             adminSqlMapper.createCarBasic(basic_facilities_id,product_id);
         }
 
-        // 최종 DetailImageList 담을 인스턴스 생성
+        // 최종 DetailImageList 담을 인스턴스 생성, 차량등록의 세부이미지 테이블 insert
         List<ProductDetailImgDto> productImageList = new ArrayList<>();
-
         List<ImageDto> ImgeDtoList = ImageUtil.saveImageAndReturnDtoList(detailedImg);
         for(ImageDto imgeDto : ImgeDtoList){
             ProductDetailImgDto productDetailImgDto = new ProductDetailImgDto();
@@ -74,7 +74,7 @@ public class AdminService {
                                            productDetailImgDto.getLocation(),
                                            productDetailImgDto.getOriginal_filename());
                                            
-            System.out.println("insert" + productDetailImgDto);
+            System.out.println("상세이미지_test_service" + productDetailImgDto);
         }
 
     }
@@ -99,6 +99,11 @@ public class AdminService {
     // 캠핑카 기본 보유 시설 Category 
     public List<BasicFacilitiesDto> getBasicFacilitiesAll() {
         return adminSqlMapper.findBasicFacilitiesAll();
+    }
+
+    // 차량 등록 list(외래키의 받은 모든 테이블을 엮음
+    public List<Map<String,Object>> getCampingCarAll() {
+        return adminSqlMapper.findCampingCarAll();
     }
 
 }

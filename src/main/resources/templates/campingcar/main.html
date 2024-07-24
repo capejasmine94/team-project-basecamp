@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org:">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <!-- Font Awesome -->
+    <script src="https://kit.fontawesome.com/7b271bba58.js" crossorigin="anonymous"></script>
+    <!-- Google Material Icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet">
+    <!-- admin_main css
+    <link href="/public/css/campingcar/adminmain.css" rel="stylesheet"> -->
+    <link href="/public/css/campingcar/camping.css" rel="stylesheet">
+    <link href="/public/css/common.css" rel="stylesheet">
+    <!-- 캘린더 js -->
+    <script src="/public/js/calendar.js"></script>
+
+    <style>
+        .carousel-inner img {
+            height: 550px; /* 이미지 높이 조정 */
+        }
+        .rounded-top-only {
+            border-top-left-radius: 30px; /* 상단 좌측 모서리 둥글게 */
+            border-top-right-radius: 30px; /* 상단 우측 모서리 둥글게 */
+            border-bottom-left-radius: 0; /* 하단 좌측 모서리 둥글지 않게 */
+            border-bottom-right-radius: 0; /* 하단 우측 모서리 둥글지 않게 */
+        }
+        .location img {
+            aspect-ratio: 1/1;
+            width: 100px;
+            object-fit: cover;
+            object-position: center;
+        }
+        .text-on-image {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) rotate(0deg); /* 회전 제거 및 중앙 정렬 유지 */
+            text-align: center; /* 텍스트를 중앙 정렬 */
+            font-size: 11px; /* 폰트 크기 설정, 필요에 따라 조정 */
+        }
+    </style>
+</head>
+<body>
+    <!-- topnavi -->
+    <div th:replace="~{campingcar/campingNavi::topNavi}"></div>
+    <div th:replace="~{campingcar/campingNavi::menuNavi}"></div>
+    <div class="container">
+        <!-- 캐러셀 섹션 -->
+        <div class="row">
+            <div class="col px-0">
+                <div id="carouselExampleSlidesOnly" class="carousel slide" data-bs-ride="carousel">
+                    <div class="carousel-inner">
+                        <div class="carousel-item active">
+                            <img src="/public/img/campingCarImage/메인이미지1.png" class="d-block w-100" alt="메인이미지1">
+                        </div>
+                        <div class="carousel-item">
+                            <img src="/public/img/campingCarImage/메인이미지2.jpg" class="d-block w-100" alt="메인이미지2">
+                        </div>
+                        <div class="carousel-item">
+                            <img src="/public/img/campingCarImage/메인이미지3.jpg" class="d-block w-100" alt="메인이미지3">
+                        </div>
+                        <div class="carousel-item">
+                            <img src="/public/img/campingCarImage/메인이미지4.jpg" class="d-block w-100" alt="메인이미지4">
+                        </div>
+                        <div class="carousel-item">
+                            <img src="/public/img/campingCarImage/메인이미지5.jpg" class="d-block w-100" alt="메인이미지5">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- 지역 카테고리 Img-->
+    <div class="container position-relative">
+        <div class="row">
+            <div class="col px-3 location bg-white rounded-top-only">
+                <!-- 첫번째 row -->
+                <div class="row">
+                    <div class="col text-center font-roboto fw-bold">
+                        <div class="p-3 pb-4 bg-white text-dark rounded-top-only">원하시는 지역을 선택해주세요</div>
+                    </div>
+                </div>
+                <!-- 두번째 row -->
+                <div class="row px-2 text-center font-roboto">
+                    <div class="col">
+                        <div class="position-relative d-inline-block">
+                            <img src="/public/img/campingCarImage/서울.jpg" alt="서울·경기" class="img-fluid rounded-circle opacity-50">
+                            <span class="text-on-image text-dark fw-bold">서울경기</span>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="position-relative d-inline-block">
+                            <img src="/public/img/campingCarImage/인천.jpg" alt="인천" class="img-fluid rounded-circle opacity-50">
+                            <span class="text-on-image text-dark fw-bold">인천</span>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="position-relative d-inline-block">
+                            <img src="/public/img/campingCarImage/강원도.jpg" alt="강원" class="img-fluid rounded-circle opacity-50">
+                            <span class="text-on-image text-dark fw-bold">강원</span>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="position-relative d-inline-block">
+                            <img src="/public/img/campingCarImage/충북.jpg" alt="충북·대전" class="img-fluid rounded-circle opacity-50">
+                            <span class="text-on-image text-dark fw-bold">충북대전</span>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="position-relative d-inline-block">
+                            <img src="/public/img/campingCarImage/충남.jpg" alt="충남·세종" class="img-fluid rounded-circle opacity-50">
+                            <span class="text-on-image text-dark fw-bold">충남세종</span>
+                        </div>
+                    </div>
+                </div>
+                <!-- 세번째 row -->
+                <div class="row px-2 text-center py-3 font-roboto">
+                    <div class="col">
+                        <div class="position-relative d-inline-block">
+                            <img src="/public/img/campingCarImage/경북.jpg" alt="경북·대구" class="img-fluid rounded-circle opacity-50">
+                            <span class="text-on-image text-dark fw-bold">경북대구</span>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="position-relative d-inline-block">
+                            <img src="/public/img/campingCarImage/부산.jpg" alt="경남·부산" class="img-fluid rounded-circle opacity-50">
+                            <span class="text-on-image text-dark fw-bold">경남부산</span>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="position-relative d-inline-block">
+                            <img src="/public/img/campingCarImage/전북.jpg" alt="전북" class="img-fluid rounded-circle opacity-50">
+                            <span class="text-on-image text-dark fw-bold">전북</span>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="position-relative d-inline-block">
+                            <img src="/public/img/campingCarImage/전남.png" alt="전남" class="img-fluid rounded-circle opacity-50">
+                            <span class="text-on-image text-dark fw-bold">전남</span>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="position-relative d-inline-block">
+                            <img src="/public/img/campingCarImage/제주도.jpg" alt="제주" class="img-fluid rounded-circle opacity-50">
+                            <span class="text-on-image text-dark fw-bold">제주</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- 켐핑카 필터 -->
+    <div class="container">
+        <div class="row font-roboto">
+            <div class="col px-4">
+                <div class="row ps-1">
+                    <div class="col ps-0 pt-3 text-start">
+                        <div class="fs-2 fw-semibold">Camping Car 🚙</div>
+                    </div>
+                </div>
+                <form action="/campingcar/selectedSearch" method="get">
+                    <!-- 검색 필터1 -->
+                    <div class="row bg-white pt-3 border border-light-subtle">
+                        <!-- 대여 장소 -->
+                        <div class="col text-center text-light-emphasis form-group px-1">
+                            <div class="row">
+                                <div class="col">
+                                    <i class="fa-solid fa-location-dot"></i><span> 대여 장소</span>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col">
+                                    <button class="btn btn-light btn-block border border-0" id="locationDisplay" data-bs-toggle="modal" data-bs-target="#locationModal">장소 선택</button>
+                                    <!-- 선택된 대여 장소를 저장하는 히든 필드p에 넣어서 form -->
+                                    <input type="hidden" id="selectedLocation" name="location">
+                                </div>
+                            </div>
+                        </div>
+                        <!-- 캠핑카 유형 -->
+                        <div class="col text-center text-light-emphasis form-group">
+                            <div class="row">
+                                <div class="col">
+                                    <i class="fa-solid fa-caravan fa-flip-horizontal"></i><span> 캠핑카 유형</span>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col">
+                                    <button class="btn btn-light btn-block border border-0" id="carTypeDisplay" data-bs-toggle="modal" data-bs-target="#campingcarModal">유형 선택</button>
+                                    <!-- 선택된 캠핑카를 저장하는 히든 필드 -->
+                                    <input type="hidden" id="selectedCarType" name="carType">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- 검색 필터2 -->
+                    <div class="row d-flex justify-content-between align-self-center bg-white pt-3 border border-light-subtle">
+                        <!-- 대여일 -->
+                        <div class="col text-center text-light-emphasis form-group">
+                            <div class="row">
+                                <div class="col">
+                                    <i class="fa-regular fa-calendar"></i><span> 대여일</span>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col">
+                                    <button type="button" class="btn btn-light btn-block border border-0" id="rendDateDisplay" data-bs-toggle="modal" data-bs-target="#rentdateModal">날짜 선택 <i class="fa-solid fa-chevron-down fa-xs"></i></button>
+                                    <!-- 선택된 대여일을 저장하는 히든 필드 -->
+                                    <input type="hidden" id="selectedRentDate" name="rentDate">
+                                </div>
+                            </div>
+                        </div>
+                        <!-- 반납일 -->
+                        <div class="col text-center text-light-emphasis form-group">
+                            <div class="row">
+                                <div class="col">
+                                    <i class="fa-regular fa-calendar"></i><span> 반납일</span>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col">
+                                    <!-- 선택된 반납일 저장하는 히든 필드 -->
+                                    <button type="button" class="btn btn-light btn-block border border-0" id="returnDateDisplay" data-bs-toggle="modal" data-bs-target="#returndateModal">날짜 선택 <i class="fa-solid fa-chevron-down fa-xs"></i></button>
+                                    <input type="hidden" id="selectedReturnDate" name="returnDate">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- 검색하기 버튼 -->
+                    <div class="row">
+                        <div class="col py-3 px-0 d-grid">
+                            <button class="btn btn-dark btn-lg fw-bold" style="color: #C6ED6F;">검색하기</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="contaimer">
+        <!-- 캠핑카 등록 차량 반복 출력 -->
+        <div class="row mx-0">
+            <div class="col">
+                <!-- 등록차량이 없을 경우 -->
+                <div class="row mx-0" th:if="${#lists.isEmpty(campingcarList)}">
+                    <div class="col">
+                        등록된 차량이 없습니다.
+                    </div>
+                </div>
+                <!--등록차량이 있을 경우 -->
+                <div class="row mx-0" th:unless="${#lists.isEmpty(campingcarList)}">
+                    <div class="col">
+                        <div class="row" th:each="campingcar : ${campingcarList}">
+                            <div class="col px-0 shadow border border-2 rounded-4 my-4">
+                                <div class="row mx-0">
+                                    <div class="col px-0 d-flex justify-content-center align-items-center overflow-hidden rounded-top-4">
+                                        <img class="img-fluid" th:if="${campingcar.main_img != null}" 
+                                        th:src="|/images/${campingcar.main_img}|" style="max-width: 100%; min-height: 100%;" alt="썸네일">
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col ps-4">
+                                        <!-- 회사명 + 차량명 -->
+                                        <div class="row">
+                                            <div class="col pe-0 pb-2">
+                                                <span class="fw-bold fs-6 text-success" th:text="${campingcar.comp_name}"></span>
+                                                <span class="fw-bold fs-6" th:text="${campingcar.product_name}" style="color: #484647;"></span>
+                                                <div class="fw-bold new-fs-85" th:text="${campingcar.short_description}" style="color: #7C7B7B;"></div>
+                                            </div>
+                                        </div>
+                                        <!-- 비수기 평일가격, 주말가격 -->
+                                        <div class="row ps-1">
+                                            <div class="col fs-6 ps-2 pb-2 d-flex align-items-center">
+                                                <span class="text-primary fw-semibold">평일 가격 : </span>
+                                                <span th:text="${#numbers.formatInteger(campingcar.rental_fee_weekdays,3,'COMMA')} + '원'"></span>
+                                            </div>
+                                            <div class="col fs-6 ps-0 pb-2 d-flex justify-content-center aling-items-center">
+                                                <span class="text-primary fw-semibold">주말 가격 : </span>
+                                                <span th:text="${#numbers.formatInteger(campingcar.rental_fee_weekend,3,'COMMA')} + '원'"></span>
+                                            </div>
+                                        </div>
+                                        <!-- 차고지 주소 + 운전 조건 -->
+                                        <div class="row">
+                                            <div class="col pt-2 pb-2 border-top fw-bold new-fs-85" style="color: #7C7B7B;">
+                                                <div th:text="'차고지 주소 : ' + ${campingcar.garage_address}"></div>
+                                                <div th:text="'운전자 면허 : ' + ${campingcar.driver_license_name}"></div>
+                                                <div th:text="'운전자 나이 : ' + ${campingcar.age_condition_name}"></div>
+                                                <div th:text="'운전자 경력 : ' + ${campingcar.experience_condition_name}"></div>
+                                            </div>
+                                        </div>
+                                        <!-- 동승,취침 애완 조건 -->
+                                        <div class="row py-2 new-fs-85 border-top">
+                                            <div class="col-4 px-0 d-flex justify-content-between align-items-center">
+                                                <span class="material-symbols-outlined">groups</span><span th:text="'동승 인원 : ' + ${campingcar.seating_capacity} + '명 '"></span>|
+                                            </div>
+                                            <div class="col-4 px-0 d-flex justify-content-between align-items-center">
+                                                <span class="material-symbols-outlined">hotel</span>
+                                                <span th:text="'취침 인원 : ' + ${campingcar.sleeping_capacity} + '명 '"></span>|
+                                            </div>
+                                            <div class="col-4 px-0 d-flex align-items-center">
+                                                <span class="material-symbols-outlined">sound_detection_dog_barking</span>
+                                                <span th:text="${campingcar.pet_friendly}"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <!-- 대여 장소 선택 모달 -->
+    <div class="modal fade" id="locationModal" tabindex="-1" aria-labelledby="locationModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <div class="modal-title fs-5 fw-semibold text-center w-100" id="locationModalLabel">대여 장소 선택</div>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="container">
+                        <div class="row pb-2">
+                            <div class="col-12 d-flex justify-content-center">
+                                <button type="button" class="btn btn-outline-light text-dark w-100" data-location="전체" onclick="selectLocation(this)">전체</button>
+                            </div>
+                        </div>
+                        <div class="row d-flex flex-wrap">
+                            <div th:each="regionsDto : ${regions}" class="col-6 pb-2 d-flex justify-content-center">
+                                <button type="button" class="btn btn-outline-light text-dark w-100" th:data-location="${regionsDto.name}" th:text="${regionsDto.name}"  onclick="selectLocation(this)"></button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer d-flex justify-content-center">
+                    <button type="button" class="btn text-dark w-100" data-bs-dismiss="modal" style="background-color: #C6ED6F;">취소하기</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- 캠핑카 유형 선택 모달 -->
+    <div class="modal fade" id="campingcarModal" tabindex="-1" aria-labelledby="campingcarModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <div class="modal-title fs-5 fw-semibold text-center w-100" id="campingcarModalLabel">캠핑카 유형 선택</div>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>" 
+                <div class="modal-body">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-12 pb-2" th:each="carTypeDto : ${carType}">
+                                <div class="form-check d-flex align-items-center">
+                                    <!-- 사용자가 체크박스를 선택할 때마다 호출되며, 선택된 모든 체크박스 값을 배열로 저장한 후 이를 히든 필드와 버튼 텍스트에 설정 -->
+                                    <input class="form-check-input" type="checkbox" th:name="carTypes" th:id="${carTypeDto.id}" th:value="${carTypeDto.name}" th:data-car-type="${carTypeDto.name}" onclick="selectCarType('this')">
+                                    <label class="form-check-label" th:for="${carTypeDto.id}"th:text="${carTypeDto.name}"></label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer d-flex justify-content-center">
+                    <button type="button" class="btn text-dark w-100" data-bs-dismiss="modal" style="background-color: #C6ED6F;">선택</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- 대여일 모달 -->
+    <div class="modal fade" id="rentdateModal" tabindex="-1" aria-labelledby="rentdateModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <div class="modal-title fs-5 fw-semibold text-center w-100" id="rentdateModalLabel">대여일 선택</div>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col align-items-center justify-content-center">
+                            <div id="calendar_rentdate"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer d-flex justify-content-center">
+                    <button type="button" class="btn text-dark w-100" data-bs-dismiss="modal" style="background-color: #C6ED6F;" onclick="comfirmRentDate()">확인</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- 반납일 모달 -->
+    <div class="modal fade" id="returndateModal" tabindex="-1" aria-labelledby="returndateModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <div class="modal-title fs-5 fw-semibold text-center w-100" id="returndateModalLabel">반납일 선택</div>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col align-items-center justify-content-center">
+                            <div id="calendar_returndate"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer d-flex justify-content-center">
+                    <button type="button" class="btn text-dark w-100" data-bs-dismiss="modal" style="background-color: #C6ED6F;" onclick="confirmReturnDate()">확인</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+    <div class="py-5 my-5"></div>
+    <div th:replace="~{campingcar/campingNavi::bottomNavi}"></div>
+    
+    <div th:replace="~{campingcar/campingNavi::quickNavi}"></div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js"></script>
+    <script>
+        // 모달에서 전체 혹은 장소를 선택 했을때, 함수를 호출한다.
+        function selectLocation(button) {
+            // 버튼의 data-location 속성에서 선택된 대여 장소 값을 가져와서 location에 담는다
+            let location = button.getAttribute('data-location');
+            // 선택된 대여 장소(location)를 히든 필드에 값(value)담는다.
+            document.getElementById('selectedLocation').value = location;
+            // 선택된 대여 장소(location)를 버튼 텍스트에 표시(innerText)한다.
+            document.getElementById('locationDisplay').innerText = location;
+            // 대여 장소(modal_id) 모달을 닫아준다.
+            $('#locationModal').modal('hide');
+
+        }
+        // 모달에서 대여일 날짜 선택 했을때, 함수를 호출한다.
+        function comfirmRentDate() {
+            // datepicker 플러그인에서 선택된 날짜(calendar_rentDate_id)를 가져와서 selectedDate에 담는다.
+            // datepicker : 
+            // getFormattedDate : 
+            let selectedDate = $('#calendar_rentdate').datepicker('getFormattedDate');
+            // 선택된 대여날짜(selectedDate)를 히든 필드 값에 담는다. 
+            document.getElementById('selectedRentDate').value = selectedDate;
+            // 선택된 대여날짜를 버튼 택스트에 표시한다.
+            document.getElementById('rendDateDisplay').innerText = selectedDate;
+            // 대여일 모달을 닫아준다.
+            $('#rentdateModal').modal('hide');
+
+        }
+        // 모달에서 반납일 날짜 선택했을 때, 함수를 호출한다.
+        function confirmReturnDate() {
+            let selectedDate = $('#calendar_returndate').datepicker('getFormattedDate');
+            // 선택된 반납일을 히든 필드에 설정
+            document.getElementById('selectedReturnDate').value = selectedDate;
+            // 선택된 반납일을 버튼 텍스트에 표시
+            document.getElementById('returnDateDisplay').innerText = selectedDate;
+            // 반납일 모달을 닫음
+            $('#returndateModal').modal('hide');
+
+        }
+
+
+
+
+
+
+
+
+
+        ////////////////// 캘린더 설정 /////////////////////
+        // 현재 날짜와 시간을 포함하는 Date 객체 생성
+        const nextYear = new Date();
+
+        // Date 객체의 연도를 현재 연도에서 1년 더한 값으로 설정
+        nextYear.setFullYear(nextYear.getFullYear() + 1);
+
+        // "peak"라는 식별자로, 다음 해부터 365일간의 달력 데이터 생성 또는 처리
+        createRangeCalendar("rentdate", 365, nextYear);
+        createRangeCalendar("returndate", 365, nextYear);
+    </script>
+</body>
+</html>
