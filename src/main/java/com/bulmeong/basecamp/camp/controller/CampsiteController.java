@@ -61,11 +61,13 @@ public class CampsiteController {
 
     @RequestMapping("/registerCamp")
     public String registerCampPage(){
+        utils.setSession("campsiteCategory", campsiteService.getCampsiteCategory());
         return "camp/registerCamp";
     }
 
     @RequestMapping("/manageCamp")
     public String manageCampPage(){
+
         return "camp/manageCamp";
     }
     
