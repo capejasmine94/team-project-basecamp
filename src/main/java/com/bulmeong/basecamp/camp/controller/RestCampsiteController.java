@@ -5,9 +5,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.bulmeong.basecamp.camp.dto.CampsiteDto;
 import com.bulmeong.basecamp.camp.service.CampsiteService;
 import com.bulmeong.basecamp.common.dto.RestResponseDto;
 import com.bulmeong.basecamp.common.util.Utils;
+
 
 @RestController
 @RequestMapping("/api/camp/")
@@ -42,6 +44,15 @@ public class RestCampsiteController {
         restResponseDto.setResult("success");
         restResponseDto.add("needLogin", utils.getSession("campsite") == null);
         return restResponseDto;
+    }
+    
+    @RequestMapping("getCampsite")
+    public RestResponseDto getCampsite() {
+        RestResponseDto result = new RestResponseDto();
+        result.setResult("success");
+        CampsiteDto campsiteDto = utils.getSession("campsite");
+        result.add("cmapsite", campsiteDto);
+        return result;
     }
     
 }

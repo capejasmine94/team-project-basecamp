@@ -108,7 +108,8 @@ public class CampsiteController {
     }
 
     @RequestMapping("/registerCampProcess")
-    public String registerCampProcess(CampsiteDto campsiteDto, @RequestParam("mainImage")MultipartFile[] mainImage, @RequestParam("mapImage")MultipartFile mapImage, @RequestParam("campsite_category") String[] categories){
+    public String registerCampProcess(CampsiteDto campsiteDto, @RequestParam("mainImage")MultipartFile[] mainImage, @RequestParam("mapImage")MultipartFile mapImage, @RequestParam("campsite_category") String[] categories, @RequestParam("opentime_start_date")Date opentime){
+        campsiteDto.setOpentime(opentime);
         campsiteService.updateCampsite(campsiteDto, categories, mainImage, mapImage);
         utils.setSession("campsite", campsiteService.getCampsiteDtoByAccount(campsiteDto));
         return "camp/main";

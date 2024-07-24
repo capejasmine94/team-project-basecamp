@@ -33,9 +33,9 @@ function checkRequiredCalendar(calendarName) {
 }
 
 function initCalendarData(name,start,end){
-    setStartDate(name,start);
-    setEndDate(name,end);
-    renderCalendar();
+    getCalendarData(name).startDate = new Date(start);
+    getCalendarData(name).endDate = new Date(end);
+    refreshCalendar(name,getCalendarData(name));
 }
 
 function getCalendarData(calendarName){
@@ -163,8 +163,117 @@ function createCalendarStructure(name) {
 
     return container;
 }
-function refreshCalendar(name, date) {
-    
+
+function refreshCalendar(name, data) {
+    const calendarDocument = document.getElementById('calendar_' + name);
+    const calendarBody = calendarDocument.querySelector('#calendarBody');
+    const monthYear = calendarDocument.querySelector('#monthYear');
+   
+    calendarDataList.set(name, data);
+    function renderCalendar(date) {
+        calendarBody.innerHTML = ''; // 이전 달력 내용을 비웁니다.
+        const currentYear = date.getFullYear(); // 현재 연도
+        const currentMonth = date.getMonth(); // 현재 월 (0-11)
+
+        // 해당 월의 첫 번째 날짜와 마지막 날짜 계산
+        const firstDay = new Date(currentYear, currentMonth, 1).getDay(); // 해당 월의 첫 번째 날짜의 요일 (0-6)
+        const lastDate = new Date(currentYear, currentMonth + 1, 0).getDate(); // 해당 월의 마지막 날짜 (28-31)
+
+        // 이전 월의 마지막 날짜 계산
+        const prevLastDate = new Date(currentYear, currentMonth, 0).getDate(); // 이전 월의 마지막 날짜 (28-31)
+
+        // 월과 년도 텍스트 업데이트
+        monthYear.innerText = `${date.toLocaleString('default', { month: 'long' })} ${currentYear}`;
+
+        let row = document.createElement('tr'); // 달력의 새로운 행 생성
+        // 첫 번째 행을 이전 월의 날짜로 채웁니다.
+        for (let i = 0; i < firstDay; i++) {
+        let cell = document.createElement('td');
+        cell.innerText = prevLastDate - firstDay + 1 + i;
+        const cellDate = new Date(currentYear, currentMonth - 1, prevLastDate - firstDay + 1 + i);
+        if (data.startDate && data.endDate && cellDate >= data.startDate && cellDate <= data.endDate) {
+            cell.classList.add('selected-range');
+        } else if (data.startDate && cellDate.getTime() === data.startDate.getTime()) {
+            cell.classList.add('selected-start');
+        } else if (data.endDate && cellDate.getTime() === data.endDate.getTime()) {
+            cell.classList.add('selected-end');
+        }
+        else
+            cell.classList.add('inactive');
+        
+        row.appendChild(cell);
+        }
+
+        // 각 날짜를 셀로 생성하여 달력에 추가합니다.
+        let dayCount = 0; // 총 날짜 개수를 세기 위한 변수
+        for (let day = 1; day <= lastDate; day++) {
+        if ((firstDay + dayCount) % 7 === 0 && day !== 1) {
+            calendarBody.appendChild(row);
+            row = document.createElement('tr');
+        }
+        let cell = document.createElement('td');
+        cell.innerText = day;
+        const cellDate = new Date(currentYear, currentMonth, day);
+
+        // 주말에 대한 스타일을 추가합니다.
+        if ((firstDay + dayCount) % 7 === 6) {
+            cell.classList.add('saturday');
+        } else if ((firstDay + dayCount) % 7 === 0) {
+            cell.classList.add('sunday');
+        }
+
+        // 제한되는 예약일을 추가합니다.
+        if (cellDate.getTime() > data.limit.getTime()) {
+            cell.classList.add('inactive');
+        }
+
+        // 선택된 날짜 범위를 강조합니다.
+        if (data.startDate && data.endDate && cellDate >= data.startDate && cellDate <= data.endDate) {
+            cell.classList.add('selected-range');
+        } else if (data.startDate && cellDate.getTime() === data.startDate.getTime()) {
+            cell.classList.add('selected-start');
+        } else if (data.endDate && cellDate.getTime() === data.endDate.getTime()) {
+            cell.classList.add('selected-end');
+        }
+        row.appendChild(cell); // 행에 셀 추가
+        dayCount++;
+        }
+
+        // 마지막 행을 다음 월의 날짜로 채웁니다.
+        let nextMonthDay = 1;
+        while (row.children.length < 7) {
+        let cell = document.createElement('td');
+        cell.innerText = nextMonthDay++;
+        const cellDate = new Date(currentYear, currentMonth + 1, nextMonthDay-1);
+        if (data.startDate && data.endDate && cellDate >= data.startDate && cellDate <= data.endDate) {
+            cell.classList.add('selected-range');
+        } else if (data.startDate && cellDate.getTime() === data.startDate.getTime()) {
+            cell.classList.add('selected-start');
+        } else if (data.endDate && cellDate.getTime() === data.endDate.getTime()) {
+            cell.classList.add('selected-end');
+        }
+        else
+            cell.classList.add('inactive');
+        row.appendChild(cell);
+        }
+        calendarBody.appendChild(row);
+
+        // 총 날짜 개수가 35(5주)보다 큰 경우에만 6줄로 만듭니다.
+        if (dayCount + firstDay > 35) {
+        // 추가 행을 다음 월의 날짜로 채워 6줄이 되도록 합니다.
+        while (calendarBody.children.length < 6) {
+            row = document.createElement('tr');
+            for (let i = 0; i < 7; i++) {
+            let cell = document.createElement('td');
+            cell.innerText = nextMonthDay++;
+            cell.classList.add('inactive');
+            row.appendChild(cell);
+            }
+            calendarBody.appendChild(row);
+        }
+        }
+    }
+    renderCalendar(data.currentDate); // 달력 다시 렌더링
 }
 function createRangeCalendar(name, length, limit) {
     const calendarDocument = createCalendarStructure(name);
