@@ -223,7 +223,7 @@
 
         <!-- 스토리 -->
         <!-- overflow-x: auto; 이 클래스가 적용된 요소는 내용이 요소의 크기를 초과할 때, x축 방향으로 스크롤할 수 있게 됩니다. -->
-        <div class="row border-bottom pb-1 mb-3" >
+        <div class="row border-bottom mb-2">
             <!-- 스크롤 바 없애는 거 scrollbar-width: none; _ overflow있는 곳에 넣어주기 -->
             <div class="col overflow-x-auto" style="scrollbar-width: none;">
                 <div class="row" style="width: 150%;">
@@ -383,7 +383,7 @@
                                     th:classappend="${iterStat.index == 0 ? 'active' : ''}"
                                     th:data-bs-slide-to="${iterStat.index}"></li>
                                     <!-- iterStat은 Thymeleaf에서 반복문을 사용할 때 제공되는 변수로, 반복 상태를 나타내는 객체입니다.
-                                        iterStat을 사용하면 반복문에서 현재 반복의 상태를 추적하고, 인덱스나 반복 횟수와 같은 정보를 얻을 수 있습니다. -->
+                                         iterStat을 사용하면 반복문에서 현재 반복의 상태를 추적하고, 인덱스나 반복 횟수와 같은 정보를 얻을 수 있습니다. -->
                             </ol>
                             
                             <div class="carousel-inner">
@@ -474,7 +474,7 @@
                             <button class="btn px-0">
                                 <i class="fa-regular fa-comment"></i>
                             </button>
-                            <input type="hidden" name="user_id" th:value="${session.sessionUserInfo.id}">
+                            <input type="hidden" name="user_id" th:value="${instaUserInfoDto.id}">
                             <input type="hidden" name="article_id" th:value="${instaArticleList.instaArticleDto.id}">
                         </form>
                     </div>
@@ -528,7 +528,7 @@
                 <!-- 댓글 -->
                 <div class="row">
                     <a class="col link-dark link-offset-2 link-underline link-underline-opacity-0"
-                        th:href="@{./commentWritePage(user_id=${session.sessionUserInfo.id}, article_id=${instaArticleList.instaArticleDto.id})}">
+                        th:href="@{./commentWritePage(user_id=${instaUserInfoDto.id}, article_id=${instaArticleList.instaArticleDto.id})}">
                         <span class="fontBasic" style="color: rgb(162, 162, 162);">댓글
                             <span th:text="${instaArticleList.commentCount}"></span>개 모두 보기
                         </span>
@@ -543,7 +543,7 @@
                         <img th:src="|/images/${instaUserInfoDto.insta_profile_img}|" class="img-fluid rounded-circle commentImage">
                     </div>
                     <a class="col ps-1 link-dark link-offset-2 link-underline link-underline-opacity-0"
-                        th:href="@{./commentWritePage(user_id=${session.sessionUserInfo.id}, article_id=${instaArticleList.instaArticleDto.id})}">
+                        th:href="@{./commentWritePage(user_id=${instaUserInfoDto.id}, article_id=${instaArticleList.instaArticleDto.id})}">
                         <span class="fontBasic" style="color: rgb(162, 162, 162);">댓글 달기...</span>
                     </a>
                 </div>

@@ -153,7 +153,10 @@ public class InstaController {
     }
 
     @RequestMapping("commentWritePage")
-    public String commentWritePage(){
+    public String commentWritePage(Model model, @RequestParam("user_id") int id){
+        InstaUserInfoDto instaUserInfoDto = instaService.selectUserInfo(id);
+
+        model.addAttribute("instaUserInfoDto", instaUserInfoDto);
 
         return "insta/commentWritePage";
     }

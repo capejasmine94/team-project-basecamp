@@ -258,7 +258,7 @@
             <div class="row border-top fixed-bottom px-3" style="background-color: white;">
                 <!-- 로그인 한 유저 프로필 사진 -->
                 <div class="col-auto pe-0">
-                    <img src="/public/img/instaImage/hahaha4.jpg" class="img-fluid rounded-circle commentWriteImage" alt="Profile Image">
+                    <img th:src="|/images/${instaUserInfoDto.insta_profile_img}|" class="img-fluid rounded-circle commentWriteImage" alt="Profile Image">
                 </div>
 
                 <!-- 댓글 작성 form -->

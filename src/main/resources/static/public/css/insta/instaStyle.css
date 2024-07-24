@@ -1,0 +1,136 @@
+/* 폰트 사이즈 */
+.fontBasic {
+    font-size: 0.8em;
+}
+.fontNine {
+    font-size: 0.9em;
+}
+
+/* 상단바 */
+.fixed-top {
+    text-align: center;
+    justify-content: space-around; /* 가로 중앙 정렬 */
+    align-items: center; /* 세로 중앙 정렬 */
+    height: 50px; /* 원하는 높이로 설정 */
+}
+/* 하단바 */
+.fixed-bottom {
+    text-align: center;
+    justify-content: space-around; /* 가로 중앙 정렬 */
+    align-items: center; /* 세로 중앙 정렬 */
+    height: 70px; /* 원하는 높이로 설정 */
+}
+
+/* 이미지 크기 */
+.commentImage {
+    width: 20px;  /* 원하는 너비 */
+    height: 20px; /* 원하는 높이 */
+    object-fit: cover; /* 이미지가 요소를 채우도록 조정 */
+}
+.profileImage {
+    width: 35px;  /* 원하는 너비 */
+    height: 35px; /* 원하는 높이 */
+    object-fit: cover; /* 이미지가 요소를 채우도록 조정 */
+}
+.storyImage {
+    width: 60px;  /* 원하는 너비 */
+    height: 60px; /* 원하는 높이 */
+    object-fit: cover; /* 이미지가 요소를 채우도록 조정 */
+}
+/* instaBookmarkPage */
+.userImage {
+    width: 80px;  /* 원하는 너비 */
+    height: 80px; /* 원하는 높이 */
+    object-fit: cover; /* 이미지가 요소를 채우도록 조정 */
+}
+/* instaConfirmPage */
+#profileImage {
+    width: 150px;  /* 원하는 너비 */
+    height: 150px; /* 원하는 높이 */
+    object-fit: cover; /* 이미지가 요소를 채우도록 조정 */
+}
+
+.instaButtonColor {
+    color: #0095f6;
+}
+
+/* 검색창 */
+.search-container {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+.search-container input {
+    padding-left: 30px; /* 아이콘을 위한 여유 공간 */
+    border-radius: 10px; /* 모서리를 더 둥글게 만들기 */
+}
+.search-container .bi-search {
+    position: absolute;
+    left: 10px;
+    color: gray;
+}
+
+/* 글쓰기 버튼 */
+.write-button-container {
+    position: fixed; /* 페이지의 특정 위치에 고정할 수 있음 */
+    bottom: 100px; /* 원하는 위치로 조정 가능 */
+    right: 20px;  /* 원하는 위치로 조정 가능 */  
+    border-radius: 3px;
+    z-index: 1000; /* 다른 요소들보다 위에 위치하도록 설정 */
+}
+/* .write-button {
+    border: 1px solid #ccc; 경계선 추가
+    border-radius:4px;
+    padding: 0%;
+    display: flex;
+} */
+
+/* instaMainPage */
+/* 이미지 하단 사진 개수 */
+/* Bootstrap Carousel 기본 스타일을 유지하면서 점 모양 인디케이터 스타일링 */
+.carousel-indicators {
+    bottom: 1px; /* 인디케이터 위치 조정 */
+}
+
+.carousel-indicators .active {
+    background-color: #fff; /* 활성화된 점 색상 설정 (흰색) */
+}
+
+/* 인디케이터 숫자 제거 */
+.carousel-indicators li {
+    list-style: none; /* 기본 리스트 스타일 제거 */
+    width: 6px; /* 점의 너비 */
+    height: 6px; /* 점의 높이 */
+    background-color: #dbdada93; /* 점의 색상 */
+    border-radius: 50%; /* 둥근 점 모양 */
+    margin: 0 2px; /* 점 사이 간격 */
+    cursor: pointer; /* 클릭 가능 표시 */
+    display: inline-block; /* 인라인 블록으로 나란히 배치 */
+}
+
+
+/* commentWritePage */
+
+/* 전송버튼 */
+.send-icon {
+    width: 10%;
+    height: 39%;
+    position: absolute;
+    right: 2.1rem;
+    top: 1.32rem;
+    /* opacity: 50%; */
+}
+.send-icon i {
+    position: absolute;
+    top: 25%;
+    left: 35%;
+}
+
+
+
+
+
+
+
+
+
