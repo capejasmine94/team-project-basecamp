@@ -98,9 +98,8 @@ public class AdminController {
                                      ,@RequestParam(value = "basicFacilites_id") List<Integer> basicFacilites_id) {
             campingcarDto.setMain_img(ImageUtil.saveImageAndReturnLocation(main_image));
 
-
             adminService.registerCamping(campingcarDto,basicFacilites_id,detailedImg);
-            System.out.println("111111111111"+ campingcarDto+basicFacilites_id+detailedImg);
+            System.out.println("carRegister_test_controller"+ campingcarDto+basicFacilites_id+detailedImg);
         return "redirect:/admin/main";
     }
 

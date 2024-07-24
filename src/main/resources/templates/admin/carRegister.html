@@ -259,7 +259,7 @@
                                                                             <div class="row">
                                                                                 <div class="col">
                                                                                     <span class="material-symbols-outlined">sentiment_excited</span>
-                                                                                    <div class="font-roboto">가능해요</div>
+                                                                                    <div class="font-roboto" id="petfriendlyYes">가능해요</div>
                                                                                 </div>
                                                                             </div>
                                                                         </label>
@@ -270,7 +270,7 @@
                                                                             <div class="row">
                                                                                 <div class="col">
                                                                                     <span class="material-symbols-outlined">sentiment_sad</span>
-                                                                                    <div class="font-roboto">불가능해요</div>
+                                                                                    <div class="font-roboto" id="pet_friendlyNo">불가능해요</div>
                                                                                 </div>
                                                                             </div>
                                                                         </label>
@@ -506,12 +506,11 @@
                                                 <!-- 취소 규정-->
                                                 <div class="form-group">
                                                     <div class="row">
-                                                        <div class="col" name="cancellation _policy">
+                                                        <div class="col">
                                                             <label for="cancellationPolicy" class="control-label fw-semibold pb-3">취소 규정</label>
-                                                            <textarea id="cancellationPolicy" class="form-control" rows="3" cols="50" name="cancellationPolicy" readonly>
-                                                            - 출발일 기준 7일전 취소시: 80% 환불
-                                                            - 출발일 기준 6일~4일전 취소시: 50% 환불
-                                                            - 출발일 기준 3일~당일 취소시: 환불 불가
+                                                            <textarea id="cancellationPolicy" class="form-control" rows="3" cols="50" name="cancellation_policy" readonly>- 출발일 기준 7일전 취소시: 80% 환불
+- 출발일 기준 6일~4일전 취소시: 50% 환불 
+- 출발일 기준 3일~당일 취소시: 환불 불가
                                                             </textarea>
                                                         </div>
                                                     </div>

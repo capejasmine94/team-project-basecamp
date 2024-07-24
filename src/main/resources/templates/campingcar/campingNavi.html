@@ -1,0 +1,267 @@
+<!-- 최상단 헤더 -->
+<div th:fragment="topNavi" class="header d-flex align-items-center border-bottom" style="background-color: #141414;">
+    <div class="container">
+        <nav class="navbar position-relative d-flex aligin-items-center">
+            <button class="navbar-toggler new-btn-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar" aria-label="Toggle navigation">
+                <i class="bi bi-list fs-1 text-white"></i>
+            </button>
+            <a href="/user/mainPage" class="logo position-absolute top-50 start-50 translate-middle">
+                <img src="/public/img/campingCarImage/logo.png" alt="" class="d-block">
+            </a>
+            <div class="d-flex align-items-center">
+                <a href="/user/myPage" th:if="${session.sessionUserInfo != null}" class="profile_icon overflow-hidden d-block me-2 rounded-pill">
+                    <img th:if="${session.sessionUserInfo.userDto.profile_image != null}" th:src="|/images/${session.sessionUserInfo.userDto.profile_image}|" alt=" " class="img-fluid">
+                    <i th:if="${session.sessionUserInfo.userDto.profile_image == null}" class="bi bi-person-circle fs-2 lh-1 text-white"></i>
+                </a>
+                <a href=""><i class="bi bi-bell fs-5 text-white"></i></a>
+            </div>
+        </nav>
+    </div>
+</div>
+
+<!-- 서브 헤더 -->
+<div th:fragment="subNavi" class="header d-flex align-items-center border-bottom bg-primary2">
+    <div class="container">
+        <nav class="navbar position-relative d-flex aligin-items-center">
+            <a href="javascript:history.back();" class="d-flex align-items-center pe-3">
+                <i class="bi bi-arrow-left fs-3 text-white lh-1"></i>
+            </a>
+            <div class="d-flex align-items-center">
+                <a href="/user/myPage" th:if="${session.sessionUserInfo != null}" class="profile_icon overflow-hidden d-block me-2 rounded-pill">
+                    <img th:if="${session.sessionUserInfo.userDto.profile_image != null}" th:src="|/images/${session.sessionUserInfo.userDto.profile_image}|" alt=" " class="img-fluid">
+                    <i th:if="${session.sessionUserInfo.userDto.profile_image == null}" class="bi bi-person-circle fs-2 lh-1 text-white"></i>
+                </a>
+                <a href=""><i class="bi bi-bell fs-5 text-white"></i></a>
+            </div>
+        </nav>
+    </div>
+</div>
+
+<!-- 임시 메뉴 -->
+<div th:fragment="menuNavi" class="header-menu sticky-top bg-white">
+    <div class="container">
+        <div class="row p-0 d-flex justify-content-between">
+            <div class="col text-center">
+                <div class="row">
+                    <div class="col py-0">
+                        <a href="">
+                            <span class="material-symbols-outlined">
+                                heart_plus
+                            </span>
+                        </a>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col fs-6 fw-bold">
+                        찜
+                    </div>
+                </div>
+            </div>
+            <div class="col text-center">
+                <div class="row">
+                    <div class="col py-0">
+                        <a href="">
+                            <span class="material-symbols-outlined">
+                                calendar_month
+                            </span>
+                        </a>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col fs-6 fw-bold">
+                        예약내역
+                    </div>
+                </div>
+            </div>
+            <div class="col text-center">
+                <div class="row">
+                    <div class="col py-0">
+                        <a href="">
+                            <span class="material-symbols-outlined">
+                                search
+                            </span>
+                        </a>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col fs-6 fw-bold">
+                        검색
+                    </div>
+                </div>
+            </div>
+            <div class="col text-center">
+                <div class="row">
+                    <div class="col py-0">
+                        <a href="">
+                            <span class="material-symbols-outlined">
+                                account_circle
+                            </span>
+                        </a>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col fs-6 fw-bold">
+                        내정보
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div> 
+</div>
+
+<!-- 전체 메뉴 -->
+<div th:fragment="allMenuNavi" class="offcanvas offcanvas-start all-menu-navi" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasRightLabel">
+    <div class="offcanvas-header position-relative p-0">
+        <img src="/public/img/allMenuBanner.jpg" alt="" class="img-fluid">
+        <button type="button" class="btn-close position-absolute top-0 end-0 z-1 m-2 p-2" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        <div class="login-box p-3 pb-4 position-absolute start-0 bottom-0 text-white">
+            <div th:if="${session.sessionUserInfo == null}">
+                <div class="fw-semibold fs-5">로그인 해주세요.</div>
+                <a href="/user/loginPage" class="fw-medium new-fs-8 text-white">로그인 <i class="bi bi-chevron-right"></i></a>            
+            </div>
+            <div th:unless="${session.sessionUserInfo == null}">
+                <div class="">
+                    <span th:text="${session.sessionUserInfo.userDto.nickname}" class="fw-semibold fs-5"></span>
+                    <span class="">님</span>                  
+                </div>
+                <a href="/user/myPage" class="fw-medium new-fs-8 text-white">마이페이지</a>
+                <i class="bi bi-dot new-fs-7"></i>            
+                <a href="/user/logoutProcess" class="fw-medium new-fs-8 text-white">로그아웃</a>            
+            </div>
+        </div>
+    </div>
+    <div class="offcanvas-body p-0">
+        <div class="search-box p-3 pt-4 pb-2">
+            <div class="flex-grow-1 d-flex bg-primary4 rounded-2">
+                <input type="text" placeholder="검색어를 입력해주세요." class="form-word flex-grow-1 p-2 new-input-none bg-transparent new-fs-8">
+                <button type="button" class="btn-search new-btn-none px-2"><i class="bi bi-search"></i></button>
+            </div>
+        </div>
+        <div th:if="${session.sessionUserInfo == null or (session.sessionUserInfo != null and !session.sessionUserInfo.isOwner)}" class="menu-list p-3 pb-2">
+            <div class="mb-1 pb-2 fw-semibold border-bottom">카페</div>
+            <ul>
+                <li>
+                    <a href="/cafe/main" class="d-flex py-2 new-fs-9">
+                        <span>매장 목록</span><i class="bi bi-chevron-right ms-auto"></i>
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <div class="menu-list p-3 pb-2">
+            <div class="mb-1 pb-2 fw-semibold border-bottom">게시판</div>
+            <ul>
+                <li>
+                    <a href="/community/mainPage" class="d-flex py-2 new-fs-9">
+                        <span>자유게시판</span><i class="bi bi-chevron-right ms-auto"></i>
+                    </a>
+                </li>
+                <li>
+                    <a href="/event/mainPage" class="d-flex py-2 new-fs-9">
+                        <span>이벤트</span><i class="bi bi-chevron-right ms-auto"></i>
+                    </a>
+                </li>
+                <li>
+                    <a href="/qna/mainPage" class="d-flex py-2 new-fs-9">
+                        <span>QnA</span><i class="bi bi-chevron-right ms-auto"></i>
+                    </a>
+                </li>
+                <li th:if="${session.sessionUserInfo == null or (session.sessionUserInfo != null and session.sessionUserInfo.isOwner)}">
+                    <a href="/rental/mainPage" class="d-flex py-2 new-fs-9">
+                        <span>장비 임대/거래</span><i class="bi bi-chevron-right ms-auto"></i>
+                    </a>
+                </li>
+                <li>
+                    <a href="/visit/listPage" class="d-flex py-2 new-fs-9">
+                        <span>카페방문</span><i class="bi bi-chevron-right ms-auto"></i>
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <div class=""></div>
+    </div>
+</div>
+
+<!-- 공통 푸터 -->
+<div th:fragment="bottomNavi" class="footer py-5 mt-5">
+    <div class="container">
+        <div class="copryright text-center">
+            <span class="new-fs-75 text-body-secondary">&copy; 2024 BaseCampe's Nature Forest v2.4. Ac.JA</span>
+        </div>
+    </div>
+</div>
+
+<!-- 하단 바 : 변경 필요 // fixed-bottom -->
+<div th:fragment="quickNavi" class="quick-navi border-top bg-white fixed-bottom" style="z-index: 1030;">
+    <div class="row px-3 py-2 bg-white border-top">
+        <div class="col text-center">
+            <div class="row">
+                <div class="col">
+                    <span class="material-symbols-outlined">
+                        home
+                    </span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col new-fs-9 fw-bold">
+                    HOME
+                </div>
+            </div>
+        </div>
+        <div class="col text-center">
+            <div class="row">
+                <div class="col">
+                    <span class="material-symbols-outlined">
+                        storefront
+                    </span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col new-fs-9 fw-bold">
+                    SHOP
+                </div>
+            </div>
+        </div>
+        <div class="col text-center">
+            <div class="row">
+                <div class="col">
+                    <span class="material-symbols-outlined">
+                        camping
+                    </span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col new-fs-9 fw-bold">
+                    CAMP
+                </div>
+            </div>
+        </div>
+        <div class="col text-center">
+            <div class="row">
+                <div class="col">
+                    <span class="material-symbols-outlined">
+                        forum
+                    </span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col new-fs-9 fw-bold">
+                    COMMUNITY
+                </div>
+            </div>
+        </div>
+        <div class="col text-center">
+            <div class="row">
+                <div class="col">
+                    <span class="material-symbols-outlined">
+                        person
+                    </span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col new-fs-9 fw-bold">
+                    MY
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
