@@ -186,8 +186,9 @@
                         // 댓글 수정 영상 1시간 48분부터
 
                         // commentProfile 프로필
-                        // const commentProfile = newCommentWrapper.querySelector(".commentProfile");
-                        // commentProfile.innerText = e.instaUserInfoDto.insta_profile_img;
+                        const commentProfile = newCommentWrapper.querySelector(".commentProfile");
+                        commentProfile.setAttribute("src", `/images/${e.instaUserInfoDto.insta_profile_img}`)
+                        
 
                         // commentLike 좋아요
                         // const commentLike = newCommentWrapper.querySelector(".commentLike");
@@ -307,7 +308,7 @@
                 <div class="col mt-3">
                     <div class="row">    
                         <a class="col-auto pe-0 align-self-center link-dark link-offset-2 link-underline link-underline-opacity-0" href="./instaUserPage">
-                            <img src="/public/img/instaImage/hahaha4.jpg" class="commentProfile img-fluid rounded-circle commentWriteImage">
+                            <img class="commentProfile img-fluid rounded-circle commentWriteImage">
                         </a>
                         <div class="col align-self-center">
                             <div class="row">
