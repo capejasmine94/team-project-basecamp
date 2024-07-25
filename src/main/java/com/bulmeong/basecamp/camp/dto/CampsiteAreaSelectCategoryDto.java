@@ -1,10 +1,10 @@
 package com.bulmeong.basecamp.camp.dto;
 
 import lombok.Data;
+
 @Data
-public class CampsiteAreaPointDto {
+public class CampsiteAreaSelectCategoryDto {
     private int id;
     private int area_id;
-    private int point_count;
-    private String name;
+    private int category_id;
 }

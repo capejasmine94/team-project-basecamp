@@ -28,7 +28,9 @@
 
             <!-- 본문 -->
             <div class="col right ms-2" style="padding-top: 58px; ">
-                <form id="registerCampProcess" method="post" action="/camp/registerCampProcess">
+                <form id="updateCampProcess" method="post" action="/camp/updateCampProcess" enctype="multipart/form-data">
+                    <input type="hidden" th:value="${session.campsite.seller}" name="seller">
+                    <input type="hidden" th:value="${session.campsite.id}" name="id">
                     <!-- 상단 바 -->
                     <div th:replace="~{camp/campNavi::topNavi}"></div>
 
@@ -46,7 +48,7 @@
                                                 <div class="col-1 text-secondary text-end">캠핑장 이름</div>
                                                 <div class="col-4">
                                                     <span class= "fw-semibold" id="text_name" th:text="${session.campsite.name}">베어그릴스와 행복한 캠핑타임</span>
-                                                    <input class="form-control d-none" id="editable_name" name="name">
+                                                    <input class="form-control d-none" id="editable_name" name="name" th:value="${session.campsite.name}">
                                                 </div>
                                                 <div class="col-auto">
                                                     <i class="bi bi-pencil-square text-primary" onclick="editableText('name')"></i>
@@ -59,8 +61,8 @@
                                             <div class="row mt-4 align-items-center">
                                                 <div class="col-1 text-secondary text-end">캠핑장 연락처</div>
                                                 <div class="col-4 fw-semibold"> 
-                                                    <span id="text_camp_phone" name="camp_phone" th:text="${session.campsite.camp_phone}">010-1234-1234</span>
-                                                    <input class="form-control d-none" id="editable_camp_phone" name="camp_phone">
+                                                    <span id="text_camp_phone" th:text="${session.campsite.camp_phone}">010-1234-1234</span>
+                                                    <input class="form-control d-none" id="editable_camp_phone" name="camp_phone" th:value="${session.campsite.camp_phone}">
                                                 </div>
                                                 <div class="col-auto">
                                                     <i class="bi bi-pencil-square text-primary" onclick="editableText('camp_phone')"></i>
@@ -70,7 +72,7 @@
                                                 <div class="col-1 text-secondary text-end">홈페이지</div>
                                                 <div class="col-4 fw-semibold">
                                                     <a th:href="@{${session.campsite.url}}" id="text_url" th:text="${session.campsite.url}">https://www.google.com/</a>
-                                                    <input class="form-control d-none" id="editable_url" name="url">
+                                                    <input class="form-control d-none" id="editable_url" name="url" th:value="${session.campsite.url}">
                                                 </div>
                                                 <div class="col-auto">
                                                     <i class="bi bi-pencil-square text-primary" onclick="editableText('url')"></i>
@@ -80,7 +82,7 @@
                                                 <div class="col-1 text-secondary text-end">캠핑장 이메일</div>
                                                 <div class="col-4 fw-semibold">
                                                     <span id="text_email" th:text="${session.campsite.email}"></span>
-                                                    <input class="form-control d-none" id="editable_email" name="email">
+                                                    <input class="form-control d-none" id="editable_email" name="email" th:value="${session.campsite.email}">
                                                 </div>
                                                 <div class="col-auto">
                                                     <i class="bi bi-pencil-square text-primary" onclick="editableText('email')"></i>
@@ -92,7 +94,7 @@
                                                 </div>
                                                 <div class="col-4 fw-semibold">
                                                     <div id="text_description" th:text="${session.campsite.description}"></div>
-                                                    <textarea class="form-control d-none" name="description" id="editable_description" cols="30" rows="5"></textarea>
+                                                    <textarea class="form-control d-none" name="description" id="editable_description" cols="30" rows="5" th:text="${session.campsite.description}"></textarea>
                                                 </div>
                                                 <div class="col-auto">
                                                     <i class="bi bi-pencil-square text-primary" onclick="editableText('description')"></i>
@@ -116,7 +118,7 @@
                                             <div class="row mt-3 flex-column">
                                                 <div class="col-auto text-secondary text-start ms-1">캠핑장 이미지</div>
                                                 <div class="col-8 pb-3 mb-2">
-                                                    <div id="upload_main_image"></div>
+                                                    <div id="upload_mainImage"></div>
                                                     <span class="text-secondary new-fs-9">
                                                         <div>사진을 드래그하여 위치를 바꿀 수 있습니다.</div>
                                                         <div>맨 앞의 이미지는 대표 이미지로 지정되어 메인에 노출됩니다.</div>
@@ -131,7 +133,7 @@
                                             <div class="row mt-3 flex-column">
                                                 <div class="col-auto text-secondary text-start ms-1">배치도 이미지</div>
                                                 <div class="col-8 pb-3">
-                                                    <div id="upload_map_image"></div>
+                                                    <div id="upload_mapImage"></div>
                                                     <span class="text-secondary new-fs-9">용량은 최대 100MB까지 한 장만 업로드 하실 수 있습니다.</span>
                                                 </div>
                                             </div>
@@ -222,7 +224,7 @@
                                         </div>
                                         <div class="row mt-3">
                                             <div class="col-8 mx-3">
-                                                <textarea class="form-control" rows="5" th:text="${session.campsite.notice}"></textarea>
+                                                <textarea class="form-control" rows="5" name="notice" th:text="${session.campsite.notice}"></textarea>
                                             </div>
                                         </div>
 
@@ -231,7 +233,7 @@
                                         </div>
                                         <div class="row mt-3">
                                             <div class="col-8 mx-3">
-                                                <textarea class="form-control" rows="5" th:text="${session.campsite.facility_notice}"></textarea>
+                                                <textarea class="form-control" rows="5" name="facility_notice" th:text="${session.campsite.facility_notice}"></textarea>
                                             </div>
                                         </div>
 
@@ -240,7 +242,7 @@
                                         </div>
                                         <div class="row mt-3 mb-3">
                                             <div class="col-8 mx-3">
-                                                <textarea class="form-control" rows="5" th:text="${session.campsite.refund_notice}"></textarea>
+                                                <textarea class="form-control" rows="5" name="refund_notice" th:text="${session.campsite.refund_notice}"></textarea>
                                             </div>
                                         </div>
                                     </div>
@@ -307,7 +309,8 @@
                                                     체크인
                                                 </div>
                                                 <div class="col-2 pe-0">
-                                                    <input name="check_in" class="form-control text-end" type="time" id="check_in" th:value="${session.campsite.check_in}">
+                                                    <input name="check_in" class="form-control text-end" type="time" id="check_in" 
+                                                           th:value="${#dates.format(session.campsite.check_in, 'HH:mm')}">
                                                 </div>
                                             </div>
                                             <div class="row mt-2">
@@ -315,7 +318,8 @@
                                                     체크아웃
                                                 </div>
                                                 <div class="col-2 pe-0">
-                                                    <input name="check_out" class="form-control text-end" type="time" id="check_out" th:value="${session.campsite.check_out}">
+                                                    <input name="check_out" class="form-control text-end" type="time" id="check_out" 
+                                                           th:value="${#dates.format(session.campsite.check_out, 'HH:mm')}">
                                                 </div>
                                             </div>
                                         </div>
@@ -333,13 +337,15 @@
                                             </div>
                                             <div class="row mt-2">
                                                 <div class="col-2 pe-0">
-                                                    <input name="manner_start" class="form-control text-end" type="time" id="manner_start" th:value="${session.campsite.manner_start}">
+                                                    <input name="manner_start" class="form-control text-end" type="time" id="manner_start" 
+                                                           th:value="${#dates.format(session.campsite.manner_start, 'HH:mm')}">
                                                 </div>
                                                 <div class="col-auto mt-1 fw-semibold">
                                                     부터
                                                 </div>
                                                 <div class="col-2 pe-0">
-                                                    <input name="manner_end" class="form-control text-end" type="time" id="manner_end" th:value="${session.campsite.manner_end}">
+                                                    <input name="manner_end" class="form-control text-end" type="time" id="manner_end" 
+                                                           th:value="${#dates.format(session.campsite.manner_end, 'HH:mm')}">
                                                 </div>
                                                 <div class="col-auto mt-1 fw-semibold">
                                                     까지
@@ -444,25 +450,14 @@
         </div>
         <div th:replace="~{common/navi::popup}"></div>
         <script>
-            createMultipleUploader('main_image',10);
-            createUploader('map_image');
+            
+            createMultipleUploader('mainImage',10);
+            createUploader('mapImage');
             const date = new Date();
             date.setFullYear(date.getFullYear() + 1);
             createCalendar('opentime',date);
             createRangeCalendar('peak',365, date);
-            function getCampsiteInfo() {
-                const url ='/api/camp/getCampsite';
-                fetch(url)
-                .then(response => response.json())
-                .then((response) => {
-                    const campsite = response.data.cmapsite;
-                    if(campsite != null) {
-                        initCalendarData('peak', campsite.peak_start_date, campsite.peak_end_date);
-                        initCalendarData('opentime',campsite.opentime, null);
-                    }
-                });
-            }
-            getCampsiteInfo();
+
        </script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
     </body>

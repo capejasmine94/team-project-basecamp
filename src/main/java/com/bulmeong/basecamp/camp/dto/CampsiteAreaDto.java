@@ -19,6 +19,7 @@ public class CampsiteAreaDto {
     private int max_car;
     private int limit_people;
     private int min_ordertime;
+    private int max_ordertime;
     private int adult_pay;
     private int kid_pay;
     private int car_pay;

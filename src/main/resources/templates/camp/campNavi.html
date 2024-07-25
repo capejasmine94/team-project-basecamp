@@ -173,7 +173,7 @@
                 <div class="row justify-content-between">
                     <div id="title" th:text="${session.pageInfo.pageDetail}" class="col-auto fs-3 fw-bold ms-2">마이 페이지</div>
                     <div class="col-auto me-3" th:if="${session.pageInfo.isButtonActive == 'T'}">
-                        <button id="saveStateButton" type="button" class="btn btn-primary px-3 me-2">저장</button>
+                        <button id="saveStateButton" type="button" class="btn btn-primary px-3 me-2" disabled>저장</button>
                     </div>
                 </div>
             </div>

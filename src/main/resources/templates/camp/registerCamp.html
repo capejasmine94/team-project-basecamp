@@ -219,7 +219,7 @@
                                     </div>
                                     <div class="row mt-3">
                                         <div class="col-8 mx-3">
-                                            <textarea class="form-control" rows="5" th:text="${session.campsite.notice}"></textarea>
+                                            <textarea class="form-control" rows="5" name="notice"></textarea>
                                         </div>
                                     </div>
 
@@ -228,7 +228,7 @@
                                     </div>
                                     <div class="row mt-3">
                                         <div class="col-8 mx-3">
-                                            <textarea class="form-control" rows="5" th:text="${session.campsite.facility_notice}"></textarea>
+                                            <textarea class="form-control" rows="5" name="facility_notice"></textarea>
                                         </div>
                                     </div>
 
@@ -237,7 +237,7 @@
                                     </div>
                                     <div class="row mt-3 mb-3">
                                         <div class="col-8 mx-3">
-                                            <textarea class="form-control" rows="5" th:text="${session.campsite.refund_notice}"></textarea>
+                                            <textarea class="form-control" rows="5" name="refund_notice"></textarea>
                                         </div>
                                     </div>
                                 </div>
@@ -565,15 +565,14 @@
         hiddenInput.value = JSON.stringify(categoryIds);
         form.appendChild(hiddenInput);
     });
-
-
     const stateButton = document.getElementById('saveStateButton');
     const form = document.getElementById('registerCampProcess');
     stateButton.onclick = () => { validateAndSubmitForm(); };
     function validateAndSubmitForm() {
         const requiredFields = [
             'car_pay', 'kid_pay', 'adult_pay', 'peak_pay', 'max_ordertime', 
-            'manner_end', 'manner_start', 'check_out', 'check_in',  
+            'manner_end', 'manner_start', 'check_out', 'check_in', 'notice',
+            'refund_notice', 'facility_notice', 'description',
             'camp_phone', 'detail_address', 'address', 'postcode', 'name'
         ];
 

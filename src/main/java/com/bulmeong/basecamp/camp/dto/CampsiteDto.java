@@ -23,10 +23,14 @@ public class CampsiteDto {
     private String map_image;
     private String profile_image;
     private String description;
-    private String manner_start;
-    private String manner_end;
-    private String check_in;
-    private String check_out;
+    @DateTimeFormat(pattern = "HH:mm")
+    private Date manner_start;
+    @DateTimeFormat(pattern = "HH:mm")
+    private Date manner_end;
+    @DateTimeFormat(pattern = "HH:mm")
+    private Date check_in;
+    @DateTimeFormat(pattern = "HH:mm")
+    private Date check_out;
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date peak_start_date;
     @DateTimeFormat(pattern = "yyyy-MM-dd")
