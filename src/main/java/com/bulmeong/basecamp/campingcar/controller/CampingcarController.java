@@ -1,7 +1,6 @@
 package com.bulmeong.basecamp.campingcar.controller;
 
 import java.util.List;
-import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -16,7 +15,8 @@ import com.bulmeong.basecamp.campingcar.service.AdminService;
 @RequestMapping("campingcar")
 public class CampingcarController {
 
-    @Autowired AdminService adminService;
+    @Autowired 
+    private AdminService adminService;
 
 
     @RequestMapping("main")
@@ -29,9 +29,9 @@ public class CampingcarController {
         List<CarTypeDto> carType = adminService.getCarTypeAll();
         model.addAttribute("carType", carType);
 
-        // 캠핑카 등록 list 출력
-        List<Map<String,Object>> campingcarList = adminService.getCampingCarAll();
-        model.addAttribute("campingcarList", campingcarList);
+        // // 캠핑카 등록 list 출력
+        // List<Map<String,Object>> campingcarList = adminService.getCampingCarAll();
+        // model.addAttribute("campingcarList", campingcarList);
         
 
         return "campingcar/main";
