@@ -113,6 +113,10 @@
         and user_id = #{user_id}
     </delete>
 
+    <!-- 게시물 삭제를 이제서야.. -->
+    <delete id="deleteArticleById">
+        delete from bc_insta_article where id = ${id}
+    </delete>
 
 </mapper>
 

@@ -22,6 +22,7 @@ public interface InstaSqlMapper {
     public List<InstaArticleImgDto> selectArticleImgByArticleId(int article_id);
     public InstaUserInfoDto selectUserInfoById(int id);
     public int selectArticleCountByUserId(int user_id);
+    public void deleteArticleById(int id);
 
     // 댓글
     public void createComment(InstaArticleCommentDto instaArticleCommentDto);

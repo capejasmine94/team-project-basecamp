@@ -75,6 +75,7 @@ public class InstaService {
             int user_id = instaArticleDto.getUser_id();
             InstaUserInfoDto instaUserInfoDto = instaSqlMapper.selectUserInfoById(user_id);
             map.put("instaUserInfoDto", instaUserInfoDto);
+            System.out.println("instaUserInfoDto: " + instaUserInfoDto);
 
             // 댓글 수 카운트
             int commentCount = instaSqlMapper.commentCountByArticleId(article_id);
@@ -156,6 +157,11 @@ public class InstaService {
     // 몇번 회원이 몇번 글에 좋아요 했는지
     public boolean isLiked(InstaArticleLikeDto instaArticleLikeDto){
         return instaSqlMapper.countLikeByArticleIdAndUserId(instaArticleLikeDto) > 0;
+    }
+
+    // 게시물 삭제
+    public void deleteArticle(int id){
+        instaSqlMapper.deleteArticleById(id);
     }
 }
 

@@ -218,6 +218,13 @@ public class InstaController {
 
         return "insta/userFollowingPage";
     }
+
+    @RequestMapping("articleDeleteProcess")
+    public String articleDeleteProcess(@RequestParam("article_id") int id, @RequestParam("user_id") int user_id){
+        instaService.deleteArticle(id);
+
+        return "redirect:./instaMainPage?user_id=" + user_id;
+    }
 }
 
 
