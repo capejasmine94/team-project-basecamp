@@ -29,9 +29,7 @@ public class CampingcarController {
         List<CarTypeDto> carType = adminService.getCarTypeAll();
         model.addAttribute("carType", carType);
 
-        // // 캠핑카 등록 list 출력
-        // List<Map<String,Object>> campingcarList = adminService.getCampingCarAll();
-        // model.addAttribute("campingcarList", campingcarList);
+        
         
 
         return "campingcar/main";

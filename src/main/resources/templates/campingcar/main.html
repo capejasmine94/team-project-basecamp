@@ -237,97 +237,25 @@
             </div>
         </div>
     </div>
+    <!-- 캠핑카 등록 리스트 출력 -->
     <div class="contaimer">
         <!-- 캠핑카 등록 차량 반복 출력 -->
         <div class="row mx-0">
             <div class="col">
                 <!-- 등록차량이 없을 경우 -->
-                <div class="row mx-0" th:if="${#lists.isEmpty(campingcarList)}">
+                <!-- <div class="row mx-0" th:if="${#lists.isEmpty(campingcarList)}">
                     <div class="col">
                         등록된 차량이 없습니다.
                     </div>
-                </div>
+                </div> -->
                 <!--등록차량이 있을 경우 -->
-                <div class="row mx-0" th:unless="${#lists.isEmpty(campingcarList)}">
-                    <div class="col">
-                        <div class="row" th:each="campingcar : ${campingcarList}">
-                            <div class="col px-0 shadow border border-2 rounded-4 my-4">
-                                <div class="row mx-0">
-                                    <div class="col px-0 d-flex justify-content-center align-items-center overflow-hidden rounded-top-4">
-                                        <img class="img-fluid" th:if="${campingcar.main_img != null}" 
-                                        th:src="|/images/${campingcar.main_img}|" style="max-width: 100%; min-height: 100%;" alt="썸네일">
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col ps-4">
-                                        <!-- 회사명 + 차량명 -->
-                                        <div class="row">
-                                            <div class="col pe-0 pb-2">
-                                                <span class="fw-bold fs-6 text-success" th:text="${campingcar.comp_name}"></span>
-                                                <span class="fw-bold fs-6" th:text="${campingcar.product_name}" style="color: #484647;"></span>
-                                                <div class="fw-bold new-fs-85" th:text="${campingcar.short_description}" style="color: #7C7B7B;"></div>
-                                            </div>
-                                        </div>
-                                        <!-- 비수기 평일가격, 주말가격 -->
-                                        <div class="row ps-1">
-                                            <div class="col fs-6 ps-2 pb-2 d-flex align-items-center">
-                                                <span class="text-primary fw-semibold">평일 가격 : </span>
-                                                <span th:text="${#numbers.formatInteger(campingcar.rental_fee_weekdays,3,'COMMA')} + '원'"></span>
-                                            </div>
-                                            <div class="col fs-6 ps-0 pb-2 d-flex justify-content-center aling-items-center">
-                                                <span class="text-primary fw-semibold">주말 가격 : </span>
-                                                <span th:text="${#numbers.formatInteger(campingcar.rental_fee_weekend,3,'COMMA')} + '원'"></span>
-                                            </div>
-                                        </div>
-                                        <!-- 차고지 주소 + 운전 조건 -->
-                                        <div class="row">
-                                            <div class="col pt-2 pb-2 border-top fw-bold new-fs-85" style="color: #7C7B7B;">
-                                                <div th:text="'차고지 주소 : ' + ${campingcar.garage_address}"></div>
-                                                <div th:text="'운전자 면허 : ' + ${campingcar.driver_license_name}"></div>
-                                                <div th:text="'운전자 나이 : ' + ${campingcar.age_condition_name}"></div>
-                                                <div th:text="'운전자 경력 : ' + ${campingcar.experience_condition_name}"></div>
-                                            </div>
-                                        </div>
-                                        <!-- 동승,취침 애완 조건 -->
-                                        <div class="row py-2 new-fs-85 border-top">
-                                            <div class="col-4 px-0 d-flex justify-content-between align-items-center">
-                                                <span class="material-symbols-outlined">groups</span><span th:text="'동승 인원 : ' + ${campingcar.seating_capacity} + '명 '"></span>|
-                                            </div>
-                                            <div class="col-4 px-0 d-flex justify-content-between align-items-center">
-                                                <span class="material-symbols-outlined">hotel</span>
-                                                <span th:text="'취침 인원 : ' + ${campingcar.sleeping_capacity} + '명 '"></span>|
-                                            </div>
-                                            <div class="col-4 px-0 d-flex align-items-center">
-                                                <span class="material-symbols-outlined">sound_detection_dog_barking</span>
-                                                <span th:text="${campingcar.pet_friendly}"></span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                <div class="row mx-0">
+                    <div class="col" id="campingcarListBox"></div>
                 </div>
 
             </div>
         </div>
     </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
     <!-- 대여 장소 선택 모달 -->
     <div class="modal fade" id="locationModal" tabindex="-1" aria-labelledby="locationModalLabel" aria-hidden="true">
@@ -427,6 +355,64 @@
         </div>
     </div>
 
+<!-- campingcarList Templete -->
+    <div id="campingcarListTemplete" class="d-none">
+        <div class="campingcarListWrapper row">
+            <div class="col px-0 shadow border border-2 rounded-4 my-4">
+                <div class="row mx-0">
+                    <div class="col px-0 d-flex justify-content-center align-items-center overflow-hidden rounded-top-4">
+                        <img class="campingcarImg img-fluid" src="" style="max-width: 100%; min-height: 100%;" alt="썸네일">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col ps-4">
+                        <!-- 회사명 + 차량명 -->
+                        <div class="row">
+                            <div class="col pe-0 pb-2">
+                                <span class="campingcarComp_name  fw-bold fs-6 text-success"></span>
+                                <span class="campingcarProduct_name fw-bold fs-6" style="color: #484647;"></span>
+                                <div class="campingcarShortdescription fw-bold new-fs-85" style="color: #7C7B7B;"></div>
+                            </div>
+                        </div>
+                        <!-- 비수기 평일가격, 주말가격 -->
+                        <div class="row ps-1">
+                            <div class="col fs-6 ps-2 pb-2 d-flex align-items-center">
+                                <span class="text-primary fw-semibold"></span>
+                                <span class="campingcarRental_fee_weekdays"></span>
+                            </div>
+                            <div class="col fs-6 ps-0 pb-2 d-flex justify-content-center aling-items-center">
+                                <span class="text-primary fw-semibold"></span>
+                                <span class="campingcarRental_fee_weekend"></span>
+                            </div>
+                        </div>
+                        <!-- 차고지 주소 + 운전 조건 -->
+                        <div class="row">
+                            <div class="col pt-2 pb-2 border-top fw-bold new-fs-85" style="color: #7C7B7B;">
+                                <div class="campingcarGarage_address"></div>
+                                <div class="campingcarDriver_license_name"></div>
+                                <div class="campingcarDriver_age_condition_name"></div>
+                                <div class="campingcarDriver_experience_condition_name"></div>
+                            </div>
+                        </div>
+                        <!-- 동승,취침, 애완 조건 -->
+                        <div class="row py-2 new-fs-85 border-top">
+                            <div class="col-4 px-0 d-flex justify-content-between align-items-center">
+                                <span class="material-symbols-outlined">groups</span><span class="campingcarSeating_capacity"></span>|
+                            </div>
+                            <div class="col-4 px-0 d-flex justify-content-between align-items-center">
+                                <span class="material-symbols-outlined">hotel</span>
+                                <span class="campingcarSleeping_capacity"></span>|
+                            </div>
+                            <div class="col-4 px-0 d-flex align-items-center">
+                                <span class="material-symbols-outlined">sound_detection_dog_barking</span>
+                                <span class="campingcarPet_friendly"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
 
 
@@ -438,6 +424,83 @@
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js"></script>
+    
+    <!-- campingcarList script -->
+    <script>
+        window.addEventListener("DOMContentLoaded",() => {
+            // 페이지가 로드 될때 실행되어야 하는 이벤트 등록  
+            loadCampingCarList();                             
+        })
+
+        function loadCampingCarList() {
+            const url = "/api/campingcar/campingcarList";
+            fetch(url)
+            .then(response => response.json())
+            .then(response => {
+                const campingcarListBox = document.getElementById("campingcarListBox");
+                // 응답 받고 innerHTML이 초기화되어야 하는 상태
+                campingcarListBox.innerHTML = "";
+                
+                if(response.data.campingcarList.length==0){
+                    const notExistList = document.querySelector("#campingcarListTemplete .notExistList")
+                    campingcarListBox.appendChild(notExistList);
+                    return;
+                }
+
+                // 반복할 id : templete,  전반적 출력 내용 큰 class : wrapper 가지고 와서 변수명 선언 
+                const campingcarListWrapperTemplete = document.querySelector("#campingcarListTemplete .campingcarListWrapper");
+                //응답받은 responseDto의 data 필드에서 추가(add) 메서드에 넣은 "키와 값" 반복문 돌리기
+                for(e of response.data.campingcarList) {
+                    // WrapperTemlete 클론로드(복사본)해서 새로운Wrapper 변수 선언하기
+                    const newCampingcarListWrapper  = campingcarListWrapperTemplete.cloneNode(true);
+
+                    //newWrapper의 class를 가지고 와서 클래스를 변수에 담기=> 사실상 출력할 th:text부분임 
+                    const campingcarImg = newCampingcarListWrapper.querySelector(".campingcarImg");
+                    campingcarImg.setAttribute("src", `/images/${e.main_img}`);
+                    const campingcarComp_name = newCampingcarListWrapper.querySelector(".campingcarComp_name")
+                    campingcarComp_name.innerText = e.comp_name;
+
+                    const campingcarProduct_name = newCampingcarListWrapper.querySelector(".campingcarProduct_name"); 
+                    campingcarProduct_name.innerText = e.product_name;
+
+                    const campingcarShortdescription = newCampingcarListWrapper.querySelector(".campingcarShortdescription");
+                    campingcarShortdescription.innerText = e.shortdescription;
+
+                    const campingcarRental_fee_weekdays = newCampingcarListWrapper.querySelector(".campingcarRental_fee_weekdays");
+                    campingcarRental_fee_weekdays.innerText = `평일 가격 : ${e.rental_fee_weekdays.toLocaleString('ko-KR')}원`;
+
+                    const campingcarRental_fee_weekend = newCampingcarListWrapper.querySelector(".campingcarRental_fee_weekend");
+                    campingcarRental_fee_weekend.innerText = `주말 가격 : ${e.rental_fee_weekend.toLocaleString('ko-KR')}원`;
+
+                    const campingcarGarage_address = newCampingcarListWrapper.querySelector(".campingcarGarage_address");
+                    campingcarGarage_address.innerText = `차고지 주소 : ${e.garage_address}`;
+
+                    const campingcarDriver_license_name = newCampingcarListWrapper.querySelector(".campingcarDriver_license_name");
+                    campingcarDriver_license_name.innerText = `운전면허증 : ${e.driver_license_name}`;
+                
+                    const campingcarDriver_age_condition_name = newCampingcarListWrapper.querySelector(".campingcarDriver_age_condition_name");
+                    campingcarDriver_age_condition_name.innerText =`운전자 나이 : ${e.driver_age_condition_name}`;
+
+                    const campingcarDriver_experience_condition_name = newCampingcarListWrapper.querySelector(".campingcarDriver_experience_condition_name");
+                    campingcarDriver_experience_condition_name.innerText = `운전 경력 : ${e.driver_experience_condition_name}`;
+
+                    const campingcarSeating_capacity = newCampingcarListWrapper.querySelector(".campingcarSeating_capacity");
+                    campingcarSeating_capacity.innerText = `동승인원 : ${e.seating_capacity}명`; 
+
+                    const campingcarSleeping_capacity = newCampingcarListWrapper.querySelector(".campingcarSleeping_capacity");
+                    campingcarSleeping_capacity.innerText = `취침인원 : ${e.sleeping_capacity}명`;
+
+                    const campingcarPet_friendly = newCampingcarListWrapper.querySelector(".campingcarPet_friendly");
+                    campingcarPet_friendly.innerText = e.pet_friendly;
+
+                    campingcarListBox.appendChild(newCampingcarListWrapper);
+                }
+
+
+            });
+        } 
+    </script>
+    <!-- 모달 script -->
     <script>
         // 모달에서 전체 혹은 장소를 선택 했을때, 함수를 호출한다.
         function selectLocation(button) {
@@ -476,13 +539,6 @@
             $('#returndateModal').modal('hide');
 
         }
-
-
-
-
-
-
-
 
 
         ////////////////// 캘린더 설정 /////////////////////
