@@ -19,23 +19,19 @@ import com.bulmeong.basecamp.common.util.Utils;
 
 @RequestMapping("campsiteCenter")
 @Controller
-public class CampsiteController {
+public class CampsiteSellerController {
     @Autowired
     private CampsiteService campsiteService;
     @Autowired
     private Utils utils;
 
-    @RequestMapping("unity")
-    public String unity(){
-        return "camp/unity";
-    }
 
     @RequestMapping("")
     public String mainPageByEmpty(){
         utils.setSession("campsiteCategory", campsiteService.getCampsiteCategory());
         CampsiteDto dto = utils.getSession("campsite");
         utils.setSession("selectCategory", campsiteService.getCampsiteCategoriesByCampsiteId(dto.getId()));
-        return "redirect:/camp/main";
+        return "redirect:/camp/sellerMain";
     }
 
     @RequestMapping("/")
@@ -43,7 +39,7 @@ public class CampsiteController {
         utils.setSession("campsiteCategory", campsiteService.getCampsiteCategory());
         CampsiteDto dto = utils.getSession("campsite");
         utils.setSession("selectCategory", campsiteService.getCampsiteCategoriesByCampsiteId(dto.getId()));
-        return "redirect:/camp/main";
+        return "redirect:/camp/sellerMain";
     }
 
     @RequestMapping("/main")
@@ -51,7 +47,7 @@ public class CampsiteController {
         utils.setSession("campsiteCategory", campsiteService.getCampsiteCategory());
         CampsiteDto dto = utils.getSession("campsite");
         utils.setSession("selectCategory", campsiteService.getCampsiteCategoriesByCampsiteId(dto.getId()));
-        return "camp/main";
+        return "camp/sellerMain";
     }
 
     @RequestMapping("/register")
@@ -147,7 +143,7 @@ public class CampsiteController {
         campsiteDto.setOpentime(opentime);
         campsiteService.updateCampsite(campsiteDto, categories, mainImage, mapImage);
         utils.setSession("campsite", campsiteService.getCampsiteDtoById(campsiteDto));
-        return "camp/main";
+        return "camp/sellerMain";
     }
 
     @RequestMapping("/updateCampProcess")
@@ -181,7 +177,7 @@ public class CampsiteController {
         campsiteDto.setOpentime(opentime);
         campsiteService.updateCampsite(campsiteDto, categories, mainImage, mapImage);
         utils.setSession("campsite", campsiteService.getCampsiteDtoById(campsiteDto));
-        return "camp/main";
+        return "redirect:./manageCamp";
     }
 
      @RequestMapping("updateAreaProcess")
@@ -193,10 +189,5 @@ public class CampsiteController {
     ) {
         campsiteService.updateArea(areaDto, categories,mainImage,mapImage);
         return "redirect:./manageArea";
-    }
-
-    @RequestMapping("resv")
-    public String userMain(){
-        return "camp/userMain";
     }
 }

@@ -28,7 +28,7 @@
 
             <!-- 본문 -->
             <div class="col right ms-2" style="padding-top: 58px; ">
-                <form id="updateCampProcess" method="post" action="/camp/updateCampProcess" enctype="multipart/form-data">
+                <form id="updateCampProcess" method="post" action="/campsiteCenter/updateCampProcess" enctype="multipart/form-data">
                     <input type="hidden" th:value="${session.campsite.seller}" name="seller">
                     <input type="hidden" th:value="${session.campsite.id}" name="id">
                     <!-- 상단 바 -->
@@ -458,6 +458,60 @@
             createCalendar('opentime',date);
             createRangeCalendar('peak',365, date);
 
+            document.getElementById('updateCampProcess').addEventListener('submit', function(event) {
+                const form = event.target;
+                const categoryInputs = form.querySelectorAll('input[name="campsite_category"]:checked');
+                if (categoryInputs.length === 0) {
+                    alert('캠핑장 카테고리를 하나 이상 선택해주세요.');
+                    event.preventDefault();
+                    return;
+                }
+                
+                const categoryIds = Array.from(categoryInputs).map(input => input.value);
+                const hiddenInput = document.createElement('input');
+                hiddenInput.type = 'hidden';
+                hiddenInput.name = 'campsite_category';
+                hiddenInput.value = JSON.stringify(categoryIds);
+                form.appendChild(hiddenInput);
+            });
+            const stateButton = document.getElementById('saveStateButton');
+            const form = document.getElementById('updateCampProcess');
+            stateButton.onclick = () => { validateAndSubmitForm(); };
+            function validateAndSubmitForm() {
+                const requiredFields = [
+                    'car_pay', 'kid_pay', 'adult_pay', 'peak_pay', 'max_ordertime', 
+                    'manner_end', 'manner_start', 'check_out', 'check_in', 'notice',
+                    'refund_notice', 'facility_notice', 'description',
+                    'camp_phone', 'name'
+                ];
+
+                let allValid = true;
+            
+            requiredFields.forEach((fieldName) => {
+                const field = form.querySelector(`[name="${fieldName}"]`);
+                console.log(fieldName);
+                if (!field.value) {
+                    field.focus();
+                    allValid = false;
+                    return false;  // 종료
+                }
+            });
+
+            const categoryInputs = form.querySelectorAll('input[name="campsite_category"]:checked');
+            if (categoryInputs.length === 0) {
+                alert('캠핑장 카테고리를 하나 이상 선택해주세요.');
+                allValid = false;
+            }
+
+            if (allValid) {
+                replaceMoneyInput();
+                form.submit();
+            }
+            }
+                form.addEventListener('submit', function(event) {
+                event.preventDefault();  // 기본 제출 동작 방지
+                validateAndSubmitForm(); // 유효성 검사 후 제출
+            });
        </script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
     </body>

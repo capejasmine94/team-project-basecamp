@@ -49,8 +49,7 @@ public class WebConfig implements WebMvcConfigurer {
 
          // 공용네비 .addPathPatterns 본인 시작경로 추가
          registry.addInterceptor(sessionInterceptor)
-                 .addPathPatterns("/user/**", "/secondhandProduct/**")
-                 .excludePathPatterns("/user/login", "/user/register", "/user/registerProcess", "/user/loginProcess");
+                 .addPathPatterns("/user/myPage", "/secondhandProduct/**");
     }
 
 }
