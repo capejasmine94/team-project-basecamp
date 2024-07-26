@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.bulmeong.basecamp.insta.dto.InstaArticleCommentDto;
 import com.bulmeong.basecamp.insta.dto.InstaArticleLikeDto;
+import com.bulmeong.basecamp.insta.dto.InstaFollowDto;
 import com.bulmeong.basecamp.insta.dto.InstaRestResponseDto;
 import com.bulmeong.basecamp.insta.service.InstaService;
 import com.bulmeong.basecamp.user.dto.UserDto;
@@ -110,6 +111,23 @@ public class RestInstaController {
         instaRestResponseDto.setResult("success");
 
         instaService.deleteComment(id);
+
+        return instaRestResponseDto;
+    }
+
+
+
+
+    // 팔로우
+    @RequestMapping("follow")
+    public InstaRestResponseDto follow(@RequestParam("user_id") int following_user_id , HttpSession session){
+        InstaRestResponseDto instaRestResponseDto = new InstaRestResponseDto();
+        instaRestResponseDto.setResult("success");
+
+        // 로그인이 되어있다는 가정하에
+        UserDto userDto = (UserDto) session.getAttribute("sessionUserInfo");
+
+        instaService.follow(following_user_id, userDto.getId());
 
         return instaRestResponseDto;
     }

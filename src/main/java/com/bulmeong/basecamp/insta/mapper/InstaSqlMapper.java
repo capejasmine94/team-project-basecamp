@@ -6,6 +6,7 @@ import com.bulmeong.basecamp.insta.dto.InstaArticleCommentDto;
 import com.bulmeong.basecamp.insta.dto.InstaArticleDto;
 import com.bulmeong.basecamp.insta.dto.InstaArticleImgDto;
 import com.bulmeong.basecamp.insta.dto.InstaArticleLikeDto;
+import com.bulmeong.basecamp.insta.dto.InstaFollowDto;
 import com.bulmeong.basecamp.insta.dto.InstaUserInfoDto;
 import com.bulmeong.basecamp.user.dto.UserDto;
 
@@ -35,4 +36,22 @@ public interface InstaSqlMapper {
     public int countLikeByArticleId(int article_id); // 어떤 글에 몇명이 좋아요 했는지 
     public int countLikeByArticleIdAndUserId(InstaArticleLikeDto instaArticleLikeDto); // 몇번 회원이 몇번 글에 좋아요 했는지
     public void deleteLikeByArticleIdAndUserId(InstaArticleLikeDto instaArticleLikeDto);
+
+    // 팔로우 _ 자바스크립트
+    public void insertFollowByUserId(int follower_user_id, int following_user_id);
+    public int followCountByFollowerUserId(int follower_user_id); // 몇번 회원이 몇명을 팔로우 했는지
+    public int followingCountByFollowingUserId(int following_user_id); // 몇번 회원을 몇명이 팔로잉 했지
+    public int confirmFollowStatus(InstaFollowDto instaFollowDto); // 팔로우 했는지
+    public void deleteFollowByFollowerUserIdAndFollowingUserId(InstaFollowDto instaFollowDto);
+
+
 }
+
+
+
+
+
+
+
+
+

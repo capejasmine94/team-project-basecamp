@@ -7,6 +7,7 @@ import com.bulmeong.basecamp.insta.dto.InstaArticleCommentDto;
 import com.bulmeong.basecamp.insta.dto.InstaArticleDto;
 import com.bulmeong.basecamp.insta.dto.InstaArticleImgDto;
 import com.bulmeong.basecamp.insta.dto.InstaArticleLikeDto;
+import com.bulmeong.basecamp.insta.dto.InstaFollowDto;
 import com.bulmeong.basecamp.insta.dto.InstaUserInfoDto;
 import com.bulmeong.basecamp.insta.mapper.InstaSqlMapper;
 import com.bulmeong.basecamp.user.dto.UserDto;
@@ -162,6 +163,38 @@ public class InstaService {
     // 게시물 삭제
     public void deleteArticle(int id){
         instaSqlMapper.deleteArticleById(id);
+    }
+
+
+
+
+    // 팔로우 _ 자바스크립트
+    public void follow(int follower_user_id, int following_user_id){
+        instaSqlMapper.insertFollowByUserId(follower_user_id, following_user_id);
+    }
+
+    // 몇번 회원이 몇명을 팔로우 했는지
+    public int followCount(int follower_user_id){
+        int followCount = instaSqlMapper.followCountByFollowerUserId(follower_user_id);
+
+        return followCount;
+    }
+
+    // 몇번 회원을 몇명이 팔로잉 했지
+    public int followingCount(int following_user_id){
+        int followingCount = instaSqlMapper.followingCountByFollowingUserId(following_user_id);
+
+        return followingCount;
+    }
+
+    // 팔로우 했는지
+    public boolean confirmFollow(InstaFollowDto instaFollowDto){
+
+        return instaSqlMapper.confirmFollowStatus(instaFollowDto) > 0; // 0보다 크면 follow한거
+    }
+
+    public void deleteFollow(InstaFollowDto instaFollowDto){
+        instaSqlMapper.deleteFollowByFollowerUserIdAndFollowingUserId(instaFollowDto);
     }
 }
 

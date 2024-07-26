@@ -118,6 +118,42 @@
         delete from bc_insta_article where id = ${id}
     </delete>
 
+
+
+    <!-- 팔로우 _ 좋아요 기능 사용(자바스크립트) -->
+    <insert id="insertFollowByUserId">
+        insert into bc_insta_follow(
+            follower_user_id, following_user_id
+        )values(
+            #{follower_user_id}, #{following_user_id}
+        )
+    </insert>
+
+    <!-- 몇번 회원이 몇명을 팔로우 했는지 -->
+    <select id="followCountByFollowerUserId" resultType="int">
+        select count(*) from bc_insta_follow
+        where follower_user_id = #{follower_user_id}
+    </select>
+
+    <!-- 몇번 회원을 몇명이 팔로잉 했지 -->
+    <select id="followingCountByFollowingUserId" resultType="int">
+        select count(*) from bc_insta_follow
+        where following_user_id = #{following_user_id}
+    </select>
+
+    <!-- 팔로우 했는지 -->
+    <select id="confirmFollowStatus" resultType="int">
+        select count(*) from bc_insta_follow
+        where follower_user_id = #{follower_user_id}
+        and following_user_id = #{following_user_id}
+    </select>
+
+    <delete id="deleteFollowByFollowerUserIdAndFollowingUserId">
+        delete from bc_insta_follow
+        where follower_user_id = #{follower_user_id}
+        and following_user_id = #{following_user_id}
+    </delete>
+
 </mapper>
 
 
