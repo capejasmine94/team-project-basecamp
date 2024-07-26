@@ -361,7 +361,7 @@
             <div class="col px-0 shadow border border-2 rounded-4 my-4">
                 <div class="row mx-0">
                     <div class="col px-0 d-flex justify-content-center align-items-center overflow-hidden rounded-top-4">
-                        <img class="campingcarImg img-fluid" src="" style="max-width: 100%; min-height: 100%;" alt="썸네일">
+                        <img class="campingcarImg img-fluid" style="max-width: 100%; min-height: 100%;" alt="썸네일">
                     </div>
                 </div>
                 <div class="row">
@@ -464,7 +464,7 @@
                     campingcarProduct_name.innerText = e.product_name;
 
                     const campingcarShortdescription = newCampingcarListWrapper.querySelector(".campingcarShortdescription");
-                    campingcarShortdescription.innerText = e.shortdescription;
+                    campingcarShortdescription.innerText = e.short_description;
 
                     const campingcarRental_fee_weekdays = newCampingcarListWrapper.querySelector(".campingcarRental_fee_weekdays");
                     campingcarRental_fee_weekdays.innerText = `평일 가격 : ${e.rental_fee_weekdays.toLocaleString('ko-KR')}원`;
@@ -474,7 +474,7 @@
 
                     const campingcarGarage_address = newCampingcarListWrapper.querySelector(".campingcarGarage_address");
                     campingcarGarage_address.innerText = `차고지 주소 : ${e.garage_address}`;
-
+                    
                     const campingcarDriver_license_name = newCampingcarListWrapper.querySelector(".campingcarDriver_license_name");
                     campingcarDriver_license_name.innerText = `운전면허증 : ${e.driver_license_name}`;
                 

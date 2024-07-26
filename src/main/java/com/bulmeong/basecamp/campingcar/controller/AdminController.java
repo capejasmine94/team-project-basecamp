@@ -102,6 +102,13 @@ public class AdminController {
             System.out.println("carRegister_test_controller"+ campingcarDto+basicFacilites_id+detailedImg);
         return "redirect:/admin/main";
     }
+    
+    @RequestMapping("carManagement") 
+    public String carManagement(){
+
+        return "admin/carManagement";
+    }
+    
 
     @RequestMapping("peakSeason")
     public String peakSeason(){

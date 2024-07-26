@@ -239,6 +239,12 @@
                                                     <input type="text" name="comp_address" class="form-control bg-white" id="address" placeholder="주소">
                                                 </div>
                                             </div>
+                                            <div class="row pb-2">
+                                                <div class="col-3"></div>
+                                                <div class="col">
+                                                    <input type="text" name="comp_detailed_address" class="form-control bg-white" id="detailAddress" placeholder="상세 주소">
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                     
@@ -295,6 +301,7 @@
         <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
         <script src="/public/js/campingcar/adminmain.js"></script>
         <script>
+            
             function automaticallyInputOriginAddress(){
                 const originAddressCheckBox = document.getElementById("originAddressCheckBox");
                 const origin_postcode = document.getElementById("origin_postcode");
@@ -315,7 +322,7 @@
                     origin_detailAddress.value = '';
                 }
             }
-
+            
             function automaticallyInputReturnAddress(){
                 const returnAddressCheckBox = document.getElementById("returnAddressCheckBox");
                 const return_postcode = document.getElementById("return_postcode");
@@ -393,28 +400,29 @@
 
                 const postcode = document.getElementById("postcode");
                 const address = document.getElementById("address");
+                const deatilAddress = document.getElementById("detailAddress")
                 const postcodeButton = document.getElementById("postcodeButton");
-                if(postcode.value == '' || address.value == ''){
+                if(postcode.value == '' || address.value == '' || detailAddress.value == ''){
                     // alert("주소를 입력해주세요");
                     postcodeButton.focus();
                     return;
                 }
 
-                // const origin_postcode = document.getElementById("origin_postcode");
-                // const origin_address = document.getElementById("origin_address");
-                // const originPostcodeButton = document.getElementById("originPostcodeButton");
-                // if(origin_postcode.value == '' || origin_address.value == ''){
-                //     originPostcodeButton.focus();
-                //     return;
-                // }
+                const origin_postcode = document.getElementById("origin_postcode");
+                const origin_address = document.getElementById("origin_address");
+                const originPostcodeButton = document.getElementById("originPostcodeButton");
+                if(origin_postcode.value == '' || origin_address.value == ''){
+                    originPostcodeButton.focus();
+                    return;
+                }
 
-                // const return_postcode = document.getElementById("return_postcode");
-                // const return_address = document.getElementById("return_address");
-                // const returnPostcodeButton = document.getElementById("returnPostcodeButton");
-                // if(return_postcode.value == '' || return_address.value == ''){
-                //     returnPostcodeButton.focus();
-                //     return;
-                // }
+                const return_postcode = document.getElementById("return_postcode");
+                const return_address = document.getElementById("return_address");
+                const returnPostcodeButton = document.getElementById("returnPostcodeButton");
+                if(return_postcode.value == '' || return_address.value == ''){
+                    returnPostcodeButton.focus();
+                    return;
+                }
 
 
                 const campingcarRegisterForm = document.getElementById("campingcarRegisterForm");

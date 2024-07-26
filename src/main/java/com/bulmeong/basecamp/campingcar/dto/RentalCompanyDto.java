@@ -15,6 +15,7 @@ public class RentalCompanyDto {
     private String representative_name;
     private String comp_email;
     private String comp_address;
+    private String comp_detailed_address;
     private String contact_number;
     private String comp_profile_image;
     private String comp_nickname;
