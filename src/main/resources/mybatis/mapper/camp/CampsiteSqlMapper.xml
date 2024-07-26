@@ -64,6 +64,17 @@
         )
     </insert>
     
+    <insert id="insertAreaCategory">
+        insert into bc_campsite_select_area_category(
+            area_id,
+            category_id
+        )
+        values(
+            #{area_id},
+            #{category_id}
+        );
+    </insert>
+
     <insert id="insertPoint">
         insert into bc_campsite_area_point(
             area_id,
@@ -176,6 +187,13 @@
         where id = #{id}
     </update>
 
+    <update id="updatePoint">
+        UPDATE bc_campsite_area_point set
+            name = #{name},
+            point_count = #{point_count}
+        where id = #{id}
+    </update>
+
     <update id="authCampSite">
         UPDATE bc_campsite set
             is_authenticated = 'T'
@@ -208,6 +226,9 @@
     </select>
     <select id="getAreaCategory" resultType="com.bulmeong.basecamp.camp.dto.CampsiteCategoryDto">
         select * from bc_campsite_area_category
+    </select>
+    <select id="getSelectAreaCategoriesByAreaId" resultType="int">
+        select category_id from bc_campsite_select_area_category where area_id = #{id}
     </select>
     <select id="getCategoryBySelectCategoryId" resultType="com.bulmeong.basecamp.camp.dto.CampsiteCategoryDto">
         select * from bc_campsite_category where id = #{id}

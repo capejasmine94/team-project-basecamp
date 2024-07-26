@@ -16,6 +16,7 @@ import com.bulmeong.basecamp.camp.dto.CampsiteAreaDto;
 import com.bulmeong.basecamp.camp.dto.CampsiteBankDto;
 import com.bulmeong.basecamp.camp.dto.CampsiteDto;
 import com.bulmeong.basecamp.camp.service.CampsiteService;
+import com.bulmeong.basecamp.common.dto.RestResponseDto;
 import com.bulmeong.basecamp.common.util.Utils;
 
 @RequestMapping("camp")
@@ -183,5 +184,16 @@ public class CampsiteController {
         campsiteService.updateCampsite(campsiteDto, categories, mainImage, mapImage);
         utils.setSession("campsite", campsiteService.getCampsiteDtoById(campsiteDto));
         return "camp/main";
+    }
+
+     @RequestMapping("updateArea")
+    public String updateArea(
+        CampsiteAreaDto areaDto,
+        @RequestParam("area_category") String[] categories, 
+        @RequestParam("mainImage") MultipartFile[] mainImage, 
+        @RequestParam("mapImage") MultipartFile mapImage
+    ) {
+        campsiteService.updateArea(areaDto, categories,mainImage,mapImage);
+        return "redirect:./manageArea";
     }
 }

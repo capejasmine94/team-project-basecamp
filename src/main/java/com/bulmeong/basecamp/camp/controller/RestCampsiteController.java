@@ -8,12 +8,12 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.bulmeong.basecamp.camp.dto.CampsiteAreaDto;
+import com.bulmeong.basecamp.camp.dto.CampsiteAreaPointDto;
+import com.bulmeong.basecamp.camp.dto.CampsiteCategoryDto;
 import com.bulmeong.basecamp.camp.dto.CampsiteDto;
 import com.bulmeong.basecamp.camp.service.CampsiteService;
 import com.bulmeong.basecamp.common.dto.RestResponseDto;
 import com.bulmeong.basecamp.common.util.Utils;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 
 
 
@@ -66,6 +66,7 @@ public class RestCampsiteController {
         RestResponseDto result = new RestResponseDto();
         result.setResult("success");
         CampsiteDto campsiteDto = utils.getSession("campsite");
+        result.add("areaCategory", campsiteService.getAreaCategory());
         result.add("areaList", campsiteService.getAreaList(campsiteDto.getId()));
         return result;
     }
@@ -105,6 +106,14 @@ public class RestCampsiteController {
         return result;
     }
     
+    @RequestMapping("updatePoint")
+    public RestResponseDto deletePoint(CampsiteAreaPointDto param) {
+        RestResponseDto result = new RestResponseDto();
+        result.setResult("success");
+        campsiteService.updatePoint(param);
+        result.add("getPointList", campsiteService.getPointList(param.getArea_id()));
+        return result;
+    }
 
     @RequestMapping("updateArea")
     public RestResponseDto updateArea(

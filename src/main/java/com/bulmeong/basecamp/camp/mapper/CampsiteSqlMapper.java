@@ -34,6 +34,7 @@ public interface CampsiteSqlMapper {
     public void insertAreaCategory(CampsiteAreaSelectCategoryDto campsiteAreaCategoryDto);
     public void insertCampsiteCategory(CampsiteSelectCategoryDto campsiteCategoryDto);
     public void deletePoint(@Param("id") int id);
+    public void updatePoint(CampsiteAreaPointDto campsiteAreaPointDto);
     public int newCampsiteID();
     public int newAreaIDByCampsiteId(int id);
     public int pointCountByAreaId(int id);

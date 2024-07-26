@@ -86,13 +86,20 @@ public class CampsiteService {
             imageDto.setOrigin_filename(image.getOrigin_filename());
             campsiteSqlMapper.insertAreaImage(imageDto);
         }
+        System.out.println(campsiteAreaDto);
+        campsiteSqlMapper.updateArea(campsiteAreaDto);
         for(String category : areaCategoryDtos) {
             CampsiteAreaSelectCategoryDto categorySelect = new CampsiteAreaSelectCategoryDto();
             categorySelect.setCategory_id(Integer.parseInt(category));
             categorySelect.setArea_id(campsiteAreaDto.getId());
             campsiteSqlMapper.insertAreaCategory(categorySelect);
         }
-        campsiteSqlMapper.updateArea(campsiteAreaDto);
+       
+    }
+
+    // 캠핑장 포인트 수정
+    public void updatePoint(CampsiteAreaPointDto campsiteAreaPointDto) {
+        campsiteSqlMapper.updatePoint(campsiteAreaPointDto);
     }
 
     // 아이디 & 비밀번호로 정보 찾기
@@ -178,6 +185,7 @@ public class CampsiteService {
             int count = campsiteSqlMapper.pointCountByAreaId(area.getId());
             map.put("pointCount", count);
             map.put("points", campsiteSqlMapper.getPointList(area.getId()));
+            map.put("selectAreaCategory", campsiteSqlMapper.getSelectAreaCategoriesByAreaId(area.getId()));
             result.add(map);
         }
         return result; 
@@ -196,6 +204,7 @@ public class CampsiteService {
         int count = campsiteSqlMapper.pointCountByAreaId(area_id);
         map.put("pointCount", count);
         map.put("points", campsiteSqlMapper.getPointList(area_id));
+        map.put("selectAreaCategory", campsiteSqlMapper.getSelectAreaCategoriesByAreaId(area_id));
         return map;
     }
 }
