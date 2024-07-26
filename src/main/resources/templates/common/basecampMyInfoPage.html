@@ -13,11 +13,11 @@
 <!--상단네비-->
 <div class="container-fluid g-0 fixed-top">
     <div class="row mx-2 py-2">
-        <a href="/common/basecampPublicPage" class="col fs-3">
+        <a href="/" class="col fs-3">
             <span class="fw-bold">BaseCamp</span>
         </a>
         <div class="col fs-3 text-end">
-            <a href="/common/logoutProcess" th:unless="${session.sessionUserInfo == null}">
+            <a href="/user/logoutProcess" th:unless="${session.sessionUserInfo == null}">
                 <span><i class="bi bi-door-closed"></i></span>
             </a>
         </div>

@@ -5,50 +5,40 @@ import com.bulmeong.basecamp.user.service.UserService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-@RequestMapping("common")
+@RequestMapping("user")
 public class UserController {
 
     @Autowired
     private UserService userService;
 
-    @GetMapping("basecampPublicPage")
-    public String basecampPublicPage(HttpSession session,
-                                     Model model) {
-        UserDto sessionUserInfo = (UserDto) session.getAttribute("sessionUserInfo");
-        model.addAttribute("sessionUserInfo", sessionUserInfo);
-
-        return "common/basecampPublicPage";
-    }
-
-    @GetMapping("basecampLoginPage")
+    @GetMapping("login")
     public String basecampLoginPage() {
 
         return "common/basecampLoginPage";
     }
 
-    @GetMapping("basecampMyInfoPage")
+    @GetMapping("myPage")
     public String basecampMyInfoPage() {
 
         return "common/basecampMyInfoPage";
     }
 
-    @GetMapping("basecampSignPage")
+    @GetMapping("register")
     public String basecampSignPage() {
 
         return "common/basecampSignPage";
     }
 
-    @PostMapping("signProcess")
+    @PostMapping("registerProcess")
     public String signProcess(@ModelAttribute UserDto userDto) {
         userService.insertUser(userDto);
-        return "redirect:/common/basecampLoginPage";
+        return "redirect:/user/login";
     }
 
     @PostMapping("loginProcess")
@@ -67,13 +57,13 @@ public class UserController {
                 return "redirect:" + redirectAfterLogin;
             }
 
-            return "redirect:/common/basecampPublicPage";
+            return "redirect:/";
         }
     }
 
     @GetMapping("logoutProcess")
     public String logoutProcess(HttpSession session) {
         session.invalidate();
-        return "redirect:/common/basecampLoginPage";
+        return "redirect:/user/login";
     }
 }
