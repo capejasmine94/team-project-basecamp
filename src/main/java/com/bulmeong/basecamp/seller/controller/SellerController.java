@@ -64,7 +64,7 @@ public class SellerController {
             CampsiteDto campsiteDto = campsiteService.getCampsiteDtoByAccountInfo(account_id, account_pw);
             session.setAttribute("campsite", campsiteDto);
     
-            return "redirect:/camp/main";
+            return "redirect:/campsiteCenter/main";
         }else{
             //여기 수정(캠핑카)
             RentalCompanyDto rentalCompanyDto = adminService.getSellerByIdAndPw(account_id, account_pw);

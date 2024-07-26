@@ -1,7 +1,6 @@
 package com.bulmeong.basecamp.camp.controller;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
 import java.util.Date;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -16,10 +15,9 @@ import com.bulmeong.basecamp.camp.dto.CampsiteAreaDto;
 import com.bulmeong.basecamp.camp.dto.CampsiteBankDto;
 import com.bulmeong.basecamp.camp.dto.CampsiteDto;
 import com.bulmeong.basecamp.camp.service.CampsiteService;
-import com.bulmeong.basecamp.common.dto.RestResponseDto;
 import com.bulmeong.basecamp.common.util.Utils;
 
-@RequestMapping("camp")
+@RequestMapping("campsiteCenter")
 @Controller
 public class CampsiteController {
     @Autowired
@@ -56,7 +54,7 @@ public class CampsiteController {
         return "camp/main";
     }
 
-    @RequestMapping("/registerUser")
+    @RequestMapping("/register")
     public String registerUser(Model model){
         String id = String.format("%02d", campsiteService.newCampsiteID());
         model.addAttribute("campsiteDto", new CampsiteDto());
@@ -186,7 +184,7 @@ public class CampsiteController {
         return "camp/main";
     }
 
-     @RequestMapping("updateArea")
+     @RequestMapping("updateAreaProcess")
     public String updateArea(
         CampsiteAreaDto areaDto,
         @RequestParam("area_category") String[] categories, 
@@ -195,5 +193,10 @@ public class CampsiteController {
     ) {
         campsiteService.updateArea(areaDto, categories,mainImage,mapImage);
         return "redirect:./manageArea";
+    }
+
+    @RequestMapping("resv")
+    public String userMain(){
+        return "camp/userMain";
     }
 }

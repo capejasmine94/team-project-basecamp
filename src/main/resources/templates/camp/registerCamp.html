@@ -29,7 +29,7 @@
 
         <!-- 본문 -->
         <div class="col right ms-2" style="padding-top: 58px;">
-            <form id="registerCampProcess" method="post" enctype="multipart/form-data" action="/camp/registerCampProcess">
+            <form id="registerCampProcess" method="post" enctype="multipart/form-data" action="/campsiteCenter/registerCampProcess">
                 <input type="hidden" name ="id" th:value="${session.campsite.id}">
                 <!-- 상단 바 -->
                 <div th:replace="~{camp/campNavi::topNavi}"></div>
