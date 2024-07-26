@@ -26,17 +26,17 @@ public class CampsiteInterceptor implements HandlerInterceptor {
         utils.setSession("pageInfo", pageInfo(pageDetail));
 
         String requestURI = request.getRequestURI();
-        if(requestURI.equals("/camp/registerUser"))
+        if(requestURI.equals("/campsiteCenter/registerUser"))
             return true;
         if (request.getSession() == null || request.getSession().getAttribute("campsite") == null) {
             response.sendRedirect("/seller/login");
             return false;
         }
-        if (requestURI.equals("/camp/registerCamp") || requestURI.equals("/seller/login") || requestURI.equals("/camp/registerCampProcess")) {
+        if (requestURI.equals("/campsiteCenter/registerCamp") || requestURI.equals("/seller/login") || requestURI.equals("/campsiteCenter/registerCampProcess")) {
             return true;
         }
         if(!campsiteService.isAuthed(utils.getSession("campsite"))){
-            response.sendRedirect("/camp/registerCamp");
+            response.sendRedirect("/campsiteCenter/registerCamp");
             request.getSession().setAttribute("pageInfo", pageInfo("registerCamp"));
             return false;
         }

@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="kr">
+    <head>
+        <title>BaseCamp</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">    
+        <script src="https://kit.fontawesome.com/7b271bba58.js" crossorigin="anonymous"></script>
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
+        <link rel="stylesheet" href="/public/css/common.css">
+        
+        <script src="/public/js/calendar.js"></script>
+        <script src="/public/js/util.js"></script>
+        <script src="/public/js/sellerPage.js"></script>
+        <script src="/public/js/camp/campsite.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    </head>
+    <body> 
+        <div th:replace="~{camp/campNavi::topNaviSeller}"></div>
+        <div class="container-fluid">
+          <div class="row">
+
+             <!-- 메뉴 -->
+             <div th:replace="~{camp/campNavi::leftNavi}"></div>
+
+             <!-- 본문 -->
+             <div class="col right ms-2" style="padding-top: 58px; ">
+                 <!-- 상단 바 -->
+                 <div th:replace="~{camp/campNavi::topNavi}"></div>
+ 
+                <!-- 내용 -->
+                <div class="row scroll-list-box" style="margin-top: 100px; width: 1600px;">
+                    <div class="col">
+                        <img class="img-fluid" src="/public/img/camp/construction.png" alt="">
+                    </div>
+                </div>
+            </div>
+
+          </div>
+        </div>
+        <div th:replace="~{common/navi::popup}"></div>
+        <script>
+                document.addEventListener('DOMContentLoaded', (event) => {
+                // Sample data for the last 7 days
+                const salesData = {
+                    labels: ['Day 1', 'Day 2', 'Day 3', 'Day 4', 'Day 5', 'Day 6', 'Day 7'],
+                    datasets: [{
+                        label: 'Sales (in USD)',
+                        data: [150, 200, 250, 300, 350, 400, 450],
+                        backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                        borderColor: 'rgba(54, 162, 235, 1)',
+                        borderWidth: 1
+                    }]
+                };
+            
+                // Configuring the Chart
+                const config = {
+                    type: 'line',
+                    data: salesData,
+                    options: {
+                        responsive: true,
+                        scales: {
+                            y: {
+                                beginAtZero: true
+                            }
+                        }
+                    }
+                };
+            
+                // Render the Chart
+                const ctx = document.getElementById('salesChart').getContext('2d');
+                new Chart(ctx, config);
+            });
+        </script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    </body>
+</html>

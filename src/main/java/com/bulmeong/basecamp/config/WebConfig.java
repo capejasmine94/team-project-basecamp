@@ -44,13 +44,13 @@ public class WebConfig implements WebMvcConfigurer {
      @Override
     public void addInterceptors(InterceptorRegistry registry) {
         // 특정 컨트롤러 경로에 대해 인터셉터를 등록합니다.
-        registry.addInterceptor(campsiteInterceptor).addPathPatterns("/camp/**")
-        .excludePathPatterns("/camp/registerUserProcess");
+        registry.addInterceptor(campsiteInterceptor).addPathPatterns("/campsiteCenter/**")
+        .excludePathPatterns("/campsiteCenter/registerUserProcess","/campsite/resv");
 
          // 공용네비 .addPathPatterns 본인 시작경로 추가
          registry.addInterceptor(sessionInterceptor)
-                 .addPathPatterns("/common/**", "/secondhandProduct/**")
-                 .excludePathPatterns("/common/basecampLoginPage", "/common/basecampSignPage", "/common/signProcess", "/common/loginProcess");
+                 .addPathPatterns("/user/**", "/secondhandProduct/**")
+                 .excludePathPatterns("/user/login", "/user/register", "/user/registerProcess", "/user/loginProcess");
     }
 
 }

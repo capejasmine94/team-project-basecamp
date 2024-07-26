@@ -14,6 +14,7 @@
         <script src="/public/js/calendar.js"></script>
         <script src="/public/js/uploader.js"></script>
         <script src="/public/js/util.js"></script>
+        <script src="/public/js/camp/area.js"></script>
         <script src="/public/js/sellerPage.js"></script>
         <script src="/public/js/camp/campsite.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -28,538 +29,486 @@
 
                 <!-- 본문 -->
                 <div class="col right ms-2" style="padding-top: 58px; ">
-                    <!-- 상단 바 -->
-                    <div th:replace="~{camp/campNavi::topNavi}"></div>
+                    <form id="updateArea" action="/campsiteCenter/updateAreaProcess" method="post" enctype="multipart/form-data">
+                        <input id="setID" name="id" type="hidden">
+                        <!-- 상단 바 -->
+                        <div th:replace="~{camp/campNavi::topNavi}"></div>
 
-                    <!-- 내용 -->
-                    <div class="row scroll-list-box" style="margin-top: 100px; width: 1600px;">
-                        <div class="col ps-5" style="margin-left: 6em;">
-                            
-                            <!-- 구역 목록 -->
-                            <div class="row new-mt-45 justify-content-center">
-                                <div class="col border rounded-2 me-5">
-                                    <div class="row mt-1">
-                                        <div class="col-auto ms-3 my-1 fs-5 fw-bold">구역 목록</div>
-                                        <div class="col-auto ms-3 my-1 fs-5 fw-bold"><i class="bi bi-plus-square text-primary"></i></div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-auto ms-3 mb-2 new-fs-9">구역은 고객들이 이용할 구역을 분류합니다.</div>
-                                    </div>
-                                    <!-- 검색 기능 -->
-                                    <!-- <div class="row ms-1 mb-3 align-items-center">
-                                        <div class="col-auto fs-4"><i class="bi bi-search"></i></div>
-                                        <div class="col-3 me-2 ps-1">
-                                            <input type="text" class="my-2 new-fs-85 rounded-5 form-control border-secondary">
-                                        </div>
-                                    </div> -->
-                                   
-                                    <div class="row mt-2 ps-1 border-top border-bottom bg-light">
-                                        <div class="col-10 mx-2 ms-3">
-                                        <div class="row py-1 fw-semibold">
-                                            <div class="col-4 ms-5 ps-4">구역이름</div>
-                                            <div class="col-2 ms-4 text-end">가격</div>
-                                        </div>
-                                        </div>
-                                    </div>
-                                    <div class="row ms-1">
-                                        <div class="col">
-                                            <div class="row pb-2">
-                                                <div id="areaList" class="col mx-2">
-                                                    <div class="row py-2 border-bottom align-items-center">
-                                                            <div class="col-4">베어그릴스의 야생의 시간</div>
-                                                            <div class="col-2 me-5 text-end">1,000,000 원</div>
-                                                            <div class="col text-end ms-5 ps-5">
-                                                                <button class="btn btn-outline-primary px-4">관리</button>
-                                                            </div>
-                                                    </div>
-                                                    <div class="row py-2 border-bottom align-items-center">
-                                                            <div class="col-4">베어그릴스의 야생의 시간</div>
-                                                            <div class="col-2 me-5 text-end">1,000,000 원</div>
-                                                            <div class="col text-end ms-5 ps-5">
-                                                                <button class="btn btn-outline-primary px-4">관리</button>
-                                                            </div>
-                                                    </div>
-                                                    <div class="row py-2 border-bottom align-items-center">
-                                                            <div class="col-4">베어그릴스의 야생의 시간</div>
-                                                            <div class="col-2 me-5 text-end">1,000,000 원</div>
-                                                            <div class="col text-end ms-5 ps-5">
-                                                                <button class="btn btn-outline-primary px-4">관리</button>
-                                                            </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-
-                            <!-- 기본 정보 -->
-                            <div class="row new-mt-45">
-                                <div class="col">
-                                    <div class="row justify-content-center">
-                                        <div class="col border rounded-2 me-5">
-                                            <div class="row my-1">
-                                                <div class="col-auto ms-3 my-1 fs-5 fw-bold">기본 정보</div>
-                                            </div>
-                                            <div class="row ps-1 pb-3 border-top">
-                                                <div class="col mx-2">
-                                                    <div class="row mt-3 align-items-center">
-                                                        <div class="col-1 text-secondary text-end">구역 이름</div>
-                                                        <div class="col-4 fw-semibold">베어그릴스의 야생의 시간</div>
-                                                        <div class="col-auto">
-                                                            <i class="bi bi-pencil-square text-primary"></i>
-                                                        </div>
-                                                    </div>
-                                                    <div class="row mt-4 align-items-center">
-                                                        <div class="col-1 text-secondary text-end">기본 가격</div>
-                                                        <div class="col-4 fw-semibold">1,000,000원</div>
-                                                        <div class="col-auto">
-                                                            <i class="bi bi-pencil-square text-primary"></i>
-                                                        </div>
-                                                    </div>
-                                                    <div class="row mt-4 align-items-center">
-                                                        <div class="col-1 text-secondary text-end">구역 크기</div>
-                                                        <div class="col-4 fw-semibold">6.0m x 7.0m</div>
-                                                        <div class="col-auto">
-                                                            <i class="bi bi-pencil-square text-primary"></i>
-                                                        </div>
-                                                    </div>
-                                                    <div class="row mt-4 mb-3">
-                                                        <div class="col-1 text-secondary text-end">
-                                                            <span>구역 설명</span>
-                                                        </div>
-                                                        <div class="col-4 fw-semibold">
-                                                            <div>누구도 고생하지 않는 캠핑리조트</div>
-                                                            <div>어디에도 없을 감성적인 카라반, 넓은 사이트,</div>
-                                                            <div>자연과 문화가 공존하는 가장 완벽한 가족형 캠핑리조트를 만날 수 있습니다.</div>
-                                                        </div>
-                                                        <div class="col-auto">
-                                                            <i class="bi bi-pencil-square text-primary"></i>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-
-                            <!-- 이미지 정보 -->
-                            <div class="row new-mt-45 justify-content-center">
-                                <div class="col border rounded-2 me-5">
-                                    <div class="row my-1">
-                                        <div class="col ms-3 my-1 fs-5 fw-bold">이미지 정보</div>
-                                    </div>
-                                    <div class="row border-top pb-2">
-                                        <div class="col mx-2">
-                                            <div class="row mt-3 flex-column">
-                                                <div class="col-auto text-secondary text-start ms-1">구역 이미지</div>
-                                                <div class="col-8 pb-3">
-                                                    <div id="upload_main_image"></div>
-                                                    <span class="text-secondary new-fs-9">
-                                                        <div>사진을 드래그하여 위치를 바꿀 수 있습니다.</div>
-                                                        <div>맨 앞의 이미지는 대표 이미지로 지정되어 메인에 노출됩니다.</div>
-                                                        <div>캠핑장 이미지는 최대 10장, 용량은 최대 100MB까지 업로드 하실 수 있습니다.</div>
-                                                    </span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="row border-top pb-2">
-                                        <div class="col mx-2">
-                                            <div class="row mt-3 flex-column">
-                                                <div class="col-auto text-secondary text-start ms-1">배치도 이미지</div>
-                                                <div class="col-8 pb-3">
-                                                    <div id="upload_map_image"></div>
-                                                    <span class="text-secondary new-fs-9">용량은 최대 100MB까지 한 장만 업로드 하실 수 있습니다.</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="row border-top pb-2 pt-3">
-                                        <div class="col mx-2 mb-2">
-                                            <div class="row">
-                                                <div class="col">
-                                                    <span class="text-secondary new-fs-9">미리 보기를 통해 실제 사용자들이 어떻게 보이는지 확인할 수 있습니다.</span>
-                                                </div>
-                                            </div>
-                                            <div class="row mt-3">
-                                                <div class="col">
-                                                    <button class="btn btn-primary">미리 보기</button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>  
-                                </div>
-                            </div>
-
-
-                            <!-- 구역 정보 -->
-                            <div class="row new-mt-45 justify-content-center">
-                                <div class="col border rounded-2 me-5">
-                                    <div class="row my-1">
-                                        <div class="col ms-3 my-1 fs-5 fw-bold">구역 정보</div>
-                                    </div>
-                                    <div class="row border-top py-3">
-                                        <div class="row my-1">
-                                            <div class="col ms-3 my-1 pb-2 new-fs-85 text-secondary">
-                                                <div class="fs-6 mb-2">구역의 특징을 <span class="fw-bold">정확하게</span> 선택해주세요.</div>
-                                                <div>거짓된 정보로 고객들을 현혹 시, 신고사유가 될 수 있으며,</div>
-                                                <div>이후에 서비스 사용 재제, 영구 정지 또는 법적 조치로 이어질 수 있습니다.</div>
-                                            </div>
+                        <!-- 내용 -->
+                        <div class="row scroll-list-box" style="margin-top: 100px; width: 1600px;">
+                            <div class="col ps-5" style="margin-left: 6em;">
+                                
+                                <!-- 구역 목록 -->
+                                <div class="row new-mt-45 justify-content-center">
+                                    <div class="col border rounded-2 me-5">
+                                        <div class="row mt-1">
+                                            <div class="col-auto ms-3 my-1 fs-5 fw-bold">구역 목록</div>
+                                            <div class="col-auto ms-3 my-1 fs-5 fw-bold"><i class="bi bi-plus-square text-primary" onclick="insertArea()"></i></div>
                                         </div>
                                         <div class="row">
-                                            <div class="col-8 ms-3 mt-2 px-0">
-                                                <input name="campsite_category" type="checkbox" class="btn-check" id="1" autocomplete="off">
-                                                <label class="btn ms-2 mb-2 rounded-5 btn-outline-primary" for="1">카테고리1</label>
-        
-                                                <input name="campsite_category" type="checkbox" class="btn-check" id="2" autocomplete="off">
-                                                <label class="btn ms-2 mb-2 rounded-5 btn-outline-primary" for="2">카테고리2</label>
-        
-                                                <input name="campsite_category" type="checkbox" class="btn-check" id="3" autocomplete="off">
-                                                <label class="btn ms-2 mb-2 rounded-5 btn-outline-primary" for="3">카테고리3</label>
-                                            </div>
+                                            <div class="col-auto ms-3 mb-2 new-fs-9">구역은 고객들이 이용할 구역을 분류합니다.</div>
                                         </div>
-                                    </div>
-                                </div>
-                            </div>
-
-
-                            <!-- 포인트 정보 -->
-                            <div class="row new-mt-45 justify-content-center">
-                                <div class="col border rounded-2 me-5">
-                                    <div class="row my-1">
-                                        <div class="col-auto ms-3 my-1 fs-5 fw-bold">포인트 설정</div>
-                                        <div class="col-auto ms-3 my-1 fs-5 fw-bold"><i class="bi bi-plus-square text-primary"></i></div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-auto text-secondary ms-3 mb-4 new-fs-9">
-                                            <div>실제로 고객들이 사용할 자리를 설정합니다. 실제 캠핑장의 배치도에 맞게 설정해주세요.</div>
-                                            <div>포인트 이름은 중복이 허용되지 않습니다.</div>
-                                        </div>
-                                    </div>
-                                    <div class="row ps-4 py-1 border-top border-bottom bg-light">
-                                        <div class="col-1">포인트 이름</div>
-                                        <div class="col-1 ms-2 me-5 text-end">개수</div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col">
-                                            <div class="row pb-2 justify-content-center">
-                                                <div class="col mx-2">
-                                                    <div class="row py-2 border-bottom align-items-center">
-                                                        <div class="col-1 text-center ms-2 me-5">
-                                                            <span>A</span>
-                                                            <i class="bi bi-pencil-square text-primary ms-3"></i>
-                                                        </div>
-                                                        <div class="col-1 me-5">
-                                                            <input class="form-control text-end p-1" type="number" value="3">
-                                                        </div>
-                                                        <div class="col-2 ms-5 ps-5">
-                                                            <i class="bi bi-trash text-danger ms-3"></i>
-                                                        </div>
-                                                </div>
-                                                
+                                        <!-- 검색 기능 -->
+                                        <!-- <div class="row ms-1 mb-3 align-items-center">
+                                            <div class="col-auto fs-4"><i class="bi bi-search"></i></div>
+                                            <div class="col-3 me-2 ps-1">
+                                                <input type="text" class="my-2 new-fs-85 rounded-5 form-control border-secondary">
                                             </div>
-                                            </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                            </div>
-
-                            <!-- 요금 -->
-                            <div class="row new-mt-45 justify-content-center">
-                                <div class="col border rounded-2 me-5">
-                                    <div class="row my-1">
-                                        <div class="col ms-3 my-1 fs-5 fw-bold">요금 설정</div>
-                                    </div>
-                                    <div class="row border-top pt-3">
-                                        <div class="col-auto ms-3 mt-2 px-0">
-                                            <input name="followCampPay" type="radio" class="btn-check" id="followCampPayTrue" autocomplete="off" value="T" checked>
-                                            <label class="btn px-3 ms-2 mb-2 rounded-5 btn-outline-primary" for="followCampPayTrue">캠핑장 규칙에 따름</label>
-                                        </div>
-                                        <div class="col-auto mt-2 px-0">
-                                            <input name="followCampPay" type="radio" class="btn-check" id="followCampPayFalse" autocomplete="off" value="F">
-                                            <label class="btn px-5 ms-0 mb-2 rounded-5 btn-outline-primary" for="followCampPayFalse">임의로 설정</label>
-                                        </div>
-                                    </div>
-
-                                    <div class="row">
-                                        <div class="col ms-2 my-1 new-fs-85 text-secondary">
-                                            <div>'임의로 설정'을 선택하여 구역에 따라 다른 요금을 설정할 수 있습니다.</div>
-                                            <div>요금 설정 시 기존의 캠핑장 규칙에서 정한 값은 반영하지 않습니다.</div>
-                                        </div>
-                                    </div>
-
-                                    <div class="row mb-3">
-                                        <div class="col d-none ">
-                                            <div class="row mt-3">
-                                                <div class="col-auto mt-1 ms-2 fw-semibold">
-                                                    인원 추가 요금
-                                                </div>
-                                            </div>
-                                            <div class="row mt-4">
-                                                <div class="col-auto mt-1 ms-5">
-                                                    성인
-                                                </div>
-                                                <div class="col-2 ms-3 pe-0">
-                                                    <input name="adult_pay" class="form-control text-end numberInput" type="text" value="0">
-                                                </div>
-                                                <div class="col-auto mt-1">
-                                                    원
-                                                </div>
-                                            </div>
-                                            <div class="row mt-3">
-                                                <div class="col-auto mt-1 ms-3">
-                                                    미성년자
-                                                </div>
-                                                <div class="col-2 ms-3 pe-0">
-                                                    <input name="kid_pay" class="form-control text-end numberInput" type="text" value="0">
-                                                </div>
-                                                <div class="col-auto mt-1">
-                                                    원
-                                                </div>
-                                            </div>
-                                            <div class="row mt-5  mb-3">
-                                                <div class="col-auto pe-0 mt-1 fw-semibold">
-                                                    차량 추가 요금
-                                                </div>
-                                                <div class="col-2 ms-3 pe-0 ps-1">
-                                                    <input name="car_pay" class="form-control text-end numberInput" type="text" value="10,000" placeholder="0">
-                                                </div>
-                                                <div class="col-auto mt-1 fw-semibold">
-                                                    원
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
+                                        </div> -->
                                     
+                                        <div class="row mt-2 ps-1 border-top border-bottom bg-light">
+                                            <div class="col-11 mx-2 ms-3">
+                                            <div class="row py-1 fw-semibold">
+                                                <div class="col-4 ps-3 me-5">구역이름</div>
+                                                <div class="col-2 text-end">가격</div>
+                                                <div class="col-3 pe-5 text-end">포인트 수</div>
+                                            </div>
+                                            </div>
+                                        </div>
+                                        <div class="row ms-1">
+                                            <div class="col">
+                                                <div class="row pb-2">
+                                                    <div id="areaList" class="col mx-2">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
-                            </div>
 
-
-                            <!-- 시간 -->
-                            <div class="row new-mt-45 justify-content-center">
-                                <div class="col border rounded-2 me-5">
-                                    <div class="row my-1">
-                                        <div class="col ms-3 my-1 fs-5 fw-bold">시간 설정</div>
-                                    </div>
-
-                                    <div class="row border-top py-2">
-                                        <div class="col ms-2 fw-semibold">구역별 시간 설정</div>
-                                    </div>
-                                    <div class="row ">
-                                        <div class="col-auto ms-3 mt-2 px-0">
-                                            <input name="followCampTime" type="radio" class="btn-check" id="followCampTimeTrue" autocomplete="off" value="T" checked>
-                                            <label class="btn px-3 ms-2 mb-2 rounded-5 btn-outline-primary" for="followCampTimeTrue">캠핑장 규칙에 따름</label>
-                                        </div>
-                                        <div class="col-auto mt-2 px-0">
-                                            <input name="followCampTime" type="radio" class="btn-check" id="followCampTimeFalse" autocomplete="off" value="F">
-                                            <label class="btn px-5 ms-0 mb-2 rounded-5 btn-outline-primary" for="followCampTimeFalse">임의로 설정</label>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col ms-2 my-1 new-fs-85 text-secondary">
-                                            <div>'임의로 설정'을 선택하여 구역에 따라 다른 요금을 설정할 수 있습니다.</div>
-                                            <div>요금 설정 시 기존의 캠핑장 규칙에서 정한 값은 반영하지 않습니다.</div>
-                                        </div>
-                                    </div>
-                                    <div id="timeSetter" class="row">
+                                <div id="showDetail" class="d-none"> 
+                                        <!-- 기본 정보 -->
+                                    <div class="row new-mt-45">
                                         <div class="col">
-                                            <div class="row mt-3 pt-3 pb-1">
-                                                <div class="col ms-2 fw-semibold">예약 마감 시간</div>
-                                            </div>
-                                            
-                                            
-                                            <div class="row mt-1">
-                                                <div class="col ms-2 pb-2 new-fs-9 text-secondary">
-                                                    <div>이 시간 이후에는 예약이 불가능합니다.</div>
+                                            <div class="row justify-content-center">
+                                                <div class="col border rounded-2 me-5">
+                                                    <div class="row my-1">
+                                                        <div class="col-auto ms-3 my-1 fs-5 fw-bold">기본 정보</div>
+                                                    </div>
+                                                    <div class="row ps-1 pb-3 border-top">
+                                                        <div class="col mx-2">
+                                                            <div class="row mt-3 align-items-center">
+                                                                <div class="col-1 text-secondary text-end">구역 이름</div>
+                                                                <div class="col-4">
+                                                                    <input type="text" class="form-control fw-semibold" id="name" name="name" placeholder="구역 이름을 입력하세요"></input>
+                                                                </div>
+                                                                
+                                                            </div>
+                                                            <div class="row mt-4 align-items-center">
+                                                                <div class="col-1 text-secondary text-end">기본 가격</div>
+                                                                <div class="col-2 fw-semibold">
+                                                                    <input type="text" class="form-control moneyInput" id="prise" name="prise" value="10,000"></input>
+                                                                </div>
+                                                                <div class="col-auto fw-semibold">원</div>
+                                                            </div>
+                                                            <div class="row mt-4 align-items-center">
+                                                                <div class="col-1 text-secondary text-end">구역 크기</div>
+                                                                <div class="col-1"><input class="fw-semibold form-control" type="number" max="999" name="size_x" id="size_x" ></div>
+                                                                <div class="col-auto fw-semibold mx-2">x</div>
+                                                                <div class="col-1"><input class="fw-semibold form-control" type="number" max="999" name="size_y" id="size_y" ></div>
+                                                                <div class="col-1 text-secondary new-fs-85"><span>m (미터) 단위</span></div>
+                                                            </div>
+                                                            <div class="row mt-4 mb-3">
+                                                                <div class="col-1 text-secondary text-end">
+                                                                    <span>구역 설명</span>
+                                                                </div>
+                                                                <div class="col-5 fw-semibold">
+                                                                    <textarea class="form-control" name="description" id="description" cols="30" rows="5"></textarea>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
                                                 </div>
                                             </div>
-                                            <div class="row mt-1">
-                                                <div class="col-6 pe-0">
-                                                    <div id="calendar_opentime"> </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- 이미지 정보 -->
+                                    <div class="row new-mt-45 justify-content-center">
+                                        <div class="col border rounded-2 me-5">
+                                            <div class="row my-1">
+                                                <div class="col ms-3 my-1 fs-5 fw-bold">이미지 정보</div>
+                                            </div>
+                                            <div class="row border-top pb-2">
+                                                <div class="col mx-2">
+                                                    <div class="row mt-3 flex-column">
+                                                        <div class="col-auto text-secondary text-start ms-1">구역 이미지</div>
+                                                        <div class="col-8 pb-3">
+                                                            <div id="upload_mainImage"></div>
+                                                            <span class="text-secondary new-fs-9">
+                                                                <div>사진을 드래그하여 위치를 바꿀 수 있습니다.</div>
+                                                                <div>맨 앞의 이미지는 대표 이미지로 지정되어 메인에 노출됩니다.</div>
+                                                                <div>캠핑장 이미지는 최대 10장, 용량은 최대 100MB까지 업로드 하실 수 있습니다.</div>
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row border-top pb-2">
+                                                <div class="col mx-2">
+                                                    <div class="row mt-3 flex-column">
+                                                        <div class="col-auto text-secondary text-start ms-1">배치도 이미지</div>
+                                                        <div class="col-8 pb-3">
+                                                            <div id="upload_mapImage"></div>
+                                                            <span class="text-secondary new-fs-9">용량은 최대 100MB까지 한 장만 업로드 하실 수 있습니다.</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row border-top pb-2 pt-3">
+                                                <div class="col mx-2 mb-2">
+                                                    <div class="row">
+                                                        <div class="col">
+                                                            <span class="text-secondary new-fs-9">미리 보기를 통해 실제 사용자들이 어떻게 보이는지 확인할 수 있습니다.</span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row mt-3">
+                                                        <div class="col">
+                                                            <button class="btn btn-primary">미리 보기</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>  
+                                        </div>
+                                    </div>
+
+                                    <!-- 구역 정보 -->
+                                    <div class="row new-mt-45 justify-content-center">
+                                        <div class="col border rounded-2 me-5">
+                                            <div class="row my-1">
+                                                <div class="col ms-3 my-1 fs-5 fw-bold">구역 정보</div>
+                                            </div>
+                                            <div class="row border-top py-3">
+                                                <div class="row my-1">
+                                                    <div class="col ms-3 my-1 pb-2 new-fs-85 text-secondary">
+                                                        <div class="fs-6 mb-2">구역의 특징을 <span class="fw-bold">정확하게</span> 선택해주세요.</div>
+                                                        <div>거짓된 정보로 고객들을 현혹 시, 신고사유가 될 수 있으며,</div>
+                                                        <div>이후에 서비스 사용 재제, 영구 정지 또는 법적 조치로 이어질 수 있습니다.</div>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-8 ms-3">
+                                                        <div class="row" id="areaCategoryList">
+                                                           
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- 포인트 정보 -->
+                                    <div class="row new-mt-45 justify-content-center">
+                                        <div class="col border rounded-2 me-5">
+                                            <div class="row my-1">
+                                                <div class="col-auto ms-3 my-1 fs-5 fw-bold">포인트 설정</div>
+                                                <div class="col-auto ms-3 my-1 fs-5 fw-bold"><i class="bi bi-plus-square text-primary" onclick="insertPoint()"></i></div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-auto text-secondary ms-3 mb-4 new-fs-9">
+                                                    <div>실제로 고객들이 사용할 자리를 설정합니다. 실제 캠핑장의 배치도에 맞게 설정해주세요.</div>
+                                                    <div>포인트 이름은 중복이 허용되지 않습니다.</div>
+                                                </div>
+                                            </div>
+                                            <div class="row ps-4 py-1 border-top border-bottom bg-light">
+                                                <div class="col-1">포인트 이름</div>
+                                                <div class="col-1 ms-2 me-5 text-end">개수</div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col" id="pointList">
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- 요금 -->
+                                    <div class="row new-mt-45 justify-content-center d-none" id="payTab">
+                                        <div class="col border rounded-2 me-5">
+                                            <div class="row my-1">
+                                                <div class="col ms-3 my-1 fs-5 fw-bold">요금 설정</div>
+                                            </div>
+                                            <div class="row border-top pt-3">
+                                                <div class="col-auto ms-3 mt-2 px-0">
+                                                    <input name="followCampPay" type="radio" class="btn-check" id="followCampPayTrue" autocomplete="off" value="T" checked>
+                                                    <label class="btn px-3 ms-2 mb-2 rounded-5 btn-outline-primary" for="followCampPayTrue">캠핑장 규칙에 따름</label>
+                                                </div>
+                                                <div class="col-auto mt-2 px-0">
+                                                    <input name="followCampPay" type="radio" class="btn-check" id="followCampPayFalse" autocomplete="off" value="F">
+                                                    <label class="btn px-5 ms-0 mb-2 rounded-5 btn-outline-primary" for="followCampPayFalse">임의로 설정</label>
                                                 </div>
                                             </div>
 
+                                            <div class="row">
+                                                <div class="col ms-2 my-1 new-fs-85 text-secondary">
+                                                    <div>'임의로 설정'을 선택하여 구역에 따라 다른 요금을 설정할 수 있습니다.</div>
+                                                    <div>요금 설정 시 기존의 캠핑장 규칙에서 정한 값은 반영하지 않습니다.</div>
+                                                </div>
+                                            </div>
+
+                                            <div class="row mb-3">
+                                                <div class="col d-none ">
+                                                    <div class="row mt-3">
+                                                        <div class="col-auto mt-1 ms-2 fw-semibold">
+                                                            인원 추가 요금
+                                                        </div>
+                                                    </div>
+                                                    <div class="row mt-4">
+                                                        <div class="col-auto mt-1 ms-5">
+                                                            성인
+                                                        </div>
+                                                        <div class="col-2 ms-3 pe-0">
+                                                            <input name="adult_pay" class="form-control text-end moneyInput" type="text" value="0">
+                                                        </div>
+                                                        <div class="col-auto mt-1">
+                                                            원
+                                                        </div>
+                                                    </div>
+                                                    <div class="row mt-3">
+                                                        <div class="col-auto mt-1 ms-3">
+                                                            미성년자
+                                                        </div>
+                                                        <div class="col-2 ms-3 pe-0">
+                                                            <input name="kid_pay" class="form-control text-end moneyInput" type="text" value="0">
+                                                        </div>
+                                                        <div class="col-auto mt-1">
+                                                            원
+                                                        </div>
+                                                    </div>
+                                                    <div class="row mt-5  mb-3">
+                                                        <div class="col-auto pe-0 mt-1 fw-semibold">
+                                                            차량 추가 요금
+                                                        </div>
+                                                        <div class="col-2 ms-3 pe-0 ps-1">
+                                                            <input name="car_pay" class="form-control text-end moneyInput" type="text" value="10,000" placeholder="0">
+                                                        </div>
+                                                        <div class="col-auto mt-1 fw-semibold">
+                                                            원
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            
+                                        </div>
+                                    </div>
+
+                                    <!-- 시간 -->
+                                    <div class="row new-mt-45 justify-content-center d-none" id="timeTab">
+                                        <div class="col border rounded-2 me-5">
+                                            <div class="row my-1">
+                                                <div class="col ms-3 my-1 fs-5 fw-bold">시간 설정</div>
+                                            </div>
+
+                                            <div class="row border-top py-2">
+                                                <div class="col ms-2 fw-semibold">구역별 시간 설정</div>
+                                            </div>
+                                            <div class="row ">
+                                                <div class="col-auto ms-3 mt-2 px-0">
+                                                    <input name="followCampTime" type="radio" class="btn-check" id="followCampTimeTrue" autocomplete="off" value="T" checked>
+                                                    <label class="btn px-3 ms-2 mb-2 rounded-5 btn-outline-primary" for="followCampTimeTrue">캠핑장 규칙에 따름</label>
+                                                </div>
+                                                <div class="col-auto mt-2 px-0">
+                                                    <input name="followCampTime" type="radio" class="btn-check" id="followCampTimeFalse" autocomplete="off" value="F">
+                                                    <label class="btn px-5 ms-0 mb-2 rounded-5 btn-outline-primary" for="followCampTimeFalse">임의로 설정</label>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col ms-2 my-1 new-fs-85 text-secondary">
+                                                    <div>'임의로 설정'을 선택하여 구역에 따라 다른 요금을 설정할 수 있습니다.</div>
+                                                    <div>요금 설정 시 기존의 캠핑장 규칙에서 정한 값은 반영하지 않습니다.</div>
+                                                </div>
+                                            </div>
+                                            <div id="timeSetter" class="row">
+                                                <div class="col">
+                                                    <div class="row mt-3 pt-3 pb-1">
+                                                        <div class="col ms-2 fw-semibold">예약 마감 시간</div>
+                                                    </div>
+                                                    
+                                                    
+                                                    <div class="row mt-1">
+                                                        <div class="col ms-2 pb-2 new-fs-9 text-secondary">
+                                                            <div>이 시간 이후에는 예약이 불가능합니다.</div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row mt-1">
+                                                        <div class="col-6 pe-0">
+                                                            <div id="calendar_opentime"> </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="row mt-4 mb-3">
+                                                        <div class="col">
+                                                            <div class="row pt-3 pb-1">
+                                                                <div class="col ms-2 fw-semibold">최대 예약 기간</div>
+                                                            </div>
+                                                            <div class="row mt-1">
+                                                                <div class="col ms-2 pb-2 new-fs-9 text-secondary">
+                                                                    <div>고객들이 최대로 예약 가능한 일수입니다.</div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="row mt-2">
+                                                                <div class="col-2 pe-0">
+                                                                    <input name="max_ordertime" class="form-control text-end" type="number" id="max_ordertime" value="7">
+                                                                </div>
+                                                                <div class="col-auto mt-1 fw-semibold">
+                                                                    일
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            
+                                            
                                             <div class="row mt-4 mb-3">
                                                 <div class="col">
                                                     <div class="row pt-3 pb-1">
-                                                        <div class="col ms-2 fw-semibold">최대 예약 기간</div>
+                                                        <div class="col ms-2 fw-semibold">최소 예약 기간</div>
                                                     </div>
                                                     <div class="row mt-1">
                                                         <div class="col ms-2 pb-2 new-fs-9 text-secondary">
-                                                            <div>고객들이 최대로 예약 가능한 일수입니다.</div>
+                                                            <div>고객들이 최소 몇 일부터 예약 가능한지 설정합니다.</div>
                                                         </div>
                                                     </div>
                                                     <div class="row mt-2">
                                                         <div class="col-2 pe-0">
-                                                            <input name="max_ordertime" class="form-control text-end" type="text" id="max_ordertime" value="7">
+                                                            <input name="min_ordertime" class="form-control text-end" value="1" type="number" id="min_ordertime">
                                                         </div>
-                                                        <div class="col-auto mt-1 fw-semibold">
+                                                        <div class="col-auto mt-2 fw-semibold">
                                                             일
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
+
                                         </div>
+
                                     </div>
 
-                                    
-                                    
-                                    <div class="row mt-4 mb-3">
-                                        <div class="col">
-                                            <div class="row pt-3 pb-1">
-                                                <div class="col ms-2 fw-semibold">최소 예약 기간</div>
+                                    <!-- 할인 -->
+                                    <div class="row new-mt-45 justify-content-center d-none">
+                                        <div class="col border rounded-2 me-5">
+                                            <div class="row my-1">
+                                                <div class="col ms-3 my-1 fs-5 fw-bold">할인 설정</div>
                                             </div>
-                                            <div class="row mt-1">
-                                                <div class="col ms-2 pb-2 new-fs-9 text-secondary">
-                                                    <div>고객들이 최소 몇 일부터 예약 가능한지 설정합니다.</div>
-                                                </div>
+                                            <div class="row border-top pt-3">
+                                                <div class="col-auto ms-3 mt-2 px-0">
+                                                    </div>
                                             </div>
-                                            <div class="row mt-2">
-                                                <div class="col-2 pe-0">
-                                                    <input name="opentime" class="form-control text-end" value="1" type="number" id="opentime">
-                                                </div>
-                                                <div class="col-auto mt-2 fw-semibold">
-                                                    일
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
 
-                                </div>
-
-                            </div>
-
-
-                            <!-- 할인 -->
-                            <div class="row new-mt-45 justify-content-center">
-                                <div class="col border rounded-2 me-5">
-                                    <div class="row my-1">
-                                        <div class="col ms-3 my-1 fs-5 fw-bold">할인 설정</div>
-                                    </div>
-                                    <div class="row border-top pt-3">
-                                        <div class="col-auto ms-3 mt-2 px-0">
-                                            </div>
-                                    </div>
-
-                                    <div class="row">
-                                        <div class="col ms-2 my-1 new-fs-85 text-secondary">
-                                            <div>'임의로 설정'을 선택하여 구역에 따라 다른 요금을 설정할 수 있습니다.</div>
-                                            <div>요금 설정 시 기존의 캠핑장 규칙에서 정한 값은 반영하지 않습니다.</div>
-                                        </div>
-                                    </div>
-
-                                    <div class="row mt-4">
-                                        <div class="col-2 mx-2">
-                                            <button class="btn btn-primary">추가</button>
-                                        </div>
-                                    </div>
-
-                                    <div id="addSale" class="row mx-2 mt-4 p-2 py-3 border rounded-2">
-                                        <div class="col-6">
                                             <div class="row">
-                                                <div class="col">
-                                                    <div id="calendar_sale"></div>
+                                                <div class="col ms-2 my-1 new-fs-85 text-secondary">
+                                                    <div>'임의로 설정'을 선택하여 구역에 따라 다른 요금을 설정할 수 있습니다.</div>
+                                                    <div>요금 설정 시 기존의 캠핑장 규칙에서 정한 값은 반영하지 않습니다.</div>
                                                 </div>
                                             </div>
-                                            <div class="row mt-4">
-                                                <div class="col-auto pe-0 mt-1 fw-semibold">
-                                                    할인율
-                                                </div>
-                                                <div class="col-1 ms-3 pe-0 ps-1">
-                                                    <input name="car_pay" class="form-control text-end numberInput" type="text" placeholder="0">
-                                                </div>
-                                                <div class="col-auto mt-1 fw-semibold">
-                                                    %
-                                                </div>
-                                            </div>
-                                            <div class="row mt-5 justify-content-end">
-                                                <div class="col-auto">
-                                                    <button class="btn btn-primary">확인</button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
 
-                                    <div class="row mt-4 mb-2">
-                                        <div class="col-auto ms-2 mt-1 fw-semibold">
-                                            할인 목록
-                                        </div>
-                                    </div>
-                                    <div class="row border-top border-bottom bg-light">
-                                        <div class="col-11 mx-2">
-                                            <div class="row py-1 fw-semibold text-center">
-                                                <div class="col-4">구역이름</div>
-                                                <div class="col-2">할인율</div>
-                                                <div class="col-3">기간</div>
-                                                <div class="col-2">상황</div>
+                                            <div class="row mt-4">
+                                                <div class="col-2 mx-2">
+                                                    <button class="btn btn-primary">추가</button>
+                                                </div>
                                             </div>
-                                        </div>
-                                    </div>
-                                        
-                                    <div class="row pb-2">
-                                        <div id="saleList" class="col">
-                                            <div class="row border-bottom">
+
+                                            <div id="addSale" class="row mx-2 mt-4 p-2 py-3 border rounded-2">
+                                                <div class="col-6">
+                                                    <div class="row">
+                                                        <div class="col">
+                                                            <div id="calendar_sale"></div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row mt-4">
+                                                        <div class="col-auto pe-0 mt-1 fw-semibold">
+                                                            할인율
+                                                        </div>
+                                                        <div class="col-1 ms-3 pe-0 ps-1">
+                                                            <input name="car_pay" class="form-control text-end moneyInput" type="text" placeholder="0">
+                                                        </div>
+                                                        <div class="col-auto mt-1 fw-semibold">
+                                                            %
+                                                        </div>
+                                                    </div>
+                                                    <div class="row mt-5 justify-content-end">
+                                                        <div class="col-auto">
+                                                            <button class="btn btn-primary">확인</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="row mt-4 mb-2">
+                                                <div class="col-auto ms-2 mt-1 fw-semibold">
+                                                    할인 목록
+                                                </div>
+                                            </div>
+                                            <div class="row border-top border-bottom bg-light">
                                                 <div class="col-11 mx-2">
-                                                    <div class="row py-1 text-center">
-                                                        <div class="col-4">베어그릴스의 야생의 시간</div>
-                                                        <div class="col-2" style="color:orangered">100%</div>
-                                                        <div class="col-3">2024/12/12 ~ 2024/12/12</div>
-                                                        <div class="col-2 text-secondary">할인 대기 중</div>
-                                                        <div class="col text-end text-danger"><i class="bi bi-trash"></i></div>
+                                                    <div class="row py-1 fw-semibold text-center">
+                                                        <div class="col-4">구역이름</div>
+                                                        <div class="col-2">할인율</div>
+                                                        <div class="col-3">기간</div>
+                                                        <div class="col-2">상황</div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                                
+                                            <div class="row pb-2">
+                                                <div id="saleList" class="col">
+                                                    <div class="row border-bottom">
+                                                        <div class="col-11 mx-2">
+                                                            <div class="row py-1 text-center">
+                                                                <div class="col-4">베어그릴스의 야생의 시간</div>
+                                                                <div class="col-2" style="color:orangered">100%</div>
+                                                                <div class="col-3">2024/12/12 ~ 2024/12/12</div>
+                                                                <div class="col-2 text-secondary">할인 대기 중</div>
+                                                                <div class="col text-end text-danger"><i class="bi bi-trash"></i></div>
+                                                            </div>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                            </div>
 
-
-                            <!-- 구역 삭제 요청 -->
-                            <div class="row new-mt-45 justify-content-center">
-                                <div class="col border rounded-2 me-5">
-                                    <div class="row my-1">
-                                        <div class="col ms-3 my-1 fs-5 fw-bold">구역 삭제</div>
-                                    </div>
-                                    <div class="row border-top pt-3">
-                                        <div class="col-auto ms-3 mt-2 px-0">
+                                    <!-- 구역 삭제 요청 -->
+                                    <div class="row new-mt-45 justify-content-center">
+                                        <div class="col border rounded-2 me-5">
+                                            <div class="row my-1">
+                                                <div class="col ms-3 my-1 fs-5 fw-bold">구역 삭제</div>
                                             </div>
-                                    </div>
+                                            <div class="row border-top pt-3">
+                                                <div class="col-auto ms-3 mt-2 px-0">
+                                                    </div>
+                                            </div>
 
-                                    <div class="row">
-                                        <div class="col ms-2 my-1 new-fs-85 text-secondary">
-                                            <div>삭제 요청 후 삭제까지는 1 ~ 3일 정도 시간이 소요됩니다.</div>
-                                            <div>삭제 완료 시 고객에게서 구역이 보이지 않으며, 예약이 불가능합니다.</div>
-                                            <div>삭제 전 해당 구역을 이용했던 고객들의 과거 기록들은 남아있습니다.</div>
-                                            <div class="mt-4 fw-semibold">삭제를 원하시면 아래 문구를 정확히 작성해야합니다.</div>
+                                            <div class="row">
+                                                <div class="col ms-2 my-1 new-fs-85 text-secondary">
+                                                    <div>삭제 요청 후 삭제까지는 1 ~ 3일 정도 시간이 소요됩니다.</div>
+                                                    <div>삭제 완료 시 고객에게서 구역이 보이지 않으며, 예약이 불가능합니다.</div>
+                                                    <div>삭제 전 해당 구역을 이용했던 고객들의 과거 기록들은 남아있습니다.</div>
+                                                    <div class="mt-4 fw-semibold">삭제를 원하시면 아래 문구를 정확히 작성해야합니다.</div>
+                                                </div>
+                                            </div>
+
+                                            <div class="row mt-2">
+                                                <div class="col-4 ms-3 pe-0 ps-1">
+                                                    <input name="request_delete_area" class="form-control" type="text" id="request_delete_area">
+                                                </div>
+                                            </div>
+
+                                            <div class="row mt-5 mb-3">
+                                                <div class="col-2 mx-2 ">
+                                                    <button type="button" class="btn btn-danger" onclick="deleteArea()">삭제</button>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
-
-                                    <div class="row mt-2">
-                                        <div class="col-4 ms-3 pe-0 ps-1">
-                                            <input name="request_delete_area" class="form-control" type="text" value="" placeholder="'${session.area.name}'구역을 삭제합니다.">
-                                        </div>
-                                    </div>
-
-                                    <div class="row mt-5 mb-3">
-                                        <div class="col-2 mx-2 ">
-                                            <button class="btn btn-danger">삭제</button>
-                                        </div>
-                                    </div>
-
-                                  
                                 </div>
                             </div>
                         </div>
                     </div>
-
-
                 </div>
-            </div>
+            </form>
         </div>
 
         <div th:replace="~{common/navi::popup}"></div>
@@ -568,8 +517,67 @@
             date.setFullYear(date.getFullYear() + 1);
             createCalendar('opentime',date);
             createRangeCalendar('sale',365, date);
-            createMultipleUploader('main_image');
-            createUploader('map_image');
+            createMultipleUploader('mainImage');
+            createUploader('mapImage');
+            init();
+            function init(){
+                document.getElementById('updateArea').addEventListener('submit', function(event) {
+                    const form = document.getElementById('updateArea');
+                    if(selectedArea == null) return;
+                    const categoryInputs = form.querySelectorAll('input[name="area_category"]:checked');
+                    if (categoryInputs.length === 0) {
+                        alert('구역 카테고리를 하나 이상 선택해주세요.');
+                        event.preventDefault();
+                        return;
+                    }
+            
+                    const categoryIds = Array.from(categoryInputs).map(input => input.value);
+                    const hiddenInput = document.createElement('input');
+                    hiddenInput.type = 'hidden';
+                    hiddenInput.name = 'area_category';
+                    hiddenInput.value = JSON.stringify(categoryIds);
+                    form.appendChild(hiddenInput);
+                });
+                const stateButton = document.getElementById('saveStateButton');
+                const form = document.getElementById('updateArea');
+                
+                function validateAndSubmitForm() {
+                    const requiredFields = [
+                        'max_ordertime', 'min_ordertime', 
+                        'prise', 'size_y', 'size_x', 'name'
+                    ];
+
+                    let allValid = true;
+                    
+                    requiredFields.forEach((fieldName) => {
+                        const field = form.querySelector(`[name="${fieldName}"]`);
+                        if (!field.value) {
+                            field.focus();
+                            allValid = false;
+                            return;  // 종료
+                        }
+                    });
+                    console.log(selectedArea)
+                    if(selectedArea.size <= 0){
+                        alert('구역을 선택해주세요.');
+                        return;
+                    }
+                    const categoryInputs = form.querySelectorAll('input[name="area_category"]:checked');
+                    if (categoryInputs.length === 0) {
+                        alert('구역 카테고리를 하나 이상 선택해주세요.');
+                        allValid = false;
+                        return;
+                    }
+
+                    if (allValid) {
+                        const setID = document.getElementById('setID');
+                        setID.value = selectedArea.dto.id;
+                        replaceMoneyInput();
+                        form.submit();
+                    }
+                }
+                stateButton.onclick = function(){ validateAndSubmitForm(); };
+            }
         </script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
     </body>
