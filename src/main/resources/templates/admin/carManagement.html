@@ -52,402 +52,510 @@
                         </div>
                     
                         <!-- 탭 내용 -->
-                        <div class="tab-content">
-                            <div class="tab-pane fade show active" id="all">
-                                <!-- 테이블 1: 전체 -->
-                                <table class="table table-bordered table-striped mb-4 shadow-sm">
-                                    <thead class="table-light text-dark fw-bold">
-                                        <tr>
-                                            <th scope="col" class="text-center">No</th>
-                                            <th colspan="1">상품명</th>
-                                            <th>비수기</th>
-                                            <th>성수기</th>
-                                            <th>준성수기</th>
-                                            <th>할인가</th>
-                                            <th>지정기간</th>
-                                            <th>상태</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <!-- 예시 데이터 -->
-                                        <tr>
-                                            <td class="text-center">1</td>
-                                            <td>
-                                                <div class="d-flex align-items-center">
-                                                    <div class="me-2">
-                                                        <img src="/public/img/campingCarImage/메인이미지1.png" alt="썸네일" style="width: 4rem; height: 4rem;">
+                        <div class="card">
+                            <div class="tab-content">
+                                <div class="tab-pane fade show active" id="all">
+                                    <!-- 테이블 1: 전체 -->
+                                    <table class="table table-border table-hover">
+                                        <thead class="table-light text-dark fw-bold ">
+                                            <tr>
+                                                <th scope="col" class="text-center">No</th>
+                                                <th colspan="1">상품명</th>
+                                                <th>비수기</th>
+                                                <th>성수기</th>
+                                                <th>준성수기</th>
+                                                <th>할인가</th>
+                                                <th>지정기간</th>
+                                                <th>운전조건</th>
+                                                <th>상태</th>
+                                                <th></th>
+                                                <th></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <!-- 예시 데이터 -->
+                                            <tr>
+                                                <td class="text-center">1</td>
+                                                <td>
+                                                    <div class="d-flex align-items-center">
+                                                        <div class="me-2">
+                                                            <img src="/public/img/campingCarImage/메인이미지1.png" alt="썸네일" style="width: 4rem; height: 4rem;">
+                                                        </div>
+                                                        <div class="px-0">
+                                                            <div class="new-fs-7">캠핑카 유형</div>
+                                                            <div>차량등록명</div>
+                                                            <div class="text-body-tertiary" style="font-size: 0.75rem;">
+                                                                <span>동승인원</span><span>5인</span>
+                                                                <span>취침인원</span><span>5인</span>
+                                                            </div>
+                                                        </div>
+                                                        <div class="ms-auto">
+                                                            <a href="/상품상세페이지_경로" class="text-body-tertiary">
+                                                                <span class="material-symbols-outlined">search</span>
+                                                            </a>
+                                                        </div>
                                                     </div>
-                                                    <div>
-                                                        <div>스탠다드</div>
-                                                        <div class="text-body-tertiary" style="font-size: 0.75rem;">기본 정보 텍스트</div>
+                                                </td>
+                                                <td>
+                                                    <ul class="list-unstyled mb-0">
+                                                        <li class="d-flex justify-content-between">
+                                                            <span>평일</span>
+                                                            <span>100,000원</span>
+                                                        </li>
+                                                        <li class="d-flex justify-content-between">
+                                                            <span>주말</span>
+                                                            <span>150,000원</span>
+                                                        </li>
+                                                    </ul>
+                                                </td>
+                                                <td>
+                                                    <ul class="list-unstyled mb-0">
+                                                        <li class="d-flex justify-content-between">
+                                                            <span>평일</span>
+                                                            <span>100,000원</span>
+                                                        </li>
+                                                        <li class="d-flex justify-content-between">
+                                                            <span>주말</span>
+                                                            <span>150,000원</span>
+                                                        </li>
+                                                    </ul>
+                                                </td>
+                                                <td>
+                                                    <ul class="list-unstyled mb-0">
+                                                        <li class="d-flex justify-content-between">
+                                                            <span>평일</span>
+                                                            <span>100,000원</span>
+                                                        </li>
+                                                        <li class="d-flex justify-content-between">
+                                                            <span>주말</span>
+                                                            <span>150,000원</span>
+                                                        </li>
+                                                    </ul>
+                                                </td>
+                                                <td>
+                                                    <ul class="list-unstyled mb-0">
+                                                        <li class="d-flex justify-content-between">
+                                                            <span>평일</span>
+                                                            <span>100,000원</span>
+                                                        </li>
+                                                        <li class="d-flex justify-content-between">
+                                                            <span>주말</span>
+                                                            <span>150,000원</span>
+                                                        </li>
+                                                    </ul>
+                                                </td>
+                                                <td>
+                                                    <ul class="list-unstyled mb-0">
+                                                        <li class="d-flex justify-content-between">
+                                                            <span>평일</span>
+                                                            <span>100,000원</span>
+                                                        </li>
+                                                        <li class="d-flex justify-content-between">
+                                                            <span>주말</span>
+                                                            <span>150,000원</span>
+                                                        </li>
+                                                    </ul>
+                                                </td>
+                                                <td class="d-flex justify-content-between">
+                                                    <ul class="list-unstyled">
+                                                        <li class="d-flex justify-content-between">
+                                                            <span>운전면허증</span>
+                                                            <span>1종대형</span>
+                                                        </li>
+                                                        <li class="d-flex justify-content-between">
+                                                            <span class="pe-2">운전자나이</span>
+                                                            <span>만26세이상</span>
+                                                        </li>
+                                                        <li class="d-flex justify-content-between">
+                                                            <span>운전경력</span>
+                                                            <span>3년이상</span>
+                                                        </li>
+                                                    </ul>
+                                                </td>
+                                                <td class="text-center">
+                                                    <select class="form-select form-select-sm">
+                                                        <option selected>노출중</option>
+                                                        <option value="1">품절</option>
+                                                        <option value="2">숨김</option>
+                                                    </select>
+                                                </td>
+                                                <td></td>
+                                                <td></td>
+                                            </tr>
+                                            <tr>
+                                                <td class="text-center">2</td>
+                                                <td>
+                                                    <div class="d-flex align-items-center">
+                                                        <div class="me-2">
+                                                            <img src="/public/img/campingCarImage/메인이미지2.jpg" alt="썸네일" style="width: 4rem; height: 4rem;">
+                                                        </div>
+                                                        <div class="px-0">
+                                                            <div>디럭스</div>
+                                                            <div class="text-body-tertiary" style="font-size: 0.75rem;">
+                                                                <span>동승인원</span><span>5인</span>
+                                                                <span>취침인원</span><span>5인</span>
+                                                            </div>
+                                                        </div>
+                                                        <div class="ms-auto">
+                                                            <a href="/상품상세페이지_경로" class="text-body-tertiary">
+                                                                <span class="material-symbols-outlined">search</span>
+                                                            </a>
+                                                        </div>
                                                     </div>
-                                                    <div class="ms-auto">
-                                                        <a href="/상품상세페이지_경로" class="text-body-tertiary">
-                                                            <span class="material-symbols-outlined">search</span>
-                                                        </a>
+                                                </td>
+                                                <td>
+                                                    <ul class="list-unstyled mb-0">
+                                                        <li class="d-flex justify-content-between">
+                                                            <span>평일</span>
+                                                            <span>100,000원</span>
+                                                        </li>
+                                                        <li class="d-flex justify-content-between">
+                                                            <span>주말</span>
+                                                            <span>150,000원</span>
+                                                        </li>
+                                                    </ul>
+                                                </td>
+                                                <td>
+                                                    <ul class="list-unstyled mb-0">
+                                                        <li class="d-flex justify-content-between">
+                                                            <span>평일</span>
+                                                            <span>100,000원</span>
+                                                        </li>
+                                                        <li class="d-flex justify-content-between">
+                                                            <span>주말</span>
+                                                            <span>150,000원</span>
+                                                        </li>
+                                                    </ul>
+                                                </td>
+                                                <td>
+                                                    <ul class="list-unstyled mb-0">
+                                                        <li class="d-flex justify-content-between">
+                                                            <span>평일</span>
+                                                            <span>100,000원</span>
+                                                        </li>
+                                                        <li class="d-flex justify-content-between">
+                                                            <span>주말</span>
+                                                            <span>150,000원</span>
+                                                        </li>
+                                                    </ul>
+                                                </td>
+                                                <td>
+                                                    <ul class="list-unstyled mb-0">
+                                                        <li class="d-flex justify-content-between">
+                                                            <span>평일</span>
+                                                            <span>100,000원</span>
+                                                        </li>
+                                                        <li class="d-flex justify-content-between">
+                                                            <span>주말</span>
+                                                            <span>150,000원</span>
+                                                        </li>
+                                                    </ul>
+                                                </td>
+                                                <td>
+                                                    <ul class="list-unstyled mb-0">
+                                                        <li class="d-flex justify-content-between">
+                                                            <span>평일</span>
+                                                            <span>100,000원</span>
+                                                        </li>
+                                                        <li class="d-flex justify-content-between">
+                                                            <span>주말</span>
+                                                            <span>150,000원</span>
+                                                        </li>
+                                                    </ul>
+                                                </td>
+                                                <td class="d-flex justify-content-between">
+                                                    <ul class="list-unstyled">
+                                                        <li class="d-flex justify-content-between">
+                                                            <span>운전면허증</span>
+                                                            <span>1종대형</span>
+                                                        </li>
+                                                        <li class="d-flex justify-content-between">
+                                                            <span class="pe-2">운전자나이</span>
+                                                            <span>만26세이상</span>
+                                                        </li>
+                                                        <li class="d-flex justify-content-between">
+                                                            <span>운전경력</span>
+                                                            <span>3년이상</span>
+                                                        </li>
+                                                    </ul>
+                                                </td>
+                                                <td class="text-center">
+                                                    <select class="form-select form-select-sm">
+                                                        <option selected>노출중</option>
+                                                        <option value="1">품절</option>
+                                                        <option value="2">숨김</option>
+                                                    </select>
+                                                </td>
+                                                <td></td>
+                                                <td></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <!-- 위에 같은 동일한 방식임 -->
+                                <div class="tab-pane fade" id="selling">
+                                    <!-- 테이블 2: 판매중 -->
+                                    <table class="table table-bordered table-striped mb-4 shadow-sm">
+                                        <thead class="table-light text-dark fw-bold">
+                                            <tr>
+                                                <th scope="col" class="text-center">No</th>
+                                                <th colspan="1">상품명</th>
+                                                <th>비수기</th>
+                                                <th>성수기</th>
+                                                <th>준성수기</th>
+                                                <th>할인가</th>
+                                                <th>지정기간</th>
+                                                <th>상태</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td class="text-center">1</td>
+                                                <td>
+                                                    <div class="d-flex align-items-center">
+                                                        <div class="me-2">
+                                                            <img src="/public/img/campingCarImage/메인이미지1.png" alt="썸네일" style="width: 4rem; height: 4rem;">
+                                                        </div>
+                                                        <div>
+                                                            <div>스탠다드</div>
+                                                            <div class="text-body-tertiary" style="font-size: 0.75rem;">기본 정보 텍스트</div>
+                                                        </div>
+                                                        <div class="ms-auto">
+                                                            <a href="/상품상세페이지_경로" class="text-body-tertiary">
+                                                                <span class="material-symbols-outlined">search</span>
+                                                            </a>
+                                                        </div>
                                                     </div>
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <ul class="list-unstyled mb-0">
-                                                    <li>평일 <span>100,000원</span></li>
-                                                    <li>주말 <span>150,000원</span></li>
-                                                </ul>
-                                            </td>
-                                            <td>
-                                                <ul class="list-unstyled mb-0">
-                                                    <li>평일 <span>120,000원</span></li>
-                                                    <li>주말 <span>180,000원</span></li>
-                                                </ul>
-                                            </td>
-                                            <td>
-                                                <ul class="list-unstyled mb-0">
-                                                    <li>평일 <span>100,000원</span></li>
-                                                    <li>주말 <span>150,000원</span></li>
-                                                </ul>
-                                            </td>
-                                            <td>
-                                                <ul class="list-unstyled mb-0">
-                                                    <li>평일 <span>100,000원</span></li>
-                                                    <li>주말 <span>150,000원</span></li>
-                                                </ul>
-                                            </td>
-                                            <td>
-                                                <ul class="list-unstyled mb-0">
-                                                    <li>평일 <span>100,000원</span></li>
-                                                    <li>주말 <span>150,000원</span></li>
-                                                </ul>
-                                            </td>
-                                            <td class="text-center">
-                                                <select class="form-select form-select-sm">
-                                                    <option selected>노출중</option>
-                                                    <option value="1">품절</option>
-                                                    <option value="2">숨김</option>
-                                                </select>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td class="text-center">2</td>
-                                            <td>
-                                                <div class="d-flex align-items-center">
-                                                    <div class="me-2">
-                                                        <img src="/public/img/campingCarImage/메인이미지2.jpg" alt="썸네일" style="width: 4rem; height: 4rem;">
+                                                </td>
+                                                <td>
+                                                    <ul class="list-unstyled mb-0">
+                                                        <li>평일 <span>100,000원</span></li>
+                                                        <li>주말 <span>150,000원</span></li>
+                                                    </ul>
+                                                </td>
+                                                <td>
+                                                    <ul class="list-unstyled mb-0">
+                                                        <li>평일 <span>120,000원</span></li>
+                                                        <li>주말 <span>180,000원</span></li>
+                                                    </ul>
+                                                </td>
+                                                <td>
+                                                    <ul class="list-unstyled mb-0">
+                                                        <li>평일 <span>100,000원</span></li>
+                                                        <li>주말 <span>150,000원</span></li>
+                                                    </ul>
+                                                </td>
+                                                <td>
+                                                    <ul class="list-unstyled mb-0">
+                                                        <li>평일 <span>100,000원</span></li>
+                                                        <li>주말 <span>150,000원</span></li>
+                                                    </ul>
+                                                </td>
+                                                <td>
+                                                    <ul class="list-unstyled mb-0">
+                                                        <li>평일 <span>100,000원</span></li>
+                                                        <li>주말 <span>150,000원</span></li>
+                                                    </ul>
+                                                </td>
+                                                <td class="text-center">
+                                                    <select class="form-select form-select-sm">
+                                                        <option selected>노출중</option>
+                                                        <option value="1">품절</option>
+                                                        <option value="2">숨김</option>
+                                                    </select>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="text-center">2</td>
+                                                <td>
+                                                    <div class="d-flex align-items-center">
+                                                        <div class="me-2">
+                                                            <img src="/public/img/campingCarImage/메인이미지2.jpg" alt="썸네일" style="width: 4rem; height: 4rem;">
+                                                        </div>
+                                                        <div>
+                                                            <div>디럭스</div>
+                                                            <div class="text-body-tertiary" style="font-size: 0.75rem;">기본 정보 텍스트</div>
+                                                        </div>
+                                                        <div class="ms-auto">
+                                                            <a href="/상품상세페이지_경로" class="text-body-tertiary">
+                                                                <span class="material-symbols-outlined">search</span>
+                                                            </a>
+                                                        </div>
                                                     </div>
-                                                    <div>
-                                                        <div>디럭스</div>
-                                                        <div class="text-body-tertiary" style="font-size: 0.75rem;">기본 정보 텍스트</div>
+                                                </td>
+                                                <td>
+                                                    <ul class="list-unstyled mb-0">
+                                                        <li>평일 <span>100,000원</span></li>
+                                                        <li>주말 <span>150,000원</span></li>
+                                                    </ul>
+                                                </td>
+                                                <td>
+                                                    <ul class="list-unstyled mb-0">
+                                                        <li>평일 <span>100,000원</span></li>
+                                                        <li>주말 <span>150,000원</span></li>
+                                                    </ul>
+                                                </td>
+                                                <td>
+                                                    <ul class="list-unstyled mb-0">
+                                                        <li>평일 <span>100,000원</span></li>
+                                                        <li>주말 <span>150,000원</span></li>
+                                                    </ul>
+                                                </td>
+                                                <td>
+                                                    <ul class="list-unstyled mb-0">
+                                                        <li>평일 <span>100,000원</span></li>
+                                                        <li>주말 <span>150,000원</span></li>
+                                                    </ul>
+                                                </td>
+                                                <td>
+                                                    <ul class="list-unstyled mb-0">
+                                                        <li>평일 <span>100,000원</span></li>
+                                                        <li>주말 <span>150,000원</span></li>
+                                                    </ul>
+                                                </td>
+                                                <td class="text-center">
+                                                    <select class="form-select form-select-sm">
+                                                        <option selected>노출중</option>
+                                                        <option value="1">품절</option>
+                                                        <option value="2">숨김</option>
+                                                    </select>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <!-- 위와 같은 동일한 방식임 -->
+                                <div class="tab-pane fade" id="hidden">
+                                    <!-- 테이블 3: 숨김 -->
+                                    <table class="table table-bordered table-striped mb-4 shadow-sm">
+                                        <thead class="table-light text-dark fw-bold">
+                                            <tr>
+                                                <th scope="col" class="text-center">No</th>
+                                                <th colspan="1">상품명</th>
+                                                <th>비수기</th>
+                                                <th>성수기</th>
+                                                <th>준성수기</th>
+                                                <th>할인가</th>
+                                                <th>지정기간</th>
+                                                <th>상태</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td class="text-center">1</td>
+                                                <td>
+                                                    <div class="d-flex align-items-center">
+                                                        <div class="me-2">
+                                                            <img src="/public/img/campingCarImage/메인이미지1.png" alt="썸네일" style="width: 4rem; height: 4rem;">
+                                                        </div>
+                                                        <div>
+                                                            <div>스탠다드</div>
+                                                            <div class="text-body-tertiary" style="font-size: 0.75rem;">기본 정보 텍스트</div>
+                                                        </div>
+                                                        <div class="ms-auto">
+                                                            <a href="/상품상세페이지_경로" class="text-body-tertiary">
+                                                                <span class="material-symbols-outlined">search</span>
+                                                            </a>
+                                                        </div>
                                                     </div>
-                                                    <div class="ms-auto">
-                                                        <a href="/상품상세페이지_경로" class="text-body-tertiary">
-                                                            <span class="material-symbols-outlined">search</span>
-                                                        </a>
+                                                </td>
+                                                <td>
+                                                    <ul class="list-unstyled mb-0">
+                                                        <li>평일 <span>100,000원</span></li>
+                                                        <li>주말 <span>150,000원</span></li>
+                                                    </ul>
+                                                </td>
+                                                <td>
+                                                    <ul class="list-unstyled mb-0">
+                                                        <li>평일 <span>120,000원</span></li>
+                                                        <li>주말 <span>180,000원</span></li>
+                                                    </ul>
+                                                </td>
+                                                <td>
+                                                    <ul class="list-unstyled mb-0">
+                                                        <li>평일 <span>100,000원</span></li>
+                                                        <li>주말 <span>150,000원</span></li>
+                                                    </ul>
+                                                </td>
+                                                <td>
+                                                    <ul class="list-unstyled mb-0">
+                                                        <li>평일 <span>100,000원</span></li>
+                                                        <li>주말 <span>150,000원</span></li>
+                                                    </ul>
+                                                </td>
+                                                <td>
+                                                    <ul class="list-unstyled mb-0">
+                                                        <li>평일 <span>100,000원</span></li>
+                                                        <li>주말 <span>150,000원</span></li>
+                                                    </ul>
+                                                </td>
+                                                <td class="text-center">
+                                                    <select class="form-select form-select-sm">
+                                                        <option selected>노출중</option>
+                                                        <option value="1">품절</option>
+                                                        <option value="2">숨김</option>
+                                                    </select>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="text-center">2</td>
+                                                <td>
+                                                    <div class="d-flex align-items-center">
+                                                        <div class="me-2">
+                                                            <img src="/public/img/campingCarImage/메인이미지2.jpg" alt="썸네일" style="width: 4rem; height: 4rem;">
+                                                        </div>
+                                                        <div>
+                                                            <div>디럭스</div>
+                                                            <div class="text-body-tertiary" style="font-size: 0.75rem;">기본 정보 텍스트</div>
+                                                        </div>
+                                                        <div class="ms-auto">
+                                                            <a href="/상품상세페이지_경로" class="text-body-tertiary">
+                                                                <span class="material-symbols-outlined">search</span>
+                                                            </a>
+                                                        </div>
                                                     </div>
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <ul class="list-unstyled mb-0">
-                                                    <li>평일 <span>100,000원</span></li>
-                                                    <li>주말 <span>150,000원</span></li>
-                                                </ul>
-                                            </td>
-                                            <td>
-                                                <ul class="list-unstyled mb-0">
-                                                    <li>평일 <span>100,000원</span></li>
-                                                    <li>주말 <span>150,000원</span></li>
-                                                </ul>
-                                            </td>
-                                            <td>
-                                                <ul class="list-unstyled mb-0">
-                                                    <li>평일 <span>100,000원</span></li>
-                                                    <li>주말 <span>150,000원</span></li>
-                                                </ul>
-                                            </td>
-                                            <td>
-                                                <ul class="list-unstyled mb-0">
-                                                    <li>평일 <span>100,000원</span></li>
-                                                    <li>주말 <span>150,000원</span></li>
-                                                </ul>
-                                            </td>
-                                            <td>
-                                                <ul class="list-unstyled mb-0">
-                                                    <li>평일 <span>100,000원</span></li>
-                                                    <li>주말 <span>150,000원</span></li>
-                                                </ul>
-                                            </td>
-                                            <td class="text-center">
-                                                <select class="form-select form-select-sm">
-                                                    <option selected>노출중</option>
-                                                    <option value="1">품절</option>
-                                                    <option value="2">숨김</option>
-                                                </select>
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                            <!-- 위에 같은 동일한 방식임 -->
-                            <div class="tab-pane fade" id="selling">
-                                <!-- 테이블 2: 판매중 -->
-                                <table class="table table-bordered table-striped mb-4 shadow-sm">
-                                    <thead class="table-light text-dark fw-bold">
-                                        <tr>
-                                            <th scope="col" class="text-center">No</th>
-                                            <th colspan="1">상품명</th>
-                                            <th>비수기</th>
-                                            <th>성수기</th>
-                                            <th>준성수기</th>
-                                            <th>할인가</th>
-                                            <th>지정기간</th>
-                                            <th>상태</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td class="text-center">1</td>
-                                            <td>
-                                                <div class="d-flex align-items-center">
-                                                    <div class="me-2">
-                                                        <img src="/public/img/campingCarImage/메인이미지1.png" alt="썸네일" style="width: 4rem; height: 4rem;">
-                                                    </div>
-                                                    <div>
-                                                        <div>스탠다드</div>
-                                                        <div class="text-body-tertiary" style="font-size: 0.75rem;">기본 정보 텍스트</div>
-                                                    </div>
-                                                    <div class="ms-auto">
-                                                        <a href="/상품상세페이지_경로" class="text-body-tertiary">
-                                                            <span class="material-symbols-outlined">search</span>
-                                                        </a>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <ul class="list-unstyled mb-0">
-                                                    <li>평일 <span>100,000원</span></li>
-                                                    <li>주말 <span>150,000원</span></li>
-                                                </ul>
-                                            </td>
-                                            <td>
-                                                <ul class="list-unstyled mb-0">
-                                                    <li>평일 <span>120,000원</span></li>
-                                                    <li>주말 <span>180,000원</span></li>
-                                                </ul>
-                                            </td>
-                                            <td>
-                                                <ul class="list-unstyled mb-0">
-                                                    <li>평일 <span>100,000원</span></li>
-                                                    <li>주말 <span>150,000원</span></li>
-                                                </ul>
-                                            </td>
-                                            <td>
-                                                <ul class="list-unstyled mb-0">
-                                                    <li>평일 <span>100,000원</span></li>
-                                                    <li>주말 <span>150,000원</span></li>
-                                                </ul>
-                                            </td>
-                                            <td>
-                                                <ul class="list-unstyled mb-0">
-                                                    <li>평일 <span>100,000원</span></li>
-                                                    <li>주말 <span>150,000원</span></li>
-                                                </ul>
-                                            </td>
-                                            <td class="text-center">
-                                                <select class="form-select form-select-sm">
-                                                    <option selected>노출중</option>
-                                                    <option value="1">품절</option>
-                                                    <option value="2">숨김</option>
-                                                </select>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td class="text-center">2</td>
-                                            <td>
-                                                <div class="d-flex align-items-center">
-                                                    <div class="me-2">
-                                                        <img src="/public/img/campingCarImage/메인이미지2.jpg" alt="썸네일" style="width: 4rem; height: 4rem;">
-                                                    </div>
-                                                    <div>
-                                                        <div>디럭스</div>
-                                                        <div class="text-body-tertiary" style="font-size: 0.75rem;">기본 정보 텍스트</div>
-                                                    </div>
-                                                    <div class="ms-auto">
-                                                        <a href="/상품상세페이지_경로" class="text-body-tertiary">
-                                                            <span class="material-symbols-outlined">search</span>
-                                                        </a>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <ul class="list-unstyled mb-0">
-                                                    <li>평일 <span>100,000원</span></li>
-                                                    <li>주말 <span>150,000원</span></li>
-                                                </ul>
-                                            </td>
-                                            <td>
-                                                <ul class="list-unstyled mb-0">
-                                                    <li>평일 <span>100,000원</span></li>
-                                                    <li>주말 <span>150,000원</span></li>
-                                                </ul>
-                                            </td>
-                                            <td>
-                                                <ul class="list-unstyled mb-0">
-                                                    <li>평일 <span>100,000원</span></li>
-                                                    <li>주말 <span>150,000원</span></li>
-                                                </ul>
-                                            </td>
-                                            <td>
-                                                <ul class="list-unstyled mb-0">
-                                                    <li>평일 <span>100,000원</span></li>
-                                                    <li>주말 <span>150,000원</span></li>
-                                                </ul>
-                                            </td>
-                                            <td>
-                                                <ul class="list-unstyled mb-0">
-                                                    <li>평일 <span>100,000원</span></li>
-                                                    <li>주말 <span>150,000원</span></li>
-                                                </ul>
-                                            </td>
-                                            <td class="text-center">
-                                                <select class="form-select form-select-sm">
-                                                    <option selected>노출중</option>
-                                                    <option value="1">품절</option>
-                                                    <option value="2">숨김</option>
-                                                </select>
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                            <!-- 위와 같은 동일한 방식임 -->
-                            <div class="tab-pane fade" id="hidden">
-                                <!-- 테이블 3: 숨김 -->
-                                <table class="table table-bordered table-striped mb-4 shadow-sm">
-                                    <thead class="table-light text-dark fw-bold">
-                                        <tr>
-                                            <th scope="col" class="text-center">No</th>
-                                            <th colspan="1">상품명</th>
-                                            <th>비수기</th>
-                                            <th>성수기</th>
-                                            <th>준성수기</th>
-                                            <th>할인가</th>
-                                            <th>지정기간</th>
-                                            <th>상태</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td class="text-center">1</td>
-                                            <td>
-                                                <div class="d-flex align-items-center">
-                                                    <div class="me-2">
-                                                        <img src="/public/img/campingCarImage/메인이미지1.png" alt="썸네일" style="width: 4rem; height: 4rem;">
-                                                    </div>
-                                                    <div>
-                                                        <div>스탠다드</div>
-                                                        <div class="text-body-tertiary" style="font-size: 0.75rem;">기본 정보 텍스트</div>
-                                                    </div>
-                                                    <div class="ms-auto">
-                                                        <a href="/상품상세페이지_경로" class="text-body-tertiary">
-                                                            <span class="material-symbols-outlined">search</span>
-                                                        </a>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <ul class="list-unstyled mb-0">
-                                                    <li>평일 <span>100,000원</span></li>
-                                                    <li>주말 <span>150,000원</span></li>
-                                                </ul>
-                                            </td>
-                                            <td>
-                                                <ul class="list-unstyled mb-0">
-                                                    <li>평일 <span>120,000원</span></li>
-                                                    <li>주말 <span>180,000원</span></li>
-                                                </ul>
-                                            </td>
-                                            <td>
-                                                <ul class="list-unstyled mb-0">
-                                                    <li>평일 <span>100,000원</span></li>
-                                                    <li>주말 <span>150,000원</span></li>
-                                                </ul>
-                                            </td>
-                                            <td>
-                                                <ul class="list-unstyled mb-0">
-                                                    <li>평일 <span>100,000원</span></li>
-                                                    <li>주말 <span>150,000원</span></li>
-                                                </ul>
-                                            </td>
-                                            <td>
-                                                <ul class="list-unstyled mb-0">
-                                                    <li>평일 <span>100,000원</span></li>
-                                                    <li>주말 <span>150,000원</span></li>
-                                                </ul>
-                                            </td>
-                                            <td class="text-center">
-                                                <select class="form-select form-select-sm">
-                                                    <option selected>노출중</option>
-                                                    <option value="1">품절</option>
-                                                    <option value="2">숨김</option>
-                                                </select>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td class="text-center">2</td>
-                                            <td>
-                                                <div class="d-flex align-items-center">
-                                                    <div class="me-2">
-                                                        <img src="/public/img/campingCarImage/메인이미지2.jpg" alt="썸네일" style="width: 4rem; height: 4rem;">
-                                                    </div>
-                                                    <div>
-                                                        <div>디럭스</div>
-                                                        <div class="text-body-tertiary" style="font-size: 0.75rem;">기본 정보 텍스트</div>
-                                                    </div>
-                                                    <div class="ms-auto">
-                                                        <a href="/상품상세페이지_경로" class="text-body-tertiary">
-                                                            <span class="material-symbols-outlined">search</span>
-                                                        </a>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <ul class="list-unstyled mb-0">
-                                                    <li>평일 <span>100,000원</span></li>
-                                                    <li>주말 <span>150,000원</span></li>
-                                                </ul>
-                                            </td>
-                                            <td>
-                                                <ul class="list-unstyled mb-0">
-                                                    <li>평일 <span>100,000원</span></li>
-                                                    <li>주말 <span>150,000원</span></li>
-                                                </ul>
-                                            </td>
-                                            <td>
-                                                <ul class="list-unstyled mb-0">
-                                                    <li>평일 <span>100,000원</span></li>
-                                                    <li>주말 <span>150,000원</span></li>
-                                                </ul>
-                                            </td>
-                                            <td>
-                                                <ul class="list-unstyled mb-0">
-                                                    <li>평일 <span>100,000원</span></li>
-                                                    <li>주말 <span>150,000원</span></li>
-                                                </ul>
-                                            </td>
-                                            <td>
-                                                <ul class="list-unstyled mb-0">
-                                                    <li>평일 <span>100,000원</span></li>
-                                                    <li>주말 <span>150,000원</span></li>
-                                                </ul>
-                                            </td>
-                                            <td class="text-center">
-                                                <select class="form-select form-select-sm">
-                                                    <option selected>노출중</option>
-                                                    <option value="1">품절</option>
-                                                    <option value="2">숨김</option>
-                                                </select>
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
+                                                </td>
+                                                <td>
+                                                    <ul class="list-unstyled mb-0">
+                                                        <li>평일 <span>100,000원</span></li>
+                                                        <li>주말 <span>150,000원</span></li>
+                                                    </ul>
+                                                </td>
+                                                <td>
+                                                    <ul class="list-unstyled mb-0">
+                                                        <li>평일 <span>100,000원</span></li>
+                                                        <li>주말 <span>150,000원</span></li>
+                                                    </ul>
+                                                </td>
+                                                <td>
+                                                    <ul class="list-unstyled mb-0">
+                                                        <li>평일 <span>100,000원</span></li>
+                                                        <li>주말 <span>150,000원</span></li>
+                                                    </ul>
+                                                </td>
+                                                <td>
+                                                    <ul class="list-unstyled mb-0">
+                                                        <li>평일 <span>100,000원</span></li>
+                                                        <li>주말 <span>150,000원</span></li>
+                                                    </ul>
+                                                </td>
+                                                <td>
+                                                    <ul class="list-unstyled mb-0">
+                                                        <li>평일 <span>100,000원</span></li>
+                                                        <li>주말 <span>150,000원</span></li>
+                                                    </ul>
+                                                </td>
+                                                <td class="text-center">
+                                                    <select class="form-select form-select-sm">
+                                                        <option selected>노출중</option>
+                                                        <option value="1">품절</option>
+                                                        <option value="2">숨김</option>
+                                                    </select>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
                             </div>
                         </div>
                     </div>
