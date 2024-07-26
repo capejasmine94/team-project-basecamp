@@ -39,6 +39,8 @@ public interface ClubSqlMapper {
     public ClubPostDto selectPostDtoById(int id);
 
     public void insertClubPostCommentDto(ClubPostCommentDto clubPostCommentDto);
+    // public void updateComment(ClubPostCommentDto clubPostCommentDto);
+    // public void deleteComment(int id);
     public int countTotalComment(int id); 
 
     public List<ClubPostCommentDto> selectPostCommentDto(int post_id);

@@ -52,6 +52,18 @@ public class ClubService {
 
     }
 
+    //  소모임 게시판 댓글 수정하기
+    // public void updateComment(ClubPostCommentDto clubPostCommentDto){
+    //     clubSqlMapper.updateComment(clubPostCommentDto);
+    // }
+
+    //  소모임 게시판 댓글 삭제하기
+    // public void deleteComment(int id){
+        // clubSqlMapper.deleteComment(id);
+    // }
+
+
+
     // 소모임 회원가입
     public void joinClub(ClubMemberDto clubMemberDto){
         clubSqlMapper.insertClubMemberDto(clubMemberDto);

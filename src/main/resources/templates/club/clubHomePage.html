@@ -282,9 +282,9 @@
                                 <a th:href="@{/club/joinClub(id=${id})}" class="btn form-control btn-dark">가입하기</a>
                             </div>
                         </div>
-                        <div class="row pt-2 pb-5 text-center" th:if="${totalClubMember >= confirmCapacity}">
+                        <div class="row pt-3 pb-5 text-center" th:if="${totalClubMember >= confirmCapacity}">
                             <div class="col">
-                                <p class="text-danger fw-semi-bold">모집인원이 마감되었습니다.</p>
+                                <p class="text-danger fw-bold">모집인원이 마감되었습니다.</p>
                             </div>
                         </div>
 

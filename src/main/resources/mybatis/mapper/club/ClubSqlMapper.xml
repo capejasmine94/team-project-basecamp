@@ -71,8 +71,6 @@
     </insert>
 
 
-
-
     <!-- 소모임 회원 가입 -->
     <insert id="insertClubMemberDto">
         insert into bc_club_member(
@@ -85,6 +83,7 @@
             #{role_id} 
         )
     </insert>
+
 
     <!-- 지역 카테고리 -->
     <select id="selectRegionCategory" resultType="com.bulmeong.basecamp.club.dto.ClubRegionCategoryDto">
@@ -152,6 +151,22 @@
             #{post_id}, #{user_id}, #{content}
         )
     </insert>
+
+    <!-- 게시글 댓글 삭제  -->
+    <!-- <delete id ="deleteComment">
+        delete from bc_club_post_comment 
+        where id = #{id}
+    </delete> -->
+
+    <!-- 게시글 댓글 수정  -->
+    <!-- <updete id="updateComment">
+        update bc_club_post_comment 
+        set content = #{content}
+        where id = #{id}
+    </updete> -->
+
+
+
 
     <!-- 게시글 댓글 DTO 가져오기 by post_id -->
     <select id="selectPostCommentDto" resultType="com.bulmeong.basecamp.club.dto.ClubPostCommentDto">

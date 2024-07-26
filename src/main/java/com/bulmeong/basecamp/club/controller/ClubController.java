@@ -12,6 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+
 import org.springframework.web.multipart.MultipartFile;
 
 import com.bulmeong.basecamp.club.dto.ClubBookmarkDto;
@@ -27,6 +28,7 @@ import com.bulmeong.basecamp.club.dto.ClubPostLikeDto;
 import com.bulmeong.basecamp.club.dto.ClubRegionCategoryDto;
 import com.bulmeong.basecamp.club.service.ClubService;
 import com.bulmeong.basecamp.common.dto.ImageDto;
+
 import com.bulmeong.basecamp.common.util.ImageUtil;
 import com.bulmeong.basecamp.common.util.Utils;
 import com.bulmeong.basecamp.user.dto.UserDto;
@@ -36,6 +38,7 @@ import jakarta.servlet.http.HttpSession;
 
 @Controller
 @RequestMapping("club")
+
 public class ClubController {
 
     @Autowired
@@ -54,9 +57,13 @@ public class ClubController {
         List<ClubRegionCategoryDto> regionCategoryDtoList = clubService.findRegionCategory();
         model.addAttribute("regionCategoryDtoList", regionCategoryDtoList);
 
-        // 북마크한 소모임 목록
+        // 북마크한 소모임 목록 3개 리미트 걸기
         List<Map<String, Object>> bookmarkedClubDataList = clubService.getBookmarkedClubDtoList(userDto.getId());
-        model.addAttribute("bookmarkedClubDataList", bookmarkedClubDataList);
+        List<Map<String,Object>> limitedBookmarkedClubDtoList = bookmarkedClubDataList.stream()
+        .limit(3)
+        .collect(Collectors.toList());
+        
+        model.addAttribute("bookmarkedClubDataList", limitedBookmarkedClubDtoList);
 
         //  내가 가입한 소모임 목록
         List<ClubDto> joinClubDtoList = clubService.findJoinClubDtoList(userDto.getId());
@@ -366,6 +373,7 @@ public class ClubController {
 
     //     return "redirect:/club/home?id=";
     // }
+
     
 
    
