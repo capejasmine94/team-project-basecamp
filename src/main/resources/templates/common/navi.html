@@ -57,7 +57,7 @@
 <div th:fragment="bottomNaviBasecamp" class="container-fluid g-0 bg-light fixed-bottom">
     <div class="row mx-1 py-2 text-center fs-3">
         <!--HOME-->
-        <a href="/common/basecampPublicPage" class="col icon-and-text">
+        <a href="/" class="col icon-and-text">
             <span class="icon"><i class="bi bi-house"></i></span>
             <span class="text-navi">HOME</span>
         </a>
@@ -114,11 +114,11 @@
         </div>
         <!--내정보-->
         <div class="col fs-3 icon-and-text">
-            <a href="/common/basecampLoginPage" th:if="${session.sessionUserInfo == null}" class="icon-and-text">
+            <a href="/user/login" th:if="${session.sessionUserInfo == null}" class="icon-and-text">
                 <span><i class="fa-solid fa-gear"></i></span>
                 <span class="text-navi">My</span>
             </a>
-            <a href="/common/basecampMyInfoPage" th:unless="${session.sessionUserInfo == null}" class="icon-and-text">
+            <a href="/user/myPage" th:unless="${session.sessionUserInfo == null}" class="icon-and-text">
                 <span><i class="fa-solid fa-gear"></i></span>
                 <span class="text-navi">My</span>
             </a>
