@@ -45,10 +45,13 @@ public class ImageUtil {
         LocalDateTime localDateTime = LocalDateTime.now();
         DateTimeFormatter format = DateTimeFormatter.ofPattern("yyyy/MM/dd");
         String userHome = System.getProperty("user.home");
-        String filePath = (System.getProperty("os.name").charAt(0) == 'M' ? userHome +  "Users" : "") + "/basecampImage/";
+        System.out.println(userHome);
+        String filePath = (System.getProperty("os.name").charAt(0) == 'M' ? userHome : "Users") + "/basecampImage/";
+        System.out.println(filePath);
 
         String existDate = localDateTime.format(format);
         String Path = filePath + existDate + "/";
+        System.out.println(Path);
 
 
         File file = new File(Path);
