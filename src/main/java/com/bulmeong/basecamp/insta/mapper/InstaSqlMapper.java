@@ -38,10 +38,10 @@ public interface InstaSqlMapper {
     public void deleteLikeByArticleIdAndUserId(InstaArticleLikeDto instaArticleLikeDto);
 
     // 팔로우 _ 자바스크립트
-    public void insertFollowByUserId(int follower_user_id, int following_user_id);
-    public int followCountByFollowerUserId(int follower_user_id); // 몇번 회원이 몇명을 팔로우 했는지
+    public void insertFollowByUserId(InstaFollowDto instaFollowDto);
+    public int followerCountByFollowerUserId(int follower_user_id); // 몇번 회원이 몇명을 팔로우 했는지
     public int followingCountByFollowingUserId(int following_user_id); // 몇번 회원을 몇명이 팔로잉 했지
-    public int confirmFollowStatus(InstaFollowDto instaFollowDto); // 팔로우 했는지
+    public int confirmFollowStatus(InstaFollowDto instaFollowDto); // 내가 팔로우를 했는지
     public void deleteFollowByFollowerUserIdAndFollowingUserId(InstaFollowDto instaFollowDto);
 
 
