@@ -9,6 +9,7 @@ import com.bulmeong.basecamp.insta.dto.InstaArticleCommentDto;
 import com.bulmeong.basecamp.insta.dto.InstaArticleLikeDto;
 import com.bulmeong.basecamp.insta.dto.InstaFollowDto;
 import com.bulmeong.basecamp.insta.dto.InstaRestResponseDto;
+import com.bulmeong.basecamp.insta.dto.InstaUserInfoDto;
 import com.bulmeong.basecamp.insta.service.InstaService;
 import com.bulmeong.basecamp.user.dto.UserDto;
 
@@ -87,8 +88,12 @@ public class RestInstaController {
         InstaRestResponseDto instaRestResponseDto = new InstaRestResponseDto();
         instaRestResponseDto.setResult("success");
 
-        UserDto userDto = (UserDto)session.getAttribute("sessionUserInfo");
-        params.setUser_id(userDto.getId());
+        // 로그인이 되어있다는 가정하에
+        UserDto userDto = (UserDto) session.getAttribute("sessionUserInfo");
+        InstaUserInfoDto instaUserInfoDto = instaService.userInfoByUserId(userDto.getId());
+
+
+        params.setUser_id(instaUserInfoDto.getId());
 
         instaService.registerComment(params);
 
@@ -116,18 +121,97 @@ public class RestInstaController {
     }
 
 
+    // session id 받아와서 인스타 정보 뽑는 쿼리
+    @RequestMapping("getMyInstaId")
+    public InstaRestResponseDto getMyInstaId(HttpSession session){
+        InstaRestResponseDto instaRestResponseDto = new InstaRestResponseDto();
+        instaRestResponseDto.setResult("success");
+
+        UserDto userDto = (UserDto)session.getAttribute("sessionUserInfo");
+
+        InstaUserInfoDto instaUserInfoDto = instaService.userInfoByUserId(userDto.getId());
+
+        instaRestResponseDto.add("myInstaId", instaUserInfoDto.getId());
+
+        return instaRestResponseDto;
+    }
 
 
     // 팔로우
     @RequestMapping("follow")
-    public InstaRestResponseDto follow(@RequestParam("user_id") int following_user_id , HttpSession session){
+    public InstaRestResponseDto follow(InstaFollowDto params , HttpSession session){
         InstaRestResponseDto instaRestResponseDto = new InstaRestResponseDto();
         instaRestResponseDto.setResult("success");
 
         // 로그인이 되어있다는 가정하에
         UserDto userDto = (UserDto) session.getAttribute("sessionUserInfo");
+        InstaUserInfoDto  instaUserInfoDto = instaService.userInfoByUserId(userDto.getId());
+        params.setFollower_user_id(instaUserInfoDto.getId());
 
-        instaService.follow(following_user_id, userDto.getId());
+        // session_id = following_user_id
+        // user_id  follower_user_id
+        instaService.follow(params);
+
+        return instaRestResponseDto;
+    }
+
+    @RequestMapping("unFollow")
+    public InstaRestResponseDto unFollow(InstaFollowDto params , HttpSession session){
+        InstaRestResponseDto instaRestResponseDto = new InstaRestResponseDto();
+        instaRestResponseDto.setResult("success");
+
+        // 로그인이 되어있다는 가정하에
+        UserDto userDto = (UserDto) session.getAttribute("sessionUserInfo");
+        InstaUserInfoDto  instaUserInfoDto = instaService.userInfoByUserId(userDto.getId());
+        params.setFollower_user_id(instaUserInfoDto.getId());
+
+        // session_id = following_user_id
+        // user_id  follower_user_id
+        instaService.unFollow(params);
+
+        return instaRestResponseDto;
+
+    }
+
+    // 몇번 회원이 몇명을 팔로우 했는지 _ 자바스크립트 사용 안 함
+    @RequestMapping("getFollowerCount")
+    public InstaRestResponseDto getFollowerCount(@RequestParam("user_id") int follower_user_id){
+        InstaRestResponseDto instaRestResponseDto = new InstaRestResponseDto();
+        instaRestResponseDto.setResult("success");
+
+        int followCount = instaService.followerCount(follower_user_id);
+        instaRestResponseDto.add("followCount", followCount);
+
+        return instaRestResponseDto;
+    }
+
+    // 몇번 회원을 몇명이 팔로잉 했는지
+    @RequestMapping("getFollowingCount")
+    public InstaRestResponseDto getFollowingCount(@RequestParam("following_user_id") int following_user_id){
+        InstaRestResponseDto instaRestResponseDto = new InstaRestResponseDto();
+        instaRestResponseDto.setResult("success");
+
+        int followingCount = instaService.followingCount(following_user_id);
+        instaRestResponseDto.add("followingCount", followingCount);
+
+        return instaRestResponseDto;
+    }
+
+    // 내가 팔로우를 했는지
+    @RequestMapping("confirmFollow")
+    public InstaRestResponseDto confirmFollow(InstaFollowDto params , HttpSession session){
+        InstaRestResponseDto instaRestResponseDto = new InstaRestResponseDto();
+        instaRestResponseDto.setResult("success");
+
+        // 로그인이 되어있다는 가정하에
+        UserDto userDto = (UserDto) session.getAttribute("sessionUserInfo");
+        InstaUserInfoDto  instaUserInfoDto = instaService.userInfoByUserId(userDto.getId());
+        params.setFollower_user_id(instaUserInfoDto.getId());
+
+        // session_id = following_user_id
+        // user_id  follower_user_id
+        boolean x = instaService.confirmFollow(params);
+        instaRestResponseDto.add("confirmFollow", x); // json으로 변환하면서 true 혹은 false 값을 변환해줌
 
         return instaRestResponseDto;
     }

@@ -46,6 +46,146 @@
             }
 
         </style>
+
+        <script>
+            // user_id(선택한 유저의 인스타 id) = followingUserId 글로벌 변수로 설정
+            const urlParams = new URL(window.location.href).searchParams; // searchParams = 주소창에 있는 파라미터를 찾음
+            const followingUserId = urlParams.get("user_id"); // 주소창에 전달 되는 파라미터를 가져옴
+
+            // let myId = null; // myId =  session아이디 _ 글로벌 변수
+            let myInstaId = null;
+
+            // function setSessionId(){
+            //     // const = JavaScript에서 변수를 선언하는 키워드
+            //     const url = "/api/user/getSessionUserId";
+
+            //     /* fetch = JavaScript에서 네트워크 요청을 보내는 함수입니다. 이는 HTML form을 사용하여 서버에 데이터를 제출하는 것과 비슷합니다.
+            //     그러나 fetch는 더 유연하고, 비동기적으로 작동하여 페이지를 다시 로드하지 않고 서버와 통신할 수 있습니다. */
+            //     fetch(url)
+            //     .then(response => response.json())
+            //     .then((response) => {
+            //         myId = response.data.userId
+
+            //         console.log("Session ID has been set:", myId); // 콘솔에 찍힐 세션 id
+            //         setMyInstaId();
+            //     })
+            //     ;
+            // }
+
+            function setMyInstaId(){
+                const url = "/api/insta/getMyInstaId";
+
+                fetch(url)
+                .then(response => response.json())
+                .then((response) => {
+                    myInstaId = response.data.myInstaId
+                    reloadFollow();
+
+                    console.log("sessionGetInstaId ID has been set:", myInstaId); // 콘솔에 찍힐 세션 id
+                })
+                ;
+            }
+
+            function follow() {
+
+                if(myInstaId == null) {
+                    if(confirm("로그인 후 이용부탁드립니다. 로그인 페이지로 이동하시겠습니까?")){
+                        location.href = "/insta/instaLoginPage";
+                    }
+                    return;
+                }
+
+                const url = "/api/insta/follow?following_user_id=" + followingUserId;
+                fetch(url)
+                .then(response => response.json())
+                .then((response) => {
+                    reloadFollow();
+                    getFollowingCount();
+                })
+                ;
+
+            }
+
+            function unFollow() {
+
+                if(myInstaId == null) {
+                    if(confirm("로그인 후 이용부탁드립니다. 로그인 페이지로 이동하시겠습니까?")){
+                        location.href = "/insta/instaLoginPage";
+                    }
+                    return;
+                }
+
+                const url = "/api/insta/unFollow?following_user_id=" + followingUserId;
+                fetch(url)
+                .then(response => response.json())
+                .then((response) => {
+                    reloadFollow();
+                    getFollowingCount();
+                })
+                ;
+
+            }
+
+            // 팔로우 유무 확인하는 쿼리
+            function reloadFollow() {
+
+                const follow = document.getElementById("follow");
+                const unFollow = document.getElementById("unFollow");
+
+                if(myInstaId == null) {
+                    follow.classList.remove("d-none");
+                    unFollow.classList.add("d-none");
+
+                    return;
+                }
+
+                const url = "/api/insta/confirmFollow?following_user_id=" + followingUserId;
+                fetch(url)
+                .then(response => response.json())
+                .then(response => {
+
+                    // follow를 받아와서
+                    const follow = document.getElementById("follow");
+                    const unFollow = document.getElementById("unFollow");
+
+                    if(response.data.confirmFollow){ // 팔로우 상태
+                        unFollow.classList.remove("d-none");
+                        follow.classList.add("d-none");
+
+                    }else{ // 언팔로우 상태
+                        follow.classList.remove("d-none");
+                        unFollow.classList.add("d-none");
+                    }
+                })
+                ;
+
+            }
+
+            function getFollowingCount(){
+
+                const url = "/api/insta/getFollowingCount?following_user_id=" + followingUserId;
+                fetch(url)
+                .then(response => response.json())
+                .then(response => {
+                    const followingCount = document.getElementById("followingCount");
+                    followingCount.innerText = response.data.followingCount;
+                })
+                ;
+
+            }
+
+
+
+            window.addEventListener("DOMContentLoaded", () => {
+                // 페이지 로드 후 사실상 시작 지점
+                setMyInstaId();
+                getFollowingCount();
+                // reloadFollow(); _ 여기 말고 setMyInstaId 안에서 reloadFollow(); 실행시켜줘야 함
+
+            });
+
+        </script>
+
     </head>
     <body>
         <div class="container">
@@ -70,10 +210,10 @@
                             <span th:text="${articleCount}">13</span>
                         </div>
                         <a class="col" href="./userFollowersPage" style="text-decoration: none; color: black;">
-                            <span>254</span>
+                            <span th:text="${followerCount}">팔로워 카운트</span>
                         </a>
                         <a class="col" href="./userFollowingPage" style="text-decoration: none; color: black;">
-                            <span>250</span>
+                            <span id="followingCount">팔로잉 카운트</span>
                         </a>
                     </div>
                     <div class="row text-center">
@@ -97,12 +237,12 @@
             </div>
 
             <div class="row mt-3 fontNine" style="padding-right: 3.5%;padding-left: 3.5%;">
-                <div class="col badge d-grid" href="./userEditProfile" style="height: 30px; background-color: #0095f6; text-decoration: none;">
-                    <span class="align-self-center" style="font-size: 1.2em;">팔로우</span>
+                <div id="follow" class="col badge d-grid d-none" style="height: 30px; background-color: #0095f6; text-decoration: none;">
+                    <span onclick="follow()" class="align-self-center" style="font-size: 1.2em;">팔로우</span>
                 </div>
-                <!-- <div class="col badge d-grid" href="./userEditProfile" style="height: 30px; background-color: #262626; text-decoration: none;">
-                    <span class="align-self-center" style="font-size: 1.2em;">팔로잉</span>
-                </div> -->
+                <div id="unFollow" class="col badge d-grid d-none" style="height: 30px; background-color: #262626; text-decoration: none;">
+                    <span onclick="unFollow()" class="align-self-center" style="font-size: 1.2em;">팔로잉</span>
+                </div>
             </div>
 
             <!-- 이미지 List -->

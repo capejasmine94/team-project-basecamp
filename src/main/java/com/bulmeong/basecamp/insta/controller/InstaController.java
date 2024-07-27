@@ -130,7 +130,7 @@ public class InstaController {
     @RequestMapping("instaWriteProcess")
     public String instaWriteProcess(InstaArticleDto instaArticleDto, @RequestParam("insta") MultipartFile[]insta_article_img){
         instaService.writeArticle(instaArticleDto);
-        System.out.println("instaArticleDto : " + instaArticleDto);
+        // System.out.println("instaArticleDto : " + instaArticleDto);
         // System.out.println("instaId" + instaArticleDto.getId());
 
         InstaUserInfoDto instaUserInfoDto = instaService.selectUserInfo(instaArticleDto.getUser_id());
@@ -189,6 +189,10 @@ public class InstaController {
 
         int articleCount = instaService.selectArticleCountByUserId(id);
         model.addAttribute("articleCount", articleCount);
+
+        // 몇번 회원이 몇명을 팔로우 했는지
+        int followerCount = instaService.followerCount(id);
+        model.addAttribute("followerCount", followerCount);
 
         model.addAttribute("instaUserInfoDto", instaUserInfoDto);
 

@@ -9,7 +9,6 @@
         <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap">
         <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap">
 
-        <link rel="stylesheet" href="styles.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 
         <title>commentWritePage</title>
@@ -83,24 +82,38 @@
             // article_id는 글로벌 변수로 링크 파라미터 잡아 놨음
             const articleId = urlParams.get("article_id");
 
-            let myId = null;
+            // let myId = null;
+            let myInstaId = null;
 
-            function setSessionId(){
-                const url = "/api/user/getSessionUserId";
+            // function setSessionId(){
+            //     const url = "/api/user/getSessionUserId";
+            //     fetch(url)
+            //     .then(response => response.json())
+            //     .then((response) => { // 응답 받은 시점
+
+            //         myId = response.data.userId;
+
+            //         console.log("Session ID has been set:", myId); // 콘솔에 찍힐 세션 id
+            //     });
+            // }
+
+            function setMyInstaId(){
+                const url = "/api/insta/getMyInstaId";
+
                 fetch(url)
                 .then(response => response.json())
-                .then((response) => { // 응답 받은 시점
+                .then((response) => {
+                    myInstaId = response.data.myInstaId
 
-                    myId = response.data.userId;
-
-                    console.log("Session ID has been set:", myId); // 콘솔에 찍힐 세션 id
-                });
+                    console.log("sessionGetInstaId ID has been set:", myInstaId); // 콘솔에 찍힐 세션 id
+                })
+                ;
             }
 
             // 댓글 insert _ post방식으로 작성
             function registerComment(){                
 
-                if(myId == null){
+                if(myInstaId == null){
                     if(confirm("로그인 하셔야 이용 가능합니다. 로그인 페이지로 이동하시겠습니까?")){
                         location.href = "/insta/instaLoginPage";
                     }
@@ -153,7 +166,7 @@
                     const commentWrapperTemplete = document.querySelector("#templete .commentWrapper");
 
                     // e = map
-                    for(e of response.data.commentList){
+                    for(const e of response.data.commentList){
                         const newCommentWrapper = commentWrapperTemplete.cloneNode(true);
 
                         // querySelector = 배열이 아니고 단일 엘리먼트들을 리턴해줌
@@ -169,10 +182,10 @@
 
                         commentDate.innerText = `${date.getFullYear()}.${date.getMonth()+1}.${date.getDate()}`;
 
-                        // console.log("myId:", myId);
+                        // console.log("myInstaId:", myInstaId);
                         // console.log("user_id:", e.instaArticleCommentDto.user_id);
 
-                        if(myId != null && e.instaArticleCommentDto.user_id == myId){ // 댓글 삭제
+                        if(myInstaId != null && e.instaArticleCommentDto.user_id == myInstaId){ // 댓글 삭제
                             const commentButton = newCommentWrapper.querySelector(".commentButton");
                             commentButton.classList.remove("d-none");
 
@@ -200,8 +213,7 @@
 
                         commentListBox.appendChild(newCommentWrapper);
                     }
-                })
-                ;
+                });
             }
 
             // 댓글 삭제
@@ -215,15 +227,14 @@
                     .then(response => {
 
                         reloadCommentList();
-                    })
-                    ;
+                    });
                 }
             }
 
 
             window.addEventListener("DOMContentLoaded", () => {
             // 페이지 로드 후 사실상 시작 지점
-            setSessionId();
+            setMyInstaId();
             reloadCommentList();
 
             });

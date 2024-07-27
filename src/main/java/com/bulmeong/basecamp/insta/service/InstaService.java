@@ -31,12 +31,14 @@ public class InstaService {
         instaSqlMapper.insertInstaUserInfo(InstaUserInfoDto);
     }
 
+    // 세션아이디 받아와서 인스타 정보 뽑는 쿼리
     public InstaUserInfoDto userInfoByUserId(int user_id){
         InstaUserInfoDto instaUserInfoDto = instaSqlMapper.selectUserInfoByUserId(user_id);
 
         return instaUserInfoDto;
     }
 
+    // 인스타 id로 인스타유저 정보 뽑는 쿼리
     public InstaUserInfoDto selectUserInfo(int id){
         InstaUserInfoDto instaUserInfoDto = instaSqlMapper.selectUserInfoById(id);
 
@@ -76,7 +78,7 @@ public class InstaService {
             int user_id = instaArticleDto.getUser_id();
             InstaUserInfoDto instaUserInfoDto = instaSqlMapper.selectUserInfoById(user_id);
             map.put("instaUserInfoDto", instaUserInfoDto);
-            System.out.println("instaUserInfoDto: " + instaUserInfoDto);
+            // System.out.println("instaUserInfoDto: " + instaUserInfoDto);
 
             // 댓글 수 카운트
             int commentCount = instaSqlMapper.commentCountByArticleId(article_id);
@@ -122,12 +124,14 @@ public class InstaService {
         List<InstaArticleCommentDto> commentList = instaSqlMapper.getCommentList(article_id);
 
         for(InstaArticleCommentDto instaArticleCommentDto : commentList){
-            InstaUserInfoDto instaUserInfoDto = instaSqlMapper.selectUserInfoByUserId(instaArticleCommentDto.getUser_id());
+            InstaUserInfoDto instaUserInfoDto = instaSqlMapper.selectUserInfoById(instaArticleCommentDto.getUser_id());
 
             Map<String, Object> map = new HashMap<>();
 
             map.put("instaArticleCommentDto", instaArticleCommentDto);
+            // System.out.println(instaArticleCommentDto);
             map.put("instaUserInfoDto", instaUserInfoDto);
+            // System.out.println(instaUserInfoDto);
 
             result.add(map);
         }
@@ -169,13 +173,13 @@ public class InstaService {
 
 
     // 팔로우 _ 자바스크립트
-    public void follow(int follower_user_id, int following_user_id){
-        instaSqlMapper.insertFollowByUserId(follower_user_id, following_user_id);
+    public void follow(InstaFollowDto instaFollowDto){
+        instaSqlMapper.insertFollowByUserId(instaFollowDto);
     }
 
     // 몇번 회원이 몇명을 팔로우 했는지
-    public int followCount(int follower_user_id){
-        int followCount = instaSqlMapper.followCountByFollowerUserId(follower_user_id);
+    public int followerCount(int follower_user_id){
+        int followCount = instaSqlMapper.followerCountByFollowerUserId(follower_user_id);
 
         return followCount;
     }
@@ -187,13 +191,13 @@ public class InstaService {
         return followingCount;
     }
 
-    // 팔로우 했는지
+    // 내가 팔로우를 했는지
     public boolean confirmFollow(InstaFollowDto instaFollowDto){
 
         return instaSqlMapper.confirmFollowStatus(instaFollowDto) > 0; // 0보다 크면 follow한거
     }
 
-    public void deleteFollow(InstaFollowDto instaFollowDto){
+    public void unFollow(InstaFollowDto instaFollowDto){
         instaSqlMapper.deleteFollowByFollowerUserIdAndFollowingUserId(instaFollowDto);
     }
 }
