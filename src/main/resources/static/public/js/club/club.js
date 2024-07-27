@@ -1,4 +1,4 @@
-document.addEventListener('DOMContentLoaded', () => {
+function getCommentList() {
     // 여기서부터 시작
 
     // html파일 전체 태그에서 아이디로 하나의 태그를 가져온다(document.getElementById)
@@ -20,7 +20,18 @@ document.addEventListener('DOMContentLoaded', () => {
     // commentWrapperBox에 newCommentWrapper(복사해둔 것)을 하위태그(자식태그)로 붙여넣기 한다
     // commentWrapperBox.appendChild(newCommentWrapper);
 
-    fetch('/api/club/comment?post_id=8', {
+
+    // url에서 ?id=9 까지 가져옴(웹브라우저의 현재 주소의 쿼리스트링을 가져온다)
+    const a = window.location.search;
+    // console.log(a);
+
+    // 위에서 가져온 ?id=9에서 9만 가져온다 (id -> 쿼리스트링 키값으로)
+    const urlSearchObj1 = new URLSearchParams(a);
+    // console.log(urlSearchObj1);
+    const param = urlSearchObj1.get('id');
+    // console.log(param);
+
+    fetch('/api/club/comment?post_id='+param, {
         method: 'GET'
         // 데이터를 가져오는 경우 GET
         // 데이터를 생성해야 할 경우 POST
@@ -54,4 +65,12 @@ document.addEventListener('DOMContentLoaded', () => {
                 commentWrapperBox.appendChild(newCommnetWrapper); 
             }
         });
+}
+
+
+
+
+document.addEventListener('DOMContentLoaded', () => {
+    getCommentList();
+    
 })
