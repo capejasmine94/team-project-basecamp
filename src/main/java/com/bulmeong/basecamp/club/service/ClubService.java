@@ -7,8 +7,10 @@ import com.bulmeong.basecamp.club.dto.ClubDto;
 import com.bulmeong.basecamp.club.dto.ClubMeetingDto;
 import com.bulmeong.basecamp.club.dto.ClubMeetingMemberDto;
 import com.bulmeong.basecamp.club.dto.ClubMemberDto;
+import com.bulmeong.basecamp.club.dto.ClubNestedCommentDto;
 import com.bulmeong.basecamp.club.dto.ClubPostCategoryDto;
 import com.bulmeong.basecamp.club.dto.ClubPostCommentDto;
+import com.bulmeong.basecamp.club.dto.ClubPostCommentLikeDto;
 import com.bulmeong.basecamp.club.dto.ClubPostDto;
 import com.bulmeong.basecamp.club.dto.ClubPostImageDto;
 import com.bulmeong.basecamp.club.dto.ClubPostLikeDto;
@@ -229,14 +231,30 @@ public class ClubService {
 
         }
 
+    // 게시글 대댓글
+        public void writeNestedComment(ClubNestedCommentDto clubNestedCommentDto){
+            clubSqlMapper.insertNestedCommentDto(clubNestedCommentDto);
+        }
+
     //  게시글 댓글 출력
         public List<Map<String, Object>> getPostCommentDetailList(int id){
             List<Map<String, Object>> commentDetailList = new ArrayList<>();
             List<ClubPostCommentDto> clubPostCommentDtoList = clubSqlMapper.selectPostCommentDto(id);
             for(ClubPostCommentDto clubPostCommentDto : clubPostCommentDtoList){
                UserDto userDto = clubSqlMapper.selectUserDtoById(clubPostCommentDto.getUser_id());
+               ClubPostCommentLikeDto clubPostCommentLikeDto = new ClubPostCommentLikeDto();
+               clubPostCommentLikeDto.setComment_id(clubPostCommentDto.getId());
+               clubPostCommentLikeDto.setUser_id(userDto.getId());
+               int confirmCommentLike = clubSqlMapper.confirmCommentLike(clubPostCommentLikeDto);
+            
 
                Map<String, Object> map = new HashMap<>();
+
+               if(confirmCommentLike == 0) {
+                map.put("isLiked", false);
+               }else{
+                map.put("isLiked", true);
+               }
                map.put("clubPostCommentDto", clubPostCommentDto);
                map.put("userDto", userDto);
             
@@ -244,6 +262,23 @@ public class ClubService {
             }
             return commentDetailList;
         }    
+
+        // 게시글 댓글 좋아요 확인
+        public int confirmCommentLike(ClubPostCommentLikeDto clubPostCommentLikeDto){
+            int confirmCommentLike = clubSqlMapper.confirmCommentLike(clubPostCommentLikeDto);
+            return confirmCommentLike;
+        }
+
+        // 게시글 댓글 좋아요 insert
+        public void insertCommentLike(ClubPostCommentLikeDto clubPostCommentLikeDto){
+            clubSqlMapper.insertCommentLike(clubPostCommentLikeDto);
+        }
+
+        // 게시글 댓글 좋아요 delete
+        public void deleteCommentLike(ClubPostCommentLikeDto clubPostCommentLikeDto){
+            clubSqlMapper.deleteCommentLike(clubPostCommentLikeDto);
+        }
+
 
     // 소모임 홈 소모임 정보 카드
         public Map<String, Object>  clubDetail(int id){

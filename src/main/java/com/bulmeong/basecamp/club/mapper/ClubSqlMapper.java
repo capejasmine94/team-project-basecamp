@@ -10,8 +10,10 @@ import com.bulmeong.basecamp.club.dto.ClubJoinConditionDto;
 import com.bulmeong.basecamp.club.dto.ClubMeetingDto;
 import com.bulmeong.basecamp.club.dto.ClubMeetingMemberDto;
 import com.bulmeong.basecamp.club.dto.ClubMemberDto;
+import com.bulmeong.basecamp.club.dto.ClubNestedCommentDto;
 import com.bulmeong.basecamp.club.dto.ClubPostCategoryDto;
 import com.bulmeong.basecamp.club.dto.ClubPostCommentDto;
+import com.bulmeong.basecamp.club.dto.ClubPostCommentLikeDto;
 import com.bulmeong.basecamp.club.dto.ClubPostDto;
 import com.bulmeong.basecamp.club.dto.ClubPostLikeDto;
 import com.bulmeong.basecamp.club.dto.ClubPostImageDto;
@@ -42,6 +44,16 @@ public interface ClubSqlMapper {
     // public void updateComment(ClubPostCommentDto clubPostCommentDto);
     // public void deleteComment(int id);
     public int countTotalComment(int id); 
+    
+    // 댓글 좋아요
+    public int confirmCommentLike(ClubPostCommentLikeDto clubPostCommentLikeDto); 
+    public void insertCommentLike(ClubPostCommentLikeDto clubPostCommentLikeDto); 
+    public void deleteCommentLike(ClubPostCommentLikeDto clubPostCommentLikeDto); 
+
+    // 대댓글 작성
+    public void insertNestedCommentDto(ClubNestedCommentDto clubNestedCommentDto);
+
+
 
     public List<ClubPostCommentDto> selectPostCommentDto(int post_id);
     public ClubDto selectClubDtoById(int id);

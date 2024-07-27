@@ -23,6 +23,11 @@
 
 }
 
+/* googl material icon 채워주기 */
+.fill-on {
+    font-variation-settings: 'FILL' 1;
+}
+
 /* 부트스트랩 기본 메인 컬러 */
 .btn-primary {
     background-color: var(--bs-primary);

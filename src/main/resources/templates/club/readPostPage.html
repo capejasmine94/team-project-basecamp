@@ -190,24 +190,24 @@
     <div class="container-fluid fixed-bottom shadow-lg" th:if="${session.sessionUserInfo != null}">
         <form action="/club/writeCommentProcess" method="post" class="row bg-white pb-3 pt-2">
     
-                    <div class="col align-self-center text-center me-0 pe-0 fs-1">
-                        <a href="">
-                            <i class="bi bi-image"></i>
-                        </a>
-                    </div>
-                    <div class="col-7 px-0 align-self-center">
-                        <input name="content" class="form-control align-self-center" type="text" placeholder="댓글을 입력해주세요.">
-                    </div>
-    
-                     <div class="col align-self-center text-center ps-2">
-    
-                         <button class="btn form-control btn-dark text-center">등록</button>
-    
-                        <input name="user_id" type="hidden" th:value="${session.sessionUserInfo.id}">
-                        <input name="post_id" type="hidden" th:value="${map.clubPostDto.id}">
-    
-                    </div>
-    
+                <div class="col align-self-center text-center me-0 pe-0 fs-1">
+                    <a href="">
+                        <i class="bi bi-image"></i>
+                    </a>
+                </div>
+                <div class="col-7 px-0 align-self-center">
+                    <input name="content" class="form-control align-self-center comment" type="text" placeholder="댓글을 입력해주세요.">
+                </div>
+
+                    <div class="col align-self-center text-center ps-2">
+
+                        <button type="button" class="btn form-control btn-dark text-center registerComment">등록</button>
+
+                    <input name="user_id" type="hidden" th:value="${session.sessionUserInfo.id}">
+                    <input name="post_id" type="hidden" th:value="${map.clubPostDto.id}">
+
+                </div>
+
         </form>
     </div>
     
@@ -262,20 +262,21 @@
                         <div class="col">
     
                             <div class="row pt-2">
-                                <div class="col-auto d-flex align-items-center px-0 text-secondary " style="font-size: 0.8em">
-                                    <span class="material-symbols-outlined">
+                                <div class="col-auto d-flex align-items-center px-0 text-secondary" style="font-size: 0.8em">
+                                    <span class="material-symbols-outlined commentHeart fw-light">
                                         favorite
                                     </span>
                                 </div>
-                                <div class="col-auto d-flex align-items-center ps-1">
+                                <div class="col-auto d-flex align-items-center ps-0">
                                     추천
                                 </div>
+
                                 <div class="col-auto d-flex align-items-center px-0 text-secondary" style="font-size: 0.8em">
-                                    <span class="material-symbols-outlined">
+                                    <span class="material-symbols-outlined fw-light">
                                         chat_bubble
                                     </span>
                                 </div>
-                                <div class="col-auto d-flex align-items-center ps-1">
+                                <div class="col-auto d-flex align-items-center ps-0 writeNestedComment">
                                     댓글쓰기
                                 </div>
                             </div>

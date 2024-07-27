@@ -22,46 +22,114 @@ function getCommentList() {
 
 
     // url에서 ?id=9 까지 가져옴(웹브라우저의 현재 주소의 쿼리스트링을 가져온다)
-    const a = window.location.search;
+    const currentUrl = window.location.search;
     // console.log(a);
 
     // 위에서 가져온 ?id=9에서 9만 가져온다 (id -> 쿼리스트링 키값으로)
-    const urlSearchObj1 = new URLSearchParams(a);
+    const urlQueryString = new URLSearchParams(currentUrl);
     // console.log(urlSearchObj1);
-    const param = urlSearchObj1.get('id');
+    const param = urlQueryString.get('id');
     // console.log(param);
 
     fetch('/api/club/comment?post_id='+param, {
         method: 'GET'
         // 데이터를 가져오는 경우 GET
         // 데이터를 생성해야 할 경우 POST
-        // 데이터를 업데이트해야 하는 경우 PUT, PETCH
+        // 데이터를 업데이트해야 하는 경우 PUT, PATCH
         // 데이터를 삭제해야 하는 경우 DELETE
     })
         .then(response => response.json())
         .then(response => {
-            console.log(response.data.commentDataList);
+            // console.log(response.data.commentDataList);
+
+            const commentWrapperBox = document.getElementById("comment-wrapper-box");
+            commentWrapperBox.innerHTML = '';
 
             for(const commentData of response.data.commentDataList) {
                 // console.log(commentData.userDto);
 
-                const commentWrapper = document.querySelector(".comment-wrapper");
-                console.log(commentWrapper);
+                const commentWrapper = document.querySelector("#comment-template .comment-wrapper");
+                // console.log(commentWrapper);
 
+                
                 const newCommnetWrapper = commentWrapper.cloneNode(true);
                 const commentNickname = newCommnetWrapper.querySelector(".commentNickname"); 
-                commentNickname.innerText = commentData.userDto.nickname;
+                commentNickname.innerText = commentData.userDto.nickname;               
 
                 const commentCreatedAt = newCommnetWrapper.querySelector(".commentCreatedAt");
                 commentCreatedAt.innerText = commentData.clubPostCommentDto.created_at;
 
                 const commentContent = newCommnetWrapper.querySelector(".commentContent");
                 commentContent.innerText = commentData.clubPostCommentDto.content;
+                
+
+                const commentHeart = newCommnetWrapper.querySelector(".commentHeart");
+
+                const writeNestedComment = newCommnetWrapper.querySelector(".writeNestedComment");
+
+                // writeNestedComment.onclick = function a() {}; 아래와 같은 코드임
+                // writeNestedComment.onclick = function b () {};
+                // writeNestedComment.setAttribute('onclick', function b() {});
+
+                // writeNestedComment.onclick = (event) => {
+                //     console.log(event.target);
+                // };
+
+                // writeNestedComment.addEventListener('click', function a() {});
+                
+                writeNestedComment.onclick = () => {
+                    const comment = document.querySelector(".comment");
+                    comment.focus();
+                    comment.placeholder = `@${commentData.userDto.nickname}`;
+                   
+                   const registerComment = document.querySelector(".registerComment");
+                //     // console.log(registerComment);
+                    console.log(registerComment);
+                    registerComment.onclick = () => {
+                        const commentId = commentData.clubPostCommentDto.id
+                        const content = comment.value;
+                //         console.log(commentId);
+                //         console.log(content);
+                        const data = {
+                            comment_id: commentId,
+                            content: content
+                        }
+                        fetch('/api/club/nestedComment', {
+                            method: "POST",
+                            headers: {
+                                'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify(data)
+                        })
+                        .then(response => response.json())
+                        .then(response => {
+                            console.log('Response:', response);
+                        })
+                        .catch(error => {
+                            console.error('Error:', error);
+                        });
+                    };
+                };
+
+                
+                const commentId = commentData.clubPostCommentDto.id;
+                if(commentData.isLiked) {
+                    commentHeart.classList.add("fill-on");
+                    commentHeart.onclick = () => {
+                        removeHeart(commentId);
+                        
+                    }
+                } else {
+                    commentHeart.classList.remove("fill-on");
+                    commentHeart.onclick = () => {
+                        addHeart(commentId);
+                    }
+                }
 
 
+            
 
-
-                const commentWrapperBox = document.getElementById("comment-wrapper-box");
+                
                 commentWrapperBox.appendChild(newCommnetWrapper); 
             }
         });
@@ -69,8 +137,31 @@ function getCommentList() {
 
 
 
+function removeHeart(commentId) {
+    fetch('/api/club/comment/like?comment_id=' + commentId, {
+        method: 'DELETE'
+    })
+    .then(response => response.json())
+    .then(response => {
+        getCommentList();
+    })
+}
+
+function addHeart(commentId){
+    fetch('/api/club/comment/like?comment_id=' + commentId, {
+        method: 'POST'
+    })
+    .then(response => response.json())
+    .then(response => {
+        getCommentList();
+    })
+}
+
+
+
+
 
 document.addEventListener('DOMContentLoaded', () => {
     getCommentList();
-    
+
 })

@@ -263,8 +263,44 @@
         )values(
 	        #{post_id},#{user_id}
         )
-
     </insert>
+
+
+    <!-- 댓글 좋아요 유무 확인 select count -->
+    <select id="confirmCommentLike" resultType="int">
+        select count (*) from bc_club_post_comment_like
+        where comment_id = #{comment_id}    
+        and user_id = #{user_id}
+    </select>
+
+
+    <!-- 댓글 좋아요 insert -->
+    <insert id="insertCommentLike">
+        insert into bc_club_post_comment_like(
+	        comment_id, user_id
+        )values(
+	        #{comment_id}, #{user_id}
+        )
+    </insert>
+
+
+    <!-- 댓글 좋아요 delete -->
+    <delete id="deleteCommentLike">
+        delete from  bc_club_post_comment_like
+        where comment_id = #{comment_id}
+        and user_id = #{user_id}
+    </delete>
+
+    <!-- 대댓글 인서트 -->
+    <insert id="insertNestedCommentDto">
+    insert into bc_club_nested_comment(
+	    comment_id, user_id, content
+    )values(
+	    #{comment_id}, #{user_id}, #{content}
+    )
+    </insert>
+
+
 
     <!-- 소모임 댓글 총개수 집계 -->
     <select id="countTotalComment" resultType="int">
