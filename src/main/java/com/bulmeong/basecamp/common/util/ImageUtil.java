@@ -46,7 +46,7 @@ public class ImageUtil {
         DateTimeFormatter format = DateTimeFormatter.ofPattern("yyyy/MM/dd");
         String userHome = System.getProperty("user.home");
         System.out.println(userHome);
-        String filePath = (System.getProperty("os.name").charAt(0) == 'M' ? userHome : "Users") + "/basecampImage/";
+        String filePath = (System.getProperty("os.name").charAt(0) == 'M' ? userHome : "") + "/basecampImage/";
         System.out.println(filePath);
 
         String existDate = localDateTime.format(format);
