@@ -175,6 +175,15 @@ public class CampsiteService {
         return campsiteSqlMapper.getAreaCategory();
     }
 
+    public Map<String, Object> getAllCategory() {
+        List<CampsiteCategoryDto> campCategory = getCampsiteCategory();
+        List<CampsiteCategoryDto> areaCategory = getAreaCategory();
+        Map<String, Object> result = new HashMap<>();
+        result.put("campsite", campCategory);
+        result.put("area", areaCategory);
+        return result;
+    }
+
     // 캠핑장 에리어 리스트
     public List<Map<String,Object>> getAreaList(int campsite_id) { 
         List<Map<String,Object>> result = new ArrayList<>();
