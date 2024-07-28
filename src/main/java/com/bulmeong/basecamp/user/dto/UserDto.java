@@ -14,7 +14,7 @@ public class UserDto {
     private String email;
     private String phone;
     private String profile_image;
-    private int point;
+    private int mileage;
     private String gender;
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date birth;
