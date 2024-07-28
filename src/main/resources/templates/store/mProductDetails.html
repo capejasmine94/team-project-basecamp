@@ -57,13 +57,284 @@
         .f40{
             font-size: 4em;
         }
+        .inputQuantity:focus {
+            outline:none;
+        }
     </style>
     <script>
+        const urlParams = new URL(window.location.href).searchParams;
+        const product_id = urlParams.get("id");
+
+        let myId = null;
+
         document.addEventListener('DOMContentLoaded', function() {
             document.getElementById('backButton').addEventListener('click', function() {
                 history.back();
             });
+            setOptionData();
+            setSessionId();
         });
+
+        function setSessionId(){
+            const url = "/api/user/getSessionUserId";
+            fetch(url)
+            .then(response => response.json())
+            .then((response) => {
+                myId = response.data.userId;
+            })
+        }
+
+        function setSelectedOption(selectElement){
+            
+            const currentIndex = parseInt(selectElement.dataset.index, 10);
+            const optionSelectBoxes = document.querySelectorAll("#optionContainer .optionSelectBox")
+
+            // 선택할 옵션이 두개 이상 남은 경우 다음 옵션 활성화 후 return
+            if (currentIndex < optionSelectBoxes.length - 2) { 
+                for(optionSelectBox of optionSelectBoxes){
+                    const selectbox_index = parseInt(optionSelectBox.dataset.index, 10)
+                    if(selectbox_index==currentIndex+1){
+                        optionSelectBox.disabled = false;
+                        return;
+                    }
+                }
+                return;
+            }
+
+            // 마지막 옵션일 경우
+            if(currentIndex == optionSelectBoxes.length-1){
+                const selectedOptionContainer = document.getElementById("selectedOptionContainer");
+                const selectedOptionRow = document.querySelector("#template .selectedOptionRow");
+                const selectedOptionValue = document.querySelector("#template .selectedOptionValue");
+                const selectedOptionId = document.querySelector("#template .selectedOptionId");
+
+                const newSelectedOptionRow = selectedOptionRow.cloneNode(true)
+                for(optionSelectBox of optionSelectBoxes){
+                    const newSelectedOptionValue = selectedOptionValue.cloneNode(true)
+                    const newSelectedOptionId = selectedOptionId.cloneNode(true)
+
+                    const selectedOption = optionSelectBox.options[optionSelectBox.selectedIndex];
+                    newSelectedOptionValue.innerText = selectedOption.innerText;
+                    
+                    //input hidden으로 아이디도 추가
+                    newSelectedOptionId.value = selectedOption.value;
+
+                    const selectedOptionValueCol = newSelectedOptionRow.querySelector(".selectedOptionValueCol");
+                    
+                    selectedOptionValueCol.appendChild(newSelectedOptionValue);
+                    selectedOptionValueCol.appendChild(newSelectedOptionId);
+                }
+
+                const optionPrice = newSelectedOptionRow.querySelector(".optionPrice")//추가금?
+                const inputOptionPrice = newSelectedOptionRow.querySelector(".inputOptionPrice");
+                const selectedValues = Array.from(optionSelectBoxes)
+                    .filter(optionSelectBox => {
+                        const selectedOption = optionSelectBox.options[optionSelectBox.selectedIndex];
+                        return selectedOption && !selectedOption.disabled;
+                    })
+                    .map(optionSelectBox => optionSelectBox.options[optionSelectBox.selectedIndex].value);
+
+                const value_ids = selectedValues.join(",");
+
+                const url = `/api/store/getAdditionalInfoDto?value_ids=${value_ids}`
+                fetch(url)
+                .then(response => response.json())
+                .then((response) => {
+                    const additional_price = response.data.additionalInfoDto.additional_price;
+                    const salePrice = document.getElementById("salePrice").innerText.replace(/,/g, '');
+
+                    optionPrice.innerText = parseInt(additional_price, 10)+parseInt(salePrice, 10)
+                    inputOptionPrice.value = parseInt(additional_price, 10)+parseInt(salePrice, 10)
+                })
+
+                selectedOptionContainer.appendChild(newSelectedOptionRow);
+                
+                setOptionData();
+
+                return;
+            }
+
+            // 마지막 옵션만 남았을 경우
+            const selectedValues = Array.from(optionSelectBoxes)
+                .filter(optionSelectBox => {
+                    const selectedOption = optionSelectBox.options[optionSelectBox.selectedIndex];
+                    return selectedOption && !selectedOption.disabled;
+                })
+                .map(optionSelectBox => optionSelectBox.options[optionSelectBox.selectedIndex].value);
+
+            const value_ids = selectedValues.join(",");
+
+            const url = `/api/store/getAdditionalInfo?product_id=${product_id}&currentIndex=${currentIndex}&value_ids=${value_ids}`
+            fetch(url)
+            .then(response => response.json())
+            .then((response) => {
+                const additionalInfoDataList = response.data.additionalInfoDataList;
+                for(additionalInfoData of additionalInfoDataList){
+                    const lastSelectOption = document.getElementById("lastSelectOption");
+                    const optionValues = lastSelectOption.querySelectorAll(".optionValue");
+
+                    for(optionValue of optionValues){
+                        if(additionalInfoData.productOptionValueDto.id == optionValue.value && additionalInfoData.additionalInfoDto.additional_price!=0){
+                            optionValue.innerText=`${additionalInfoData.productOptionValueDto.name}(+${additionalInfoData.additionalInfoDto.additional_price})`
+                        }
+                    }
+
+                    lastSelectOption.disabled = false;
+                }
+            })
+
+        }
+
+        function setOptionData(){
+            const url = `/api/store/getOptionDataList?product_id=${product_id}`
+
+            fetch(url)
+            .then(response => response.json())
+            .then(response =>{
+                let index = 0;
+
+                const optionDataList = response.data.optionDataList;
+
+                if(optionDataList.length == 0){
+                    return;
+                }
+
+                if(optionDataList.length == 1){
+                    const url = `/api/store/getAdditionalInfo?product_id=${product_id}&currentIndex=0&value_ids=`
+                    fetch(url)
+                    .then(response => response.json())
+                    .then((response) => {
+                        const additionalInfoDataList = response.data.additionalInfoDataList;
+                        for(additionalInfoData of additionalInfoDataList){
+                            const lastSelectOption = document.getElementById("lastSelectOption");
+                            const optionValues = lastSelectOption.querySelectorAll(".optionValue");
+
+                            for(optionValue of optionValues){
+                                if(additionalInfoData.productOptionValueDto.id == optionValue.value && additionalInfoData.additionalInfoDto.additional_price!=0){
+                                    optionValue.innerText=`${additionalInfoData.productOptionValueDto.name}(+${additionalInfoData.additionalInfoDto.additional_price})`
+                                }
+                            }
+
+                            lastSelectOption.disabled = false;
+                        }
+                    })
+                }
+
+                const optionContainer = document.getElementById("optionContainer");
+                optionContainer.innerHTML="";
+                const optionSelectRow = document.querySelector("#template .optionSelectRow");
+                
+                for(optionData of optionDataList){
+                    const newOptionSelectRow = optionSelectRow.cloneNode(true);
+
+                    const optionSelectBox = newOptionSelectRow.querySelector(".optionSelectBox")
+                    
+                    optionSelectBox.setAttribute("name", "value_id");
+                    optionSelectBox.setAttribute("data-index", index);
+
+                    optionSelectBox.querySelector(".optionName").innerText = optionData.productOptionNameDto.name;
+
+                    const optionValue = newOptionSelectRow.querySelector(".optionValue");
+
+                    for(productOptionValueDto of optionData.productOptionValueDtoList){
+                        const newOptionValue = optionValue.cloneNode(true)
+                        optionValue.innerText = productOptionValueDto.name;
+                        optionValue.value = productOptionValueDto.id;
+                        optionValue.classList.remove("d-none");
+
+                        optionSelectBox.appendChild(newOptionValue);
+                    }
+
+                    if(index == 0){
+                        optionSelectBox.disabled = false;
+                    } else {
+                        optionSelectBox.disabled = true;
+                    }
+
+                    if(index == optionDataList.length-1){
+                        optionSelectBox.setAttribute("id", "lastSelectOption");
+                    }
+
+                    optionContainer.appendChild(newOptionSelectRow);
+
+                    index++;
+                }
+                
+            })
+        }
+
+        function decreaseOptionQuantity(decreaseButton){
+            const optionQuantityRow = decreaseButton.closest(".optionQuantityRow")
+            const inputQuantity = optionQuantityRow.querySelector(".inputQuantity");
+            const optionPrice = optionQuantityRow.querySelector(".optionPrice");
+            const inputOptionPrice = optionQuantityRow.querySelector(".inputOptionPrice");
+
+            if(inputQuantity.value == 1){
+                return;
+            }else{
+                inputQuantity.value = parseInt(inputQuantity.value, 10) - 1
+            }
+
+            optionPrice.innerText = parseInt(inputOptionPrice.value, 10) * parseInt(inputQuantity.value, 10)
+        }
+
+        function increaseOptionQuantity(increaseButton){
+            const optionQuantityRow = increaseButton.closest(".optionQuantityRow")
+            const inputQuantity = optionQuantityRow.querySelector(".inputQuantity");
+            const optionPrice = optionQuantityRow.querySelector(".optionPrice");
+            const inputOptionPrice = optionQuantityRow.querySelector(".inputOptionPrice");
+
+            inputQuantity.value = parseInt(inputQuantity.value, 10) + 1
+            optionPrice.innerText = parseInt(inputOptionPrice.value, 10) * parseInt(inputQuantity.value, 10)
+            //그 머더라 막아야지 수량
+        }
+
+        function deleteOption(deleteOptionButton){
+            const selectedOptionRow = deleteOptionButton.closest(".selectedOptionRow")
+            selectedOptionRow.parentNode.removeChild(selectedOptionRow);
+        }
+
+        async function addToCart(){
+            if(myId==null){
+                if(confirm("로그인 후 이용 가능합니다. 로그인 페이지로 이동하시겠습니까?")){
+                    location.href="/user/login";
+                }
+                return;
+            }
+
+            const forms = document.querySelectorAll('#selectedOptionContainer .selectedOptionRow');
+
+            if(forms.length==0){
+                alert("상품 옵션을 선택해주세요");
+                return;
+            }
+
+            for (const form of forms) {
+                const quantity = form.querySelector('.inputQuantity').value;
+                const price = form.querySelector('.inputOptionPrice').value;
+                
+                const selectedOptionIds = form.querySelectorAll('.selectedOptionId');
+
+                const valueIds = Array.from(selectedOptionIds).map(option => parseInt(option.value, 10));
+
+                const value_ids = valueIds.join(",");
+
+                const url = `/api/store/addToCart?quantity=${quantity}&product_id=${product_id}&value_ids=${value_ids}&user_id=${myId}`;
+                await fetch(url);
+            }
+
+            if(confirm("장바구니로 갈까?(이거 나중에 토스트로)")){
+                location.href = "/store/cart";
+            }
+            
+        }
+
+        // function checkDisabled(optionSelectRow){
+        //     if(optionSelectRow.querySelector(".optionSelectBox").disabled == true){
+        //         alert("상위 옵션을 먼저 선택해주세요")
+        //     }
+        // }
+
     </script>
 </head>
 <body class="bg-body-tertiary">
@@ -80,11 +351,11 @@
                     </button>
                 </div>
                 <div class="col"></div>
-                <div class="col-auto pe-0 d-flex align-items-center">
+                <a href="/store/cart" class="col-auto pe-0 d-flex align-items-center text-black">
                     <span class="material-symbols-outlined">
                         shopping_bag
                     </span>
-                </div>
+                </a>
             </div>
         </div>
     </div>
@@ -97,7 +368,7 @@
                 <div id="carouselExample" class="carousel slide">
                     <div class="carousel-inner">
                         <div class="carousel-item active">
-                            <img src="/public/img/storeImage/productDetail1.jpg" class="d-block w-100" style="aspect-ratio: 1/1;">
+                            <img th:src="|/images/${productData.storeProductDto.main_image}|" class="d-block w-100" style="aspect-ratio: 1/1; width: 100%; object-fit: cover; object-position: center;">
                         </div>
                         <div class="carousel-item">
                             <img src="/public/img/storeImage/productDetail2.jpg" class="d-block w-100" style="aspect-ratio: 1/1;">
@@ -122,25 +393,25 @@
                         <span th:text="${productData.storeDto.name}">GamjaStore</span>
                     </div>
                 </div>
-                <div class="row px-3 py-3">
+                <div class="row px-3 pt-3 pb-2">
                     <div class="col px-0 fw-bold">
                         <span th:text="${productData.storeProductDto.name}">진짜 맛있는 납작복숭아</span>
                     </div>
-                    <div class="col-auto px-0">
+                    <div class="col-auto px-0 d-flex align-items-center">
                         <span class="material-symbols-outlined">
                             share
                         </span>
                     </div>
                 </div>
-                <div class="row px-3">
+                <div class="row px-3" th:if="${productData.percentage!=0}">
                     <div class="col px-0 f08 text-body-tertiary" style="text-decoration: line-through;">
                         <span th:text="|${#numbers.formatDecimal(productData.storeProductDto.price, 1, 'COMMA', 0, 'POINT')}원|">40,000원</span>
                     </div>
                 </div>
                 <div class="row px-3 pb-3">
                     <div class="col px-0 d-flex align-items-center">
-                        <span class="fw-bold f12" style="color: orangered;" th:text="|${productData.percentage}%|">30%</span>
-                        &nbsp;&nbsp;<span class="fw-bold f12" th:text="|${#numbers.formatDecimal(productData.salePrice, 1, 'COMMA', 0, 'POINT')}|">28,000</span>
+                        <span class="fw-bold f12" style="color: orangered;" th:if="${productData.percentage!=0}" th:text="|${productData.percentage}%&nbsp;&nbsp;|">30%</span>
+                        <span class="fw-bold f12" id="salePrice" th:text="|${#numbers.formatDecimal(productData.salePrice, 1, 'COMMA', 0, 'POINT')}|">28,000</span>
                         <span class="f08">원</span>
                     </div>
                 </div>
@@ -339,69 +610,98 @@
         </div>
     </div>
 
+    <div id="template" class="d-none">
+        
+        <!-- 옵션 셀렉박스 -->
+        <div class="row px-3 pb-2 optionSelectRow">
+            <div class="col p-0">
+                <select class="form-select rounded-0 optionSelectBox" onchange="setSelectedOption(this)">
+                    <option disabled selected class="optionName">색상 선택</option>
+                    <option value="1" class="optionValue d-none">One</option>
+                </select>
+            </div>
+        </div>
+
+        <!-- 그냥 다 템플릿으로 만들어버려 -->
+        <span class="selectedOptionValue">black</span>
+
+        <!-- 진짜 다 만드네 -->
+        <input type="hidden" class="selectedOptionId">
+
+        <!-- 선택상품 정보 -->
+        <form class="row px-3 py-2 selectedOptionRow">
+            <div class="col bg-body-tertiary py-2">
+                <div class="row pb-2">
+                    <div class="col selectedOptionValueCol">
+                        
+                        <!-- <span> / free</span> -->
+                    </div>
+                    <div class="col-auto">
+                        <button type="button" class="border-0 p-0 bg-transparent deleteOptionButton" onclick="deleteOption(this)">
+                            <span class="material-symbols-outlined f09">
+                                close
+                            </span>
+                        </button>
+                    </div>
+                </div>
+                <div class="row optionQuantityRow">
+                    <div class="col-auto pe-0 align-items-center">
+                        <button type="button" class="border border-end-0 bg-white decreaseButton" onclick="decreaseOptionQuantity(this)">
+                            <span class="material-symbols-outlined f09">
+                                remove
+                            </span>
+                        </button>
+                    </div>
+                    <div class="col-auto border bg-white">
+                        <input type="text" class="bg-white border-0 text-center inputQuantity" readonly value="1" style="width: 2em;">
+                    </div>
+                    <div class="col-auto ps-0 align-items-center">
+                        <button type="button" class="border border-start-0 bg-white increaseButton" onclick="increaseOptionQuantity(this)">
+                            <span class="material-symbols-outlined f09">
+                                add
+                            </span>
+                        </button>
+                    </div>
+                    <div class="col text-end">
+                        <span class="fw-bold optionPrice">28,000</span>원
+                        <input type="hidden" class="inputOptionPrice">
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <!-- 이거 쓰고싶다 -->
+    <div id="toast" class="toast align-items-center text-bg-dark border-0 fade show" role="alert" aria-live="assertive" aria-atomic="true">
+        <div class="toast-body row align-items-center">
+          <div class="col pe-0">
+            장바구니에 상품이 담겼습니다
+          </div>
+          <div class="col-auto">
+            <a href="/store/cart" style="text-decoration: none;">장바구니로 가기</a>
+          </div>
+        </div>
+    </div>
+
     <!-- offcanvas -->
     <div class="offcanvas offcanvas-bottom" tabindex="-1" id="offcanvasBottom" style="max-height: 90vh; height: auto;">
         <div class="offcanvas-header">
           <button type="button" class="btn-close" data-bs-dismiss="offcanvas"></button>
         </div>
         <div class="offcanvas-body pb-4">
-            <div class="row px-3 pb-2">
-                <div class="col p-0">
-                    <select class="form-select rounded-0" name="">
-                        <option selected>색상 선택</option>
-                        <option value="1">One</option>
-                        <option value="2">Two</option>
-                        <option value="3">Three</option>
-                    </select>
+            <div class="row">
+                <div class="col" id="optionContainer">
+
                 </div>
             </div>
-            <div class="row px-3 pb-2">
-                <div class="col p-0">
-                    <select class="form-select rounded-0" name="">
-                        <option selected>사이즈 선택</option>
-                        <option value="1">One</option>
-                        <option value="2">Two</option>
-                        <option value="3">Three</option>
-                    </select>
+            <div class="row">
+                <div class="col" id="selectedOptionContainer">
+
                 </div>
             </div>
-            <div class="row px-3 py-2">
-                <div class="col bg-body-tertiary py-2">
-                    <div class="row pb-2">
-                        <div class="col">
-                            black / free
-                        </div>
-                        <div class="col-auto">
-                            <span class="material-symbols-outlined f09">
-                                close
-                            </span>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-auto pe-0 align-items-center">
-                            <button class="border border-end-0 bg-white">
-                                <span class="material-symbols-outlined f09">
-                                    remove
-                                </span>
-                            </button>
-                        </div>
-                        <div class="col-auto border bg-white">
-                            1
-                        </div>
-                        <div class="col-auto ps-0 align-items-center">
-                            <button class="border border-start-0 bg-white">
-                                <span class="material-symbols-outlined f09">
-                                    add
-                                </span>
-                            </button>
-                        </div>
-                        <div class="col text-end">
-                            <span class="fw-bold">28,000</span>원
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="row px-3 py-2 text-end">
+
+            <!-- 주문금액정보 -->
+            <div class="row px-3 py-2 text-end d-none">
                 <div class="col p-0">
                     <span class="f08">총 상품 금액</span>
                     <span class="fw-bold f12">28,000</span>
@@ -410,14 +710,16 @@
             </div>
             <div class="row">
                 <div class="col pe-0 py-3 d-grid">
-                    <a href="/store/cart" type="button" class="btn btn-outline-dark rounded-0 py-2">
+                    <a id="cartButton" type="button" class="btn btn-outline-dark rounded-0 py-2" onclick="addToCart()">
                         장바구니
                     </a>
+                    <!-- href="/store/cart" -->
                 </div>
                 <div class="col py-3 d-grid">
-                    <a href="/store/ordersheet" type="button" class="btn btn-dark rounded-0 py-2">
+                    <a id="orderButton" type="button" class="btn btn-dark rounded-0 py-2">
                         구매하기
                     </a>
+                    <!-- href="/store/ordersheet" -->
                 </div>
             </div>
         </div>

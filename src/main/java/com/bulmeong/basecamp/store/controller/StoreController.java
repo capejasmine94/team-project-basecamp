@@ -8,7 +8,11 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.bulmeong.basecamp.store.dto.StoreOrderDto;
 import com.bulmeong.basecamp.store.service.StoreService;
+import com.bulmeong.basecamp.user.dto.UserDto;
+
+import jakarta.servlet.http.HttpSession;
 
 
 @Controller
@@ -45,22 +49,41 @@ public class StoreController {
 
     @RequestMapping("cart")
     public String cart(){
+
         return "store/mCart";
     }
 
     @RequestMapping("ordersheet")
-    public String ordersheet(){
+    public String ordersheet(HttpSession session, Model model){
+
+        UserDto userDto = (UserDto)session.getAttribute("sessionUserInfo");
+        int user_id = userDto.getId();
+
+        List<Map<String, Object>> pendingOrderProductInfoDataList = storeService.getPendingOrderDataList(user_id);
+
+        model.addAttribute("pendingOrderProductInfoDataList", pendingOrderProductInfoDataList);
+
         return "store/mOrdersheet";
     }
 
     @RequestMapping("orderComplete")
-    public String orderComplete(){
-        return "store/mOrderComplete";
+    public String orderComplete(@RequestParam("id") int id, HttpSession session, Model model){
+        UserDto userDto = (UserDto)session.getAttribute("sessionUserInfo");
+
+        StoreOrderDto storeOrderDto = storeService.getStoreOrderDtoById(id);
+        
+        if(userDto==null||storeOrderDto.getUser_id()!=userDto.getId()){
+            return "redirect:/store";
+        }else{
+
+            return "store/mOrderComplete";
+        }
     }
 
-    @RequestMapping("login")
-    public String login(){
-        return "store/tempUserLogin";
+    @RequestMapping("myOrderList")
+    public String myOrderList(){
+
+        return "store/mMyOrderList";
     }
 
 }

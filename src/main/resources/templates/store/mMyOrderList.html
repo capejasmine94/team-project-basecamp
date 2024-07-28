@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">    
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+    <script src="https://kit.fontawesome.com/7b271bba58.js" crossorigin="anonymous"></script>
+
+    <style>
+        .fill-on {
+            font-variation-settings: 'FILL' 1;
+        }
+        .fill-off {
+            font-variation-settings: 'FILL' 0;
+        }
+        .seller_profile img{
+            aspect-ratio: 1/1;
+            width: 100px;
+            object-fit: cover;
+            object-position: center;
+        }
+        .icon-col img{
+            aspect-ratio: 1/1;
+            width: 100%;
+            object-fit: cover;
+            object-position: center;
+        }
+        .product-col img{
+            aspect-ratio: 1/1;
+            width: 100%;
+            object-fit: cover;
+            object-position: center;
+        }
+        a{
+            text-decoration: none;
+            color: black;
+        }
+        .f05{
+            font-size: 0.5em;
+        }
+        .f08{
+            font-size: 0.8em;
+        }
+        .f09{
+            font-size: 0.9em;
+        }
+        .f12{
+            font-size: 1.2em;
+        }
+        .f17{
+            font-size: 1.7em;
+        }
+        .f20{
+            font-size: 2em;
+        }
+        .f40{
+            font-size: 4em;
+        }
+        .active{
+            font-weight: bold;
+            border-bottom: 2px solid black;
+        }
+    </style>
+
+</head>
+<body class="bg-light">
+
+    <!-- top-nav -->
+    <div class="fixed-top px-4 row border-bottom bg-white">
+        <div class="col">
+            <div class="row py-3 align-items-center">
+                <div class="col-auto ps-0">
+                    <button id="backButton" class="border-0 bg-transparent d-flex align-items-center">
+                        <span class="material-symbols-outlined">
+                            arrow_back_ios
+                        </span>
+                    </button>
+                </div>
+                <div class="col ps-0 fw-bold f12 text-center">
+                    주문/배송조회
+                </div>
+                <a href="/" class="col-auto pe-0 d-flex align-items-center text-black">
+                    <span class="material-symbols-outlined">
+                        home
+                    </span>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <div class="container" style="padding-top: 60.792px;">
+
+        <div class="row">
+            <div class="col">
+
+                <div class="row border-bottom mb-3">
+                    <div class="col text-center p-0">
+                        <img src="/public/img/storeImage/myOrderListBanner.jpg" style="width: 100%;">
+                    </div>
+                </div>
+
+                <div class="row bg-white py-3 align-items-center border-top border-bottom">
+                    <div class="col-auto pe-0">
+                        <span class="fw-bold">전체</span>
+                    </div>
+                    <div class="col">
+                        <span class="f08">최근 1년</span>
+                    </div>
+                    <div class="col-auto">
+                        <button class="btn btn-sm border rounded-pill d-flex align-items-center">
+                            <span>필터</span>
+                            <span class="material-symbols-outlined f12">
+                                tune
+                            </span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- 필터선택 -->
+                <div class="row bg-white py-3 mb-3 border-bottom">
+                    <div class="col d-grid">
+                        <button class="row text-dark p-0 text-center border-0 bg-transparent">
+                            <div class="col">
+                                <div class="row pb-2 fw-bold fs-4">
+                                    <div class="col">0</div>
+                                </div>
+                                <div class="row f08">
+                                    <div class="col px-1">전체</div>
+                                </div>                                    
+                            </div>
+                        </button>
+                    </div>
+                    <div class="col d-grid">
+                        <button class="row text-secondary p-0 text-center border-0 bg-transparent">
+                            <div class="col">
+                                <div class="row pb-2 fw-bold fs-4">
+                                    <div class="col">0</div>
+                                </div>
+                                <div class="row f08">
+                                    <div class="col px-1">주문완료</div>
+                                </div>                                    
+                            </div>
+                        </button>
+                    </div>
+                    <div class="col d-grid">
+                        <button class="row text-secondary p-0 text-center border-0 bg-transparent">
+                            <div class="col">
+                                <div class="row pb-2 fw-bold fs-4">
+                                    <div class="col">0</div>
+                                </div>
+                                <div class="row f08">
+                                    <div class="col px-1">배송중</div>
+                                </div>                                    
+                            </div>
+                        </button>
+                    </div>
+                    <div class="col d-grid">
+                        <button class="row text-secondary p-0 text-center border-0 bg-transparent">
+                            <div class="col">
+                                <div class="row pb-2 fw-bold fs-4">
+                                    <div class="col">0</div>
+                                </div>
+                                <div class="row f08">
+                                    <div class="col px-1">배송완료</div>
+                                </div>                                    
+                            </div>
+                        </button>
+                    </div>
+                    <div class="col d-grid">
+                        <button class="row text-dark p-0 text-center border-0 bg-transparent">
+                            <div class="col">
+                                <div class="row pb-2 fw-bold fs-4">
+                                    <div class="col">0</div>
+                                </div>
+                                <div class="row f08">
+                                    <div class="col px-1">구매확정</div>
+                                </div>                                    
+                            </div>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="row mb-3 border-top border-bottom">
+                    <div class="col">
+
+                        <!-- 주문상세보기 -->
+                        <div class="row bg-white py-2 border-bottom">
+                            <div class="col fw-bold f12">
+                                2024.07.07
+                            </div>
+                            <div class="col-auto d-flex align-items-center">
+                                <span class="material-symbols-outlined">
+                                    chevron_forward
+                                </span>
+                            </div>
+                        </div>
+        
+                        <!-- 상품 하나의 정보 -->
+                        <div class="row bg-white">
+                            <div class="col">
+                                <div class="row py-3">
+                                    <div class="col fw-bold f09">
+                                        구매확정
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-auto pe-0 seller_profile">
+                                        <img class="border" src="https://www.cat-lab.co.kr/data/editor/1811/ebb93bf998cab0e92df4402e266c4e50_1541192645_5868.jpg">
+                                    </div>
+                                    <div class="col">
+                                        <div class="row">
+                                            <div class="col f09">
+                                                GamjaStore
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col f09 fw-bold">
+                                                진짜 맛있는 납작복숭아
+                                            </div>
+                                        </div>
+                                        <div class="row text-body-tertiary f09">
+                                            <div class="col-auto pe-0">
+                                                Black / M
+                                            </div>
+                                            <div class="col">
+                                                <span class="border-start border-2 px-1">5개</span>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col fw-bold">
+                                                13,500원
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row py-3">
+                                    <div class="col d-grid pe-0">
+                                        <button class="btn border bg-white rounded-0">
+                                            배송조회
+                                        </button>
+                                    </div>
+                                    <div class="col d-grid">
+                                        <button class="btn border bg-white rounded-0">
+                                            리뷰작성
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+        
+                        <div class="row bg-white">
+                            <div class="col">
+                                <div class="row py-3">
+                                    <div class="col fw-bold f09">
+                                        구매확정
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-auto pe-0 seller_profile">
+                                        <img class="border" src="https://www.cat-lab.co.kr/data/editor/1811/ebb93bf998cab0e92df4402e266c4e50_1541192645_5868.jpg">
+                                    </div>
+                                    <div class="col">
+                                        <div class="row">
+                                            <div class="col f09">
+                                                GamjaStore
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col f09 fw-bold">
+                                                진짜 맛있는 납작복숭아
+                                            </div>
+                                        </div>
+                                        <div class="row text-body-tertiary f09">
+                                            <div class="col-auto pe-0">
+                                                Black / M
+                                            </div>
+                                            <div class="col">
+                                                <span class="border-start border-2 px-1">5개</span>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col fw-bold">
+                                                13,500원
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row py-3">
+                                    <div class="col d-grid pe-0">
+                                        <button class="btn border bg-white rounded-0">
+                                            배송조회
+                                        </button>
+                                    </div>
+                                    <div class="col d-grid">
+                                        <button class="btn border bg-white rounded-0">
+                                            리뷰작성
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- footer -->
+        <div class="row py-2 bg-dark-subtle text-white text-center f09">
+            <div class="col fw-bold border-end">
+                로그아웃
+            </div>
+            <div class="col fw-bold border-end">
+                고객센터
+            </div>
+            <div class="col fw-bold">
+                NEWS
+            </div>
+        </div>
+        <div class="row py-4 px-3 bg-body-secondary text-secondary">
+            <div class="col">
+                <div class="row pb-2">
+                    <div class="col-auto p-0">
+                        <span class="material-symbols-outlined f20">
+                            camping
+                        </span>
+                    </div>
+                    <div class="col p-0 fw-bold fs-3">
+                        <span>&nbsp;BASECAMP</span>
+                    </div>
+                </div>
+                <div class="row pb-3 border-bottom border-2">
+                    <div class="col p-0 f08">
+                        BASECAMP는 통신판매 중개자로서 통신판매의 당사자가 아니며 상품의 예약, 이용 및 환불 등과 관련한 의무와 책임은 각 판매자에게 있습니다.
+                    </div>
+                </div>
+
+                <div class="row pt-3 py-3 border-bottom border-2">
+                    <div class="col-auto p-0">
+                        <button class="btn btn-sm bg-dark-subtle text-white fw-bold f08 d-flex align-items-center">
+                            <span class="material-symbols-outlined f12">
+                                phone_in_talk
+                            </span>
+                            <span>&nbsp;고객센터</span>
+                        </button>
+                    </div>
+                    <div class="col-auto">
+                        <button class="btn btn-sm bg-dark-subtle text-white fw-bold f08">
+                            카카오 1:1 문의
+                        </button>
+                    </div>
+                    <div class="col p-0 f08">
+                        <div class="row">
+                            <div class="col">
+                                <span>평일</span> : 10:00 ~ 17:00
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <span>점심</span> : 12:00 ~ 13:00
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                * 주말 공휴일 휴무
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row pt-3 align-items-center">
+                    <div class="col-auto me-2 bg-dark-subtle rounded-circle d-flex align-items-center" style="aspect-ratio: 1/1;">
+                        <i class="bi bi-google-play"></i>
+                    </div>
+                    <div class="col-auto me-2 bg-dark-subtle rounded-circle d-flex align-items-center" style="aspect-ratio: 1/1;">
+                        <i class="bi bi-youtube"></i>
+                    </div>
+                    <div class="col-auto me-2 bg-dark-subtle rounded-circle d-flex align-items-center" style="aspect-ratio: 1/1;">
+                        <i class="bi bi-instagram"></i>
+                    </div>
+                    <div class="col-auto pe-0 f08">
+                        이용약관
+                    </div>
+                    <div class="col f08">
+                        개인정보처리방침
+                    </div>
+                </div>
+                <div class="row py-5"></div>
+                <div class="row py-4"></div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- bottom-nav(임시) -->
+    <div class="row px-2 bg-white fixed-bottom pt-2 pb-4 border-top">
+        <div class="col text-center">
+            <div class="row">
+                <div class="col">
+                    <span class="material-symbols-outlined f17">
+                        home
+                    </span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col f05 fw-bold">
+                    HOME
+                </div>
+            </div>
+        </div>
+        <div class="col text-center" style="color: orangered;">
+            <div class="row">
+                <div class="col">
+                    <span class="material-symbols-outlined f17">
+                        storefront
+                    </span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col f05 fw-bold">
+                    SHOP
+                </div>
+            </div>
+        </div>
+        <div class="col text-center">
+            <div class="row">
+                <div class="col">
+                    <span class="material-symbols-outlined f17">
+                        camping
+                    </span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col f05 fw-bold">
+                    CAMP
+                </div>
+            </div>
+        </div>
+        <div class="col text-center">
+            <div class="row">
+                <div class="col">
+                    <span class="material-symbols-outlined f17">
+                        forum
+                    </span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col f05 fw-bold">
+                    COMMUNITY
+                </div>
+            </div>
+        </div>
+        <div class="col text-center">
+            <div class="row">
+                <div class="col">
+                    <span class="material-symbols-outlined f17">
+                        person
+                    </span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col f05 fw-bold">
+                    MY
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+</body>
+</html>

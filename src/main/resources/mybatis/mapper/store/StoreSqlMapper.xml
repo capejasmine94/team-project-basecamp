@@ -241,4 +241,286 @@
         and product_id = #{product_id}
     </select>
 
+    <select id="selectOptionNameListByProductId" resultType="com.bulmeong.basecamp.store.dto.ProductOptionNameDto">
+        select * from product_option_name
+        where product_id = #{product_id}
+    </select>
+
+    <select id="selectOptionValueListByOptionId" resultType="com.bulmeong.basecamp.store.dto.ProductOptionValueDto">
+        select * from product_option_value
+        where option_id = #{option_id}
+    </select>
+
+    <select id="selectNextOptionId" resultType="int">
+        select id from product_option_name
+        where product_id = #{product_id}
+        limit 1 offset #{offset}
+    </select>
+
+    <select id="selectAdditionalInfoIdByValueIds" parameterType="int[]" resultType="int">
+        select t1.additional_info_id
+        from (
+            select additional_info_id
+            from option_value_additional_info
+            where option_value_id = #{valueIds[0]}
+        ) t1
+        <foreach collection="valueIds" item="valueId" index="index" open=" " separator=" inner join " close="">
+            <choose>
+                <when test="index != 0">
+                    inner join (
+                        select additional_info_id
+                        from option_value_additional_info
+                        where option_value_id = #{valueId}
+                    ) t${index + 1} ON t1.additional_info_id = t${index + 1}.additional_info_id
+                </when>
+            </choose>
+        </foreach>
+    </select>
+
+    <select id="selectAdditionalInfoById" resultType="com.bulmeong.basecamp.store.dto.AdditionalInfoDto">
+        select * from additional_info
+        where id = #{additional_info_id}
+    </select>
+
+    <!-- 장바구니에 담기 -->
+    <insert id="insertCartProduct">
+        <selectKey resultType="int" keyProperty="id" order="AFTER">
+            select max(id) from cart_product
+        </selectKey>
+        insert into cart_product(
+            user_id, product_id, quantity
+        )values(
+            #{user_id}, #{product_id}, #{quantity}
+        )
+    </insert>
+
+    <insert id="insertCartProductOptionValue">
+        insert into cart_product_option_value(
+            cart_product_id, option_value_id
+        )values(
+            #{cart_product_id}, #{option_value_id}
+        )
+    </insert>
+
+    <select id="selectStoreNamesOfCartProdcutByUserId" resultType="java.lang.String">
+        select s.name from cart_product cp
+        inner join store_product sp on cp.product_id = sp.id 
+        inner join store s on sp.store_id = s.id 
+        where user_id = #{user_id}
+        group by s.id
+    </select>
+    
+    <select id="selectCartProductDtoList" resultType="com.bulmeong.basecamp.store.dto.CartProductDto">
+        select * from cart_product
+        where user_id = #{user_id}
+    </select>
+
+    <select id="selectStoreDtoByCartProductId" resultType="com.bulmeong.basecamp.store.dto.StoreDto">
+        select s.* from cart_product cp
+        inner join store_product sp on cp.product_id = sp.id 
+        inner join store s on sp.store_id = s.id 
+        where cp.id = #{cart_product_id}
+    </select>
+
+    <select id="selectCartProductDataById" resultType="java.util.HashMap">
+        select 
+            sp.name, 
+            sp.main_image, 
+            sp.price,
+            sp.discount_id,
+            cp.quantity,
+            cp.id
+        from cart_product cp
+        inner join cart_product_option_value cpov on cpov.cart_product_id = cp.id
+        inner join store_product sp on sp.id = cp.product_id  
+        where cp.id = #{cart_product_id}
+        group by cp.id
+    </select>
+
+    <select id="selectCartProductOptionValueIds" resultType="int">
+        select cpov.option_value_id from cart_product cp
+        inner join cart_product_option_value cpov on cpov.cart_product_id = cp.id
+        where cp.id = #{cart_product_id}
+    </select>
+
+    <select id="selectCartProductOptionValuePrimaryKeys" resultType="int">
+        select cpov.id from cart_product cp
+        inner join cart_product_option_value cpov on cpov.cart_product_id = cp.id
+        where cp.id = #{cart_product_id}
+    </select>
+
+    <select id="selectOptionValueNameById" resultType="java.lang.String">
+        select name from product_option_value pov
+        where id = #{id}
+    </select>
+
+    <insert id="insertPendingOrder">
+        <selectKey resultType="int" keyProperty="id" order="AFTER">
+            select max(id) from store_order
+        </selectKey>
+        insert into store_order(
+            user_id, status
+        )values(
+            #{user_id}, 'pending'
+        )
+    </insert>
+
+    <select id="selectCartProductById" resultType="com.bulmeong.basecamp.store.dto.CartProductDto">
+        select * from cart_product
+        where id = #{cart_product_id}
+    </select>
+
+    <insert id="insertOrderProduct">
+        <selectKey resultType="int" keyProperty="id" order="AFTER">
+            select max(id) from order_product
+        </selectKey>
+        insert into order_product(
+            order_id, product_id, quantity, status
+        )values(
+            #{order_id}, #{product_id}, #{quantity}, 'pending'
+        )
+    </insert>
+
+    <insert id="insertProductOptionValue">
+        insert into order_product_option_value(
+            order_product_id, option_value_id
+        )values(
+            #{order_product_id}, #{option_value_id}
+        )
+    </insert>
+
+    <select id="selectStoreNamesOfPendingOrderByUserId" resultType="java.lang.String">
+        select s.name from store_order so
+        inner join order_product op on so.id = op.order_id
+        inner join store_product sp on sp.id = op.product_id
+        inner join store s on s.id = sp.store_id
+        where so.user_id = #{user_id}
+        and so.status = 'pending'
+        group by s.id
+    </select>
+
+    <select id="selectPendingOrderProductDtoList" resultType="com.bulmeong.basecamp.store.dto.OrderProductDto">
+        select op.* from order_product op
+        inner join store_order so on op.order_id = so.id
+        where so.user_id = #{user_id}
+        and so.status = 'pending'
+    </select>
+
+    <select id="selectStoreDtoByOrderProductId" resultType="com.bulmeong.basecamp.store.dto.StoreDto">
+        select s.* from order_product op 
+        inner join store_product sp on op.product_id = sp.id
+        inner join store s on sp.store_id = s.id
+        where op.id = #{order_product_id}
+    </select>
+
+    <select id="selectPendingOrderProductDataById" resultType="java.util.HashMap">
+        select 
+            sp.name,
+            sp.main_image,
+            sp.price,
+            sp.discount_id,
+            op.quantity,
+            op.id
+        from order_product op
+        inner join order_product_option_value opov on op.id = opov.order_product_id
+        inner join store_product sp on sp.id = op.product_id
+        where op.id = #{order_product_id}
+        group by op.id
+    </select>
+
+    <select id="selectOrderProductOptionValueIds" resultType="int">
+        select opov.option_value_id from order_product op
+        inner join order_product_option_value opov on opov.order_product_id = op.id
+        where op.id = #{order_product_id}
+    </select>
+
+    <select id="selectOrderProductOptionValuePrimaryKeys" resultType="int">
+        select opov.id from order_product op
+        inner join order_product_option_value opov on opov.order_product_id = op.id
+        where op.id = #{order_product_id}
+    </select>
+
+    <select id="selectPendingOrderDtoListByUserId" resultType="com.bulmeong.basecamp.store.dto.StoreOrderDto">
+        select * from store_order
+        where user_id = #{user_id}
+        and status = 'pending'
+    </select>
+
+    <select id="selectPendingOrderProductListByOrderId" resultType="com.bulmeong.basecamp.store.dto.OrderProductDto">
+        select * from order_product
+        where order_id = #{order_id}
+        and status = 'pending'
+    </select>
+
+    <delete id="deletePendingOrderById">
+        delete from store_order
+        where id = #{id}
+    </delete>
+
+    <delete id="deletePendingOrderProductById">
+        delete from order_product
+        where status = 'pending'
+        and id = #{order_product_id}
+    </delete>
+
+    <delete id="deleteOrderProductOptionValueById">
+        delete from order_product_option_value
+        where id = #{id}
+    </delete>
+
+    <update id="updateStoreOrder">
+        update store_order
+        set used_point = #{used_point},
+            delivery_address = #{delivery_address},
+            status = 'complete',
+            created_at = now()
+        where id = #{id}
+    </update>
+
+    <update id="updateOrderProduct">
+        update order_product
+        set product_price = #{product_price},
+            product_main_image = #{product_main_image},
+            product_name = #{product_name},
+            discount_percentage = #{discount_percentage},
+            used_point = #{used_point},
+            order_price = #{order_price},
+            status = '결제완료'
+        where id = #{id}
+    </update>
+
+    <insert id="insertPointUsageLog">
+        insert into bc_user_mileage_log(
+            user_id, mileage_log, change_amount
+        )values(
+            #{user_id}, '포인트 결제', #{change_amount}
+        )
+    </insert>
+
+    <update id="updateUserMileage">
+        update bc_user
+        set mileage = mileage-#{used_point}
+        where id = #{id}
+    </update>
+
+    <delete id="deleteCartProduct">
+        delete from cart_product
+        where id = #{id}
+    </delete>
+
+    <delete id="deleteCartProductOptionValue">
+        delete from cart_product_option_value
+        where id = #{id}
+    </delete>
+
+    <select id="selectStoreOrderDtoById" resultType="com.bulmeong.basecamp.store.dto.StoreOrderDto">
+        select * from store_order
+        where id = #{id}
+    </select>
+
+    <select id="selectOrderProductListByOrderId" resultType="com.bulmeong.basecamp.store.dto.OrderProductDto">
+        select * from order_product
+        where order_id = #{order_id}
+    </select>
+
 </mapper>

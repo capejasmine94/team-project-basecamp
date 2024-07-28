@@ -35,6 +35,7 @@
         }
         a{
             text-decoration: none;
+            color: black;
         }
         .f05{
             font-size: 0.5em;
@@ -66,20 +67,20 @@
 
     <!-- top-nav -->
     <div class="fixed-top px-4 row border-bottom py-3 shadow-sm bg-white">
-        <div class="col-auto ps-0 fw-bold align-items-center f12">
+        <a href="/" class="col-auto ps-0 fw-bold align-items-center f12 text-black">
             Logo
-        </div>
+        </a>
         <div class="col"></div>
         <div class="col-auto pe-0 text-end pt-1 d-flex align-items-center">
             <span class="material-symbols-outlined">
                 search
             </span>
         </div>
-        <div class="col-auto pe-0 d-flex align-items-center">
+        <a href="/store/cart" class="col-auto pe-0 d-flex align-items-center text-black">
             <span class="material-symbols-outlined">
                 shopping_bag
             </span>
-        </div>
+        </a>
     </div>
 
     <div class="container" style="padding-top: 60.792px;">
@@ -382,7 +383,7 @@
         <div class="row bg-white pb-5 pe-3">
 
             <!-- 상품 하나의 정보 -->
-            <div class="col-6 py-3 pe-0 ps-3" th:each="productData : ${allProductDataList}">
+            <a th:href="@{/store/productDetails(id=${productData.storeProductDto.id})}" class="col-6 py-3 pe-0 ps-3" th:each="productData : ${allProductDataList}">
                 <div class="row">
                     <div class="col product-col">
                         <img class="border rounded-2" th:src="|/images/${productData.storeProductDto.main_image}|">
@@ -398,22 +399,28 @@
                         <span th:text="${productData.storeProductDto.name}">진짜 맛있는 납작복숭아</span>
                     </div>
                 </div>
-                <div class="row fw-bold f08 text-body-tertiary">
+                <div class="row fw-bold f08 text-body-tertiary" th:if="${productData.percentage!=0}">
                     <div class="col" style="text-decoration: line-through;">
                         <span th:text="${#numbers.formatDecimal(productData.storeProductDto.price, 1, 'COMMA', 0, 'POINT')}">40,000</span>
                     </div>
                 </div>
-                <div class="row fw-bold">
+                <div class="row fw-bold" th:if="${productData.percentage!=0}">
                     <div class="col">
                         <span style="color: orangered;" th:text="|${productData.percentage}%|">30% </span>
                         <span th:text="${#numbers.formatDecimal(productData.salePrice, 1, 'COMMA', 0, 'POINT')}">28,000</span>
                     </div>
                 </div>
-            </div>
+                <div class="row fw-bold" th:unless="${productData.percentage!=0}">
+                    <div class="col">
+                        <span th:text="${#numbers.formatDecimal(productData.storeProductDto.price, 1, 'COMMA', 0, 'POINT')}">28,000</span>
+                    </div>
+                </div>
+            </a>
 
         </div>
 
         <!-- footer -->
+        <!-- 
         <div class="row py-2 bg-secondary text-white text-center f09">
             <div class="col fw-bold border-end">
                 로그아웃
@@ -484,6 +491,92 @@
                         <i class="bi bi-youtube"></i>
                     </div>
                     <div class="col-auto me-2 bg-secondary rounded-circle d-flex align-items-center" style="aspect-ratio: 1/1;">
+                        <i class="bi bi-instagram"></i>
+                    </div>
+                    <div class="col-auto pe-0 f08">
+                        이용약관
+                    </div>
+                    <div class="col f08">
+                        개인정보처리방침
+                    </div>
+                </div>
+                <div class="row py-5"></div>
+                <div class="row py-4"></div>
+            </div>
+        </div>
+         -->
+
+        <!-- footer -->
+        <div class="row py-2 bg-dark-subtle text-white text-center f09">
+            <div class="col fw-bold border-end">
+                로그아웃
+            </div>
+            <div class="col fw-bold border-end">
+                고객센터
+            </div>
+            <div class="col fw-bold">
+                NEWS
+            </div>
+        </div>
+        <div class="row py-4 px-3 bg-body-secondary text-secondary">
+            <div class="col">
+                <div class="row pb-2">
+                    <div class="col-auto p-0">
+                        <span class="material-symbols-outlined f20">
+                            camping
+                        </span>
+                    </div>
+                    <div class="col p-0 fw-bold fs-3">
+                        <span>&nbsp;BASECAMP</span>
+                    </div>
+                </div>
+                <div class="row pb-3 border-bottom border-2">
+                    <div class="col p-0 f08">
+                        BASECAMP는 통신판매 중개자로서 통신판매의 당사자가 아니며 상품의 예약, 이용 및 환불 등과 관련한 의무와 책임은 각 판매자에게 있습니다.
+                    </div>
+                </div>
+
+                <div class="row pt-3 py-3 border-bottom border-2">
+                    <div class="col-auto p-0">
+                        <button class="btn btn-sm bg-dark-subtle text-white fw-bold f08 d-flex align-items-center">
+                            <span class="material-symbols-outlined f12">
+                                phone_in_talk
+                            </span>
+                            <span>&nbsp;고객센터</span>
+                        </button>
+                    </div>
+                    <div class="col-auto">
+                        <button class="btn btn-sm bg-dark-subtle text-white fw-bold f08">
+                            카카오 1:1 문의
+                        </button>
+                    </div>
+                    <div class="col p-0 f08">
+                        <div class="row">
+                            <div class="col">
+                                <span>평일</span> : 10:00 ~ 17:00
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <span>점심</span> : 12:00 ~ 13:00
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                * 주말 공휴일 휴무
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row pt-3 align-items-center">
+                    <div class="col-auto me-2 bg-dark-subtle rounded-circle d-flex align-items-center" style="aspect-ratio: 1/1;">
+                        <i class="bi bi-google-play"></i>
+                    </div>
+                    <div class="col-auto me-2 bg-dark-subtle rounded-circle d-flex align-items-center" style="aspect-ratio: 1/1;">
+                        <i class="bi bi-youtube"></i>
+                    </div>
+                    <div class="col-auto me-2 bg-dark-subtle rounded-circle d-flex align-items-center" style="aspect-ratio: 1/1;">
                         <i class="bi bi-instagram"></i>
                     </div>
                     <div class="col-auto pe-0 f08">

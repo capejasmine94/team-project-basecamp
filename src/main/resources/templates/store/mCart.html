@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
     <script src="https://kit.fontawesome.com/7b271bba58.js" crossorigin="anonymous"></script>
+    <script src="/public/js/store/store.js"></script>
 
     <style>
         .fill-on {
@@ -60,11 +61,248 @@
         }
     </style>
     <script>
+
+        let myId = null;
+
+        function formatNumberToPrice(number) {
+            return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+        }
+
+        function setSessionId(){
+            const url = "/api/user/getSessionUserId";
+            fetch(url)
+            .then(response => response.json())
+            .then((response) => {
+                myId = response.data.userId;
+                reloadCartProductList();
+            })
+        }
+
+        function allSelect(checkbox){
+            if(checkbox.classList.contains('storeCheckbox')){
+                const productSelectCheckboxes = checkbox.closest(".storeWrapper").querySelectorAll(".productSelectCheckbox")
+                if(checkbox.checked){
+                    for(e of productSelectCheckboxes){
+                        e.checked = true;
+                    }
+                }else{
+                    for(e of productSelectCheckboxes){
+                        e.checked = false;
+                    }
+                }
+            }else{
+                const productSelectCheckboxes = document.querySelectorAll(".productSelectCheckbox");
+                const storeCheckboxes = document.querySelectorAll(".storeCheckbox");
+
+                if(checkbox.checked){
+                    for(e of productSelectCheckboxes){
+                        e.checked = true;
+                    }
+                    for(e of storeCheckboxes){
+                        e.checked = true;
+                    }
+                }else{
+                    for(e of productSelectCheckboxes){
+                        e.checked = false;
+                    }
+                    for(e of storeCheckboxes){
+                        e.checked = false;
+                    }
+                }
+                
+            }
+            reloadSelectedProductsPrice();
+        }
+        
+        function reloadCartProductList(){
+            const url = `/api/store/getCartProductList?user_id=${myId}`
+            fetch(url)
+            .then(response => response.json())
+            .then((response) => {
+                const cartProductInfoDataList = response.data.cartProductInfoDataList;
+
+                const cartProductContainer = document.getElementById("cartProductContainer")
+                cartProductContainer.innerHTML = "";
+
+                const storeWrapper = document.querySelector("#template .storeWrapper");
+
+                for(cartProductInfoData of cartProductInfoDataList){
+                    const newStoreWrapper = storeWrapper.cloneNode(true);
+
+                    const storeNames = newStoreWrapper.querySelectorAll(".storeName")
+                    
+                    storeNames.forEach(storeName => storeName.innerText = cartProductInfoData.store_name);
+
+                    const productContainer = newStoreWrapper.querySelector(".productContainer");
+                    const productWrapper = document.querySelector("#template .productWrapper")
+
+                    for(cartProductData of cartProductInfoData.cartProductDataList){
+                        const newProductWrapper = productWrapper.cloneNode(true);
+                        newProductWrapper.querySelector(".main_img").setAttribute("src", `/images/${cartProductData.main_image}`);
+                        newProductWrapper.querySelector(".store_name").innerText = cartProductInfoData.store_name;
+                        newProductWrapper.querySelector(".product_name").innerText = cartProductData.name;
+
+                        newProductWrapper.querySelector(".productSelectCheckbox").value = cartProductData.id;
+                        
+                        let salePrice = 0;
+
+                        if(cartProductData.discount_id != 0){
+                            const price = cartProductData.price;
+                            const percentage = cartProductData.percentage;
+                            salePrice = Math.round(price - price*percentage)
+                            
+                            newProductWrapper.querySelector(".salePrice").innerText = `${formatNumberToPrice(salePrice)}원`
+                            newProductWrapper.querySelector(".price").innerText = formatNumberToPrice(price);
+                        }else{
+                            const price = cartProductData.price;
+                            salePrice = cartProductData.price;
+
+                            newProductWrapper.querySelector(".salePrice").innerText = `${formatNumberToPrice(salePrice)}원`
+                            newProductWrapper.querySelector(".price").innerText = formatNumberToPrice(price);
+                            newProductWrapper.querySelector(".price").classList.add("d-none");
+                        }
+
+                        newProductWrapper.querySelector(".quantity").innerText = `${cartProductData.quantity}`
+                        if(cartProductData.additional_price != 0){
+                            newProductWrapper.querySelector(".additional_price").innerText = `(+${formatNumberToPrice(cartProductData.additional_price)})`
+                        }
+                        newProductWrapper.querySelector(".value_names").innerText = cartProductData.valueNameList.join("/")
+
+                        const final_price = formatNumberToPrice((salePrice+cartProductData.additional_price)*cartProductData.quantity)
+                        newProductWrapper.querySelector(".final_price").innerText = `${final_price}원`
+
+                        productContainer.appendChild(newProductWrapper);
+                    }
+
+                    const checkboxes = newStoreWrapper.querySelectorAll(".productSelectCheckbox")
+                    const checkedCheckboxes = Array.from(checkboxes).filter(checkbox => checkbox.checked);
+
+                    let price_sum = 0;
+                    let final_price_sum = 0;
+
+                    for(checkedCheckbox of checkedCheckboxes){
+                        const productWrapper = checkedCheckbox.closest(".productWrapper");
+
+                        const price_text = productWrapper.querySelector(".price").innerText;
+                        const strWithoutCommas = price_text.replace(/,/g,"");
+
+                        const quantity = productWrapper.querySelector(".quantity").innerText;
+
+                        price_sum += parseInt(strWithoutCommas, 10)*quantity;
+
+                        const final_price_text = productWrapper.querySelector(".final_price").innerText;
+                        const final_price = final_price_text.replace(/,/g,"");
+                        final_price_sum += parseInt(final_price, 10);
+                    }
+
+                    newStoreWrapper.querySelector(".selected_products_price").innerText = formatNumberToPrice(price_sum)
+                    newStoreWrapper.querySelector(".discount_price").innerText = formatNumberToPrice(final_price_sum-price_sum)
+
+                    newStoreWrapper.querySelector(".selected_products_saleprice").innerText = formatNumberToPrice(final_price_sum)
+
+                    newStoreWrapper.querySelector(".selectedProductsNumber").innerText = checkedCheckboxes.length;
+                    
+                    cartProductContainer.appendChild(newStoreWrapper);
+                }
+
+                const productSelectCheckboxes = document.querySelectorAll("#cartProductContainer .productSelectCheckbox")
+                const checkedCheckboxes = Array.from(productSelectCheckboxes).filter(checkbox => checkbox.checked);
+
+                document.getElementById("selectedProductCount").innerText = checkedCheckboxes.length;
+
+                let final_price_sum = 0;
+            
+                for(checkedCheckbox of checkedCheckboxes){
+                    const productWrapper = checkedCheckbox.closest(".productWrapper");
+                    productWrapper.querySelector(".final_price").innerText;
+
+                    const final_price_text = productWrapper.querySelector(".final_price").innerText;
+                    const final_price = final_price_text.replace(/,/g,"");
+                    final_price_sum += parseInt(final_price, 10);
+                }
+
+                document.getElementById("selectedProductPrice").innerText = formatNumberToPrice(final_price_sum);
+            })
+
+        }
+
+        function reloadSelectedProductsPrice(){
+            const storeWrappers = document.querySelectorAll("#cartProductContainer .storeWrapper");
+
+            for(storeWrapper of storeWrappers){
+                const checkboxes = storeWrapper.querySelectorAll(".productSelectCheckbox")
+                const checkedCheckboxes = Array.from(checkboxes).filter(checkbox => checkbox.checked);
+
+                let price_sum = 0;
+                let final_price_sum = 0;
+
+                for(checkedCheckbox of checkedCheckboxes){
+                    const productWrapper = checkedCheckbox.closest(".productWrapper");
+
+                    const price_text = productWrapper.querySelector(".price").innerText;
+                    const strWithoutCommas = price_text.replace(/,/g,"");
+
+                    const quantity = productWrapper.querySelector(".quantity").innerText;
+
+                    price_sum += parseInt(strWithoutCommas, 10)*quantity;
+
+                    const final_price_text = productWrapper.querySelector(".final_price").innerText;
+                    const final_price = final_price_text.replace(/,/g,"");
+                    final_price_sum += parseInt(final_price, 10);
+                }
+
+                storeWrapper.querySelector(".selected_products_price").innerText = formatNumberToPrice(price_sum)
+                storeWrapper.querySelector(".discount_price").innerText = formatNumberToPrice(final_price_sum-price_sum)
+
+                storeWrapper.querySelector(".selected_products_saleprice").innerText = formatNumberToPrice(final_price_sum)
+
+                storeWrapper.querySelector(".selectedProductsNumber").innerText = checkedCheckboxes.length;
+            }
+
+            const productSelectCheckboxes = document.querySelectorAll("#cartProductContainer .productSelectCheckbox")
+            const checkedCheckboxes = Array.from(productSelectCheckboxes).filter(checkbox => checkbox.checked);
+
+            document.getElementById("selectedProductCount").innerText = checkedCheckboxes.length;
+
+            let final_price_sum = 0;
+        
+            for(checkedCheckbox of checkedCheckboxes){
+                const productWrapper = checkedCheckbox.closest(".productWrapper");
+                productWrapper.querySelector(".final_price").innerText;
+
+                const final_price_text = productWrapper.querySelector(".final_price").innerText;
+                const final_price = final_price_text.replace(/,/g,"");
+                final_price_sum += parseInt(final_price, 10);
+            }
+
+            document.getElementById("selectedProductPrice").innerText = formatNumberToPrice(final_price_sum);
+        }
+
+        function addAllProductToOrdersheet(){
+
+            const productSelectCheckboxes = document.querySelectorAll("#cartProductContainer .productSelectCheckbox");
+            const checkedCheckboxes = Array.from(productSelectCheckboxes).filter(checkbox => checkbox.checked);
+
+            const checkedValues = checkedCheckboxes.map(checkbox => parseInt(checkbox.value, 10));
+
+            const cart_product_ids = checkedValues.join(",");
+
+            const url = `/api/store/addToOrdersheet?user_id=${myId}&cart_product_ids=${cart_product_ids}`
+            fetch(url)
+            .then(response => response.json())
+            .then((response) => {
+                location.href="/store/ordersheet";
+            })
+
+        }
+
         document.addEventListener('DOMContentLoaded', function() {
             document.getElementById('backButton').addEventListener('click', function() {
                 history.back();
             });
+            setSessionId();
         });
+
     </script>
 </head>
 <body class="bg-body-secondary">
@@ -89,7 +327,7 @@
 
     <div class="row fixed-top px-4 py-2 border-bottom shadow-sm bg-white fw-bold align-items-center" style="margin-top: 60.792px;">
         <div class="col p-0">
-            <input class="form-check-input" type="checkbox" id="AllSelectCheckBox" checked>
+            <input class="form-check-input allSelectCheckBox" type="checkbox" id="AllSelectCheckBox" checked onchange="allSelect(this)">
             <label class="form-check-label" for="AllSelectCheckBox">
                 ALL
             </label>
@@ -107,8 +345,9 @@
     <div class="container" style="margin-top: 107.125px;">
 
         <div class="row px-3 pt-3 bg-body-tertiary">
-            <div class="col">
-                <div class="row pb-3">
+            <div class="col" id="cartProductContainer">
+
+                <div class="row pb-3 storeWrapper">
                     <div class="col py-2 rounded-3 border bg-white shadow-sm">
 
                         <div class="row px-3">
@@ -320,217 +559,6 @@
                     </div>
                 </div>
 
-                <div class="row pb-3">
-                    <div class="col py-2 rounded-3 border bg-white shadow-sm">
-
-                        <div class="row px-3">
-                            <div class="col px-0 py-2 border-bottom border-2 border-black">
-                                
-                                <div class="row align-items-center">
-                                    <div class="col-auto pe-0">
-                                        <input class="form-check-input" type="checkbox" checked>
-                                    </div>
-                                    <div class="col fw-bold f12">
-                                        <span>
-                                            GamjaStore
-                                        </span>
-                                    </div>
-                                </div>
-                
-                            </div>
-                        </div>
-        
-                        <div class="row px-3 py-3">
-                            <div class="col p-0">
-                                <div class="row">
-                                    <div class="col-auto pe-0">
-                                        <input class="form-check-input" type="checkbox" checked>
-                                    </div>
-                                    <div class="col">
-                                        <div class="row px-3">
-                                            <div class="col-4 p-0 product-col">
-                                                <img class="border" src="/public/img/storeImage/productImg1.jpg">
-                                            </div>
-                                            <div class="col">
-                                                <div class="row text-body-tertiary">
-                                                    <div class="col">
-                                                        GamjaStore
-                                                    </div>
-                                                </div>
-                                                <div class="row">
-                                                    <div class="col">
-                                                        엄청 맛있는 납작복숭아
-                                                    </div>
-                                                </div>
-                                                <div class="row">
-                                                    <div class="col">
-                                                        <span class=" fw-bold">
-                                                            28,000 원
-                                                        </span>
-                                                        <span class="text-body-tertiary" style="text-decoration: line-through;">
-                                                            40,000
-                                                        </span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="row py-2 px-3">
-                                            <div class="col py-2 f09 bg-body-tertiary">
-                                                <span>수량 : 1개 |</span>
-                                                <span>Black / M</span>
-                                            </div>
-                                        </div>
-                                        <div class="row px-3 fw-bold">
-                                            <div class="col p-0">
-                                                상품금액
-                                            </div>
-                                            <div class="col p-0 text-end">
-                                                28,000원
-                                            </div>
-                                        </div>
-                                        <div class="row px-3 pt-2 f09">
-                                            <div class="col-auto p-0">
-                                                배송비(50,000원 이상 무료)
-                                            </div>
-                                            <div class="col text-end p-0">
-                                                3,000원
-                                            </div>
-                                        </div>
-                                        <div class="row py-2 px-3">
-                                            <div class="col ps-0 d-grid">
-                                                <input type="button" class="btn bg-white border rounded-0" value="삭제">
-                                            </div>
-                                            <div class="col ps-0 d-grid">
-                                                <input type="button" class="btn bg-white border rounded-0" value="주문수정">
-                                            </div>
-                                            <div class="col px-0 d-grid">
-                                                <input type="button" class="btn bg-white border border-black rounded-0" value="주문하기">
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                
-                        <div class="row px-3 py-3">
-                            <div class="col p-0">
-                                <div class="row">
-                                    <div class="col-auto pe-0">
-                                        <input class="form-check-input" type="checkbox" checked>
-                                    </div>
-                                    <div class="col">
-                                        <div class="row px-3">
-                                            <div class="col-4 p-0 product-col">
-                                                <img class="border" src="/public/img/storeImage/productImg1.jpg">
-                                            </div>
-                                            <div class="col">
-                                                <div class="row text-body-tertiary">
-                                                    <div class="col">
-                                                        GamjaStore
-                                                    </div>
-                                                </div>
-                                                <div class="row">
-                                                    <div class="col">
-                                                        엄청 맛있는 납작복숭아
-                                                    </div>
-                                                </div>
-                                                <div class="row">
-                                                    <div class="col">
-                                                        <span class=" fw-bold">
-                                                            28,000 원
-                                                        </span>
-                                                        <span class="text-body-tertiary" style="text-decoration: line-through;">
-                                                            40,000
-                                                        </span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="row py-2 px-3">
-                                            <div class="col py-2 f09 bg-body-tertiary">
-                                                <span>수량 : 1개 |</span>
-                                                <span>Black / M</span>
-                                            </div>
-                                        </div>
-                                        <div class="row px-3 fw-bold">
-                                            <div class="col p-0">
-                                                상품금액
-                                            </div>
-                                            <div class="col p-0 text-end">
-                                                28,000원
-                                            </div>
-                                        </div>
-                                        <div class="row px-3 pt-2 f09">
-                                            <div class="col-auto p-0">
-                                                배송비(50,000원 이상 무료)
-                                            </div>
-                                            <div class="col text-end p-0">
-                                                3,000원
-                                            </div>
-                                        </div>
-                                        <div class="row py-2 px-3">
-                                            <div class="col ps-0 d-grid">
-                                                <input type="button" class="btn bg-white border rounded-0" value="삭제">
-                                            </div>
-                                            <div class="col ps-0 d-grid">
-                                                <input type="button" class="btn bg-white border rounded-0" value="주문수정">
-                                            </div>
-                                            <div class="col px-0 d-grid">
-                                                <input type="button" class="btn bg-white border border-black rounded-0" value="주문하기">
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                
-                        <div class="row px-3 pb-2">
-                            <div class="col p-0 py-3 border-black border-top">
-                                <div class="row f09">
-                                    <div class="col text-body-tertiary">
-                                        선택상품금액
-                                    </div>
-                                    <div class="col text-end fw-bold">
-                                        40,000원
-                                    </div>
-                                </div>
-                                <div class="row pt-1 f09">
-                                    <div class="col text-body-tertiary">
-                                        배송비
-                                    </div>
-                                    <div class="col text-end fw-bold">
-                                        3,000원
-                                    </div>
-                                </div>
-                                <div class="row f09 pt-1">
-                                    <div class="col text-body-tertiary">
-                                        할인금액
-                                    </div>
-                                    <div class="col text-end fw-bold text-danger">
-                                        -12,000원
-                                    </div>
-                                </div>
-                                <div class="row pt-1 fw-bold">
-                                    <div class="col">
-                                        주문금액
-                                    </div>
-                                    <div class="col text-end">
-                                        31,000원
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                
-                        <div class="row pb-3">
-                            <div class="col d-grid">
-                                <a href="" type="button" class="btn btn-dark fw-bold py-2">
-                                    GamjaStore 1건 주문하기
-                                </a>
-                            </div>
-                        </div>
-        
-                    </div>
-                </div>
             </div>
         </div>
 
@@ -631,25 +659,176 @@
 
     </div>
 
-    <!-- bottom-nav(임시) -->
+    <!-- bottom-nav -->
     <div class="row px-3 bg-dark fixed-bottom pt-2 pb-3">
         <div class="col">
             <div class="row align-items-center text-white">
                 <div class="col f08">
-                    총 <span class="fw-bold">1건</span>
+                    총 <span class="fw-bold" id="selectedProductCount">1</span>건
                 </div>
                 <div class="col text-end fw-bold f12">
-                    31,000 원
+                    <span id="selectedProductPrice">31,000</span> 원
                 </div>
             </div>
             <div class="row pt-2">
                 <div class="col d-grid">
-                    <a href="/store/ordersheet" type="button" class="btn btn-light py-2 fw-bold">
+                    <a onclick="addAllProductToOrdersheet()" type="button" class="btn btn-light py-2 fw-bold">
                         주문하기
                     </a>
                 </div>
             </div>
         </div>
+    </div>
+
+    <div id="template" class="d-none">
+
+        <!-- store하나의 정보 -->
+        <div class="row pb-3 storeWrapper">
+            <div class="col py-2 rounded-3 border bg-white shadow-sm">
+
+                <div class="row px-3">
+                    <div class="col px-0 py-2 border-bottom border-2 border-black">
+                        
+                        <div class="row align-items-center">
+                            <div class="col-auto pe-0">
+                                <input class="form-check-input storeCheckbox" type="checkbox" checked onchange="allSelect(this)">
+                            </div>
+                            <div class="col fw-bold f12">
+                                <span class="storeName">
+                                    GamjaStore
+                                </span>
+                            </div>
+                        </div>
+        
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col productContainer">
+
+                    </div>
+                </div>
+        
+                <div class="row px-3 pb-2">
+                    <div class="col p-0 py-3 border-black border-top">
+                        <div class="row f09">
+                            <div class="col text-body-tertiary">
+                                선택상품금액
+                            </div>
+                            <div class="col text-end fw-bold">
+                                <span class="selected_products_price">40,000</span>원
+                            </div>
+                        </div>
+                        <div class="row pt-1 f09">
+                            <div class="col text-body-tertiary">
+                                배송비(아직 안 함)
+                            </div>
+                            <div class="col text-end fw-bold">
+                                0원
+                            </div>
+                        </div>
+                        <div class="row f09 pt-1">
+                            <div class="col text-body-tertiary">
+                                할인금액
+                            </div>
+                            <div class="col text-end fw-bold text-danger">
+                                <span class="discount_price">-12,000</span>원
+                            </div>
+                        </div>
+                        <div class="row pt-1 fw-bold">
+                            <div class="col">
+                                주문금액
+                            </div>
+                            <div class="col text-end">
+                                <span class="selected_products_saleprice">31,000</span>원
+                            </div>
+                        </div>
+                    </div>
+                </div>
+        
+                <div class="row pb-3">
+                    <div class="col d-grid">
+                        <a type="button" class="btn btn-dark fw-bold py-2">
+                            <span class="storeName">GamjaStore</span> <span class="selectedProductsNumber">1</span>건 주문하기
+                        </a>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        
+        <!-- 상품 하나의 정보 -->
+        <div class="row px-3 py-3 productWrapper">
+            <div class="col p-0">
+                <div class="row">
+                    <div class="col-auto pe-0">
+                        <input class="form-check-input productSelectCheckbox" type="checkbox" checked onchange="reloadSelectedProductsPrice()">
+                    </div>
+                    <div class="col">
+                        <div class="row px-3">
+                            <div class="col-4 p-0 product-col">
+                                <img class="border main_img" src="/public/img/storeImage/productImg1.jpg">
+                            </div>
+                            <div class="col">
+                                <div class="row text-body-tertiary">
+                                    <div class="col">
+                                        <span class="store_name">GamjaStore</span>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col product_name">
+                                        엄청 맛있는 납작복숭아
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col">
+                                        <span class=" fw-bold salePrice">
+                                            28,000 원
+                                        </span>
+                                        <span class="text-body-tertiary price" style="text-decoration: line-through;"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row py-2 px-3">
+                            <div class="col py-2 f09 bg-body-tertiary">
+                                수량 : <span class="quantity">1</span>개 |
+                                <span class="value_names">Black / M</span>
+                                <span class="additional_price"></span>
+                            </div>
+                        </div>
+                        <div class="row px-3 fw-bold">
+                            <div class="col p-0">
+                                상품금액
+                            </div>
+                            <div class="col p-0 text-end final_price">
+                                28,000원
+                            </div>
+                        </div>
+                        <div class="row px-3 pt-2 f09">
+                            <div class="col-auto p-0">
+                                배송비(50,000원 이상 무료)
+                            </div>
+                            <div class="col text-end p-0">
+                                0원
+                            </div>
+                        </div>
+                        <div class="row py-2 px-3">
+                            <div class="col ps-0 d-grid">
+                                <input type="button" class="btn bg-white border rounded-0" value="삭제">
+                            </div>
+                            <div class="col ps-0 d-grid">
+                                <input type="button" class="btn bg-white border rounded-0" value="주문수정">
+                            </div>
+                            <div class="col px-0 d-grid">
+                                <input type="button" class="btn bg-white border border-black rounded-0" value="주문하기">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>

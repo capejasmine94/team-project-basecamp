@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
     <script src="https://kit.fontawesome.com/7b271bba58.js" crossorigin="anonymous"></script>
+    <script src="/public/js/store/store.js"></script>
 
     <style>
         .fill-on {
@@ -58,12 +59,128 @@
         .f40{
             font-size: 4em;
         }
+        #inputPoint:focus{
+            outline: none;
+        }
     </style>
     <script>
+        let myId = null;
+
+        function setSessionId(){
+            const url = "/api/user/getSessionUserId";
+            fetch(url)
+            .then(response => response.json())
+            .then((response) => {
+                myId = response.data.userId;
+            })
+        }
+
+        function validateInput(input){
+            input.value = input.value.replace(/[^0-9]/g, '');
+        }
+
+        function inputPoint(input){
+            if(input.value.startsWith('0')&&input.value!=0){
+                input.value = input.value.replace(/^0+/, '');
+            }
+            
+            const userPoint_text = document.getElementById("userPoint").innerText;
+            const userPoint = parseInt(userPoint_text.replace(/,/g,""), 10);
+
+            if(input.value>userPoint){
+                alert("보유 금액 이상 사용은 불가능 합니다.")
+                input.value = 0;
+                document.getElementById("usePoint").innerText = 0;
+                document.getElementById("usePointRow").classList.add("d-none")
+                setPaymentAmount();
+                return;
+            }
+
+            if(input.value>0){
+                document.getElementById("usePoint").innerText = `${formatNumberToPrice(input.value)}`;
+                document.getElementById("usePointRow").classList.remove("d-none")
+                setPaymentAmount();
+            }else{
+                document.getElementById("usePoint").innerText = 0;
+                document.getElementById("usePointRow").classList.add("d-none")
+                setPaymentAmount();
+            }
+        }
+
+        function setOrdersheet(){
+            const priceList = document.querySelectorAll(".price");
+            let priceSum = 0;
+
+            for(price of priceList){
+                priceSum += parseInt(price.innerText.replace(/,/g,""), 10);
+            }
+            
+            document.getElementById("price").innerText = `${formatNumberToPrice(priceSum)}원`;
+
+            const salePriceList = document.querySelectorAll(".salePrice");
+            let salePriceSum = 0;
+
+            for(salePrice of salePriceList){
+                salePriceSum += parseInt(salePrice.innerText.replace(/[,원]/g, ""), 10);
+            }
+
+            const orderPriceList = document.querySelectorAll(".orderPrice")
+
+            for(orderPrice of orderPriceList){
+                orderPrice.innerText = `${formatNumberToPrice(salePriceSum)}원`;
+            }
+
+            const discountPrice = document.getElementById("discountPrice");
+            discountPrice.innerText = `${formatNumberToPrice(salePriceSum - priceSum)}원`
+
+            setPaymentAmount();
+        }
+
+        function setRewardPoint(){
+            const purchasePoint = document.getElementById("purchasePoint");
+            const paymentAmount = document.querySelector(".paymentAmount").innerText.replace(/,/g,"");
+
+            purchasePoint.innerText = formatNumberToPrice(parseInt(paymentAmount/1000, 10));
+
+            const expectedPoint = document.getElementById("expectedPoint");
+            expectedPoint.innerText = formatNumberToPrice(parseInt((paymentAmount/1000)+500, 10))
+        }
+
+        function setPaymentAmount(){
+            const paymentAmountList = document.querySelectorAll(".paymentAmount");
+            const orderPrice_text = document.querySelector(".orderPrice").innerText;
+            const usePoint_text = document.getElementById("usePoint").innerText;
+
+            const orderPrice = parseInt(orderPrice_text.replace(/,/g,""), 10);
+            const usePoint = parseInt(usePoint_text.replace(/,/g,""), 10);
+
+            for(paymentAmount of paymentAmountList){
+                paymentAmount.innerText = formatNumberToPrice(orderPrice - usePoint);
+            }
+            setRewardPoint();
+        }
+
+        function submitPayment(){
+            const used_point = document.getElementById("inputPoint").value;
+            const deliveryAddress = document.getElementById("deliveryAddress").innerText;
+            const paymentAmount = document.querySelector(".paymentAmount").innerText.replace(/,/g,"");
+
+            const url = `/api/store/orderProcess?used_point=${used_point}&delivery_address=${deliveryAddress}&payment_amount=${paymentAmount}`
+            fetch(url)
+            .then(response => response.json())
+            .then(response => {
+                const order_id = response.data.order_id;
+
+                location.href=`/store/orderComplete?id=${order_id}`
+            })
+        }
+
         document.addEventListener('DOMContentLoaded', function() {
             document.getElementById('backButton').addEventListener('click', function() {
                 history.back();
             });
+            setSessionId();
+            setOrdersheet();
         });
     </script>
 </head>
@@ -98,8 +215,8 @@
                     </div>
                 </div>
 
-                <div class="row pb-3">
-                    <div class="col py-3 rounded-3 bg-white shadow-sm">
+                <div class="row pb-4">
+                    <div class="col py-3 rounded-3 bg-white border">
                         <div class="row">
                             <div class="col">
                                 <div class="row pb-1 align-items-center">
@@ -113,7 +230,7 @@
                                     </div>
                                 </div>
                                 <div class="row pb-1">
-                                    <div class="col">
+                                    <div class="col" id="deliveryAddress">
                                         서울특별시 강남구 테헤란로 7길 7 (무슨 빌딩) 6층 (12345)
                                     </div>
                                 </div>
@@ -134,39 +251,50 @@
                     </div>
                 </div>
 
-                <div class="row pb-3">
-                    <div class="col py-3 rounded-3 bg-white shadow-sm">
+                <div class="row pb-4" th:each="pendingOrderProductInfoData : ${pendingOrderProductInfoDataList}">
+                    <div class="col py-3 rounded-3 bg-white border">
 
-                        <div class="row pb-2 pb-1 align-items-center">
-                            <div class="col fw-bold">
-                                모이세농원
+                        <div class="row align-items-center">
+                            <div class="col fw-bold text-dark">
+                                <span th:text="${pendingOrderProductInfoData.store_name}">모이세농원</span>
                             </div>
                         </div>
-                        <div class="row pb-1">
+                        <div class="row pt-3" th:each="e : ${pendingOrderProductInfoData.productOrderProductDataList}">
                             <div class="col-3 pe-0 product-col">
-                                <img class="border" src="/public/img/storeImage/productImg1.jpg">
+                                <img class="border rounded-2" th:src="|/images/${e.main_image}|">
                             </div>
                             <div class="col">
                                 <div class="row">
                                     <div class="col">
-                                        진짜 맛있는 납작복숭아
+                                        <span th:text="${e.name}">진짜 맛있는 납작복숭아</span>
                                     </div>
                                 </div>
                                 <div class="row text-body-tertiary f09">
-                                    <div class="col-auto pe-0">
-                                        <span class="badge text-bg-light border text-body-tertiary">
+                                    <div class="col-auto pe-0 d-flex align-items-center">
+                                        <span class="badge text-bg-white border text-body-tertiary">
                                             옵션
                                         </span>
                                     </div>
                                     <div class="col">
-                                        색상: 검정 / 사이즈: M / 또 무슨 옵션: 짜라잔
-                                        <span class="border-start border-2 px-1">1개</span>
+                                        <span th:if="${e.valueNameList}" th:each="name, iterStat : ${e.valueNameList}">
+                                            <span th:text="${name}">색상: 검정 / 사이즈: M / 또 무슨 옵션: 짜라잔</span>
+                                            <span th:if="${!iterStat.last}">/</span>
+                                        </span>
+                                        <span class="border-start border-2 px-1" th:text="|${e.quantity}개|"></span>
+                                        <span th:if="${e.additional_price!=0}" th:text="|(+${#numbers.formatDecimal(e.quantity*e.additional_price, 1, 'COMMA', 0, 'POINT')}원)|">3,000</span>
                                     </div>
                                 </div>
-                                <div class="row">
+                                <div class="row align-items-center">
                                     <div class="col">
-                                        <span class="fw-bold">28,000원</span>
-                                        <span class="text-body-tertiary" style="text-decoration: line-through;">40,000</span>
+                                        <span class="fw-bold salePrice" th:text="|${#numbers.formatDecimal((e.salePrice+e.additional_price)*e.quantity, 1, 'COMMA', 0, 'POINT')}원|">
+                                            28,000원
+                                        </span>
+                                        <span class="text-body-tertiary price" style="text-decoration: line-through;" th:if="${e.percentage!=0}" th:text="${#numbers.formatDecimal((e.price+e.additional_price)*e.quantity, 1, 'COMMA', 0, 'POINT')}">
+                                            40,000
+                                        </span>
+                                        <span class="text-body-tertiary price d-none" style="text-decoration: line-through;" th:unless="${e.percentage!=0}" th:text="${#numbers.formatDecimal((e.price+e.additional_price)*e.quantity, 1, 'COMMA', 0, 'POINT')}">
+                                            40,000
+                                        </span>
                                     </div>
                                 </div>
                             </div>
@@ -175,14 +303,14 @@
                     </div>
                 </div>
 
-                <div class="row pb-3">
-                    <div class="col pt-3 rounded-3 bg-white shadow-sm">
+                <div class="row pb-4">
+                    <div class="col pt-3 rounded-3 bg-white border">
 
                         <div class="row pb-2 pb-1 align-items-center text-body-tertiary">
                             <div class="col">
                                 상품금액
                             </div>
-                            <div class="col text-end">
+                            <div class="col text-end" id="price">
                                 40,000원
                             </div>
                         </div>
@@ -192,7 +320,8 @@
                                 배송비
                             </div>
                             <div class="col text-end">
-                                +3,000원
+                                <!-- +3,000원 -->
+                                0원
                             </div>
                         </div>
 
@@ -200,7 +329,7 @@
                             <div class="col">
                                 할인금액
                             </div>
-                            <div class="col text-end">
+                            <div class="col text-end" id="discountPrice">
                                 -12,000원
                             </div>
                         </div>
@@ -209,7 +338,7 @@
                             <div class="col">
                                 총 주문금액
                             </div>
-                            <div class="col text-end" style="color: orangered;">
+                            <div class="col text-end orderPrice" style="color: orangered;">
                                 28,000원
                             </div>
                         </div>
@@ -223,21 +352,38 @@
                     </div>
                 </div>
 
-                <div class="row pb-3">
-                    <div class="col py-3 rounded-3 bg-white shadow-sm">
+                <!-- <div class="row" th:each="orderProduct : ${orderProductList}">
+                    <div class="col">
+                        <span>될까?</span>
+                        <span th:text="${orderProduct.orderProduct.quantity}"></span>
+                    </div>
+                </div> -->
 
-                        <div class="row pb-2 text-body-tertiary">
+                <div class="row pb-4">
+                    <div class="col py-3 rounded-3 bg-white border">
+
+                        <div class="row pb-2 text-dark-emphasis fw-semibold">
                             <div class="col">
                                 보유
                             </div>
                             <div class="col text-end">
-                                4,000원
+                                <span id="userPoint" th:text="${#numbers.formatDecimal(session.sessionUserInfo.mileage, 1, 'COMMA', 0, 'POINT')}">4,000</span>원
                             </div>
                         </div>
 
-                        <div class="row">
-                            <div class="col">
-                                <input type="text" class="form-control" placeholder="사용">
+                        <div class="row" style="padding-left: 12px;padding-right: 12px;">
+                            <div class="col border rounded-2">
+                                <div class="row align-items-center">
+                                    <div class="col-auto">
+                                        <span class="text-body-tertiary">사용</span>
+                                    </div>
+                                    <div class="col d-grid pe-0">
+                                        <input type="text" class="border-0 text-end py-2 fw-bold" id="inputPoint" value="0" oninput="validateInput(this)" onblur="inputPoint(this)">
+                                    </div>
+                                    <div class="col-auto fw-bold">
+                                        <span>원</span>
+                                    </div>
+                                </div>
                             </div>
                         </div>
 
@@ -250,44 +396,80 @@
                     </div>
                 </div>
 
-                <div class="row pb-3">
-                    <div class="col py-3 rounded-3 bg-white shadow-sm">
+                <div class="row pb-4">
+                    <div class="col py-3 rounded-3 bg-white border">
 
-                        <div class="row pb-2">
-                            <div class="col">
-                                카드결제랑
+                        <div class="row">
+                            <div class="col-auto pe-0">
+                                <input type="radio" class="form-check-input" checked>
+                            </div>
+                            <div class="col-auto pe-0 d-flex align-items-center">
+                                <img src="/public/img/storeImage/payment_icon_yellow_medium.png" style="height: 20px;">
+                            </div>
+                            <div class="col fw-bold">
+                                카카오페이
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="row py-2 fw-bold align-items-center">
+                    <div class="col p-0 f12">
+                        결제 상세
+                    </div>
+                    <div class="col-auto p-0 orderPrice" style="color: orangered;">
+                        52,000원
+                    </div>
+                </div>
+
+                <div class="row pb-4 fw-semibold">
+                    <div class="col py-3 rounded-3 bg-white border">
+
+                        <div class="row pb-2 d-none" id="usePointRow">
+                            <div class="col text-dark-emphasis">
+                                포인트 사용
+                            </div>
+                            <div class="col-auto">
+                                <span id="usePoint">0</span>원
                             </div>
                         </div>
 
                         <div class="row">
-                            <div class="col">
-                                무통장 입금이랑 뭐 그런 거
+                            <div class="col text-dark-emphasis">
+                                신용카드(결제수단)
+                            </div>
+                            <div class="col-auto">
+                                <span class="paymentAmount">50,000</span>원
                             </div>
                         </div>
 
                     </div>
                 </div>
 
-                <div class="row py-2 fw-bold f12">
-                    <div class="col p-0">
+                <div class="row py-2 fw-bold align-items-center">
+                    <div class="col p-0 f12">
                         적립 예정 포인트
+                    </div>
+                    <div class="col-auto p-0" style="color: orangered;">
+                        최대 <span id="expectedPoint">500</span>원
                     </div>
                 </div>
 
-                <div class="row pb-3">
-                    <div class="col py-3 fw-bold rounded-3 bg-white shadow-sm">
+                <div class="row pb-4">
+                    <div class="col py-3 fw-semibold rounded-3 bg-white border">
 
                         <div class="row pb-2">
-                            <div class="col">
+                            <div class="col text-dark-emphasis">
                                 구매적립
                             </div>
                             <div class="col text-end">
-                                280원
+                                <span id="purchasePoint"></span>원
                             </div>
                         </div>
 
                         <div class="row">
-                            <div class="col">
+                            <div class="col text-dark-emphasis">
                                 리뷰적립
                             </div>
                             <div class="col text-end">
@@ -315,12 +497,12 @@
         <div class="col">
             <div class="row pt-2">
                 <div class="col d-grid">
-                    <a href="/store/orderComplete" type="button" class="btn btn-dark py-2 fw-bold">
-                        31,000원 결제하기
+                    <a onclick="submitPayment()" type="button" class="btn btn-dark py-2 fw-bold">
+                        <span class="paymentAmount">31,000</span>원 결제하기
                     </a>
                 </div>
             </div>
-            <div class="row pt-2">
+            <div class="row pt-2 text-center">
                 <div class="col" style="font-size: 0.75em;">
                     약관 및 주문 내용을 확인하였으며, 정보 제공 등에 동의합니다.
                 </div>

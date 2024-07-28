@@ -11,11 +11,13 @@ import org.springframework.web.multipart.MultipartFile;
 import com.bulmeong.basecamp.common.dto.RestResponseDto;
 import com.bulmeong.basecamp.common.util.ImageUtil;
 import com.bulmeong.basecamp.store.dto.AdditionalInfoDto;
+import com.bulmeong.basecamp.store.dto.CartProductDto;
 import com.bulmeong.basecamp.store.dto.ProductOptionNameDto;
 import com.bulmeong.basecamp.store.dto.StoreDto;
 import com.bulmeong.basecamp.store.dto.StoreProductDto;
 import com.bulmeong.basecamp.store.dto.StoreRestResponseDto;
 import com.bulmeong.basecamp.store.service.StoreService;
+import com.bulmeong.basecamp.user.dto.UserDto;
 
 import jakarta.servlet.http.HttpSession;
 
@@ -150,4 +152,154 @@ public class RestStoreController {
         return restResponseDto;
     }
 
+    @RequestMapping("getOptionDataList")
+    public RestResponseDto getOptionDataList(@RequestParam("product_id") int product_id){
+        RestResponseDto restResponseDto = new RestResponseDto();
+
+        List<Map<String, Object>> optionDataList = storeService.getOptionDataList(product_id);
+
+        restResponseDto.add("optionDataList", optionDataList);
+
+        return restResponseDto;
+    }
+    
+    @RequestMapping("getAdditionalInfo")
+    public RestResponseDto getAdditionalInfo(
+        @RequestParam("product_id")int product_id, 
+        @RequestParam("currentIndex") int currentIndex,
+        @RequestParam("value_ids") int[] value_ids
+    ){
+        RestResponseDto restResponseDto = new RestResponseDto();
+
+        if (value_ids == null) {
+            value_ids = new int[0];
+        }
+
+        List<Map<String, Object>> additionalInfoDataList = storeService.getAdditionalInfoDataList(product_id, currentIndex, value_ids);
+
+        restResponseDto.add("additionalInfoDataList", additionalInfoDataList);
+
+        return restResponseDto;
+    }
+
+    @RequestMapping("getAdditionalInfoDto")
+    public RestResponseDto getAdditionalInfoDto(@RequestParam("value_ids") int[] value_ids){
+        RestResponseDto restResponseDto = new RestResponseDto();
+
+        restResponseDto.add("additionalInfoDto", storeService.getAdditionalInfoDto(value_ids));
+
+        return restResponseDto;
+    }
+
+    @RequestMapping("addToCart")
+    public RestResponseDto addToCart(
+        @RequestParam("quantity") int quantity,
+        @RequestParam("product_id") int product_id,
+        @RequestParam("value_ids") int[] value_ids,
+        @RequestParam("user_id") int user_id
+    ){
+        RestResponseDto restResponseDto = new RestResponseDto();
+
+        CartProductDto cartProductDto = new CartProductDto();
+        cartProductDto.setProduct_id(product_id);
+        cartProductDto.setQuantity(quantity);
+        cartProductDto.setUser_id(user_id);
+
+        storeService.insertCartProduct(cartProductDto, value_ids);
+
+        return restResponseDto;
+    }
+
+    @RequestMapping("getCartProductList")
+    public RestResponseDto getCartProductList(@RequestParam("user_id") int user_id){
+        RestResponseDto restResponseDto = new RestResponseDto();
+
+        List<Map<String, Object>> cartProductInfoDataList = storeService.getCartProductDataList(user_id);
+
+        restResponseDto.add("cartProductInfoDataList", cartProductInfoDataList);
+
+        return restResponseDto;
+    }
+
+    @RequestMapping("insertPendingOrder")
+    public RestResponseDto insertPendingOrder(@RequestParam("user_id")int user_id, @RequestParam("cart_product_ids") int[] cart_product_ids){
+        RestResponseDto restResponseDto = new RestResponseDto();
+
+        storeService.insertPendingOrder(user_id, cart_product_ids);
+
+        return restResponseDto;
+    }
+
+    // @RequestMapping("getPendingOrderProductList")
+    // public RestResponseDto getPendingOrderProductList(@RequestParam("user_id") int user_id){
+    //     RestResponseDto restResponseDto = new RestResponseDto();
+
+    //     List<Map<String, Object>> pendingOrderProductInfoDataList = storeService.getPendingOrderDataList(user_id);
+
+    //     restResponseDto.add("pendingOrderProductInfoDataList", pendingOrderProductInfoDataList);
+
+    //     return restResponseDto;
+    // }
+
+    @RequestMapping("deletePendingOrderDtoList")
+    public RestResponseDto deletePendingOrderDtoList(@RequestParam("user_id") int user_id){
+        RestResponseDto restResponseDto = new RestResponseDto();
+
+        storeService.deletePendingOrder(user_id);
+
+        return restResponseDto;
+    }
+
+    @RequestMapping("addToOrdersheet")
+    public RestResponseDto addToOrdersheet(
+        @RequestParam("user_id")int user_id, 
+        @RequestParam("cart_product_ids") int[] cart_product_ids,
+        HttpSession session
+    ){
+        RestResponseDto restResponseDto = new RestResponseDto();
+
+        session.setAttribute("pendingOrderCartProductIds", cart_product_ids);
+
+        storeService.deletePendingOrder(user_id);
+        storeService.insertPendingOrder(user_id, cart_product_ids);
+
+        return restResponseDto;
+    }
+
+    @RequestMapping("orderProcess")
+    public RestResponseDto orderProcess(
+        @RequestParam("used_point")int used_point, 
+        @RequestParam("delivery_address") String delivery_address, 
+        @RequestParam("payment_amount") int payment_amount,
+        HttpSession session
+    ){
+        RestResponseDto restResponseDto = new RestResponseDto();
+
+        UserDto userDto = (UserDto)session.getAttribute("sessionUserInfo");
+        int user_id = userDto.getId();
+        int order_id = storeService.orderProcess(user_id, used_point, delivery_address, payment_amount);
+        
+        int[] pendingOrderCartProductIds = (int[])session.getAttribute("pendingOrderCartProductIds");
+
+        if(pendingOrderCartProductIds!=null){
+            storeService.deleteCartProductDataList(pendingOrderCartProductIds);
+        }
+
+        restResponseDto.add("order_id", order_id);
+
+        
+
+        return restResponseDto;
+    }
+
+
+    // 확인용
+    @RequestMapping("getPendingOrderCartProductIds")
+    public RestResponseDto getPendingOrderCartProductIds(HttpSession session){
+        RestResponseDto restResponseDto = new RestResponseDto();
+
+        restResponseDto.add("pendingOrderCartProductIds", session.getAttribute("pendingOrderCartProductIds"));
+
+        return restResponseDto;
+    }
 }
