@@ -38,7 +38,7 @@ public class SellerController {
             return "redirect:/storeCenter/storeRegister";
         }else{
             //여기 수정(캠핑카)
-            return "redirect:/admin/nfRegisterPage";
+            return "redirect:/partner/nfRegisterPage";
         }
     }
 
@@ -71,7 +71,7 @@ public class SellerController {
             session.setAttribute("sessionCaravanInfo", rentalCompanyDto);
             System.out.println("11111111111"+  rentalCompanyDto);
     
-            return "redirect:/admin/main";
+            return "redirect:/partner/main";
         }
     }
 }

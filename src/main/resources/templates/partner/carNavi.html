@@ -10,7 +10,7 @@
             </span>
             <span th:unless="${session.sessionCaravanInfo!=null}">비회원</span>
         </div>
-        <form action="/admin/logoutProcess" class="col-auto">
+        <form action="/partner/logoutProcess" class="col-auto">
             <button class="btn btn-outline-light btn-sm fw-bold text-black">로그아웃</button>
         </form>
     </div>
@@ -41,7 +41,7 @@ id="leftAccordion" style="color: white; padding-top: 58px; background-color: #30
     <!-- 대쉬보드 -->
     <div class="row category">
         <div class="col  ps-3 pe-0 d-grid">
-            <a class="py-3 accordion-button collapsed fw-semibold fs-7" href="/admin/dashboard">
+            <a class="py-3 accordion-button collapsed fw-semibold fs-7" href="/partner/dashboard">
                 <span class="material-symbols-outlined fs-7">dashboard</span>
                 <div class="ps-2">Dashboard</div>
             </a>
@@ -64,10 +64,10 @@ id="leftAccordion" style="color: white; padding-top: 58px; background-color: #30
     <!-- 차량등록_서브카테고리 -->
     <div class="row accordion-collapse collapse show p-0" id="first-collapse" data-bs-parent="#leftAccordion">
         <div class="col">
-            <a class="row accordion-body py-3 ps-5 subcategory" href="/admin/carRegister" id="productRegister">
+            <a class="row accordion-body py-3 ps-5 subcategory" href="/partner/carRegister" id="productRegister">
                 차량 등록
             </a>
-            <a class="row accordion-body py-3 ps-5 subcategory" href="/admin/carManagement">
+            <a class="row accordion-body py-3 ps-5 subcategory" href="/partner/carManagement">
                 차량 조회/수정
             </a>
         </div>
@@ -89,19 +89,19 @@ id="leftAccordion" style="color: white; padding-top: 58px; background-color: #30
     <!-- 예약관리_서브카테고리 -->
     <div class="row accordion-collapse collapse p-0" id="second-collapse" data-bs-parent="#leftAccordion">
         <div class="col">
-            <a class="row accordion-body py-3 ps-5 subcategory" href="/admin/reservation_status">
+            <a class="row accordion-body py-3 ps-5 subcategory" href="/partner/reservation_status">
                 예약 현황
             </a>
-            <a class="row accordion-body py-3 ps-5 subcategory" href="/admin/bookReservation">
+            <a class="row accordion-body py-3 ps-5 subcategory" href="/partner/bookReservation">
                 예약 신청
             </a>
-            <a class="row accordion-body py-3 ps-5 subcategory" href="/admin/optionSettings">
+            <a class="row accordion-body py-3 ps-5 subcategory" href="/partner/optionSettings">
                 옵션신청
             </a>
-            <a class="row accordion-body py-3 ps-5 subcategory" href="/admin/peakSeason">
+            <a class="row accordion-body py-3 ps-5 subcategory" href="/partner/peakSeason">
                 성수기·휴일
             </a>
-            <a class="row accordion-body py-3 ps-5 subcategory" href="/admin/settings">
+            <a class="row accordion-body py-3 ps-5 subcategory" href="/partner/settings">
                 환경 설정
             </a>
         </div>
@@ -123,10 +123,10 @@ id="leftAccordion" style="color: white; padding-top: 58px; background-color: #30
     <!-- 문의/리뷰_서브카테고리 -->
     <div class="row accordion-collapse collapse p-0" id="third-collapse" data-bs-parent="#leftAccordion">
         <div class="col">
-            <a class="row accordion-body py-3 ps-5 subcategory" href="/admin/inquiryManage">
+            <a class="row accordion-body py-3 ps-5 subcategory" href="/partner/inquiryManage">
                 문의관리
             </a>
-            <a class="row accordion-body py-3 ps-5 subcategory" href="/admin/review_manage">
+            <a class="row accordion-body py-3 ps-5 subcategory" href="/partner/review_manage">
                 리뷰관리
             </a>
         </div>
@@ -148,16 +148,16 @@ id="leftAccordion" style="color: white; padding-top: 58px; background-color: #30
     <!-- 컨텐츠관리_서브카테고리 -->
     <div class="row accordion-collapse collapse p-0" id="third-collapse" data-bs-parent="#leftAccordion">
         <div class="col">
-            <a class="row accordion-body py-3 ps-5 subcategory" href="/admin/inputForm">
+            <a class="row accordion-body py-3 ps-5 subcategory" href="/partner/inputForm">
                 입력폼
             </a>
-            <a class="row accordion-body py-3 ps-5 subcategory" href="/admin/map">
+            <a class="row accordion-body py-3 ps-5 subcategory" href="/partner/map">
                 지도
             </a>
-            <a class="row accordion-body py-3 ps-5 subcategory" href="/admin/schedule">
+            <a class="row accordion-body py-3 ps-5 subcategory" href="/partner/schedule">
                 일정
             </a>
-            <a class="row accordion-body py-3 ps-5 subcategory" href="/admin/reportBlock">
+            <a class="row accordion-body py-3 ps-5 subcategory" href="/partner/reportBlock">
                 신고·차단
             </a>
         </div>
@@ -179,31 +179,31 @@ id="leftAccordion" style="color: white; padding-top: 58px; background-color: #30
     <!-- 통계_서브카테고리  -->
     <div class="row accordion-collapse collapse p-0" id="third-collapse" data-bs-parent="#leftAccordion">
         <div class="col">
-            <a class="row accordion-body py-3 ps-5 subcategory" href="/admin/statistics">
+            <a class="row accordion-body py-3 ps-5 subcategory" href="/partner/statistics">
                 홈
             </a>
-            <a class="row accordion-body py-3 ps-5 subcategory" href="/admin/sales">
+            <a class="row accordion-body py-3 ps-5 subcategory" href="/partner/sales">
                 매출 통계     
             </a>
-            <a class="row accordion-body py-3 ps-5 subcategory" href="/admin/periodicAnalysis">
+            <a class="row accordion-body py-3 ps-5 subcategory" href="/partner/periodicAnalysis">
                 기간별 분석
             </a>
-            <a class="row accordion-body py-3 ps-5 subcategory" href="/admin/referralSites">
+            <a class="row accordion-body py-3 ps-5 subcategory" href="/partner/referralSites">
                 유입 사이트
             </a>
-            <a class="row accordion-body py-3 ps-5 subcategory" href="/admin/searchKeywords">
+            <a class="row accordion-body py-3 ps-5 subcategory" href="/partner/searchKeywords">
                 유입 검색어
             </a>
-            <a class="row accordion-body py-3 ps-5 subcategory" href="/admin/visitors">
+            <a class="row accordion-body py-3 ps-5 subcategory" href="/partner/visitors">
                 방문자
             </a>
-            <a class="row accordion-body py-3 ps-5 subcategory" href="/admin/topVisitedPages">
+            <a class="row accordion-body py-3 ps-5 subcategory" href="/partner/topVisitedPages">
                 많이 방문한 페이지
             </a>
-            <a class="row accordion-body py-3 ps-5 subcategory" href="/admin/rewardse">
+            <a class="row accordion-body py-3 ps-5 subcategory" href="/partner/rewardse">
                 적립금
             </a>
-            <a class="row accordion-body py-3 ps-5 subcategory" href="/admin/additionalServices">
+            <a class="row accordion-body py-3 ps-5 subcategory" href="/partner/additionalServices">
                 부가 서비스
             </a>
         </div>

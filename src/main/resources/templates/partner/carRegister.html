@@ -8,20 +8,19 @@
     <script src="https://kit.fontawesome.com/7b271bba58.js" crossorigin="anonymous"></script>
     <!-- Google Material Icons -->
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet">
-    <!-- admin_main css
-    <link href="/public/css/campingcar/adminmain.css" rel="stylesheet"> -->
-    <link href="/public/css/campingcar/camping.css" rel="stylesheet">
+    <!-- partner 오른쪽  본문 css -->
+    <link href="/public/css/campingcar/right-content.css" rel="stylesheet">
     <link href="/public/css/common.css" rel="stylesheet">
     <!-- 이미지 js -->
     <script src="/public/js/util.js"></script>
 
 </head>
 <body>
-    <div th:replace="~{admin/carNavi::topNavi}"></div>
+    <div th:replace="~{partner/carNavi::topNavi}"></div>
 
     <div class="container-fluid">
         <div class="row">
-            <div th:replace="~{admin/carNavi::leftNavi}"></div>
+            <div th:replace="~{partner/carNavi::leftNavi}"></div>
             <!-- right -->
             <div class="col right bg-body-secondary" style="padding-top: 55px;">
                 <div class="row py-3 px-4 d-flex align-items-center bg-white">
@@ -32,7 +31,7 @@
                 </div>
                 <!-- 본문내용(templets) -->
                 <div class="row px-4"th:if="${session.sessionCaravanInfo != null}">
-                    <form class="col" method="post" action="/admin/carRegisterProgress" id="registrationForm" enctype="multipart/form-data">
+                    <form class="col" method="post" action="/partner/carRegisterProgress" id="registrationForm" enctype="multipart/form-data">
                         <div class="row">
                             <div class="col pt-3">
                                 <input type="hidden" name="rental_company_id" th:value="${session.sessionCaravanInfo.id}">
@@ -597,7 +596,7 @@
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js"></script>
-    <script src="/public/js/campingcar/adminmain.js"></script>
+    <script src="/public/js/campingcar/partnermain.js"></script>
     <!-- 차량 등록 JS -->
     <script src="/public/js/campingcar/carRegister.js"></script>
     <!-- 이미지 upload 공용 js -->
