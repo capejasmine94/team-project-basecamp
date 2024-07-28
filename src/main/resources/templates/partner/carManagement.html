@@ -224,7 +224,7 @@
                 const registeredCampersListBox = document.getElementById("registeredCampersListBox");
                 registeredCampersListBox.innerHTML = "";
 
-                if (response.data.registeredCampersList.length === 0) {
+                if (!response.data || !response.data.registeredCampersList || response.data.registeredCampersList.length === 0) {
                     const noDataTemplate = document.querySelector("#noDataTemplate").cloneNode(true);
                     noDataTemplate.classList.remove("hidden");
                     registeredCampersListBox.appendChild(noDataTemplate);
