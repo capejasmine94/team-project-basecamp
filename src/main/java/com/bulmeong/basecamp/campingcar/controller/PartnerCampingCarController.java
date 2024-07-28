@@ -17,7 +17,7 @@ import com.bulmeong.basecamp.campingcar.dto.DriverExperienceCondDto;
 import com.bulmeong.basecamp.campingcar.dto.DriverLicenseDto;
 import com.bulmeong.basecamp.campingcar.dto.LocationDto;
 import com.bulmeong.basecamp.campingcar.dto.RentalCompanyDto;
-import com.bulmeong.basecamp.campingcar.service.AdminService;
+import com.bulmeong.basecamp.campingcar.service.PartnerCampingCarService;
 import com.bulmeong.basecamp.common.util.ImageUtil;
 import com.bulmeong.basecamp.common.util.Utils;
 
@@ -25,19 +25,19 @@ import jakarta.servlet.http.HttpSession;
 
 
 @Controller
-@RequestMapping("admin")
-public class AdminController {
+@RequestMapping("partner")
+public class PartnerCampingCarController {
     @Autowired Utils utils;
-    @Autowired AdminService adminService;
+    @Autowired PartnerCampingCarService partnerCampingCarService;
 
 // 판매자 회원가입 
     @RequestMapping("nfRegisterPage")
     public String nfRegisterPage(Model model) {
         // 회원가입_회사지역 cate List
-        List<LocationDto> locationData = adminService.getLocationAll();
+        List<LocationDto> locationData = partnerCampingCarService.getLocationAll();
         model.addAttribute("locationData", locationData);
         
-        return "admin/nfRegisterPage";
+        return "partner/nfRegisterPage";
     }
 
 // 판매자 회원가입 등록
@@ -46,7 +46,7 @@ public class AdminController {
         
         rentalCompanyDto.setComp_profile_image(ImageUtil.saveImageAndReturnLocation(comp_profile_image));
         
-        adminService.registerSeller(rentalCompanyDto);
+        partnerCampingCarService.registerSeller(rentalCompanyDto);
         return "redirect:/seller/login";
     }
 // 판매자 로그아웃 
@@ -61,7 +61,7 @@ public class AdminController {
 
         RentalCompanyDto rentalCompanyDto = (RentalCompanyDto) session.getAttribute("sessionCaravanInfo");
         model.addAttribute("rentalCompanyDto", rentalCompanyDto);
-            return "admin/main";
+            return "partner/main";
     
     }
     // admin_main에 sub_category_쓰는 방식
@@ -69,26 +69,26 @@ public class AdminController {
     public String carRegister(Model model, HttpSession session) {
 
     // 차량등록_캠핑카 유형 Category List
-        List<CarTypeDto> carType = adminService.getCarTypeAll();
+        List<CarTypeDto> carType = partnerCampingCarService.getCarTypeAll();
         model.addAttribute("carType", carType);
         
     // 차량등록_운전자 나이 Category List
-        List<DriverAgeCondDto> driverAge = adminService.getDriverAgeAll(); 
+        List<DriverAgeCondDto> driverAge = partnerCampingCarService.getDriverAgeAll(); 
         model.addAttribute("driverAge", driverAge);
 
     // 차량등록_운전 면허증 Category List
-        List<DriverLicenseDto> driverLicense = adminService.getDriverLicenseAll();
+        List<DriverLicenseDto> driverLicense = partnerCampingCarService.getDriverLicenseAll();
         model.addAttribute("driverLicense", driverLicense);
 
     // 차량등록_운전자 경력 Category List
-        List<DriverExperienceCondDto> driverExpericnece = adminService.getDriverExperienceAll();
+        List<DriverExperienceCondDto> driverExpericnece = partnerCampingCarService.getDriverExperienceAll();
         model.addAttribute("driverExpericnece", driverExpericnece);
         
     // 캠핑카 기본 보유 시설 Category List
-        List<BasicFacilitiesDto> basicFacilities = adminService.getBasicFacilitiesAll();
+        List<BasicFacilitiesDto> basicFacilities = partnerCampingCarService.getBasicFacilitiesAll();
         model.addAttribute("basicFacilities", basicFacilities);
         
-        return "admin/carRegister";
+        return "partner/carRegister";
     }
 
     // 차량등록 insert 
@@ -98,22 +98,22 @@ public class AdminController {
                                      ,@RequestParam(value = "basicFacilites_id") List<Integer> basicFacilites_id) {
             campingcarDto.setMain_img(ImageUtil.saveImageAndReturnLocation(main_image));
 
-            adminService.registerCamping(campingcarDto,basicFacilites_id,detailedImg);
+            partnerCampingCarService.registerCamping(campingcarDto,basicFacilites_id,detailedImg);
             System.out.println("carRegister_test_controller"+ campingcarDto+basicFacilites_id+detailedImg);
-        return "redirect:/admin/main";
+        return "redirect:/partner/main";
     }
     
     @RequestMapping("carManagement") 
     public String carManagement(){
 
-        return "admin/carManagement";
+        return "partner/carManagement";
     }
     
 
     @RequestMapping("peakSeason")
     public String peakSeason(){
 
-        return "admin/peakSeason";
+        return "partner/peakSeason";
     }
 
 

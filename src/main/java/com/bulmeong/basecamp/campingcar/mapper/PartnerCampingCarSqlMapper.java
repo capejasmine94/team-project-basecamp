@@ -16,7 +16,7 @@ import com.bulmeong.basecamp.campingcar.dto.RentalCompanyDto;
 
 
 @Mapper
-public interface AdminSqlMapper {
+public interface PartnerCampingCarSqlMapper {
     // 판매자 회원가입
     public void createSeller (RentalCompanyDto rentalCompanyDto);
     // 판매자 id,pw 검사
@@ -48,9 +48,13 @@ public interface AdminSqlMapper {
                                 @Param("original_filename")String original_filename);
     
     
-     // 차량 등록 list(차량등록에 관한 모든 테이블을 엮음) : 
-    //  차량등록, 회사,회사지역카태고리,캠핑카유형,세부이미지, 상품X기본보유옵션, 기본보유옵션, 운전자조건(면허증,경력,나이),좋아요, 성수기 가격
+    // 사용자 : 차량 등록 list(차량등록에 관한 테이블을 엮음) : 
+    // 차량등록, 회사,회사지역카태고리,캠핑카유형, 운전자조건(면허증,경력,나이), 좋아요, 성수기 가격
     public List<Map<String,Object>> findCampingCarAll();
+
+    // 판매자 : 차량 현황 및 수정 list(차랴등록에 관한 테이블 엮음)
+    // 차량등록, 회사, 회사지역카테고리, 캠피앜유형, 운전자조건(면허증,경력,나이),좋아요, 성수기 가격ㄴ
+    public List<Map<String,Object>> findCampingCarBySellerId(int rental_company_id);
 
 
 }

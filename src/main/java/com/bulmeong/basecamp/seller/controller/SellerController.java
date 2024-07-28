@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.bulmeong.basecamp.camp.dto.CampsiteDto;
 import com.bulmeong.basecamp.camp.service.CampsiteService;
 import com.bulmeong.basecamp.campingcar.dto.RentalCompanyDto;
-import com.bulmeong.basecamp.campingcar.service.AdminService;
+import com.bulmeong.basecamp.campingcar.service.PartnerCampingCarService;
 import com.bulmeong.basecamp.store.dto.StoreDto;
 import com.bulmeong.basecamp.store.service.StoreService;
 
@@ -21,7 +21,7 @@ public class SellerController {
     @Autowired
     private StoreService storeService;
     @Autowired
-    private AdminService adminService;
+    private PartnerCampingCarService partnerCampingCarService;
     @Autowired
     private CampsiteService campsiteService;
 
@@ -67,7 +67,7 @@ public class SellerController {
             return "redirect:/campsiteCenter/main";
         }else{
             //여기 수정(캠핑카)
-            RentalCompanyDto rentalCompanyDto = adminService.getSellerByIdAndPw(account_id, account_pw);
+            RentalCompanyDto rentalCompanyDto = partnerCampingCarService.getSellerByIdAndPw(account_id, account_pw);
             session.setAttribute("sessionCaravanInfo", rentalCompanyDto);
             System.out.println("11111111111"+  rentalCompanyDto);
     

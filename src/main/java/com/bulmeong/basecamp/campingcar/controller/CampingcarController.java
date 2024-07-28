@@ -9,28 +9,25 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.bulmeong.basecamp.campingcar.dto.CarTypeDto;
 import com.bulmeong.basecamp.campingcar.dto.LocationDto;
-import com.bulmeong.basecamp.campingcar.service.AdminService;
+import com.bulmeong.basecamp.campingcar.service.PartnerCampingCarService;
 
 @Controller
 @RequestMapping("campingcar")
 public class CampingcarController {
 
     @Autowired 
-    private AdminService adminService;
+    private PartnerCampingCarService partnerCampingCarService;
 
 
     @RequestMapping("main")
     public String main(Model model){
 
         // 모달_지역 선택 
-        List<LocationDto> regions = adminService.getLocationAll();
+        List<LocationDto> regions = partnerCampingCarService.getLocationAll();
         model.addAttribute("regions", regions);
         // 모달_캠핑카유형 선텍 
-        List<CarTypeDto> carType = adminService.getCarTypeAll();
+        List<CarTypeDto> carType = partnerCampingCarService.getCarTypeAll();
         model.addAttribute("carType", carType);
-
-        
-        
 
         return "campingcar/main";
     }

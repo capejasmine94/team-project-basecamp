@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.bulmeong.basecamp.camp.service.CampsiteService;
-import com.bulmeong.basecamp.campingcar.service.AdminService;
+import com.bulmeong.basecamp.campingcar.service.PartnerCampingCarService;
 import com.bulmeong.basecamp.common.dto.RestResponseDto;
 import com.bulmeong.basecamp.common.util.Utils;
 import com.bulmeong.basecamp.store.service.StoreService;
@@ -23,7 +23,7 @@ public class SellerRestController {
     private CampsiteService campsiteService;
 
     @Autowired
-    private AdminService adminService;
+    private PartnerCampingCarService partnerCampingCarService;
 
     @RequestMapping("getSellerDtoByAccountInfo")
     public RestResponseDto getStoreDtoByAccountInfo(
@@ -38,7 +38,7 @@ public class SellerRestController {
         }else if(seller_type.equals("Campsite")){
             restResponseDto.add("sellerDto", campsiteService.getCampsiteDtoByAccountInfo(account_id, account_pw));
         }else if(seller_type.equals("Caravan")){
-            restResponseDto.add("sellerDto", adminService.getSellerByIdAndPw(account_id, account_pw));
+            restResponseDto.add("sellerDto", partnerCampingCarService.getSellerByIdAndPw(account_id, account_pw));
         }
 
         return restResponseDto;

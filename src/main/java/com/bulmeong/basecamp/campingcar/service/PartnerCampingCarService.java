@@ -18,32 +18,32 @@ import com.bulmeong.basecamp.campingcar.dto.DriverLicenseDto;
 import com.bulmeong.basecamp.campingcar.dto.LocationDto;
 import com.bulmeong.basecamp.campingcar.dto.ProductDetailImgDto;
 import com.bulmeong.basecamp.campingcar.dto.RentalCompanyDto;
-import com.bulmeong.basecamp.campingcar.mapper.AdminSqlMapper;
+import com.bulmeong.basecamp.campingcar.mapper.PartnerCampingCarSqlMapper;
 import com.bulmeong.basecamp.common.dto.ImageDto;
 import com.bulmeong.basecamp.common.util.ImageUtil;
 
 @Service
-public class AdminService {
+public class PartnerCampingCarService {
     @Autowired
-    private AdminSqlMapper adminSqlMapper;
+    private PartnerCampingCarSqlMapper partnerCampingCarSqlMapper;
     //판매자 회원가입 등록 
     public void registerSeller(RentalCompanyDto rentalCompanyDto) {
-        adminSqlMapper.createSeller(rentalCompanyDto);
+        partnerCampingCarSqlMapper.createSeller(rentalCompanyDto);
     }
     // 판매자 id,pw 검사 
     public RentalCompanyDto getSellerByIdAndPw (String account_id, String account_pw) {
-        return adminSqlMapper.selectCompanyByAccountIdandPw(account_id, account_pw);
+        return partnerCampingCarSqlMapper.selectCompanyByAccountIdandPw(account_id, account_pw);
     } 
     // 판매자회원가입_지역 카테고리 List
     public List<LocationDto> getLocationAll() {
-        return adminSqlMapper.findLocationAll();
+        return partnerCampingCarSqlMapper.findLocationAll();
     }
     // 판매자 id 가지고 오기 
     public Map<String,Object> getcampingCarandSellerInfo (int id){
         Map<String,Object> map = new HashMap<>();
-        RentalCompanyDto rentalCompanyDto = adminSqlMapper.getRentalCompanyInfoByid(id);
+        RentalCompanyDto rentalCompanyDto = partnerCampingCarSqlMapper.getRentalCompanyInfoByid(id);
         map.put("rentalCompanyDto", rentalCompanyDto);
-        CampingcarDto compingCarDto = adminSqlMapper.getCompingCarByid(id);
+        CampingcarDto compingCarDto = partnerCampingCarSqlMapper.getCompingCarByid(id);
         map.put("compingCarDto", compingCarDto);
 
         return map;
@@ -52,11 +52,11 @@ public class AdminService {
     // 차량등록 
     public void registerCamping(CampingcarDto campingCar, List<Integer> basicFacilites_id, MultipartFile[] detailedImg) {
         // 기본 차량등록 insert
-        adminSqlMapper.createCamping(campingCar);
+        partnerCampingCarSqlMapper.createCamping(campingCar);
         // 차량등록X기본보유옵션 테이블 insert
         int product_id = campingCar.getId();
         for(int basic_facilities_id :basicFacilites_id) {
-            adminSqlMapper.createCarBasic(basic_facilities_id,product_id);
+            partnerCampingCarSqlMapper.createCarBasic(basic_facilities_id,product_id);
         }
 
         // 최종 DetailImageList 담을 인스턴스 생성, 차량등록의 세부이미지 테이블 insert
@@ -70,7 +70,7 @@ public class AdminService {
 
             productImageList.add(productDetailImgDto);
             
-            adminSqlMapper.createDetailImg(productDetailImgDto.getProduct_id(), 
+            partnerCampingCarSqlMapper.createDetailImg(productDetailImgDto.getProduct_id(), 
                                            productDetailImgDto.getLocation(),
                                            productDetailImgDto.getOriginal_filename());
                                            
@@ -81,29 +81,36 @@ public class AdminService {
 
     // 차량등록_캠핑카 유형 Category List
     public List<CarTypeDto> getCarTypeAll() {
-        return adminSqlMapper.findCarTypeAll(); 
+        return partnerCampingCarSqlMapper.findCarTypeAll(); 
     }
     // 차량등록_운전 면허증 Category List
     public List<DriverLicenseDto> getDriverLicenseAll() {
-        return adminSqlMapper.findDriverLicenseAll();
+        return partnerCampingCarSqlMapper.findDriverLicenseAll();
     }
     // 차량등록_운전자 나이 Category List
     public List<DriverAgeCondDto> getDriverAgeAll() {
-        return adminSqlMapper.findDriverAgeAll(); 
+        return partnerCampingCarSqlMapper.findDriverAgeAll(); 
     }
     // 차량등록_운전자 경력 Category List
     public List<DriverExperienceCondDto> getDriverExperienceAll() {
-        return adminSqlMapper.findDriverExperienceAll();
+        return partnerCampingCarSqlMapper.findDriverExperienceAll();
     }
 
     // 캠핑카 기본 보유 시설 Category 
     public List<BasicFacilitiesDto> getBasicFacilitiesAll() {
-        return adminSqlMapper.findBasicFacilitiesAll();
+        return partnerCampingCarSqlMapper.findBasicFacilitiesAll();
     }
 
-    // 차량 등록 list(외래키의 받은 모든 테이블을 엮음
+    // 사용자 : 차량 등록 list(외래키의 받은 테이블을 엮음)
     public List<Map<String,Object>> getCampingCarAll() {
-        return adminSqlMapper.findCampingCarAll();
+        return partnerCampingCarSqlMapper.findCampingCarAll();
     }
+
+    // 판매자 : 차량 현황및수정 List(외래키의 받은 테이블 엮음)
+    public List<Map<String,Object>> getCampingcarBySellerId(int rental_company_id) {
+        return partnerCampingCarSqlMapper.findCampingCarBySellerId(rental_company_id);
+
+    }
+
 
 }
