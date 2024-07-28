@@ -367,7 +367,7 @@
                         <!-- 회사명 + 차량명 -->
                         <div class="row">
                             <div class="col pe-0 pb-2">
-                                <span class="campingcarComp_name  fw-bold fs-6 text-success"></span>
+                                <span class="campingcarComp_name fw-bold fs-6 text-success"></span>
                                 <span class="campingcarProduct_name fw-bold fs-6" style="color: #484647;"></span>
                                 <div class="campingcarShortdescription fw-bold new-fs-85" style="color: #7C7B7B;"></div>
                             </div>
@@ -474,7 +474,7 @@
                     campingcarGarage_address.innerText = `차고지 주소 : ${e.garage_address}`;
                     
                     const campingcarDriver_license_name = newCampingcarListWrapper.querySelector(".campingcarDriver_license_name");
-                    campingcarDriver_license_name.innerText = `운전면허증 : ${e.driver_license_name}`;
+                    campingcarDriver_license_name.innerText = `운전면허증 : ${e.driver_license_condition_name}`;
                 
                     const campingcarDriver_age_condition_name = newCampingcarListWrapper.querySelector(".campingcarDriver_age_condition_name");
                     campingcarDriver_age_condition_name.innerText =`운전자 나이 : ${e.driver_age_condition_name}`;

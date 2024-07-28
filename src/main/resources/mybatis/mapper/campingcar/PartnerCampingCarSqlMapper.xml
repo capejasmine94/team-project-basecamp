@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.bulmeong.basecamp.campingcar.mapper.AdminSqlMapper">
+<mapper namespace="com.bulmeong.basecamp.campingcar.mapper.PartnerCampingCarSqlMapper">
     <!-- 판매자 회원가입 -->
     <insert id="createSeller">
         insert into bc_rental_company_info(
@@ -108,7 +108,7 @@
         bc.overnight_stay,
         bc.seating_capacity, 
         bc.sleeping_capacity, 
-        bdlc.name AS driver_license_name, 
+        bdlc.name AS driver_license_condition_name, 
         bdac.name AS driver_age_condition_name, 
         bdec.name AS driver_experience_condition_name,
         bc.pet_friendly, 
@@ -127,8 +127,27 @@
     </select>
 
     <!-- 차량관리 -->
-    <select id="findCarManageAll" resultType="map">
-    select  *
+    <select id="findCampingCarBySellerId" resultType="map">
+    select  
+        bc.id, 
+        bc.rental_company_id,
+        brci.comp_name, 
+        bctc.name AS car_type_name, 
+        bc.product_name, 
+        bc.main_img, 
+        bc.short_description,
+        bc.rental_fee_weekdays, 
+        bc.rental_fee_weekend,
+        bc.garage_address, 
+        bc.overnight_stay,
+        bc.seating_capacity, 
+        bc.sleeping_capacity, 
+        bdlc.name AS driver_license_condition_name, 
+        bdac.name AS driver_age_condition_name, 
+        bdec.name AS driver_experience_condition_name,
+        bc.pet_friendly, 
+        bc.is_opened,
+        brpp.*
     from bc_campingcar bc 
         INNER join bc_rental_company_info brci on bc.rental_company_id = brci.id
         INNER join bc_location_category blc on brci.location_category_id = blc.id
@@ -138,7 +157,7 @@
         INNER join bc_driver_experience_condition bdec on bc.driver_experience_id = bdec.id
         left join bc_campingcar_like cl on cl.product_id = bc.id 
         left join bc_rental_peak_price brpp on bc.id = brpp.product_id
-    where bc.rental_company_id = #{rental_company_id};
+        where bc.rental_company_id = #{rental_company_id};
     </select>
 
 </mapper>
