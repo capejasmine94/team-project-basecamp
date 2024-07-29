@@ -10,8 +10,11 @@
             </span>
             <span th:unless="${session.sessionCaravanInfo!=null}">비회원</span>
         </div>
-        <form action="/partner/logoutProcess" class="col-auto">
+        <form action="/partner/logoutProcess" class="col-auto" th:if="${session.sessionCaravanInfo!=null}">
             <button class="btn btn-outline-light btn-sm fw-bold text-black">로그아웃</button>
+        </form>
+        <form action="/partner/loginProcess" class="col-auto" th:unless="${session.sessionCaravanInfo!=null}">
+            <button class="btn btn-outline-light btn-sm fw-bold text-black">로그인</button>
         </form>
     </div>
 </div>

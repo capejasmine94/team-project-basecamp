@@ -49,6 +49,12 @@ public class PartnerCampingCarController {
         partnerCampingCarService.registerSeller(rentalCompanyDto);
         return "redirect:/seller/login";
     }
+// 판매자 로그인 
+    @RequestMapping("loginProcess")
+    public String loginProcess() {
+        return "redirect:/seller/login";
+
+    }
 // 판매자 로그아웃 
     @RequestMapping("logoutProcess")
     public String logoutProcess(HttpSession session) {
