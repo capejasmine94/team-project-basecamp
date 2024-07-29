@@ -5,8 +5,9 @@
 //3. popup을 onclick에 넣습니다.
 //4-1. popup의 매개변수는 (제목,내용,예,아니오,function(){2번에서 만든 함수}) 순으로 넣으시면 됩니다.
 //4-2. 매개변수에서 기존 popup에서 아니오만 빼면 단일 팝업을 표시합니다.
+// export {checkLogin,checkMustLogin};
 
-function popup(title,content,yes,no,action) {
+function popup(title,content,yes,no,action,noAction) {
    const node = document.getElementById('popup');
    bootstrap.Modal.getOrCreateInstance('#popup',{backdrop: 'true', keyboard: true})  
    let text = node.querySelector("#popup-title");
@@ -16,10 +17,38 @@ function popup(title,content,yes,no,action) {
    text = node.querySelector("#popup-no");
    text.classList.remove('d-none');
    text.innerText = no;
+   text.onclick = noAction;
+   text = node.querySelector("#popup-three");
+   text.classList.add('d-none');
    text = node.querySelector("#popup-button");
    text.onclick = action;
    text.innerText = yes;
    bootstrap.Modal.getOrCreateInstance('#popup').show();
+}
+
+function popup3Button(title,content,select1,select2,select3,action1,action2,action3) {
+  const node = document.getElementById('popup');
+  bootstrap.Modal.getOrCreateInstance('#popup',{backdrop: 'true', keyboard: true})  
+  let text = node.querySelector("#popup-title");
+  text.innerText = title;
+  text = node.querySelector("#popup-content");
+  text.innerText = content;
+
+  text = node.querySelector("#popup-no");
+  text.classList.remove('d-none');
+  text.innerText = select1;
+  text.onclick = action1;
+
+  text = node.querySelector("#popup-button");
+  text.innerText = select2;
+  text.onclick = action2;
+
+  text = node.querySelector("#popup-three");
+  text.classList.remove('d-none');
+  text.innerText = select3;
+  text.onclick = action3;
+
+  bootstrap.Modal.getOrCreateInstance('#popup').show();
 }
 
 function popupForce(title,content,accept,action) {
@@ -34,14 +63,15 @@ function popupForce(title,content,accept,action) {
    text = node.querySelector("#popup-button");
    text.onclick = action;
    text.innerText = accept;
+   text = node.querySelector("#popup-three");
+   text.classList.add('d-none');
    bootstrap.Modal.getOrCreateInstance('#popup').show();
 }
 
 
 
 function popupClose() {
-  const c = bootstrap.Modal.getOrCreateInstance('#popup');
-  c.hide();
+  bootstrap.Modal.getOrCreateInstance('#popup').hide();
 }
 
 

@@ -54,45 +54,47 @@
         <div class="row mt-5 pt-5">
             <div class="col new-mt-45 pt-4 pb-4">
                 <div class="campsiteTemplate row mx-1 py-4 border-bottom">
-                    <div class="col">
-                        <div class="row">
-                            <div class="col">
-                                <img class="img-fluid px-0 rounded-3" src="/public/img/clubImage/mountain.jpg" alt="">
-                            </div>
-                        </div>
-                       <div class="row justify-content-between">
-                            <div class="col-8 ms-1">
-                                <div class="row mt-2">
-                                    <span class="col fs-4 fw-semibold ellipsis">캠핑장 이름</span> 
+                    <a href="./campsite?id=1">
+                        <div class="col">
+                            <div class="row">
+                                <div class="col">
+                                    <img class="img-fluid px-0 rounded-3" src="/public/img/clubImage/mountain.jpg" alt="">
                                 </div>
                             </div>
-                            <div class="col-auto">
-                                <div class="row mt-2 justify-content-end">
-                                    <div class="col-auto p-0">
-                                        <i class="bi bi-heart"></i>
+                        <div class="row justify-content-between">
+                                <div class="col-8 ms-1">
+                                    <div class="row mt-2">
+                                        <span class="col fs-4 fw-semibold ellipsis">캠핑장 이름</span> 
                                     </div>
-                                    <div class="col-auto p-0 mx-3 text-start">
-                                        99999
+                                </div>
+                                <div class="col-auto">
+                                    <div class="row mt-2 justify-content-end">
+                                        <div class="col-auto p-0">
+                                            <i class="bi bi-heart"></i>
+                                        </div>
+                                        <div class="col-auto p-0 mx-3 text-start">
+                                            99999
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="row ps-1 mt-1">
-                            <div class="col-12 new-fs-9 fw-semibold ellipsis text-secondary">
-                                캠핑장 주소
+                            <div class="row ps-1 mt-1">
+                                <div class="col-12 new-fs-9 fw-semibold ellipsis text-secondary">
+                                    캠핑장 주소
+                                </div>
+                            </div>
+                            <div class="row ps-1 mt-1 align-items-end">
+                                <div class="col pe-0 badgeList">
+                                    <span class="badge text-bg-secondary me-1">카테고리</span>
+                                    <span class="badge text-bg-secondary me-1">카테고리</span>
+                                    <span class="badge text-bg-secondary me-1">카테고리</span>
+                                </div>
+                                <div class="col-auto fw-semibold text-end">
+                                    <span class="fs-5 text-primary">1,000,000 원</span>
+                                </div>
                             </div>
                         </div>
-                        <div class="row ps-1 mt-1 align-items-end">
-                            <div class="col pe-0 badgeList">
-                                <span class="badge text-bg-secondary me-1">카테고리</span>
-                                <span class="badge text-bg-secondary me-1">카테고리</span>
-                                <span class="badge text-bg-secondary me-1">카테고리</span>
-                            </div>
-                            <div class="col-auto fw-semibold text-end">
-                                <span class="fs-5 text-primary">1,000,000 원</span>
-                            </div>
-                        </div>
-                    </div>
+                    </a>
                 </div>
             </div>
             
@@ -100,39 +102,12 @@
     </div>
 </div>
 
-<div class="modal fade container-fluid" id="popupCategory" tabindex="-1" aria-labelledby="popupCategory-title" data-keyboard="true" data-backdrop="static" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h1 class="modal-title fs-5" id="popupCategory-title">카테고리</h1>
-            </div>
-            <div id="popupCategory-content" class="modal-body col">
-                <div class="row categoryList">
-                    <div class="col-auto p-0" th:each="category:${session.allCategory.campsite}">
-                        <input type="checkbox" class="btn-check" th:id="${category.id}" name="selectCategory" autocomplete="off">
-                        <label class="btn btn-outline-primary rounded-5 m-1" th:for="${category.id}">
-                            <img class="img-fluid" src="/public/img/clubImage/mountain.jpg" alt="" style="width: 1.5em; height: 1.5em;">
-                            <span th:text="${category.name}"></span>
-                        </label><br>
-                    </div>
-                    <div class="col-auto p-0" th:each="category:${session.allCategory.area}">
-                        <input type="checkbox" class="btn-check" th:id="${category.id}" name="selectCategory" autocomplete="off">
-                        <label class="btn btn-outline-primary rounded-5 m-1" th:for="${category.id}">
-                            <img class="img-fluid" src="/public/img/clubImage/mountain.jpg" alt="" style="width: 1.5em; height: 1.5em;">
-                            <span th:text="${category.name}"></span>
-                        </label><br>
-                    </div>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button id="popupCategory-clear" type="button" class="btn btn-secondary">초기화</button>
-                <button id="popupCategory-no" type="button" class="btn btn-primary" data-bs-dismiss="modal">선택</button>
-            </div>
-        </div>
-    </div>
-</div>
 
 <!-- 네비가 추가됨 -->
+<div th:replace="camp/campNavi::popupCategory"></div>
+<div th:replace="camp/campNavi::popupSelectDay"></div>
+
+
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://kit.fontawesome.com/7b271bba58.js" crossorigin="anonymous"></script>
 </body>

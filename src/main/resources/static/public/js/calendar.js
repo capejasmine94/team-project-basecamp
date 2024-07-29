@@ -978,3 +978,9 @@ function createRangeCalendarWithMin(name, min, length, limit) {
 
     renderCalendar(data.currentDate); // 초기 달력 렌더링
 }
+
+function yearsAgo(year) {
+    const date = new Date();
+    date.setFullYear(date.getFullYear() + year);
+    return date;
+}

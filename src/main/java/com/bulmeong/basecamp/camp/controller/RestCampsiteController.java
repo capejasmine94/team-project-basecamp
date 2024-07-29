@@ -59,6 +59,16 @@ public class RestCampsiteController {
         result.add("cmapsite", campsiteDto);
         return result;
     }
+
+    @RequestMapping("getCampsiteById")
+    public RestResponseDto getCampsiteById(@RequestParam("id") String id) {
+        int campstie_id = Integer.parseInt(id);
+        RestResponseDto result = new RestResponseDto();
+        result.setResult("success");
+        CampsiteDto campsiteDto = campsiteService.getCampsiteDtoById(campstie_id);
+        result.add("cmapsite", campsiteDto);
+        return result;
+    }
         
     @RequestMapping("getAreaInfoList")
     public RestResponseDto getAreaInfoList() {

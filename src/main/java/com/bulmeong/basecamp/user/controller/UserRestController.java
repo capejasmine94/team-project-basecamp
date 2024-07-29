@@ -21,7 +21,13 @@ public class UserRestController {
     public RestResponseDto checkLogin() {
         RestResponseDto result = new RestResponseDto();
         result.setResult("success");
-        result.add("needLogin", utils.isNeedLogin());
+        boolean isLogined = utils.isNeedLogin();
+        if(!isLogined) {
+            result.add("needLogin", isLogined);
+            result.add("userInfo", utils.getSession("sessionUserInfo"));
+        }
+        else
+        result.add("needLogin", isLogined);
         return result;
     }
 
