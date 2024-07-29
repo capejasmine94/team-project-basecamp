@@ -66,31 +66,16 @@ function getCommentList() {
 
                 const writeNestedComment = newCommentWrapper.querySelector(".writeNestedComment");
 
+                // const newNestedCommentWrapper = nestedCommentWrapper.cloneNode(true);
+                // const nestedCommentNickname = nestedCommentWrapper.querySelector(".nestedCommentNickname");
+                
+                // nestedCommentNickname.innerText = commentData.nestedCommentDetailList.userDtoForNestedComment.nickname;
+            
+                // const nestedCommentCreatedAt = nestedCommentWrapper.querySelector(".nestedCommentCreatedAt");
+                // nestedCommentCreatedAt.innerText = formatDate(commentData.nestedCommentDetailList.mapForNestedComment.nestedCommentDto.created_at);
 
-
-               // Find or create a container for nested comments
-            let nestedCommentsContainer = newCommentWrapper.querySelector(".nestedCommentsContainer");
-            if (!nestedCommentsContainer) {
-                nestedCommentsContainer = document.createElement('div');
-                nestedCommentsContainer.classList.add('nestedCommentsContainer');
-                newCommentWrapper.appendChild(nestedCommentsContainer);
-            }
-
-            const nestedCommentWrapperTemplate = document.querySelector("#nested-comment-template .nested-comment-wrapper");
-            for (const nestedCommentData of commentData.nestedCommentDetailList) {
-                const newNestedCommentWrapper = nestedCommentWrapperTemplate.cloneNode(true);
-
-                const nestedCommentNickname = newNestedCommentWrapper.querySelector(".nestedCommentNickname");
-                nestedCommentNickname.innerText = nestedCommentData.userDtoForNestedComment.nickname;
-
-                const nestedCommentCreatedAt = newNestedCommentWrapper.querySelector(".nestedCommentCreatedAt");
-                nestedCommentCreatedAt.innerText = formatDate(nestedCommentData.nestedCommentDto.created_at);
-
-                const nestedCommentContent = newNestedCommentWrapper.querySelector(".nestedCommentContent");
-                nestedCommentContent.innerText = nestedCommentData.nestedCommentDto.content;
-
-                nestedCommentsContainer.appendChild(newNestedCommentWrapper);
-            }
+                // const nestedCommentContent = nestedCommentWrapper.querySelector(".nestedCommentContent");
+                // nestedCommentContent.innerText = commentData.nestedCommentMap.nestedCommentDto.content;
 
                 // writeNestedComment.onclick = function a() {}; 아래와 같은 코드임
                 // writeNestedComment.onclick = function b () {};
@@ -152,6 +137,28 @@ function getCommentList() {
                 }
 
                 commentWrapperBox.appendChild(newCommentWrapper); 
+
+
+                for (const nestedCommentDetail of commentData.nestedCommentDetailList) {
+                    const nestedCommentWrapper = document.querySelector('#nested-comment-template .nested-comment-wrapper');
+                    const newNestedCommentWrapper = nestedCommentWrapper.cloneNode(true);
+    
+                    const nestedeCommentNickname = nestedCommentWrapper.querySelector(".nestedCommentNickname");
+                    nestedeCommentNickname.innerText = nestedCommentDetail.userDtoForNestedComment.nickname;
+
+                    const nestedCommentCreatedAt = nestedCommentWrapper.querySelector(".nestedCommentCreatedAt");
+                    nestedCommentCreatedAt.innerText = formatDate(nestedCommentDetail.nestedCommentDto.created_at);
+
+                    const nestedCommentContent = nestedCommentWrapper.querySelector(".nestedCommentContent");
+                    nestedCommentContent.innerText = nestedCommentDetail.nestedCommentDto.content;
+
+
+
+
+
+
+                    commentWrapperBox.appendChild(newNestedCommentWrapper);
+                   }
             }
         });
 }
