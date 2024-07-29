@@ -52,6 +52,7 @@ public interface ClubSqlMapper {
 
     // 대댓글 작성
     public void insertNestedCommentDto(ClubNestedCommentDto clubNestedCommentDto);
+    public List<ClubNestedCommentDto> selectNestedCommentDtoList(int comment_id);
 
 
 

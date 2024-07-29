@@ -225,13 +225,13 @@ public class ClubService {
             return userDto;
         }
 
-    //  게시글 댓글 
+    //  게시글 댓글 작성
         public void writeClubPostComment(ClubPostCommentDto clubPostCommentDto){
             clubSqlMapper.insertClubPostCommentDto(clubPostCommentDto);
 
         }
 
-    // 게시글 대댓글
+    // 게시글 대댓글 작성
         public void writeNestedComment(ClubNestedCommentDto clubNestedCommentDto){
             clubSqlMapper.insertNestedCommentDto(clubNestedCommentDto);
         }
@@ -240,25 +240,33 @@ public class ClubService {
         public List<Map<String, Object>> getPostCommentDetailList(int id){
             List<Map<String, Object>> commentDetailList = new ArrayList<>();
             List<ClubPostCommentDto> clubPostCommentDtoList = clubSqlMapper.selectPostCommentDto(id);
+
             for(ClubPostCommentDto clubPostCommentDto : clubPostCommentDtoList){
                UserDto userDto = clubSqlMapper.selectUserDtoById(clubPostCommentDto.getUser_id());
                ClubPostCommentLikeDto clubPostCommentLikeDto = new ClubPostCommentLikeDto();
                clubPostCommentLikeDto.setComment_id(clubPostCommentDto.getId());
                clubPostCommentLikeDto.setUser_id(userDto.getId());
-               int confirmCommentLike = clubSqlMapper.confirmCommentLike(clubPostCommentLikeDto);
-            
 
-               Map<String, Object> map = new HashMap<>();
+                List<ClubNestedCommentDto> nestedCommentDtoList = clubSqlMapper.selectNestedCommentDtoList(clubPostCommentDto.getId());
 
-               if(confirmCommentLike == 0) {
-                map.put("isLiked", false);
-               }else{
-                map.put("isLiked", true);
-               }
-               map.put("clubPostCommentDto", clubPostCommentDto);
-               map.put("userDto", userDto);
-            
-               commentDetailList.add(map);
+                List<Map<String, Object>> nestedCommentDetailList = new ArrayList<>();
+                for (ClubNestedCommentDto nestedCommentDto : nestedCommentDtoList) {
+                    UserDto userDtoForNestedComment = clubSqlMapper.selectUserDtoById(nestedCommentDto.getUser_id());
+                    Map<String, Object> nestedMap = new HashMap<>();
+                    nestedMap.put("userDtoForNestedComment", userDtoForNestedComment);
+                    nestedMap.put("nestedCommentDto", nestedCommentDto);
+                    nestedCommentDetailList.add(nestedMap);
+                }
+
+                int confirmCommentLike = clubSqlMapper.confirmCommentLike(clubPostCommentLikeDto);
+
+                Map<String, Object> map = new HashMap<>();
+                map.put("isLiked", confirmCommentLike != 0);
+                map.put("clubPostCommentDto", clubPostCommentDto);
+                map.put("userDto", userDto);
+                map.put("nestedCommentDetailList", nestedCommentDetailList);
+        
+                commentDetailList.add(map);
             }
             return commentDetailList;
         }    
@@ -295,7 +303,6 @@ public class ClubService {
             return map;
         }
 
-        
 
         //  소모임 북마크 여부 확인
         public int confirmBookmark(ClubBookmarkDto clubBookmarkDto){

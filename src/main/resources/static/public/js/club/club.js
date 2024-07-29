@@ -51,21 +51,46 @@ function getCommentList() {
                 const commentWrapper = document.querySelector("#comment-template .comment-wrapper");
                 // console.log(commentWrapper);
 
-                
-                const newCommnetWrapper = commentWrapper.cloneNode(true);
-                const commentNickname = newCommnetWrapper.querySelector(".commentNickname"); 
+                const newCommentWrapper = commentWrapper.cloneNode(true);
+                const commentNickname = commentWrapper.querySelector(".commentNickname"); 
                 commentNickname.innerText = commentData.userDto.nickname;               
 
-                const commentCreatedAt = newCommnetWrapper.querySelector(".commentCreatedAt");
-                commentCreatedAt.innerText = commentData.clubPostCommentDto.created_at;
+                const commentCreatedAt = commentWrapper.querySelector(".commentCreatedAt");
+                commentCreatedAt.innerText = formatDate(commentData.clubPostCommentDto.created_at);
 
-                const commentContent = newCommnetWrapper.querySelector(".commentContent");
+                const commentContent = newCommentWrapper.querySelector(".commentContent");
                 commentContent.innerText = commentData.clubPostCommentDto.content;
                 
 
-                const commentHeart = newCommnetWrapper.querySelector(".commentHeart");
+                const commentHeart = newCommentWrapper.querySelector(".commentHeart");
 
-                const writeNestedComment = newCommnetWrapper.querySelector(".writeNestedComment");
+                const writeNestedComment = newCommentWrapper.querySelector(".writeNestedComment");
+
+
+
+               // Find or create a container for nested comments
+            let nestedCommentsContainer = newCommentWrapper.querySelector(".nestedCommentsContainer");
+            if (!nestedCommentsContainer) {
+                nestedCommentsContainer = document.createElement('div');
+                nestedCommentsContainer.classList.add('nestedCommentsContainer');
+                newCommentWrapper.appendChild(nestedCommentsContainer);
+            }
+
+            const nestedCommentWrapperTemplate = document.querySelector("#nested-comment-template .nested-comment-wrapper");
+            for (const nestedCommentData of commentData.nestedCommentDetailList) {
+                const newNestedCommentWrapper = nestedCommentWrapperTemplate.cloneNode(true);
+
+                const nestedCommentNickname = newNestedCommentWrapper.querySelector(".nestedCommentNickname");
+                nestedCommentNickname.innerText = nestedCommentData.userDtoForNestedComment.nickname;
+
+                const nestedCommentCreatedAt = newNestedCommentWrapper.querySelector(".nestedCommentCreatedAt");
+                nestedCommentCreatedAt.innerText = formatDate(nestedCommentData.nestedCommentDto.created_at);
+
+                const nestedCommentContent = newNestedCommentWrapper.querySelector(".nestedCommentContent");
+                nestedCommentContent.innerText = nestedCommentData.nestedCommentDto.content;
+
+                nestedCommentsContainer.appendChild(newNestedCommentWrapper);
+            }
 
                 // writeNestedComment.onclick = function a() {}; 아래와 같은 코드임
                 // writeNestedComment.onclick = function b () {};
@@ -84,7 +109,7 @@ function getCommentList() {
                    
                    const registerComment = document.querySelector(".registerComment");
                 //     // console.log(registerComment);
-                    console.log(registerComment);
+                    // console.log(registerComment);
                     registerComment.onclick = () => {
                         const commentId = commentData.clubPostCommentDto.id
                         const content = comment.value;
@@ -126,11 +151,7 @@ function getCommentList() {
                     }
                 }
 
-
-            
-
-                
-                commentWrapperBox.appendChild(newCommnetWrapper); 
+                commentWrapperBox.appendChild(newCommentWrapper); 
             }
         });
 }
@@ -155,6 +176,19 @@ function addHeart(commentId){
     .then(response => {
         getCommentList();
     })
+}
+
+function formatDate(dateString) {
+    const date = new Date(dateString);
+
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const day = String(date.getDate()).padStart(2, '0');
+    const hours = String(date.getHours()).padStart(2, '0');
+    const minutes = String(date.getMinutes()).padStart(2, '0');
+    const seconds = String(date.getSeconds()).padStart(2, '0');
+
+    return `${year}-${month}-${day} ${hours}:${minutes}`;
 }
 
 

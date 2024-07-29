@@ -72,11 +72,16 @@ public class RestClubController {
     }
 
     @PostMapping("nestedComment")
-    public RestResponseDto writeNestedComment(@RequestBody ClubNestedCommentDto clubNestedCommentDto){
+    public RestResponseDto writeNestedComment(@RequestBody ClubNestedCommentDto clubNestedCommentDto, HttpSession session){
         RestResponseDto restResponseDto = new RestResponseDto();
-        System.out.println(clubNestedCommentDto);
+        // System.out.println(clubNestedCommentDto);
+        UserDto userDto = (UserDto)session.getAttribute("sessionUserInfo");
+        ClubNestedCommentDto nestedCommentDto = new ClubNestedCommentDto();
+        nestedCommentDto.setUser_id(userDto.getId());
+        nestedCommentDto.setContent(clubNestedCommentDto.getContent());
+        nestedCommentDto.setComment_id(clubNestedCommentDto.getComment_id());
 
-        clubService.writeNestedComment(clubNestedCommentDto);
+        clubService.writeNestedComment(nestedCommentDto);
         return restResponseDto;
     } 
 

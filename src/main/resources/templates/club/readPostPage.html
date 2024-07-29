@@ -129,21 +129,21 @@
 
                 <!-- 댓글 입력 -->
 
-            <div class="row pt-2 mb-5">
-                <div class="col">
+                <div class="row pt-2 mb-5">
+                    <div class="col">
 
-                    <div class="row">
-                        <div class="col">
+                        <div class="row">
+                            <div class="col">
 
-                            <div class="row pb-2">
-                                <div class="col-8 fw-semibold">
-                                    <span style="font-size: 0.8em;">댓글 </span>
-                                    <span class="fw-bold" style="font-size: 0.8em; color:crimson;" th:text=" ${map.totalComment}"></span>
-                                    <!-- <span style="font-size: 0.8em" th:text="${readPostMap.totalCommentEachPost}"></span> -->
-                                </div>
-                                <div class="col ms-0">
-                                    <!-- <div class="row" th:if="${oldestFirst == false}"> -->
-                                        
+                                <div class="row pb-2">
+                                    <div class="col-8 fw-semibold">
+                                        <span style="font-size: 0.8em;">댓글 </span>
+                                        <span class="fw-bold" style="font-size: 0.8em; color:crimson;" th:text=" ${map.totalComment}"></span>
+                                        <!-- <span style="font-size: 0.8em" th:text="${readPostMap.totalCommentEachPost}"></span> -->
+                                    </div>
+                                    <div class="col ms-0">
+                                        <!-- <div class="row" th:if="${oldestFirst == false}"> -->
+                                            
                                         <div class="col pe-0 text-end fw-bold">
                                             <!-- <a th:href="@{/freeboard/readPost(id=${readPostMap.freeboardPostDto.id}, oldestFirst=false)}"><span style="font-size: 0.9em">최신순</span></a> -->
                                         </div>
@@ -152,39 +152,37 @@
                                         
                                         </div>
                                     </div>
-                                    <!-- <div class="row" th:if="${oldestFirst == true}"> -->
-                                        
-                                        <div class="col pe-0 text-end text-secondary">
-                                            <!-- <a th:href="@{/freeboard/readPost(id=${readPostMap.freeboardPostDto.id}, oldestFirst=false)}"><span style="font-size: 0.9em">최신순</span></a> -->
-                                        </div>
-                                        <div class="col px-2 fw-bold">
-                                            <!-- <a th:href="@{/freeboard/readPost(id=${readPostMap.freeboardPostDto.id}, oldestFirst=true)}"><span style="font-size: 0.9em">등록순</span></a> -->
-                                        </div>
+                                        <!-- <div class="row" th:if="${oldestFirst == true}"> -->
+                                            
+                                    <div class="col pe-0 text-end text-secondary">
+                                        <!-- <a th:href="@{/freeboard/readPost(id=${readPostMap.freeboardPostDto.id}, oldestFirst=false)}"><span style="font-size: 0.9em">최신순</span></a> -->
+                                    </div>
+                                    <div class="col px-2 fw-bold">
+                                        <!-- <a th:href="@{/freeboard/readPost(id=${readPostMap.freeboardPostDto.id}, oldestFirst=true)}"><span style="font-size: 0.9em">등록순</span></a> -->
                                     </div>
                                 </div>
+
                             </div>
-
-
-                            <div class="row">
-                                <div class="col" id="comment-wrapper-box">
-                                    
-                                    
-
-                                </div>
-                            </div>
-
-                        
-                            </div>
-
-
                         </div>
-                    </div>
 
+
+                        <div class="row">
+                            <div class="col" id="comment-wrapper-box">
+                                
+                                
+
+                            </div>
+                        </div>
+
+                   
+
+                    </div>
                 </div>
 
-   
+
             </div>
         </div>
+
     </div>
 
     <div class="container-fluid fixed-bottom shadow-lg" th:if="${session.sessionUserInfo != null}">
@@ -212,13 +210,13 @@
     </div>
     
     
-
+    <!-- 댓글 -->
     <div class="col d-none" id="comment-template">
-        <div class="row py-3 border-top comment-wrapper">
+        <div class="row py-2 my-0 border-top comment-wrapper">
             <div class="col-2" >
                 
-                <!-- <img th:if="${postCommentDetail.userDto.profile_image == 'default'}" src="/public/img/clubImage/profile.jpg" class="img-fluid rounded-circle"  style="aspect-ratio: 1/1;">
-                <img th:unless="${postCommentDetail.userDto.profile_image == 'default'}" th:src="|/images/${postCommentDetail.userDto.profile_image}|" class="img-fluid rounded-circle"  style="aspect-ratio: 1/1;"> -->
+                <img th:if="${map.userDto.profile_image == 'default'}" src="/public/img/clubImage/profile.jpg" class="img-fluid rounded-circle"  style="aspect-ratio: 1/1;">
+                <img th:unless="${map.userDto.profile_image == 'default'}" th:src="|/images/${map.userDto.profile_image}|" class="img-fluid rounded-circle"  style="aspect-ratio: 1/1;">
     
             </div>
             <div class="col">
@@ -233,18 +231,8 @@
                         <i class="bi bi-three-dots">수정 | 삭제
                         </i>
                     </div>
-                    <!-- <div class="col text-end">
-                        <a th:href="@{/freeboard/deleteCommentProcess(id=${commentDetail.freeboardCommentDto.id}, post_id=${commentDetail.freeboardCommentDto.post_id})}"
-                            th:if="${session.sessionUserInfo != null and session.sessionUserInfo.id == postCommentDetail.clubPostCommentDto.user_id}">
-                            <span class="col text-secondary pe-2" style="font-size: 0.9em"><i class="bi bi-trash3"></i> 삭제</span>
-                        </a>
-                    </div> -->
-    
-                    <!-- <div class="col text-end pt-1 pe-4 text-secondary" style="font-size:0.8em" th:if="${session.sessionUserInfo != null and session.sessionUserInfo.id == postCommentDetail.clubPostCommentDto.user_id}"> -->
-                        <!-- <a th:href="@{/freeboard/updatePost(id=${readPostMap.freeboardPostDto.id})}">수정</a> -->
-                        <!-- <a th:href="@{/freeboard/deletePostProcess(id=${readPostMap.freeboardPostDto.id})}">삭제</a> -->
-                    <!-- </div> -->
-            </div>
+              
+                </div>
             <div class="row text-secondary" style="font-size:0.8em">
                 <div class="col ps-0">
                     <span class="commentCreatedAt">댓글작성일</span>
@@ -257,16 +245,17 @@
                             <span class="commentContent">댓글본문</span>
                         </div>
                     </div>
-    
+        
                     <div class="row">
                         <div class="col">
-    
-                            <div class="row pt-2">
+        
+                            <div class="row py-2">
                                 <div class="col-auto d-flex align-items-center px-0 text-secondary" style="font-size: 0.8em">
-                                    <span class="material-symbols-outlined commentHeart fw-light">
+                                    <span class="material-symbols-outlined commentHeart fw-light" style="color: crimson;">
                                         favorite
                                     </span>
                                 </div>
+                                
                                 <div class="col-auto d-flex align-items-center ps-0">
                                     추천
                                 </div>
@@ -280,15 +269,44 @@
                                     댓글쓰기
                                 </div>
                             </div>
-                             
-                            </div>
+                                
                         </div>
-    
                     </div>
                 </div>
             </div>
+            </div>
         </div>
-        
+    </div>
+
+
+    <!-- 리댓글 -->
+    <div class="col d-none" id="nested-comment-template">
+             <div class="row py-3 border-top nested-comment-wrapper">
+                <div class="col-auto pe-0 me-0 text-center">
+                    <i class="bi bi-arrow-return-right"></i>
+                </div>
+                <div class="col-2 mx-0 ms-auto">
+                    <img th:if="${map.userDto.profile_image == 'default'}" src="/public/img/clubImage/profile.jpg" class="img-fluid rounded-circle"  style="aspect-ratio: 1/1;">
+                    <img th:unless="${map.userDto.profile_image == 'default'}" th:src="|/images/${map.userDto.profile_image}|" class="img-fluid rounded-circle"  style="aspect-ratio: 1/1;">
+                </div>
+                <div class="col">
+                    <div class="row" style="font-size:0.9em">
+                        <div class="col ps-0">
+                            <span class="fw-bold nestedCommentNickname">닉네임출력</span>
+                        </div>
+                    </div>
+                    <div class="row text-secondary" style="font-size:0.8em">
+                        <div class="col ps-0">
+                            <span class="nestedCommentCreatedAt">댓글작성일</span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col ps-0 nestedCommentContent">
+                            리댓글의 내용이 출력됩니다.
+                        </div>
+                    </div>
+                </div>
+            </div>
     </div>
     
 

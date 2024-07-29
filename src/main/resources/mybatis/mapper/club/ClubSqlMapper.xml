@@ -300,6 +300,12 @@
     )
     </insert>
 
+    <!-- 대댓글DTO 가져오기 by comment_id -->
+    <select id="selectNestedCommentDtoList" resultType="com.bulmeong.basecamp.club.dto.ClubNestedCommentDto">
+        select * from bc_club_nested_comment
+        where comment_id  = #{comment_id}
+    </select>
+
 
 
     <!-- 소모임 댓글 총개수 집계 -->
