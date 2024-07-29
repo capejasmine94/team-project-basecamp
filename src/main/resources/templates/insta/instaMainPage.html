@@ -102,11 +102,8 @@
 
         });
 
-        
-        function action(){
-            alert("껄끄럽네~")
-        }
     </script>
+
     <style>
         /* 오프캠버스 css */
         #offcanvasBottom {
@@ -425,7 +422,7 @@
                     <div class="col-auto px-0" th:if="${instaArticleList.like == 1}">
                         <form action="./pushArticleLikeDeleteProcess" method="get">
                             <button class="btn">
-                                <i class="fa-solid fa-heart" style="color: #F23054;"></i>
+                                <i class="fa-solid fa-heart likeColor"></i>
                             </button>
 
                             <input type="hidden" name="user_id" th:value="${session.sessionUserInfo.id}">
