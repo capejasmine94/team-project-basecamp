@@ -435,6 +435,30 @@
     </div>
 </div>
 
+
+
+<!-- 지도 모달 -->
+<div class="modal fade container-fluid" id="popupSite" tabindex="-1" aria-labelledby="popupSite-title" data-keyboard="true" data-backdrop="static" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="popupSite-title">캠핑장 위치</h1>
+            </div>
+            <div id="popupSite-content" class="modal-body col">
+                <div class="row">
+                    <div class="col">
+                       
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button id="popupSite-no" type="button" class="btn btn-primary" >예약하기</button>
+                <button id="popupSite-no" type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 <!-- 네비가 추가됨 -->
 <div th:replace="camp/campNavi::popupCategory"></div>
 <div th:replace="camp/campNavi::popupSelectDay"></div>
