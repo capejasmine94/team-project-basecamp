@@ -77,19 +77,19 @@
                                         </tbody>
                                         <!-- registeredCampersListTemplete -->                                        
                                         <tbody>
-                                            <tr id="registeredCampersListTemplete" class="hidden">
+                                            <tr id="registeredCampersListTemplete" class="hidden" style="display: none;">
                                                 <td class="rclNumberWrapper text-center"></td>
                                                 <td>
                                                     <div class="d-flex align-items-center">
                                                         <div class="me-2">
-                                                            <img class="rcl-main_img" alt="썸네일" style="width: 4rem; height: 4rem;">
+                                                            <img class="rcl-main_img"  style="width: 4rem; height: 4rem;">
                                                         </div>
                                                         <div class="px-0">
                                                             <div class="rcl-carType_cate new-fs-7"></div>
                                                             <div class="rcl-product_name"></div>
                                                             <div class="text-body-tertiary" style="font-size: 0.75rem;">
-                                                                <span>동승인원</span><span class="rcl-seating_capacity"></span>
-                                                                <span>취침인원</span><span class="rcl-sleeping_capacity"></span>
+                                                                <span class="rcl-seating_capacity"></span>
+                                                                <span class="rcl-sleeping_capacity"></span>
                                                             </div>
                                                         </div>
                                                         <div class="ms-auto">
@@ -103,11 +103,10 @@
                                                 <td>
                                                     <ul class="list-unstyled mb-0">
                                                         <li class="d-flex justify-content-between">
-                                                            <span>평일</span>
                                                             <span class="rcl-rental_fee_weekdays"></span>
                                                         </li>
                                                         <li class="d-flex justify-content-between">
-                                                            <span>주말</span>
+                                                            
                                                             <span class="rcl-rental_fee_weekend"></span>
                                                         </li>
                                                     </ul>
@@ -116,11 +115,9 @@
                                                 <td>
                                                     <ul class="list-unstyled mb-0">
                                                         <li class="d-flex justify-content-between">
-                                                            <span>평일</span>
                                                             <span class="rcl-weekdays_price"></span>
                                                         </li>
                                                         <li class="d-flex justify-content-between">
-                                                            <span>주말</span>
                                                             <span class="rcl-weekend_price"></span>
                                                         </li>
                                                     </ul>
@@ -129,11 +126,11 @@
                                                 <td>
                                                     <ul class="list-unstyled mb-0">
                                                         <li class="d-flex justify-content-between">
-                                                            <span>평일</span>
+                                                            <!-- <span>평일</span> -->
                                                             <span class="rcl-semi_peak_weekdays_price"></span>
                                                         </li>
                                                         <li class="d-flex justify-content-between">
-                                                            <span>주말</span>
+                                                            <!-- <span>주말</span> -->
                                                             <span class="rcl-semi_peak_weekend_price"></span>
                                                         </li>
                                                     </ul>
@@ -142,11 +139,11 @@
                                                 <td>
                                                     <ul class="list-unstyled mb-0">
                                                         <li class="d-flex justify-content-between">
-                                                            <span>평일</span>
+                                                            <!-- <span>평일</span> -->
                                                             <span class="rcl-saile_weekdays_price"></span>
                                                         </li>
                                                         <li class="d-flex justify-content-between">
-                                                            <span>주말</span>
+                                                            <!-- <span>주말</span> -->
                                                             <span class="rcl-saile_weekend_price"></span>
                                                         </li>
                                                     </ul>
@@ -155,11 +152,11 @@
                                                 <td>
                                                     <ul class="list-unstyled mb-0">
                                                         <li class="d-flex justify-content-between">
-                                                            <span>평일</span>
+                                                            <!-- <span>평일</span> -->
                                                             <span class="rcl-specifiedPeriod_weekdays"></span>
                                                         </li>
                                                         <li class="d-flex justify-content-between">
-                                                            <span>주말</span>
+                                                            <!-- <span>주말</span> -->
                                                             <span class="rcl-specifiedPeriod_weekend"></span>
                                                         </li>
                                                     </ul>
@@ -167,15 +164,15 @@
                                                 <td class="d-flex justify-content-between">
                                                     <ul class="list-unstyled">
                                                         <li class="d-flex justify-content-between">
-                                                            <span>운전면허증</span>
+                                                            <!-- <span>운전면허증</span> -->
                                                             <span class="rcl-driver_liecense_condition"></span>
                                                         </li>
                                                         <li class="d-flex justify-content-between">
-                                                            <span class="pe-2">운전자나이</span>
+                                                            <!-- <span class="pe-2">운전자나이</span> -->
                                                             <span class="rcl-dirver_age_condition"></span>
                                                         </li>
                                                         <li class="d-flex justify-content-between">
-                                                            <span>운전경력</span>
+                                                            <!-- <span>운전경력</span> -->
                                                             <span class="rcl-driver_experience_condition"></span>
                                                         </li>
                                                     </ul>
@@ -189,9 +186,6 @@
                                                 </td>
                                                 <td></td>
                                                 <td></td>
-                                            </tr>
-                                            <tr id="noDataTemplate" class="hidden">
-                                                <td colspan="10" class="text-center">등록된 차량이 없습니다.</td>
                                             </tr>
                                         </tbody>
                                     </table>
@@ -211,156 +205,99 @@
     <!-- 이미지 upload 공용 js -->
     <script src="/public/js/uploader.js"></script>
     <script>
-        window.addEventListener("DOMContentLoaded",() => {
-            getRegisteredCampersList();
-        })
+    window.addEventListener("DOMContentLoaded", () => {
+    getRegisteredCampersList();
+    });
 
-        function getRegisteredCampersList() {
-            const url = "/api/campingcar/campingCarManagement";
-            fetch(url)
-            .then(response => response.json())
-            .then(response => {
-                console.log(response);
-                const registeredCampersListBox = document.getElementById("registeredCampersListBox");
-                registeredCampersListBox.innerHTML = "";
+    function getRegisteredCampersList() {
+        const url = "/api/campingcar/campingCarManagement";
+        fetch(url)
+        .then(response => response.json())
+        .then(response => {
+            console.log(response);
+            const registeredCampersListBox = document.getElementById("registeredCampersListBox");
+            registeredCampersListBox.innerHTML = ""; // 기존 내용을 초기화
 
-                if (!response.data || !response.data.registeredCampersList || response.data.registeredCampersList.length === 0) {
-                    const noDataTemplate = document.querySelector("#noDataTemplate").cloneNode(true);
-                    noDataTemplate.classList.remove("hidden");
-                    registeredCampersListBox.appendChild(noDataTemplate);
-                }else {
-                    const registeredCampersListTemplete = document.querySelector("#registeredCampersListTemplete");
-                    // console.log("Template exists:", registeredCampersListTemplete); // 요소 존재 여부 확인
-                        for(e of response.data.registeredCampersList) {
-                        const newRclWrapper = registeredCampersListTemplete.cloneNode(true);
-                        
-                        const rclNumberWrapper = newRclWrapper.querySelector(".rclNumberWrapper"); 
-                        rclNumberWrapper.innerText = e.id;
-                        console.log("rclNumberWrapper:", rclNumberWrapper);
+                    // 데이터 검증 및 처리
+            if (response.data.registeredCampersList.length === 0) {
+                registeredCampersListBox.innerHTML = "<tr><td colspan='10'>데이터가 없습니다.</td></tr>";
+                return;
+            }
+                const registeredCampersListTemplete = document.querySelector("#registeredCampersListTemplete");
 
-                        const rcl_main_img = newRclWrapper.querySelector(".rcl-main_img"); 
-                        rcl_main_img.setAttribute("src", `/images/${e.main_img}`);
-                        console.log("rcl_main_img:", rcl_main_img);
+                for (const e of response.data.registeredCampersList) {
+                    const newRclWrapper = registeredCampersListTemplete.cloneNode(true);
+                    newRclWrapper.classList.remove("hidden"); // 템플릿 줄의 숨김 상태 제거
+                    newRclWrapper.style.display = ""; // display 스타일 초기화
 
-                        const rcl_carType_cate = newRclWrapper.querySelector(".rcl-carType_cate");
-                        rcl_carType_cate.innerText = e.car_type_name;
-                        console.log("rcl_carType_cate:", rcl_carType_cate);
-
-                        const rcl_product_name = newRclWrapper.querySelector(".rcl-product_name"); 
-                        rcl_product_name.innerText = e.product_name;
-                        console.log("rcl_product_name:", rcl_product_name);
-
-                        const rcl_seating_capacity = newRclWrapper.querySelector(".rcl-seating_capacity");
-                        rcl_seating_capacity.innerText = `${e.seating_capacity}인승`;
-                        console.log("rcl_seating_capacity:",rcl_seating_capacity);
-
-                        const rcl_sleeping_capacity = newRclWrapper.querySelector(".rcl-sleeping_capacity");
-                        rcl_sleeping_capacity.innerText = `${e.sleeping_capacity}인승`;
-                        console.log("rcl_sleeping_capacity:", rcl_sleeping_capacity);
-
-                        const rcl_rental_fee_weekdays = newRclWrapper.querySelector(".rcl-rental_fee_weekdays");
-                        rcl_rental_fee_weekdays.innerText = `${e.rental_fee_weekdays.toLocaleString('ko-KR')}원`;
-                        console.log("rcl_rental_fee_weekdays:",rcl_rental_fee_weekdays);
-
-                        const rcl_rental_fee_weekend = newRclWrapper.querySelector(".rcl-rental_fee_weekend");
-                        rcl_rental_fee_weekend.innerText = `${e.rental_fee_weekend.toLocaleString('ko-KR')}원`;
-                        console.log("rcl_rental_fee_weekend:",rcl_rental_fee_weekend);
-
-                        const rcl_weekdays_price = newRclWrapper.querySelector(".rcl-weekdays_price");
-                        // e.weekdays_price가 null이 아닌 경우에만 toLocaleString을 사용
-                        if (e.weekdays_price !== null && e.weekdays_price !== undefined) {
-                            rcl_weekdays_price.innerText = `${e.weekdays_price.toLocaleString('ko-KR')}원`;
-                        } else {
-                            rcl_weekdays_price.innerText = '가격 정보 없음';  // 또는 적절한 기본값 또는 대체 텍스트로 파트너에게 명시
-                        }
-                        console.log("rcl_weekdays_price:", rcl_weekdays_price);
-
-                        const rcl_weekend_price = newRclWrapper.querySelector(".rcl-weekend_price");
-                        if(rcl_weekend_price !== null && e.weekend_price !== undefined){
-                            rcl_weekend_price.innerText = `${e.weekend_price.toLocaleString('ko-KR')}원`;
-                        }else {
-                            rcl_weekend_price.innerText = '가격 정보 없음';// 또는 적절한 기본값 또는 대체 텍스트로 파트너에게 명시
-                        }
-                        console.log("rcl_weekdays_price:", rcl_weekend_price);
-
-                        const rcl_semi_peak_weekdays_price = newRclWrapper.querySelector(".rcl-semi_peak_weekdays_price");
-                        // 요소의 텍스트가 비어 있는지 확인하고, 비어 있다면 '가격 정보 없음'을 추가
-                        // .trim() 함수는 문자열 앞뒤의 공백을 제거
-                        if (rcl_semi_peak_weekdays_price && rcl_semi_peak_weekdays_price.innerText.trim() === '') {
-                            rcl_semi_peak_weekdays_price.innerText = '가격 정보 없음';
-                            console.log("가격 정보가 업데이트 되었습니다:", rcl_semi_peak_weekdays_price);
-                        } else {
-                            console.log("가격 정보가 이미 설정되어 있습니다:", rcl_semi_peak_weekdays_price);
-                        }
-
-                        const rcl_semi_peak_weekend_price = newRclWrapper.querySelector(".rcl-semi_peak_weekend_price");
-                        // 요소의 텍스트가 비어 있는지 확인하고, 비어 있다면 '가격 정보 없음'을 추가
-                        // .trim() 함수는 문자열 앞뒤의 공백을 제거
-                        if(rcl_semi_peak_weekend_price && rcl_semi_peak_weekend_price.innerText.trim() === '') {
-                            rcl_semi_peak_weekend_price.innerText = '가격 정보 없음'
-                            console.log("가격 정보가 업데이트 되었습니다:", rcl_semi_peak_weekend_price);
-                        }else {
-                            console.log("가격 정보가 이미 설정되어 있습니다:", rcl_semi_peak_weekend_price);
-                        }
-
-                        const rcl_saile_weekdays_price = newRclWrapper.querySelector(".rcl-saile_weekdays_price");
-                        // 요소의 텍스트가 비어 있는지 확인하고, 비어 있다면 '가격 정보 없음'을 추가
-                        // .trim() 함수는 문자열 앞뒤의 공백을 제거
-                        if(rcl_saile_weekdays_price && rcl_saile_weekdays_price.innerText.trim() === '') {
-                            rcl_saile_weekdays_price.innerText = '가격 정보 없음'
-                            console.log("가격 정보가 업데이트 되었습니다:", rcl_saile_weekdays_price);
-                        }else {
-                            console.log("가격 정보가 이미 설정되어 있습니다:", rcl_saile_weekdays_price);
-                        }
-
-                        const rcl_saile_weekend_price = newRclWrapper.querySelector(".rcl-saile_weekend_price");
-                        // 요소의 텍스트가 비어 있는지 확인하고, 비어 있다면 '가격 정보 없음'을 추가
-                        // .trim() 함수는 문자열 앞뒤의 공백을 제거
-                        if(rcl_saile_weekend_price && rcl_saile_weekend_price.innerText.trim() === '') {
-                            rcl_saile_weekend_price.innerText = '가격 정보 없음'
-                            console.log("가격 정보가 업데이트 되었습니다:", rcl_saile_weekend_price);
-                        }else {
-                            console.log("가격 정보가 이미 설정되어 있습니다:", rcl_saile_weekend_price);
-                        }
-
-                        const rcl_specifiedPeriod_weekdays = newRclWrapper.querySelector(".rcl-specifiedPeriod_weekdays");
-                        // 요소의 텍스트가 비어 있는지 확인하고, 비어 있다면 '가격 정보 없음'을 추가
-                        // .trim() 함수는 문자열 앞뒤의 공백을 제거
-                        if(rcl_specifiedPeriod_weekdays && rcl_specifiedPeriod_weekdays.innerText.trim() === '') {
-                            rcl_specifiedPeriod_weekdays.innerText = '가격 정보 없음'
-                            console.log("가격 정보가 업데이트 되었습니다:", rcl_specifiedPeriod_weekdays);
-                        }else {
-                            console.log("가격 정보가 이미 설정되어 있습니다:", rcl_specifiedPeriod_weekdays);
-                        }
-                        
-                        const rcl_specifiedPeriod_weekend = newRclWrapper.querySelector(".rcl-specifiedPeriod_weekend");
-                        // 요소의 텍스트가 비어 있는지 확인하고, 비어 있다면 '가격 정보 없음'을 추가
-                        // .trim() 함수는 문자열 앞뒤의 공백을 제거
-                        if(rcl_specifiedPeriod_weekend && rcl_specifiedPeriod_weekend.innerText.trim() === '') {
-                            rcl_specifiedPeriod_weekend.innerText = '가격 정보 없음'
-                            console.log("가격 정보가 업데이트 되었습니다:", rcl_specifiedPeriod_weekend);
-                        }else {
-                            console.log("가격 정보가 이미 설정되어 있습니다:", rcl_specifiedPeriod_weekend);
-                        }
-
-                        const rcl_driver_liecense_condition = newRclWrapper.querySelector(".rcl-driver_liecense_condition");
-                        rcl_driver_liecense_condition.innerText = e.driver_license_condition_name;
-                        console.log("rcl_driver_liecense_condition:", rcl_driver_liecense_condition)
-
-                        const rcl_dirver_age_condition = newRclWrapper.querySelector(".rcl-dirver_age_condition");
-                        rcl_dirver_age_condition.innerText = e.driver_age_condition_name;
-                        console.log("rcl_dirver_age_condition:", rcl_dirver_age_condition)
-
-                        const rcl_driver_experience_condition = newRclWrapper.querySelector(".rcl-driver_experience_condition");
-                        rcl_driver_experience_condition.innerText = e.driver_experience_condition_name;
-                        console.log("rcl_driver_experience_condition:", rcl_driver_experience_condition);
-
-                        registeredCampersListBox.appendChild(newRclWrapper);
-
+                    // 데이터 채우기
+                    newRclWrapper.querySelector(".rclNumberWrapper").innerText = e.id;
+                    newRclWrapper.querySelector(".rcl-main_img").setAttribute("src", `/images/${e.main_img}`);
+                    newRclWrapper.querySelector(".rcl-carType_cate").innerText = e.car_type_name;
+                    newRclWrapper.querySelector(".rcl-product_name").innerText = e.product_name;
+                    newRclWrapper.querySelector(".rcl-seating_capacity").innerText = `동승인원 ${e.seating_capacity}인승`;
+                    newRclWrapper.querySelector(".rcl-sleeping_capacity").innerText = `취침 인원 ${e.sleeping_capacity}인승`;
+                    newRclWrapper.querySelector(".rcl-rental_fee_weekdays").innerText = `평일 ${e.rental_fee_weekdays.toLocaleString('ko-KR')}원`;
+                    newRclWrapper.querySelector(".rcl-rental_fee_weekend").innerText = `주말 ${e.rental_fee_weekend.toLocaleString('ko-KR')}원`;
+                    
+                    // 성수기
+                    if (e.weekdays_price !== null && e.weekdays_price !== undefined) {
+                        newRclWrapper.querySelector(".rcl-weekdays_price").innerText = `평일 ${e.weekdays_price.toLocaleString('ko-KR')}원`;
+                    } else {
+                        newRclWrapper.querySelector(".rcl-weekdays_price").innerText = '가격 정보 없음';
                     }
+                    if (e.weekend_price !== null && e.weekend_price !== undefined) {
+                        newRclWrapper.querySelector(".rcl-weekend_price").innerText = `주말 ${e.weekend_price.toLocaleString('ko-KR')}원`;
+                    } else {
+                        newRclWrapper.querySelector(".rcl-weekend_price").innerText = '가격 정보 없음';
+                    }
+                    
+                    // 준성수기
+                    if (e.semi_peak_weekdays_price !== null && e.semi_peak_weekdays_price !== undefined) {
+                        newRclWrapper.querySelector(".rcl-semi_peak_weekdays_price").innerText = `평일 ${e.semi_peak_weekdays_price.toLocaleString('ko-KR')}원`;
+                    } else {
+                        newRclWrapper.querySelector(".rcl-semi_peak_weekdays_price").innerText = '가격 정보 없음';
+                    }
+                    if (e.semi_peak_weekend_price !== null && e.semi_peak_weekend_price !== undefined) {
+                        newRclWrapper.querySelector(".rcl-semi_peak_weekend_price").innerText = `주말 ${e.semi_peak_weekend_price.toLocaleString('ko-KR')}원`;
+                    } else {
+                        newRclWrapper.querySelector(".rcl-semi_peak_weekend_price").innerText = '가격 정보 없음';
+                    }
+
+                    // 할인가
+                    if (e.saile_weekdays_price !== null && e.saile_weekdays_price !== undefined) {
+                        newRclWrapper.querySelector(".rcl-saile_weekdays_price").innerText = `평일 ${e.saile_weekdays_price.toLocaleString('ko-KR')}원`;
+                    } else {
+                        newRclWrapper.querySelector(".rcl-saile_weekdays_price").innerText = '가격 정보 없음';
+                    }
+                    if (e.saile_weekend_price !== null && e.saile_weekend_price !== undefined) {
+                        newRclWrapper.querySelector(".rcl-saile_weekend_price").innerText = `주말 ${e.saile_weekend_price.toLocaleString('ko-KR')}원`;
+                    } else {
+                        newRclWrapper.querySelector(".rcl-saile_weekend_price").innerText = '가격 정보 없음';
+                    }
+
+                    // 지정기간
+                    if (e.specifiedPeriod_weekdays !== null && e.specifiedPeriod_weekdays !== undefined) {
+                        newRclWrapper.querySelector(".rcl-specifiedPeriod_weekdays").innerText = `평일 ${e.specifiedPeriod_weekdays.toLocaleString('ko-KR')}원`;
+                    } else {
+                        newRclWrapper.querySelector(".rcl-specifiedPeriod_weekdays").innerText = '가격 정보 없음';
+                    }
+                    if (e.specifiedPeriod_weekend !== null && e.specifiedPeriod_weekend !== undefined) {
+                        newRclWrapper.querySelector(".rcl-specifiedPeriod_weekend").innerText = `주말 ${e.specifiedPeriod_weekend.toLocaleString('ko-KR')}원`;
+                    } else {
+                        newRclWrapper.querySelector(".rcl-specifiedPeriod_weekend").innerText = '가격 정보 없음';
+                    }
+
+                    // 운전 조건
+                    newRclWrapper.querySelector(".rcl-driver_liecense_condition").innerText = `운전면허 ${e.driver_license_condition_name}`;
+                    newRclWrapper.querySelector(".rcl-dirver_age_condition").innerText = `운전자나이 ${e.driver_age_condition_name}`;
+                    newRclWrapper.querySelector(".rcl-driver_experience_condition").innerText = `운전 경력 ${e.driver_experience_condition_name}`;
+
+                    registeredCampersListBox.appendChild(newRclWrapper);
                 }
-            });
-        }
+        });
+    }
+
     </script>
 
 </body>
