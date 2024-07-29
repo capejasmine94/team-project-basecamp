@@ -423,8 +423,8 @@
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js"></script>
     
-    <!-- campingcarList script -->
-    <script>
+     <!-- campingcarList script -->
+     <script>
         window.addEventListener("DOMContentLoaded",() => {
             // 페이지가 로드 될때 실행되어야 하는 이벤트 등록  
             loadCampingCarList();                             
@@ -449,6 +449,7 @@
                 const campingcarListWrapperTemplete = document.querySelector("#campingcarListTemplete .campingcarListWrapper");
                 //응답받은 responseDto의 data 필드에서 추가(add) 메서드에 넣은 "키와 값" 반복문 돌리기
                 for(e of response.data.campingcarList) {
+
                     // WrapperTemlete 클론로드(복사본)해서 새로운Wrapper 변수 선언하기
                     const newCampingcarListWrapper  = campingcarListWrapperTemplete.cloneNode(true);
 
@@ -462,7 +463,7 @@
                     campingcarProduct_name.innerText = e.product_name;
 
                     const campingcarShortdescription = newCampingcarListWrapper.querySelector(".campingcarShortdescription");
-                    campingcarShortdescription.innerText = e.short_description;
+                    campingcarShortdescription.innerText = e.shortdescription;
 
                     const campingcarRental_fee_weekdays = newCampingcarListWrapper.querySelector(".campingcarRental_fee_weekdays");
                     campingcarRental_fee_weekdays.innerText = `평일 가격 : ${e.rental_fee_weekdays.toLocaleString('ko-KR')}원`;
@@ -472,9 +473,9 @@
 
                     const campingcarGarage_address = newCampingcarListWrapper.querySelector(".campingcarGarage_address");
                     campingcarGarage_address.innerText = `차고지 주소 : ${e.garage_address}`;
-                    
+
                     const campingcarDriver_license_name = newCampingcarListWrapper.querySelector(".campingcarDriver_license_name");
-                    campingcarDriver_license_name.innerText = `운전면허증 : ${e.driver_license_condition_name}`;
+                    campingcarDriver_license_name.innerText = `운전면허증 : ${e.driver_license_name}`;
                 
                     const campingcarDriver_age_condition_name = newCampingcarListWrapper.querySelector(".campingcarDriver_age_condition_name");
                     campingcarDriver_age_condition_name.innerText =`운전자 나이 : ${e.driver_age_condition_name}`;

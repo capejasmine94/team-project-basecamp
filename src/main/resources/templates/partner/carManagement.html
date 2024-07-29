@@ -219,7 +219,7 @@
             registeredCampersListBox.innerHTML = ""; // 기존 내용을 초기화
 
                     // 데이터 검증 및 처리
-            if (response.data.registeredCampersList.length === 0) {
+            if (response.data.registeredCampersList.length == 0) {
                 registeredCampersListBox.innerHTML = "<tr><td colspan='10'>데이터가 없습니다.</td></tr>";
                 return;
             }

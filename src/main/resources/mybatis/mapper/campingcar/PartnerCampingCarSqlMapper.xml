@@ -94,7 +94,8 @@
     </insert>
     <!-- main 페이지의 차량 등록 list(외래키의 받은 모든 테이블을 엮음) : 
     차량등록, 회사,회사지역카태고리,캠핑카유형, 운전자조건(면허증,경력,나이),좋아요, 성수기 가격 -->
-    <select id="findCampingCarById" resultType="map">
+    <select id="findCampingCarAll" resultType="map">
+    select
         bc.id, 
         bc.rental_company_id,
         brci.comp_name, 
@@ -157,7 +158,7 @@
         INNER join bc_driver_experience_condition bdec on bc.driver_experience_id = bdec.id
         left join bc_campingcar_like cl on cl.product_id = bc.id 
         left join bc_rental_peak_price brpp on bc.id = brpp.product_id
-        where bc.rental_company_id = #{rental_company_id};
+        where bc.rental_company_id = #{rental_company_id}
     </select>
 
 </mapper>
