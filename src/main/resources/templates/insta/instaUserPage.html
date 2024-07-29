@@ -79,7 +79,7 @@
                 .then(response => response.json())
                 .then((response) => {
                     myInstaId = response.data.myInstaId
-                    reloadFollow();
+                    reloadFollow();  // 팔로우 유무 확인
 
                     console.log("sessionGetInstaId ID has been set:", myInstaId); // 콘솔에 찍힐 세션 id
                 })
@@ -99,7 +99,7 @@
                 fetch(url)
                 .then(response => response.json())
                 .then((response) => {
-                    reloadFollow();
+                    reloadFollow(); // 팔로우 유무 확인
                     getFollowingCount();
                 })
                 ;
@@ -115,14 +115,15 @@
                     return;
                 }
 
-                const url = "/api/insta/unFollow?following_user_id=" + followingUserId;
-                fetch(url)
-                .then(response => response.json())
-                .then((response) => {
-                    reloadFollow();
-                    getFollowingCount();
-                })
-                ;
+                if(confirm("팔로우를 취소하시겠습니까?")){
+                    const url = "/api/insta/unFollow?following_user_id=" + followingUserId;
+                    fetch(url)
+                    .then(response => response.json())
+                    .then((response) => {
+                        reloadFollow();  // 팔로우 유무 확인
+                        getFollowingCount();
+                    });
+                }
 
             }
 

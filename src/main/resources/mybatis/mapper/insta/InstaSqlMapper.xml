@@ -154,6 +154,36 @@
         and following_user_id = #{following_user_id}
     </delete>
 
+
+
+    <!-- 댓글 좋아요(자바스크립트) -->
+    <insert id="createCommentLike">
+        insert into bc_insta_comment_like(
+            user_id, comment_id
+        )values(
+            #{user_id}, #{comment_id}
+        )
+    </insert>
+
+    <!-- 몇번 댓글에 좋아요 개수가 몇인지 -->
+    <select id="countLikeByCommentId" resultType="int">
+        select count(*) from bc_insta_comment_like
+        where comment_id = #{comment_id}
+    </select>
+
+    <!-- 댓글 좋아요 여부 -->
+    <select id="countLikeByCommentIdAndUserId" resultType="int">
+        select count(*) from bc_insta_comment_like
+        where comment_id = #{comment_id}
+        and user_id = #{user_id}
+    </select>
+
+    <delete id="deleteLikeByCommentIdAndUserId">
+        delete from bc_insta_comment_like
+        where comment_id = #{comment_id}
+        and user_id = #{user_id}
+    </delete>
+
 </mapper>
 
 

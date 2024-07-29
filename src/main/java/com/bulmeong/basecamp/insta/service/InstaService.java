@@ -7,6 +7,7 @@ import com.bulmeong.basecamp.insta.dto.InstaArticleCommentDto;
 import com.bulmeong.basecamp.insta.dto.InstaArticleDto;
 import com.bulmeong.basecamp.insta.dto.InstaArticleImgDto;
 import com.bulmeong.basecamp.insta.dto.InstaArticleLikeDto;
+import com.bulmeong.basecamp.insta.dto.InstaCommentLikeDto;
 import com.bulmeong.basecamp.insta.dto.InstaFollowDto;
 import com.bulmeong.basecamp.insta.dto.InstaUserInfoDto;
 import com.bulmeong.basecamp.insta.mapper.InstaSqlMapper;
@@ -172,6 +173,32 @@ public class InstaService {
 
 
 
+    // 댓글 좋아요 _ 자바스크립트
+    public void commentLike(InstaCommentLikeDto instaCommentLikeDto){
+        instaSqlMapper.createCommentLike(instaCommentLikeDto);
+    }
+
+    // 댓글 좋아요 개수
+    public int commentLikeCount(int comment_id){
+        int commentLikeCount = instaSqlMapper.countLikeByCommentId(comment_id);
+
+        return commentLikeCount;
+    }
+
+    // 댓글 좋아요 상태 여부
+    public int commentIsLiked(InstaCommentLikeDto instaCommentLikeDto){
+        int commentIsLiked = instaSqlMapper.countLikeByCommentIdAndUserId(instaCommentLikeDto);
+
+        return commentIsLiked;
+    }
+
+    public void unFollow(InstaCommentLikeDto instaCommentLikeDto){
+        instaSqlMapper.deleteLikeByCommentIdAndUserId(instaCommentLikeDto);
+    }
+    
+
+    
+
     // 팔로우 _ 자바스크립트
     public void follow(InstaFollowDto instaFollowDto){
         instaSqlMapper.insertFollowByUserId(instaFollowDto);
@@ -200,6 +227,9 @@ public class InstaService {
     public void unFollow(InstaFollowDto instaFollowDto){
         instaSqlMapper.deleteFollowByFollowerUserIdAndFollowingUserId(instaFollowDto);
     }
+
+
+
 }
 
 

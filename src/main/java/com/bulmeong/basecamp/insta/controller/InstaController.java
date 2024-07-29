@@ -169,6 +169,14 @@ public class InstaController {
         int articleCount = instaService.selectArticleCountByUserId(id);
         model.addAttribute("articleCount", articleCount);
 
+        // 몇번 회원이 몇명을 팔로우 했는지
+        int followerCount = instaService.followerCount(id);
+        model.addAttribute("followerCount", followerCount);
+
+        // 몇번 회원을 몇명이 팔로잉 했는지
+        int followingCount = instaService.followingCount(id);
+        model.addAttribute("followingCount", followingCount);
+
         return "insta/instaMyPage";
     }
 

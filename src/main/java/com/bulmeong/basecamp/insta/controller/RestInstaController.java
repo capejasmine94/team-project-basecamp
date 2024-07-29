@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.bulmeong.basecamp.insta.dto.InstaArticleCommentDto;
 import com.bulmeong.basecamp.insta.dto.InstaArticleLikeDto;
+import com.bulmeong.basecamp.insta.dto.InstaCommentLikeDto;
 import com.bulmeong.basecamp.insta.dto.InstaFollowDto;
 import com.bulmeong.basecamp.insta.dto.InstaRestResponseDto;
 import com.bulmeong.basecamp.insta.dto.InstaUserInfoDto;
@@ -78,6 +79,25 @@ public class RestInstaController {
         return instaRestResponseDto;
     }
 
+
+    // 댓글 좋아요
+    @RequestMapping("commentLike")
+    public InstaRestResponseDto commentLike(InstaCommentLikeDto params, HttpSession session){
+        InstaRestResponseDto instaRestResponseDto = new InstaRestResponseDto();
+        instaRestResponseDto.setResult("success");
+
+        // 로그인이 되어있다는 가정하에
+        UserDto userDto = (UserDto) session.getAttribute("sessionUserInfo");
+        InstaUserInfoDto  instaUserInfoDto = instaService.userInfoByUserId(userDto.getId());
+        params.setUser_id(instaUserInfoDto.getId());
+
+        System.out.println("Received comment_id: " + params.getComment_id());
+        System.out.println("Received user_id: " + params.getUser_id());
+
+        instaService.commentLike(params);
+
+        return instaRestResponseDto;
+    }
 
 
 
