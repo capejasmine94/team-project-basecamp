@@ -15,8 +15,13 @@
     <script src="/public/js/uploader.js"></script>
     <script src="/public/js/util.js"></script>
     <script src="/public/js/sellerPage.js"></script>
-    <script src="/public/js/camp/campsite.js"></script>
+    <script src="/public/js/camp/seller.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <script>
+         // 초기화
+        initRegisterCamp();
+    </script>
 </head>
 
 <body>
@@ -30,7 +35,7 @@
         <!-- 본문 -->
         <div class="col right ms-2" style="padding-top: 58px;">
             <form id="registerCampProcess" method="post" enctype="multipart/form-data" action="/campsiteCenter/registerCampProcess">
-                <input type="hidden" name ="id" th:value="${session.campsite.id}">
+                <input type="hidden" name ="id" th:value="${session.campsite.dto.id}">
                 <!-- 상단 바 -->
                 <div th:replace="~{camp/campNavi::topNavi}"></div>
 
@@ -47,7 +52,7 @@
                                         <div class="row mt-3 align-items-center">
                                             <div class="col-1 text-secondary text-end">캠핑장 이름</div>
                                             <div class="col-4 text-secondary text-end">
-                                                <input name="name" type="text" th:value="${session.campsite.name}" class="form-control" placeholder="욕설 또는 타인을 비방하는 단어는 자제해주세요">
+                                                <input name="camp_name" type="text" th:value="${session.campsite.dto.camp_name}" class="form-control" placeholder="욕설 또는 타인을 비방하는 단어는 자제해주세요">
                                             </div>
                                         </div>
                                         <div class="row mt-4 align-items-center">
@@ -55,7 +60,7 @@
                                                 <div class="row pb-2 align-items-center">
                                                     <div class="col-1 text-secondary text-end">주소</div>
                                                     <div class="col-2 pe-0">
-                                                        <input type="text" th:value="${session.campsite.postcode}" class="form-control bg-white" name="postcode" id="postcode" placeholder="우편번호">
+                                                        <input type="text" th:value="${session.campsite.dto.postcode}" class="form-control bg-white" name="postcode" id="postcode" placeholder="우편번호">
                                                     </div>
                                                     <div class="col-auto">
                                                         <input type="button" id="postcodeButton" class="form-control" onclick="execDaumPostcode()" value="우편번호 찾기">
@@ -64,13 +69,13 @@
                                                 <div class="row pb-2">
                                                     <div class="col-1"></div>
                                                     <div class="col-4">
-                                                        <input type="text" th:value="${session.campsite.address}" name="address" class="form-control bg-white" id="address" placeholder="주소">
+                                                        <input type="text" th:value="${session.campsite.dto.address}" name="address" class="form-control bg-white" id="address" placeholder="주소">
                                                     </div>
                                                 </div>
                                                 <div class="row">
                                                     <div class="col-1"></div>
                                                     <div class="col-4">
-                                                        <input type="text" th:value="${session.campsite.detail_address}" name="detail_address" class="form-control" id="detailAddress" placeholder="상세주소">
+                                                        <input type="text" th:value="${session.campsite.dto.detail_address}" name="detail_address" class="form-control" id="detailAddress" placeholder="상세주소">
                                                     </div>
                                                 </div>
                                             </div>
@@ -78,19 +83,19 @@
                                         <div class="row mt-4 align-items-center">
                                             <div class="col-1 text-secondary text-end">캠핑장 연락처</div>
                                             <div class="col-4">
-                                                <input class="form-control" th:value="${session.campsite.camp_phone}" name="camp_phone" type="text" maxlength="13" oninput="formatPhoneNumber(this)" placeholder="하이폰 '-' 없이 입력">
+                                                <input class="form-control" th:value="${session.campsite.dto.camp_phone}" name="camp_phone" type="text" maxlength="13" oninput="formatPhoneNumber(this)" placeholder="하이폰 '-' 없이 입력">
                                             </div>
                                         </div>
                                         <div class="row mt-4 align-items-center">
                                             <div class="col-1 text-secondary text-end">홈페이지</div>
                                             <div class="col-4">
-                                                <input name="url" class="form-control" type="text" placeholder="url 입력">
+                                                <input name="url" class="form-control" type="text" placeholder="url 입력" th:value="${'www.camping' + session.campsite.dto.id + '.com'}">
                                             </div>
                                         </div>
                                         <div class="row mt-4 align-items-center">
                                             <div class="col-1 text-secondary text-end">캠핑장 이메일</div>
                                             <div class="col-4">
-                                                <input name="email" class="form-control" type="text" placeholder="username@domain.com">
+                                                <input name="email" class="form-control" type="text" placeholder="username@domain.com" th:value="${'camp' + session.campsite.dto.id + '@campsite.com'}">
                                             </div>
                                         </div>
                                         <div class="row mt-4 mb-3">
@@ -98,7 +103,7 @@
                                                 <span>캠핑장 소개</span>
                                             </div>
                                             <div class="col-4 fw-semibold">
-                                                <textarea class="form-control" name="description" id="" cols="30" rows="5"></textarea>
+                                                <textarea class="form-control" name="description" id="" cols="30" rows="5" th:text="${'세상에서 가장 강하고 경이로운 캠핑장' + session.campsite.dto.id}"></textarea>
                                             </div>
                                         </div>
                                     </div>
@@ -169,9 +174,9 @@
                                         </div>
                                     </div>
                                     <div class="row justify-content-between">
-                                        <div class="col-8 ms-3 mt-2 px-0">
-                                            <span th:each="camp_category : ${session.campsiteCategory}">
-                                                <input name="campsite_category" type="checkbox" class="btn-check" th:id="'campCategory' + ${camp_category.id}" th:value="${camp_category.id}" autocomplete="off">
+                                        <div class="col-8 ms-3 mt-2 px-0" id="categoryList">
+                                            <span th:each="camp_category : ${session.category.camp}">
+                                                <input name="campCategory" type="checkbox" class="btn-check" th:id="'campCategory' + ${camp_category.id}" th:value="${camp_category.id}" autocomplete="off">
                                                 <label class="btn ms-2 mb-2 rounded-5 btn-outline-primary" th:for="'campCategory' + ${camp_category.id}"><span th:text="${camp_category.name}"></span></label>
                                             </span>
                                         </div>
@@ -219,7 +224,7 @@
                                     </div>
                                     <div class="row mt-3">
                                         <div class="col-8 mx-3">
-                                            <textarea class="form-control" rows="5" name="notice"></textarea>
+                                            <textarea class="form-control" rows="5" name="notice">예약하시려면 돈을 내야합니다.</textarea>
                                         </div>
                                     </div>
 
@@ -228,7 +233,7 @@
                                     </div>
                                     <div class="row mt-3">
                                         <div class="col-8 mx-3">
-                                            <textarea class="form-control" rows="5" name="facility_notice"></textarea>
+                                            <textarea class="form-control" rows="5" name="facility_notice">시설을 사용하시려면 돈을 내야합니다.</textarea>
                                         </div>
                                     </div>
 
@@ -237,7 +242,7 @@
                                     </div>
                                     <div class="row mt-3 mb-3">
                                         <div class="col-8 mx-3">
-                                            <textarea class="form-control" rows="5" name="refund_notice"></textarea>
+                                            <textarea class="form-control" rows="5" name="refund_notice">환불 하고싶으세요? 어림도 없지 ㅋㅋ</textarea>
                                         </div>
                                     </div>
                                 </div>
@@ -302,7 +307,7 @@
                                                 체크인
                                             </div>
                                             <div class="col-2 pe-0">
-                                                <input name="check_in" class="form-control text-end" type="time" id="check_in">
+                                                <input name="check_in" class="form-control text-end" type="time" id="check_in" value="15:00">
                                             </div>
                                         </div>
                                         <div class="row mt-2">
@@ -310,7 +315,7 @@
                                                 체크아웃
                                             </div>
                                             <div class="col-2 pe-0">
-                                                <input name="check_out" class="form-control text-end" type="time" id="check_out">
+                                                <input name="check_out" class="form-control text-end" type="time" id="check_out" value="12:00">
                                             </div>
                                         </div>
                                     </div>
@@ -349,13 +354,13 @@
                                         </div>
                                         <div class="row mt-2">
                                             <div class="col-2 pe-0">
-                                                <input name="manner_start" class="form-control text-end" type="time" id="manner_start">
+                                                <input name="manner_start" class="form-control text-end" type="time" id="manner_start" value="23:00">
                                             </div>
                                             <div class="col-auto mt-1 fw-semibold">
                                                 부터
                                             </div>
                                             <div class="col-2 pe-0">
-                                                <input name="manner_end" class="form-control text-end" type="time" id="manner_end">
+                                                <input name="manner_end" class="form-control text-end" type="time" id="manner_end" value="05:30">
                                             </div>
                                             <div class="col-auto mt-1 fw-semibold">
                                                 까지
@@ -440,6 +445,7 @@
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 <script>
+    // 카카오 주소 입력
     function origin_execDaumPostcode() {
         new daum.Postcode({
             oncomplete: function (data) {
@@ -473,7 +479,6 @@
             }
         }).open();
     }
-
     function return_execDaumPostcode() {
         new daum.Postcode({
             oncomplete: function (data) {
@@ -508,7 +513,6 @@
             }
         }).open();
     }
-
     function execDaumPostcode() {
         new daum.Postcode({
             oncomplete: function (data) {
@@ -539,69 +543,94 @@
             }
         }).open();
     }
-
+   
+    // 캘린더 / 업로더
     createMultipleUploader('mainImage');
     createUploader('mapImage');
-    const date = new Date();
-    date.setFullYear(date.getFullYear() + 1);
-    createCalendar('opentime', date);
-    createRangeCalendar('peak', 365, date);
-    // alert('서비스를 사용하시려면 캠핑장 등록이 필요합니다.');
-    popupForce('캠핑장 등록', '서비스를 사용하시려면 캠핑장 등록이 필요합니다.', '확인', popupClose);
+    createCalendar('opentime', yearsAgo(1));
+    createRangeCalendar('peak', 365, yearsAgo(1));
 
-    document.getElementById('registerCampProcess').addEventListener('submit', function(event) {
-        const form = event.target;
-        const categoryInputs = form.querySelectorAll('input[name="campsite_category"]:checked');
-        if (categoryInputs.length === 0) {
-            alert('캠핑장 카테고리를 하나 이상 선택해주세요.');
-            event.preventDefault();
-            return;
-        }
-        
-        const categoryIds = Array.from(categoryInputs).map(input => input.value);
-        const hiddenInput = document.createElement('input');
-        hiddenInput.type = 'hidden';
-        hiddenInput.name = 'campsite_category';
-        hiddenInput.value = JSON.stringify(categoryIds);
-        form.appendChild(hiddenInput);
-    });
-    const stateButton = document.getElementById('saveStateButton');
-    const form = document.getElementById('registerCampProcess');
-    stateButton.onclick = () => { validateAndSubmitForm(); };
-    function validateAndSubmitForm() {
-        const requiredFields = [
-            'car_pay', 'kid_pay', 'adult_pay', 'peak_pay', 'max_ordertime', 
-            'manner_end', 'manner_start', 'check_out', 'check_in', 'notice',
-            'refund_notice', 'facility_notice', 'description',
-            'camp_phone', 'detail_address', 'address', 'postcode', 'name'
-        ];
-
-        let allValid = true;
-        
-        requiredFields.forEach((fieldName) => {
-            const field = form.querySelector(`[name="${fieldName}"]`);
-            if (!field.value) {
-                field.focus();
-                allValid = false;
-                return false;  // 종료
+    // 폼 제출 버튼
+    function initFormButton() {
+        const stateButton = document.getElementById('saveStateButton');
+        stateButton.onclick = (event)=> { 
+            event.preventDefault();  // 기본 제출 동작 방지
+            validateAndSubmitForm(); 
+        };
+        function validateAndSubmitForm() {
+            // 초기화
+            const form = document.getElementById('registerCampProcess');
+            const requiredFields = [
+                'car_pay',
+                'kid_pay',
+                'adult_pay',
+                'peak_pay',
+                'manner_start',
+                'manner_end',
+                'max_ordertime',
+                'check_out',
+                'check_in',
+                'opentime_start_date',
+                'peak_start_date',
+                'refund_notice',
+                'facility_notice',
+                'notice',
+                'mapImage',
+                'mainImage',
+                'description',
+                'email',
+                'url',
+                'camp_phone',
+                'address',
+                'camp_name'        
+            ];
+            let allValid = true;
+            
+            // 빈칸 확인
+            requiredFields.forEach((fieldName) => {
+                let field = form.querySelector(`[name="${fieldName}"]`);
+                if (!field.value) {
+                    if(fieldName.includes('Image')) {
+                        field = form.querySelector('#upload_' + fieldName);
+                    }
+                    if(fieldName.includes('peak')) {
+                        field = form.querySelector('#calendar_peak');
+                    }
+                    else if(fieldName.includes('opentime')) {
+                        field = form.querySelector('#calendar_opentime');
+                    }
+                    field.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    allValid = false;
+                }
+            });
+            const categoryInputs = form.querySelectorAll('input[name="campCategory"]:checked');
+            if(allValid) {
+                // 카테고리 체크 확인
+                if (categoryInputs.length === 0) {
+                    alert('캠핑장 카테고리를 하나 이상 선택해주세요.');
+                    document.getElementById('categoryList').scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    allValid = false;
+                }
             }
-        });
+            // 모든 유효성 마침 
+            if (allValid) {
+                // 돈 쉼표 제거
+                replaceMoneyInput();
 
-        const categoryInputs = form.querySelectorAll('input[name="campsite_category"]:checked');
-        if (categoryInputs.length === 0) {
-            alert('캠핑장 카테고리를 하나 이상 선택해주세요.');
-            allValid = false;
-        }
-
-        if (allValid) {
-            replaceMoneyInput();
-            form.submit();
+                // 카테고리 데이터화
+                const categoryIds = Array.from(categoryInputs).map(input => input.value);
+                const hiddenInput = document.createElement('input');
+                hiddenInput.type = 'hidden';
+                hiddenInput.name = 'campCategory';
+                hiddenInput.value = JSON.stringify(categoryIds);
+                form.appendChild(hiddenInput);
+                document.getElementById('registerCampProcess').submit();
+            }
         }
     }
-        form.addEventListener('submit', function(event) {
-        event.preventDefault();  // 기본 제출 동작 방지
-        validateAndSubmitForm(); // 유효성 검사 후 제출
-    });
+    initFormButton();
+   
+    
 </script>
 </body>
 </html>
