@@ -75,7 +75,7 @@ public class StoreController {
         if(userDto==null||storeOrderDto.getUser_id()!=userDto.getId()){
             return "redirect:/store";
         }else{
-
+            model.addAttribute("orderData", storeService.getOrderDataByOrderId(id));
             return "store/mOrderComplete";
         }
     }

@@ -10,6 +10,7 @@ import com.bulmeong.basecamp.store.dto.AdditionalInfoDto;
 import com.bulmeong.basecamp.store.dto.CartProductDto;
 import com.bulmeong.basecamp.store.dto.CartProductOptionValueDto;
 import com.bulmeong.basecamp.store.dto.OptionValueAdditionalInfoDto;
+import com.bulmeong.basecamp.store.dto.OrderDeliveryInfoDto;
 import com.bulmeong.basecamp.store.dto.OrderProductDto;
 import com.bulmeong.basecamp.store.dto.OrderProductOptionValueDto;
 import com.bulmeong.basecamp.store.dto.ProductOptionNameDto;
@@ -23,6 +24,7 @@ import com.bulmeong.basecamp.store.dto.StoreProductCategoryDto;
 import com.bulmeong.basecamp.store.dto.StoreProductDiscountDto;
 import com.bulmeong.basecamp.store.dto.StoreProductDto;
 import com.bulmeong.basecamp.user.dto.MileageLogDto;
+import com.bulmeong.basecamp.user.dto.UserDto;
 
 @Mapper
 public interface StoreSqlMapper {
@@ -100,7 +102,7 @@ public interface StoreSqlMapper {
     public List<OrderProductDto> selectPendingOrderProductDtoList(int user_id);
     public StoreDto selectStoreDtoByOrderProductId(int order_product_id);
 
-    public Map<String, Object> selectPendingOrderProductDataById(int order_product_id);
+    public Map<String, Object> selectOrderProductDataById(int order_product_id);
     public int[] selectOrderProductOptionValueIds(int order_product_id);
     public int[] selectOrderProductOptionValuePrimaryKeys(int order_product_id);
 
@@ -114,7 +116,7 @@ public interface StoreSqlMapper {
     public void updateOrderProduct(OrderProductDto orderProductDto);
 
     public void insertPointUsageLog(MileageLogDto mileageLogDto);
-    public void updateUserMileage(@Param("user_id") int user_id, @Param("used_point") int used_point);
+    public void updateUserMileage(@Param("id") int id, @Param("used_point") int used_point);
 
     public int[] selectCartProductOptionValuePrimaryKeys(int cart_product_id);
 
@@ -124,4 +126,15 @@ public interface StoreSqlMapper {
     public StoreOrderDto selectStoreOrderDtoById(int id);
 
     public List<OrderProductDto> selectOrderProductListByOrderId(int order_id);
+
+    public List<OrderProductDto> selectOrderProductListByStoreId(int store_id);
+
+    public OrderProductDto selectOrderProductDtoById(int id);
+
+    public UserDto selectUserDtoById(int id);
+
+    public void updateOrderProductStatusToPreparing(int id);
+    public void insertOrderDeliveryInfo(OrderDeliveryInfoDto orderDeliveryInfoDto);
+    public void updateOrderProductStatusToDelivering(int id);
+    public OrderDeliveryInfoDto selectOrderDeliveryInfoByOrderProductId(int order_product_id);
 }

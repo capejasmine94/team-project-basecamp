@@ -62,13 +62,13 @@
             font-size: 4em;
         }
     </style>
-    <script>
+    <!-- <script>
         document.addEventListener('DOMContentLoaded', function() {
             document.getElementById('backButton').addEventListener('click', function() {
                 history.back();
             });
         });
-    </script>
+    </script> -->
 </head>
 <body class="bg-body-tertiary">
 
@@ -128,8 +128,9 @@
                         상품정보
                     </div>
                     <div class="col text-center">
-                        <span class="fw-bold">진짜맛있는 납작복숭아</span>
-                        <span> 외 3건</span>
+                        <span class="fw-bold">이거 js로 해야될 것 같기도 하고</span>
+                        <!-- <span class="fw-bold">진짜맛있는 납작복숭아</span> -->
+                        <!-- <span> 외 3건</span> -->
                     </div>
                     <div class="col-auto d-flex align-items-center fw-bold text-body-tertiary">
                         <span class="material-symbols-outlined">
@@ -156,54 +157,31 @@
         <div class="row accordion-collapse collapse bg-white px-3" id="first-collapse">
             <div class="col p-0 border-bottom">
                 
-
-                <div class="row pb-3 align-items-center">
+                <!-- 상품 하나의 정보 -->
+                <div class="row pb-3 align-items-center" th:each="orderProductData : ${orderData.orderProductDataList}">
                     <div class="col-3 pe-0 product-col">
-                        <img src="/public/img/storeImage/productImg1.jpg" class="border">
+                        <img th:src="|/images/${orderProductData.orderProductDto.product_main_image}|" class="border">
                     </div>
                     <div class="col">
                         <div class="row f09">
                             <div class="col">
-                                GamjaStore
+                                <span th:text="${orderProductData.storeName}">GamjaStore</span>
                             </div>
                         </div>
                         <div class="row fw-bold f09">
                             <div class="col">
-                                엄청 맛있는 납작복숭아
+                                <span th:text="${orderProductData.orderProductDto.product_name}">엄청 맛있는 납작복숭아</span>
                             </div>
                         </div>
                         <div class="row align-items-center">
                             <div class="col text-body-tertiary f09">
-                                Black / M | 1개
+                                <span th:if="${orderProductData.valueNameList}" th:each="name, iterStat : ${orderProductData.valueNameList}">
+                                    <span th:text="${name}">Black / M</span>
+                                    <span th:if="${!iterStat.last}">/</span>
+                                </span> | <span th:text="${orderProductData.orderProductDto.quantity}">1</span>개
                             </div>
                             <div class="col fw-bold text-end">
-                                28,000원
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="row pb-3 align-items-center">
-                    <div class="col-3 pe-0 product-col">
-                        <img src="/public/img/storeImage/productImg1.jpg" class="border">
-                    </div>
-                    <div class="col">
-                        <div class="row f09">
-                            <div class="col">
-                                GamjaStore
-                            </div>
-                        </div>
-                        <div class="row fw-bold f09">
-                            <div class="col">
-                                엄청 맛있는 납작복숭아
-                            </div>
-                        </div>
-                        <div class="row align-items-center">
-                            <div class="col text-body-tertiary f09">
-                                Black / M | 1개
-                            </div>
-                            <div class="col fw-bold text-end">
-                                28,000원
+                                <span th:text="${#numbers.formatDecimal(orderProductData.orderProductDto.order_price, 1, 'COMMA', 0, 'POINT')}">28,000</span>원
                             </div>
                         </div>
                     </div>
@@ -218,7 +196,7 @@
                 결제금액
             </div>
             <div class="col">
-                224,733원
+                <span th:text="|${#numbers.formatDecimal(orderData.storeOrderDto.payment_amount, 1, 'COMMA', 0, 'POINT')}원|">224,733원</span>
             </div>
         </div>
 
@@ -229,7 +207,9 @@
                 </a>
             </div>
             <div class="col pe-0 d-grid">
-                <input type="button" value="쇼핑 홈" class="btn btn-dark py-2 fw-bold f09 rounded-0">
+                <a href="/store" type="button" class="btn btn-dark py-2 fw-bold f09 rounded-0">
+                    쇼핑 홈
+                </a>
             </div>
         </div>
 

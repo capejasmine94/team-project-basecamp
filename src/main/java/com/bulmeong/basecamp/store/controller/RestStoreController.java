@@ -12,6 +12,7 @@ import com.bulmeong.basecamp.common.dto.RestResponseDto;
 import com.bulmeong.basecamp.common.util.ImageUtil;
 import com.bulmeong.basecamp.store.dto.AdditionalInfoDto;
 import com.bulmeong.basecamp.store.dto.CartProductDto;
+import com.bulmeong.basecamp.store.dto.OrderDeliveryInfoDto;
 import com.bulmeong.basecamp.store.dto.ProductOptionNameDto;
 import com.bulmeong.basecamp.store.dto.StoreDto;
 import com.bulmeong.basecamp.store.dto.StoreProductDto;
@@ -287,7 +288,20 @@ public class RestStoreController {
 
         restResponseDto.add("order_id", order_id);
 
+
+
+        return restResponseDto;
+    }
+
+    @RequestMapping("getStoreOrderDataList")
+    public RestResponseDto getStoreOrderDataList(HttpSession session){
         
+        RestResponseDto restResponseDto = new RestResponseDto();
+
+        StoreDto storeDto = (StoreDto)session.getAttribute("sessionStoreInfo");
+        int store_id = storeDto.getId();
+
+        restResponseDto.add("storeOrderDataList", storeService.getStoreOrderDataList(store_id));
 
         return restResponseDto;
     }
@@ -299,6 +313,33 @@ public class RestStoreController {
         RestResponseDto restResponseDto = new RestResponseDto();
 
         restResponseDto.add("pendingOrderCartProductIds", session.getAttribute("pendingOrderCartProductIds"));
+
+        return restResponseDto;
+    }
+
+    @RequestMapping("getOrderDataByOrderId")
+    public RestResponseDto getOrderDataByOrderId(@RequestParam("id") int id){
+        RestResponseDto restResponseDto = new RestResponseDto();
+
+        restResponseDto.add("orderData", storeService.getOrderDataByOrderId(id));
+
+        return restResponseDto;
+    }
+
+    @RequestMapping("confirmOrder")
+    public RestResponseDto confirmOrder(@RequestParam("ids") int[] ids){
+        RestResponseDto restResponseDto = new RestResponseDto();
+
+        storeService.confirmOrder(ids);
+
+        return restResponseDto;
+    }
+
+    @RequestMapping("insertDeliveryInfo")
+    public RestResponseDto insertDeliveryInfo(OrderDeliveryInfoDto orderDeliveryInfoDto){
+        RestResponseDto restResponseDto = new RestResponseDto();
+
+        storeService.insertDeliveryInfo(orderDeliveryInfoDto);
 
         return restResponseDto;
     }

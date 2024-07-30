@@ -85,16 +85,18 @@
                 background: rgba(33, 122, 244, .1);  /*스크롤바 뒷 배경 색상*/
             }
         </style>
+
     </head>
     <body>
 
+        <!-- top-navi -->
         <div class="container-fluid">
             <div id="topNaviSeller" class="row fixed-top align-items-center py-2 px-3 store-center">
                 <div class="col fs-3 text-white">
                     <span class="fw-bold">BaseCamp</span> Store Center
                 </div>
                 <div class="col fs-5 text-end">
-                    <span class="fw-bold text-white">
+                    <span class="fw-bold text-white" th:if="${session.sessionStoreInfo!=null}" th:text="${session.sessionStoreInfo.account_id}">
                         Sacabambaspis
                     </span>
                 </div>
@@ -115,12 +117,12 @@
                         <div class="col">
                             <div class="row">
                                 <div class="col seller_profile text-center">
-                                    <img src="https://img1.newsis.com/2023/07/12/NISI20230712_0001313626_web.jpg" class="rounded-circle">
+                                    <img src="/public/img/storeImage/userImg.jpeg" class="rounded-circle">
                                 </div>
                             </div>
                             <div class="row text-center pt-2 fw-bold">
                                 <div class="col">
-                                    사카밤바스피스
+                                    <span th:if="${session.sessionStoreInfo!=null}" th:text="${session.sessionStoreInfo.name}">사카밤바스피스</span>
                                 </div>
                             </div>
                         </div>
@@ -141,13 +143,13 @@
                         </div>
                         <div class="col-auto ps-0 d-grid fs-5">
                             <button type="button" class="py-3 accordion-button collapsed">
-                                <i class="bi bi-chevron-up"></i>
+                                <i class="bi bi-chevron-down"></i>
                             </button>
                         </div>
                     </div>
-                    <div class="row accordion-collapse collapse show p-0" id="first-collapse" data-bs-parent="#leftAccordion">
+                    <div class="row accordion-collapse collapse p-0" id="first-collapse" data-bs-parent="#leftAccordion">
                         <div class="col">
-                            <a class="row accordion-body py-3 ps-4 subcategory text-primary" href="/storeCenter/productManage">
+                            <a class="row accordion-body py-3 ps-4 subcategory" href="/storeCenter/productManage">
                                 상품조회/수정
                             </a>
                             <a class="row accordion-body py-3 ps-4 subcategory" href="/storeCenter/productRegister" id="productRegister">
@@ -167,17 +169,20 @@
                         </div>
                         <div class="col-auto ps-0 d-grid fs-5">
                             <button type="button" class="py-3 accordion-button collapsed">
-                                <i class="bi bi-chevron-down"></i>
+                                <i class="bi bi-chevron-up"></i>
                             </button>
                         </div>
                     </div>
-                    <div class="row accordion-collapse collapse p-0" id="second-collapse" data-bs-parent="#leftAccordion">
+                    <div class="row accordion-collapse show collapse p-0" id="second-collapse" data-bs-parent="#leftAccordion">
                         <div class="col">
                             <a class="row accordion-body py-3 ps-4 subcategory" href="/storeCenter/orderIntegration">
                                 주문 통합 검색
                             </a>
-                            <a class="row accordion-body py-3 ps-4 subcategory" href="/storeCenter/sendProcessing">
+                            <a class="row accordion-body py-3 ps-4 subcategory text-primary" href="/storeCenter/sendProcessing">
                                 발송관리
+                            </a>
+                            <a class="row accordion-body py-3 ps-4 subcategory" href="">
+                                배송현황관리(...)
                             </a>
                             <a class="row accordion-body py-3 ps-4 subcategory" href="/storeCenter/cancelManage">
                                 취소관리
@@ -329,10 +334,30 @@
                 
                 <!-- right -->
                 <div class="col bg-body-tertiary right" style="padding-top: 58px;">
-                    
+
                     <div class="row py-3 px-4">
                         <div class="col fs-3 fw-bold">
-                            상품 조회/수정
+                            발송관리
+                        </div>
+                    </div>
+                    
+                    <div class="row px-4 pb-4 text-body-tertiary f08 fw-semibold">
+                        <div class="col border py-3 bg-white rounded-2 px-4">
+                            <li>
+                                주문확인이 완료된 주문입니다. 구매자에게 상품을 발송해주세요
+                            </li>
+                            <li>
+                                발송처리시 송장 트래킹 정보에 이미 “배송완료 일자”가 찍혀 있는 송장번호로 발송 처리하는 경우 상품 발송 후 66일차에 자동구매결정 처리 됩니다.
+                            </li>
+                            <li>
+                                발송지연 주문건 발생 시 상품의 노출중지 또는 해당 상품의 검색불가 처리와 같은 패널티가 부과될 수 있으니 빠른 발송처리 부탁드립니다.
+                            </li>
+                        </div>
+                    </div>
+
+                    <div class="row px-4 pb-4">
+                        <div class="col border text-center py-5 bg-white rounded-2">
+                            뭔가 검색 옵션들..(다른 페이지 먼저 만들고 이것저것 추가할 수 있으면 할 것)
                         </div>
                     </div>
 
@@ -340,7 +365,20 @@
                         <div class="col border bg-white rounded-2">
                             <div class="row py-3 px-3 border-bottom">
                                 <div class="col fw-bold">
-                                    상품 목록
+                                    목록 (총 <span id="orderDataCount"></span>개)
+                                </div>
+                            </div>
+
+                            <div class="row px-3 pt-3">
+                                <div class="col-auto p-0">
+                                    <a onclick="confirmOrder()" class="btn bg-white border rounded-0">
+                                        발주확인
+                                    </a>
+                                </div>
+                                <div class="col">
+                                    <a onclick="insertDeliveryInfo()" class="btn bg-white border rounded-0">
+                                        발송처리
+                                    </a>
                                 </div>
                             </div>
 
@@ -348,68 +386,32 @@
                                 <div class="col border bg-white" style="height: 20em; overflow-y: auto;">
                                     <div class="row d-flex align-items-stretch border-bottom text-center align-items-center bg-body-tertiary" style="position: sticky; top: 0; z-index: 1;">
                                         <div class="col-auto py-3 align-items-center justify-content-center d-flex">
-                                            <input id="allOptionsSelectCheckBox" type="checkbox" class="form-check-input">
+                                            <input type="checkbox" class="form-check-input" id="allSelectCheckBox">
                                         </div>
                                         <div class="col align-items-center justify-content-center d-flex border-end border-start">
-                                            상품명
+                                            주문번호
+                                        </div>
+                                        <div class="col align-items-center justify-content-center d-flex border-end border-start">
+                                            상품주문번호
                                         </div>
                                         <div class="col align-items-center justify-content-center d-flex border-end">
-                                            평점
+                                            택배사
                                         </div>
                                         <div class="col align-items-center justify-content-center d-flex border-end">
-                                            포토
+                                            송장번호
                                         </div>
                                         <div class="col align-items-center justify-content-center d-flex border-end">
-                                            재고수량
+                                            발송일
                                         </div>
                                         <div class="col align-items-center justify-content-center d-flex border-end">
-                                            판매상태
-                                        </div>
-                                        <div class="col align-items-center justify-content-center d-flex border-end">
-                                            판매가
-                                        </div>
-                                        <div class="col align-items-center justify-content-center d-flex border-end">
-                                            할인가
-                                        </div>
-                                        <div class="col-1 align-items-center justify-content-center d-flex">
-                                            삭제
+                                            발송기한
                                         </div>
                                     </div>
 
                                     <div class="row">
-                                        <div class="col" id="optionListBox">
+                                        <div class="col" id="orderContainer">
 
-                                            <div class="row d-flex align-items-stretch border-bottom text-center align-items-center bg-white">
-                                                <div class="col-auto align-items-center justify-content-center d-flex">
-                                                    <input type="checkbox" class="form-check-input">
-                                                </div>
-                                                <div class="col align-items-center justify-content-center d-flex border-end border-start">
-                                                    상품명
-                                                </div>
-                                                <div class="col align-items-center justify-content-center d-flex border-end">
-                                                    평점
-                                                </div>
-                                                <div class="col align-items-center justify-content-center d-flex border-end">
-                                                    포토
-                                                </div>
-                                                <div class="col align-items-center justify-content-center d-flex border-end">
-                                                    재고수량
-                                                </div>
-                                                <div class="col align-items-center justify-content-center d-flex border-end">
-                                                    판매상태
-                                                </div>
-                                                <div class="col align-items-center justify-content-center d-flex border-end">
-                                                    판매가
-                                                </div>
-                                                <div class="col align-items-center justify-content-center d-flex border-end">
-                                                    할인가
-                                                </div>
-                                                <div class="col-1 align-items-center justify-content-center d-flex">
-                                                    <input type="button" class="btn bg-white border rounded-0 text-danger f08" value="X">
-                                                </div>
-                                            </div>
                                             
-
                                         </div>
                                     </div>
 
@@ -421,9 +423,187 @@
                 </div>
             </div>
         </div>
-    
+
+        <div id="template" class="d-none">
+
+            <!-- 주문상품 한 건의 정보 -->
+            <div class="row orderProductData d-flex align-items-stretch border-bottom text-center align-items-center bg-white">
+                <div class="col-auto py-3 align-items-center justify-content-center d-flex">
+                    <input type="checkbox" class="form-check-input orderCheckbox">
+                </div>
+                <div class="col orderNumber align-items-center justify-content-center d-flex border-end border-start">
+                    내용
+                </div>
+                <a class="col orderProductNumber align-items-center justify-content-center d-flex border-end border-start">
+                    상품주문번호
+                </a>
+                <div class="col courierCol align-items-center justify-content-center d-flex border-end">
+                    <select class="form-select courier">
+                        <option value="" selected disabled>택배사 선택</option>
+                        <option value="CJ대한통운">CJ대한통운</option>
+                        <option value="우체국">우체국</option>
+                        <option value="뭐">뭐</option>
+                    </select>
+                </div>
+                <div class="col trackingNumberCol align-items-center justify-content-center d-flex border-end">
+                    <input type="text" class="form-control inputTrackingNumber" oninput="validateNumberInput(this)">
+                </div>
+                <div class="col shippedDate align-items-center justify-content-center d-flex border-end"></div>
+                <div class="col deliveryDeadline align-items-center justify-content-center d-flex border-end"></div>
+                <div class="col d-none order_status"></div>
+            </div>
+
+        </div>
+
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
         <script>
+            function setSessionId() {
+                const url = "/api/store/getSessionStoreId";
+                fetch(url)
+                .then(response => response.json())
+                .then((response) => {
+                    const storeId = response.data.id;
+                    if (storeId == null) {
+                        window.location.href = "/seller/login";
+                    }
+                })
+            }
+
+            function allCheck(){
+                const allSelectCheckBox = document.getElementById("allSelectCheckBox");
+                const orderCheckboxList = document.querySelectorAll("#orderContainer .orderCheckbox");
+                if(allSelectCheckBox.checked){
+                    for(e of orderCheckboxList){
+                        e.checked = true;
+                    }
+                }else{
+                    for(e of orderCheckboxList){
+                        e.checked = false;
+                    }
+                }
+            }
+
+            function confirmOrder(){
+                const orderCheckboxes = document.querySelectorAll("#orderContainer .orderCheckbox");
+                const checkedCheckboxes = Array.from(orderCheckboxes).filter(checkbox => checkbox.checked);
+                
+                const checked_order_product_ids = [];
+
+                for(checkedCheckbox of checkedCheckboxes){
+                    const orderProductData = checkedCheckbox.closest(".orderProductData")
+
+                    const order_status = orderProductData.querySelector(".order_status").innerText
+                    if(order_status=="배송중"){
+                        alert("발송처리 된 주문건입니다.")
+                        checkedCheckbox.checked = false
+                        return;
+                    }else if(order_status=="상품준비중"){
+                        checkedCheckbox.checked = false
+                        return;
+                    }
+
+                    const orderProductNumber = orderProductData.querySelector(".orderProductNumber").innerText;
+                    checked_order_product_ids.push(orderProductNumber)
+                }
+
+                if(checked_order_product_ids.length==0){
+                    return;
+                }
+
+                fetch(`/api/store/confirmOrder?ids=${checked_order_product_ids}`)
+                .then(response => {
+                    reloadStoreOrderData();
+                })
+
+            }
+
+            async function insertDeliveryInfo(){
+                const orderCheckboxes = document.querySelectorAll("#orderContainer .orderCheckbox");
+                const checkedCheckboxes = Array.from(orderCheckboxes).filter(checkbox => checkbox.checked);
+                
+                for(checkedCheckbox of checkedCheckboxes){
+                    const courier = checkedCheckbox.closest(".orderProductData").querySelector(".courier")
+                    const selectedOption = courier.options[courier.selectedIndex];
+
+                    if(selectedOption.disabled==true){
+                        alert("택배사를 선택해주세요");
+                        courier.focus();
+                        return;
+                    }
+
+                    const inputTrackingNumber = checkedCheckbox.closest(".orderProductData").querySelector(".inputTrackingNumber")
+
+                    if(inputTrackingNumber.value==""){
+                        alert("송장번호를 입력해주세요");
+                        inputTrackingNumber.focus();
+                        return;
+                    }
+
+                    const orderProductNumber = checkedCheckbox.closest(".orderProductData").querySelector(".orderProductNumber").innerText;
+
+                    const url = `/api/store/insertDeliveryInfo?courier=${courier.value}&tracking_number=${inputTrackingNumber.value}&order_product_id=${orderProductNumber}`
+                    await fetch(url)
+                }
+
+                reloadStoreOrderData();
+                
+            }
+
+            function validateNumberInput(input){
+                input.value = input.value.replace(/[^0-9]/g, '');
+            }
+
+            function reloadStoreOrderData(){
+                fetch("/api/store/getStoreOrderDataList")
+                .then(response => response.json())
+                .then((response) => {
+                    const storeOrderDataList = response.data.storeOrderDataList;
+
+                    document.getElementById("orderDataCount").innerText = storeOrderDataList.length;
+
+                    const orderContainer = document.getElementById("orderContainer");
+                    orderContainer.innerHTML = "";
+                    const orderProductData = document.querySelector("#template .orderProductData");
+                    for(storeOrderData of storeOrderDataList){
+                        const newOrderProductData = orderProductData.cloneNode(true);
+
+                        const orderNumber = newOrderProductData.querySelector(".orderNumber");
+                        orderNumber.innerText = storeOrderData.orderProductDto.order_id
+
+                        const orderProductNumber = newOrderProductData.querySelector(".orderProductNumber");
+                        orderProductNumber.innerText = storeOrderData.orderProductDto.id
+                        orderProductNumber.setAttribute("onclick", `loadOrderDetails(${storeOrderData.orderProductDto.id})`)
+
+                        if(storeOrderData.orderDeliveryInfoDto!=null){
+                            const courierCol = newOrderProductData.querySelector(".courierCol")
+                            courierCol.innerHTML = "";
+                            courierCol.innerText = storeOrderData.orderDeliveryInfoDto.courier
+
+                            const trackingNumberCol = newOrderProductData.querySelector(".trackingNumberCol")
+                            trackingNumberCol.innerHTML = "";
+                            trackingNumberCol.innerText = storeOrderData.orderDeliveryInfoDto.tracking_number
+
+                            const shippedDate = newOrderProductData.querySelector(".shippedDate");
+                            const date = new Date(storeOrderData.orderDeliveryInfoDto.delivered_date);
+                            shippedDate.innerText = `${date.getFullYear()}.${date.getMonth()+1}.${date.getDate()}`;
+                        }
+                        const createdAtDate = new Date(storeOrderData.orderProductDto.created_at);
+                        const deliveryDeadlineDate = new Date(createdAtDate);
+                        deliveryDeadlineDate.setDate(createdAtDate.getDate() + 3);
+
+                        newOrderProductData.querySelector(".deliveryDeadline").innerText = `${deliveryDeadlineDate.getFullYear()}.${deliveryDeadlineDate.getMonth()+1}.${deliveryDeadlineDate.getDate()}`;
+
+                        newOrderProductData.querySelector(".order_status").innerText = storeOrderData.orderProductDto.status
+
+                        orderContainer.appendChild(newOrderProductData);
+                    }
+                })
+            }
+
+            function loadOrderDetails(order_id){
+                window.open(`/storeCenter/orderProductDetails?id=${order_id}`, "팝업 창", `width=800,height=800,left=${(window.screen.width-600)/2},top=${(window.screen.height - 800) / 2},resizable=yes,scrollbars=yes`);
+
+            }
 
             document.querySelectorAll('.toggle-icon').forEach(button => {
                 button.addEventListener('click', function () {
@@ -446,7 +626,6 @@
             function onResize(){
                 const topNaviSeller = document.getElementById("topNaviSeller");
                 const height = topNaviSeller.offsetHeight;
-                console.log(height);
                 const leftMenu = document.getElementById("leftAccordion");
                 leftMenu.style.paddingTop = height + 'px';
             }
@@ -454,17 +633,11 @@
 
             window.addEventListener("resize",function(){onResize();});
 
-            // function openCollapse(){
-            //     const a = new bootstrap.Collapse('#first-collapse', {
-            //         toggle: false
-            //     })
-            //     document.getElementById("productRegister").classList.add("text-primary");
-            //     a.show();
-            // }
-
-            // window.addEventListener("DOMContentLoaded", ()=> {
-            //     openCollapse();
-            // })
+            window.addEventListener("DOMContentLoaded", () => {
+                setSessionId();
+                reloadStoreOrderData();
+                allSelectCheckBox.addEventListener("change", allCheck);
+            })
         </script>
     </body>
 </html>
