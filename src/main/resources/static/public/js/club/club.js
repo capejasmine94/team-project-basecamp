@@ -48,14 +48,17 @@ function getCommentList() {
             for(const commentData of response.data.commentDataList) {
                 // console.log(commentData.userDto);
 
-                const commentWrapper = document.querySelector("#comment-template .comment-wrapper");
-                // console.log(commentWrapper);
+                // const commentWrapper = document.querySelector("#comment-template .comment-wrapper");
 
+                const commentTemplate = document.getElementById('comment-template');
+                const commentWrapper = commentTemplate.querySelector(".comment-wrapper");
+                
                 const newCommentWrapper = commentWrapper.cloneNode(true);
-                const commentNickname = commentWrapper.querySelector(".commentNickname"); 
+
+                const commentNickname = newCommentWrapper.querySelector(".commentNickname"); 
                 commentNickname.innerText = commentData.userDto.nickname;               
 
-                const commentCreatedAt = commentWrapper.querySelector(".commentCreatedAt");
+                const commentCreatedAt = newCommentWrapper.querySelector(".commentCreatedAt");
                 commentCreatedAt.innerText = formatDate(commentData.clubPostCommentDto.created_at);
 
                 const commentContent = newCommentWrapper.querySelector(".commentContent");
@@ -66,16 +69,6 @@ function getCommentList() {
 
                 const writeNestedComment = newCommentWrapper.querySelector(".writeNestedComment");
 
-                // const newNestedCommentWrapper = nestedCommentWrapper.cloneNode(true);
-                // const nestedCommentNickname = nestedCommentWrapper.querySelector(".nestedCommentNickname");
-                
-                // nestedCommentNickname.innerText = commentData.nestedCommentDetailList.userDtoForNestedComment.nickname;
-            
-                // const nestedCommentCreatedAt = nestedCommentWrapper.querySelector(".nestedCommentCreatedAt");
-                // nestedCommentCreatedAt.innerText = formatDate(commentData.nestedCommentDetailList.mapForNestedComment.nestedCommentDto.created_at);
-
-                // const nestedCommentContent = nestedCommentWrapper.querySelector(".nestedCommentContent");
-                // nestedCommentContent.innerText = commentData.nestedCommentMap.nestedCommentDto.content;
 
                 // writeNestedComment.onclick = function a() {}; 아래와 같은 코드임
                 // writeNestedComment.onclick = function b () {};
@@ -93,13 +86,13 @@ function getCommentList() {
                     comment.placeholder = `@${commentData.userDto.nickname}`;
                    
                    const registerComment = document.querySelector(".registerComment");
-                //     // console.log(registerComment);
+                    // console.log(registerComment);
                     // console.log(registerComment);
                     registerComment.onclick = () => {
                         const commentId = commentData.clubPostCommentDto.id
                         const content = comment.value;
-                //         console.log(commentId);
-                //         console.log(content);
+                    // console.log(commentId);
+                    // console.log(content);
                         const data = {
                             comment_id: commentId,
                             content: content
@@ -114,6 +107,7 @@ function getCommentList() {
                         .then(response => response.json())
                         .then(response => {
                             console.log('Response:', response);
+                            getCommentList();
                         })
                         .catch(error => {
                             console.error('Error:', error);
@@ -140,21 +134,19 @@ function getCommentList() {
 
 
                 for (const nestedCommentDetail of commentData.nestedCommentDetailList) {
-                    const nestedCommentWrapper = document.querySelector('#nested-comment-template .nested-comment-wrapper');
+                    const nestedCommentTemplate = document.getElementById('nested-comment-template');
+                    const nestedCommentWrapper = nestedCommentTemplate.querySelector('.nested-comment-wrapper');
+                    
                     const newNestedCommentWrapper = nestedCommentWrapper.cloneNode(true);
     
-                    const nestedeCommentNickname = nestedCommentWrapper.querySelector(".nestedCommentNickname");
+                    const nestedeCommentNickname = newNestedCommentWrapper.querySelector(".nestedCommentNickname");
                     nestedeCommentNickname.innerText = nestedCommentDetail.userDtoForNestedComment.nickname;
 
-                    const nestedCommentCreatedAt = nestedCommentWrapper.querySelector(".nestedCommentCreatedAt");
+                    const nestedCommentCreatedAt = newNestedCommentWrapper.querySelector(".nestedCommentCreatedAt");
                     nestedCommentCreatedAt.innerText = formatDate(nestedCommentDetail.nestedCommentDto.created_at);
 
-                    const nestedCommentContent = nestedCommentWrapper.querySelector(".nestedCommentContent");
+                    const nestedCommentContent = newNestedCommentWrapper.querySelector(".nestedCommentContent");
                     nestedCommentContent.innerText = nestedCommentDetail.nestedCommentDto.content;
-
-
-
-
 
 
                     commentWrapperBox.appendChild(newNestedCommentWrapper);
@@ -198,11 +190,7 @@ function formatDate(dateString) {
     return `${year}-${month}-${day} ${hours}:${minutes}`;
 }
 
-
-
-
-
 document.addEventListener('DOMContentLoaded', () => {
     getCommentList();
 
-})
+ });
