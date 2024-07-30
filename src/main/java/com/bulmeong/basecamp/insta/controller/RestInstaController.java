@@ -91,14 +91,64 @@ public class RestInstaController {
         InstaUserInfoDto  instaUserInfoDto = instaService.userInfoByUserId(userDto.getId());
         params.setUser_id(instaUserInfoDto.getId());
 
-        System.out.println("Received comment_id: " + params.getComment_id());
-        System.out.println("Received user_id: " + params.getUser_id());
+        // System.out.println(params);
+
+        // System.out.println("Received comment_id: " + params.getComment_id());
+        // System.out.println("Received user_id: " + params.getUser_id());
 
         instaService.commentLike(params);
 
         return instaRestResponseDto;
     }
 
+    @RequestMapping("commentUnLike")
+    public InstaRestResponseDto commentUnLike(InstaCommentLikeDto params , HttpSession session){
+        InstaRestResponseDto instaRestResponseDto = new InstaRestResponseDto();
+        instaRestResponseDto.setResult("success");
+
+        // 로그인이 되어있다는 가정하에
+        UserDto userDto = (UserDto) session.getAttribute("sessionUserInfo");
+        InstaUserInfoDto  instaUserInfoDto = instaService.userInfoByUserId(userDto.getId());
+        params.setUser_id(instaUserInfoDto.getId());
+
+        // session_id = following_user_id
+        // user_id  follower_user_id
+        instaService.commentUnLike(params);
+
+        return instaRestResponseDto;
+
+    }
+
+    // 댓글 좋아요 유무 확인
+    @RequestMapping("commentIsLiked")
+    public InstaRestResponseDto commentIsLiked(InstaCommentLikeDto params, HttpSession session){
+        InstaRestResponseDto instaRestResponseDto = new InstaRestResponseDto();
+        instaRestResponseDto.setResult("success");
+
+        // 로그인이 되어있다는 가정하에
+        UserDto userDto = (UserDto) session.getAttribute("sessionUserInfo");
+        InstaUserInfoDto  instaUserInfoDto = instaService.userInfoByUserId(userDto.getId());
+        params.setUser_id(instaUserInfoDto.getId());
+
+
+        boolean x = instaService.commentIsLiked(params);
+        instaRestResponseDto.add("confirmCommentLike", x); // json으로 변환하면서 true 혹은 false 값을 변환해줌
+
+        return instaRestResponseDto;
+    }
+
+    @RequestMapping("commentLikeCount")
+    public InstaRestResponseDto commentLikeCount(@RequestParam("comment_id") int comment_id){
+        InstaRestResponseDto instaRestResponseDto = new InstaRestResponseDto();
+        instaRestResponseDto.setResult("success");
+
+        int commentLikeCount = instaService.commentLikeCount(comment_id);
+        instaRestResponseDto.add("likeCount", commentLikeCount);
+
+        // System.out.println(commentLikeCount);
+
+        return instaRestResponseDto;
+    }
 
 
 

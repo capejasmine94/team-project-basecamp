@@ -186,13 +186,12 @@ public class InstaService {
     }
 
     // 댓글 좋아요 상태 여부
-    public int commentIsLiked(InstaCommentLikeDto instaCommentLikeDto){
-        int commentIsLiked = instaSqlMapper.countLikeByCommentIdAndUserId(instaCommentLikeDto);
+    public boolean commentIsLiked(InstaCommentLikeDto instaCommentLikeDto){
 
-        return commentIsLiked;
+        return instaSqlMapper.countLikeByCommentIdAndUserId(instaCommentLikeDto) > 0;
     }
 
-    public void unFollow(InstaCommentLikeDto instaCommentLikeDto){
+    public void commentUnLike(InstaCommentLikeDto instaCommentLikeDto){
         instaSqlMapper.deleteLikeByCommentIdAndUserId(instaCommentLikeDto);
     }
     
