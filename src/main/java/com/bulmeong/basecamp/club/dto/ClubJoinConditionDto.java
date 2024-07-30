@@ -6,8 +6,8 @@ import lombok.Data;
 public class ClubJoinConditionDto {
     private int id;
     private int club_id;
-    private int min_age;
-    private int max_age;
+    private int start_year;
+    private int end_year;
     private String gender;
 
 }

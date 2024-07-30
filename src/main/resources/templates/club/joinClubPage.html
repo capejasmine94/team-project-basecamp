@@ -20,6 +20,8 @@
                         <div class="row">
                             <div class="col">
                                 <input name="club_id" type="hidden" th:value="${id}" >
+                                <input name="gender" type="hidden" th:value="${session.sessionUserInfo.gender}" >
+                                <input name="birth" type="hidden" th:value="${session.sessionUserInfo.birth}" >
                                 <button class="form-control btn btn-success">가입하기</button>  
                             </div>
                         </div>

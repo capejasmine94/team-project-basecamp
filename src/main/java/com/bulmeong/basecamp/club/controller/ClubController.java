@@ -17,6 +17,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.bulmeong.basecamp.club.dto.ClubBookmarkDto;
 import com.bulmeong.basecamp.club.dto.ClubDto;
+import com.bulmeong.basecamp.club.dto.ClubJoinConditionDto;
 import com.bulmeong.basecamp.club.dto.ClubMeetingDto;
 import com.bulmeong.basecamp.club.dto.ClubMeetingMemberDto;
 import com.bulmeong.basecamp.club.dto.ClubMemberDto;
@@ -141,15 +142,23 @@ public class ClubController {
     }
     
     @RequestMapping("createNewClubProcess")
-    public String createClubProcess(ClubDto clubDto, @RequestParam("main_img") MultipartFile main_img){
+    public String createClubProcess(ClubDto clubDto, @RequestParam("main_img") MultipartFile main_img, ClubJoinConditionDto clubJoinConditionDto){
         clubDto.setMain_image(ImageUtil.saveImageAndReturnLocation(main_img));
         clubService.createNewClub(clubDto);
+      
 
         ClubMemberDto clubMemberDto = new ClubMemberDto();
         clubMemberDto.setUser_id(clubDto.getUser_id());
         clubMemberDto.setRole_id(1);
         clubMemberDto.setClub_id(clubDto.getId());
         clubService.joinClub(clubMemberDto);
+
+        ClubJoinConditionDto joinConditionDto = new ClubJoinConditionDto();
+        joinConditionDto.setClub_id(clubDto.getId());
+        joinConditionDto.setStart_year(clubJoinConditionDto.getStart_year());
+        joinConditionDto.setEnd_year(clubJoinConditionDto.getEnd_year());
+        joinConditionDto.setGender(clubJoinConditionDto.getGender());
+        clubService.insertClubJoinCondition(joinConditionDto);
         // util.loginUser();
 
         return "redirect:/club/main";
