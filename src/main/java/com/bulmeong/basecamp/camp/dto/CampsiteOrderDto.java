@@ -2,13 +2,17 @@ package com.bulmeong.basecamp.camp.dto;
 
 import java.util.Date;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import lombok.Data;
 
 @Data
 public class CampsiteOrderDto {
     private int id;
     private int point_id;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date start_date;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date end_Date;
     private String customer_name;
     private int prise;

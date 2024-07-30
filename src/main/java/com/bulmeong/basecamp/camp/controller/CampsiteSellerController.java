@@ -1,17 +1,14 @@
 package com.bulmeong.basecamp.camp.controller;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
+
 import java.util.Date;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.bulmeong.basecamp.camp.dto.CampsiteAreaDto;
 import com.bulmeong.basecamp.camp.dto.CampsiteBankDto;
 import com.bulmeong.basecamp.camp.dto.CampsiteDto;
 import com.bulmeong.basecamp.camp.service.CampsiteService;
@@ -21,173 +18,79 @@ import com.bulmeong.basecamp.common.util.Utils;
 @Controller
 public class CampsiteSellerController {
     @Autowired
-    private CampsiteService campsiteService;
+    private CampsiteService service;
     @Autowired
     private Utils utils;
 
 
-    @RequestMapping("")
-    public String mainPageByEmpty(){
-        utils.setSession("campsiteCategory", campsiteService.getCampsiteCategory());
-        CampsiteDto dto = utils.getSession("campsite");
-        utils.setSession("selectCategory", campsiteService.getCampsiteCategoriesByCampsiteId(dto.getId()));
-        return "redirect:/camp/sellerMain";
-    }
-
-    @RequestMapping("/")
-    public String mainPageBySlash(){
-        utils.setSession("campsiteCategory", campsiteService.getCampsiteCategory());
-        CampsiteDto dto = utils.getSession("campsite");
-        utils.setSession("selectCategory", campsiteService.getCampsiteCategoriesByCampsiteId(dto.getId()));
-        return "redirect:/camp/sellerMain";
-    }
-
+    //============================================================================
+    // 리퀘스트 구역
+    //============================================================================
     @RequestMapping("/main")
-    public String mainPage(){
-        utils.setSession("campsiteCategory", campsiteService.getCampsiteCategory());
-        CampsiteDto dto = utils.getSession("campsite");
-        utils.setSession("selectCategory", campsiteService.getCampsiteCategoriesByCampsiteId(dto.getId()));
-        return "camp/sellerMain";
+    public String mainPage() {
+        return "camp/seller/main";
+    }
+    @RequestMapping("")
+    public String redirectMain() {
+        return "redirect:/campsiteCenter/main";
     }
 
-    @RequestMapping("/register")
-    public String registerUser(Model model){
-        String id = String.format("%02d", campsiteService.newCampsiteID());
-        model.addAttribute("campsiteDto", new CampsiteDto());
-        model.addAttribute("bankDto", new CampsiteBankDto());
-        model.addAttribute("newCampsiteID", id);
-        return "camp/registerUser";
+    @RequestMapping("/campsite")
+    public String manageCampsite() {
+        return "camp/seller/campsite";
+    }
+
+    @RequestMapping("/registerUser")
+    public String registerUser() {
+        utils.setModel("newCampsiteId", service.newCampsiteId());
+        return "camp/seller/registerUser";
     }
 
     @RequestMapping("/registerCamp")
-    public String registerCampPage(){
-        utils.setSession("campsiteCategory", campsiteService.getCampsiteCategory());
-        return "camp/registerCamp";
+    public String registerCamp() {
+        utils.setModel("newCampsiteId", service.newCampsiteId());
+        return "camp/seller/registerCamp";
     }
-
-    @RequestMapping("/manageCamp")
-    public String manageCampPage(){
-
-        return  "camp/manageCamp";
-    }
-    
-    
-    @RequestMapping("/manageArea")
-    public String manageAreaPage(Model model){
-        CampsiteDto campsiteDto = utils.getSession("campsite");
-        model.addAttribute("areaCategory", campsiteService.getAreaCategory());
-        model.addAttribute("areaInfoList", campsiteService.getAreaList(campsiteDto.getId()));
-        return "camp/manageArea";
-    }
-
-    @RequestMapping("/manageReservation")
-    public String manageReservationPage(){
-        return "camp/manageReservation";
-    }
-
-    @RequestMapping("/manageAsset")
-    public String manageAssetPage(){
-        return "camp/manageAsset";
-    }
-
-    @RequestMapping("/statisticsCamp")
-    public String statisticsPage(){
-        return "camp/statisticsCamp";
-    }
-
-    @RequestMapping("/manageCampReview")
-    public String reviewPage(){
-        return "camp/manageCampReview";
-    }
+    //============================================================================
 
 
 
+    //============================================================================
+    // 프로세스 구역
+    //============================================================================
     @RequestMapping("/registerUserProcess")
-    public String registerUserProcess(
-        @ModelAttribute CampsiteDto campsiteDto, 
-        @ModelAttribute CampsiteBankDto bankDto, 
-        @RequestParam("profileImage")MultipartFile profileImage
-    ){
-        campsiteService.insertCampsite(campsiteDto, bankDto, profileImage);
-        return "store/registerComplete";
+    public String registerUserProcess(CampsiteDto campsiteDto, CampsiteBankDto bankDto, @RequestParam("profileImage") MultipartFile profileImage) {
+        service.registerSeller(campsiteDto, bankDto, profileImage);
+        return "redirect:/seller/registerComplete";      
     }
 
     @RequestMapping("/registerCampProcess")
     public String registerCampProcess(
-            CampsiteDto campsiteDto, 
-            @RequestParam("mainImage") MultipartFile[] mainImage, 
-            @RequestParam("mapImage") MultipartFile mapImage, 
-            @RequestParam("campsite_category") String[] categories, 
-            @RequestParam("opentime_start_date") @DateTimeFormat(pattern = "yyyy-MM-dd") Date opentime,
-            @RequestParam("manner_start") String mannerStartStr,
-            @RequestParam("manner_end") String mannerEndStr,
-            @RequestParam("check_in") String checkInStr,
-            @RequestParam("check_out") String checkOutStr) {
-        
-        SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm");
-        try {
-            Date mannerStart = timeFormat.parse(mannerStartStr);
-            Date mannerEnd = timeFormat.parse(mannerEndStr);
-            Date checkIn = timeFormat.parse(checkInStr);
-            Date checkOut = timeFormat.parse(checkOutStr);
-            
-            campsiteDto.setManner_start(mannerStart);
-            campsiteDto.setManner_end(mannerEnd);
-            campsiteDto.setCheck_in(checkIn);
-            campsiteDto.setCheck_out(checkOut);
-        } catch (ParseException e) {
-            e.printStackTrace();
-            return "Invalid time format";
-        }
-        
+        CampsiteDto campsiteDto, 
+        @RequestParam("mapImage") MultipartFile mapImage, 
+        @RequestParam("mainImage") MultipartFile[] mainImages, 
+        @RequestParam("opentime_start_date") @DateTimeFormat(pattern = "yyyy-MM-dd") Date opentime,
+        @RequestParam("campCategory") String[] categories) {
+        // 판매자 데이터 업데이트
         campsiteDto.setOpentime(opentime);
-        campsiteService.updateCampsite(campsiteDto, categories, mainImage, mapImage);
-        utils.setSession("campsite", campsiteService.getCampsiteDtoById(campsiteDto));
-        return "camp/sellerMain";
+        service.registerCamp(campsiteDto, mapImage, mainImages, categories);
+        // 세션 데이터 갱신
+        utils.setSession("campsite", service.campsiteInfo(campsiteDto.getId()));
+        return "camp/seller/main";      
     }
 
     @RequestMapping("/updateCampProcess")
     public String updateCampProcess(
-            CampsiteDto campsiteDto, 
-            @RequestParam("mainImage") MultipartFile[] mainImage, 
-            @RequestParam("mapImage") MultipartFile mapImage, 
-            @RequestParam("campsite_category") String[] categories, 
-            @RequestParam("opentime_start_date") @DateTimeFormat(pattern = "yyyy-MM-dd") Date opentime,
-            @RequestParam("manner_start") String mannerStartStr,
-            @RequestParam("manner_end") String mannerEndStr,
-            @RequestParam("check_in") String checkInStr,
-            @RequestParam("check_out") String checkOutStr) {
-        
-        SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm");
-        try {
-            Date mannerStart = timeFormat.parse(mannerStartStr);
-            Date mannerEnd = timeFormat.parse(mannerEndStr);
-            Date checkIn = timeFormat.parse(checkInStr);
-            Date checkOut = timeFormat.parse(checkOutStr);
-            
-            campsiteDto.setManner_start(mannerStart);
-            campsiteDto.setManner_end(mannerEnd);
-            campsiteDto.setCheck_in(checkIn);
-            campsiteDto.setCheck_out(checkOut);
-        } catch (ParseException e) {
-            e.printStackTrace();
-            return "Invalid time format";
-        }
-        
+        CampsiteDto campsiteDto, 
+        @RequestParam("mapImage") MultipartFile mapImage, 
+        @RequestParam("mainImage") MultipartFile[] mainImages, 
+        @RequestParam("opentime_start_date") @DateTimeFormat(pattern = "yyyy-MM-dd") Date opentime,
+        @RequestParam("campCategory") String[] categories) {
+        // 판매자 데이터 업데이트
         campsiteDto.setOpentime(opentime);
-        campsiteService.updateCampsite(campsiteDto, categories, mainImage, mapImage);
-        utils.setSession("campsite", campsiteService.getCampsiteDtoById(campsiteDto));
-        return "redirect:./manageCamp";
+        service.updateCamp(campsiteDto, mapImage, mainImages, categories);
+        return "camp/seller/main";      
     }
-
-     @RequestMapping("updateAreaProcess")
-    public String updateArea(
-        CampsiteAreaDto areaDto,
-        @RequestParam("area_category") String[] categories, 
-        @RequestParam("mainImage") MultipartFile[] mainImage, 
-        @RequestParam("mapImage") MultipartFile mapImage
-    ) {
-        campsiteService.updateArea(areaDto, categories,mainImage,mapImage);
-        return "redirect:./manageArea";
-    }
+    
+    //============================================================================
 }

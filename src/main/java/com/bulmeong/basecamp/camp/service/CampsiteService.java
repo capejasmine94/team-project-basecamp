@@ -1,15 +1,15 @@
 package com.bulmeong.basecamp.camp.service;
-
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.bulmeong.basecamp.camp.dto.CampsiteAreaDto;
-import com.bulmeong.basecamp.camp.dto.CampsiteAreaImageDto;
 import com.bulmeong.basecamp.camp.dto.CampsiteAreaPointDto;
-import com.bulmeong.basecamp.camp.dto.CampsiteAreaSelectCategoryDto;
 import com.bulmeong.basecamp.camp.dto.CampsiteBankDto;
 import com.bulmeong.basecamp.camp.dto.CampsiteCategoryDto;
 import com.bulmeong.basecamp.camp.dto.CampsiteDto;
@@ -18,202 +18,234 @@ import com.bulmeong.basecamp.camp.dto.CampsiteSelectCategoryDto;
 import com.bulmeong.basecamp.camp.mapper.CampsiteSqlMapper;
 import com.bulmeong.basecamp.common.dto.ImageDto;
 import com.bulmeong.basecamp.common.util.ImageUtil;
+import com.bulmeong.basecamp.common.util.Utils;
 
 @Service
 public class CampsiteService {
     @Autowired
     private CampsiteSqlMapper campsiteSqlMapper;
+    @Autowired
+    private Utils utils;
 
-    //캠핑장 판매자 아이디 추가
-    public void insertCampsite(CampsiteDto campsiteDto, CampsiteBankDto campsiteBankDto, MultipartFile profileImage) {
-        if(profileImage != null && !profileImage.isEmpty())
-        campsiteDto.setProfile_image(ImageUtil.saveImageAndReturnLocation(profileImage));
-        campsiteSqlMapper.insertCampsite(campsiteDto);
-        campsiteBankDto.setCampsite_id(campsiteDto.getId());
-        campsiteSqlMapper.insertCampsiteBank(campsiteBankDto);
+    //===================================================================================================================
+    // 로그인 / 회원가입 구역
+    //===================================================================================================================
+    //판매자 로그인 확인
+    public CampsiteDto getCampsiteDtoByAccountInfo(String account, String password) {
+        return campsiteSqlMapper.getCampsiteDtoByAccountInfo(account,password);
     }
+    
+    //새 회원가입 번호
+    public String newCampsiteId() { 
+        return String.format("%02d", campsiteSqlMapper.newCampsiteId()) ; 
+    }
+    
+    //판매자 회원 등록
+    public void registerSeller(CampsiteDto campsiteDto, CampsiteBankDto campsiteBankDto, MultipartFile profileImage) {
+        // 프로필 사진 저장
+        if(profileImage != null) {
+            String profileImageToString = ImageUtil.saveImageAndReturnLocation(profileImage);   
+            campsiteDto.setProfile_image(profileImageToString);
+        }
 
-    //캠핑장 부가 정보 추가
-    public void updateCampsite(CampsiteDto campsiteDto, String[] campsiteCategoryDtos, MultipartFile[] main_images, MultipartFile map_image) {
-        // 이미지 추가
-        List<ImageDto> mainImages = ImageUtil.saveImageAndReturnDtoList(main_images);
-        if(map_image != null && !map_image.isEmpty())
-            campsiteDto.setMap_image(ImageUtil.saveImageAndReturnLocation(map_image));
-        for(ImageDto image : mainImages) {
+        // 새 판매자 계정 생성
+        campsiteSqlMapper.registerUser(campsiteDto);
+
+        // 새 계좌 생성
+        campsiteBankDto.setCampsite_id(campsiteDto.getId());
+        campsiteSqlMapper.registerBank(campsiteBankDto);
+    }
+    
+    // 캠핑장 등록
+    public void registerCamp(CampsiteDto campsiteDto, MultipartFile mapImage, MultipartFile[] mainImages, String[] categories) {
+        //배치도 이미지 저장
+        String mapImageToString = ImageUtil.saveImageAndReturnLocation(mapImage);
+        campsiteDto.setMap_image(mapImageToString);
+
+        //메인 이미지 저장
+        List<ImageDto> mainImageList = ImageUtil.saveImageAndReturnDtoList(mainImages);
+        for(ImageDto img : mainImageList) {
             CampsiteImageDto imageDto = new CampsiteImageDto();
             imageDto.setCampsite_id(campsiteDto.getId());
-            imageDto.setLocation(image.getLocation());
-            imageDto.setOrigin_filename(image.getOrigin_filename());
-            campsiteSqlMapper.insertCampMainImage(imageDto);
+            imageDto.setLocation(img.getLocation());
+            imageDto.setOrigin_filename(img.getOrigin_filename());
+            campsiteSqlMapper.addCampMainImage(imageDto);
         }
-        for(String category : campsiteCategoryDtos) {
-            CampsiteSelectCategoryDto categorySelect = new CampsiteSelectCategoryDto();
-            categorySelect.setCategory_id(Integer.parseInt(category));
-            categorySelect.setCampsite_id(campsiteDto.getId());
-            campsiteSqlMapper.insertCampsiteCategory(categorySelect);
+
+        // 카테고리 저장
+        for(String category : categories) {
+            int category_id = Integer.parseInt(category);
+            CampsiteSelectCategoryDto dto = new CampsiteSelectCategoryDto();
+            dto.setCampsite_id(campsiteDto.getId());
+            dto.setCategory_id(category_id);
+            campsiteSqlMapper.addSelectCampCategory(dto);
         }
-        if(campsiteDto.getIs_authenticated() == null)    
-            campsiteSqlMapper.authCampSite(campsiteDto);
-        campsiteSqlMapper.updateCampsite(campsiteDto);
-    }
 
-    // 캠핑장 구역 추가
-    public void insertArea(CampsiteAreaDto campsiteAreaDto) {
-        campsiteSqlMapper.insertArea(campsiteAreaDto);
+        // 판매자 정보 업데이트
+        campsiteSqlMapper.registerCamp(campsiteDto);
+        
+        // 세션 데이터 갱신
+        utils.setSession("campsite", campsiteInfo(campsiteDto.getId()));
     }
-
-    // 캠핑장 구역 고유번호로 포인트 생성
-    public void insertPoint(int id) {
-        campsiteSqlMapper.insertPoint(id);
-    }
-    public void createNameForArea(CampsiteAreaDto campsiteAreaDto){
-        campsiteSqlMapper.updateArea(campsiteAreaDto);
-    }
-
-    public void deletePoint(int id) {
-        campsiteSqlMapper.deletePoint(id);
-    }
-
-    // 캠핑장 구역 부가정보 추가
-    public void updateArea(CampsiteAreaDto campsiteAreaDto, String[] areaCategoryDtos, MultipartFile[] main_images, MultipartFile map_image) {
-        List<ImageDto> mainImages = ImageUtil.saveImageAndReturnDtoList(main_images);
-        if(map_image != null && !map_image.isEmpty())
-            campsiteAreaDto.setMap_image(ImageUtil.saveImageAndReturnLocation(map_image));
-        for(ImageDto image : mainImages) {
-            CampsiteAreaImageDto imageDto = new CampsiteAreaImageDto();
-            imageDto.setArea_id(campsiteAreaDto.getId());
-            imageDto.setLocation(image.getLocation());
-            imageDto.setOrigin_filename(image.getOrigin_filename());
-            campsiteSqlMapper.insertAreaImage(imageDto);
-        }
-        System.out.println(campsiteAreaDto);
-        campsiteSqlMapper.updateArea(campsiteAreaDto);
-        for(String category : areaCategoryDtos) {
-            CampsiteAreaSelectCategoryDto categorySelect = new CampsiteAreaSelectCategoryDto();
-            categorySelect.setCategory_id(Integer.parseInt(category));
-            categorySelect.setArea_id(campsiteAreaDto.getId());
-            campsiteSqlMapper.insertAreaCategory(categorySelect);
-        }
-       
-    }
-
-    // 캠핑장 포인트 수정
-    public void updatePoint(CampsiteAreaPointDto campsiteAreaPointDto) {
-        campsiteSqlMapper.updatePoint(campsiteAreaPointDto);
-    }
-
-    // 아이디 & 비밀번호로 정보 찾기
-    public CampsiteDto getCampsiteDtoByAccountInfo(CampsiteDto campsiteDto) {
-        return campsiteSqlMapper.getCampsiteDtoByAccountInfo(campsiteDto);
-    }
-    public CampsiteDto getCampsiteDtoByAccountInfo(String account, String password) {
-        CampsiteDto campsiteDto = new CampsiteDto();
-        campsiteDto.setAccount(account);
-        campsiteDto.setPassword(password); 
-        return campsiteSqlMapper.getCampsiteDtoByAccountInfo(campsiteDto);
-    }
+    //-------------------------------------------------------------------------------------------------------------------
 
 
-    // 아이디로만 정보 찾기
-    public CampsiteDto getCampsiteDtoByAccount(CampsiteDto campsiteDto) {
-        return campsiteSqlMapper.getCampsiteDtoByAccount(campsiteDto);
-    }
-    public CampsiteDto getCampsiteDtoByAccount(String account) {
-        CampsiteDto campsiteDto = new CampsiteDto();
-        campsiteDto.setAccount(account);
-        return campsiteSqlMapper.getCampsiteDtoByAccount(campsiteDto);
-    }
 
-    // 고유번호로 정보 찾기
-    public CampsiteDto getCampsiteDtoById(int id) {
-        CampsiteDto camp = new CampsiteDto();
-        camp.setId(id);
-        return campsiteSqlMapper.getCampsiteDtoById(camp);
-    }
-
-    public CampsiteDto getCampsiteDtoById(CampsiteDto campsiteDto) {
-        return campsiteSqlMapper.getCampsiteDtoById(campsiteDto);
-    }
-
-    // 이름으로 정보 찾기
-    public CampsiteDto getCampsiteDtoByName(CampsiteDto campsiteDto) {
-        return campsiteSqlMapper.getCampsiteDtoByName(campsiteDto);
-    }
-    public CampsiteDto getCampsiteDtoByName(String name) {
-        CampsiteDto campsiteDto = new CampsiteDto();
-        campsiteDto.setName(name);
-        return campsiteSqlMapper.getCampsiteDtoByName(campsiteDto);
-    }
-
-
-    // 캠프 등록이 된 유저인지 확인
-    public boolean isAuthed(CampsiteDto campsiteDto) {
-        return campsiteDto.getIs_authenticated().equals("T");
-    }
-
-
-    // (회원가입용) 판매회원 제일 마지막 순서
-    public int newCampsiteID() {
-        return campsiteSqlMapper.newCampsiteID();
-    }
-
-    // 구역 맨 마지막 순서
-    public int newAreaID(int campsite_id) {
-        return campsiteSqlMapper.newAreaIDByCampsiteId(campsite_id);
-    }
-
-    public List<Integer> getCampsiteCategoriesByCampsiteId(int id) { 
-        return campsiteSqlMapper.getSelectCategoriesByCampsiteId(id);
-    }
-
-    // 캠핑장 카테고리
-    public List<CampsiteCategoryDto> getCampsiteCategory() {
-        return campsiteSqlMapper.getCampsiteCategory();
-    }
-
-    public List<CampsiteCategoryDto> getAreaCategory() {
-        return campsiteSqlMapper.getAreaCategory();
-    }
-
-    public Map<String, Object> getAllCategory() {
-        List<CampsiteCategoryDto> campCategory = getCampsiteCategory();
-        List<CampsiteCategoryDto> areaCategory = getAreaCategory();
+    //===================================================================================================================
+    // 카테고리
+    //===================================================================================================================
+    // 모든 카테고리
+    public Map<String,Object> categories() {
+        // 초기값
         Map<String, Object> result = new HashMap<>();
-        result.put("campsite", campCategory);
-        result.put("area", areaCategory);
+
+        // 캠핑장 카테고리
+        result.put("camp", campsiteSqlMapper.campCategory());
+
+        // 구역 카테고리
+        result.put("area", campsiteSqlMapper.areaCategory());
+
+        // 마무리
         return result;
     }
 
-    // 캠핑장 에리어 리스트
-    public List<Map<String,Object>> getAreaList(int campsite_id) { 
-        List<Map<String,Object>> result = new ArrayList<>();
-        List<CampsiteAreaDto> list = campsiteSqlMapper.getAreaList(campsite_id);
-        for(CampsiteAreaDto area : list) {
-            Map<String,Object> map = new HashMap<>();
-            map.put("dto", area);
-            int count = campsiteSqlMapper.pointCountByAreaId(area.getId());
-            map.put("pointCount", count);
-            map.put("points", campsiteSqlMapper.getPointList(area.getId()));
-            map.put("selectAreaCategory", campsiteSqlMapper.getSelectAreaCategoriesByAreaId(area.getId()));
-            result.add(map);
+    // 모든 카테고리 캠핑장 번호로 찾기
+    private List<CampsiteCategoryDto> showCategory(int campsite_id) {
+        List<CampsiteCategoryDto> result = new ArrayList<>();
+        List<Map<String, Object>> list = campsiteSqlMapper.selectCampCategory(campsite_id);
+        for(Map<String, Object> category : list) {
+            CampsiteCategoryDto dto = new CampsiteCategoryDto();
+            dto.setId((int)category.get("id"));
+            dto.setName((String)category.get("name"));
+            dto.setImage((String)category.get("image"));
+            result.add(dto);
         }
-        return result; 
+        List<CampsiteAreaDto> areaList = campsiteSqlMapper.getAreaListByCampsiteId(campsite_id);
+        for(CampsiteAreaDto area : areaList) {
+            int area_id = area.getId();
+            list = campsiteSqlMapper.selectAreaCategory(area_id);
+            for(Map<String, Object> category : list) {
+                CampsiteCategoryDto dto = new CampsiteCategoryDto();
+                dto.setId((int)category.get("id"));
+                dto.setName((String)category.get("name"));
+                dto.setImage((String)category.get("image"));
+                result.add(dto);
+            }
+        }
+        return result;
     }
 
-    public List<CampsiteAreaPointDto> getPointList(int area_id) {
-        return campsiteSqlMapper.getPointList(area_id);
+    // 캠핑장 데이터 변경 시 사용
+    private void updateSelectCampCategory(int campsite_id, String[] categories) {
+        campsiteSqlMapper.deleteSelectCampCategory(campsite_id);
+        for(String category : categories) {
+            int category_id = Integer.parseInt(category);
+            CampsiteSelectCategoryDto dto = new CampsiteSelectCategoryDto();
+            dto.setCampsite_id(campsite_id);
+            dto.setCategory_id(category_id);
+            campsiteSqlMapper.addSelectCampCategory(dto);
+        }
     }
 
-    // 캠핑장 구역 정보
-    public Map<String,Object> getAreaInfo(int area_id){
-        Map<String,Object> map = new HashMap<>();
-        CampsiteAreaDto area = new CampsiteAreaDto();
-        area.setId(area_id);
-        map.put("dto", campsiteSqlMapper.getAreaDtoById(area));
-        int count = campsiteSqlMapper.pointCountByAreaId(area_id);
-        map.put("pointCount", count);
-        map.put("points", campsiteSqlMapper.getPointList(area_id));
-        map.put("selectAreaCategory", campsiteSqlMapper.getSelectAreaCategoriesByAreaId(area_id));
-        return map;
+    //-------------------------------------------------------------------------------------------------------------------
+
+
+
+    //===================================================================================================================
+    // 판매자 구역
+    //===================================================================================================================
+    //고유 번호로 캠핑장 모든 정보
+    public Map<String,Object> campsiteInfo(int campsite_id) {
+        // 초기값
+        Map<String, Object> result = new HashMap<>();
+
+        // Dto 확인
+        CampsiteDto campsiteDto = campsiteSqlMapper.getCampsiteDtoById(campsite_id);
+        if(campsiteDto == null) return null;
+        
+        // Dto
+        result.put("dto", campsiteDto);
+
+        // 구역
+        List<CampsiteAreaDto> areaList = campsiteSqlMapper.getAreaListByCampsiteId(campsite_id);
+        List<Map<String,Object>> areaInfoList = new ArrayList<>();
+        for(CampsiteAreaDto area : areaList) {
+            if(area == null) continue;
+            int area_id = area.getId();
+            Map<String,Object> areaInfo = areaInfo(area_id);
+            areaInfoList.add(areaInfo);
+        }
+        result.put("area", areaInfoList);
+
+        //카테고리 
+        result.put("campCategory", campsiteSqlMapper.selectCampCategory(campsite_id));
+        result.put("showCategory", showCategory(campsite_id));
+
+        //리뷰
+
+        // 마무리
+        return result;
     }
+    
+    //고유 번호로 구역 모든 정보
+    public Map<String,Object> areaInfo(int area_id) {
+        // 초기값
+        Map<String, Object> result = new HashMap<>();
+
+        // Dto 확인
+        CampsiteAreaDto areaDto = campsiteSqlMapper.getAreaById(area_id);
+        if(areaDto == null) return null;
+        
+        // Dto
+        result.put("dto", areaDto);
+
+        // 포인트
+
+        // 카테고리
+        result.put("category", campsiteSqlMapper.selectAreaCategory(area_id));
+
+        // 마무리
+        return result;
+    }
+
+    // 캠핑장 수정
+    public void updateCamp(CampsiteDto campsiteDto, MultipartFile mapImage, MultipartFile[] mainImages, String[] categories) {
+        //배치도 이미지 저장
+        String mapImageToString = ImageUtil.saveImageAndReturnLocation(mapImage);
+        campsiteDto.setMap_image(mapImageToString);
+
+        //메인 이미지 저장
+        campsiteSqlMapper.deleteCampMainImage(campsiteDto.getId());
+        List<ImageDto> mainImageList = ImageUtil.saveImageAndReturnDtoList(mainImages);
+        for(ImageDto img : mainImageList) {
+            CampsiteImageDto imageDto = new CampsiteImageDto();
+            imageDto.setCampsite_id(campsiteDto.getId());
+            imageDto.setLocation(img.getLocation());
+            imageDto.setOrigin_filename(img.getOrigin_filename());
+            campsiteSqlMapper.addCampMainImage(imageDto);
+        }
+
+        // 카테고리 수정
+        updateSelectCampCategory(campsiteDto.getId(), categories);
+
+        // 판매자 정보 업데이트
+        campsiteSqlMapper.updateCamp(campsiteDto);
+
+        // 세션 데이터 갱신
+        utils.setSession("campsite", campsiteInfo(campsiteDto.getId()));
+    }
+    
+    //-------------------------------------------------------------------------------------------------------------------
+
+
+
+    //===================================================================================================================
+    // 
+    //===================================================================================================================
+
+    //-------------------------------------------------------------------------------------------------------------------
+
+
+
+
 }
