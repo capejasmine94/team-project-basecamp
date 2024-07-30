@@ -49,6 +49,10 @@ public class Utils {
         request.getSession().setAttribute(name, object);
     }
 
+    public void setModel(String name, Object object) {
+        request.setAttribute(name, object);
+    }
+
      /**세션 안의 오브젝트를 가져옵니다. 원하는 형태로 바로 불러올 수 있습니다.
      * @param name : 세션이름
      * @return 세션의 오브젝트

@@ -33,13 +33,18 @@ public class SellerController {
     @RequestMapping("sellerType")
     public String sellerType(@RequestParam("selectOption") String selectOption){
         if(selectOption.equals("camp")){
-            return "redirect:/camp/registerUser";
+            return "redirect:/campsiteCenter/registerUser";
         }else if(selectOption.equals("store")){
             return "redirect:/storeCenter/storeRegister";
         }else{
             //여기 수정(캠핑카)
             return "redirect:/partner/nfRegisterPage";
         }
+    }
+
+    @RequestMapping("registerComplete")
+    public String registerComplete(){
+        return "seller/registerComplete";
     }
 
     @RequestMapping("login")

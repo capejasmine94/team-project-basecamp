@@ -215,6 +215,17 @@
                         // commentLike.innerText = e.instaUserInfoDto.insta_nickname;
                         const likeButton = newCommentWrapper.querySelector(".likeButton");
                         likeButton.setAttribute("onclick", `commentLike(${e.instaArticleCommentDto.id})`);
+                        const unLikeButton = newCommentWrapper.querySelector(".unLikeButton");
+                        unLikeButton.setAttribute("onclick", `commentUnLike(${e.instaArticleCommentDto.id})`);
+                        
+                        // 좋아요 유무 확인
+                        commentIsLiked(e.instaArticleCommentDto.id, likeButton, unLikeButton);
+
+                        // 좋아요 카운트
+                        const likeCount = newCommentWrapper.querySelector(".likeCount");
+                        // likeCount.setAttribute("onclick", `commentLikeCount(${e.instaArticleCommentDto.id})`);
+                        commentLikeCount(e.instaArticleCommentDto.id, likeCount);
+                        
 
                         // commentReply 답글 버튼
                         // const commentReply = newCommentWrapper.querySelector(".commentReply");
@@ -265,6 +276,71 @@
                     reloadCommentList();
                 })
                 ;
+            }
+
+            // 좋아요 유무 확인
+            function commentIsLiked(commentId, likeButton, unLikeButton) {
+                // const likeButton = document.querySelector("likeButton");
+                // const unLikeButton = document.querySelector("unLikeButton");
+
+                if(myInstaId == null) {
+                    likeButton.classList.add("d-none");
+                    unLikeButton.classList.remove("d-none");
+
+                    return;
+                }
+
+                const url = "/api/insta/commentIsLiked?comment_id=" + commentId;
+                fetch(url)
+                .then(response => response.json())
+                .then(response => {
+
+                    // const likeButton = document.getElementById("likeButton");
+                    // const unLikeButton = document.getElementById("unLikeButton");
+
+                    if(response.data.confirmCommentLike){ // 좋아요 상태
+                        likeButton.classList.add("d-none");
+                        unLikeButton.classList.remove("d-none");
+
+                    }else{ // 좋아요 안 눌렀을 때
+                        unLikeButton.classList.add("d-none");
+                        likeButton.classList.remove("d-none");
+                    }
+                })
+                ;
+
+            }
+
+            // 댓글 좋아요 취소
+            function commentUnLike(commentId, unLikeButton) {
+                if (myInstaId == null) {
+                    if (confirm("로그인 후 이용 부탁드립니다. 로그인 페이지로 이동하시겠습니까?")) {
+                        location.href = "/insta/instaLoginPage";
+                    }
+                    return;
+                }
+
+                const url = "/api/insta/commentUnLike?comment_id=" + commentId;
+
+                fetch(url)
+                    .then(response => response.json())
+                    .then(response => {
+                        reloadCommentList(); // 상태가 변경된 후 댓글 리스트를 새로고침
+                    });
+            }
+
+            // 댓글 좋아요 개수 카운트
+            function commentLikeCount(commentId, likeCount) {
+
+                const url = "/api/insta/commentLikeCount?comment_id=" + commentId;
+                fetch(url)
+                .then(response => response.json())
+                .then(response => {
+                    // const likeCount = document.querySelector(".likeCount");
+                    likeCount.innerText = response.data.likeCount;
+                })
+                ;
+
             }
 
 
@@ -383,23 +459,24 @@
                         <!-- 좋아요 -->
                         <div class="col-auto align-self-center">
                             <div class="row">
-                                <!-- 좋아요 눌렀을 때 -->
-                                <!-- <div class="col align-self-center">
-                                    <span>
-                                        <i class="fa-solid fa-heart likeColor"></i>
-                                    </span>
-                                </div> -->
-
+                                
                                 <!-- 좋아요 안 눌렀을 때 -->
-                                <div class="likeButton col align-self-center">
+                                <div class="likeButton col align-self-center d-none">
                                     <span>
                                         <i class="fa-regular fa-heart"></i>
+                                    </span>
+                                </div>
+
+                                <!-- 좋아요 눌렀을 때 -->
+                                <div class="unLikeButton col align-self-center d-none">
+                                    <span>
+                                        <i class="fa-solid fa-heart likeColor"></i>
                                     </span>
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col p-0 fontNine text-center">
-                                    <span>4</span>
+                                    <span class="likeCount">4</span>
                                 </div>
                             </div>
                         </div>

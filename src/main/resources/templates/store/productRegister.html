@@ -477,7 +477,7 @@
                                         <div class="col-2 px-4" id="discountSettingButtons">
                                             <div class="row border bg-body-tertiary" style="padding: 1px;">
                                                 <div class="col p-0 d-grid text-center">
-                                                    <input type="button" class="py-2 border-0 bg-body-tertiary" value="설정함" onclick="selectDiscountSetting(this)">
+                                                    <input type="button" class="py-2 border-0 bg-body-tertiary text-body-tertiary" value="설정함" onclick="selectDiscountSetting(this)">
                                                 </div>
                                                 <div class="col p-0 d-grid text-center">
                                                     <input type="button" class="py-2 border rounded-2 bg-white" value="설정안함" onclick="selectDiscountSetting(this)">
@@ -559,7 +559,7 @@
                                 <div class="col">
                                     <div class="row pb-3 align-items-center">
                                         <div class="col-3 d-grid">
-                                            <input id="inputQuantity" name="quantity" type="number" value="0" min="0" class="form-control">
+                                            <input id="inputQuantity" name="quantity" type="text" value="0" class="form-control" oninput="validateInput(input)">
                                         </div>
                                         <div class="col">
                                             개
@@ -588,7 +588,7 @@
                                         <div class="col-2 px-4" id="optionSettingButtons">
                                             <div class="row border bg-body-tertiary" style="padding: 1px;">
                                                 <div class="col p-0 d-grid text-center">
-                                                    <input type="button" class="py-2 border-0 bg-body-tertiary" value="설정함" onclick="selectOptionSetting(this)">
+                                                    <input type="button" class="py-2 border-0 bg-body-tertiary text-body-tertiary" value="설정함" onclick="selectOptionSetting(this)">
                                                 </div>
                                                 <div class="col p-0 d-grid text-center">
                                                     <input type="button" class="py-2 border rounded-2 bg-white" value="설정안함" onclick="selectOptionSetting(this)">
@@ -1336,9 +1336,11 @@
                 buttons.forEach(btn => btn.classList.remove('rounded-2'));
                 buttons.forEach(btn => btn.classList.add('bg-body-tertiary'));
                 buttons.forEach(btn => btn.classList.add('border-0'));
+                buttons.forEach(btn => btn.classList.add('text-body-tertiary'));
 
                 button.classList.remove('bg-body-tertiary');
                 button.classList.remove('border-0');
+                button.classList.remove('text-body-tertiary');
                 button.classList.add('bg-white');
                 button.classList.add('border');
                 button.classList.add('rounded-2');
@@ -1360,9 +1362,11 @@
                 buttons.forEach(btn => btn.classList.remove('rounded-2'));
                 buttons.forEach(btn => btn.classList.add('bg-body-tertiary'));
                 buttons.forEach(btn => btn.classList.add('border-0'));
+                buttons.forEach(btn => btn.classList.add('text-body-tertiary'));
 
                 button.classList.remove('bg-body-tertiary');
                 button.classList.remove('border-0');
+                button.classList.remove('text-body-tertiary');
                 button.classList.add('bg-white');
                 button.classList.add('border');
                 button.classList.add('rounded-2');
@@ -1371,12 +1375,12 @@
                 const optionSettingRow = document.getElementById("optionSettingRow");
                 if(button.value=="설정함"){
                     optionSettingRow.classList.remove('d-none');
-                    inputQuantity.disabled = true;
+                    inputQuantity.readOnly = true;
 
                     inputOptionQuantity();
                 }else{
                     optionSettingRow.classList.add('d-none');
-                    inputQuantity.disabled = false;
+                    inputQuantity.readOnly = false;
                 }
             }
 

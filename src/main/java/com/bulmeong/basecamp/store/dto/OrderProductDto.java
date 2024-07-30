@@ -1,5 +1,7 @@
 package com.bulmeong.basecamp.store.dto;
 
+import java.util.Date;
+
 import lombok.Data;
 
 @Data
@@ -15,4 +17,5 @@ public class OrderProductDto {
     private double discount_percentage;
     private String product_name;
     private String product_main_image;
+    private Date created_at;
 }

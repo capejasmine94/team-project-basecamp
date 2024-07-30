@@ -9,6 +9,7 @@ import com.bulmeong.basecamp.store.dto.AdditionalInfoDto;
 import com.bulmeong.basecamp.store.dto.CartProductDto;
 import com.bulmeong.basecamp.store.dto.CartProductOptionValueDto;
 import com.bulmeong.basecamp.store.dto.OptionValueAdditionalInfoDto;
+import com.bulmeong.basecamp.store.dto.OrderDeliveryInfoDto;
 import com.bulmeong.basecamp.store.dto.OrderProductDto;
 import com.bulmeong.basecamp.store.dto.OrderProductOptionValueDto;
 import com.bulmeong.basecamp.store.dto.ProductOptionNameDto;
@@ -23,6 +24,7 @@ import com.bulmeong.basecamp.store.dto.StoreProductDiscountDto;
 import com.bulmeong.basecamp.store.dto.StoreProductDto;
 import com.bulmeong.basecamp.store.mapper.StoreSqlMapper;
 import com.bulmeong.basecamp.user.dto.MileageLogDto;
+import com.bulmeong.basecamp.user.dto.UserDto;
 
 @Service
 public class StoreService {
@@ -236,6 +238,11 @@ public class StoreService {
         List<ProductOptionNameDto> productOptionNameDtoList = storeSqlMapper.selectOptionNameListByProductId(product_id);
 
         for(ProductOptionNameDto productOptionNameDto : productOptionNameDtoList){
+
+            if(productOptionNameDto.getName().equals("")){
+                return result;
+            }
+
             Map<String, Object> map = new HashMap<>();
 
             int option_id = productOptionNameDto.getId();
@@ -406,7 +413,7 @@ public class StoreService {
 
                 if(store_name.equals(storeDto.getName())){
 
-                    Map<String, Object> pendingOrderProductData = storeSqlMapper.selectPendingOrderProductDataById(order_product_id);
+                    Map<String, Object> pendingOrderProductData = storeSqlMapper.selectOrderProductDataById(order_product_id);
                     //name,main_image,price,quantity,discount_id,order_product_id
 
                     int[] option_value_ids = storeSqlMapper.selectOrderProductOptionValueIds(order_product_id);
@@ -534,7 +541,7 @@ public class StoreService {
                         int salePrice = (int)Math.round(price-price*percentage);
                         salePrice = (salePrice+additional_price)*quantity;
 
-                        int point_discoint = (int)(used_point*(salePrice/payment_amount));
+                        int point_discoint = (int)(used_point*((double)salePrice/payment_amount));
                         orderProductDto.setUsed_point(point_discoint);
 
                         orderProductDto.setOrder_price(salePrice-point_discoint);
@@ -545,7 +552,7 @@ public class StoreService {
                         int salePrice = (int)Math.round(price-price*percentage);
                         salePrice = (salePrice)*quantity;
 
-                        int point_discoint = (int)(used_point*(salePrice/payment_amount));
+                        int point_discoint = (int)(used_point*((double)salePrice/payment_amount));
                         orderProductDto.setUsed_point(point_discoint);
                         orderProductDto.setOrder_price(salePrice-point_discoint);
 
@@ -563,7 +570,7 @@ public class StoreService {
 
                         int salePrice = (price+additional_price)*quantity;
 
-                        int point_discoint = (int)(used_point*(salePrice/payment_amount));
+                        int point_discoint = (int)(used_point*((double)salePrice/payment_amount));
                         orderProductDto.setUsed_point(point_discoint);
 
                         orderProductDto.setOrder_price(salePrice-point_discoint);
@@ -573,7 +580,7 @@ public class StoreService {
                         //옵션 없는 경우
                         int salePrice = price*quantity;
 
-                        int point_discoint = (int)(used_point*(salePrice/payment_amount));
+                        int point_discoint = (int)(used_point*((double)salePrice/payment_amount));
                         orderProductDto.setUsed_point(point_discoint);
                         orderProductDto.setOrder_price(salePrice-point_discoint);
 
@@ -631,22 +638,96 @@ public class StoreService {
             
             int order_product_id = orderProductDto.getId();
             int[] value_ids = storeSqlMapper.selectOrderProductOptionValueIds(order_product_id);
+            List<String> valueNameList = new ArrayList<>();
+            for(int value_id : value_ids){
+                String value_name = storeSqlMapper.selectOptionValueNameById(value_id);
+                valueNameList.add(value_name);
+            }
 
             int additional_info_id = storeSqlMapper.selectAdditionalInfoIdByValueIds(value_ids);
             AdditionalInfoDto additionalInfoDto = storeSqlMapper.selectAdditionalInfoById(additional_info_id);
 
-            map.put("storeDto", storeDto);
+            map.put("storeName", storeDto.getName());
             map.put("orderProductDto", orderProductDto);
             map.put("additionalInfoDto", additionalInfoDto);
-            //option_value도 찾아야지..
+            map.put("valueNameList", valueNameList);
 
             orderProductDataList.add(map);
         }
 
         result.put("storeOrderDto", storeOrderDto);
-        result.put("orderProductDtoList", orderProductDtoList);
+        result.put("orderProductDataList", orderProductDataList);
 
         return result;
     }
+
+    public List<Map<String, Object>> getStoreOrderDataList(int store_id){
+        List<Map<String, Object>> result = new ArrayList<>();
+
+        List<OrderProductDto> orderProductDtoList = storeSqlMapper.selectOrderProductListByStoreId(store_id);//여기에 나중에 status랑 머더라 아무튼 필터 걸 것임
+
+        for(OrderProductDto orderProductDto : orderProductDtoList){
+            Map<String, Object> map = new HashMap<>();
+            int order_product_id = orderProductDto.getId();
+
+            int[] value_ids = storeSqlMapper.selectOrderProductOptionValueIds(order_product_id);
+            int additional_info_id = storeSqlMapper.selectAdditionalInfoIdByValueIds(value_ids);
+            AdditionalInfoDto additionalInfoDto = storeSqlMapper.selectAdditionalInfoById(additional_info_id);
+
+            map.put("orderProductDto", orderProductDto);
+            map.put("additionalInfoDto", additionalInfoDto);
+            
+            OrderDeliveryInfoDto orderDeliveryInfoDto = storeSqlMapper.selectOrderDeliveryInfoByOrderProductId(order_product_id);
+            map.put("orderDeliveryInfoDto", orderDeliveryInfoDto);
+
+            result.add(map);
+        }
+
+
+        return result;
+    }
+
+    public Map<String, Object> getOrderProductData(int order_product_id){
+        Map<String, Object> map = new HashMap<>();
+
+        OrderProductDto orderProductDto = storeSqlMapper.selectOrderProductDtoById(order_product_id);
+
+        int order_id = orderProductDto.getOrder_id();
+        StoreOrderDto storeOrderDto = storeSqlMapper.selectStoreOrderDtoById(order_id);
+        int payment_amount = storeOrderDto.getPayment_amount();
+
+        int user_id = storeOrderDto.getUser_id();
+        UserDto userDto = storeSqlMapper.selectUserDtoById(user_id);
+
+        int price = orderProductDto.getProduct_price();
+        double percentage = orderProductDto.getDiscount_percentage();
+        int salePrice = (int)Math.round(price-price*percentage);
+
+        map.put("orderProductDto", orderProductDto);
+        map.put("payment_amount", payment_amount);
+        map.put("userDto", userDto);
+        map.put("salePrice", salePrice);
+
+        return map;
+    }
     
+    public int getStoreIdByStoreOrderId(int order_product_id){
+        return storeSqlMapper.selectStoreDtoByOrderProductId(order_product_id).getId();
+    }
+
+    public void confirmOrder(int[] order_product_ids){
+
+        for(int order_product_id : order_product_ids){
+            storeSqlMapper.updateOrderProductStatusToPreparing(order_product_id);
+        }
+
+    }
+
+    public void insertDeliveryInfo(OrderDeliveryInfoDto orderDeliveryInfoDto){
+
+        storeSqlMapper.insertOrderDeliveryInfo(orderDeliveryInfoDto);
+        storeSqlMapper.updateOrderProductStatusToDelivering(orderDeliveryInfoDto.getOrder_product_id());
+
+    }
+
 }

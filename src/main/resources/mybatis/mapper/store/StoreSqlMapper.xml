@@ -413,7 +413,7 @@
         where op.id = #{order_product_id}
     </select>
 
-    <select id="selectPendingOrderProductDataById" resultType="java.util.HashMap">
+    <select id="selectOrderProductDataById" resultType="java.util.HashMap">
         select 
             sp.name,
             sp.main_image,
@@ -472,6 +472,7 @@
         update store_order
         set used_point = #{used_point},
             delivery_address = #{delivery_address},
+            payment_amount = #{payment_amount},
             status = 'complete',
             created_at = now()
         where id = #{id}
@@ -523,4 +524,48 @@
         where order_id = #{order_id}
     </select>
 
+    <select id="selectOrderProductListByStoreId" resultType="com.bulmeong.basecamp.store.dto.OrderProductDto">
+        select op.* from order_product op 
+        inner join store_product sp on sp.id = op.product_id 
+        inner join store s on s.id  = sp.store_id 
+        inner join store_order so on so.id = op.order_id
+        where s.id = #{store_id}
+        order by so.created_at asc
+    </select>
+
+    <select id="selectOrderProductDtoById" resultType="com.bulmeong.basecamp.store.dto.OrderProductDto">
+        select * from order_product
+        where id = #{id}
+    </select>
+
+    <select id="selectUserDtoById" resultType="com.bulmeong.basecamp.user.dto.UserDto">
+        select * from bc_user
+        where id = #{id}
+    </select>
+
+    <update id="updateOrderProductStatusToPreparing">
+        update order_product
+        set status = "상품준비중"
+        where id = #{id}
+    </update>
+
+    <insert id="insertOrderDeliveryInfo">
+        insert into order_delivery_info(
+            order_product_id, courier, tracking_number
+        )values(
+            #{order_product_id}, #{courier}, #{tracking_number}
+        )
+    </insert>
+
+    <update id="updateOrderProductStatusToDelivering">
+        update order_product
+        set status = "배송중"
+        where id = #{id}
+    </update>
+
+    <select id="selectOrderDeliveryInfoByOrderProductId" resultType="com.bulmeong.basecamp.store.dto.OrderDeliveryInfoDto">
+        select * from order_delivery_info
+        where order_product_id = #{order_product_id}
+    </select>
+    
 </mapper>

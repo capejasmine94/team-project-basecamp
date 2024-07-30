@@ -196,6 +196,16 @@
                 const optionDataList = response.data.optionDataList;
 
                 if(optionDataList.length == 0){
+                    const optionQuantityRow = document.querySelector("#template .optionQuantityRow").cloneNode(true);
+
+                    // optionQuantityRow.classList.add("selectedOptionRow");
+                    
+                    const salePrice = document.getElementById("salePrice").innerText
+                    
+                    optionQuantityRow.querySelector(".optionPrice").innerText = salePrice
+                    optionQuantityRow.querySelector(".inputOptionPrice").value = salePrice.replace(/,/g, '');
+
+                    document.getElementById("selectedOptionContainer").appendChild(optionQuantityRow)
                     return;
                 }
 

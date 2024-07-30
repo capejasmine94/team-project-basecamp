@@ -5,6 +5,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 // import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.bulmeong.basecamp.store.dto.StoreBankAccountDto;
 import com.bulmeong.basecamp.store.dto.StoreDeliveryInfoDto;
@@ -37,12 +38,7 @@ public class StoreCenterController {
 
         storeService.registerStore(storeDto, storeDeliveryInfoDto, storeBankAccountDto);
 
-        return "redirect:/storeCenter/registerComplete";
-    }
-
-    @RequestMapping("registerComplete")
-    public String registerComplete(){
-        return "store/registerComplete";
+        return "redirect:/seller/registerComplete";
     }
 
     @RequestMapping("dashboard")
@@ -77,6 +73,25 @@ public class StoreCenterController {
         return "store/deliveryInfo";
     }
 
+    @RequestMapping("sendProcessing")
+    public String sendProcessing(){
+
+        return "store/sendProcessing";
+    }
+
+    @RequestMapping("orderProductDetails")
+    public String orderDetails(@RequestParam("id") int id, Model model, HttpSession session){
+
+        StoreDto storeDto = (StoreDto)session.getAttribute("sessionStoreInfo");
+        int store_id = storeService.getStoreIdByStoreOrderId(id);
+
+        if(storeDto==null||storeDto.getId() != store_id){
+            return "redirect:/store"; //여기 먼가 잘못된 접근입니다 머 그런 느낌 페이지
+        }
+        model.addAttribute("orderProductData", storeService.getOrderProductData(id));
+
+        return "store/orderProductDetails";
+    }
     //////////////////////////////////////////////////////////////////////////
 
     @RequestMapping("productManage")
@@ -89,10 +104,7 @@ public class StoreCenterController {
         return "store/XorderIntegration";
     }
 
-    @RequestMapping("sendProcessing")
-    public String sendProcessing(){
-        return "store/XsendProcessing";
-    }
+
 
     @RequestMapping("cancelManage")
     public String cancelManage(){
