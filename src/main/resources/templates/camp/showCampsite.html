@@ -7,13 +7,15 @@
     <link rel="stylesheet" href="/public/css/common.css">
     <link rel="stylesheet" href="/public/css/basecamp.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css">
-    
+
+    <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=d17362e8bc72e774ada9174ac4347761&libraries=services"></script>
     <script src="/public/js/calendar.js"></script>
+    <script src="/public/js/mapUtil.js"></script>
     <script src="/public/js/camp/campsite.js"></script>
 
     <style>
         .material-symbols-outlined {
-          font-variation-settings:
+          font-constiation-settings:
           'FILL' 0,
           'wght' 400,
           'GRAD' 0,
@@ -116,7 +118,7 @@
                                 <span class="fs-4 fw-semibold" th:text="${session.campsite.name}">캠핑장 이름 솰라솰라솰라솰라솰라솰라솰라솰라</span>
                             </div>
                             <div class="col-auto">
-                                <i class="bi bi-map"></i>
+                                <i class="bi bi-map" data-bs-toggle="modal" data-bs-target="#popupMap"></i>
                             </div>
                         </div>
                         <div class="row mt-1 align-items-center">
@@ -428,7 +430,7 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button id="popupSite-no" type="button" class="btn btn-primary" >예약하기</button>
+                <button id="popupSite-reservation" type="button" class="btn btn-primary" >예약하기</button>
                 <button id="popupSite-no" type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
             </div>
         </div>
@@ -438,22 +440,25 @@
 
 
 <!-- 지도 모달 -->
-<div class="modal fade container-fluid" id="popupSite" tabindex="-1" aria-labelledby="popupSite-title" data-keyboard="true" data-backdrop="static" aria-hidden="true">
+<div class="modal fade container-fluid" id="popupMap" tabindex="-1" aria-labelledby="popupMap-title" data-keyboard="true" data-backdrop="static" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h1 class="modal-title fs-5" id="popupSite-title">캠핑장 위치</h1>
+                <h1 class="modal-title fs-5" id="popupMap-title">캠핑장 위치</h1>
             </div>
-            <div id="popupSite-content" class="modal-body col">
+            <div id="popupMap-content" class="modal-body col">
+                <div class="row">
+                    <div id="map" style="width: 80vw; height: 40vh; padding: 0; margin-left: .75em;"></div>
+                </div>
                 <div class="row">
                     <div class="col">
-                       
+                        <span class="fw-semibold">주소</span>
+                        <span class="text-bg-secondary"></span>
                     </div>
                 </div>
             </div>
             <div class="modal-footer">
-                <button id="popupSite-no" type="button" class="btn btn-primary" >예약하기</button>
-                <button id="popupSite-no" type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+                <button id="popupMap-no" type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
             </div>
         </div>
     </div>
@@ -467,6 +472,10 @@
 <script src="https://kit.fontawesome.com/7b271bba58.js" crossorigin="anonymous"></script>
 <script>
     createRangeCalendar('selectDay',7, yearsAgo(1));
+    document.getElementById('popupMap').addEventListener('shown.bs.modal', function () {
+       showMap('제주특별자치도 제주시 첨단로 242');
+    });
+    
 </script>
 </body>
 </html>
