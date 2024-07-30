@@ -42,6 +42,11 @@ public class SellerController {
         }
     }
 
+    @RequestMapping("registerComplete")
+    public String registerComplete(){
+        return "seller/registerComplete";
+    }
+
     @RequestMapping("login")
     public String login(){
         return "seller/login";

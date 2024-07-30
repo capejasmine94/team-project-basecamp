@@ -38,12 +38,7 @@ public class StoreCenterController {
 
         storeService.registerStore(storeDto, storeDeliveryInfoDto, storeBankAccountDto);
 
-        return "redirect:/storeCenter/registerComplete";
-    }
-
-    @RequestMapping("registerComplete")
-    public String registerComplete(){
-        return "store/registerComplete";
+        return "redirect:/seller/registerComplete";
     }
 
     @RequestMapping("dashboard")
