@@ -71,7 +71,7 @@
         </div>
     </div>
     <!-- 지역 카테고리 Img-->
-    <div class="container position-relative">
+    <div class="container position-relative" style="top: -30px;">
         <div class="row">
             <div class="col px-3 location bg-white rounded-top-only">
                 <!-- 첫번째 row -->
@@ -358,8 +358,19 @@
         <div class="campingcarListWrapper row">
             <div class="col px-0 shadow border border-2 rounded-4 my-4">
                 <div class="row mx-0">
-                    <div class="col px-0 d-flex justify-content-center align-items-center overflow-hidden rounded-top-4">
-                        <img class="campingcarImg img-fluid" style="max-width: 100%; min-height: 100%;" alt="썸네일">
+                    <div class="col px-0 d-flex justify-content-center align-items-center overflow-hidden rounded-top-4 position-relative">
+                    <!-- 캠핑카 이미지 -->
+                    <!-- 이미지를 표시하는 img 태그. JavaScript로 src 속성을 설정 -->
+                    <img class="campingcarImg img-fluid" style="max-width: 100%; min-height: 100%;" alt="썸네일">
+                    <!-- 찜 기능 아이콘 -->
+                    <!-- 좋아요 기능을 위한 하트 아이콘. 클릭 시 like() 함수 호출 -->
+                    <div class="position-absolute top-0 end-0 pt-1" style="padding-right: 0.75rem;">
+                        <!-- id 속성에 product_id 변수를 넣어 특정 차량과 연결. onclick 이벤트로 like() 함수 호출 -->
+                        <!-- id 속성을 `heart-${product_id}` 형태로 설정하여 고유한 ID를 부여합니다. 
+                             여기서 product_id는 각 캠핑카 항목의 고유 ID를 의미합니다. 
+                             이를 통해 특정 캠핑카 항목에 대한 좋아요 상태를 개별적으로 관리할 수 있습니다. -->
+                            <i id="heart-${product_id}" onclick="like()" class="fa-regular fa-heart" style="color: #ff0000;"></i>
+                        </div>
                     </div>
                 </div>
                 <div class="row">
@@ -414,7 +425,6 @@
 
 
 
-    <div class="py-5 my-5"></div>
     <div th:replace="~{campingcar/campingNavi::bottomNavi}"></div>
     
     <div th:replace="~{campingcar/campingNavi::quickNavi}"></div>
@@ -423,62 +433,108 @@
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js"></script>
     
-     <!-- campingcarList script -->
-     <script>
-        window.addEventListener("DOMContentLoaded",() => {
-            // 페이지가 로드 될때 실행되어야 하는 이벤트 등록  
-            loadCampingCarList();                             
-        })
 
-        function loadCampingCarList() {
-            const url = "/api/campingcar/campingcarList";
-            fetch(url)
-            .then(response => response.json())
+     <script>
+    // 페이지 로드 시 실행되는 이벤트를 등록합니다.
+    window.addEventListener("DOMContentLoaded", () => {
+        // 페이지가 완전히 로드되면 세션에서 사용자 ID를 설정하고, 캠핑카 리스트를 로드합니다.
+        setSessionUserId();
+        loadCampingCarList();                          
+    });
+
+    // 전역 변수: 사용자 ID 초기화
+    // 페이지가 로드될 때 사용자 ID를 null로 초기화합니다.
+    let myId = null;
+
+    // 세션에서 사용자 ID를 가져오는 함수
+    function setSessionUserId() {
+        // 사용자 ID를 가져오는 API 요청
+        const url = "/api/rent-user/getSessionUserId";
+        fetch(url)
+            .then(response => response.json()) // JSON 형식으로 응답을 처리
+            .then((response) => {
+                // 응답에서 사용자 ID를 추출하여 전역 변수에 저장
+                myId = response.data.id;
+            });
+    }
+
+    // 캠핑카 리스트를 로드하고 화면에 표시하는 함수
+    function loadCampingCarList() {
+        // 캠핑카 리스트를 가져오는 API 요청
+        const url = "/api/campingcar/campingcarList";
+        fetch(url)
+            .then(response => response.json()) // JSON 형식으로 응답을 처리
             .then(response => {
+                // 캠핑카 리스트를 표시할 컨테이너 선택
                 const campingcarListBox = document.getElementById("campingcarListBox");
-                // 응답 받고 innerHTML이 초기화되어야 하는 상태
+                // 컨테이너의 기존 내용을 초기화
                 campingcarListBox.innerHTML = "";
                 
-                if(response.data.campingcarList.length==0){
-                    const notExistList = document.querySelector("#campingcarListTemplete .notExistList")
+                // 캠핑카 리스트가 비어있는 경우 처리
+                if (response.data.campingcarList.length == 0) {
+                    // 캠핑카가 없는 경우에 표시할 요소를 가져와서 리스트 박스에 추가
+                    const notExistList = document.querySelector("#campingcarListTemplete .notExistList");
                     campingcarListBox.appendChild(notExistList);
-                    return;
+                    return; // 캠핑카가 없으므로 함수 종료
                 }
 
-                // 반복할 id : templete,  전반적 출력 내용 큰 class : wrapper 가지고 와서 변수명 선언 
+                // 캠핑카 항목의 템플릿 요소를 가져와서 변수에 저장
                 const campingcarListWrapperTemplete = document.querySelector("#campingcarListTemplete .campingcarListWrapper");
-                //응답받은 responseDto의 data 필드에서 추가(add) 메서드에 넣은 "키와 값" 반복문 돌리기
-                for(e of response.data.campingcarList) {
 
-                    // WrapperTemlete 클론로드(복사본)해서 새로운Wrapper 변수 선언하기
+                // 캠핑카 리스트의 각 항목을 반복 처리
+                for (const e of response.data.campingcarList) {
+                    // 캠핑카 항목 템플릿을 클론하여 새로운 항목 생성
                     const newCampingcarListWrapper  = campingcarListWrapperTemplete.cloneNode(true);
 
-                    //newWrapper의 class를 가지고 와서 클래스를 변수에 담기=> 사실상 출력할 th:text부분임 
+                    // 캠핑카 이미지 설정
                     const campingcarImg = newCampingcarListWrapper.querySelector(".campingcarImg");
+                    // setAttribute 메서드를 사용하여 캠핑카 이미지의 src 속성을 설정합니다.
+                    // 이 속성은 캠핑카의 주요 이미지를 표시하는데 사용됩니다.
+                    // e.main_img는 서버에서 제공된 이미지 파일 이름을 포함하며,
+                    // 이 값을 통해 이미지를 동적으로 불러올 수 있습니다.
                     campingcarImg.setAttribute("src", `/images/${e.main_img}`);
-                    const campingcarComp_name = newCampingcarListWrapper.querySelector(".campingcarComp_name")
+
+                    // 좋아요 기능 설정
+                    const like = newCampingcarListWrapper.querySelector(".fa-heart");
+                    // setAttribute 메서드를 사용하여 하트 아이콘의 onclick 속성을 설정합니다.
+                    // 이를 통해 하트 아이콘 클릭 시 like() 함수가 호출되도록 합니다.
+                    // product_id는 현재 캠핑카 항목의 고유 ID를 나타내며, 
+                    // 이를 통해 특정 캠핑카에 대해 좋아요를 추가하거나 제거할 수 있습니다.
+                    like.setAttribute("onclick", `like(${e.id})`);
+
+                    // 하트 아이콘의 id 속성 설정
+                    const heart = newCampingcarListWrapper.querySelector(".fa-heart");
+                    // setAttribute 메서드를 사용하여 하트 아이콘의 id 속성을 설정합니다.
+                    // ID는 `heart-${e.id}` 형태로 설정되어 각 캠핑카 항목의 하트 아이콘을 고유하게 식별할 수 있습니다.
+                    // 이를 통해 이후 좋아요 상태를 동적으로 업데이트 할 수 있습니다.
+                    heart.setAttribute("id", `heart-${e.id}`);
+
+                    // 텍스트 요소 설정
+                    const campingcarComp_name = newCampingcarListWrapper.querySelector(".campingcarComp_name");
                     campingcarComp_name.innerText = e.comp_name;
 
-                    const campingcarProduct_name = newCampingcarListWrapper.querySelector(".campingcarProduct_name"); 
+                    const campingcarProduct_name = newCampingcarListWrapper.querySelector(".campingcarProduct_name");
                     campingcarProduct_name.innerText = e.product_name;
 
                     const campingcarShortdescription = newCampingcarListWrapper.querySelector(".campingcarShortdescription");
                     campingcarShortdescription.innerText = e.shortdescription;
 
+                    // 가격 정보 설정
                     const campingcarRental_fee_weekdays = newCampingcarListWrapper.querySelector(".campingcarRental_fee_weekdays");
                     campingcarRental_fee_weekdays.innerText = `평일 가격 : ${e.rental_fee_weekdays.toLocaleString('ko-KR')}원`;
 
                     const campingcarRental_fee_weekend = newCampingcarListWrapper.querySelector(".campingcarRental_fee_weekend");
                     campingcarRental_fee_weekend.innerText = `주말 가격 : ${e.rental_fee_weekend.toLocaleString('ko-KR')}원`;
 
+                    // 주소 및 운전 조건 설정
                     const campingcarGarage_address = newCampingcarListWrapper.querySelector(".campingcarGarage_address");
                     campingcarGarage_address.innerText = `차고지 주소 : ${e.garage_address}`;
 
                     const campingcarDriver_license_name = newCampingcarListWrapper.querySelector(".campingcarDriver_license_name");
                     campingcarDriver_license_name.innerText = `운전면허증 : ${e.driver_license_name}`;
-                
+
                     const campingcarDriver_age_condition_name = newCampingcarListWrapper.querySelector(".campingcarDriver_age_condition_name");
-                    campingcarDriver_age_condition_name.innerText =`운전자 나이 : ${e.driver_age_condition_name}`;
+                    campingcarDriver_age_condition_name.innerText = `운전자 나이 : ${e.driver_age_condition_name}`;
 
                     const campingcarDriver_experience_condition_name = newCampingcarListWrapper.querySelector(".campingcarDriver_experience_condition_name");
                     campingcarDriver_experience_condition_name.innerText = `운전 경력 : ${e.driver_experience_condition_name}`;
@@ -492,13 +548,106 @@
                     const campingcarPet_friendly = newCampingcarListWrapper.querySelector(".campingcarPet_friendly");
                     campingcarPet_friendly.innerText = e.pet_friendly;
 
+                    // 새로운 캠핑카 항목을 리스트 박스에 추가
                     campingcarListBox.appendChild(newCampingcarListWrapper);
+
+                    // 각 캠핑카 항목의 좋아요 상태를 갱신
+                    reloadLike(e.id);
                 }
-
-
             });
-        } 
+    }
+
+    // 좋아요 클릭 함수
+    function like(product_id) {
+        // 사용자가 로그인하지 않은 경우 로그인 페이지로 리다이렉트
+        if (myId == null) {
+            if (confirm("로그인 하셔야 이용 가능합니다. 로그인 페이지로 이동하시겠습니까?")) {
+                location.href = "/user/loginPage";
+            }
+            return;
+        }
+
+        // 좋아요를 추가하는 API 요청
+        const url = `/api/rent-user/like?product_id=${product_id}`;
+        fetch(url)
+            .then(response => response.json()) // JSON 형식으로 응답을 처리
+            .then(response => {
+                // 좋아요 상태를 갱신합니다.
+                reloadLike(product_id);
+            });
+    }
+
+    // 좋아요 상태를 갱신하는 함수
+    function reloadLike(product_id) {
+        // 사용자가 로그인하지 않은 경우 함수 종료
+        if (myId == null) {
+            return; 
+        }
+
+        // 찜 여부를 확인하는 API 요청
+        const url = `/api/rent-user/isLiked?product_id=${product_id}`;
+        fetch(url)
+            .then(response => response.json()) // JSON 형식으로 응답을 처리
+            .then(response => {
+                // 콘솔 로그로 상태 확인
+                console.log("isLiked 여부 응답 확인: ", response.data.isLikedByUser);
+                console.log("myId 확인 : ", myId);
+                
+                // 특정 차량의 하트 아이콘 선택
+                const heart = document.getElementById(`heart-${product_id}`);
+                console.log("heart의 product_id 값 확인: ", heart);
+
+                // 사용자가 이미 좋아요를 눌렀는지 여부를 확인
+                if (response.data.isLikedByUser == true) {
+                    // 좋아요가 눌린 상태: 하트 아이콘의 클래스를 fa-solid로 변경하여 강조
+                    heart.classList.remove("fa-regular");
+                    heart.classList.add("fa-solid");
+
+                    // setAttribute 메서드를 사용하여 하트 아이콘의 onclick 속성을 설정합니다.
+                    // 현재 좋아요 상태일 경우 클릭 시 좋아요를 취소하는 unLike() 함수가 호출되도록 설정합니다.
+                    heart.setAttribute("onclick", `unLike(${product_id})`);
+                } else {
+                    // 좋아요가 눌리지 않은 상태: 하트 아이콘의 클래스를 fa-regular로 변경하여 비활성화
+                    heart.classList.remove("fa-solid");
+                    heart.classList.add("fa-regular");
+
+                    // setAttribute 메서드를 사용하여 하트 아이콘의 onclick 속성을 설정합니다.
+                    // 현재 좋아요 상태가 아닐 경우 클릭 시 좋아요를 추가하는 like() 함수가 호출되도록 설정합니다.
+                    heart.setAttribute("onclick", `like(${product_id})`);
+                }
+            });
+    }
+
+    // 좋아요 취소 함수
+    function unLike(product_id) {
+        // 사용자가 로그인하지 않은 경우 로그인 페이지로 리다이렉트
+        if (myId == null) {
+            if (confirm("로그인 하셔야 이용 가능합니다. 로그인 페이지로 이동하시겠습니까?")) {
+                location.href = "/user/loginPage";
+            }
+            return;
+        }
+
+        // 좋아요를 취소하는 API 요청
+        const url = `/api/rent-user/unLike?product_id=${product_id}`;
+        fetch(url)
+            .then(response => response.json()) // JSON 형식으로 응답을 처리
+            .then(response => {
+                // 좋아요 상태를 갱신합니다.
+                reloadLike(product_id);
+            });
+    }
     </script>
+
+
+
+
+
+
+
+
+
+
     <!-- 모달 script -->
     <script>
         // 모달에서 전체 혹은 장소를 선택 했을때, 함수를 호출한다.

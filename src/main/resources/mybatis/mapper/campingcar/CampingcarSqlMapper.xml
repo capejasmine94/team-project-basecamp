@@ -2,5 +2,34 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.bulmeong.basecamp.campingcar.mapper.CampingcarSqlMapper">
+ 
+    <!-- 좋아요 관련 -->
+    <insert id="createLike">
+        insert into bc_campingcar_like (
+            product_id,rent_user_id
+        )values(
+            #{product_id}, #{rent_user_id}
+        )
+    </insert>
+
+    <!-- 등록된 차량 좋아요 누른 수 -->
+    <select id="countLikeByProduct_id" resultType="int">
+        select count(*) from bc_campingcar_like 
+        where product_id = #{product_id}
+    </select>
+
+    <!-- 회원이 등록된 차량에 좋아요를 눌른 수, count를 통해 회원이 좋아요 눌렀는지 확인하는 쿼리 -->
+    <select id="checkUserLike" resultType="int">
+        select count(*) from bc_campingcar_like 
+        where  product_id = #{product_id} and rent_user_id = #{rent_user_id}
+    </select>
+
+    <!-- 좋아요 1번 이상 눌렀을 경우 취소 쿼리 -->
+    <delete id="deleteLikeByLikeDto">
+        delete from bc_campingcar_like 
+        where product_id = #{product_id} and rent_user_id = #{rent_user_id}
+    </delete>
+
+
 
 </mapper>
