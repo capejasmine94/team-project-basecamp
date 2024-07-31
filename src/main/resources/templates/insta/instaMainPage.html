@@ -113,6 +113,14 @@
 
             overflow: hidden; /* 내용이 모서리를 넘지 않도록 */
         }
+
+        /* 모달의 내용 스타일 */
+        .modal-content {
+            width: 70%; /* 모달 내용의 너비 */
+            transform: translate(20%, 0%);
+        }
+
+
     </style>
 
 </head>
@@ -270,7 +278,7 @@
                     <!-- 오프캠버스의 경우 조건문으로 두가지 이상의 결과를 내야할 때
                          offcanvas id를 조건문에따라서 다르게 해야함 data-bs-target, aria-controls의 이름도 id와 같게 바꿔줘야 함 -->
                     <!-- 세션 아이디와 글쓴 사람 아이디가 같을경우 -->
-                    <div class="col text-end align-self-center"
+                    <!-- <div class="col text-end align-self-center"
                          th:if="${session.sessionUserInfo.id == instaArticleList.instaUserInfoDto.user_id}">
                         <button class="btn p-0" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasMy" aria-controls="offcanvasMy">
                             <i class="bi bi-three-dots"></i>
@@ -304,37 +312,43 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </div> -->
 
-                    <!-- 세션 아이디와 글쓴 사람 아이디가 다를경우 -->
+                    <!-- 세션 아이디와 글쓴 사람 아이디가 같을경우 -->
                     <div class="col text-end align-self-center"
-                         th:unless="${session.sessionUserInfo.id == instaArticleList.instaUserInfoDto.user_id}">
-                        <button class="btn p-0" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasUser" aria-controls="offcanvasUser">
+                        th:if="${session.sessionUserInfo.id == instaArticleList.instaUserInfoDto.user_id}">
+                        <button class="btn p-0" type="button" data-bs-toggle="modal" data-bs-target="#myModal">
                             <i class="bi bi-three-dots"></i>
                         </button>
 
-                        <div class="offcanvas offcanvas-bottom" tabindex="-1" id="offcanvasUser" aria-labelledby="offcanvasBottomLabel">
-                            <div class="offcanvas-body pt-2 pt-0">
-                                <div class="row text-center fontBasic">
-                                    <div class="col">
-                                        <div class="row border-bottom">
-                                            <a class="col link-dark link-underline-opacity-0 py-3" href="./aticleBlockPage">
-                                                <span>
-                                                    차단
-                                                </span>
-                                            </a>
-                                        </div>
-                                        <div class="row border-bottom">
-                                            <a class="col link-dark link-underline-opacity-0 py-3" href="./articleReportPage">
-                                                <span style="color: red;">
-                                                    신고
-                                                </span>
-                                            </a>
-                                        </div>
-                                        <div class="row">
-                                            <button type="button" class="col py-4" data-bs-dismiss="offcanvas" aria-label="Close" style="border: none; background-color: white;">
-                                                취소
-                                            </button>
+                        <!-- Modal -->
+                        <div class="modal fade" id="myModal" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered">
+                                <div class="modal-content">
+                                    <div class="modal-body">
+                                        <div class="row text-center fontBasic">
+                                            <div class="col">
+                                                <div class="row border-bottom">
+                                                    <a class="col link-dark link-underline-opacity-0 py-3" href="./aticleEditPage">
+                                                        <span>
+                                                            수정
+                                                        </span>
+                                                    </a>
+                                                </div>
+                                                <div class="row border-bottom">
+                                                    <a class="col link-dark link-underline-opacity-0 py-3"
+                                                    th:href="@{./articleDeleteProcess(article_id=${instaArticleList.instaArticleDto.id}, user_id=${session.sessionUserInfo.id})}">
+                                                        <span style="color: red;">
+                                                            삭제
+                                                        </span>
+                                                    </a>
+                                                </div>
+                                                <div class="row">
+                                                    <button type="button" class="col py-4" data-bs-dismiss="modal" aria-label="Close" style="border: none; background-color: white;">
+                                                        취소
+                                                    </button>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -342,7 +356,46 @@
                         </div>
                     </div>
 
+                    <!-- 세션 아이디와 글쓴 사람 아이디가 다를경우 -->
+                    <div class="col text-end align-self-center"
+                        th:unless="${session.sessionUserInfo.id == instaArticleList.instaUserInfoDto.user_id}">
+                        <button class="btn p-0" type="button" data-bs-toggle="modal" data-bs-target="#userModal">
+                            <i class="bi bi-three-dots"></i>
+                        </button>
 
+                        <!-- Modal -->
+                        <div class="modal fade modal-custom" id="userModal" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered">
+                                <div class="modal-content">
+                                    <div class="modal-body">
+                                        <div class="row text-center fontBasic">
+                                            <div class="col">
+                                                <div class="row border-bottom">
+                                                    <a class="col link-dark link-underline-opacity-0 py-3" href="./aticleBlockPage">
+                                                        <span>
+                                                            차단
+                                                        </span>
+                                                    </a>
+                                                </div>
+                                                <div class="row border-bottom">
+                                                    <a class="col link-dark link-underline-opacity-0 py-3" href="./articleReportPage">
+                                                        <span style="color: red;">
+                                                            신고
+                                                        </span>
+                                                    </a>
+                                                </div>
+                                                <div class="row">
+                                                    <button type="button" class="col py-4" data-bs-dismiss="modal" aria-label="Close" style="border: none; background-color: white;">
+                                                        취소
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
 
                 <!-- 해당글 이미지 List -->
@@ -555,7 +608,7 @@
         
     </div>
 
-    <div class="container mt-5 pt-5">
+    <div class="container mt-5">
         <!-- 하단바 -->
         <div class="row">
             <div class="col">
