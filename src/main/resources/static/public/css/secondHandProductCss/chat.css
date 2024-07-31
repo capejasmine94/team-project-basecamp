@@ -2,6 +2,13 @@
     border-radius: 1rem;
     background-color: #F8F9FA;
     border: none;
+    width: 100%;
+    min-height: 2rem;
+    max-height: 200px;
+    overflow-y: auto;
+    resize: none;
+    padding: 0.5rem; /* 상하좌우 여백 추가 */
+    box-sizing: border-box; /* padding을 포함한 크기 계산 */
 }
 .custom-input:focus {
     box-shadow: none;
@@ -65,11 +72,23 @@
     white-space: nowrap;
 }
 .send-icon {
-    position: absolute;
-    right: 2rem;
-    top: 0.8rem;
+    padding-left: 0.5rem;
     opacity: 50%;
 }
 .send-icon.active {
     color: #FF6F0F;
+}
+/*채팅목록 페이지 표시*/
+.link-custom span.active {
+    background-color: black;
+    color: white;
+}
+/*채팅목록 글자 길이제한*/
+.chat-text-line {
+    display: inline-block;
+    max-width: 16rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    vertical-align: bottom;
 }

@@ -1,10 +1,8 @@
 package com.bulmeong.basecamp.secondHandProduct.controller;
 
 import com.bulmeong.basecamp.common.util.Utils;
-import com.bulmeong.basecamp.secondHandProduct.dto.CategoryDto;
-import com.bulmeong.basecamp.secondHandProduct.dto.ImageDto;
-import com.bulmeong.basecamp.secondHandProduct.dto.AllContentsProductDto;
-import com.bulmeong.basecamp.secondHandProduct.dto.SecondhandProductDto;
+import com.bulmeong.basecamp.secondHandProduct.dto.*;
+import com.bulmeong.basecamp.secondHandProduct.service.ChatService;
 import com.bulmeong.basecamp.secondHandProduct.service.ProductService;
 import com.bulmeong.basecamp.user.dto.UserDto;
 import jakarta.servlet.http.HttpSession;
@@ -23,6 +21,8 @@ public class ProductController {
 
     @Autowired
     private ProductService productService;
+    @Autowired
+    private ChatService chatService;
     @Autowired
     private Utils utils;
 
@@ -132,20 +132,75 @@ public class ProductController {
         return "secondhandProduct/postDetailsPage";
     }
 
-    @GetMapping("productChatRoomPage")
-    public String productChatRoomPage(HttpSession session,
-                                      Model model,
-                                      @RequestParam(name = "product_id") int product_id) {
+    @GetMapping("chatRoomPage")
+    public String chatRoomPage() {
+
+        return "secondhandProduct/chatRoomPage";
+    }
+    // 채팅방 생성 - 전체
+    @RequestMapping("allChatRoomPage")
+    public String allChatRoomPage(HttpSession session, Model model) {
 
         UserDto sessionUserInfo = (UserDto) session.getAttribute("sessionUserInfo");
-        model.addAttribute("sessionUserInfo", sessionUserInfo);
+        List<SaleChatRoomDto> allChatRoomDto = chatService.selectAllChatRoomList(sessionUserInfo.getId());
 
-        SecondhandProductDto secondhandProductDto = productService.selectChatRoomProductInformation(product_id);
-        model.addAttribute("ProductDto", secondhandProductDto);
+        model.addAttribute("allChatRoomDto", allChatRoomDto);
+        model.addAttribute("currentUserId", sessionUserInfo.getId());
+
+        return "partials/secondhandProduct/allChatRoomPage :: content";
+    }
+    // 채팅방 생성 - 구매
+    @RequestMapping("buyChatRoomPage")
+    public String buyChatRoomPage(HttpSession session, Model model) {
+
+        UserDto sessionUserInfo = (UserDto) session.getAttribute("sessionUserInfo");
+        List<SaleChatRoomDto> buyChatRoomDto = chatService.selectBuyChatRoomList(sessionUserInfo.getId());
+
+        model.addAttribute("buyChatRoomDto", buyChatRoomDto);
+
+        return "partials/secondhandProduct/buyChatRoomPage :: content";
+    }
+    // 채팅방 생성 - 판매
+    @RequestMapping("saleChatRoomPage")
+    public String saleChatRoomPage(HttpSession session, Model model) {
+
+        UserDto sessionUserInfo = (UserDto) session.getAttribute("sessionUserInfo");
+        List<SaleChatRoomDto> saleChatRoomDto = chatService.selectSaleChatRoomList(sessionUserInfo.getId());
+
+        model.addAttribute("saleChatRoomDto", saleChatRoomDto);
+
+        return "partials/secondhandProduct/saleChatRoomPage :: content";
+    }
+
+    @GetMapping("productChatMessagePage")
+    public String productChatMessagePage(Model model,
+                                        @RequestParam(name = "product_id") int product_id,
+                                        @RequestParam(name = "chat_room_id") int chat_room_id,
+                                         @RequestParam(name = "nickname", required = false) String nickname) {
+
+
+        Map<String, Object> productTotalDtoList = productService.selectSecondhandDetailProduct(product_id);
+        productTotalDtoList.put("nickname", nickname);
+        model.addAttribute("productTotalDtoList", productTotalDtoList);
+
+        List<ChatMessageDto> chatMessageDtoList = chatService.selectChatRoomMessage(chat_room_id);
+        model.addAttribute("chatMessageDtoList", chatMessageDtoList);
 
 
 
-        return "secondhandProduct/productChatRoomPage";
+        return "secondhandProduct/productChatMessagePage";
+    }
+
+    // 대화중인 채팅방
+    @GetMapping("conversationChatPage")
+    public String conversationChatPage(Model model,
+                                       @RequestParam("product_id") int product_id) {
+
+        List<SaleChatRoomDto> saleChatRoomDto = chatService.selectByProductChatRoomList(product_id);
+
+        model.addAttribute("saleChatRoomDto", saleChatRoomDto);
+
+        return "secondhandProduct/conversationChatPage";
     }
 
     @GetMapping("selectCategoryPage")

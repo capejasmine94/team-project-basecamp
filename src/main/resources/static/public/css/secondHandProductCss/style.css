@@ -10,6 +10,12 @@ body {
     border-radius: 0.5rem;
     padding: 0.5rem 1rem;
 }
+/*채팅 선택*/
+.chat-span-custom {
+    border-radius: 1rem;
+    padding: 0.5rem 0.7rem;
+    font-size: 0.8rem;
+}
 /* 게시글 위치,카테고리,시간,좋아요,채팅 */
 .font-custom1 {
     font-size: 0.9rem;

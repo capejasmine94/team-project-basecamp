@@ -12,19 +12,19 @@
 </head>
 <body>
 <!--상단네비-->
-<div class="container g-0 py-3 fixed-top bg-light">
+<div class="container g-0 py-2 fixed-top bg-light">
     <div class="row mx-2">
-        <a href="javascript:history.back()" class="col" style="color: black">
+        <a href="javascript:history.back()" class="col fs-5" style="color: black">
             <i class="bi bi-chevron-left"></i>
         </a>
-        <div class="col text-center">
+        <div class="col text-center fs-5">
             <span th:text="${categoryName}"></span>
         </div>
         <div class="col"></div>
     </div>
 </div>
 <!--하단네비-->
-<div class="container-fluid g-0" style="margin-top: 4.5rem; padding-bottom: 5rem">
+<div class="container-fluid g-0" style="margin-top: 4rem; padding-bottom: 5rem">
     <a th:href="@{/secondhandProduct/postDetailsPage(product_id=${categoryByList.product_id})}" class="row mx-2 py-3 border-bottom mainPostLink-custom" th:each="categoryByList : ${categoryNameList}">
         <div class="col-4 me-1" style="height: 7rem;">
             <img class="mainPostImg-custom" th:src="@{/images/{image}(image=${categoryByList.main_image})}">
@@ -43,8 +43,8 @@
                     <span th:text="|${#numbers.formatInteger(categoryByList.price, 0, 'COMMA')}원|">금액</span>
                 </div>
                 <div class="col pt-3 text-end">
-                    <span><i class="bi bi-chat"></i></span><span class="ms-1">1</span>
-                    <span><i class="bi bi-heart"></i></span><span class="ms-1">1</span>
+                    <span><i class="bi bi-chat"></i></span><span class="ms-1" th:text="${categoryByList.chat_room_count}">채팅수</span>
+                    <span><i class="bi bi-heart"></i></span><span class="ms-1" th:text="${categoryByList.wish_list_count}">좋아요수</span>
                 </div>
             </div>
         </div>

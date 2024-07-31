@@ -41,19 +41,19 @@
 <div class="container g-0 py-3 fixed-top" id="topNav">
     <div class="row mx-2">
         <a href="javascript:history.back()" class="col-auto icon pe-0" style="color: white">
-            <span style="font-size: 1.3rem">
-                <i class="bi bi-chevron-left"></i>
+            <span class="border p-1 rounded-circle" style="font-size: 1.3rem; background-color: white">
+                <i class="bi bi-chevron-left" style="color: black"></i>
             </span>
         </a>
-        <a href="/secondhandProduct/mainPage" class="col icon" style="color: white">
-            <span style="font-size: 1.3rem">
-                <i class="bi bi-house"></i>
+        <a href="/secondhandProduct/mainPage" class="col text-end icon" style="color: white">
+            <span class="border p-1 rounded-circle" style="font-size: 1.3rem; background-color: white">
+                <i class="bi bi-house" style="color: black"></i>
             </span>
         </a>
     </div>
 </div>
 <!-- 게시글 상세 이미지 -->
-<form action="/secondhandProduct/productChatRoomPage" class="container-fluid g-0 form-container">
+<div class="container-fluid g-0 form-container">
     <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
         <div class="carousel-inner">
             <th:block th:each="imageDto, stat : ${productTotalDtoList.imageDtoList}">
@@ -121,7 +121,7 @@
     <!--관심,조회수 -->
     <div class="row mx-2 mt-4">
         <div class="col font-custom3">
-            <span>채팅</span><span class="ms-1">3</span>
+            <span>채팅</span><span class="ms-1" th:text="${productTotalDtoList.AllContentsDto.chat_room_count}">3</span>
             <span>・</span>
             <span>관심</span><span class="ms-1" id="likeCount"></span>
             <span>・</span>
@@ -139,13 +139,16 @@
             <div class="col pt-1">
                 <span th:text="|${#numbers.formatInteger(productTotalDtoList.AllContentsDto.price, 0, 'COMMA')}원|" class="fw-bold fs-5">금액</span>
             </div>
-            <div class="col text-center d-grid">
-                <input type="hidden" name="product_id" th:value="${productTotalDtoList.AllContentsDto.product_id}">
-                <button type="submit" class="btn" style="background-color: #FF6F0F; color: white">채팅하기</button>
+            <div class="col text-center d-grid" th:if="${session.sessionUserInfo != null and session.sessionUserInfo.id != productTotalDtoList.AllContentsDto.user_id}">
+                <input type="button" class="btn" style="background-color: #FF6F0F; color: white" value="채팅하기" onclick="startChat()">
+            </div>
+            <div class="col text-center d-grid" th:if="${session.sessionUserInfo != null and session.sessionUserInfo.id == productTotalDtoList.AllContentsDto.user_id}">
+                <input type="button" class="btn" style="background-color: #FF6F0F; color: white" onclick="conversationChat()"
+                       th:value="'대화 중인 채팅방 ' + ${productTotalDtoList.AllContentsDto.chat_room_count}" >
             </div>
         </div>
     </div>
-</form>
+</div>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -153,42 +156,11 @@
 
 <script>
 <!-- 좋아요    -->
+    let myId = null;
     const urlParams = new URL(window.location.href).searchParams;
     const productId = urlParams.get("product_id");
-    let myId = null;
-    //
-    const carousel = document.querySelector('#carouselExampleIndicators');
-    const sellerInfo = document.querySelector('#sellerInfo');
-    const topNav = document.querySelector('#topNav');
-    let startX, endX;
+    const sellerUserId = urlParams.get("user_id");
 
-
-    carousel.addEventListener('touchstart', function(event) {
-        startX = event.touches[0].clientX;
-    });
-
-    carousel.addEventListener('touchmove', function(event) {
-        endX = event.touches[0].clientX;
-    });
-
-    carousel.addEventListener('touchend', function(event) {
-        const threshold = 50;
-        if (startX - endX > threshold) {
-
-            $(this).carousel('next');
-        } else if (endX - startX > threshold) {
-
-            $(this).carousel('prev');
-        }
-    });
-
-    window.addEventListener('scroll', function() {
-        if (window.scrollY >= sellerInfo.offsetTop - topNav.offsetHeight) {
-            topNav.classList.add('fixed-background');
-        } else {
-            topNav.classList.remove('fixed-background');
-        }
-    });
     // js 로그인여부
     function setSessionUserId() {
         const url = "/api/user/getSessionUserId"
@@ -199,6 +171,34 @@
                 productByUserLike();
             })
         ;
+    }
+    // 채팅방 생성
+    function startChat() {
+        const url = "/api/chatPolling/getOrCreateRoom";
+        const data = {
+            product_id: productId,
+            seller_user_id: sellerUserId,
+            buyer_user_id: myId
+        };
+
+        fetch(url, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+        })
+            .then(response => response.json())
+            .then((response) => {
+                if (response.result === "success") {
+                    const chatRoomId = response.data.chatRoomId;
+                    window.location.href = `/secondhandProduct/productChatMessagePage?product_id=${productId}&chat_room_id=${chatRoomId}`;
+                }
+            })
+    }
+    // 대화 중인 채팅방
+    function conversationChat() {
+        window.location.href = `/secondhandProduct/conversationChatPage?product_id=${productId}`;
     }
     // 좋아요 인서트
     function like() {
@@ -261,6 +261,39 @@
     window.addEventListener("DOMContentLoaded", () => {
         setSessionUserId();
         totalLikeCount();
+    });
+
+    const carousel = document.querySelector('#carouselExampleIndicators');
+    const sellerInfo = document.querySelector('#sellerInfo');
+    const topNav = document.querySelector('#topNav');
+    let startX, endX;
+
+
+    carousel.addEventListener('touchstart', function(event) {
+        startX = event.touches[0].clientX;
+    });
+
+    carousel.addEventListener('touchmove', function(event) {
+        endX = event.touches[0].clientX;
+    });
+
+    carousel.addEventListener('touchend', function(event) {
+        const threshold = 50;
+        if (startX - endX > threshold) {
+
+            $(this).carousel('next');
+        } else if (endX - startX > threshold) {
+
+            $(this).carousel('prev');
+        }
+    });
+
+    window.addEventListener('scroll', function() {
+        if (window.scrollY >= sellerInfo.offsetTop - topNav.offsetHeight) {
+            topNav.classList.add('fixed-background');
+        } else {
+            topNav.classList.remove('fixed-background');
+        }
     });
 
 </script>

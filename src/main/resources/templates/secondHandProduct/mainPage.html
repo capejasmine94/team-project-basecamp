@@ -67,23 +67,21 @@
 <!--하단네비-->
 <div th:replace="common/navi::bottomNaviBasecamp"></div>
 <!--상단네비-->
-<div class="container g-0 py-3 bg-white fixed-top border-bottom">
+<div class="container g-0 py-2 bg-white fixed-top border-bottom">
     <div class="row mx-2">
-        <div class="col-auto">로고</div>
-        <div class="col">중고장터</div>
-    </div>
-    <div class="row mx-2 mt-2">
-        <a href="/secondhandProduct/mainPage" class="col-auto">홈</a>
-        <a href="/secondhandProduct/transactionListPage" class="col-auto">x</a>
+        <a href="/secondhandProduct/mainPage" class="col-auto fs-5">
+            홈
+        </a>
+        <div class="col fs-5">중고장터</div>
     </div>
 </div>
-<div class="container-fluid g-0" style="margin-top: 7rem; padding-bottom: 5rem">
+<div class="container-fluid g-0" style="margin-top: 4rem; padding-bottom: 5rem">
     <div class="row mx-2">
         <a href="/secondhandProduct/selectCategoryPage" class="col-auto mainPostLink-custom">
             <span class="bg-custom1 main-span-custom"><span class="me-1"><i class="bi bi-list"></i></span>전체</span>
         </a>
     </div>
-    <a th:href="@{/secondhandProduct/postDetailsPage(product_id=${productList.product_id})}" class="row mx-2 py-3 border-bottom mainPostLink-custom" th:each="productList : ${productDtoList}">
+    <a th:href="@{/secondhandProduct/postDetailsPage(product_id=${productList.product_id}, user_id=${productList.user_id})}" class="row mx-2 py-3 border-bottom mainPostLink-custom" th:each="productList : ${productDtoList}">
         <div class="col-4 me-2" style="height: 7rem;">
             <img class="mainPostImg-custom" th:src="@{/images/{image}(image=${productList.main_image})}">
         </div>
@@ -101,8 +99,8 @@
                     <span th:text="|${#numbers.formatInteger(productList.price, 0, 'COMMA')}원|" class="font-custom2 fw-bold">금액</span>
                 </div>
                 <div class="col pt-3 text-end font-custom1">
-                    <span><i class="bi bi-chat"></i></span><span class="ms-1">1</span>
-                    <span><i class="bi bi-heart"></i></span><span class="ms-1" th:text="${productList.wish_list_count}">1</span>
+                    <span><i class="bi bi-chat"></i></span><span class="ms-1" th:text="${productList.chat_room_count}">채팅수</span>
+                    <span><i class="bi bi-heart"></i></span><span class="ms-1" th:text="${productList.wish_list_count}">좋아요수</span>
                 </div>
             </div>
         </div>
@@ -117,7 +115,7 @@
     <div class="menu-item" onclick="location.href='/secondhandProduct/productRegistrationPage'">
         <i class="bi bi-pencil"></i><span>내 물건 팔기</span>
     </div>
-    <div class="menu-item" onclick="location.href='/secondhandProduct/productChatRoomPage'">
+    <div class="menu-item" onclick="location.href='/secondhandProduct/chatRoomPage'">
         <i class="bi bi-chat-dots"></i><span>채팅</span>
     </div>
     <div class="menu-item" onclick="location.href='/secondhandProduct/myPage'">

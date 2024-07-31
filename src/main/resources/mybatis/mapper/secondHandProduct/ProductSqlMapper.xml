@@ -8,9 +8,9 @@
             SELECT max(product_id) from bc_secondhand_product;
         </selectKey>
         INSERT INTO bc_secondhand_product
-        (user_id, category_id, main_image, title, price, explanation, status, read_count)
+        (user_id, category_id, main_image, title, price, explanation, status, read_count, chat_room_count)
         values
-        (#{user_id},#{category_id}, #{main_image}, #{title}, #{price}, #{explanation}, #{status} , #{read_count})
+        (#{user_id},#{category_id}, #{main_image}, #{title}, #{price}, #{explanation}, #{status} , #{read_count}, 0)
     </insert>
     <!--메인페이지 전체 게시글  리스트-->
     <select id="selectSecondhandProductList"

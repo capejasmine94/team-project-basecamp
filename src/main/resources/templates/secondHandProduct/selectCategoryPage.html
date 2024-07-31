@@ -13,24 +13,24 @@
 </head>
 <body>
 <!--상단네비-->
-<div class="container g-0 py-3 fixed-top bg-light">
+<div class="container g-0 py-2 fixed-top bg-light">
     <div class="row mx-2">
-        <a href="javascript:history.back()" class="col" style="color: black">
+        <a href="javascript:history.back()" class="col fs-5" style="color: black">
             <i class="bi bi-chevron-left"></i>
         </a>
-        <div class="col text-center">
+        <div class="col text-center fs-5">
             <span>전체서비스</span>
         </div>
         <div class="col"></div>
     </div>
 </div>
-<div class="container-fluid g-0" style="margin-top: 4.5rem; padding-bottom: 5rem">
+<div class="container-fluid g-0" style="margin-top: 4rem; padding-bottom: 5rem">
     <div class="row mx-2">
-        <div class="col">
+        <div class="col fs-3">
             중고거래
         </div>
     </div>
-    <div class="row mx-4">
+    <div class="row mx-3">
         <div class="col" th:each="categoryList : ${categoryDtoList}">
             <a th:href="@{/secondhandProduct/selectCategoryDetailListPage(category_id=${categoryList.category_id})}" class="row p-0 link-custom">
 <!-- 카테고리 반복 -->

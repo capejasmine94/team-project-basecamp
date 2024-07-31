@@ -15,5 +15,6 @@ public class SecondhandProductDto {
     private String explanation;
     private String status;
     private int read_count;
+    private int chat_room_count;
     private Date created_at;
 }

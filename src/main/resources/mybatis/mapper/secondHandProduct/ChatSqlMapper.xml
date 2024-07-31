@@ -1,14 +1,125 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.bulmeong.basecamp.secondHandProduct.mapper.ProductSqlMapper">
+<mapper namespace="com.bulmeong.basecamp.secondHandProduct.mapper.ChatSqlMapper">
 
-    <insert id="insertChatRoomMessage">
+    <!-- 채팅방ID 가져오기 -->
+    <select id="findByChatId">
+        SELECT chat_room_id FROM bc_secondhand_product_chat_room
+        WHERE product_id = #{product_id}
+          AND seller_user_id = #{seller_user_id}
+          AND buyer_user_id = #{buyer_user_id}
+    </select>
+
+    <!--채팅방 생성-->
+    <insert id="insertChatRoom" useGeneratedKeys="true" keyProperty="chat_room_id">
         INSERT INTO bc_secondhand_product_chat_room
-            (product_id, buyer_user_id, message)
+            (product_id, buyer_user_id, seller_user_id, message)
         values
-            (#{product_id}, #{buyer_user_id}, #{message})
+            (#{product_id}, #{buyer_user_id}, #{seller_user_id}, default)
     </insert>
 
+    <!--채팅메시지 등록-->
+    <insert id="insertMessageList">
+        INSERT INTO bc_secondhand_product_chat_message
+            (chat_room_id, sender_id, message, message_image)
+        VALUES
+            (#{chat_room_id}, #{sender_id}, #{message}, default)
+    </insert>
+    <!--채티방 마지막메세지 업데이트-->
+    <update id="updateChatRoomLastMessage">
+        UPDATE bc_secondhand_product_chat_room
+        SET message = #{message}
+        WHERE chat_room_id = #{chat_room_id}
+    </update>
+
+    <!--채팅방목록(전체)-->
+    <select id="selectAllChatRoomList" resultType="com.bulmeong.basecamp.secondHandProduct.dto.SaleChatRoomDto">
+        SELECT c.*,
+               p.main_image,
+               u_seller.nickname AS seller_nickname,
+               u_buyer.nickname AS buyer_nickname
+        FROM bc_secondhand_product_chat_room c
+                 JOIN bc_secondhand_product p ON p.product_id = c.product_id
+                 LEFT JOIN bc_user u_seller ON u_seller.id = c.seller_user_id
+                 LEFT JOIN bc_user u_buyer ON u_buyer.id = c.buyer_user_id
+        WHERE c.seller_user_id = #{user_id} OR c.buyer_user_id = #{user_id}
+        ORDER BY c.message_time DESC;
+    </select>
+    <!--채팅방목록(구매)-->
+    <select id="selectBuyChatRoomList" resultType="com.bulmeong.basecamp.secondHandProduct.dto.SaleChatRoomDto">
+        SELECT c.*,
+               p.main_image,
+               u_seller.nickname AS seller_nickname,
+               u_buyer.nickname AS buyer_nickname
+        FROM bc_secondhand_product_chat_room c
+                 JOIN bc_secondhand_product p ON p.product_id = c.product_id
+                 LEFT JOIN bc_user u_seller ON u_seller.id = c.seller_user_id
+                 LEFT JOIN bc_user u_buyer ON u_buyer.id = c.buyer_user_id
+        WHERE c.buyer_user_id = #{user_id}
+        ORDER BY c.message_time DESC;
+    </select>
+    <!--채팅방목록(판매)-->
+    <select id="selectSaleChatRoomList" resultType="com.bulmeong.basecamp.secondHandProduct.dto.SaleChatRoomDto">
+        SELECT c.*,
+               p.main_image,
+               u_seller.nickname AS seller_nickname,
+               u_buyer.nickname AS buyer_nickname
+        FROM bc_secondhand_product_chat_room c
+                 JOIN bc_secondhand_product p ON p.product_id = c.product_id
+                 LEFT JOIN bc_user u_seller ON u_seller.id = c.seller_user_id
+                 LEFT JOIN bc_user u_buyer ON u_buyer.id = c.buyer_user_id
+        WHERE c.seller_user_id = #{user_id}
+        ORDER BY c.message_time DESC;
+    </select>
+    <!--메시지 채팅방 목록(게시글 판매목록)-->
+    <select id="selectByProductChatRoomList" resultType="com.bulmeong.basecamp.secondHandProduct.dto.SaleChatRoomDto">
+        SELECT c.*,
+               p.main_image,
+               u_seller.nickname AS seller_nickname,
+               u_buyer.nickname AS buyer_nickname
+        FROM bc_secondhand_product_chat_room c
+                 JOIN bc_secondhand_product p ON p.product_id = c.product_id
+                 LEFT JOIN bc_user u_seller ON u_seller.id = c.seller_user_id
+                 LEFT JOIN bc_user u_buyer ON u_buyer.id = c.buyer_user_id
+        WHERE p.product_id = #{product_id}
+        ORDER BY c.message_time DESC;
+    </select>
+
+
+    <!--채팅방 내용-->
+    <select id="selectChatRoomMessage" resultType="com.bulmeong.basecamp.secondHandProduct.dto.ChatMessageDto">
+        SELECT * FROM bc_secondhand_product_chat_message
+        WHERE chat_room_id = #{chat_room_id}
+    </select>
+
+    <!--채팅방 개수 업데이트-->
+    <update id="updateChatRoomCountP">
+        UPDATE bc_secondhand_product
+        SET chat_room_count = chat_room_count + 1
+        WHERE product_id = #{product_id}
+    </update>
+    <!-- 채팅방 개수 삭제 -->
+    <update id="updateChatRoomCountM">
+        UPDATE bc_secondhand_product
+        SET chat_room_count = chat_room_count - 1
+        WHERE product_id = #{product_id}
+    </update>
+
+    <!-- 채팅방 생성후 메세지 확인 -->
+    <select id="selectFindChatRoomByNullMessage" resultType="String">
+        SELECT message FROM bc_secondhand_product_chat_room
+        WHERE chat_room_id = #{chat_room_id}
+    </select>
+    <!--채팅방 생성후 메세지 확인 NULL = 삭제 -->
+    <delete id="deleteChatRoom">
+        DELETE FROM bc_secondhand_product_chat_room
+        WHERE chat_room_id = #{chat_room_id}
+    </delete>
+    <!-- 채팅방 확인 -->
+    <select id="selectCountRoomById" resultType="int">
+        SELECT COUNT(*) FROM bc_secondhand_product_chat_room
+        WHERE chat_room_id = #{chat_room_id}
+    </select>
 
 </mapper>

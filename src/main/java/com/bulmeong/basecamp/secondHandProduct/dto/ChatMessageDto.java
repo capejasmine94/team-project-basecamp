@@ -7,8 +7,11 @@ import java.util.Date;
 @Data
 public class ChatMessageDto {
     private int chat_message_id;
-    private int chat_user_id;
     private int chat_room_id;
+    private int sender_id;
     private String message;
-    private Date created_at;
+    private String message_image;
+    private Date message_time;
 }
+
+

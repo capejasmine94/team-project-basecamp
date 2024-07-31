@@ -68,8 +68,8 @@
                     <span th:text="|${#numbers.formatInteger(userWishList.price, 0, 'COMMA')}원|" class="font-custom2 fw-bold">금액</span>
                 </div>
                 <div class="col pt-3 text-end font-custom1">
-                    <span><i class="bi bi-chat"></i></span><span class="ms-1">1</span>
-                    <span><i class="bi bi-heart"></i></span><span class="ms-1" th:text="${userWishList.wish_list_count}">1</span>
+                    <span><i class="bi bi-chat"></i></span><span class="ms-1" th:text="${userWishList.chat_room_count}">채팅수</span>
+                    <span><i class="bi bi-heart"></i></span><span class="ms-1" th:text="${userWishList.wish_list_count}">좋아요수</span>
                 </div>
             </div>
         </div>

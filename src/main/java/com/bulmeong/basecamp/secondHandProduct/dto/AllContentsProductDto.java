@@ -16,6 +16,7 @@ public class AllContentsProductDto {
     private String explanation;
     private String status;
     private int read_count;
+    private int chat_room_count;
     private int wish_list_count;
     private Date created_at;
 }
