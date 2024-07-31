@@ -138,35 +138,32 @@
                 </div>
             </div>
             <!-- 정보 작성 -->
-            <div class="row mt-3">
-                <div class="col-auto ms-3">
-                    <span class="fw-semibold">예약 날짜</span>
-                </div> 
-                <div class="col ms-3 ps-1">2024-08-11 ~ 2024-08-14</div>
-            </div>
-            <div class="row mt-3">
+            <div class="row mt-3 border-top pt-3">
                 <div class="col">
-                    <span class="fw-semibold fs-5">예약정보 입력</span>
+                    <span class="fw-semibold fs-5">예약정보</span>
                 </div> 
             </div>
-            <div class="row border-bottom border-5 mt-2 pb-4" th:if="${session.sessionInfo != null}">
-                <div class="col">
-                    <div class="row"><div class="col"><span>이름</span></div></div>
-                    <div class="row"><div class="col"><span>연락처</span></div></div>
+            <div class="row mt-2" >
+                <div class="col" th:if="${session.sessionUserInfo != null}">
+                    <div class="row"><div class="col"><span class="fw-semibold me-4 pe-4">이름</span><span th:text="${session.sessionUserInfo.name}"></span></div></div>
+                    <div class="row mt-2"><div class="col"><span class="fw-semibold me-4 pe-2">연락처</span><span th:text="${session.sessionUserInfo.phone}"></span></div></div>
                 </div>
-            </div>
-            
-            <div class="row mt-2" th:unless="${session.sessionInfo != null}">
-                <div class="col">
+                <div class="col" th:unless="${session.sessionUserInfo != null}">
                     <div class="row my-2 align-items-center"><div class="col-2 p-0 text-end">이름</div><div class="col"><input class="form-control" type="text" name="name" placeholder="예약자 이름"></div></div>
                     <div class="row my-2 align-items-center"><div class="col-2 p-0 text-end">연락처</div><div class="col"><input class="form-control" type="text" name="phone" placeholder="예약자 연락처"></div></div>
                 </div>
             </div>
+            <div class="row mt-2">
+                <div class="col-auto">
+                    <span class="fw-semibold">예약일</span>
+                </div> 
+                <div class="col ms-3 ps-1"><span>2024-08-11 ~ 2024-08-14</span></div>
+            </div>
 
             <!-- 차량 -->
-            <div class="row border-bottom border-5 mt-1 pb-4">
-                <div class="col">
-                    <div class="row my-2 align-items-center"><div class="col-2 p-0 text-end new-fs-9">차량번호</div><div class="col"><input class="form-control" type="text" name="car_number" placeholder="차량번호 입력"></div></div>
+            <div class="row border-bottom border-5 mt-2 pb-4">
+                <div class="col" th:if="${car > 0}">
+                    <div class="row my-2 align-items-center" th:each="i : ${#numbers.sequence(1, car)}"><div class="col-2 p-0 text-end new-fs-9">차량번호</div><div class="col"><input class="form-control" type="text" name="car_number" placeholder="차량번호 입력"></div></div>
                 </div>
             </div>
 
@@ -186,14 +183,13 @@
                     <span class="fw-semibold fs-5">포인트 선택</span>
                 </div>
                 <div class="col">
-                    <span class="new-fs-9 text-secondary">칸의 위치는 실제 위치와 연관이 없습니다.<br>
+                    <span class="new-fs-9 text-secondary">칸의 위치는 실제 장소의 위치와 연관이 없습니다.<br>
                     배치도에 보여지는 이름과 같은 포인트로 배정됩니다.</span>
                 </div>
-                <div class="col mt-4">
-                    <div class="row my-2 pb-5">
-                        <div class="col mt-4 ms-4 pointList">
-                            <!-- selectedArea 클래스 추가로 선택을 표시 -->
-                            
+                <div class="col mt-2">
+                    <div class="row ms-1 my-2 pb-5 pointList">
+                        <div class="col-auto py-2 me-1 mb-1 border">
+                            포인트
                         </div>
                     </div>
                 </div>
@@ -202,7 +198,7 @@
             <!-- 약관 동의 -->
             <div class="row mt-3 flex-column border-bottom border-5 pb-5">
                 <div class="col">
-                    <span class="fw-semibold fs-5">결제 약관</span>
+                    <span class="fw-semibold fs-5">약관</span>
                 </div>
                 <div class="col">
                     <span class="new-fs-9 text-secondary">예약을 하기 위해서는 결제약관에 동의하셔야합니다.</span>
@@ -222,16 +218,28 @@
                 </div>
             </div>
 
-            <!-- 결제 방법 -->
+            <!-- 결제 가격 -->
             <div class="row mt-3 flex-column pb-2">
                 <div class="col">
-                    <span class="fw-semibold fs-5">결제 옵션 선택</span>
+                    <span class="fw-semibold fs-5">가격</span>
                 </div>
                 <div class="col">
                    
                 </div>
                 
             </div>
+
+            <!-- 결제 방법 -->
+            <div class="row mt-3 flex-column border-top pt-3">
+                <div class="col">
+                    <span class="fw-semibold fs-5">결제 옵션 선택</span>
+                </div>
+                <div class="col">
+                    
+                </div>
+                
+            </div>
+
             <div class="row mt-5 pb-2 justify-content-center">
                 <div class="col d-grid px-0 mx-5">
                     <button class="btn btn-primary" type="button" >결제하기</button>

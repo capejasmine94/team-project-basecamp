@@ -14,7 +14,7 @@
         <script src="/public/js/calendar.js"></script>
         <script src="/public/js/uploader.js"></script>
         <script src="/public/js/util.js"></script>
-        <script src="/public/js/camp/campsite.js"></script>
+        <script src="/public/js/camp/seller.js"></script>
         <script src="/public/js/sellerPage.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     </head>
@@ -29,8 +29,8 @@
             <!-- 본문 -->
             <div class="col right ms-2" style="padding-top: 58px; ">
                 <form id="updateCampProcess" method="post" action="/campsiteCenter/updateCampProcess" enctype="multipart/form-data">
-                    <input type="hidden" th:value="${session.campsite.seller}" name="seller">
-                    <input type="hidden" th:value="${session.campsite.id}" name="id">
+                    <input type="hidden" th:value="${session.campsite.dto.seller_name}" name="seller_name">
+                    <input type="hidden" th:value="${session.campsite.dto.id}" name="id">
                     <!-- 상단 바 -->
                     <div th:replace="~{camp/campNavi::topNavi}"></div>
 
@@ -47,22 +47,22 @@
                                             <div class="row mt-3 align-items-center">
                                                 <div class="col-1 text-secondary text-end">캠핑장 이름</div>
                                                 <div class="col-4">
-                                                    <span class= "fw-semibold" id="text_name" th:text="${session.campsite.name}">베어그릴스와 행복한 캠핑타임</span>
-                                                    <input class="form-control d-none" id="editable_name" name="name" th:value="${session.campsite.name}">
+                                                    <span class= "fw-semibold" id="text_camp_name" th:text="${session.campsite.dto.camp_name}">베어그릴스와 행복한 캠핑타임</span>
+                                                    <input class="form-control d-none" id="editable_camp_name" name="camp_name" th:value="${session.campsite.dto.camp_name}">
                                                 </div>
                                                 <div class="col-auto">
-                                                    <i class="bi bi-pencil-square text-primary" onclick="editableText('name')"></i>
+                                                    <i class="bi bi-pencil-square text-primary" onclick="editableText('camp_name')"></i>
                                                 </div>
                                             </div>
                                             <div class="row mt-4 align-items-center">
                                                 <div class="col-1 text-secondary text-end">주소</div>
-                                                <div class="col-4 fw-semibold" th:text="${session.campsite.address} + ' ' + ${session.campsite.detail_address}">충북 제천시 백운면 구학산로 1038 (운학리)</div>
+                                                <div class="col-4 fw-semibold" th:text="${session.campsite.dto.address} + ' ' + ${session.campsite.dto.detail_address}">충북 제천시 백운면 구학산로 1038 (운학리)</div>
                                             </div>
                                             <div class="row mt-4 align-items-center">
                                                 <div class="col-1 text-secondary text-end">캠핑장 연락처</div>
                                                 <div class="col-4 fw-semibold"> 
-                                                    <span id="text_camp_phone" th:text="${session.campsite.camp_phone}">010-1234-1234</span>
-                                                    <input class="form-control d-none" id="editable_camp_phone" name="camp_phone" th:value="${session.campsite.camp_phone}">
+                                                    <span id="text_camp_phone" th:text="${session.campsite.dto.camp_phone}">010-1234-1234</span>
+                                                    <input class="form-control d-none" id="editable_camp_phone" name="camp_phone" th:value="${session.campsite.dto.camp_phone}">
                                                 </div>
                                                 <div class="col-auto">
                                                     <i class="bi bi-pencil-square text-primary" onclick="editableText('camp_phone')"></i>
@@ -71,8 +71,8 @@
                                             <div class="row mt-4 align-items-center">
                                                 <div class="col-1 text-secondary text-end">홈페이지</div>
                                                 <div class="col-4 fw-semibold">
-                                                    <a th:href="@{${session.campsite.url}}" id="text_url" th:text="${session.campsite.url}">https://www.google.com/</a>
-                                                    <input class="form-control d-none" id="editable_url" name="url" th:value="${session.campsite.url}">
+                                                    <a th:href="@{${session.campsite.dto.url}}" id="text_url" th:text="${session.campsite.dto.url}">https://www.google.com/</a>
+                                                    <input class="form-control d-none" id="editable_url" name="url" th:value="${session.campsite.dto.url}">
                                                 </div>
                                                 <div class="col-auto">
                                                     <i class="bi bi-pencil-square text-primary" onclick="editableText('url')"></i>
@@ -81,8 +81,8 @@
                                             <div class="row mt-4 align-items-start">
                                                 <div class="col-1 text-secondary text-end">캠핑장 이메일</div>
                                                 <div class="col-4 fw-semibold">
-                                                    <span id="text_email" th:text="${session.campsite.email}"></span>
-                                                    <input class="form-control d-none" id="editable_email" name="email" th:value="${session.campsite.email}">
+                                                    <span id="text_email" th:text="${session.campsite.dto.email}"></span>
+                                                    <input class="form-control d-none" id="editable_email" name="email" th:value="${session.campsite.dto.email}">
                                                 </div>
                                                 <div class="col-auto">
                                                     <i class="bi bi-pencil-square text-primary" onclick="editableText('email')"></i>
@@ -93,8 +93,8 @@
                                                     <span>캠핑장 소개</span>
                                                 </div>
                                                 <div class="col-4 fw-semibold">
-                                                    <div id="text_description" th:text="${session.campsite.description}"></div>
-                                                    <textarea class="form-control d-none" name="description" id="editable_description" cols="30" rows="5" th:text="${session.campsite.description}"></textarea>
+                                                    <div id="text_description" th:text="${session.campsite.dto.description}"></div>
+                                                    <textarea class="form-control d-none" name="description" id="editable_description" cols="30" rows="5" th:text="${session.campsite.dto.description}"></textarea>
                                                 </div>
                                                 <div class="col-auto">
                                                     <i class="bi bi-pencil-square text-primary" onclick="editableText('description')"></i>
@@ -173,9 +173,9 @@
                                         </div>
                                         <div class="row justify-content-between">
                                             <div class="col-8 ms-3 mt-2 px-0">
-                                                <span th:each="camp_category : ${session.campsiteCategory}">
-                                                    <input name="campsite_category" type="checkbox" class="btn-check" th:id="'campCategory' + ${camp_category.id}" th:value="${camp_category.id}" autocomplete="off" th:checked="${session.selectCategory.contains(camp_category.id)}">
-                                                    <label class="btn ms-2 mb-2 rounded-5 btn-outline-primary" th:for="'campCategory' + ${camp_category.id}"><span th:text="${camp_category.name}"></span></label>
+                                                <span th:each="camp_Category : ${session.category.camp}">
+                                                    <input name="campCategory" type="checkbox" class="btn-check" th:id="'campCategory' + ${camp_Category.id}" th:value="${camp_Category.id}" autocomplete="off" th:checked="${session.campsite.campCategory.contains(camp_Category.id)}">
+                                                    <label class="btn ms-2 mb-2 rounded-5 btn-outline-primary" th:for="'campCategory' + ${camp_Category.id}"><span th:text="${camp_Category.name}"></span></label>
                                                 </span>
                                             </div>
                                         </div>
@@ -224,7 +224,7 @@
                                         </div>
                                         <div class="row mt-3">
                                             <div class="col-8 mx-3">
-                                                <textarea class="form-control" rows="5" name="notice" th:text="${session.campsite.notice}"></textarea>
+                                                <textarea class="form-control" rows="5" name="notice" th:text="${session.campsite.dto.notice}"></textarea>
                                             </div>
                                         </div>
 
@@ -233,7 +233,7 @@
                                         </div>
                                         <div class="row mt-3">
                                             <div class="col-8 mx-3">
-                                                <textarea class="form-control" rows="5" name="facility_notice" th:text="${session.campsite.facility_notice}"></textarea>
+                                                <textarea class="form-control" rows="5" name="facility_notice" th:text="${session.campsite.dto.facility_notice}"></textarea>
                                             </div>
                                         </div>
 
@@ -242,7 +242,7 @@
                                         </div>
                                         <div class="row mt-3 mb-3">
                                             <div class="col-8 mx-3">
-                                                <textarea class="form-control" rows="5" name="refund_notice" th:text="${session.campsite.refund_notice}"></textarea>
+                                                <textarea class="form-control" rows="5" name="refund_notice" th:text="${session.campsite.dto.refund_notice}"></textarea>
                                             </div>
                                         </div>
                                     </div>
@@ -310,7 +310,7 @@
                                                 </div>
                                                 <div class="col-2 pe-0">
                                                     <input name="check_in" class="form-control text-end" type="time" id="check_in" 
-                                                           th:value="${#dates.format(session.campsite.check_in, 'HH:mm')}">
+                                                           th:value="${#dates.format(session.campsite.dto.check_in, 'HH:mm')}">
                                                 </div>
                                             </div>
                                             <div class="row mt-2">
@@ -319,7 +319,7 @@
                                                 </div>
                                                 <div class="col-2 pe-0">
                                                     <input name="check_out" class="form-control text-end" type="time" id="check_out" 
-                                                           th:value="${#dates.format(session.campsite.check_out, 'HH:mm')}">
+                                                           th:value="${#dates.format(session.campsite.dto.check_out, 'HH:mm')}">
                                                 </div>
                                             </div>
                                         </div>
@@ -338,14 +338,14 @@
                                             <div class="row mt-2">
                                                 <div class="col-2 pe-0">
                                                     <input name="manner_start" class="form-control text-end" type="time" id="manner_start" 
-                                                           th:value="${#dates.format(session.campsite.manner_start, 'HH:mm')}">
+                                                           th:value="${#dates.format(session.campsite.dto.manner_start, 'HH:mm')}">
                                                 </div>
                                                 <div class="col-auto mt-1 fw-semibold">
                                                     부터
                                                 </div>
                                                 <div class="col-2 pe-0">
                                                     <input name="manner_end" class="form-control text-end" type="time" id="manner_end" 
-                                                           th:value="${#dates.format(session.campsite.manner_end, 'HH:mm')}">
+                                                           th:value="${#dates.format(session.campsite.dto.manner_end, 'HH:mm')}">
                                                 </div>
                                                 <div class="col-auto mt-1 fw-semibold">
                                                     까지
@@ -366,7 +366,7 @@
                                             </div>
                                             <div class="row mt-2">
                                                 <div class="col-2 pe-0">
-                                                    <input name="max_ordertime" class="form-control text-end" type="text" id="max_ordertime" th:value="${session.campsite.max_ordertime}">
+                                                    <input name="max_ordertime" class="form-control text-end" type="text" id="max_ordertime" th:value="${session.campsite.dto.max_ordertime}">
                                                 </div>
                                                 <div class="col-auto mt-1 fw-semibold">
                                                     일
@@ -453,65 +453,89 @@
             
             createMultipleUploader('mainImage',10);
             createUploader('mapImage');
-            const date = new Date();
-            date.setFullYear(date.getFullYear() + 1);
-            createCalendar('opentime',date);
-            createRangeCalendar('peak',365, date);
+            createCalendar('opentime',yearsAgo(1));
+            createRangeCalendar('peak',365, yearsAgo(1));
 
-            document.getElementById('updateCampProcess').addEventListener('submit', function(event) {
-                const form = event.target;
-                const categoryInputs = form.querySelectorAll('input[name="campsite_category"]:checked');
-                if (categoryInputs.length === 0) {
-                    alert('캠핑장 카테고리를 하나 이상 선택해주세요.');
-                    event.preventDefault();
-                    return;
+
+            function initFormButton() {
+                const stateButton = document.getElementById('saveStateButton');
+                stateButton.onclick = (event)=> { 
+                    event.preventDefault();  // 기본 제출 동작 방지
+                    validateAndSubmitForm(); 
+                };
+                function validateAndSubmitForm() {
+                    // 초기화
+                    const form = document.getElementById('updateCampProcess');
+                    const requiredFields = [
+                        'car_pay',
+                        'kid_pay',
+                        'adult_pay',
+                        'peak_pay',
+                        'manner_start',
+                        'manner_end',
+                        'max_ordertime',
+                        'check_out',
+                        'check_in',
+                        'opentime_start_date',
+                        'peak_start_date',
+                        'refund_notice',
+                        'facility_notice',
+                        'notice',
+                        'mapImage',
+                        'mainImage',
+                        'description',
+                        'email',
+                        'url',
+                        'camp_phone',
+                        'camp_name'        
+                    ];
+                    let allValid = true;
+                    
+                    // 빈칸 확인
+                    requiredFields.forEach((fieldName) => {
+                        let field = form.querySelector(`[name="${fieldName}"]`);
+                        if (!field.value) {
+                            if(fieldName.includes('Image')) {
+                                field = form.querySelector('#upload_' + fieldName);
+                            }
+                            if(fieldName.includes('peak')) {
+                                field = form.querySelector('#calendar_peak');
+                            }
+                            else if(fieldName.includes('opentime')) {
+                                field = form.querySelector('#calendar_opentime');
+                            }
+                            field.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                            allValid = false;
+                        }
+                    });
+                    const categoryInputs = form.querySelectorAll('input[name="campCategory"]:checked');
+                    if(allValid) {
+                        // 카테고리 체크 확인
+                        if (categoryInputs.length === 0) {
+                            alert('캠핑장 카테고리를 하나 이상 선택해주세요.');
+                            document.getElementById('categoryList').scrollIntoView({ behavior: 'smooth', block: 'center' });
+                            allValid = false;
+                        }
+                    }
+                    // 모든 유효성 마침 
+                    if (allValid) {
+                        // 돈 쉼표 제거
+                        replaceMoneyInput();
+
+                        // 카테고리 데이터화
+                        const categoryIds = Array.from(categoryInputs).map(input => input.value);
+                        categoryIds.forEach(categoryId => {
+                            const hiddenInput = document.createElement('input');
+                            hiddenInput.type = 'hidden';
+                            hiddenInput.name = 'campCategory';
+                            hiddenInput.value = categoryId;
+                            form.appendChild(hiddenInput);
+                        });
+                        document.getElementById('updateCampProcess').submit();
+                    }
                 }
-                
-                const categoryIds = Array.from(categoryInputs).map(input => input.value);
-                const hiddenInput = document.createElement('input');
-                hiddenInput.type = 'hidden';
-                hiddenInput.name = 'campsite_category';
-                hiddenInput.value = JSON.stringify(categoryIds);
-                form.appendChild(hiddenInput);
-            });
-            const stateButton = document.getElementById('saveStateButton');
-            const form = document.getElementById('updateCampProcess');
-            stateButton.onclick = () => { validateAndSubmitForm(); };
-            function validateAndSubmitForm() {
-                const requiredFields = [
-                    'car_pay', 'kid_pay', 'adult_pay', 'peak_pay', 'max_ordertime', 
-                    'manner_end', 'manner_start', 'check_out', 'check_in', 'notice',
-                    'refund_notice', 'facility_notice', 'description',
-                    'camp_phone', 'name'
-                ];
-
-                let allValid = true;
-            
-            requiredFields.forEach((fieldName) => {
-                const field = form.querySelector(`[name="${fieldName}"]`);
-                console.log(fieldName);
-                if (!field.value) {
-                    field.focus();
-                    allValid = false;
-                    return false;  // 종료
-                }
-            });
-
-            const categoryInputs = form.querySelectorAll('input[name="campsite_category"]:checked');
-            if (categoryInputs.length === 0) {
-                alert('캠핑장 카테고리를 하나 이상 선택해주세요.');
-                allValid = false;
             }
-
-            if (allValid) {
-                replaceMoneyInput();
-                form.submit();
-            }
-            }
-                form.addEventListener('submit', function(event) {
-                event.preventDefault();  // 기본 제출 동작 방지
-                validateAndSubmitForm(); // 유효성 검사 후 제출
-            });
+            initFormButton();
        </script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
     </body>

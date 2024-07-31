@@ -105,10 +105,27 @@
                             </div>
                         </div>
 
-                        <!-- 연령제한 -->
+                        <!-- 출생연도 범위 설정 -->
                         <div class="row py-3">                        
-                            <div class="col-3">
-                                <span>최소: </span>
+                          
+                                <div class="col d-grid">
+                                    <select id="start_year" class="form-control" name="start_year">
+                                        <option value="제한없음">제한없음</option>
+                                        <option th:each="year : ${#numbers.sequence(1941, 2024)}"
+                                                th:value="${year}" th:text="${year}"></option>
+                                    </select>
+                                </div>
+                                <div class="col-auto">
+                                    ~
+                                </div>
+                                <div class="col d-grid">
+                                    <select id="end_year" class="form-control" name="end_year">
+                                        <option value="제한없음">제한없음</option>
+                                        <option th:each="year : ${#numbers.sequence(1941, 2024)}"
+                                                th:value="${year}" th:text="${year}"></option>
+                                    </select>
+                                </div>
+                                <!-- <span>최소: </span>
                             </div>
                             <div class="col-3">
                                 <input class="form-control" type="number" id="min_age" name="min_age">
@@ -118,7 +135,10 @@
                             </div>
                             <div class="col-3">
                                 <input class="form-control" type="number" id="max_age" name="max_age">
-                            </div>
+                            </div> -->
+                              
+                      
+                          
                         </div>
 
 

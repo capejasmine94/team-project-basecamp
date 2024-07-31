@@ -10,8 +10,8 @@
             </a>
             <div class="d-flex align-items-center">
                 <a href="/user/myPage" th:if="${session.sessionUserInfo != null}" class="profile_icon overflow-hidden d-block me-2 rounded-pill">
-                    <img th:if="${session.sessionUserInfo.userDto.profile_image != null}" th:src="|/images/${session.sessionUserInfo.userDto.profile_image}|" alt=" " class="img-fluid">
-                    <i th:if="${session.sessionUserInfo.userDto.profile_image == null}" class="bi bi-person-circle fs-2 lh-1 text-white"></i>
+                    <!-- <img th:if="${session.sessionUserInfo.userDto.profile_image != null}" th:src="|/images/${session.sessionUserInfo.userDto.profile_image}|" alt=" " class="img-fluid"> -->
+                    <!-- <i th:if="${session.sessionUserInfo.userDto.profile_image == null}" class="bi bi-person-circle fs-2 lh-1 text-white"></i> -->
                 </a>
                 <a href=""><i class="bi bi-bell fs-5 text-white"></i></a>
             </div>

@@ -31,9 +31,9 @@
     <!-- 소모임 가입조건 -->
     <insert id="insertClubJoinCondition">
         insert into bc_club_join_condition(
-            club_id, min_age, max_age, gender
+            club_id, start_year, end_year, gender
         )values(
-            #{club_id},#{min_age},#{max_age},#{gender}
+            #{club_id},#{start_year},#{end_year},#{gender}
         )
     </insert>
 

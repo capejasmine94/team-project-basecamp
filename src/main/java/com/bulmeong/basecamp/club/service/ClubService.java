@@ -4,6 +4,7 @@ import org.springframework.stereotype.Service;
 
 import com.bulmeong.basecamp.club.dto.ClubBookmarkDto;
 import com.bulmeong.basecamp.club.dto.ClubDto;
+import com.bulmeong.basecamp.club.dto.ClubJoinConditionDto;
 import com.bulmeong.basecamp.club.dto.ClubMeetingDto;
 import com.bulmeong.basecamp.club.dto.ClubMeetingMemberDto;
 import com.bulmeong.basecamp.club.dto.ClubMemberDto;
@@ -37,6 +38,12 @@ public class ClubService {
         clubSqlMapper.insertClubDto(clubDto);
 
         }
+
+    // 소모임 개설조건 (연령)
+    public void insertClubJoinCondition(ClubJoinConditionDto clubJoinConditionDto){
+        clubSqlMapper.insertClubJoinCondition(clubJoinConditionDto);
+    }
+
 
     //  소모임 게시판 글 작성하기
 

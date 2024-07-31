@@ -2,250 +2,230 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.bulmeong.basecamp.camp.mapper.CampsiteSqlMapper">
-    <insert id="insertCampsite">
-        <selectKey resultType="int" keyProperty="id" order="AFTER">
-            select max(id) from bc_campsite
-        </selectKey>
-        INSERT into bc_campsite (
-            account,
-            password, 
-            name,    
-            seller,
-            address,
-            postcode,
-            detail_address,
-            phone,
-            camp_phone,
-            email,
-            profile_image,
-            url,
-            description,
-            manner_start,
-            manner_end,
-            check_in,
-            check_out,
-            notice
-        ) values (
-            #{account},
-            #{password}, 
-            #{name},    
-            #{seller},
-            #{address},
-            #{postcode},
-            #{detail_address},
-            #{phone},
-            #{camp_phone},
-            #{email},
-            #{profile_image},
-            #{url},
-            #{description},
-            #{manner_start},
-            #{manner_end},
-            #{check_in},
-            #{check_out},
-            #{notice}
-        )
-    </insert>
-    <insert id="insertCampsiteBank">
-        <selectKey resultType="int" keyProperty="id" order="AFTER">
-            select max(id) from bc_campsite_bank
-        </selectKey>
-        INSERT into bc_campsite_bank (
-            campsite_id,
-            bank_name,
-            bank_account,
-            holder
-        ) 
-        values(
-            #{campsite_id},
-            #{bank_name},
-            #{bank_account},
-            #{holder}
-        )
-    </insert>
-    
-    <insert id="insertAreaCategory">
-        insert into bc_campsite_select_area_category(
-            area_id,
-            category_id
-        )
-        values(
-            #{area_id},
-            #{category_id}
-        );
-    </insert>
+    <!-- ========================================================================
+         회원 가입 / 로그인
+         ======================================================================== -->
+        <!-- 로그인 확인 -->
+         <select id="getCampsiteDtoByAccountInfo" resultType="com.bulmeong.basecamp.camp.dto.CampsiteDto">
+            select * from bc_campsite where account = #{account} and password = #{password}
+         </select>
 
-    <insert id="insertPoint">
-        insert into bc_campsite_area_point(
-            area_id,
-            name,
-            point_count
-        )
-        values(
-            #{id},
-            '새 구역',
-            1
-        );
-    </insert>
+        <!-- 새 판매자 가입번호 -->
+         <select id="newCampsiteId" resultType="int">
+            select COALESCE(MAX(id) + 1, 1) from bc_campsite
+         </select>
 
+        <!-- 판매자 등록 -->
+         <insert id="registerUser">
+            <selectKey keyProperty="id" resultType="int" order="AFTER">
+                select max(id) from bc_campsite
+            </selectKey>
+            INSERT into bc_campsite (
+                account,
+                password, 
+                seller_name,
+                seller_phone,
+                email,
+                crn,
+                profile_image,
+                camp_name,    
+                address,
+                postcode,
+                detail_address,
+                camp_phone
+            
+            ) values (
+                #{account},
+                #{password}, 
+                #{seller_name},
+                #{seller_phone},
+                #{email},
+                #{crn},
+                #{profile_image},
+                #{camp_name},    
+                #{address},
+                #{postcode},
+                #{detail_address},
+                #{camp_phone}
+            )
+        </insert>
 
-    <insert id="insertArea">
-        <selectKey resultType="int" keyProperty="id" order="AFTER">
-            select max(id) from bc_campsite_area
-        </selectKey>
-        insert into bc_campsite_area (
-            campsite_id,
-            name,
-            prise,
-            size_x,
-            size_y,
-            map_image,
-            description,
-            max_people,
-            max_car,
-            limit_people,
-            min_ordertime,
-            adult_pay,
-            kid_pay,
-            car_pay
-        ) values 
-        (
-            #{campsite_id},
-            #{name},
-            #{prise},
-            #{size_x},
-            #{size_y},
-            #{map_image},
-            #{description},
-            #{max_people},
-            #{max_car},
-            #{limit_people},
-            #{min_ordertime},
-            #{adult_pay},
-            #{kid_pay},
-            #{car_pay}
-        );
-    </insert>
+        <!-- 판매자 은행계좌 등록 -->
+        <insert id="registerBank">
+            INSERT into bc_campsite_bank (
+                campsite_id,
+                bank_name,
+                bank_account,
+                holder
+            
+            ) values (
+                #{campsite_id},
+                #{bank_name},
+                #{bank_account},
+                #{holder}
+            )
+        </insert>
 
-    <insert id="insertCampsiteCategory">
-        insert into bc_campsite_select_category (campsite_id, category_id) values (#{campsite_id},#{category_id});
-    </insert>
-    <insert id="insertCampMainImage">
-        INSERT into bc_campsite_image (
-            campsite_id,
-	        location,
-	        origin_filename
-        )
-        values(
-            #{campsite_id},
-	        #{location},
-	        #{origin_filename}
-        )
-    </insert>
-
-    <update id="updateCampsite">
-        UPDATE bc_campsite set
-            name = #{name},
-            camp_phone = #{camp_phone},
+        <!-- 캠핑장 등록 -->
+        <update id="registerCamp">
+            UPDATE bc_campsite
+            SET 
             email = #{email},
-            url = #{url},
+            camp_name = #{camp_name},
+            postcode = #{postcode},
+            address = #{address},
+            detail_address = #{detail_address},
+            camp_phone  = #{camp_phone},
+            url  = #{url},
+            map_image  = #{map_image},
             description = #{description},
+            notice = #{notice},
             facility_notice = #{facility_notice},
-            refund_notice = #{refund_notice},
+            refund_notice  = #{refund_notice},
             manner_start = #{manner_start},
             manner_end = #{manner_end},
-            check_in = #{check_in},
-            check_out = #{check_out},
-            notice = #{notice},
-            map_image = #{map_image},
+            check_in  = #{check_in},
+            check_out  = #{check_out},
             adult_pay = #{adult_pay},
             kid_pay = #{kid_pay},
             car_pay = #{car_pay},
             peak_pay = #{peak_pay},
             peak_start_date = #{peak_start_date},
-            opentime = #{opentime},
             peak_end_date = #{peak_end_date},
-            max_ordertime = #{max_ordertime}
-        where id = #{id}
-    </update>
+            max_ordertime  = #{max_ordertime},
+            opentime = #{opentime},
+            is_authenticated  = 'T'
+            where id = #{id}
+        </update>
+    <!-- ======================================================================== -->
 
-    <update id="updateArea">
-        UPDATE bc_campsite_area set
-            name = #{name},
-            prise = #{prise},
-            size_x = #{size_x},
-            size_y = #{size_y},
-            map_image = #{map_image},
+
+
+    <!-- ========================================================================
+         카테고리
+         ======================================================================== -->
+        <!-- 캠핑장 카테고리 -->
+        <select id="areaCategory" resultType="com.bulmeong.basecamp.camp.dto.CampsiteCategoryDto">
+            select * from bc_campsite_area_category
+        </select>
+
+        <!-- 구역 카테고리 -->
+        <select id="campCategory" resultType="com.bulmeong.basecamp.camp.dto.CampsiteCategoryDto">
+            select * from bc_campsite_category
+        </select>
+
+        <!-- 캠핑장 선택 카테고리 -->
+        <select id="selectCampCategory" resultType="map">
+            select ct.* from bc_campsite_select_category sc 
+            inner join bc_campsite_category ct
+            on sc.category_id = ct.id 
+            where sc.campsite_id = #{campsite_id}
+        </select>
+
+        <!-- 구역 선택 카테고리 -->
+        <select id="selectAreaCategory" resultType="map">
+            select ct.* from bc_campsite_select_area_category sc 
+            inner join bc_campsite_area_category ct
+            on sc.category_id = ct.id 
+            where sc.area_id = #{area_id}
+        </select>
+
+        <!-- 캠핑장 선택 카테고리 등록 -->
+        <insert id="addSelectCampCategory">
+            INSERT into bc_campsite_select_category (
+                campsite_id,
+                category_id
+            
+            ) values (
+                #{campsite_id},
+                #{category_id}
+            )
+        </insert>
+
+        <!-- 캠핑장 선택 카테고리 변경 -->
+        <delete id="deleteSelectCampCategory">
+            DELETE from bc_campsite_select_category where campsite_id = #{campsite_id}
+        </delete>
+
+
+
+    <!-- ======================================================================== -->
+
+
+
+     <!-- ========================================================================
+        이미지
+        ======================================================================== -->
+        <!-- 캠핑장 이미지 추가 -->
+        <insert id="addCampMainImage">
+            INSERT into bc_campsite_image (
+                campsite_id,
+                location,
+                origin_filename
+            
+            ) values (
+                #{campsite_id},
+                #{location},
+                #{origin_filename}
+            )
+        </insert>
+
+        <!-- 캠핑장 이미지 삭제 -->
+        <delete id="deleteCampMainImage">
+            DELETE from bc_campsite_image where campsite_id = #{campsite_id}
+        </delete>
+
+    <!-- ======================================================================== -->
+
+    
+
+    <!-- ========================================================================
+        캠핑장 데이터
+        ======================================================================== -->
+
+        <!-- 고유번호로 캠핑장 -->
+        <select id="getCampsiteDtoById" resultType="com.bulmeong.basecamp.camp.dto.CampsiteDto">
+            select * from bc_campsite where id = #{campsite_id}
+        </select>
+
+        <!-- 캠핑장 고유번호로 구역리스트 -->
+        <select id="getAreaListByCampsiteId" resultType="com.bulmeong.basecamp.camp.dto.CampsiteAreaDto">
+            select * from bc_campsite_area where campsite_id = #{campsite_id}
+        </select>
+
+        <!-- 고유번호로 구역 -->
+        <select id="getAreaById" resultType="com.bulmeong.basecamp.camp.dto.CampsiteAreaDto">
+            select * from bc_campsite_area where id = #{area_id}
+        </select>
+
+        <!-- 캠핑장 수정 -->
+        <update id="updateCamp">
+            UPDATE bc_campsite
+            SET 
+            camp_name = #{camp_name},
+            camp_phone  = #{camp_phone},
+            url  = #{url},
+            email = #{email},
             description = #{description},
-            max_people = #{max_people},
-            max_car = #{max_car},
-            limit_people = #{limit_people},
-            min_ordertime = #{min_ordertime},
+            map_image  = #{map_image},
+            notice = #{notice},
+            facility_notice = #{facility_notice},
+            refund_notice  = #{refund_notice},
+            manner_start = #{manner_start},
+            manner_end = #{manner_end},
+            check_in  = #{check_in},
+            check_out  = #{check_out},
             adult_pay = #{adult_pay},
             kid_pay = #{kid_pay},
-            car_pay = #{car_pay}
-        where id = #{id}
-    </update>
+            car_pay = #{car_pay},
+            peak_pay = #{peak_pay},
+            peak_start_date = #{peak_start_date},
+            peak_end_date = #{peak_end_date},
+            max_ordertime  = #{max_ordertime},
+            opentime = #{opentime}
+            where id = #{id}
+        </update>
+    <!-- ======================================================================== -->
 
-    <update id="updatePoint">
-        UPDATE bc_campsite_area_point set
-            name = #{name},
-            point_count = #{point_count}
-        where id = #{id}
-    </update>
 
-    <update id="authCampSite">
-        UPDATE bc_campsite set
-            is_authenticated = 'T'
-        where id = #{id}
-    </update>
-    
-    <select id="getCampsiteDtoByAccountInfo" resultType="com.bulmeong.basecamp.camp.dto.CampsiteDto">
-        select * from bc_campsite where account = #{account} and password = #{password}
-    </select>
-    <select id="getCampsiteDtoByAccount" resultType="com.bulmeong.basecamp.camp.dto.CampsiteDto">
-        select * from bc_campsite where account = #{account}
-    </select>
-    <select id="getCampsiteDtoByName" resultType="com.bulmeong.basecamp.camp.dto.CampsiteDto">
-        select * from bc_campsite where name = #{name}
-    </select>
-    <select id="getCampsiteDtoById" resultType="com.bulmeong.basecamp.camp.dto.CampsiteDto">
-        select * from bc_campsite where id = #{id}
-    </select>
-    <select id="newCampsiteID" resultType="int">
-        select COALESCE(MAX(id) + 1, 1) from bc_campsite
-    </select>
-    <select id="newAreaIDByCampsiteId" resultType="int">
-        select COALESCE(MAX(id) + 1, 1) from bc_campsite_area where campsite_id = #{id}
-    </select>
-    <select id="pointCountByAreaId" resultType="int">
-        select COUNT(*) from bc_campsite_area_point where area_id = #{id}
-    </select>
-    <select id="getCampsiteCategory" resultType="com.bulmeong.basecamp.camp.dto.CampsiteCategoryDto">
-        select * from bc_campsite_category
-    </select>
-    <select id="getAreaCategory" resultType="com.bulmeong.basecamp.camp.dto.CampsiteCategoryDto">
-        select * from bc_campsite_area_category
-    </select>
-    <select id="getSelectAreaCategoriesByAreaId" resultType="int">
-        select category_id from bc_campsite_select_area_category where area_id = #{id}
-    </select>
-    <select id="getCategoryBySelectCategoryId" resultType="com.bulmeong.basecamp.camp.dto.CampsiteCategoryDto">
-        select * from bc_campsite_category where id = #{id}
-    </select>
-    <select id="getSelectCategoriesByCampsiteId" resultType="int">
-        select category_id from bc_campsite_select_category where campsite_id = #{id}
-    </select>
-    <select id="getAreaList" resultType="com.bulmeong.basecamp.camp.dto.CampsiteAreaDto">
-        select * from bc_campsite_area where campsite_id = #{campsite_id}
-    </select>
-    <select id="getPointList" resultType="com.bulmeong.basecamp.camp.dto.CampsiteAreaPointDto">
-        select * from bc_campsite_area_point where area_id = #{area_id}
-    </select>
-    <select id="getAreaDtoById" resultType="com.bulmeong.basecamp.camp.dto.CampsiteAreaDto">
-        select * from bc_campsite_area where id = #{id}
-    </select>
-    <delete id="deletePoint">
-        delete from bc_campsite_area_point where id = #{id}
-    </delete>
 </mapper>

@@ -67,8 +67,8 @@ public class SellerController {
         }else if(seller_type.equals("Campsite")){
             //여기 수정(캠핑장)
             CampsiteDto campsiteDto = campsiteService.getCampsiteDtoByAccountInfo(account_id, account_pw);
-            session.setAttribute("campsite", campsiteDto);
-    
+            session.setAttribute("campsite", campsiteService.campsiteInfo(campsiteDto.getId()));
+            session.setAttribute("category", campsiteService.categories());
             return "redirect:/campsiteCenter/main";
         }else{
             //여기 수정(캠핑카)
