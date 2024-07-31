@@ -1,15 +1,17 @@
 package com.bulmeong.basecamp.camp.service;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.bulmeong.basecamp.camp.dto.CampsiteAreaDto;
-import com.bulmeong.basecamp.camp.dto.CampsiteAreaPointDto;
 import com.bulmeong.basecamp.camp.dto.CampsiteBankDto;
 import com.bulmeong.basecamp.camp.dto.CampsiteCategoryDto;
 import com.bulmeong.basecamp.camp.dto.CampsiteDto;
@@ -135,18 +137,6 @@ public class CampsiteService {
         return result;
     }
 
-    // 캠핑장 데이터 변경 시 사용
-    private void updateSelectCampCategory(int campsite_id, String[] categories) {
-        campsiteSqlMapper.deleteSelectCampCategory(campsite_id);
-        for(String category : categories) {
-            int category_id = Integer.parseInt(category);
-            CampsiteSelectCategoryDto dto = new CampsiteSelectCategoryDto();
-            dto.setCampsite_id(campsite_id);
-            dto.setCategory_id(category_id);
-            campsiteSqlMapper.addSelectCampCategory(dto);
-        }
-    }
-
     //-------------------------------------------------------------------------------------------------------------------
 
 
@@ -180,6 +170,9 @@ public class CampsiteService {
         //카테고리 
         result.put("campCategory", campsiteSqlMapper.selectCampCategory(campsite_id));
         result.put("showCategory", showCategory(campsite_id));
+
+        // 메인 이미지
+        result.put("mainImages", campsiteSqlMapper.campMainImage(campsite_id));
 
         //리뷰
 
@@ -226,7 +219,17 @@ public class CampsiteService {
         }
 
         // 카테고리 수정
-        updateSelectCampCategory(campsiteDto.getId(), categories);
+        campsiteSqlMapper.deleteSelectCampCategory(campsiteDto.getId());
+        Set<String> set = new LinkedHashSet<>(Arrays.asList(categories));
+        categories = set.toArray(new String[0]);
+        for(String category : categories) {
+            System.out.println(category);
+            int category_id = Integer.parseInt(category);
+            CampsiteSelectCategoryDto dto = new CampsiteSelectCategoryDto();
+            dto.setCampsite_id(campsiteDto.getId());
+            dto.setCategory_id(category_id);
+            campsiteSqlMapper.addSelectCampCategory(dto);
+        }
 
         // 판매자 정보 업데이트
         campsiteSqlMapper.updateCamp(campsiteDto);

@@ -20,6 +20,7 @@ public class CampsiteDto {
     private String camp_phone;
     private String email;
     private String url;
+    private String crn;
     private String map_image;
     private String profile_image;
     private String description;

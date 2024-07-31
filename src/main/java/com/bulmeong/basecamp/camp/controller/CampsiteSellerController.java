@@ -89,7 +89,7 @@ public class CampsiteSellerController {
         // 판매자 데이터 업데이트
         campsiteDto.setOpentime(opentime);
         service.updateCamp(campsiteDto, mapImage, mainImages, categories);
-        return "camp/seller/main";      
+        return "redirect:./campsite";      
     }
     
     //============================================================================

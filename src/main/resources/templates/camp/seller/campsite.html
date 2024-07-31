@@ -17,6 +17,8 @@
         <script src="/public/js/camp/seller.js"></script>
         <script src="/public/js/sellerPage.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+        
+        <script>initSession();</script>
     </head>
     <body> 
          <div th:replace="~{camp/campNavi::topNaviSeller}"></div>
@@ -171,10 +173,10 @@
                                                 <div>이후에 서비스 사용 재제, 영구 정지 또는 법적 조치로 이어질 수 있습니다.</div>
                                             </div>
                                         </div>
-                                        <div class="row justify-content-between">
+                                        <div class="row justify-content-between" id="categoryList">
                                             <div class="col-8 ms-3 mt-2 px-0">
                                                 <span th:each="camp_Category : ${session.category.camp}">
-                                                    <input name="campCategory" type="checkbox" class="btn-check" th:id="'campCategory' + ${camp_Category.id}" th:value="${camp_Category.id}" autocomplete="off" th:checked="${session.campsite.campCategory.contains(camp_Category.id)}">
+                                                    <input name="campCategory" type="checkbox" class="btn-check" th:id="'campCategory' + ${camp_Category.id}" th:value="${camp_Category.id}" autocomplete="off">
                                                     <label class="btn ms-2 mb-2 rounded-5 btn-outline-primary" th:for="'campCategory' + ${camp_Category.id}"><span th:text="${camp_Category.name}"></span></label>
                                                 </span>
                                             </div>
@@ -452,17 +454,42 @@
         <script>
             
             createMultipleUploader('mainImage',10);
+            
             createUploader('mapImage');
+
             createCalendar('opentime',yearsAgo(1));
             createRangeCalendar('peak',365, yearsAgo(1));
 
+            getUploadedCalendar();
+            
+            function triggerInputChange(input) {
+                const event = new Event('change', { bubbles: true });
+                input.dispatchEvent(event);
+            }
 
+            function getUploadedCalendar() {
+                const url = '/api/campsiteCenter/initSession';
+                fetch(url)
+                    .then(response => response.json())
+                    .then((response) => {
+                        const campsite = response.data.campsiteInfo;
+                        initCalendarData('peak', campsite.dto.peak_start_date, campsite.dto.peak_end_date, true);
+                        initCalendarData('opentime', campsite.dto.opentime, null, false);
+                    })
+                    .catch(error => {
+                        console.error('Error fetching session data:', error);
+                    });
+            }
+
+           
+          
             function initFormButton() {
                 const stateButton = document.getElementById('saveStateButton');
-                stateButton.onclick = (event)=> { 
+                stateButton.onclick = function(event) { 
                     event.preventDefault();  // 기본 제출 동작 방지
                     validateAndSubmitForm(); 
                 };
+
                 function validateAndSubmitForm() {
                     // 초기화
                     const form = document.getElementById('updateCampProcess');
@@ -531,10 +558,12 @@
                             hiddenInput.value = categoryId;
                             form.appendChild(hiddenInput);
                         });
+                        
                         document.getElementById('updateCampProcess').submit();
                     }
                 }
             }
+           
             initFormButton();
        </script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>

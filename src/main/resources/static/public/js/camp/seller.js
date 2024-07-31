@@ -30,10 +30,14 @@ function initSession() {
         }
         
         //카테고리 데이터 삽입
-        camp_category = response.data.campCategory;
-        area_category = response.data.areaCategory;
+        camp_category = response.data.category.camp;
+        area_category = response.data.category.area;
+
+        //카테고리 버튼
+        initCategoryButtons();
     });
 }
+function getCampsite() { return campsite; }
 
 function initRegisterCamp() {
     url = '/api/campsiteCenter/initSession';
@@ -54,6 +58,18 @@ function initRegisterCamp() {
     });
 }
 
+function initCategoryButtons(){
+    for(const category of camp_category) {
+        const button = document.getElementById('campCategory' + category.id);
+        if(button == null) return;
+        for(const selected of campsite.campCategory) {
+            if(selected.id == category.id) {
+                button.checked = true;
+                break;
+            }
+        }
+    }
+}
 //=====================================================================================
 // 팝업
 //=====================================================================================

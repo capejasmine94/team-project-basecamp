@@ -175,6 +175,11 @@
             DELETE from bc_campsite_image where campsite_id = #{campsite_id}
         </delete>
 
+        <!-- 캠핑장 이미지 가져오기 -->
+        <select id="campMainImage" resultType="com.bulmeong.basecamp.camp.dto.CampsiteImageDto">
+            select * from bc_campsite_image where campsite_id = #{campsite_id} order by id asc
+        </select>
+
     <!-- ======================================================================== -->
 
     

@@ -13,35 +13,32 @@
 
 
 class CalendarData{ 
-    constructor(length,min,limit,isRange) {
+    constructor(length,min,limit) {
         this.length = length;
         this.limit = limit;
         this.min = min;
         this.currentDate = new Date();
-        this.isRange = isRange;
     }
 }
 
 const calendarDataList = new Map();
 
-function checkRequiredCalendar(calendarName) {
-    if(getCalendarData(calendarName).isRange) {
-        return getStartDate(calendarName) != null && getEndDate(calendarName) != null;
-    }
-    else
-        return getStartDate(calendarName) != null;
-}
-
-function initCalendarData(name,start,end, range){
-
-    setStartDate(name,new Date(start));
-    const startDate = getCalendarData(name).startDate;
+function initCalendarData(name, start, end, range) {
+    // 날짜 문자열을 파싱할 때 시간 부분을 제거하여 로컬 타임존으로 설정
+    const startDate = new Date(start);
+    const endDate = new Date(end);
+    
+    // 시작 날짜와 끝 날짜 설정
+    setStartDate(name, startDate);
+    setEndDate(name, endDate);
+    
+    // 하루씩 추가 (로컬 타임존에서 하루 추가)
     getCalendarData(name).startDate.setDate(startDate.getDate() + 1);
-    setEndDate(name,new Date(end));
-    const endDate = getCalendarData(name).endDate;
     getCalendarData(name).endDate.setDate(endDate.getDate() + 1);
+    
     refreshCalendar(name, range);
 }
+
 
 function getCalendarData(calendarName){
     const data = calendarDataList.get(calendarName);

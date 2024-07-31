@@ -31,6 +31,7 @@ public interface CampsiteSqlMapper {
     public void addCampMainImage(CampsiteImageDto imageDto);
     public void deleteCampMainImage(@Param("campsite_id") int campsite_id);
     public void addAreaMainImage(CampsiteAreaImageDto imageDto);
+    public List<CampsiteImageDto> campMainImage(@Param("campsite_id") int campsite_id);
     
     //===================================================================================================================
     // 카테고리

@@ -619,15 +619,18 @@
 
                 // 카테고리 데이터화
                 const categoryIds = Array.from(categoryInputs).map(input => input.value);
-                const hiddenInput = document.createElement('input');
-                hiddenInput.type = 'hidden';
-                hiddenInput.name = 'campCategory';
-                hiddenInput.value = JSON.stringify(categoryIds);
-                form.appendChild(hiddenInput);
+                categoryIds.forEach(categoryId => {
+                    const hiddenInput = document.createElement('input');
+                    hiddenInput.type = 'hidden';
+                    hiddenInput.name = 'campCategory';
+                    hiddenInput.value = categoryId;
+                    form.appendChild(hiddenInput);
+                });
                 document.getElementById('registerCampProcess').submit();
             }
         }
     }
+
     initFormButton();
    
     
