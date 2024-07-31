@@ -1,3 +1,12 @@
+let curFiles = new Map();
+class UploaderData{ 
+    constructor(file,query) {
+        this.query = query;
+        this.file = file;
+    }
+}
+
+
 function createUploadStructure(name, multiple) {
     const container = document.getElementById('upload_' + name);
     const uploadMainImageDiv = document.createElement('div');
@@ -44,33 +53,142 @@ function createUploadStructure(name, multiple) {
     return container;
 }
 
-
-function createUploader(name) 
-{
-    let curFiles = [];
-    const MAX_UPLOADS = 1;
-    const container = createUploadStructure(name, false);
-    const uploader = container.querySelector('#uploader');
-    const input = container.querySelector('#' + name + '_input');
-    const imgList = container.querySelector('#imgList_' + name);
-
+function setEventListener(uploader,input) {
     uploader.addEventListener('click', () => {
         input.click();
     });
-    input.addEventListener('change', handleFiles);
-
     uploader.addEventListener('dragover', (e) => {
         e.preventDefault();
         e.stopPropagation();
         uploader.classList.add('dragover');
     });
-
     uploader.addEventListener('dragleave', (e) => {
         e.preventDefault();
         e.stopPropagation();
         uploader.classList.remove('dragover');
     });
+}
 
+function createPreviewImage(path, uploaderName, multiple) {
+    const imgList = document.querySelector('#imgList_' + uploaderName);
+    const preview = document.createElement('div');
+    preview.classList.add('col-auto', 'px-0');
+
+    // 드래그앤드롭/삭제버튼
+    let deleteBtn;
+    if(multiple){
+        preview.setAttribute('draggable', true);
+        preview.addEventListener('dragstart', handleDragStart);
+        preview.addEventListener('dragover', handleDragOver);
+        preview.addEventListener('drop', handleDrop);
+
+        deleteBtn = document.createElement('button');
+        deleteBtn.innerHTML = '&times;';
+        deleteBtn.classList.add('btn', 'btn-danger', 'btn-sm', 'btn-delete');
+        deleteBtn.type = 'button';
+        deleteBtn.onclick = (event) => {
+            event.preventDefault();
+            imgList.removeChild(preview);
+        };
+    }
+
+    // 이미지 들어가는 곳
+    const previewContainer = document.createElement('div');
+    previewContainer.classList.add('preview-container');
+    const img = document.createElement('img');
+    img.src = path;
+    img.classList.add('preview-image', 'm-2');
+    
+    // 통합
+    previewContainer.appendChild(img);
+    if(multiple)  previewContainer.appendChild(deleteBtn);
+    preview.appendChild(previewContainer);
+
+    return preview;
+}
+
+let dragSrcEl;
+
+function handleDragStart(e) {
+    dragSrcEl = this;
+    e.dataTransfer.effectAllowed = 'move';
+    e.dataTransfer.setData('text/html', this.innerHTML);
+}
+
+function handleDragOver(e) {
+    if (e.preventDefault) {
+        e.preventDefault();
+    }
+    e.dataTransfer.dropEffect = 'move';
+    return false;
+}
+
+function handleDrop(e) {
+
+}
+
+
+
+//이름  컨트롤러이름  맵이름   데이터이름  단일 여부
+function setUploadedData(uploaderName, request, listName, dataName, multiple) {
+    const url = '/api/' + request;
+    fetch(url)
+    .then(response => response.json())
+    .then((response) => {
+        const keys = listName.split('.');
+        let dataList = response.data;
+        
+        keys.forEach(key => { dataList = dataList[key]; });
+        if(!multiple){
+            const location = '/images/' + dataList[dataName];
+    
+            // location 경로에 있는 이미지를 파일 객체로 생성
+            fetch(location)
+            .then(response => response.blob())
+            .then(blob => {
+                // 미리보기 이미지 요소 생성
+                const preview = createPreviewImage(location, uploaderName, multiple);
+                // imgList에 미리보기 이미지 추가
+                const imgList = document.getElementById('imgList_' + uploaderName);
+                imgList.appendChild(preview);
+                // 경로 이미지를 file화 하여 curFiles에 추가
+                const file = new File([blob], dataList[dataName], { type: blob.type });
+                if(curFiles.has(uploaderName))
+                    curFiles.get(uploaderName).push(new UploaderData(file,preview));
+                else {
+                    curFiles.set(uploaderName,[new UploaderData(file,preview)]);
+                }
+                onSubmitSendUploader();
+            })
+            .catch(error => console.error('Error fetching the image:', error));
+        }
+        else {
+            //listName : campsiteInfo.mainImages
+            console.log(dataList);
+            const imgList = document.getElementById('imgList_' + uploaderName);
+            for(const mainImage of dataList) {
+                const location = '/images/' + mainImage[dataName];
+                const preview = createPreviewImage(location, uploaderName, multiple);
+                imgList.appendChild(preview);
+            }
+        }
+    })
+    .catch(error => {
+        console.error('Error fetching data:', error);
+    });
+}
+                            
+
+
+function createUploader(name) {
+    const container = createUploadStructure(name, false);
+    const uploader = container.querySelector('#uploader');
+    const input = container.querySelector('#'+ name + '_input');
+    const imgList = container.querySelector('#imgList_' + name);
+
+    //드래그 / 드롭으로 이미지 첨부
+    setEventListener(uploader,input);
+    input.addEventListener('change', handleFiles);
     uploader.addEventListener('drop', (e) => {
         e.preventDefault();
         e.stopPropagation();
@@ -83,55 +201,33 @@ function createUploader(name)
         const fileList = Array.from(event.target.files);
         imgList.innerHTML = '';
         const file = fileList[0];
-        curFiles = [];
-        curFiles.push(file);
         const reader = new FileReader();
         reader.onload = function(e) {
-            const col = document.createElement('div');
-            col.classList.add('col-auto', 'px-0');
-
-            const previewContainer = document.createElement('div');
-            previewContainer.classList.add('preview-container');
-
-            const img = document.createElement('img');
-            img.src = e.target.result;
-            img.classList.add('preview-image', 'm-2');
-            previewContainer.appendChild(img);
-            col.appendChild(previewContainer);
-            imgList.appendChild(col);
+            const preview = createPreviewImage(e.target.result, name, false);
+            imgList.appendChild(preview);
+            const uploaderData = new UploaderData(file,preview);
+            curFiles.set(name, [uploaderData]);
+            onSubmitSendUploader();
         };
         reader.readAsDataURL(file);
     }
-
 }
 
+
+
+
+
 function createMultipleUploader(name, max) {
-    let curFiles = [];
     const MAX_UPLOADS = max;
    
     const container = createUploadStructure(name, true);
     const uploader = container.querySelector('#uploader');
-    const input = container.querySelector('#' + name + '_input');
+    const input = container.querySelector('#'+ name + '_input');
     const imgList = container.querySelector('#imgList_' + name);
 
-    uploader.addEventListener('click', () => {
-        input.click();
-    });
-
+    //드래그 / 드롭으로 이미지 첨부
+    setEventListener(uploader,input);
     input.addEventListener('change', handleFiles);
-
-    uploader.addEventListener('dragover', (e) => {
-        e.preventDefault();
-        e.stopPropagation();
-        uploader.classList.add('dragover');
-    });
-
-    uploader.addEventListener('dragleave', (e) => {
-        e.preventDefault();
-        e.stopPropagation();
-        uploader.classList.remove('dragover');
-    });
-
     uploader.addEventListener('drop', (e) => {
         e.preventDefault();
         e.stopPropagation();
@@ -139,100 +235,50 @@ function createMultipleUploader(name, max) {
         const files = e.dataTransfer.files;
         handleFiles({ target: { files } });
     });
-
+    
     function handleFiles(event) {
-        const fileList = Array.from(event.target.files);
-        
-        if (curFiles.length + fileList.length > MAX_UPLOADS) {
+        const uploadedList = Array.from(event.target.files);
+        const currentList = [];
+        const uploaderDataList = [];
+
+        if (currentList.length + uploadedList.length > MAX_UPLOADS) {
             alert(`최대 ${MAX_UPLOADS}개의 이미지만 업로드할 수 있습니다.`);
             return;
         }
-
-        fileList.forEach(file => {
-            if (!file.type.startsWith('image/') || curFiles.some(f => f.name === file.name)) {
+        uploadedList.forEach((file) => {
+            if (!file.type.startsWith('image/') || currentList.some(f => f.name === file.name)) {
                 alert('이미지 파일만 업로드할 수 있으며, 동일한 파일은 중복 업로드할 수 없습니다.');
                 return;
             }
-
-            curFiles.push(file);
             const reader = new FileReader();
             reader.onload = function(e) {
-                const col = document.createElement('div');
-                col.classList.add('col-auto', 'px-0');
-                col.setAttribute('draggable', true);
-                col.addEventListener('dragstart', handleDragStart);
-                col.addEventListener('dragover', handleDragOver);
-                col.addEventListener('drop', handleDrop);
-
-                const previewContainer = document.createElement('div');
-                previewContainer.classList.add('preview-container');
-
-                const img = document.createElement('img');
-                img.src = e.target.result;
-                img.classList.add('preview-image', 'm-2');
-
-                const deleteBtn = document.createElement('button');
-                deleteBtn.innerHTML = '&times;';
-                deleteBtn.classList.add('btn', 'btn-danger', 'btn-sm', 'btn-delete');
-                deleteBtn.type = 'button';
-                deleteBtn.onclick = (event) => {
-                    event.preventDefault();
-                    imgList.removeChild(col);
-                    curFiles = curFiles.filter(f => f !== file);
-                };
-
-                previewContainer.appendChild(img);
-                previewContainer.appendChild(deleteBtn);
-                col.appendChild(previewContainer);
-                imgList.appendChild(col);
+                const preview = createPreviewImage(e.target.result, name, true);
+                imgList.appendChild(preview);
+                const uploaderData = new UploaderData(file, preview);
+                uploaderDataList.push(uploaderData);
             };
             reader.readAsDataURL(file);
         });
+        curFiles.set(name, uploaderDataList);
+        onSubmitSendUploader();
     }
+}
 
-    let dragSrcEl = null;
 
-    function handleDragStart(e) {
-        dragSrcEl = this;
-        e.dataTransfer.effectAllowed = 'move';
-        e.dataTransfer.setData('text/html', this.innerHTML);
-    }
+function onSubmitSendUploader() {
+    for (const key of curFiles.keys()) {
+        const input = document.getElementById(key + '_input');
+        const uploaderData = curFiles.get(key);
+        
+        // DataTransfer 객체 생성
+        const dataTransfer = new DataTransfer();
 
-    function handleDragOver(e) {
-        if (e.preventDefault) {
-            e.preventDefault();
-        }
-        e.dataTransfer.dropEffect = 'move';
-        return false;
-    }
-
-    function handleDrop(e) {
-        if (e.stopPropagation) {
-            e.stopPropagation();
+        for (const data of uploaderData) {
+            // 파일을 DataTransfer 객체에 추가
+            dataTransfer.items.add(data.file);
         }
 
-        if (dragSrcEl !== this) {
-            const dragSrcIndex = Array.from(dragSrcEl.parentNode.children).indexOf(dragSrcEl);
-            const dropTargetIndex = Array.from(this.parentNode.children).indexOf(this);
-
-            const tempHTML = dragSrcEl.innerHTML;
-            dragSrcEl.innerHTML = this.innerHTML;
-            this.innerHTML = tempHTML;
-
-            [curFiles[dragSrcIndex], curFiles[dropTargetIndex]] = [curFiles[dropTargetIndex], curFiles[dragSrcIndex]];
-
-            dragSrcEl.querySelector('.btn-delete').onclick = (event) => {
-                event.preventDefault();
-                imgList.removeChild(dragSrcEl);
-                curFiles = curFiles.filter(f => f !== curFiles[dragSrcIndex]);
-            };
-
-            this.querySelector('.btn-delete').onclick = (event) => {
-                event.preventDefault();
-                imgList.removeChild(this);
-                curFiles = curFiles.filter(f => f !== curFiles[dropTargetIndex]);
-            };
-        }
-        return false;
+        // input 요소의 files 속성을 DataTransfer 객체로 설정
+        input.files = dataTransfer.files;
     }
 }

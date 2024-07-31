@@ -211,6 +211,7 @@ public class CampsiteService {
         campsiteSqlMapper.deleteCampMainImage(campsiteDto.getId());
         List<ImageDto> mainImageList = ImageUtil.saveImageAndReturnDtoList(mainImages);
         for(ImageDto img : mainImageList) {
+            System.out.println(img);
             CampsiteImageDto imageDto = new CampsiteImageDto();
             imageDto.setCampsite_id(campsiteDto.getId());
             imageDto.setLocation(img.getLocation());
