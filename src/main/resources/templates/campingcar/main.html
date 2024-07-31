@@ -168,7 +168,8 @@
                           </div>
                         </div>
                         <div class="row">
-                          <div class="col">
+                          <div class="col py-2">
+                            <!-- id: 장소선택 버튼 문구를 사용자가 모달창에서 선택한 지역 이름을 동적으로 바꿀 수 있도록 하는 id -->
                             <button class="btn btn-light btn-block border border-0" id="locationDisplay" onclick="showLocationModal()">장소 선택</button>
                           </div>
                         </div>
@@ -181,8 +182,8 @@
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col">
-                                <button class="btn btn-light btn-block border border-0" id="carTypeDisplay" data-bs-toggle="modal" data-bs-target="#campingcarModal">유형 선택</button>
+                            <div class="col py-2">
+                                <button class="btn btn-light btn-block border border-0" id="carTypeDisplay" onClick="showCarTypeModal">유형 선택</button>
                             </div>
                         </div>
                     </div>
@@ -211,7 +212,6 @@
                         </div>
                         <div class="row">
                             <div class="col">
-                                <!-- 선택된 반납일 저장하는 히든 필드 -->
                                 <button type="button" class="btn btn-light btn-block border border-0" id="returnDateDisplay" data-bs-toggle="modal" data-bs-target="#returndateModal">날짜 선택 <i class="fa-solid fa-chevron-down fa-xs"></i></button>
                             </div>
                         </div>
@@ -246,50 +246,42 @@
         </div>
     </div>
 
-    <!-- 대여 장소 선택 모달 -->
+    <!-- 대여 장소 선택 -->
     <div class="modal fade" id="locationModal" tabindex="-1" aria-labelledby="locationModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
-        <div class="modal-content">
-            <div class="modal-header">
-            <div class="modal-title fs-5 fw-semibold text-center w-100" id="locationModalLabel">대여 장소 선택</div>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-            <div class="container">
-                <div class="row pb-2">
-                <div class="col-12 d-flex justify-content-center">
-                    <button type="button" class="btn btn-outline-light text-dark w-100" data-location="전체">전체</button>
+            <div class="modal-content">
+                <div class="modal-header">
+                    <div class="modal-title fs-5 fw-semibold text-center w-100" id="locationModalLabel">대여 장소 선택</div>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
+                <div class="modal-body">
+                    <div class="container">
+                        <div class="row pb-2">
+                            <div class="col-12 d-flex justify-content-center">
+                                <button type="button" class="btn btn-outline-light text-dark w-100" data-location="전체">전체</button>
+                            </div>
+                        </div>
+                        <!-- 대여 지역 리스트 박스 -->
+                        <div class="row d-flex flex-wrap" id="regionsListBox"></div>
+                    </div>
                 </div>
-                <div class="row d-flex flex-wrap" id="regionsListBox">
+                <div class="modal-footer d-flex justify-content-center">
+                    <button type="button" class="btn text-dark w-100" data-bs-dismiss="modal" style="background-color: #C6ED6F;">취소하기</button>
                 </div>
             </div>
-            </div>
-            <div class="modal-footer d-flex justify-content-center">
-            <button type="button" class="btn text-dark w-100" data-bs-dismiss="modal" style="background-color: #C6ED6F;">취소하기</button>
-            </div>
-        </div>
         </div>
     </div>
-    <!-- 캠핑카 유형 선택 모달 -->
+    <!-- 캠핑카 유형 선택 -->
     <div class="modal fade" id="campingcarModal" tabindex="-1" aria-labelledby="campingcarModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
             <div class="modal-content">
                 <div class="modal-header">
                     <div class="modal-title fs-5 fw-semibold text-center w-100" id="campingcarModalLabel">캠핑카 유형 선택</div>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>" 
+                </div>
                 <div class="modal-body">
                     <div class="container">
-                        <div class="row">
-                            <div class="col-12 pb-2" th:each="carTypeDto : ${carType}">
-                                <div class="form-check d-flex align-items-center">
-                                    <!-- 사용자가 체크박스를 선택할 때마다 호출되며, 선택된 모든 체크박스 값을 배열로 저장한 후 이를 히든 필드와 버튼 텍스트에 설정 -->
-                                    <input class="form-check-input" type="checkbox" th:name="carTypes" th:id="${carTypeDto.id}" th:value="${carTypeDto.name}" th:data-car-type="${carTypeDto.name}" onclick="selectCarType('this')">
-                                    <label class="form-check-label" th:for="${carTypeDto.id}"th:text="${carTypeDto.name}"></label>
-                                </div>
-                            </div>
-                        </div>
+                        <div class="row" id="carTypeCheckListBox"></div>
                     </div>
                 </div>
                 <div class="modal-footer d-flex justify-content-center">
@@ -414,6 +406,14 @@
     <div id="regionsListTemplate" class="d-none">
         <div class="regionstsListWrapper col-6 pb-2 d-flex justify-content-center">
           <span class="regionsBtn btn btn-outline-light text-dark w-100"></span>
+        </div>
+    </div>
+
+    <!-- 캠핑카 선택 Template -->
+    <div class="col-12 pb-2" id="carTypeCheckListTemplates">
+        <div class="carTypeCheckLisWrapper form-check d-flex align-items-center">
+            <input class="form-check-input" type="checkbox" onclick="selectCarType()">
+            <label class="form-check-label"></label>
         </div>
     </div>
 
@@ -635,7 +635,7 @@
 
     // 대여 장소 선택 모달 열기 함수 
     const showLocationModal = () => {
-        const locationModal = document.getElementById("locationModal");
+        const locationModal = document.getElementById("locationModal"); 
         const modal = new bootstrap.Modal(locationModal);
         loadRegionOptionList(); // 모달을 열 때 지역 옵션 목록을 로드
         modal.show();
@@ -676,6 +676,24 @@
                 regionsListBox.appendChild(newCampingcarListTemplate);
             }
         });
+    }
+
+    const showCarTypeModal = () => {
+        const campingcarModal = documnet.getElementById("campingcarModal"); 
+        const carTypeModal = new bootstrap.Modal(campingcarModal);
+        loadCampingCarTypeList();
+        carTypeModal.show();
+
+    }
+
+    function loadCampingCarTypeList() {
+        const url = "/api/rent-user/getCarTypeAll";
+        fetch(url)
+        .then(response => response.json())
+        .then(response => {
+            
+        });
+        
     }
 /* 설명 주석
 1. newRegionButton.addEventListener('click', () => { ... });:
