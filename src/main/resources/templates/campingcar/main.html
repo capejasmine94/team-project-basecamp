@@ -158,80 +158,71 @@
                         <div class="fs-2 fw-semibold">Camping Car 🚙</div>
                     </div>
                 </div>
-                <form action="/campingcar/selectedSearch" method="get">
-                    <!-- 검색 필터1 -->
-                    <div class="row bg-white pt-3 border border-light-subtle">
-                        <!-- 대여 장소 -->
-                        <div class="col text-center text-light-emphasis form-group px-1">
-                            <div class="row">
-                                <div class="col">
-                                    <i class="fa-solid fa-location-dot"></i><span> 대여 장소</span>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col">
-                                    <button class="btn btn-light btn-block border border-0" id="locationDisplay" data-bs-toggle="modal" data-bs-target="#locationModal">장소 선택</button>
-                                    <!-- 선택된 대여 장소를 저장하는 히든 필드p에 넣어서 form -->
-                                    <input type="hidden" id="selectedLocation" name="location">
-                                </div>
+                <!-- 검색 필터1 -->
+                <div class="row bg-white pt-3 border border-light-subtle">
+                    <!-- 대여 장소 -->
+                    <div class="col text-center text-light-emphasis form-group px-1">
+                        <div class="row">
+                          <div class="col">
+                            <i class="fa-solid fa-location-dot"></i><span> 대여 장소</span>
+                          </div>
+                        </div>
+                        <div class="row">
+                          <div class="col">
+                            <button class="btn btn-light btn-block border border-0" id="locationDisplay" onclick="showLocationModal()">장소 선택</button>
+                          </div>
+                        </div>
+                    </div>
+                    <!-- 캠핑카 유형 -->
+                    <div class="col text-center text-light-emphasis form-group">
+                        <div class="row">
+                            <div class="col">
+                                <i class="fa-solid fa-caravan fa-flip-horizontal"></i><span> 캠핑카 유형</span>
                             </div>
                         </div>
-                        <!-- 캠핑카 유형 -->
-                        <div class="col text-center text-light-emphasis form-group">
-                            <div class="row">
-                                <div class="col">
-                                    <i class="fa-solid fa-caravan fa-flip-horizontal"></i><span> 캠핑카 유형</span>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col">
-                                    <button class="btn btn-light btn-block border border-0" id="carTypeDisplay" data-bs-toggle="modal" data-bs-target="#campingcarModal">유형 선택</button>
-                                    <!-- 선택된 캠핑카를 저장하는 히든 필드 -->
-                                    <input type="hidden" id="selectedCarType" name="carType">
-                                </div>
+                        <div class="row">
+                            <div class="col">
+                                <button class="btn btn-light btn-block border border-0" id="carTypeDisplay" data-bs-toggle="modal" data-bs-target="#campingcarModal">유형 선택</button>
                             </div>
                         </div>
                     </div>
-                    <!-- 검색 필터2 -->
-                    <div class="row d-flex justify-content-between align-self-center bg-white pt-3 border border-light-subtle">
-                        <!-- 대여일 -->
-                        <div class="col text-center text-light-emphasis form-group">
-                            <div class="row">
-                                <div class="col">
-                                    <i class="fa-regular fa-calendar"></i><span> 대여일</span>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col">
-                                    <button type="button" class="btn btn-light btn-block border border-0" id="rendDateDisplay" data-bs-toggle="modal" data-bs-target="#rentdateModal">날짜 선택 <i class="fa-solid fa-chevron-down fa-xs"></i></button>
-                                    <!-- 선택된 대여일을 저장하는 히든 필드 -->
-                                    <input type="hidden" id="selectedRentDate" name="rentDate">
-                                </div>
+                </div>
+                <!-- 검색 필터2 -->
+                <div class="row d-flex justify-content-between align-self-center bg-white pt-3 border border-light-subtle">
+                    <!-- 대여일 -->
+                    <div class="col text-center text-light-emphasis form-group">
+                        <div class="row">
+                            <div class="col">
+                                <i class="fa-regular fa-calendar"></i><span> 대여일</span>
                             </div>
                         </div>
-                        <!-- 반납일 -->
-                        <div class="col text-center text-light-emphasis form-group">
-                            <div class="row">
-                                <div class="col">
-                                    <i class="fa-regular fa-calendar"></i><span> 반납일</span>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col">
-                                    <!-- 선택된 반납일 저장하는 히든 필드 -->
-                                    <button type="button" class="btn btn-light btn-block border border-0" id="returnDateDisplay" data-bs-toggle="modal" data-bs-target="#returndateModal">날짜 선택 <i class="fa-solid fa-chevron-down fa-xs"></i></button>
-                                    <input type="hidden" id="selectedReturnDate" name="returnDate">
-                                </div>
+                        <div class="row">
+                            <div class="col">
+                                <button type="button" class="btn btn-light btn-block border border-0" id="rendDateDisplay" data-bs-toggle="modal" data-bs-target="#rentdateModal">날짜 선택 <i class="fa-solid fa-chevron-down fa-xs"></i></button>
                             </div>
                         </div>
                     </div>
-                    <!-- 검색하기 버튼 -->
-                    <div class="row">
-                        <div class="col py-3 px-0 d-grid">
-                            <button class="btn btn-dark btn-lg fw-bold" style="color: #C6ED6F;">검색하기</button>
+                    <!-- 반납일 -->
+                    <div class="col text-center text-light-emphasis form-group">
+                        <div class="row">
+                            <div class="col">
+                                <i class="fa-regular fa-calendar"></i><span> 반납일</span>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <!-- 선택된 반납일 저장하는 히든 필드 -->
+                                <button type="button" class="btn btn-light btn-block border border-0" id="returnDateDisplay" data-bs-toggle="modal" data-bs-target="#returndateModal">날짜 선택 <i class="fa-solid fa-chevron-down fa-xs"></i></button>
+                            </div>
                         </div>
                     </div>
-                </form>
+                </div>
+                <!-- 검색하기 버튼 -->
+                <div class="row">
+                    <div class="col py-3 px-0 d-grid">
+                        <button class="btn btn-dark btn-lg fw-bold" style="color: #C6ED6F;">검색하기</button>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -258,29 +249,26 @@
     <!-- 대여 장소 선택 모달 -->
     <div class="modal fade" id="locationModal" tabindex="-1" aria-labelledby="locationModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <div class="modal-title fs-5 fw-semibold text-center w-100" id="locationModalLabel">대여 장소 선택</div>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        <div class="modal-content">
+            <div class="modal-header">
+            <div class="modal-title fs-5 fw-semibold text-center w-100" id="locationModalLabel">대여 장소 선택</div>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+            <div class="container">
+                <div class="row pb-2">
+                <div class="col-12 d-flex justify-content-center">
+                    <button type="button" class="btn btn-outline-light text-dark w-100" data-location="전체">전체</button>
                 </div>
-                <div class="modal-body">
-                    <div class="container">
-                        <div class="row pb-2">
-                            <div class="col-12 d-flex justify-content-center">
-                                <button type="button" class="btn btn-outline-light text-dark w-100" data-location="전체" onclick="selectLocation(this)">전체</button>
-                            </div>
-                        </div>
-                        <div class="row d-flex flex-wrap">
-                            <div th:each="regionsDto : ${regions}" class="col-6 pb-2 d-flex justify-content-center">
-                                <button type="button" class="btn btn-outline-light text-dark w-100" th:data-location="${regionsDto.name}" th:text="${regionsDto.name}"  onclick="selectLocation(this)"></button>
-                            </div>
-                        </div>
-                    </div>
                 </div>
-                <div class="modal-footer d-flex justify-content-center">
-                    <button type="button" class="btn text-dark w-100" data-bs-dismiss="modal" style="background-color: #C6ED6F;">취소하기</button>
+                <div class="row d-flex flex-wrap" id="regionsListBox">
                 </div>
             </div>
+            </div>
+            <div class="modal-footer d-flex justify-content-center">
+            <button type="button" class="btn text-dark w-100" data-bs-dismiss="modal" style="background-color: #C6ED6F;">취소하기</button>
+            </div>
+        </div>
         </div>
     </div>
     <!-- 캠핑카 유형 선택 모달 -->
@@ -353,7 +341,7 @@
         </div>
     </div>
 
-<!-- campingcarList Templete -->
+    <!-- campingcarList Templete -->
     <div id="campingcarListTemplete" class="d-none">
         <div class="campingcarListWrapper row">
             <div class="col px-0 shadow border border-2 rounded-4 my-4">
@@ -420,6 +408,12 @@
                     </div>
                 </div>
             </div>
+        </div>
+    </div>
+    <!-- 지역선택 Template -->
+    <div id="regionsListTemplate" class="d-none">
+        <div class="regionstsListWrapper col-6 pb-2 d-flex justify-content-center">
+          <span class="regionsBtn btn btn-outline-light text-dark w-100"></span>
         </div>
     </div>
 
@@ -590,12 +584,12 @@
             .then(response => response.json()) // JSON 형식으로 응답을 처리
             .then(response => {
                 // 콘솔 로그로 상태 확인
-                console.log("isLiked 여부 응답 확인: ", response.data.isLikedByUser);
-                console.log("myId 확인 : ", myId);
+                // console.log("isLiked 여부 응답 확인: ", response.data.isLikedByUser);
+                // console.log("myId 확인 : ", myId);
                 
                 // 특정 차량의 하트 아이콘 선택
                 const heart = document.getElementById(`heart-${product_id}`);
-                console.log("heart의 product_id 값 확인: ", heart);
+                // console.log("heart의 product_id 값 확인: ", heart);
 
                 // 사용자가 이미 좋아요를 눌렀는지 여부를 확인
                 if (response.data.isLikedByUser == true) {
@@ -637,6 +631,82 @@
                 reloadLike(product_id);
             });
     }
+
+
+    // 대여 장소 선택 모달 열기 함수 
+    const showLocationModal = () => {
+        const locationModal = document.getElementById("locationModal");
+        const modal = new bootstrap.Modal(locationModal);
+        loadRegionOptionList(); // 모달을 열 때 지역 옵션 목록을 로드
+        modal.show();
+    }
+    // 대여 장소 모달의 지역 리스트 함수 
+    function loadRegionOptionList() {
+        const url = "/api/rent-user/getRegionsAll";
+        fetch(url)
+        .then(response => response.json())
+        .then(response => {
+            console.log("response 응답: ", response.data.allRegionsList);
+
+            const regionsListBox = document.getElementById("regionsListBox");
+                // 컨테이너의 기존 내용을 초기화
+                campingcarListBox.innerHTML = "";
+
+            const regionsListWrapperTemplate  = document.querySelector("#regionsListTemplate .regionstsListWrapper"); 
+
+            // 차량 지역 리스트의 각 항목을 반복 처리
+            for (const regionsList of response.data.allRegionsList) {
+                console.log("regionsList 반복리스트", regionsList.name);
+                
+                const newCampingcarListTemplate = regionsListWrapperTemplate.cloneNode(true);
+
+                const newregionsButton = newCampingcarListTemplate.querySelector(".regionsBtn"); 
+                newregionsButton.innerText = regionsList.name;
+                
+                // 지역 버튼 클릭한 것을 click 이벤트 추가
+                newregionsButton.addEventListener('click', () => {
+                    // 'locationDisplay'라는 ID를 가진 요소(장소 선택이라는 버튼)의 텍스트를 선택한 지역의 이름으로 동적으로 설정
+                    document.getElementById("locationDisplay").innerText = regionsList.name;
+                    // Bootstrap 모달 인스턴스를 가져와서 모달 닫기
+                    const modalInstance = bootstrap.Modal.getInstance(locationModal);// 모달 인스턴스 가져오기
+                    modalInstance.hide();// 모달 닫기
+
+                });
+                
+                regionsListBox.appendChild(newCampingcarListTemplate);
+            }
+        });
+    }
+/* 설명 주석
+1. newRegionButton.addEventListener('click', () => { ... });:
+   - 설명: addEventListener는 지정된 이벤트가 대상에서 발생할 때 호출할 함수를 설정합니다. 여기서 'click' 이벤트를 설정하여 버튼이 클릭될 때 특정 동작을 수행하도록 합니다.
+   - 사용법:
+     element.addEventListener(event, function);
+     element: 이벤트 리스너를 추가할 대상 요소입니다. 여기서는 newRegionButton입니다.
+     event: 리스너를 추가할 이벤트 유형입니다. 여기서는 'click'입니다.
+     function: 이벤트가 발생했을 때 실행할 함수입니다. 여기서는 익명 함수(() => { ... })를 사용했습니다.
+
+2. document.getElementById('locationDisplay').innerText = region.name;
+   - 설명: document.getElementById는 HTML 문서에서 지정된 ID를 가진 요소를 반환합니다. innerText는 해당 요소의 텍스트 콘텐츠를 설정하거나 반환합니다. 여기서는 locationDisplay라는 ID를 가진 요소의 텍스트를 선택한 지역의 이름(region.name)으로 설정합니다.
+   - 사용법:
+     const element = document.getElementById(id);
+     element.innerText = text;
+     id: 찾고자 하는 요소의 ID입니다. 여기서는 'locationDisplay'입니다.
+     text: 요소에 설정할 텍스트 콘텐츠입니다. 여기서는 region.name입니다.
+
+3. const modalInstance = bootstrap.Modal.getInstance(locationModal);
+   - 설명: bootstrap.Modal.getInstance는 지정된 모달 요소에 대한 Bootstrap 모달 인스턴스를 반환합니다. 이 인스턴스를 사용하면 해당 모달에 대해 프로그램적으로 제어할 수 있습니다.
+   - 사용법:
+     const modalInstance = bootstrap.Modal.getInstance(element);
+     element: 모달 요소입니다. 여기서는 locationModal입니다.
+     결과: modalInstance는 모달에 대한 Bootstrap 인스턴스가 됩니다.
+
+4. modalInstance.hide();
+   - 설명: hide 메서드는 Bootstrap 모달 인스턴스를 숨기기 위해 사용됩니다. 여기서는 modalInstance가 가리키는 모달을 닫습니다.
+   - 사용법:
+     modalInstance.hide();
+     결과: 모달이 화면에서 사라집니다.
+*/
     </script>
 
 
@@ -649,7 +719,7 @@
 
 
     <!-- 모달 script -->
-    <script>
+    <!-- <script>
         // 모달에서 전체 혹은 장소를 선택 했을때, 함수를 호출한다.
         function selectLocation(button) {
             // 버튼의 data-location 속성에서 선택된 대여 장소 값을 가져와서 location에 담는다
@@ -699,6 +769,6 @@
         // "peak"라는 식별자로, 다음 해부터 365일간의 달력 데이터 생성 또는 처리
         createRangeCalendar("rentdate", 365, nextYear);
         createRangeCalendar("returndate", 365, nextYear);
-    </script>
+    </script> -->
 </body>
 </html>

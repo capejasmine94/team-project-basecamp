@@ -1,13 +1,18 @@
 package com.bulmeong.basecamp.campingcar.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.bulmeong.basecamp.campingcar.dto.CampingCarLikeDto;
+import com.bulmeong.basecamp.campingcar.dto.CarTypeDto;
+import com.bulmeong.basecamp.campingcar.dto.LocationDto;
 import com.bulmeong.basecamp.campingcar.dto.RestRentUserResponseDto;
 import com.bulmeong.basecamp.campingcar.service.CampingcarService;
+import com.bulmeong.basecamp.campingcar.service.PartnerCampingCarService;
 import com.bulmeong.basecamp.common.util.Utils;
 import com.bulmeong.basecamp.user.dto.UserDto;
 
@@ -17,6 +22,8 @@ import jakarta.servlet.http.HttpSession;
 @RequestMapping("api/rent-user")
 public class RestRentalUserController {
 
+    @Autowired
+    private PartnerCampingCarService partnerCampingCarService;
     @Autowired
     private CampingcarService campingCarService;
     @Autowired
@@ -104,6 +111,32 @@ public class RestRentalUserController {
         return restRentUserResponseDto;
 
     }
+    @RequestMapping("getRegionsAll")
+    public RestRentUserResponseDto getAllRegions() {
+        utils.loginUser();
 
+        RestRentUserResponseDto restRentUserResponseDto = new RestRentUserResponseDto();
+        restRentUserResponseDto.setResult("success");
+
+        // 모달_지역 선택 
+        List<LocationDto> regions = partnerCampingCarService.getLocationAll();
+        restRentUserResponseDto.add("allRegionsList", regions);
+
+        return restRentUserResponseDto;
+    }
+
+    @RequestMapping("getCarTypeAll")
+    public RestRentUserResponseDto getAllCarType () {
+
+        RestRentUserResponseDto restRentUserResponseDto = new RestRentUserResponseDto();
+        restRentUserResponseDto.setResult("success");
+
+        // 모달_캠핑카유형 선텍 
+        List<CarTypeDto> carType = partnerCampingCarService.getCarTypeAll();
+        restRentUserResponseDto.add("allCarType", carType);
+        
+
+        return restRentUserResponseDto;
+    }
     
 }
