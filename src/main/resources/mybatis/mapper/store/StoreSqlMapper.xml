@@ -568,4 +568,33 @@
         where order_product_id = #{order_product_id}
     </select>
     
+    <insert id="insertUserDeliveryInfo">
+        insert into bc_user_delivery_info(
+            user_id, receiver_name, phone, delivery_address, is_default_address
+        )values(
+            #{user_id}, #{receiver_name}, #{phone}, #{delivery_address}, #{is_default_address}
+        )
+    </insert>
+
+    <update id="updateDefaultDeliveryInfoByUserId">
+        update bc_user_delivery_info
+        set is_default_address = 0
+        where user_id = #{user_id}
+    </update>
+
+    <select id="selectUserDeliveryInfoByUserId" resultType="com.bulmeong.basecamp.store.dto.UserDeliveryInfoDto">
+        select * from bc_user_delivery_info
+        where user_id = #{user_id}
+    </select>
+
+    <select id="selectDefaultAddressByUserId" resultType="com.bulmeong.basecamp.store.dto.UserDeliveryInfoDto">
+        select * from bc_user_delivery_info
+        where user_id = #{user_id}
+        and is_default_address = 1
+    </select>
+
+    <delete id="deleteUserDeliveryInfoById">
+        delete from bc_user_delivery_info
+        where id = #{id}
+    </delete>
 </mapper>

@@ -9,5 +9,5 @@ public class UserDeliveryInfoDto {
     private String receiver_name;
     private String phone;
     private String delivery_address;
-    private boolean is_default_address;
+    private int is_default_address;
 }

@@ -18,7 +18,7 @@
         }
         .seller_profile img{
             aspect-ratio: 1/1;
-            width: 100px;
+            width: 60px;
             object-fit: cover;
             object-position: center;
         }
@@ -31,14 +31,14 @@
         .product-col img{
             aspect-ratio: 1/1;
             width: 100%;
-        }
-        .ad-banner-col img{
-            width: 100%;
             object-fit: cover;
             object-position: center;
         }
         a{
             text-decoration: none;
+            color: black;
+        }
+        button{
             color: black;
         }
         .f05{
@@ -62,160 +62,129 @@
         .f40{
             font-size: 4em;
         }
+        .active{
+            font-weight: bold;
+            border-bottom: 2px solid black;
+        }
     </style>
-    <!-- <script>
+    <script>
         document.addEventListener('DOMContentLoaded', function() {
             document.getElementById('backButton').addEventListener('click', function() {
                 history.back();
             });
         });
-    </script> -->
+    </script>
 </head>
 <body class="bg-body-tertiary">
 
     <!-- top-nav -->
-    <div class="fixed-top px-4 row border-bottom bg-white">
-        <div class="col">
-
-            <div class="row py-3">
-                <div class="col-auto ps-0">
-                    <!-- <button id="backButton" class="border-0 bg-transparent d-flex align-items-center">
-                        <span class="material-symbols-outlined">
-                            arrow_back_ios
-                        </span>
-                    </button> -->
-                </div>
-                <div class="col ps-0 fw-bold f12 text-center">
-                    주문완료
-                </div>
-                <div class="col-auto pe-0 d-flex align-items-center">
-                    <span class="material-symbols-outlined">
-                        home
-                    </span>
-                </div>
-            </div>
-
+    <div class="fixed-top px-4 row border-bottom shadow-sm bg-white py-3 align-items-center">
+        <div class="col-auto ps-0">
+            <button id="backButton" class="border-0 bg-transparent d-flex align-items-center">
+                <span class="material-symbols-outlined">
+                    arrow_back_ios
+                </span>
+            </button>
         </div>
+        <div class="col ps-0 fw-bold f12 text-center">
+            <span>My(임시)</span>
+        </div>
+        <a href="/store/cart" class="col-auto pe-0 d-flex align-items-center text-black">
+            <span class="material-symbols-outlined">
+                shopping_bag
+            </span>
+        </a>
     </div>
 
     <div class="container" style="padding-top: 60.792px;">
 
         <div class="row">
-            <div class="col ad-banner-col p-0">
-                <img src="/public/img/storeImage/ad1.png">
-            </div>
-        </div>
-        <div class="row bg-white py-4">
-            <div class="col text-center align-items-center">
-                <span class="fw-bold f12">주문이 완료되었습니다</span>
-            </div>
-        </div>
-        <div class="row px-3 f09 bg-white pb-2">
-            <div class="col p-0">
-                <span class="fw-bold">김첨지</span>
-                <span class="text-body-tertiary">010-1234-5678</span>
-            </div>
-        </div>
-        <div class="row px-3 f09 bg-white pb-2">
-            <div class="col p-0">
-                <span>서울특별시 강남구 테헤란로 7길 7 무슨빌딩 6층</span>
-            </div>
-        </div>
-            
-        <div class="row px-3 bg-white py-2 toggle-icon" data-bs-toggle="collapse" data-bs-target="#first-collapse">
-            <div class="col p-0">
-                <a type="button" class="f09 accordion-button collapsed">
-                    <div class="col-auto fw-bold text-body-tertiary">
-                        상품정보
-                    </div>
-                    <div class="col text-center">
-                        <span class="fw-bold">이거 js로 해야될 것 같기도 하고</span>
-                        <!-- <span class="fw-bold">진짜맛있는 납작복숭아</span> -->
-                        <!-- <span> 외 3건</span> -->
-                    </div>
-                    <div class="col-auto d-flex align-items-center fw-bold text-body-tertiary">
-                        <span class="material-symbols-outlined">
-                            keyboard_arrow_down
-                        </span>
-                    </div>
-                </a>
-            </div>
-        </div>
+            <div class="col">
 
-<!--                         
-        <div class="row px-3 f09 bg-white py-2">
-            <div class="col p-0 fw-bold text-body-tertiary">
-                상품정보
-            </div>
-            <div class="col-auto p-0 d-flex align-items-center fw-bold text-body-tertiary">
-                <span class="material-symbols-outlined">
-                    keyboard_arrow_up
-                </span>
-            </div>
-        </div>
-         -->
-
-        <div class="row accordion-collapse collapse bg-white px-3" id="first-collapse">
-            <div class="col p-0 border-bottom">
-                
-                <!-- 상품 하나의 정보 -->
-                <div class="row pb-3 align-items-center" th:each="orderProductData : ${orderData.orderProductDataList}">
-                    <div class="col-3 pe-0 product-col">
-                        <img th:src="|/images/${orderProductData.orderProductDto.product_main_image}|" class="border">
+                <div class="row border-bottom py-3 align-items-center bg-white">
+                    <div class="col-auto seller_profile">
+                        <img src="/public/img/storeImage/userImg.jpeg" class="rounded-circle border">
                     </div>
                     <div class="col">
-                        <div class="row f09">
-                            <div class="col">
-                                <span th:text="${orderProductData.storeName}">GamjaStore</span>
+                        <div class="row">
+                            <div class="col fw-bold">
+                                김첨지
                             </div>
                         </div>
-                        <div class="row fw-bold f09">
+                        <div class="row pb-1 text-body-tertiary">
                             <div class="col">
-                                <span th:text="${orderProductData.orderProductDto.product_name}">엄청 맛있는 납작복숭아</span>
+                                ID: goguma
                             </div>
                         </div>
-                        <div class="row align-items-center">
-                            <div class="col text-body-tertiary f09">
-                                <span th:if="${orderProductData.valueNameList}" th:each="name, iterStat : ${orderProductData.valueNameList}">
-                                    <span th:text="${name}">Black / M</span>
-                                    <span th:if="${!iterStat.last}">/</span>
-                                </span> | <span th:text="${orderProductData.orderProductDto.quantity}">1</span>개
+                    </div>
+                    <div class="col-auto">
+                        <button class="btn btn-sm btn-outline-dark">
+                            로그아웃
+                        </button>
+                    </div>
+                </div>
+
+                <div class="row px-2 py-2">
+                    <div class="col py-3 fw-bold bg-white rounded-2 border">
+                        <div class="row">
+                            <div class="col">
+                                B POINT
                             </div>
-                            <div class="col fw-bold text-end">
-                                <span th:text="${#numbers.formatDecimal(orderProductData.orderProductDto.order_price, 1, 'COMMA', 0, 'POINT')}">28,000</span>원
+                            <div class="col-auto pe-0" style="color: orangered;">
+                                200P
+                            </div>
+                            <div class="col-auto" style="color: orangered;">
+                                <span class="material-symbols-outlined f09">
+                                    arrow_forward_ios
+                                </span>
                             </div>
                         </div>
                     </div>
                 </div>
 
-            </div>
-        </div>
-       
-
-        <div class="row px-3 f09 bg-white py-3 fw-bold">
-            <div class="col-auto ps-0 text-body-tertiary">
-                결제금액
-            </div>
-            <div class="col">
-                <span th:text="|${#numbers.formatDecimal(orderData.storeOrderDto.payment_amount, 1, 'COMMA', 0, 'POINT')}원|">224,733원</span>
-            </div>
-        </div>
-
-        <div class="row px-3 bg-white pt-2 pb-4">
-            <div class="col p-0 d-grid">
-                <a href="/store/orderView" type="button" class="btn btn-outline-dark py-2 fw-bold f09 rounded-0">
-                    주문 상세보기
+                <a href="/store/myOrderList" class="row bg-white py-3 border-bottom border-top">
+                    <div class="col f09 fw-bold">
+                        주문내역
+                    </div>
+                    <div class="col-auto d-flex align-items-center">
+                        <span class="material-symbols-outlined f09">
+                            arrow_forward_ios
+                        </span>
+                    </div>
+                </a>
+                <a class="row bg-white py-3 border-bottom">
+                    <div class="col f09 fw-bold">
+                        취소/반품/교환 내역
+                    </div>
+                    <div class="col-auto d-flex align-items-center">
+                        <span class="material-symbols-outlined f09">
+                            arrow_forward_ios
+                        </span>
+                    </div>
+                </a>
+                <a class="row bg-white py-3 border-bottom">
+                    <div class="col f09 fw-bold">
+                        리뷰작성
+                    </div>
+                    <div class="col-auto d-flex align-items-center">
+                        <span class="material-symbols-outlined f09">
+                            arrow_forward_ios
+                        </span>
+                    </div>
+                </a>
+                <a href="/store/addressBook" class="row bg-white py-3 border-bottom">
+                    <div class="col f09 fw-bold">
+                        배송지 관리
+                    </div>
+                    <div class="col-auto d-flex align-items-center">
+                        <span class="material-symbols-outlined f09">
+                            arrow_forward_ios
+                        </span>
+                    </div>
                 </a>
             </div>
-            <div class="col pe-0 d-grid">
-                <a href="/store" type="button" class="btn btn-dark py-2 fw-bold f09 rounded-0">
-                    쇼핑 홈
-                </a>
-            </div>
         </div>
-
-        <div class="row bg-white py-3"></div>
-
+        
         <!-- footer -->
         <div class="row py-2 bg-dark-subtle text-white text-center f09">
             <div class="col fw-bold border-end">
@@ -297,23 +266,86 @@
                     </div>
                 </div>
                 <div class="row py-5"></div>
+                <div class="row py-4"></div>
             </div>
         </div>
 
+
     </div>
 
-    <script>
-        document.querySelectorAll('.toggle-icon').forEach(button => {
-            button.addEventListener('click', function () {
-                const icon = this.querySelector('.material-symbols-outlined');
-                if (icon.innerText=="keyboard_arrow_up") {
-                    icon.innerText="keyboard_arrow_down";
-                }else{
-                    icon.innerText="keyboard_arrow_up";
-                }
-            });
-        });
-    </script>
+    <!-- bottom-nav(임시) -->
+    <div class="row px-2 bg-white fixed-bottom pt-2 pb-4 border-top">
+        <div class="col text-center">
+            <div class="row">
+                <div class="col">
+                    <span class="material-symbols-outlined f17">
+                        home
+                    </span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col f05 fw-bold">
+                    HOME
+                </div>
+            </div>
+        </div>
+        <a href="/store" class="col text-center">
+            <div class="row">
+                <div class="col">
+                    <span class="material-symbols-outlined f17">
+                        storefront
+                    </span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col f05 fw-bold">
+                    SHOP
+                </div>
+            </div>
+        </a>
+        <div class="col text-center">
+            <div class="row">
+                <div class="col">
+                    <span class="material-symbols-outlined f17">
+                        camping
+                    </span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col f05 fw-bold">
+                    CAMP
+                </div>
+            </div>
+        </div>
+        <div class="col text-center">
+            <div class="row">
+                <div class="col">
+                    <span class="material-symbols-outlined f17">
+                        forum
+                    </span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col f05 fw-bold">
+                    COMMUNITY
+                </div>
+            </div>
+        </div>
+        <a href="/store/my" class="col text-center" style="color: orangered;">
+            <div class="row">
+                <div class="col">
+                    <span class="material-symbols-outlined f17">
+                        person
+                    </span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col f05 fw-bold">
+                    MY
+                </div>
+            </div>
+        </a>
+    </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 </body>

@@ -23,6 +23,7 @@ import com.bulmeong.basecamp.store.dto.StoreOrderDto;
 import com.bulmeong.basecamp.store.dto.StoreProductCategoryDto;
 import com.bulmeong.basecamp.store.dto.StoreProductDiscountDto;
 import com.bulmeong.basecamp.store.dto.StoreProductDto;
+import com.bulmeong.basecamp.store.dto.UserDeliveryInfoDto;
 import com.bulmeong.basecamp.user.dto.MileageLogDto;
 import com.bulmeong.basecamp.user.dto.UserDto;
 
@@ -137,4 +138,11 @@ public interface StoreSqlMapper {
     public void insertOrderDeliveryInfo(OrderDeliveryInfoDto orderDeliveryInfoDto);
     public void updateOrderProductStatusToDelivering(int id);
     public OrderDeliveryInfoDto selectOrderDeliveryInfoByOrderProductId(int order_product_id);
+
+    public void insertUserDeliveryInfo(UserDeliveryInfoDto userDeliveryInfoDto);
+    public List<UserDeliveryInfoDto> selectUserDeliveryInfoByUserId(int user_id);
+    public void updateDefaultDeliveryInfoByUserId(int user_id);
+    public void deleteUserDeliveryInfoById(int id);
+
+    public UserDeliveryInfoDto selectDefaultAddressByUserId(int user_id);
 }

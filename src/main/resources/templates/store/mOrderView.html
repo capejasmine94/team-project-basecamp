@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
     <script src="https://kit.fontawesome.com/7b271bba58.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="/public/css/font.css">
 
     <style>
         .fill-on {
@@ -35,6 +36,9 @@
         }
         a{
             text-decoration: none;
+            color: black;
+        }
+        button{
             color: black;
         }
         .f05{
@@ -148,7 +152,7 @@
                                                 <span class="border-start border-2 px-1">5개</span>
                                             </div>
                                         </div>
-                                        <div class="row f09 pt-3">
+                                        <div class="row f09 pt-3 toggle-icon" data-bs-toggle="collapse" data-bs-target="#first-collapse">
                                             <div class="col">
                                                 주문금액 (상세)
                                             </div>
@@ -161,30 +165,35 @@
                                                 </span>
                                             </div>
                                         </div>
-                                        <div class="row f08 pb-1">
-                                            <div class="col text-body-tertiary">
-                                                상품 금액
-                                            </div>
-                                            <div class="col text-end">
-                                                45,000원
+                                        <div class="row accordion-collapse collapse" id="first-collapse">
+                                            <div class="col">
+                                                <div class="row f08 pb-1">
+                                                    <div class="col text-body-tertiary">
+                                                        상품 금액
+                                                    </div>
+                                                    <div class="col text-end">
+                                                        45,000원
+                                                    </div>
+                                                </div>
+                                                <div class="row f08 pb-1">
+                                                    <div class="col text-body-tertiary">
+                                                        상품 할인
+                                                    </div>
+                                                    <div class="col text-end text-primary">
+                                                        -31,500원
+                                                    </div>
+                                                </div>
+                                                <div class="row f08">
+                                                    <div class="col text-body-tertiary">
+                                                        보유 적립금 사용
+                                                    </div>
+                                                    <div class="col text-end text-primary">
+                                                        -2,513원
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
-                                        <div class="row f08 pb-1">
-                                            <div class="col text-body-tertiary">
-                                                상품 할인
-                                            </div>
-                                            <div class="col text-end text-primary">
-                                                -31,500원
-                                            </div>
-                                        </div>
-                                        <div class="row f08">
-                                            <div class="col text-body-tertiary">
-                                                보유 적립금 사용
-                                            </div>
-                                            <div class="col text-end text-primary">
-                                                -2,513원
-                                            </div>
-                                        </div>
+
                                     </div>
                                 </div>
                                 <div class="row py-3">
@@ -233,7 +242,8 @@
                                                 <span class="border-start border-2 px-1">5개</span>
                                             </div>
                                         </div>
-                                        <div class="row f09 pt-3">
+
+                                        <div class="row f09 pt-3 toggle-icon" data-bs-toggle="collapse" data-bs-target="#second-collapse">
                                             <div class="col">
                                                 주문금액 (상세)
                                             </div>
@@ -246,32 +256,38 @@
                                                 </span>
                                             </div>
                                         </div>
-                                        <div class="row f08 pb-1">
-                                            <div class="col text-body-tertiary">
-                                                상품 금액
-                                            </div>
-                                            <div class="col text-end">
-                                                45,000원
+                                        <div class="row accordion-collapse collapse" id="second-collapse">
+                                            <div class="col">
+                                                <div class="row f08 pb-1">
+                                                    <div class="col text-body-tertiary">
+                                                        상품 금액
+                                                    </div>
+                                                    <div class="col text-end">
+                                                        45,000원
+                                                    </div>
+                                                </div>
+                                                <div class="row f08 pb-1">
+                                                    <div class="col text-body-tertiary">
+                                                        상품 할인
+                                                    </div>
+                                                    <div class="col text-end text-primary">
+                                                        -31,500원
+                                                    </div>
+                                                </div>
+                                                <div class="row f08">
+                                                    <div class="col text-body-tertiary">
+                                                        보유 적립금 사용
+                                                    </div>
+                                                    <div class="col text-end text-primary">
+                                                        -2,513원
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
-                                        <div class="row f08 pb-1">
-                                            <div class="col text-body-tertiary">
-                                                상품 할인
-                                            </div>
-                                            <div class="col text-end text-primary">
-                                                -31,500원
-                                            </div>
-                                        </div>
-                                        <div class="row f08">
-                                            <div class="col text-body-tertiary">
-                                                보유 적립금 사용
-                                            </div>
-                                            <div class="col text-end text-primary">
-                                                -2,513원
-                                            </div>
-                                        </div>
+
                                     </div>
                                 </div>
+
                                 <div class="row py-3">
                                     <div class="col d-grid pe-0">
                                         <a type="button" class="btn px-0 f09 border bg-white rounded-0">
@@ -301,21 +317,21 @@
                 </div>
 
                 <!-- 배송지 정보 -->
-                <div class="row bg-white pb-4 px-3 border-bottom border-top mb-3">
+                <div class="row informationContainer bg-white px-3 border-bottom border-top mb-3">
                     <div class="col p-0">
                         
-                        <div class="row py-4">
+                        <div onclick="showAdditionalInfo(this)" class="row py-4">
                             <div class="col fw-bold">
                                 배송지 정보
                             </div>
                             <div class="col d-flex align-items-center justify-content-end">
-                                <span class="material-symbols-outlined fw-light">
+                                <span class="showButton material-symbols-outlined fw-light">
                                     keyboard_arrow_down
                                 </span>
                             </div>
                         </div>
 
-                        <div class="row f08">
+                        <div class="row f08 informationContent d-none">
                             <div class="col">
                                 <div class="row pb-2">
                                     <div class="col text-body-tertiary">
@@ -342,11 +358,28 @@
                                         <br>테헤란로 7길 7
                                     </div>
                                 </div>
-                                <div class="row pt-4 text-center">
-                                    <div class="col">
-                                        배송지 정보 유의사항 +
+                                <a onclick="notesOnDeliveryInfo()" type="button" class="row pt-3 pb-4 text-center">
+                                    <div class="col justify-content-center d-flex align-items-center">
+                                        배송지 정보 유의사항
+                                        <span class="material-symbols-outlined f09" id="addOrRemove">
+                                            add
+                                        </span>
                                     </div>
-                                </div>
+                                </a>
+                                <ul class="row pb-4 text-body-tertiary f08 d-none" id="notesOnDeliveryInfo">
+                                    <li>
+                                        배송전 일때만 배송지 주소를 변경하실 수 있습니다.(입금확인 단계까지만 가능)
+                                    </li>
+                                    <li>
+                                        동일한 주문번호라도 2개 이상의 브랜드에서 주문하신 경우 출고지 주소가 달라 각각 출고됩니다. (택배박스를 2개 이상 수령 가능)
+                                    </li>
+                                    <li>
+                                        구매 결정 후 적립금이 지급되며 후기를 작성하실 수 있습니다. 단, 구매 결정 후에는 교환/환불이 불가하오니 구매 결정은 신중히 부탁드립니다.
+                                    </li>
+                                    <li>
+                                        별도의 구매 결정이 없더라도 상품 배송 완료 후 7일이 지난 경우에는 자동 구매확정, 적립금이 자동 지급됩니다.
+                                    </li>
+                                </ul>
                             </div>
                         </div>
                     </div>
@@ -407,7 +440,8 @@
                     </div>
                 </div>
 
-                <div class="row bg-white pb-4 px-3 border-bottom border-top mb-3">
+                <!-- 최종 결제 정보 -->
+                <div class="row bg-white pb-4 px-3 border-top">
                     <div class="col p-0">
                         
                         <div class="row py-4">
@@ -454,86 +488,162 @@
                         </div>
                     </div>
                 </div>
+                <!-- 최종 결제 정보 -->
+                <div class="row px-3 fw-bold f08 bg-white mb-3 border-bottom">
+                    <div class="col p-0 py-3 border-top">
+                        <div class="row">
+                            <div class="col">
+                                결제 금액
+                            </div>
+                            <div class="col-auto text-end">
+                                100,075원
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
+                <!-- 결제 수단 -->
+                <div class="row bg-white pb-4 px-3 border-top mb-3 border-bottom">
+                    <div class="col p-0">
+                        
+                        <div class="row py-4">
+                            <div class="col fw-bold">
+                                결제 수단
+                            </div>
+                            <div class="col d-flex align-items-center justify-content-end">
+                                <span class="material-symbols-outlined fw-light">
+                                    keyboard_arrow_down
+                                </span>
+                            </div>
+                        </div>
+
+                        <div class="row f08">
+                            <div class="col">
+                                <div class="row pb-2">
+                                    <div class="col text-body-tertiary">
+                                        결제 방법
+                                    </div>
+                                    <div class="col text-end">
+                                        카카오페이 + 적립금
+                                    </div>
+                                </div>
+                                <div class="row fw-bold">
+                                    <a class="col text-end pe-0 text-primary" style="text-decoration: underline;">
+                                        영수증보기
+                                    </a>
+                                    <a class="col-auto text-end text-primary" style="text-decoration: underline;">
+                                        거래 명세서
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 환불정보 -->
+                <div class="row bg-white pb-4 px-3 border-top">
+                    <div class="col p-0">
+                        
+                        <div class="row py-4">
+                            <div class="col fw-bold">
+                                환불정보
+                            </div>
+                            <div class="col d-flex align-items-center justify-content-end">
+                                <span class="material-symbols-outlined fw-light">
+                                    keyboard_arrow_down
+                                </span>
+                            </div>
+                        </div>
+
+                        <div class="row f08">
+                            <div class="col">
+                                <div class="row pb-2">
+                                    <div class="col text-body-tertiary">
+                                        환불 수단
+                                    </div>
+                                    <div class="col text-end">
+                                        카카오페이
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col text-body-tertiary">
+                                        결제 금액
+                                    </div>
+                                    <div class="col text-end fw-bold">
+                                        57,351원
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row px-3 fw-bold f08 bg-white mb-3 border-bottom">
+                    <div class="col p-0 py-3 border-top">
+                        <div class="row">
+                            <div class="col">
+                                환불 금액
+                            </div>
+                            <div class="col-auto text-end">
+                                44,491원
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row px-2 bg-white pt-3 pb-5 border-top">
+                    <div class="col d-grid">
+                        <a href="" type="button" class="btn rounded-0 f09 py-2 bg-white border">
+                            주문 내역 삭제
+                        </a>
+                    </div>
+                </div>
             </div>
         </div>
-        <div class="row py-5 bg-white border-top"></div>
+
 
     </div>
 
-    <!-- bottom-nav(임시) -->
-    <div class="row px-2 bg-white fixed-bottom pt-2 pb-4 border-top">
-        <div class="col text-center">
-            <div class="row">
-                <div class="col">
-                    <span class="material-symbols-outlined f17">
-                        home
-                    </span>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col f05 fw-bold">
-                    HOME
-                </div>
-            </div>
-        </div>
-        <a href="/store" class="col text-center" style="color: black;">
-            <div class="row">
-                <div class="col">
-                    <span class="material-symbols-outlined f17">
-                        storefront
-                    </span>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col f05 fw-bold">
-                    SHOP
-                </div>
-            </div>
-        </a>
-        <div class="col text-center">
-            <div class="row">
-                <div class="col">
-                    <span class="material-symbols-outlined f17">
-                        camping
-                    </span>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col f05 fw-bold">
-                    CAMP
-                </div>
-            </div>
-        </div>
-        <div class="col text-center">
-            <div class="row">
-                <div class="col">
-                    <span class="material-symbols-outlined f17">
-                        forum
-                    </span>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col f05 fw-bold">
-                    COMMUNITY
-                </div>
-            </div>
-        </div>
-        <a href="/store/myOrderList" class="col text-center" style="color: orangered;">
-            <div class="row">
-                <div class="col">
-                    <span class="material-symbols-outlined f17">
-                        person
-                    </span>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col f05 fw-bold">
-                    MY
-                </div>
-            </div>
-        </a>
-    </div>
+    <script>
+        document.querySelectorAll('.toggle-icon').forEach(button => {
+            button.addEventListener('click', function () {
+                const icon = this.querySelector('.material-symbols-outlined');
+                if (icon.innerText=="keyboard_arrow_up") {
+                    icon.innerText="keyboard_arrow_down";
+                }else{
+                    icon.innerText="keyboard_arrow_up";
+                }
+            });
+        });
+
+        function notesOnDeliveryInfo(){
+            const addOrRemove = document.getElementById("addOrRemove")
+            const notesOnDeliveryInfo = document.getElementById("notesOnDeliveryInfo");
+
+            if(addOrRemove.innerText == "add"){
+                notesOnDeliveryInfo.classList.remove("d-none");
+                addOrRemove.innerText = "remove"
+            }else if(addOrRemove.innerText == "remove"){
+                notesOnDeliveryInfo.classList.add("d-none");
+                addOrRemove.innerText = "add"
+            }
+        }
+
+        function showAdditionalInfo(clickRow){
+            const showButton = clickRow.querySelector(".showButton")
+            const informationContainer = clickRow.closest(".informationContainer");
+            const informationContent = informationContainer.querySelector(".informationContent");
+
+            if(showButton.innerText == "keyboard_arrow_down"){
+                showButton.innerText = "keyboard_arrow_up"
+                informationContent.classList.remove("d-none")
+            }else{
+                showButton.innerText = "keyboard_arrow_down"
+                informationContent.classList.add("d-none")
+            }
+        }
+    </script>
+
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 </body>

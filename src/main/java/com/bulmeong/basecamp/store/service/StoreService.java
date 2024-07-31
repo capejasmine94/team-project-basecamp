@@ -22,6 +22,7 @@ import com.bulmeong.basecamp.store.dto.StoreOrderDto;
 import com.bulmeong.basecamp.store.dto.StoreProductCategoryDto;
 import com.bulmeong.basecamp.store.dto.StoreProductDiscountDto;
 import com.bulmeong.basecamp.store.dto.StoreProductDto;
+import com.bulmeong.basecamp.store.dto.UserDeliveryInfoDto;
 import com.bulmeong.basecamp.store.mapper.StoreSqlMapper;
 import com.bulmeong.basecamp.user.dto.MileageLogDto;
 import com.bulmeong.basecamp.user.dto.UserDto;
@@ -494,7 +495,7 @@ public class StoreService {
         }
     }
 
-    public int orderProcess(int user_id, int used_point, String delivery_address, int payment_amount){
+    public int orderProcess(int user_id, int used_point, String delivery_address, String receiver_name, String phone, int payment_amount){
 
         List<StoreOrderDto> storeOrderDtoList = storeSqlMapper.selectPendingOrderDtoListByUserId(user_id);
 
@@ -504,6 +505,8 @@ public class StoreService {
         for(StoreOrderDto storeOrderDto : storeOrderDtoList){
             order_id = storeOrderDto.getId();
             storeOrderDto.setDelivery_address(delivery_address);
+            storeOrderDto.setReceiver_name(receiver_name);
+            storeOrderDto.setPhone(phone);
             storeOrderDto.setUsed_point(used_point);
             storeOrderDto.setPayment_amount(payment_amount);
             
@@ -730,4 +733,22 @@ public class StoreService {
 
     }
 
+    public void insertUserDeliveryInfo(UserDeliveryInfoDto userDeliveryInfoDto){
+        if(userDeliveryInfoDto.getIs_default_address()==1){
+            storeSqlMapper.updateDefaultDeliveryInfoByUserId(userDeliveryInfoDto.getUser_id());
+        }
+        storeSqlMapper.insertUserDeliveryInfo(userDeliveryInfoDto);
+    }
+
+    public List<UserDeliveryInfoDto> getUserDeliveryInfoByUserId(int user_id){
+        return storeSqlMapper.selectUserDeliveryInfoByUserId(user_id);
+    }
+
+    public void deleteUserDeliveryInfoById(int id){
+        storeSqlMapper.deleteUserDeliveryInfoById(id);
+    }
+
+    public UserDeliveryInfoDto selectDefaultAddressByUserId(int user_id){
+        return storeSqlMapper.selectDefaultAddressByUserId(user_id);
+    }
 }

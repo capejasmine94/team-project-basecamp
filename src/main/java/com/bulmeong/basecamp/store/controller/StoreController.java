@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.bulmeong.basecamp.store.dto.StoreOrderDto;
+import com.bulmeong.basecamp.store.dto.UserDeliveryInfoDto;
 import com.bulmeong.basecamp.store.service.StoreService;
 import com.bulmeong.basecamp.user.dto.UserDto;
 
@@ -63,7 +64,10 @@ public class StoreController {
 
         model.addAttribute("pendingOrderProductInfoDataList", pendingOrderProductInfoDataList);
 
-        return "store/mOrdersheet";
+        UserDeliveryInfoDto userDeliveryInfoDto = storeService.selectDefaultAddressByUserId(user_id);
+        model.addAttribute("userDeliveryInfoDto", userDeliveryInfoDto);        
+
+        return "store/mOrdersheet(Npay)";
     }
 
     @RequestMapping("orderComplete")
@@ -80,10 +84,41 @@ public class StoreController {
         }
     }
 
+    @RequestMapping("my")
+    public String my(){
+        return "store/mMy";
+    }
+
     @RequestMapping("myOrderList")
     public String myOrderList(){
 
         return "store/mMyOrderList";
+    }
+
+    @RequestMapping("orderView")
+    public String orderView(){
+        return "store/mOrderView";
+    }
+
+    @RequestMapping("addressBook")
+    public String addressBook(HttpSession session, Model model){
+
+        UserDto userDto = (UserDto)session.getAttribute("sessionUserInfo");
+
+        if(userDto==null){
+            return "redirect:/user/login";
+        }else{
+            List<UserDeliveryInfoDto> userDeliveryInfoDtoList = storeService.getUserDeliveryInfoByUserId(userDto.getId());
+            model.addAttribute("userDeliveryInfoDtoList", userDeliveryInfoDtoList);
+
+            return "store/mAddressBook";
+        }
+    }
+
+    @RequestMapping("deliveryForm")
+    public String deliveryForm(){
+
+        return "store/mDeliveryForm";
     }
 
 }

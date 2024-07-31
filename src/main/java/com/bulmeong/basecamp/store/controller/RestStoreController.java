@@ -3,6 +3,8 @@ package com.bulmeong.basecamp.store.controller;
 import java.util.*;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -17,6 +19,7 @@ import com.bulmeong.basecamp.store.dto.ProductOptionNameDto;
 import com.bulmeong.basecamp.store.dto.StoreDto;
 import com.bulmeong.basecamp.store.dto.StoreProductDto;
 import com.bulmeong.basecamp.store.dto.StoreRestResponseDto;
+import com.bulmeong.basecamp.store.dto.UserDeliveryInfoDto;
 import com.bulmeong.basecamp.store.service.StoreService;
 import com.bulmeong.basecamp.user.dto.UserDto;
 
@@ -272,13 +275,15 @@ public class RestStoreController {
         @RequestParam("used_point")int used_point, 
         @RequestParam("delivery_address") String delivery_address, 
         @RequestParam("payment_amount") int payment_amount,
+        @RequestParam("receiver_name") String receiver_name,
+        @RequestParam("phone") String phone,
         HttpSession session
     ){
         RestResponseDto restResponseDto = new RestResponseDto();
 
         UserDto userDto = (UserDto)session.getAttribute("sessionUserInfo");
         int user_id = userDto.getId();
-        int order_id = storeService.orderProcess(user_id, used_point, delivery_address, payment_amount);
+        int order_id = storeService.orderProcess(user_id, used_point, delivery_address, receiver_name, phone, payment_amount);
         
         int[] pendingOrderCartProductIds = (int[])session.getAttribute("pendingOrderCartProductIds");
 
@@ -343,4 +348,33 @@ public class RestStoreController {
 
         return restResponseDto;
     }
+
+    @PostMapping("addressRegister")
+    public RestResponseDto addressRegister(
+        @RequestBody UserDeliveryInfoDto userDeliveryInfoDto,
+        HttpSession session
+    ){
+        RestResponseDto restResponseDto = new RestResponseDto();
+
+        UserDto userDto = (UserDto)session.getAttribute("sessionUserInfo");
+        int user_id = userDto.getId();
+        
+        userDeliveryInfoDto.setUser_id(user_id);
+        storeService.insertUserDeliveryInfo(userDeliveryInfoDto);
+
+        System.out.println(userDeliveryInfoDto);
+
+        return restResponseDto;
+    }
+
+
+    @RequestMapping("deleteDeliveryInfo")
+    public RestResponseDto deleteDeliveryInfo(@RequestParam("id") int id){
+        RestResponseDto restResponseDto = new RestResponseDto();
+
+        storeService.deleteUserDeliveryInfoById(id);
+
+        return restResponseDto;
+    }
+    
 }
