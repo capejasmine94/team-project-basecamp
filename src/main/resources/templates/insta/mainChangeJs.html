@@ -9,6 +9,7 @@
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
     <link rel="stylesheet" href="/public/css/insta/instaStyle.css">
+    <link rel="stylesheet" href="/public/css/common.css">
     <title>campstagram</title>
 
     <!-- <script src="/public/js/util.js"></script> -->
@@ -96,6 +97,36 @@
             ;
         }
 
+
+
+
+        // 게시글 List
+        function reloadArticleList() {
+
+            const url = "/api/insta/getArticleList?user_id=" + myId; // myId =  session아이디 _ 글로벌 변수
+            fetch(url)
+            .then(response => response.json())
+            .then(response => {
+                // 응답 이후에
+                console.log(response); // console에 reloadArticleList(); 찍어서 확인 가능
+
+                const articleListBox = document.getElementById("articleListBox");
+                articleListBox.innerHTML = ""; // 기존 콘텐츠 제거
+                // innerHTML = HTML 요소의 내부 HTML 콘텐츠를 가져오거나 설정할 때 사용
+                // 특정 요소의 내용을 변경하거나 새 HTML 콘텐츠를 추가할 수 있습니다
+                // 지금 같은 경우에는 articleListBox 요소의 내부 내용을 모두 지우는 코드(업데이트 용도..?)
+
+                const articleWrapperTemplete = document.querySelector("#templete .articleWrapper");
+
+                for(const a of response.data.articleList){
+                    const newArticleWrapper = articleWrapperTemplete.cloneNode(true);
+
+                }
+
+            })
+
+        }
+
         window.addEventListener("DOMContentLoaded", () => {
             // 페이지 로드 후 사실상 시작 지점
             setSessionId();
@@ -108,7 +139,7 @@
         /* 오프캠버스 css */
         #offcanvasBottom {
             border-radius: 10px 10px 0 0; /* 위쪽 모서리 둥글게 */
-            /* 위쪽 모서리 두 개는 20px로 둥글게 만들고, 아래쪽 모서리 두 개는 둥글게 만들지 않겠다는 의미입니다. */
+            /* 위쪽 모서리 두 개는 10px로 둥글게 만들고, 아래쪽 모서리 두 개는 둥글게 만들지 않겠다는 의미입니다. */
 
             overflow: hidden; /* 내용이 모서리를 넘지 않도록 */
         }
@@ -247,8 +278,81 @@
             </div>
         </div>
 
+
         <!-- 게시글 List 출력 -->
-        <div class="row mb-4" th:each="instaArticleList : ${instaArticleListAll}">
+        <!-- 게시글 List 박스 -->
+        <div class="row mb-5 mt-5">
+            <div id="articleListBox" class="col">
+                
+            </div>
+        </div>
+
+
+        <!-- <div class="write-button-container">
+            <form action="./instaWritePage" method="get">
+                <button class="btn write-button" type="submit" style="background-color: white;">
+                    <i class="bi bi-plus-square fs-2"></i>
+                </button>
+            </form>
+        </div> -->
+
+        <!-- 글쓰기 버튼 -->
+        <div class="write-button-container">
+            <!-- style="aspect-ratio: 1/1;" -> 익스펙토 주문 : 정방향을 만들어준다 -->
+            <form action="./instaWritePage" method="get">
+                <button class="btn bg-white rounded-2 border border-2 border-black px-2 py-1" type="submit">
+                    <i class="fa-solid fa-plus"></i>
+                    <input type="hidden" name="user_id" th:value="${instaUserInfoDto.id}">
+                </button>
+            </form>
+        </div>
+
+        <!-- 글쓰기 페이지 -->
+        <!-- <form class="row fixed-bottom fixed-write-button" action="./instaWritePage" method="get">
+            <div class="col-10"></div>
+            <div class="col-2">
+                <button class="btn" type="submit">
+                    <i class="bi bi-plus-square fs-2 write-button"></i>
+                </button>
+            </div>
+        </form> -->
+        
+    </div>
+
+    <!-- 하단바 -->
+    <div class="container mt-5">
+        <div class="row">
+            <div class="col">
+                <div class="row border-top fixed-bottom" style="background-color: white;">
+
+                    <div class="col">
+                        <button onclick="popup(`당신의 선택은`,`과연`,`자바스크립트`,`타임리프`,function(){action()})" class="btn" type="submit">
+                            <span>홈</span>
+                        </button>
+                    </div>
+                        
+                    <div class="col">
+                        <span>쇼핑</span>
+                    </div> 
+                    <div class="col">
+                        <span>예약</span>
+                    </div> 
+                    <div class="col">
+                        <span>커뮤</span>
+                    </div> 
+                    <div class="col">
+                        <span>마이</span>
+                    </div> 
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- display-none = 안에 있는 내용은 보이지 않음 -->
+    <div id="templete" class="d-none">
+        <!-- 하나의 게시글 -->
+        <div class="articleWrapper row mb-4" th:each="instaArticleList : ${instaArticleListAll}">
             <div class="col">
                 <div class="row">
                     <!-- 글 작성한 사람 프로필 이미지 -->
@@ -267,10 +371,10 @@
 
                     <!-- 오프캠버스말고 모달로 변경하기 -->
                     <!-- 오프캠버스의 경우 조건문으로 두가지 이상의 결과를 내야할 때
-                         offcanvas id를 조건문에따라서 다르게 해야함 data-bs-target, aria-controls의 이름도 id와 같게 바꿔줘야 함 -->
+                        offcanvas id를 조건문에따라서 다르게 해야함 data-bs-target, aria-controls의 이름도 id와 같게 바꿔줘야 함 -->
                     <!-- 세션 아이디와 글쓴 사람 아이디가 같을경우 -->
                     <div class="col text-end align-self-center"
-                         th:if="${session.sessionUserInfo.id == instaArticleList.instaUserInfoDto.user_id}">
+                        th:if="${session.sessionUserInfo.id == instaArticleList.instaUserInfoDto.user_id}">
                         <button class="btn p-0" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasMy" aria-controls="offcanvasMy">
                             <i class="bi bi-three-dots"></i>
                         </button>
@@ -288,7 +392,7 @@
                                         </div>
                                         <div class="row border-bottom">
                                             <a class="col link-dark link-underline-opacity-0 py-3"
-                                               th:href="@{./articleDeleteProcess(article_id=${instaArticleList.instaArticleDto.id}, user_id=${session.sessionUserInfo.id})}">
+                                            th:href="@{./articleDeleteProcess(article_id=${instaArticleList.instaArticleDto.id}, user_id=${session.sessionUserInfo.id})}">
                                                 <span style="color: red;">
                                                     삭제
                                                 </span>
@@ -307,7 +411,7 @@
 
                     <!-- 세션 아이디와 글쓴 사람 아이디가 다를경우 -->
                     <div class="col text-end align-self-center"
-                         th:unless="${session.sessionUserInfo.id == instaArticleList.instaUserInfoDto.user_id}">
+                        th:unless="${session.sessionUserInfo.id == instaArticleList.instaUserInfoDto.user_id}">
                         <button class="btn p-0" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasUser" aria-controls="offcanvasUser">
                             <i class="bi bi-three-dots"></i>
                         </button>
@@ -340,8 +444,6 @@
                             </div>
                         </div>
                     </div>
-
-
                 </div>
 
                 <!-- 해당글 이미지 List -->
@@ -356,16 +458,16 @@
                                     th:data-bs-slide-to="${iterStat.index}">
                                 </li>
                                 <!-- iterStat은 Thymeleaf에서 반복문을 사용할 때 제공되는 변수로, 반복 상태를 나타내는 객체입니다.
-                                     iterStat을 사용하면 반복문에서 현재 반복의 상태를 추적하고, 인덱스나 반복 횟수와 같은 정보를 얻을 수 있습니다. -->
+                                    iterStat을 사용하면 반복문에서 현재 반복의 상태를 추적하고, 인덱스나 반복 횟수와 같은 정보를 얻을 수 있습니다. -->
                             </ol>
                             
                             <div class="carousel-inner">
                                 <!-- 이미지도 반복문 -->
                                 <div th:each="image, iterStat : ${instaArticleList.instaArticleImgDtoList}"
-                                     class="carousel-item"
-                                     th:classappend="${iterStat.index == 0 ? 'active' : ''}"> <!-- data-bs-interval="5000" _ 5초에 한번씩 사진 슬라이드 -->
-                                     <!-- 타임리프에서 classappend라는 구문을 사용하여 HTML 요소의 class 속성에 동적으로 클래스를 추가할 수 있습니다. -->
-                                    <img th:src="|/images/${image.img_link}|" class="d-block w-100">
+                                    class="carousel-item"
+                                    th:classappend="${iterStat.index == 0 ? 'active' : ''}"> <!-- data-bs-interval="5000" _ 5초에 한번씩 사진 슬라이드 -->
+                                    <!-- 타임리프에서 classappend라는 구문을 사용하여 HTML 요소의 class 속성에 동적으로 클래스를 추가할 수 있습니다. -->
+                                    <img th:src="|/images/${image.img_link}|" class="d-block w-100" style="aspect-ratio: 1.4/1;">
                                 </div>
                             </div>
                             
@@ -399,20 +501,20 @@
                             
                             <div class="carousel-inner">
                                 
-                              <div class="carousel-item active"
-                                   th:each="image : ${instaArticleList.instaArticleImgDtoList}"> 
-                                   <img th:src="|/images/${image.img_link}|" class="d-block w-100">
-                              </div>
+                            <div class="carousel-item active"
+                                th:each="image : ${instaArticleList.instaArticleImgDtoList}"> 
+                                <img th:src="|/images/${image.img_link}|" class="d-block w-100">
+                            </div>
                             </div>
                             <button class="carousel-control-prev" type="button" th:data-bs-target="'#carouselExampleInterval' + ${instaArticleList.instaArticleDto.id}" data-bs-slide="prev">
-                              <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                              <span class="visually-hidden">Previous</span>
+                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Previous</span>
                             </button>
                             <button class="carousel-control-next" type="button" th:data-bs-target="'#carouselExampleInterval' + ${instaArticleList.instaArticleDto.id}" data-bs-slide="next">
-                              <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                              <span class="visually-hidden">Next</span>
+                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Next</span>
                             </button>
-                          </div>
+                        </div>
                     </div>
                 </div> -->
 
@@ -478,8 +580,8 @@
                 </div>
 
                 <!-- 글 작성한 사람 닉네임,
-                     게시글 작성일,
-                     내용 -->
+                    게시글 작성일,
+                    내용 -->
                 <div class="row justify-content-center">
                     <!-- <a class="col-auto fontBasic pe-0 link-dark link-offset-2 link-underline link-underline-opacity-0" href="./instaUserPage">
                         <span th:text="${instaArticleList.instaUserInfoDto.insta_nickname}"></span>
@@ -522,66 +624,9 @@
                 </div>
             </div>
         </div>
-
-        <!-- <div class="write-button-container">
-            <form action="./instaWritePage" method="get">
-                <button class="btn write-button" type="submit" style="background-color: white;">
-                    <i class="bi bi-plus-square fs-2"></i>
-                </button>
-            </form>
-        </div> -->
-
-        <!-- 글쓰기 버튼 -->
-        <div class="write-button-container">
-            <!-- style="aspect-ratio: 1/1;" -> 익스펙토 주문 : 정방향을 만들어준다 -->
-            <form action="./instaWritePage" method="get">
-                <button class="btn bg-white rounded-2 border border-2 border-black px-2 py-1" type="submit">
-                    <i class="fa-solid fa-plus"></i>
-                    <input type="hidden" name="user_id" th:value="${instaUserInfoDto.id}">
-                </button>
-            </form>
-        </div>
-
-        <!-- 글쓰기 페이지 -->
-        <!-- <form class="row fixed-bottom fixed-write-button" action="./instaWritePage" method="get">
-            <div class="col-10"></div>
-            <div class="col-2">
-                <button class="btn" type="submit">
-                    <i class="bi bi-plus-square fs-2 write-button"></i>
-                </button>
-            </div>
-        </form> -->
-        
     </div>
 
-    <div class="container mt-5 pt-5">
-        <!-- 하단바 -->
-        <div class="row">
-            <div class="col">
-                <div class="row border-top fixed-bottom" style="background-color: white;">
 
-                    <div class="col">
-                        <button onclick="popup(`당신의 선택은`,`과연`,`자바스크립트`,`타임리프`,function(){action()})" class="btn" type="submit">
-                            <span>홈</span>
-                        </button>
-                    </div>
-                        
-                    <div class="col">
-                        <span>쇼핑</span>
-                    </div> 
-                    <div class="col">
-                        <span>예약</span>
-                    </div> 
-                    <div class="col">
-                        <span>커뮤</span>
-                    </div> 
-                    <div class="col">
-                        <span>마이</span>
-                    </div> 
-                </div>
-            </div>
-        </div>
-    </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
     <script src="https://kit.fontawesome.com/7b271bba58.js" crossorigin="anonymous"></script>
 </body>

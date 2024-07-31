@@ -10,6 +10,7 @@
         <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap">
 
         <link rel="stylesheet" href="/public/css/insta/instaStyle.css">
+        <link rel="stylesheet" href="/public/css/common.css">
 
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 
@@ -168,8 +169,8 @@
 
                     const commentWrapperTemplete = document.querySelector("#templete .commentWrapper");
 
-                    // e = map
-                    for(const e of response.data.commentList){
+                    // c = map
+                    for(const c of response.data.commentList){
                         const newCommentWrapper = commentWrapperTemplete.cloneNode(true);
 
                         // 댓글 요소에 comment_id를 data-comment-id로 설정
@@ -179,27 +180,27 @@
                         // querySelector = 배열이 아니고 단일 엘리먼트들을 리턴해줌
                         // queryAll = 배열을 리턴
                         const commentName = newCommentWrapper.querySelector(".commentName"); // 닉네임
-                        commentName.innerText = e.instaUserInfoDto.insta_nickname;
+                        commentName.innerText = c.instaUserInfoDto.insta_nickname;
 
                         const commentText = newCommentWrapper.querySelector(".commentText"); // 내용
-                        commentText.innerText = e.instaArticleCommentDto.comment;
+                        commentText.innerText = c.instaArticleCommentDto.comment;
 
                         const commentDate = newCommentWrapper.querySelector(".commentDate"); // 날짜
-                        const date = new Date(e.instaArticleCommentDto.created_at);
+                        const date = new Date(c.instaArticleCommentDto.created_at);
 
                         commentDate.innerText = `${date.getFullYear()}.${date.getMonth()+1}.${date.getDate()}`;
 
                         // console.log("myInstaId:", myInstaId);
                         // console.log("user_id:", e.instaArticleCommentDto.user_id);
 
-                        if(myInstaId != null && e.instaArticleCommentDto.user_id == myInstaId){ // 댓글 삭제
+                        if(myInstaId != null && c.instaArticleCommentDto.user_id == myInstaId){ // 댓글 삭제
                             const commentButton = newCommentWrapper.querySelector(".commentButton");
                             commentButton.classList.remove("d-none");
 
                             // const buttonDelete = newCommentWrapper.querySelector(".commentButton");
 
                             // 댓글 삭제 쿼리
-                            commentButton.setAttribute("onclick", `deleteComment(${e.instaArticleCommentDto.id})`);
+                            commentButton.setAttribute("onclick", `deleteComment(${c.instaArticleCommentDto.id})`);
 
                         }
 
@@ -207,24 +208,24 @@
 
                         // commentProfile 프로필
                         const commentProfile = newCommentWrapper.querySelector(".commentProfile");
-                        commentProfile.setAttribute("src", `/images/${e.instaUserInfoDto.insta_profile_img}`)
+                        commentProfile.setAttribute("src", `/images/${c.instaUserInfoDto.insta_profile_img}`)
                         
 
                         // commentLike 좋아요
                         // const commentLike = newCommentWrapper.querySelector(".commentLike");
                         // commentLike.innerText = e.instaUserInfoDto.insta_nickname;
                         const likeButton = newCommentWrapper.querySelector(".likeButton");
-                        likeButton.setAttribute("onclick", `commentLike(${e.instaArticleCommentDto.id})`);
+                        likeButton.setAttribute("onclick", `commentLike(${c.instaArticleCommentDto.id})`);
                         const unLikeButton = newCommentWrapper.querySelector(".unLikeButton");
-                        unLikeButton.setAttribute("onclick", `commentUnLike(${e.instaArticleCommentDto.id})`);
+                        unLikeButton.setAttribute("onclick", `commentUnLike(${c.instaArticleCommentDto.id})`);
                         
                         // 좋아요 유무 확인
-                        commentIsLiked(e.instaArticleCommentDto.id, likeButton, unLikeButton);
+                        commentIsLiked(c.instaArticleCommentDto.id, likeButton, unLikeButton);
 
                         // 좋아요 카운트
                         const likeCount = newCommentWrapper.querySelector(".likeCount");
                         // likeCount.setAttribute("onclick", `commentLikeCount(${e.instaArticleCommentDto.id})`);
-                        commentLikeCount(e.instaArticleCommentDto.id, likeCount);
+                        commentLikeCount(c.instaArticleCommentDto.id, likeCount);
                         
 
                         // commentReply 답글 버튼
@@ -366,15 +367,10 @@
                 </div>
             </div>
 
-            <!-- 댓글 List -->
-            <div class="row mt-5">
-                <div class="col">
-                    <!-- 댓글 목록 List 박스 -->
-                    <div class="row pb-5 mb-5">
-                        <div id="commentListBox" class="col fontBasic">
-                            
-                        </div>
-                    </div>
+            <!-- 댓글 List 박스 -->
+            <div class="row pb-5 mb-5 mt-5">
+                <div id="commentListBox" class="col fontBasic">
+                    
                 </div>
             </div>
 
@@ -506,13 +502,5 @@
         <script src="https://kit.fontawesome.com/7b271bba58.js" crossorigin="anonymous"></script>
     </body>
 </html>
-
-
-
-
-
-
-
-
 
 

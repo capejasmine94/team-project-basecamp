@@ -23,6 +23,28 @@ public class RestInstaController {
     @Autowired
     private InstaService instaService;
 
+    // 댓글 List 참고
+    // @RequestMapping("getCommentList")
+    // public InstaRestResponseDto getCommentList(@RequestParam("article_id") int article_id){
+    //     InstaRestResponseDto instaRestResponseDto = new InstaRestResponseDto();
+    //     instaRestResponseDto.setResult("success");
+
+    //     instaRestResponseDto.add("commentList", instaService.getCommentList(article_id));
+
+    //     return instaRestResponseDto;
+    // }
+
+    // 게시글 List
+    @RequestMapping("getArticleList")
+    public InstaRestResponseDto getArticleList(@RequestParam("user_id") int s_user_id){
+        InstaRestResponseDto instaRestResponseDto = new InstaRestResponseDto();
+        instaRestResponseDto.setResult("success");
+
+        instaRestResponseDto.add("articleList", instaService.selectInstaArticleList(s_user_id));
+
+        return instaRestResponseDto;
+    }
+
 
     // 좋아요
     @RequestMapping("like") // like insert

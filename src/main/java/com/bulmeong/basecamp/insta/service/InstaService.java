@@ -88,7 +88,7 @@ public class InstaService {
             InstaArticleLikeDto instaArticleLikeDto = new InstaArticleLikeDto();
             instaArticleLikeDto.setArticle_id(article_id);
             instaArticleLikeDto.setUser_id(s_user_id);
-            int like = instaSqlMapper.countLikeByArticleIdAndUserId(instaArticleLikeDto);
+            int like = instaSqlMapper.countLikeByArticleIdAndUserId(instaArticleLikeDto); // 게시글 좋아요 상태 여부
 
             // instaSqlMapper.deleteLikeByArticleIdAndUserId(instaArticleLikeDto);
 

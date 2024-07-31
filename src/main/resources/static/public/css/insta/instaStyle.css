@@ -29,28 +29,33 @@
     width: 20px;  /* 원하는 너비 */
     height: 20px; /* 원하는 높이 */
     object-fit: cover; /* 이미지가 요소를 채우도록 조정 */
+    aspect-ratio: 1/1;
 }
 .profileImage {
     width: 35px;  /* 원하는 너비 */
     height: 35px; /* 원하는 높이 */
     object-fit: cover; /* 이미지가 요소를 채우도록 조정 */
+    aspect-ratio: 1/1;
 }
 .storyImage {
     width: 60px;  /* 원하는 너비 */
     height: 60px; /* 원하는 높이 */
     object-fit: cover; /* 이미지가 요소를 채우도록 조정 */
+    aspect-ratio: 1/1;
 }
 /* instaBookmarkPage */
 .userImage {
     width: 80px;  /* 원하는 너비 */
     height: 80px; /* 원하는 높이 */
     object-fit: cover; /* 이미지가 요소를 채우도록 조정 */
+    aspect-ratio: 1/1;
 }
 /* instaConfirmPage */
 #profileImage {
     width: 150px;  /* 원하는 너비 */
     height: 150px; /* 원하는 높이 */
     object-fit: cover; /* 이미지가 요소를 채우도록 조정 */
+    aspect-ratio: 1/1;
 }
 
 .instaButtonColor {
