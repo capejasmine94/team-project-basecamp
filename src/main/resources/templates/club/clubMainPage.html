@@ -8,6 +8,13 @@
         <link href="/public/css/common.css" rel="stylesheet">
         <link rel="stylesheet" href="/public/css/common.css">
 
+        <style>
+        .fixed-image-size {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        </style>
     </head>
     <body>
       
@@ -15,7 +22,7 @@
         <div class="container">
 
             <!-- 전체 박스 -->
-                <div class="row px-2">
+                <div class="row px-3">
                     <div class="col">
 
                         <div class="row pt-5 pb-3">
@@ -29,7 +36,7 @@
                             <div class="col">
 
                                 <div class="row pt-3">
-                                    <div class="col-3 d-grid pe-0">
+                                    <div class="col-auto d-grid pe-0">
                                         <select name="region_id" class="form-select form-control">
                                             <option selected>지역</option>
                                             <option th:each="regionCategoryDto:${regionCategoryDtoList}"
@@ -60,7 +67,7 @@
 
                                 <div class="row">
                                     <div class="col p-0">
-                                        <div id="bannerCaroucel" class="carousel slide" data-bs-ride="true">
+                                        <div id="bannerCaroucel" class="carousel slide"  data-bs-ride="true">
                                             <div class="carousel-inner">
                                                 <div class="carousel-item active">
                                                     <img src="/public/img/clubImage/mountain.jpg" class="d-block w-100" alt="...">
@@ -259,7 +266,7 @@
                                 </div>
                                 <div class="row">
                                     <div class="col-auto text-secondary" style="font-size: 0.9em;">
-                                        <span>따끈따근, 방금 생긴 모임이에요!</span>
+                                        <span>따끈따끈, 방금 생긴 모임이에요!</span>
                                     </div>
                                     <div class="col text-end text-secondary" style="font-size: 0.9em;">
                                         <a href="/club/newClubs"><span class="text-secondary">더보기 <i class="bi bi-chevron-right"></i></span></a>
@@ -268,153 +275,73 @@
 
                             
                                 <!-- 새로운 모임 슬라이드로~ -->
-                                <div class="row py-3">
-                                    <div class="col-6">
+                            
+                                <div class="row ms-1 me-1 border-bottom">
+                                    <div class="col scroll-list-box overflow-x-auto">
+                                    
+                                        <div class="row py-3" style="width: 200%;">
+                                            <div class="col-auto" th:each="clubDto : ${clubDtoList}">
 
-                                        <div class="row border rounded-top border-bottom-0" style="width: 10em; height: 10em;">
-                                            <div class="col px-0">
-                                                <img src="/public/img/clubImage/오색코스.jpg" class="card-img-top img-fluid rounded-top" alt="...">
-                                            </div>
-                                        </div>
-                                        <div class="row border rounded-bottom border-top-0" style="width: 10em;">
-                                            <div class="col">
-                                                
-                                                <div class="row">
-                                                    <div class="col">
-                                                        소모임명
+                                                <div class="row border me-1 rounded-top border-bottom-0" style="width: 10em; height: 8em;">
+                                                    <div class="col px-0 pb-0 mb-0">
+                                                        <img th:src="|/images/${clubDto.main_image}|" class="card-img-top img-fluid rounded-top fixed-image-size" alt="...">
                                                     </div>
                                                 </div>
-                                                <div class="row">
+                                                <div class="row border shadow-sm rounded-bottom border-top-0" style="width: 10em; height: 8em;">
                                                     <div class="col">
-                                                        소모임 설명
-                                                    </div>
-                                                </div>
-                                                <div class="row">
-                                                    <div class="col">
-                                                        버튼
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-
-
-
-
-
-
-
-                                        <!-- <div class="row">
-                                            <div class="col-6">
-                                                <div class="card" style="width: 10em; height: 100%;">
-                                                    <img src="/public/img/clubImage/오색코스.jpg" class="card-img-top" alt="...">
-                                                    <div class="card-body">
-                                                      <h5 class="card-title">소모임명</h5>
-                                                      <p class="card-text">소모임 정보 - 글자수 제한하거나 카드 높이 일괄적으로 적용해야 함</p>
-                                                      <a href="#" class="btn btn-primary">둘러보기</a>
-                                                    </div>
-                                                  </div>
-                                            </div>
-        
-                                            <div class="col-6">
-                                                <div class="card" style="width: 10em; height: 100%;">
-                                                    <img src="/public/img/clubImage/오색코스.jpg" class="card-img-top" alt="...">
-                                                    <div class="card-body">
-                                                      <h5 class="card-title">소모임명</h5>
-                                                      <p class="card-text">소모임 정보 - 글자수 제한하거나 카드 높이 일괄적으로 적용해야 함</p>
-                                                      <a href="#" class="btn btn-primary">둘러보기</a>
-                                                    </div>
-                                                </div> 
-                                            </div>
-                                        </div> -->
-
-                                    </div>
-                                </div>
-
-
-
-                               
-
-                                
-                                
-
-
-
-
-
-
-
-
-
-                                <div class="row pt-2">
-                                    <div class="col" th:each="clubDto : ${clubDtoList}">
-                                        <div class="row">
-                                            <div class="col">
-                                                <a th:href="@{/club/home(id=${clubDto.id})}">
-                                                    <div class="rectangles">
-                                                        <div class="rectangle" style="width: 5em; height: 3em; border: 1px solid #fff;" >
-                                                            <img th:src="|/images/${clubDto.main_image}|" alt="모임 이미지 1" style="width: 6em; height: 3em; object-fit: cover;">
+                                                        <div class="row pt-3">
+                                                            <div class="col text-center fw-semi-bold" style="font-size: 0.9em;">
+                                                                <span th:text="${clubDto.name}">소모임명</span>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col ellipsis-line-two text-secondary text-center" style="font-size: 0.8em;">
+                                                                <span th:text="${clubDto.description}">소모임 설명</span>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row pt-1 justify-content-center">
+                                                            <a th:href="@{/club/home(id=${clubDto.id})}" class="btn btn-outline-secondary col-auto py-1 d-grid">
+                                                                둘러보기
+                                                            </a>
                                                         </div>
                                                     </div>
-                                                </a>
-                                            </div>
-                                        </div>
-                                        <div class="row pt-1">
-                                            <div class="col">
-
-                                                <div class="row">
-                                                    <div class="col ellipsis fw-semi-bold" style="font-size: 0.8em;" >
-                                                        <a th:href="@{/club/home(id=${clubDto.id})}">
-                                                            <span th:text="${clubDto.category_id}">소모임 카테고리</span>
-                                                        </a>
-                                                    </div>
-                                                </div>
-                                                <div class="row">
-                                                    <div class="col ellipsis" style="font-size: 0.9em;" >
-                                                        <a th:href="@{/club/home(id=${clubDto.id})}">
-                                                            <span th:text="${clubDto.name}">소모임 이름</span>
-                                                        </a>
-                                                    </div>
                                                 </div>
 
                                             </div>
                                         </div>
+                                
                                     </div>
                                 </div>
 
                             </div>
                         </div>
 
-
-                        <!-- 즐겨찾기 모임 박스 -->
-                        <div class="row pt-4">
+                    
+                        <div class="row">
                             <div class="col">
 
-                                <div class="row">
-                                    <div class="col fw-semi-bold">
-                                        <span>즐겨찾기 <i class="bi bi-chevron-right"></i></span>
+                                <div class="row pt-4 pb-2">
+                                    <div class="col">
+                                        <span class="text-success fw-semi-bold">닉네임</span> 님, 이런 소모임은 어떠세요?
+                                        <!-- 인기 소모임을 보여주는 방식? 북마크 많은 순서 혹은 회원수가 많은 순서 카드가 하나씩만 보이게끔 가능할지?-->
                                     </div>
                                 </div>
-                              
 
-                                <!-- 즐겨찾기 모임 슬라이드로~ -->
-                                <div class="row pt-2">
-                                    <div class="col" th:each="clubDto : ${clubDtoList}">
-                                        <div class="row">
-                                            <div class="col">
-                                                <a th:href="@{/club/home(id=${clubDto.id})}">
-                                                    <div class="rectangles">
-                                                        <div class="rectangle" style="width: 5em; height: 3em; border: 1px solid #fff;" >
-                                                            <img th:src="|/images/${clubDto.main_image}|" alt="모임 이미지 1" style="width: 6em; height: 3em; object-fit: cover;">
-                                                        </div>
-                                                    </div>
-                                                </a>
+                                <div class="row border rounded-top border-bottom-0" style="height: 6em; overflow: hidden">
+                                    <div class="col px-0 pb-0 mb-0">
+                                        <img src="/public/img/clubImage/fake.jpeg" class="img-fluid rounded-top" style="width: 100%; height: 100%;" >
+                                    </div>
+                                </div>
+                                <div class="row border shadow-sm rounded-bottom border-top-0 justify-content-center" style="height: 6em;">
+                                    <div class="col">
+                                        <div class="row pt-3 mt-1">
+                                            <div class="col text-center fw-semi-bold" style="font-size: 0.9em;">
+                                                <span>ENGLISH CAMP FOR SUMMER VACATION</span>
                                             </div>
                                         </div>
                                         <div class="row">
-                                            <div class="col text-center ellipsis" style="font-size: 0.8em;" >
-                                                <a th:href="@{/club/home(id=${clubDto.id})}">
-                                                    <span th:text="${clubDto.name}">소모임 이름</span>
-                                                </a>
+                                            <div class="col ellipsis-line-two text-secondary text-center" style="font-size: 0.8em;">
+                                                <span>Slow and Steady Wins the Race! Read and Enjoy English Books every single day!</span>
                                             </div>
                                         </div>
                                     </div>
@@ -423,63 +350,95 @@
                             </div>
                         </div>
 
-                         <!-- 내가 가입한 모임 박스 -->
-                         <div class="row pt-4">
-                            <div class="col">
-
-                                <div class="row">
-                                    <div class="col fw-semi-bold">
-                                        <span>내 모임 <i class="bi bi-chevron-right"></i></span>
-                                    </div>
-                                </div>
-                              
-
-                                <!-- 내가 가입한 모임 슬라이드로~ -->
-                                <div class="row pt-2">
-                                    <div class="col" th:each="clubDto : ${clubDtoList}">
-                                        <div class="row">
-                                            <div class="col">
-                                                <a th:href="@{/club/home(id=${clubDto.id})}">
-                                                    <div class="rectangles">
-                                                        <div class="rectangle" style="width: 5em; height: 3em; border: 1px solid #fff;" >
-                                                            <img th:src="|/images/${clubDto.main_image}|" alt="모임 이미지 1" style="width: 6em; height: 3em; object-fit: cover;">
-                                                        </div>
-                                                    </div>
-                                                </a>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col text-center ellipsis" style="font-size: 0.8em;" >
-                                                <a th:href="@{/club/home(id=${clubDto.id})}">
-                                                    <span th:text="${clubDto.name}">소모임 이름</span>
-                                                </a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
+                        <!-- 즐겨찾기 -->
+                        <div class="row pt-4 pb-2">
+                            <div class="col fw-semi-bold">
+                                <span>즐겨찾기 <i class="bi bi-chevron-right"></i></span>
                             </div>
                         </div>
 
+                        <div class="row">
+                            <div class="col scroll-list-box overflow-x-auto" style="white-space: nowrap; overflow-x: auto;">
+                        
+                                <div class="row d-inline-block" style="width: auto;">
+                                    <div class="col d-inline-block" th:each="clubDto : ${clubDtoList}" style="width: 21em;">
+                        
+                                        <div class="row" style="width: 21em;">
+                                            <div class="col-6">
+                                                <img th:src="|/images/${clubDto.main_image}|" class="img-fluid border rounded">
+                                            </div>
+                                            <div class="col ps-0">
+                                                <div class="row">
+                                                    <div class="col">
+                                                        <span th:text="${clubDto.name}"></span>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col">
+                                                        <span th:text="${clubDto.description}"></span>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col">
+                                                        멤버 17 | 카테고리
+                                                    </div>
+                                                </div>
+                                            </div>
+                        
+                                        </div>
+                        
+                                    </div>
+                                </div>
+                        
+                            </div>
+                        </div>
+                        
+                         <!-- 내 모임 -->
+                         <div class="row pt-3 pb-2">
+                            <div class="col fw-semi-bold">
+                                <span>내 모임 <i class="bi bi-chevron-right"></i></span>
+                            </div>
+                        </div>
+                        
+                         <div class="row">
+                            <div class="col scroll-list-box overflow-x-auto" style="white-space: nowrap; overflow-x: auto;">
+                        
+                                <div class="row d-inline-block" style="width: auto;">
+                                    <div class="col d-inline-block" th:each="clubDto : ${clubDtoList}" style="width: 21em;">
+                        
+                                        <div class="row" style="width: 21em;">
+                                            <div class="col-6">
+                                                <img th:src="|/images/${clubDto.main_image}|" class="img-fluid border rounded">
+                                            </div>
+                                            <div class="col ps-0">
+                                                <div class="row">
+                                                    <div class="col">
+                                                        <span th:text="${clubDto.name}"></span>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col">
+                                                        <span th:text="${clubDto.description}"></span>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col">
+                                                        멤버 17 | 카테고리
+                                                    </div>
+                                                </div>
+                                            </div>
+                        
+                                        </div>
+                        
+                                    </div>
+                                </div>
+                        
+                            </div>
+                        </div>
+                        
+                         
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+                        
 
 <!-- 
                         즐겨찾기한 모임
@@ -522,10 +481,10 @@
                         </div>
 
 
-                         <!-- 새로운 소모임  -->
+                      
                       
 
-                         <!-- 내 모임
+                         내 모임
                          <div class="row">
                             <div class="col">
                                 <div class="row pt-4 pb-2">
@@ -559,7 +518,7 @@
                             </div>
                         </div> -->
 
-                        <div class="row pt-5">
+                        <div class="row pt-4 pb-5">
                             <div class="col">
                                 <a href="/club/createNewClub" class="btn form-control btn-dark">소모임 개설하기</a>
                             </div>
