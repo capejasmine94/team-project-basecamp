@@ -3,6 +3,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.bulmeong.basecamp.club.dto.ClubBookmarkDto;
+import com.bulmeong.basecamp.club.dto.ClubCategoryDto;
 import com.bulmeong.basecamp.club.dto.ClubDto;
 import com.bulmeong.basecamp.club.dto.ClubJoinConditionDto;
 import com.bulmeong.basecamp.club.dto.ClubMeetingDto;
@@ -97,13 +98,21 @@ public class ClubService {
         return clubMemberDataList;
     }
 
+    // 관심사 카테고리
+    public List<ClubCategoryDto> findClubCategory(){
+        List<ClubCategoryDto> clubCategoryDtoList = clubSqlMapper.selectClubCategory();
+
+        return clubCategoryDtoList;
+    }
+
+
 
     // 지역 카테고리
     public List<ClubRegionCategoryDto> findRegionCategory(){
 
-        List<ClubRegionCategoryDto> regionCategroyDtoList = clubSqlMapper.selectRegionCategory();
+        List<ClubRegionCategoryDto> regionCategoryDtoList = clubSqlMapper.selectRegionCategory();
 
-        return regionCategroyDtoList;
+        return regionCategoryDtoList;
     }
 
     public ClubRegionCategoryDto findRegionCategoryDtoById(int id){

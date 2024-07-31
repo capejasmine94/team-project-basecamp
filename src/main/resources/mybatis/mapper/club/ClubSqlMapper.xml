@@ -12,6 +12,7 @@
 
         insert into bc_club(
             user_id, 
+            category_id,
             region_id, 
             name, 
             description, 
@@ -19,6 +20,7 @@
             main_image
         )values(
             #{user_id}, 
+            #{category_id},
             #{region_id}, 
             #{name}, 
             #{description}, 
@@ -83,6 +85,11 @@
             #{role_id} 
         )
     </insert>
+    
+    <!-- 관심사 카테고리 -->
+    <select id="selectClubCategory" resultType="com.bulmeong.basecamp.club.dto.ClubCategoryDto">
+        select * from bc_club_category
+    </select>
 
 
     <!-- 지역 카테고리 -->
@@ -179,6 +186,7 @@
         select * from bc_club
         where id = #{id}
     </select>
+    
 
     <!-- 지역카테고리 DTO 가져오기 by id-->
     <select id="selectRegionCategoryDtoById" resultType="com.bulmeong.basecamp.club.dto.ClubRegionCategoryDto">

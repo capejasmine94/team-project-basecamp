@@ -43,16 +43,16 @@
                         <div class="row py-4">
                             <div class="col-auto" th:if="${session.sessionUserInfo != null}">
                                 <a th:if="${confirmBookmark == 0}" th:href="@{/club/bookmarkProcess(club_id=${map.clubDto.id}, user_id=${session.sessionUserInfo.id})}">
-                                    <span><i class="bi bi-heart"></i></span>
+                                    <span><i class="bi bi-heart text-danger"></i></span>
                                 </a>
                                 <a th:unless="${confirmBookmark == 0}" th:href="@{/club/bookmarkProcess(club_id=${map.clubDto.id}, user_id=${session.sessionUserInfo.id})}">
-                                    <span><i class="bi bi-heart-fill"></i></span>
+                                    <span><i class="bi bi-heart-fill text-danger"></i></span>
                                 </a>
                             </div>
 
                             <div class="col-auto" th:if="${session.sessionUserInfo == null}">
                                 <a>
-                                    <span><i class="bi bi-bookmark"></i></span>
+                                    <span><i class="bi bi-heart"></i></span>
                                 </a>
                             </div>
 
@@ -81,7 +81,7 @@
 
                         <div class="row pt-1 pb-2 border-0">
                             <div class="col" style="font-size: 0.8em;">
-                                [필독] (공지사항 고정하기 할 수 있을까..?)
+                                <!-- [필독] (공지사항 고정하기 할 수 있을까..?) -->
                             </div>
                         </div>
 
@@ -93,28 +93,40 @@
                                         <!-- <img th:src="@{/images/{image}(main_image=${map.clubDto.main_image})}" style="width: 100%; height: 100%; object-fit: cover;"> -->
                                         <img th:src="|/images/${map.clubDto.main_image}|"style="width: 100%; height: 100%; object-fit: cover;">
                                         <div class="badge bg-opacity-50 bg-dark" style="position: absolute; top: 5px; right: 5px;  color: #fff; padding: 10px;">
-                                            <i class="bi bi-bookmark" th:text="' ' + ${totalBookmark}"></i><span></span>
+                                            <i class="bi bi-heart" th:text="' ' + ${totalBookmark}"></i><span></span>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
 
+                        
+
+
                          <!-- 소모임 홈 - 소모임 정보 카드부분 -->
                         <div class="row border rounded py-2 shadow-sm">
                             <div class="col-auto">
 
-                             
-                                <div class="row pb-3">
+                                <div class="row pb-2">
                                     <div class="col" style="font-size: 0.8em;">
-                                        <span class="badge text-bg-danger">NEW</span>
-                                        <span class="badge text-bg-primary" th:text="${map.clubRegionCategoryDto.region_name}"></span>
-                                        <span class="badge text-bg-primary" th:text="'멤버 ' + ${map.totalClubMember} + ' / ' + ${map.clubDto.capacity}"></span>
-                                        <span class="badge text-bg-primary" th:text="${#dates.format(map.clubDto.created_at, 'yyyy.MM.dd')}"></span>
+                                        <div class="row">
+                                            <div class="col-auto pe-0 d-flex align-items-center">
+                                                <span class="badge text-bg-danger d-flex align-items-center">NEW</span>
+                                            </div>
+                                            <div class="col ps-1">                                         
+                                                <span class="text-secondary" th:text="${map.clubRegionCategoryDto.region_name}"></span>
+                                                <span class="text-secondary">|</span>
+                                                <span class="text-secondary" th:text="'멤버 ' + ${map.totalClubMember}"></span>
+                                                <span class="text-secondary">|</span>
+                                                <span class="text-secondary" th:text="${#dates.format(map.clubDto.created_at, 'yy.MM.dd')}"></span>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
+                                
+
                                 <div class="row pb-1">
-                                    <div class="col fw-bold" th:text="${map.clubDto.name}" >
+                                    <div class="col fw-semi-bold" th:text="${map.clubDto.name}" >
                                     </div> 
                                 </div>
                                 <div class="row">
@@ -124,15 +136,14 @@
                                 </div>
                             </div>
                             <div class="col text-end text-secondary" style="font-size: 0.8em;">
-                                <i class="bi bi-people"></i>
                                 <i class="bi bi-gear"></i>
                             </div>
                         </div>
-                        <div class="row border-bottom border-4 py-2">
+                        <div class="row border-bottom border-4 py-3">
                             <div class="col"></div>
                         </div>
 
-                        <div class="row py-2">
+                        <div class="row pt-4 pb-2">
                             <div class="col fw-bold ps-0">
                                 <span>정기모임</span>
                             </div>
@@ -226,6 +237,7 @@
                                     <div class="col ps-0" style="font-size: 0.8em;">
                                         <span>모임멤버</span>
                                         <span class="fw-semi-bold" style="color: crimson;" th:text="${map.totalClubMember}"></span>
+                                        <span th:text="' / ' +${map.clubDto.capacity}"></span>
                                     </div>
 
 
@@ -291,7 +303,7 @@
                     </div>
                 </div>
 
-                        <a th:if="${isMemberInClub == 1}" th:href="@{/club/createNewMeeting(id=${id})}" class="fixed-button">
+                        <a th:if="${isMemberInClub == 1}" th:href="@{/club/createNewMeeting(id=${id})}" class="fixed-button bg-opacity-75 bg-dark">
                             <!-- <i class="bi bi-plus-circle-fill"></i> -->
                             <i class="bi bi-person-raised-hand"></i>
                         </a>

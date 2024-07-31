@@ -8,6 +8,7 @@ import lombok.Data;
 @Data
 public class ClubDto {
     private int id;
+    private int category_id;
     private int user_id;
     private int region_id;
     private String name;

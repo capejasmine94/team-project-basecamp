@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.bulmeong.basecamp.club.dto.ClubBookmarkDto;
+import com.bulmeong.basecamp.club.dto.ClubCategoryDto;
 import com.bulmeong.basecamp.club.dto.ClubDto;
 import com.bulmeong.basecamp.club.dto.ClubJoinConditionDto;
 import com.bulmeong.basecamp.club.dto.ClubMeetingDto;
@@ -137,6 +138,9 @@ public class ClubController {
 
         List<ClubRegionCategoryDto> regionCategoryDtoList = clubService.findRegionCategory();
         model.addAttribute("regionCategoryDtoList", regionCategoryDtoList);
+
+        List<ClubCategoryDto> clubCategoryDtoList = clubService.findClubCategory();
+        model.addAttribute("clubCategoryDtoList", clubCategoryDtoList);
         
         return "club/createNewClubPage";
     }
