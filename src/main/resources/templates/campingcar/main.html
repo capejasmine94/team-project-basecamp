@@ -164,7 +164,7 @@
                     </div>
                 </div>
                 <!-- 검색 필터1 -->
-                <div class="row bg-white pt-3 border border-light-subtle">
+                <div class="row d-flex justify-content-between align-self-center bg-white pt-3 border border-light-subtle">
                     <!-- 대여 장소 -->
                     <div class="col text-center text-light-emphasis form-group px-1">
                         <div class="row">
@@ -173,7 +173,7 @@
                           </div>
                         </div>
                         <div class="row">
-                          <div class="col py-2">
+                          <div class="col py-2 pb-3">
                             <!-- id: 장소선택 버튼 문구를 사용자가 모달창에서 선택한 지역 이름을 동적으로 바꿀 수 있도록 하는 id -->
                             <button class="btn btn-light btn-block border border-0" id="locationDisplay" onclick="showLocationModal()">장소 선택</button>
                           </div>
@@ -187,7 +187,7 @@
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col py-2">
+                            <div class="col py-2 pb-3">
                                 <button class="btn btn-light btn-block border border-0 ellipsis-line-two" id="carTypeDisplay" onClick="showCarTypeModal()">유형 선택</button>
                             </div>
                         </div>
@@ -203,8 +203,9 @@
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col">
-                                <button type="button" class="btn btn-light btn-block border border-0" id="rendDateDisplay" data-bs-toggle="modal" data-bs-target="#rentdateModal">날짜 선택 <i class="fa-solid fa-chevron-down fa-xs"></i></button>
+                            <div class="col py-2 pb-3">
+                                <button type="button" class="btn btn-light btn-block border border-0" id="rendDateDisplay" onclick="showRentDateModal()">날짜 선택 
+                                    <i class="fa-solid fa-chevron-down fa-xs"></i></button>
                             </div>
                         </div>
                     </div>
@@ -216,8 +217,9 @@
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col">
-                                <button type="button" class="btn btn-light btn-block border border-0" id="returnDateDisplay" data-bs-toggle="modal" data-bs-target="#returndateModal">날짜 선택 <i class="fa-solid fa-chevron-down fa-xs"></i></button>
+                            <div class="col py-2 pb-3">
+                                <button type="button" class="btn btn-light btn-block border border-0" id="returnDateDisplay" onclick="showReturnDateModal()">날짜 선택 
+                                    <i class="fa-solid fa-chevron-down fa-xs"></i></button>
                             </div>
                         </div>
                     </div>
@@ -251,7 +253,7 @@
         </div>
     </div>
 
-    <!-- 대여 장소 선택 -->
+    <!-- 대여 장소 선택 모달-->
     <div class="modal fade" id="locationModal" tabindex="-1" aria-labelledby="locationModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
             <div class="modal-content">
@@ -276,7 +278,7 @@
             </div>
         </div>
     </div>
-    <!-- 캠핑카 유형 선택 -->
+    <!-- 캠핑카 유형 선택 모달 -->
     <div class="modal fade" id="campingcarModal" tabindex="-1" aria-labelledby="campingcarModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
             <div class="modal-content">
@@ -311,7 +313,7 @@
                     </div>
                 </div>
                 <div class="modal-footer d-flex justify-content-center">
-                    <button type="button" class="btn text-dark w-100" data-bs-dismiss="modal" style="background-color: #C6ED6F;" onclick="comfirmRentDate()">확인</button>
+                    <button type="button" class="btn text-dark w-100" data-bs-dismiss="modal" style="background-color: #C6ED6F;" onclick="confirmRentDate()">확인</button>
                 </div>
             </div>
         </div>
@@ -407,14 +409,15 @@
             </div>
         </div>
     </div>
-    <!-- 지역선택 Template -->
+
+    <!-- 지역선택 모달 Template -->
     <div id="regionsListTemplate" class="d-none">
         <div class="regionstsListWrapper col-6 pb-2 d-flex justify-content-center">
           <span class="regionsBtn btn btn-outline-light text-dark w-100"></span>
         </div>
     </div>
 
-    <!-- 캠핑카 선택 Template -->
+    <!-- 캠핑카선택 모달 Template -->
     <div id="carTypeCheckListTemplate" class="d-none">
         <div class="col-12 pb-2">
             <div class="carTypeCheckListWrapper form-check d-flex align-items-center">
@@ -436,318 +439,445 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js"></script>
     
 
-     <script>
-    // 페이지 로드 시 실행되는 이벤트를 등록합니다.
-    window.addEventListener("DOMContentLoaded", () => {
-        // 페이지가 완전히 로드되면 세션에서 사용자 ID를 설정하고, 캠핑카 리스트를 로드합니다.
-        setSessionUserId();
-        loadCampingCarList();                          
-    });
+    <script>
+        // 페이지 로드 시 실행되는 이벤트를 등록합니다.
+        window.addEventListener("DOMContentLoaded", () => {
+            // 페이지가 완전히 로드되면 세션에서 사용자 ID를 설정하고, 캠핑카 리스트를 로드합니다.
+            setSessionUserId();
+            loadCampingCarList();                          
+        });
 
-    // 전역 변수: 사용자 ID 초기화
-    // 페이지가 로드될 때 사용자 ID를 null로 초기화합니다.
-    let myId = null;
+        // 전역 변수: 사용자 ID 초기화
+        // 페이지가 로드될 때 사용자 ID를 null로 초기화합니다.
+        let myId = null;
 
-    // 세션에서 사용자 ID를 가져오는 함수
-    function setSessionUserId() {
-        // 사용자 ID를 가져오는 API 요청
-        const url = "/api/rent-user/getSessionUserId";
-        fetch(url)
-            .then(response => response.json()) // JSON 형식으로 응답을 처리
-            .then((response) => {
-                // 응답에서 사용자 ID를 추출하여 전역 변수에 저장
-                myId = response.data.id;
-            });
-    }
+        // 세션에서 사용자 ID를 가져오는 함수
+        function setSessionUserId() {
+            // 사용자 ID를 가져오는 API 요청
+            const url = "/api/rent-user/getSessionUserId";
+            fetch(url)
+                .then(response => response.json()) // JSON 형식으로 응답을 처리
+                .then((response) => {
+                    // 응답에서 사용자 ID를 추출하여 전역 변수에 저장
+                    myId = response.data.id;
+                });
+        }
 
-    // 캠핑카 리스트를 로드하고 화면에 표시하는 함수
-    function loadCampingCarList() {
-        // 캠핑카 리스트를 가져오는 API 요청
-        const url = "/api/campingcar/campingcarList";
-        fetch(url)
-            .then(response => response.json()) // JSON 형식으로 응답을 처리
+        // 캠핑카 리스트를 로드하고 화면에 표시하는 함수
+        function loadCampingCarList() {
+            // 캠핑카 리스트를 가져오는 API 요청
+            const url = "/api/campingcar/campingcarList";
+            fetch(url)
+                .then(response => response.json()) // JSON 형식으로 응답을 처리
+                .then(response => {
+                    // 캠핑카 리스트를 표시할 컨테이너 선택
+                    const campingcarListBox = document.getElementById("campingcarListBox");
+                    // 컨테이너의 기존 내용을 초기화
+                    campingcarListBox.innerHTML = "";
+                    
+                    // 캠핑카 리스트가 비어있는 경우 처리
+                    if (response.data.campingcarList.length == 0) {
+                        // 캠핑카가 없는 경우에 표시할 요소를 가져와서 리스트 박스에 추가
+                        const notExistList = document.querySelector("#campingcarListTemplete .notExistList");
+                        campingcarListBox.appendChild(notExistList);
+                        return; // 캠핑카가 없으므로 함수 종료
+                    }
+
+                    // 캠핑카 항목의 템플릿 요소를 가져와서 변수에 저장
+                    const campingcarListWrapperTemplete = document.querySelector("#campingcarListTemplete .campingcarListWrapper");
+
+                    // 캠핑카 리스트의 각 항목을 반복 처리
+                    for (const e of response.data.campingcarList) {
+                        // 캠핑카 항목 템플릿을 클론하여 새로운 항목 생성
+                        const newCampingcarListWrapper  = campingcarListWrapperTemplete.cloneNode(true);
+
+                        // 캠핑카 이미지 설정
+                        const campingcarImg = newCampingcarListWrapper.querySelector(".campingcarImg");
+                        // setAttribute 메서드를 사용하여 캠핑카 이미지의 src 속성을 설정합니다.
+                        // 이 속성은 캠핑카의 주요 이미지를 표시하는데 사용됩니다.
+                        // e.main_img는 서버에서 제공된 이미지 파일 이름을 포함하며,
+                        // 이 값을 통해 이미지를 동적으로 불러올 수 있습니다.
+                        campingcarImg.setAttribute("src", `/images/${e.main_img}`);
+
+                        // 좋아요 기능 설정
+                        const like = newCampingcarListWrapper.querySelector(".fa-heart");
+                        // setAttribute 메서드를 사용하여 하트 아이콘의 onclick 속성을 설정합니다.
+                        // 이를 통해 하트 아이콘 클릭 시 like() 함수가 호출되도록 합니다.
+                        // product_id는 현재 캠핑카 항목의 고유 ID를 나타내며, 
+                        // 이를 통해 특정 캠핑카에 대해 좋아요를 추가하거나 제거할 수 있습니다.
+                        like.setAttribute("onclick", `like(${e.id})`);
+
+                        // 하트 아이콘의 id 속성 설정
+                        const heart = newCampingcarListWrapper.querySelector(".fa-heart");
+                        // setAttribute 메서드를 사용하여 하트 아이콘의 id 속성을 설정합니다.
+                        // ID는 `heart-${e.id}` 형태로 설정되어 각 캠핑카 항목의 하트 아이콘을 고유하게 식별할 수 있습니다.
+                        // 이를 통해 이후 좋아요 상태를 동적으로 업데이트 할 수 있습니다.
+                        heart.setAttribute("id", `heart-${e.id}`);
+
+                        // 텍스트 요소 설정
+                        const campingcarComp_name = newCampingcarListWrapper.querySelector(".campingcarComp_name");
+                        campingcarComp_name.innerText = e.comp_name;
+
+                        const campingcarProduct_name = newCampingcarListWrapper.querySelector(".campingcarProduct_name");
+                        campingcarProduct_name.innerText = e.product_name;
+
+                        const campingcarShortdescription = newCampingcarListWrapper.querySelector(".campingcarShortdescription");
+                        campingcarShortdescription.innerText = e.shortdescription;
+
+                        // 가격 정보 설정
+                        const campingcarRental_fee_weekdays = newCampingcarListWrapper.querySelector(".campingcarRental_fee_weekdays");
+                        campingcarRental_fee_weekdays.innerText = `평일 가격 : ${e.rental_fee_weekdays.toLocaleString('ko-KR')}원`;
+
+                        const campingcarRental_fee_weekend = newCampingcarListWrapper.querySelector(".campingcarRental_fee_weekend");
+                        campingcarRental_fee_weekend.innerText = `주말 가격 : ${e.rental_fee_weekend.toLocaleString('ko-KR')}원`;
+
+                        // 주소 및 운전 조건 설정
+                        const campingcarGarage_address = newCampingcarListWrapper.querySelector(".campingcarGarage_address");
+                        campingcarGarage_address.innerText = `차고지 주소 : ${e.garage_address}`;
+
+                        const campingcarDriver_license_name = newCampingcarListWrapper.querySelector(".campingcarDriver_license_name");
+                        campingcarDriver_license_name.innerText = `운전면허증 : ${e.driver_license_name}`;
+
+                        const campingcarDriver_age_condition_name = newCampingcarListWrapper.querySelector(".campingcarDriver_age_condition_name");
+                        campingcarDriver_age_condition_name.innerText = `운전자 나이 : ${e.driver_age_condition_name}`;
+
+                        const campingcarDriver_experience_condition_name = newCampingcarListWrapper.querySelector(".campingcarDriver_experience_condition_name");
+                        campingcarDriver_experience_condition_name.innerText = `운전 경력 : ${e.driver_experience_condition_name}`;
+
+                        const campingcarSeating_capacity = newCampingcarListWrapper.querySelector(".campingcarSeating_capacity");
+                        campingcarSeating_capacity.innerText = `동승인원 : ${e.seating_capacity}명`; 
+
+                        const campingcarSleeping_capacity = newCampingcarListWrapper.querySelector(".campingcarSleeping_capacity");
+                        campingcarSleeping_capacity.innerText = `취침인원 : ${e.sleeping_capacity}명`;
+
+                        const campingcarPet_friendly = newCampingcarListWrapper.querySelector(".campingcarPet_friendly");
+                        campingcarPet_friendly.innerText = e.pet_friendly;
+
+                        // 새로운 캠핑카 항목을 리스트 박스에 추가
+                        campingcarListBox.appendChild(newCampingcarListWrapper);
+
+                        // 각 캠핑카 항목의 좋아요 상태를 갱신
+                        reloadLike(e.id);
+                    }
+                });
+        }
+
+        // 좋아요 클릭 함수
+        function like(product_id) {
+            // 사용자가 로그인하지 않은 경우 로그인 페이지로 리다이렉트
+            if (myId == null) {
+                if (confirm("로그인 하셔야 이용 가능합니다. 로그인 페이지로 이동하시겠습니까?")) {
+                    location.href = "/user/loginPage";
+                }
+                return;
+            }
+
+            // 좋아요를 추가하는 API 요청
+            const url = `/api/rent-user/like?product_id=${product_id}`;
+            fetch(url)
+                .then(response => response.json()) // JSON 형식으로 응답을 처리
+                .then(response => {
+                    // 좋아요 상태를 갱신합니다.
+                    reloadLike(product_id);
+                });
+        }
+
+        // 좋아요 상태를 갱신하는 함수
+        function reloadLike(product_id) {
+            // 사용자가 로그인하지 않은 경우 함수 종료
+            if (myId == null) {
+                return; 
+            }
+
+            // 찜 여부를 확인하는 API 요청
+            const url = `/api/rent-user/isLiked?product_id=${product_id}`;
+            fetch(url)
+                .then(response => response.json()) // JSON 형식으로 응답을 처리
+                .then(response => {
+                    // 콘솔 로그로 상태 확인
+                    // console.log("isLiked 여부 응답 확인: ", response.data.isLikedByUser);
+                    // console.log("myId 확인 : ", myId);
+                    
+                    // 특정 차량의 하트 아이콘 선택
+                    const heart = document.getElementById(`heart-${product_id}`);
+                    // console.log("heart의 product_id 값 확인: ", heart);
+
+                    // 사용자가 이미 좋아요를 눌렀는지 여부를 확인
+                    if (response.data.isLikedByUser == true) {
+                        // 좋아요가 눌린 상태: 하트 아이콘의 클래스를 fa-solid로 변경하여 강조
+                        heart.classList.remove("fa-regular");
+                        heart.classList.add("fa-solid");
+
+                        // setAttribute 메서드를 사용하여 하트 아이콘의 onclick 속성을 설정합니다.
+                        // 현재 좋아요 상태일 경우 클릭 시 좋아요를 취소하는 unLike() 함수가 호출되도록 설정합니다.
+                        heart.setAttribute("onclick", `unLike(${product_id})`);
+                    } else {
+                        // 좋아요가 눌리지 않은 상태: 하트 아이콘의 클래스를 fa-regular로 변경하여 비활성화
+                        heart.classList.remove("fa-solid");
+                        heart.classList.add("fa-regular");
+
+                        // setAttribute 메서드를 사용하여 하트 아이콘의 onclick 속성을 설정합니다.
+                        // 현재 좋아요 상태가 아닐 경우 클릭 시 좋아요를 추가하는 like() 함수가 호출되도록 설정합니다.
+                        heart.setAttribute("onclick", `like(${product_id})`);
+                    }
+                });
+        }
+
+        // 좋아요 취소 함수
+        function unLike(product_id) {
+            // 사용자가 로그인하지 않은 경우 로그인 페이지로 리다이렉트
+            if (myId == null) {
+                if (confirm("로그인 하셔야 이용 가능합니다. 로그인 페이지로 이동하시겠습니까?")) {
+                    location.href = "/user/loginPage";
+                }
+                return;
+            }
+
+            // 좋아요를 취소하는 API 요청
+            const url = `/api/rent-user/unLike?product_id=${product_id}`;
+            fetch(url)
+                .then(response => response.json()) // JSON 형식으로 응답을 처리
+                .then(response => {
+                    // 좋아요 상태를 갱신합니다.
+                    reloadLike(product_id);
+                });
+        }
+
+
+        // 대여 장소 선택 모달 열기 함수 
+        const showLocationModal = () => {
+            const locationModal = document.getElementById("locationModal"); 
+            const modal = new bootstrap.Modal(locationModal);
+            loadRegionOptionList(); // 모달을 열 때 지역 옵션 목록을 로드
+            modal.show();
+        }
+        // 대여 장소 모달의 지역 리스트 함수 
+        function loadRegionOptionList() {
+            const url = "/api/rent-user/getRegionsAll";
+            fetch(url)
+            .then(response => response.json())
             .then(response => {
-                // 캠핑카 리스트를 표시할 컨테이너 선택
-                const campingcarListBox = document.getElementById("campingcarListBox");
+                // console.log("response 응답: ", response.data.allRegionsList);
+
+                const regionsListBox = document.getElementById("regionsListBox");
                 // 컨테이너의 기존 내용을 초기화
                 campingcarListBox.innerHTML = "";
-                
-                // 캠핑카 리스트가 비어있는 경우 처리
-                if (response.data.campingcarList.length == 0) {
-                    // 캠핑카가 없는 경우에 표시할 요소를 가져와서 리스트 박스에 추가
-                    const notExistList = document.querySelector("#campingcarListTemplete .notExistList");
-                    campingcarListBox.appendChild(notExistList);
-                    return; // 캠핑카가 없으므로 함수 종료
-                }
 
-                // 캠핑카 항목의 템플릿 요소를 가져와서 변수에 저장
-                const campingcarListWrapperTemplete = document.querySelector("#campingcarListTemplete .campingcarListWrapper");
+                const regionsListWrapperTemplate  = document.querySelector("#regionsListTemplate .regionstsListWrapper"); 
 
-                // 캠핑카 리스트의 각 항목을 반복 처리
-                for (const e of response.data.campingcarList) {
-                    // 캠핑카 항목 템플릿을 클론하여 새로운 항목 생성
-                    const newCampingcarListWrapper  = campingcarListWrapperTemplete.cloneNode(true);
+                // 차량 지역 리스트의 각 항목을 반복 처리
+                for (const regionsList of response.data.allRegionsList) {
+                    // console.log("regionsList 반복리스트", regionsList.name);
+                    
+                    const newCampingcarListWrapperTemplate = regionsListWrapperTemplate.cloneNode(true);
+                    // console.log("new 확인 :" ,newCampingcarListWrapperTemplate);
 
-                    // 캠핑카 이미지 설정
-                    const campingcarImg = newCampingcarListWrapper.querySelector(".campingcarImg");
-                    // setAttribute 메서드를 사용하여 캠핑카 이미지의 src 속성을 설정합니다.
-                    // 이 속성은 캠핑카의 주요 이미지를 표시하는데 사용됩니다.
-                    // e.main_img는 서버에서 제공된 이미지 파일 이름을 포함하며,
-                    // 이 값을 통해 이미지를 동적으로 불러올 수 있습니다.
-                    campingcarImg.setAttribute("src", `/images/${e.main_img}`);
-
-                    // 좋아요 기능 설정
-                    const like = newCampingcarListWrapper.querySelector(".fa-heart");
-                    // setAttribute 메서드를 사용하여 하트 아이콘의 onclick 속성을 설정합니다.
-                    // 이를 통해 하트 아이콘 클릭 시 like() 함수가 호출되도록 합니다.
-                    // product_id는 현재 캠핑카 항목의 고유 ID를 나타내며, 
-                    // 이를 통해 특정 캠핑카에 대해 좋아요를 추가하거나 제거할 수 있습니다.
-                    like.setAttribute("onclick", `like(${e.id})`);
-
-                    // 하트 아이콘의 id 속성 설정
-                    const heart = newCampingcarListWrapper.querySelector(".fa-heart");
-                    // setAttribute 메서드를 사용하여 하트 아이콘의 id 속성을 설정합니다.
-                    // ID는 `heart-${e.id}` 형태로 설정되어 각 캠핑카 항목의 하트 아이콘을 고유하게 식별할 수 있습니다.
-                    // 이를 통해 이후 좋아요 상태를 동적으로 업데이트 할 수 있습니다.
-                    heart.setAttribute("id", `heart-${e.id}`);
-
-                    // 텍스트 요소 설정
-                    const campingcarComp_name = newCampingcarListWrapper.querySelector(".campingcarComp_name");
-                    campingcarComp_name.innerText = e.comp_name;
-
-                    const campingcarProduct_name = newCampingcarListWrapper.querySelector(".campingcarProduct_name");
-                    campingcarProduct_name.innerText = e.product_name;
-
-                    const campingcarShortdescription = newCampingcarListWrapper.querySelector(".campingcarShortdescription");
-                    campingcarShortdescription.innerText = e.shortdescription;
-
-                    // 가격 정보 설정
-                    const campingcarRental_fee_weekdays = newCampingcarListWrapper.querySelector(".campingcarRental_fee_weekdays");
-                    campingcarRental_fee_weekdays.innerText = `평일 가격 : ${e.rental_fee_weekdays.toLocaleString('ko-KR')}원`;
-
-                    const campingcarRental_fee_weekend = newCampingcarListWrapper.querySelector(".campingcarRental_fee_weekend");
-                    campingcarRental_fee_weekend.innerText = `주말 가격 : ${e.rental_fee_weekend.toLocaleString('ko-KR')}원`;
-
-                    // 주소 및 운전 조건 설정
-                    const campingcarGarage_address = newCampingcarListWrapper.querySelector(".campingcarGarage_address");
-                    campingcarGarage_address.innerText = `차고지 주소 : ${e.garage_address}`;
-
-                    const campingcarDriver_license_name = newCampingcarListWrapper.querySelector(".campingcarDriver_license_name");
-                    campingcarDriver_license_name.innerText = `운전면허증 : ${e.driver_license_name}`;
-
-                    const campingcarDriver_age_condition_name = newCampingcarListWrapper.querySelector(".campingcarDriver_age_condition_name");
-                    campingcarDriver_age_condition_name.innerText = `운전자 나이 : ${e.driver_age_condition_name}`;
-
-                    const campingcarDriver_experience_condition_name = newCampingcarListWrapper.querySelector(".campingcarDriver_experience_condition_name");
-                    campingcarDriver_experience_condition_name.innerText = `운전 경력 : ${e.driver_experience_condition_name}`;
-
-                    const campingcarSeating_capacity = newCampingcarListWrapper.querySelector(".campingcarSeating_capacity");
-                    campingcarSeating_capacity.innerText = `동승인원 : ${e.seating_capacity}명`; 
-
-                    const campingcarSleeping_capacity = newCampingcarListWrapper.querySelector(".campingcarSleeping_capacity");
-                    campingcarSleeping_capacity.innerText = `취침인원 : ${e.sleeping_capacity}명`;
-
-                    const campingcarPet_friendly = newCampingcarListWrapper.querySelector(".campingcarPet_friendly");
-                    campingcarPet_friendly.innerText = e.pet_friendly;
-
-                    // 새로운 캠핑카 항목을 리스트 박스에 추가
-                    campingcarListBox.appendChild(newCampingcarListWrapper);
-
-                    // 각 캠핑카 항목의 좋아요 상태를 갱신
-                    reloadLike(e.id);
-                }
-            });
-    }
-
-    // 좋아요 클릭 함수
-    function like(product_id) {
-        // 사용자가 로그인하지 않은 경우 로그인 페이지로 리다이렉트
-        if (myId == null) {
-            if (confirm("로그인 하셔야 이용 가능합니다. 로그인 페이지로 이동하시겠습니까?")) {
-                location.href = "/user/loginPage";
-            }
-            return;
-        }
-
-        // 좋아요를 추가하는 API 요청
-        const url = `/api/rent-user/like?product_id=${product_id}`;
-        fetch(url)
-            .then(response => response.json()) // JSON 형식으로 응답을 처리
-            .then(response => {
-                // 좋아요 상태를 갱신합니다.
-                reloadLike(product_id);
-            });
-    }
-
-    // 좋아요 상태를 갱신하는 함수
-    function reloadLike(product_id) {
-        // 사용자가 로그인하지 않은 경우 함수 종료
-        if (myId == null) {
-            return; 
-        }
-
-        // 찜 여부를 확인하는 API 요청
-        const url = `/api/rent-user/isLiked?product_id=${product_id}`;
-        fetch(url)
-            .then(response => response.json()) // JSON 형식으로 응답을 처리
-            .then(response => {
-                // 콘솔 로그로 상태 확인
-                // console.log("isLiked 여부 응답 확인: ", response.data.isLikedByUser);
-                // console.log("myId 확인 : ", myId);
-                
-                // 특정 차량의 하트 아이콘 선택
-                const heart = document.getElementById(`heart-${product_id}`);
-                // console.log("heart의 product_id 값 확인: ", heart);
-
-                // 사용자가 이미 좋아요를 눌렀는지 여부를 확인
-                if (response.data.isLikedByUser == true) {
-                    // 좋아요가 눌린 상태: 하트 아이콘의 클래스를 fa-solid로 변경하여 강조
-                    heart.classList.remove("fa-regular");
-                    heart.classList.add("fa-solid");
-
-                    // setAttribute 메서드를 사용하여 하트 아이콘의 onclick 속성을 설정합니다.
-                    // 현재 좋아요 상태일 경우 클릭 시 좋아요를 취소하는 unLike() 함수가 호출되도록 설정합니다.
-                    heart.setAttribute("onclick", `unLike(${product_id})`);
-                } else {
-                    // 좋아요가 눌리지 않은 상태: 하트 아이콘의 클래스를 fa-regular로 변경하여 비활성화
-                    heart.classList.remove("fa-solid");
-                    heart.classList.add("fa-regular");
-
-                    // setAttribute 메서드를 사용하여 하트 아이콘의 onclick 속성을 설정합니다.
-                    // 현재 좋아요 상태가 아닐 경우 클릭 시 좋아요를 추가하는 like() 함수가 호출되도록 설정합니다.
-                    heart.setAttribute("onclick", `like(${product_id})`);
-                }
-            });
-    }
-
-    // 좋아요 취소 함수
-    function unLike(product_id) {
-        // 사용자가 로그인하지 않은 경우 로그인 페이지로 리다이렉트
-        if (myId == null) {
-            if (confirm("로그인 하셔야 이용 가능합니다. 로그인 페이지로 이동하시겠습니까?")) {
-                location.href = "/user/loginPage";
-            }
-            return;
-        }
-
-        // 좋아요를 취소하는 API 요청
-        const url = `/api/rent-user/unLike?product_id=${product_id}`;
-        fetch(url)
-            .then(response => response.json()) // JSON 형식으로 응답을 처리
-            .then(response => {
-                // 좋아요 상태를 갱신합니다.
-                reloadLike(product_id);
-            });
-    }
-
-
-    // 대여 장소 선택 모달 열기 함수 
-    const showLocationModal = () => {
-        const locationModal = document.getElementById("locationModal"); 
-        const modal = new bootstrap.Modal(locationModal);
-        loadRegionOptionList(); // 모달을 열 때 지역 옵션 목록을 로드
-        modal.show();
-    }
-    // 대여 장소 모달의 지역 리스트 함수 
-    function loadRegionOptionList() {
-        const url = "/api/rent-user/getRegionsAll";
-        fetch(url)
-        .then(response => response.json())
-        .then(response => {
-            console.log("response 응답: ", response.data.allRegionsList);
-
-            const regionsListBox = document.getElementById("regionsListBox");
-                // 컨테이너의 기존 내용을 초기화
-                campingcarListBox.innerHTML = "";
-
-            const regionsListWrapperTemplate  = document.querySelector("#regionsListTemplate .regionstsListWrapper"); 
-
-            // 차량 지역 리스트의 각 항목을 반복 처리
-            for (const regionsList of response.data.allRegionsList) {
-                console.log("regionsList 반복리스트", regionsList.name);
-                
-                const newCampingcarListWrapperTemplate = regionsListWrapperTemplate.cloneNode(true);
-                console.log("new 확인 :" ,newCampingcarListWrapperTemplate);
-
-                const newregionsButton = newCampingcarListWrapperTemplate.querySelector(".regionsBtn"); 
-                newregionsButton.innerText = regionsList.name;
-                
-                // 지역 버튼 클릭한 것을 click 이벤트 추가
-                newregionsButton.addEventListener('click', () => {
+                    const newregionsButton = newCampingcarListWrapperTemplate.querySelector(".regionsBtn"); 
+                    newregionsButton.innerText = regionsList.name;
+                    
+                    // 지역 버튼 클릭한 것을 click 이벤트 추가
+                    newregionsButton.addEventListener('click', () => {
                     // 'locationDisplay'라는 ID를 가진 요소(장소 선택이라는 버튼)의 텍스트를 선택한 지역의 이름으로 동적으로 설정
                     document.getElementById("locationDisplay").innerText = regionsList.name;
                     // Bootstrap 모달 인스턴스를 가져와서 모달 닫기
                     const modalInstance = bootstrap.Modal.getInstance(locationModal);// 모달 인스턴스 가져오기
                     modalInstance.hide();// 모달 닫기
 
-                });
-                // 이벤트 리스너 추가
-                newCarTypeCheck.addEventListener('click', (event) => selectCarType(event.target));
-                regionsListBox.appendChild(newCampingcarListWrapperTemplate);
-            }
-        });
-    }
+                    });
 
-    let selectedCarTypes = [];
-
-    const showCarTypeModal = () => {
-        const campingcarModal = document.getElementById("campingcarModal"); 
-        const carTypeModal = new bootstrap.Modal(campingcarModal);
-        loadCampingCarTypeOptionList();
-        carTypeModal.show();
-    }
-
-    function loadCampingCarTypeOptionList() {
-        const url = "/api/rent-user/getCarTypeAll";
-        fetch(url)
-        .then(response => response.json())
-        .then(response => {
-            console.log("getCarTypeAll 리스트 : ", response.data.allCarType);
-
-            const carTypeCheckListBox = document.getElementById("carTypeCheckListBox");
-            carTypeCheckListBox.innerHTML = "";
-
-            const carTypeListWrapperTemplate  = document.querySelector("#carTypeCheckListTemplate .carTypeCheckListWrapper"); 
-            console.log("템플릿 확인 : " ,carTypeListWrapperTemplate);
-
-            let id = 0;
-            // 캠핑카 유형 리스트의 각 항목을 반복 처리
-            for(const carTypeList of response.data.allCarType) {
-                console.log("carTypeList 반복리스트", carTypeList.name);
-                
-                const newCarTypeListWrapperTemplate = carTypeListWrapperTemplate.cloneNode(true);
-                console.log("new 확인", newCarTypeListWrapperTemplate);
-
-                const newCarTypeCheck = newCarTypeListWrapperTemplate.querySelector(".carTypeCheck"); 
-                newCarTypeCheck.value = carTypeList.name; // 체크박스의 값 설정
-                newCarTypeCheck.id = `carTypeCheck${id}`; // 체크박스의 고유한 ID 설정
-                newCarTypeCheck.setAttribute("onclick", "selectCarType(event)"); // 체크박스 클릭 시 실행할 함수 설정
-
-                const newCarTypeLabel = newCarTypeListWrapperTemplate.querySelector(".form-check-label");
-                newCarTypeLabel.innerText = carTypeList.name; // 라벨에 텍스트 설정
-                newCarTypeLabel.setAttribute("for", `carTypeCheck${id}`); // 라벨의 for 속성 설정
-
-                carTypeCheckListBox.appendChild(newCarTypeListWrapperTemplate); // 복제된 템플릿을 체크박스 목록에 추가
-                id++; // 고유한 ID를 위해 id 값 증가
-            }
-        });
-    }
-
-    function selectCarType(event) { 
-        // console.log(event);
-        // console.log(event.target);
-
-        if (event.target.checked) {
-            // 체크박스가 체크되었으면 배열에 추가
-            selectedCarTypes.push(event.target.value);
-            console.log("event.target.value 확인: ", event.target.value);
-        } else {
-            // 체크박스가 체크 해제되었으면 배열에서 제거
-            selectedCarTypes = selectedCarTypes.filter(value => value !== event.target.value);
+                    regionsListBox.appendChild(newCampingcarListWrapperTemplate);
+                }
+            });
         }
-    }
 
-/* 설명 주석
+        let selectedCarTypes = [];
+
+        // 캠핑카 유형 선택 모달 열기 함수 
+        const showCarTypeModal = () => {
+            const campingcarModal = document.getElementById("campingcarModal"); 
+            const carTypeModal = new bootstrap.Modal(campingcarModal);
+            loadCampingCarTypeOptionList();
+            carTypeModal.show();
+        }
+
+        // 캠핑카유형 선택 모달의 지역 리스트 함수 
+        function loadCampingCarTypeOptionList() {
+            const url = "/api/rent-user/getCarTypeAll";
+            fetch(url)
+            .then(response => response.json())
+            .then(response => {
+                // console.log("getCarTypeAll 리스트 : ", response.data.allCarType);
+
+                const carTypeCheckListBox = document.getElementById("carTypeCheckListBox");
+                // 컨테이너의 기존 내용을 초기화
+                carTypeCheckListBox.innerHTML = "";
+
+                const carTypeListWrapperTemplate  = document.querySelector("#carTypeCheckListTemplate .carTypeCheckListWrapper"); 
+                // console.log("템플릿 확인 : " , carTypeListWrapperTemplate);
+
+                let id = 0;
+                // 캠핑카 유형 리스트의 각 항목을 반복 처리
+                for(const carTypeList of response.data.allCarType) {
+                    // console.log("carTypeList 반복리스트", carTypeList.name);
+                    
+                    const newCarTypeListWrapperTemplate = carTypeListWrapperTemplate.cloneNode(true);
+                    // console.log("new 확인", newCarTypeListWrapperTemplate);
+
+                    const newCarTypeCheck = newCarTypeListWrapperTemplate.querySelector(".carTypeCheck"); 
+                    newCarTypeCheck.value = carTypeList.name; // 체크박스의 값 설정
+                    newCarTypeCheck.id = `carTypeCheck${id}`; // 체크박스의 고유한 ID 설정
+
+                    const newCarTypeLabel = newCarTypeListWrapperTemplate.querySelector(".form-check-label");
+                    newCarTypeLabel.innerText = carTypeList.name; // 라벨에 텍스트 설정
+                    newCarTypeLabel.setAttribute("for", `carTypeCheck${id}`); // 라벨의 for 속성 설정
+
+                    // 이벤트 리스너 추가 : 선택된 체크박스의 함수 콜백
+                    newCarTypeCheck.addEventListener('change', (event) => selectCarType(event));
+
+                    carTypeCheckListBox.appendChild(newCarTypeListWrapperTemplate); // 복제된 템플릿을 체크박스 목록에 추가
+                    id++;  // 고유한 ID를 위해 id 값 증가
+                }
+            });
+        }
+
+        // 선택된!!! 캠핑카 유형  
+        function selectCarType(event) { 
+            // console.log(event);
+            // console.log(event.target);
+
+            if (event.target.checked) {
+                // 체크박스가 체크되었으면 배열에 추가
+                selectedCarTypes.push(event.target.value);
+                // console.log("event.target.value 확인: ", event.target.value);
+            } else {
+                // 체크박스가 체크 해제되었으면 배열에서 제거
+                selectedCarTypes = selectedCarTypes.filter(value => value !== event.target.value);
+            }
+        }
+
+        function updateSelectedCarTypes() {
+        // 선택된 캠핑카 유형들을 콤마로 구분하여 표시
+        document.getElementById("carTypeDisplay").innerText = selectedCarTypes.join(', ');
+        }
+
+
+    </script>
+
+    <script>
+// 현재 날짜와 시간을 포함하는 Date 객체 생성
+let nextYear = new Date();
+// Date 객체의 연도를 현재 연도에서 1년 더한 값으로 설정 
+nextYear.setFullYear(nextYear.getFullYear() + 1);
+
+// "rentdate"라는 식별자로, 다음 해부터 365일간의 달력 데이터 생성 또는 처리 
+createCalendar("rentdate", nextYear);
+
+// 모달을 보여주는 함수
+const showRentDateModal = () => {
+    const rentDateModalOpen = document.getElementById("rentdateModal");
+    const rentDateModal = new bootstrap.Modal(rentDateModalOpen);
+    rentDateModal.show();
+
+    // 모달이 열릴 때 비활성화 설정과 클릭 이벤트를 적용
+    setTimeout(() => {
+        disablePastDates(); // 현재 날짜 이전의 날짜를 비활성화
+        modifyCalendar(); // 클릭 이벤트를 설정
+    }, 10);  // 약간의 지연을 줘서 캘린더가 렌더링 된 후에 실행되도록 함
+}
+
+// 날짜 선택 확인 함수
+function confirmRentDate() {
+    const selectedDate = getStartDate("rentdate");
+    if (selectedDate) {
+        // 선택된 날짜를 화면에 표시
+        document.getElementById("rendDateDisplay").textContent = selectedDate.toLocaleDateString();
+    }
+}
+
+// 현재 날짜 이전의 날짜를 비활성화하고, 하나의 날짜만 선택할 수 있도록 수정하는 함수
+function disablePastDates() {
+    const calendarBody = document.querySelector('#calendar_rentdate #calendarBody');
+    let today = new Date();
+    today.setHours(0, 0, 0, 0);  // 오늘 날짜를 시간 없이 설정
+
+    // 달력의 각 셀을 검사하여 비활성화할 날짜를 설정
+    calendarBody.querySelectorAll('td').forEach(cell => {
+        const cellText = cell.innerText;
+        if (!cellText || isNaN(cellText)) return;
+
+        let cellDate;
+        // 셀이 이전 달의 날짜인 경우
+        if (cell.classList.contains('prev-month')) {
+            const prevMonth = today.getMonth() === 0 ? 11 : today.getMonth() - 1;
+            const prevYear = today.getMonth() === 0 ? today.getFullYear() - 1 : today.getFullYear();
+            cellDate = new Date(prevYear, prevMonth, cellText);
+        } 
+        // 셀이 다음 달의 날짜인 경우
+        else if (cell.classList.contains('next-month')) {
+            const nextMonth = today.getMonth() === 11 ? 0 : today.getMonth() + 1;
+            const nextYear = today.getMonth() === 11 ? today.getFullYear() + 1 : today.getFullYear();
+            cellDate = new Date(nextYear, nextMonth, cellText);
+        } 
+        // 셀이 현재 달의 날짜인 경우
+        else {
+            cellDate = new Date(today.getFullYear(), today.getMonth(), cellText);
+        }
+        cellDate.setHours(0, 0, 0, 0);  // 셀의 날짜를 시간 없이 설정
+
+        // 셀이 오늘 이전 날짜인 경우 비활성화
+        if (cellDate < today) {
+            cell.classList.add('inactive');
+            cell.style.pointerEvents = 'none';  // 클릭 비활성화
+            cell.style.color = '#ccc'; // 비활성화된 날짜를 회색으로 표시
+        } else {
+            cell.classList.remove('inactive');
+            cell.style.pointerEvents = 'auto';  // 클릭 활성화
+            cell.style.color = ''; // 활성화된 날짜의 색상 초기화
+        }
+
+        // 각 셀에 날짜 정보를 저장
+        cell.setAttribute('data-date', cellDate.toISOString().split('T')[0]);
+    });
+}
+
+// 날짜 선택 이벤트 처리 함수
+function modifyCalendar() {
+    const calendarBody = document.querySelector('#calendar_rentdate #calendarBody');
+    let today = new Date();
+    today.setHours(0, 0, 0, 0);  // 오늘 날짜를 시간 없이 설정
+
+    // 달력 셀 클릭 이벤트 핸들러 추가
+    calendarBody.addEventListener('click', (event) => {
+        const target = event.target;
+        if (target.tagName === 'TD' && !target.classList.contains('inactive')) {
+            // 'data-date' 속성에서 날짜 정보를 가져옴
+            const selectedDate = new Date(target.getAttribute('data-date'));
+            selectedDate.setHours(0, 0, 0, 0);  // 선택된 날짜를 시간 없이 설정
+
+            // 선택된 날짜가 오늘 이후인 경우에만 선택 가능
+            if (selectedDate >= today) {
+                // 기존 선택된 날짜 제거
+                calendarBody.querySelectorAll('.selected').forEach(cell => {
+                    cell.classList.remove('selected');
+                });
+                // 새로운 날짜 선택
+                target.classList.add('selected');
+                // 선택된 날짜를 'rentdate' 캘린더의 시작 날짜로 설정
+                setStartDate('rentdate', selectedDate);
+                disablePastDates();  // 선택 후 다시 비활성화 설정
+            }
+        }
+    });
+}
+
+// 캘린더 생성 후 수정 함수 호출
+document.addEventListener('DOMContentLoaded', () => {
+    // 초기 캘린더 설정 및 클릭 이벤트 핸들러 추가
+    modifyCalendar();
+});
+
+</script>
+<!-- /* 설명 주석
 1. newRegionButton.addEventListener('click', () => { ... });:
    - 설명: addEventListener는 지정된 이벤트가 대상에서 발생할 때 호출할 함수를 설정합니다. 여기서 'click' 이벤트를 설정하여 버튼이 클릭될 때 특정 동작을 수행하도록 합니다.
    - 사용법:
@@ -776,59 +906,6 @@
    - 사용법:
      modalInstance.hide();
      결과: 모달이 화면에서 사라집니다.
-*/
-    </script>
-    <!-- 모달 script -->
-    <!-- <script>
-        // 모달에서 전체 혹은 장소를 선택 했을때, 함수를 호출한다.
-        function selectLocation(button) {
-            // 버튼의 data-location 속성에서 선택된 대여 장소 값을 가져와서 location에 담는다
-            let location = button.getAttribute('data-location');
-            // 선택된 대여 장소(location)를 히든 필드에 값(value)담는다.
-            document.getElementById('selectedLocation').value = location;
-            // 선택된 대여 장소(location)를 버튼 텍스트에 표시(innerText)한다.
-            document.getElementById('locationDisplay').innerText = location;
-            // 대여 장소(modal_id) 모달을 닫아준다.
-            $('#locationModal').modal('hide');
-
-        }
-        // 모달에서 대여일 날짜 선택 했을때, 함수를 호출한다.
-        function comfirmRentDate() {
-            // datepicker 플러그인에서 선택된 날짜(calendar_rentDate_id)를 가져와서 selectedDate에 담는다.
-            // datepicker : 
-            // getFormattedDate : 
-            let selectedDate = $('#calendar_rentdate').datepicker('getFormattedDate');
-            // 선택된 대여날짜(selectedDate)를 히든 필드 값에 담는다. 
-            document.getElementById('selectedRentDate').value = selectedDate;
-            // 선택된 대여날짜를 버튼 택스트에 표시한다.
-            document.getElementById('rendDateDisplay').innerText = selectedDate;
-            // 대여일 모달을 닫아준다.
-            $('#rentdateModal').modal('hide');
-
-        }
-        // 모달에서 반납일 날짜 선택했을 때, 함수를 호출한다.
-        function confirmReturnDate() {
-            let selectedDate = $('#calendar_returndate').datepicker('getFormattedDate');
-            // 선택된 반납일을 히든 필드에 설정
-            document.getElementById('selectedReturnDate').value = selectedDate;
-            // 선택된 반납일을 버튼 텍스트에 표시
-            document.getElementById('returnDateDisplay').innerText = selectedDate;
-            // 반납일 모달을 닫음
-            $('#returndateModal').modal('hide');
-
-        }
-
-
-        ////////////////// 캘린더 설정 /////////////////////
-        // 현재 날짜와 시간을 포함하는 Date 객체 생성
-        const nextYear = new Date();
-
-        // Date 객체의 연도를 현재 연도에서 1년 더한 값으로 설정
-        nextYear.setFullYear(nextYear.getFullYear() + 1);
-
-        // "peak"라는 식별자로, 다음 해부터 365일간의 달력 데이터 생성 또는 처리
-        createRangeCalendar("rentdate", 365, nextYear);
-        createRangeCalendar("returndate", 365, nextYear);
-    </script> -->
+*/ -->
 </body>
 </html>
