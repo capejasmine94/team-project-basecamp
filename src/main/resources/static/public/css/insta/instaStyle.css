@@ -57,6 +57,12 @@
     object-fit: cover; /* 이미지가 요소를 채우도록 조정 */
     aspect-ratio: 1/1;
 }
+.commentWriteImage {
+    width: 45px;  /* 원하는 너비 */
+    height: 45px; /* 원하는 높이 */
+    object-fit: cover; /* 이미지가 요소를 채우도록 조정 */
+    aspect-ratio: 1/1;
+}
 
 .instaButtonColor {
     color: #0095f6;
