@@ -180,6 +180,11 @@
             select * from bc_campsite_image where campsite_id = #{campsite_id} order by id asc
         </select>
 
+        <!-- 구역 이미지 가져오기 -->
+        <select id="areaMainImage" resultType="com.bulmeong.basecamp.camp.dto.CampsiteAreaImageDto">
+            select * from bc_campsite_area_image where area_id = #{area_id} order by id asc
+        </select>
+
     <!-- ======================================================================== -->
 
     
@@ -187,7 +192,10 @@
     <!-- ========================================================================
         캠핑장 데이터
         ======================================================================== -->
-
+        <!-- 구역번호로 포인트 -->
+        <select id="pointListByAreaId" resultType="com.bulmeong.basecamp.camp.dto.CampsiteAreaPointDto">
+            select * from bc_campsite_area_point where area_id = #{area_id}
+        </select>
         <!-- 고유번호로 캠핑장 -->
         <select id="getCampsiteDtoById" resultType="com.bulmeong.basecamp.camp.dto.CampsiteDto">
             select * from bc_campsite where id = #{campsite_id}
@@ -230,6 +238,29 @@
             opentime = #{opentime}
             where id = #{id}
         </update>
+
+        <!-- 구역 추가 -->
+        <insert id="registerArea">
+            <selectKey keyProperty="id" resultType="int" order="AFTER">
+                select max(id) from bc_campsite_area
+            </selectKey>
+            insert into bc_campsite_area (
+                campsite_id,
+                name,
+                prise,
+                size_x,
+                size_y,
+                description
+            )
+            values (
+                #{campsite_id},
+                #{name},
+                #{prise},
+                #{size_x},
+                #{size_y},
+                #{description}
+            )
+        </insert>
     <!-- ======================================================================== -->
 
 

@@ -41,6 +41,7 @@ public class ImageUtil {
         if(inputImage.isEmpty() || inputImage == null)
             return null;
         String originalFilename = inputImage.getOriginalFilename();
+        System.out.println(originalFilename);
         String extention = originalFilename.substring(originalFilename.lastIndexOf("."));
         LocalDateTime localDateTime = LocalDateTime.now();
         DateTimeFormatter format = DateTimeFormatter.ofPattern("yyyy/MM/dd");
@@ -50,11 +51,9 @@ public class ImageUtil {
 
         String existDate = localDateTime.format(format);
         String Path = filePath + existDate + "/";
-        System.out.println(Path);
 
 
         File file = new File(Path);
-        System.out.println(Path);
         if(!file.exists()){
             file.mkdirs();
         }

@@ -8,6 +8,7 @@ import org.apache.ibatis.annotations.Param;
 
 import com.bulmeong.basecamp.camp.dto.CampsiteAreaDto;
 import com.bulmeong.basecamp.camp.dto.CampsiteAreaImageDto;
+import com.bulmeong.basecamp.camp.dto.CampsiteAreaPointDto;
 import com.bulmeong.basecamp.camp.dto.CampsiteBankDto;
 import com.bulmeong.basecamp.camp.dto.CampsiteCategoryDto;
 import com.bulmeong.basecamp.camp.dto.CampsiteDto;
@@ -32,6 +33,7 @@ public interface CampsiteSqlMapper {
     public void deleteCampMainImage(@Param("campsite_id") int campsite_id);
     public void addAreaMainImage(CampsiteAreaImageDto imageDto);
     public List<CampsiteImageDto> campMainImage(@Param("campsite_id") int campsite_id);
+    public List<CampsiteAreaImageDto> areaMainImage(@Param("area_id") int area_id);
     
     //===================================================================================================================
     // 카테고리
@@ -50,5 +52,7 @@ public interface CampsiteSqlMapper {
     public List<CampsiteAreaDto> getAreaListByCampsiteId(@Param("campsite_id") int campsite_id);
     public CampsiteAreaDto getAreaById(@Param("area_id") int area_id);
     public void updateCamp(CampsiteDto campsiteDto);
+    public List<CampsiteAreaPointDto> pointListByAreaId(@Param("area_id") int area_id);
+    public void registerArea(CampsiteAreaDto campsiteAreaDto);
 
 }

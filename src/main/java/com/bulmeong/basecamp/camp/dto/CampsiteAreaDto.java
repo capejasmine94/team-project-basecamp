@@ -22,5 +22,6 @@ public class CampsiteAreaDto {
     private int adult_pay;
     private int kid_pay;
     private int car_pay;
+    private String process;
     private Date created_at;
 }

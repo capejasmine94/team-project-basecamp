@@ -146,6 +146,28 @@ document.addEventListener('DOMContentLoaded', (event) => {
   }
 });
 
+function addColonMoneyInput() { 
+  const inputNumbers = document.getElementsByClassName('moneyInput');
+  if(inputNumbers.length <= 0 || inputNumbers == null)
+    return;
+  for(const node of inputNumbers){
+      let input = node.value;
+
+      // Remove all non-numeric characters except for period (.)
+      input = input.replace(/[^0-9.]/g, '');
+
+      // Split the input value into integer and decimal parts
+      const parts = input.split('.');
+      let integerPart = parts[0];
+      const decimalPart = parts.length > 1 ? '.' + parts[1] : '';
+
+      // Format the integer part with commas
+      integerPart = integerPart.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+
+      // Combine the formatted integer part and the decimal part
+      node.value = integerPart + decimalPart;
+    }
+}
 function replaceMoneyInput() {
   const inputNumbers = document.getElementsByClassName('moneyInput');
   for(const node of inputNumbers){

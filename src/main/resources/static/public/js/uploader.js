@@ -88,6 +88,14 @@ function createPreviewImage(path, uploaderName, multiple) {
         deleteBtn.type = 'button';
         deleteBtn.onclick = (event) => {
             event.preventDefault();
+            if(!preview.classList.contains('isAlreadyUploaded')){
+                const files = curFiles.get(uploaderName);
+                const index = files.findIndex(data => data.query === preview);
+                
+                if (index !== -1) {
+                    files.splice(index, 1);
+                }
+            }
             imgList.removeChild(preview);
         };
     }
@@ -139,6 +147,8 @@ function setUploadedData(uploaderName, request, listName, dataName, multiple) {
         let dataList = response.data;
         
         keys.forEach(key => { dataList = dataList[key]; });
+        console.log(dataList);
+        
         if(!multiple){
             const location = '/images/' + dataList[dataName];
     
@@ -147,32 +157,55 @@ function setUploadedData(uploaderName, request, listName, dataName, multiple) {
             .then(response => response.blob())
             .then(blob => {
                 // 미리보기 이미지 요소 생성
-                const preview = createPreviewImage(location, uploaderName, multiple);
+                const preview = createPreviewImage(location, uploaderName, false);
+                preview.classList.add('isAlreadyUploaded');
                 // imgList에 미리보기 이미지 추가
                 const imgList = document.getElementById('imgList_' + uploaderName);
                 imgList.appendChild(preview);
-                // 경로 이미지를 file화 하여 curFiles에 추가
-                const file = new File([blob], dataList[dataName], { type: blob.type });
-                if(curFiles.has(uploaderName))
-                    curFiles.get(uploaderName).push(new UploaderData(file,preview));
-                else {
-                    curFiles.set(uploaderName,[new UploaderData(file,preview)]);
-                }
-                onSubmitSendUploader();
+                
+                // // 경로 이미지를 file화 하여 curFiles에 추가
+                // console.log("map : " + dataList[dataName]);
+                // const file = new File([blob], dataList[dataName], { type: blob.type });
+                // if(curFiles.has(uploaderName)){
+                //     curFiles.get(uploaderName).push(new UploaderData(file,preview));
+                // }
+                // else {
+                //     curFiles.set(uploaderName,[new UploaderData(file,preview)]);
+                // }
             })
             .catch(error => console.error('Error fetching the image:', error));
         }
         else {
-            //listName : campsiteInfo.mainImages
             console.log(dataList);
+            //listName : campsiteInfo.mainImages
             const imgList = document.getElementById('imgList_' + uploaderName);
             for(const mainImage of dataList) {
-                const location = '/images/' + mainImage[dataName];
-                const preview = createPreviewImage(location, uploaderName, multiple);
-                imgList.appendChild(preview);
+                const location = '/images/' + mainImage[dataName];// location 경로에 있는 이미지를 파일 객체로 생성
+                fetch(location)
+                .then(response => response.blob())
+                .then(blob => {
+                    // 미리보기 이미지 요소 생성
+                    const preview = createPreviewImage(location, uploaderName, false);
+                    preview.classList.add('isAlreadyUploaded');
+                    // imgList에 미리보기 이미지 추가
+                    imgList.appendChild(preview);
+                    
+                    // 경로 이미지를 file화 하여 curFiles에 추가
+                    // const file = new File([blob], mainImage[dataName], { type: blob.type });
+                    // if(curFiles.has(uploaderName)){
+                    //     curFiles.get(uploaderName).push(new UploaderData(file,preview));
+                    //     console.error(curFiles);
+                    // }
+                    // else {
+                    //     curFiles.set(uploaderName,[new UploaderData(file,preview)]);
+                    //     console.error(curFiles);
+                    // }
+                })
+                .catch(error => console.error('Error fetching the image:', error));
             }
         }
     })
+    .then(()=>{onSubmitSendUploader();})
     .catch(error => {
         console.error('Error fetching data:', error);
     });
@@ -207,7 +240,6 @@ function createUploader(name) {
             imgList.appendChild(preview);
             const uploaderData = new UploaderData(file,preview);
             curFiles.set(name, [uploaderData]);
-            onSubmitSendUploader();
         };
         reader.readAsDataURL(file);
     }
@@ -238,9 +270,8 @@ function createMultipleUploader(name, max) {
     
     function handleFiles(event) {
         const uploadedList = Array.from(event.target.files);
-        const currentList = [];
-        const uploaderDataList = [];
-
+        const currentList = curFiles.has(name) ? curFiles.get(name) : [];
+        const uploaderDataList = currentList;
         if (currentList.length + uploadedList.length > MAX_UPLOADS) {
             alert(`최대 ${MAX_UPLOADS}개의 이미지만 업로드할 수 있습니다.`);
             return;
@@ -253,6 +284,10 @@ function createMultipleUploader(name, max) {
             const reader = new FileReader();
             reader.onload = function(e) {
                 const preview = createPreviewImage(e.target.result, name, true);
+                const isAlreadyUploadedElement = imgList.getElementsByClassName('isAlreadyUploaded');
+                for(const node of isAlreadyUploadedElement){
+                    imgList.removeChild(node);
+                }
                 imgList.appendChild(preview);
                 const uploaderData = new UploaderData(file, preview);
                 uploaderDataList.push(uploaderData);
@@ -260,7 +295,7 @@ function createMultipleUploader(name, max) {
             reader.readAsDataURL(file);
         });
         curFiles.set(name, uploaderDataList);
-        onSubmitSendUploader();
+        console.log(curFiles.get(name));
     }
 }
 
@@ -274,11 +309,12 @@ function onSubmitSendUploader() {
         const dataTransfer = new DataTransfer();
 
         for (const data of uploaderData) {
-            // 파일을 DataTransfer 객체에 추가
-            dataTransfer.items.add(data.file);
+           // 파일을 DataTransfer 객체에 추가
+           dataTransfer.items.add(data.file);
         }
 
         // input 요소의 files 속성을 DataTransfer 객체로 설정
         input.files = dataTransfer.files;
+        console.log(input.files);
     }
 }

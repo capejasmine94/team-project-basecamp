@@ -29,6 +29,11 @@ public class CampsiteService {
     @Autowired
     private Utils utils;
 
+    private CampsiteDto sessionCampsiteDto() {
+        Map<String,Object> info = utils.getSession("campsite");
+        return (CampsiteDto)info.get("dto");
+    }
+
     //===================================================================================================================
     // 로그인 / 회원가입 구역
     //===================================================================================================================
@@ -193,9 +198,13 @@ public class CampsiteService {
         result.put("dto", areaDto);
 
         // 포인트
+        result.put("point", campsiteSqlMapper.pointListByAreaId(area_id));
 
         // 카테고리
         result.put("category", campsiteSqlMapper.selectAreaCategory(area_id));
+
+         // 메인 이미지
+         result.put("mainImages", campsiteSqlMapper.areaMainImage(area_id));
 
         // 마무리
         return result;
@@ -204,19 +213,25 @@ public class CampsiteService {
     // 캠핑장 수정
     public void updateCamp(CampsiteDto campsiteDto, MultipartFile mapImage, MultipartFile[] mainImages, String[] categories) {
         //배치도 이미지 저장
-        String mapImageToString = ImageUtil.saveImageAndReturnLocation(mapImage);
-        campsiteDto.setMap_image(mapImageToString);
-
+        if(mapImage != null && !mapImage.isEmpty()) {
+            String mapImageToString = ImageUtil.saveImageAndReturnLocation(mapImage);
+            campsiteDto.setMap_image(mapImageToString);
+        }
+        else {
+            campsiteDto.setMap_image(sessionCampsiteDto().getMap_image());
+        }
         //메인 이미지 저장
-        campsiteSqlMapper.deleteCampMainImage(campsiteDto.getId());
-        List<ImageDto> mainImageList = ImageUtil.saveImageAndReturnDtoList(mainImages);
-        for(ImageDto img : mainImageList) {
-            System.out.println(img);
-            CampsiteImageDto imageDto = new CampsiteImageDto();
-            imageDto.setCampsite_id(campsiteDto.getId());
-            imageDto.setLocation(img.getLocation());
-            imageDto.setOrigin_filename(img.getOrigin_filename());
-            campsiteSqlMapper.addCampMainImage(imageDto);
+        if(mainImages != null && !mainImages[0].isEmpty()) {
+            campsiteSqlMapper.deleteCampMainImage(campsiteDto.getId());
+            List<ImageDto> mainImageList = ImageUtil.saveImageAndReturnDtoList(mainImages);
+            for(ImageDto img : mainImageList) {
+                System.out.println(img);
+                CampsiteImageDto imageDto = new CampsiteImageDto();
+                imageDto.setCampsite_id(campsiteDto.getId());
+                imageDto.setLocation(img.getLocation());
+                imageDto.setOrigin_filename(img.getOrigin_filename());
+                campsiteSqlMapper.addCampMainImage(imageDto);
+            }
         }
 
         // 카테고리 수정
@@ -239,6 +254,11 @@ public class CampsiteService {
         utils.setSession("campsite", campsiteInfo(campsiteDto.getId()));
     }
     
+    // 구역 생성
+    public void registerArea(CampsiteAreaDto campsiteAreaDto) {
+        campsiteAreaDto.setCampsite_id(sessionCampsiteDto().getId());
+        campsiteSqlMapper.registerArea(campsiteAreaDto);   
+    }
     //-------------------------------------------------------------------------------------------------------------------
 
 

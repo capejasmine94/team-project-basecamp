@@ -1,6 +1,6 @@
 package com.bulmeong.basecamp.camp.controller;
 
-import java.util.Date;
+import java.util.*;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.bulmeong.basecamp.camp.dto.CampsiteAreaDto;
 import com.bulmeong.basecamp.camp.dto.CampsiteBankDto;
 import com.bulmeong.basecamp.camp.dto.CampsiteDto;
 import com.bulmeong.basecamp.camp.service.CampsiteService;
@@ -22,6 +23,10 @@ public class CampsiteSellerController {
     @Autowired
     private Utils utils;
 
+    private CampsiteDto sessionCampsiteDto() {
+        Map<String,Object> info = utils.getSession("campsite");
+        return (CampsiteDto)info.get("dto");
+    }
 
     //============================================================================
     // 리퀘스트 구역
@@ -38,6 +43,11 @@ public class CampsiteSellerController {
     @RequestMapping("/campsite")
     public String manageCampsite() {
         return "camp/seller/campsite";
+    }
+
+    @RequestMapping("/area")
+    public String manageArea() {
+        return "camp/seller/area";
     }
 
     @RequestMapping("/registerUser")
@@ -67,8 +77,8 @@ public class CampsiteSellerController {
     @RequestMapping("/registerCampProcess")
     public String registerCampProcess(
         CampsiteDto campsiteDto, 
-        @RequestParam("mapImage") MultipartFile mapImage, 
-        @RequestParam("mainImage") MultipartFile[] mainImages, 
+        @RequestParam(name="mapImage") MultipartFile mapImage, 
+        @RequestParam(name="mainImage") MultipartFile[] mainImages, 
         @RequestParam("opentime_start_date") @DateTimeFormat(pattern = "yyyy-MM-dd") Date opentime,
         @RequestParam("campCategory") String[] categories) {
         // 판매자 데이터 업데이트
@@ -82,14 +92,24 @@ public class CampsiteSellerController {
     @RequestMapping("/updateCampProcess")
     public String updateCampProcess(
         CampsiteDto campsiteDto, 
-        @RequestParam("mapImage") MultipartFile mapImage, 
-        @RequestParam("mainImage") MultipartFile[] mainImages, 
+        @RequestParam(name="mapImage") MultipartFile mapImage, 
+        @RequestParam(name="mainImage") MultipartFile[] mainImages, 
         @RequestParam("opentime_start_date") @DateTimeFormat(pattern = "yyyy-MM-dd") Date opentime,
         @RequestParam("campCategory") String[] categories) {
         // 판매자 데이터 업데이트
         campsiteDto.setOpentime(opentime);
         service.updateCamp(campsiteDto, mapImage, mainImages, categories);
         return "redirect:./campsite";      
+    }
+
+    @RequestMapping("/registerAreaProcess")
+    public String registerAreaProcess(
+        CampsiteAreaDto areaDto) {
+        service.registerArea(areaDto);
+        // 세션 데이터 갱신
+        CampsiteDto campsiteDto = sessionCampsiteDto();
+        utils.setSession("campsite", service.campsiteInfo(campsiteDto.getId()));
+        return "redirect:./area";      
     }
     
     //============================================================================
