@@ -126,7 +126,7 @@ public interface StoreSqlMapper {
 
     public StoreOrderDto selectStoreOrderDtoById(int id);
 
-    public List<OrderProductDto> selectOrderProductListByOrderId(int order_id);
+    public List<OrderProductDto> selectOrderProductListByOrderId(@Param("order_id") int order_id, @Param("filterOption") String filterOption);
 
     public List<OrderProductDto> selectOrderProductListByStoreId(int store_id);
 
@@ -136,7 +136,7 @@ public interface StoreSqlMapper {
 
     public void updateOrderProductStatusToPreparing(int id);
     public void insertOrderDeliveryInfo(OrderDeliveryInfoDto orderDeliveryInfoDto);
-    public void updateOrderProductStatusToDelivering(int id);
+    public void updateOrderProductStatusToDelivered(int id);
     public OrderDeliveryInfoDto selectOrderDeliveryInfoByOrderProductId(int order_product_id);
 
     public void insertUserDeliveryInfo(UserDeliveryInfoDto userDeliveryInfoDto);
@@ -145,4 +145,11 @@ public interface StoreSqlMapper {
     public void deleteUserDeliveryInfoById(int id);
 
     public UserDeliveryInfoDto selectDefaultAddressByUserId(int user_id);
+
+    public List<StoreOrderDto> selectStoreOrderDtoListByUserId(int user_id);
+
+    public int orderCompleteCount(int user_id);
+    public int deliveryCompleteCount(int user_id);
+    public int purchaseConfirmationCount(int user_id);
+    public int allOrderCount(int user_id);
 }

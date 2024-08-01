@@ -632,7 +632,7 @@ public class StoreService {
         StoreOrderDto storeOrderDto = storeSqlMapper.selectStoreOrderDtoById(id);
 
         List<Map<String, Object>> orderProductDataList = new ArrayList<>();
-        List<OrderProductDto> orderProductDtoList = storeSqlMapper.selectOrderProductListByOrderId(id);
+        List<OrderProductDto> orderProductDtoList = storeSqlMapper.selectOrderProductListByOrderId(id, "All");
 
         for(OrderProductDto orderProductDto : orderProductDtoList){
             Map<String, Object> map = new HashMap<>();
@@ -729,7 +729,7 @@ public class StoreService {
     public void insertDeliveryInfo(OrderDeliveryInfoDto orderDeliveryInfoDto){
 
         storeSqlMapper.insertOrderDeliveryInfo(orderDeliveryInfoDto);
-        storeSqlMapper.updateOrderProductStatusToDelivering(orderDeliveryInfoDto.getOrder_product_id());
+        storeSqlMapper.updateOrderProductStatusToDelivered(orderDeliveryInfoDto.getOrder_product_id());
 
     }
 
@@ -750,5 +750,60 @@ public class StoreService {
 
     public UserDeliveryInfoDto selectDefaultAddressByUserId(int user_id){
         return storeSqlMapper.selectDefaultAddressByUserId(user_id);
+    }
+
+    public List<Map<String, Object>> getStoreOrderDataListByUserId(int user_id, String filterOption){
+        List<Map<String, Object>> result = new ArrayList<>();
+
+        List<StoreOrderDto> storeOrderDtoList = storeSqlMapper.selectStoreOrderDtoListByUserId(user_id);
+
+        for(StoreOrderDto storeOrderDto : storeOrderDtoList){
+            Map<String, Object> orderMap = new HashMap<>();
+
+            int order_id = storeOrderDto.getId();
+            List<OrderProductDto> orderProductDtoList = storeSqlMapper.selectOrderProductListByOrderId(order_id, filterOption);
+
+            List<Map<String, Object>> OrderProductDataList = new ArrayList<>();
+            
+            for(OrderProductDto orderProductDto : orderProductDtoList){
+                Map<String, Object> map = new HashMap<>();
+                
+                int order_product_id = orderProductDto.getId();
+
+                StoreDto storeDto = storeSqlMapper.selectStoreDtoByOrderProductId(order_product_id);
+
+                map.put("store_name", storeDto.getName());
+
+                int[] value_ids = storeSqlMapper.selectOrderProductOptionValueIds(order_product_id);
+                List<String> valueNameList = new ArrayList<>();
+                for(int value_id : value_ids){
+                    String value_name = storeSqlMapper.selectOptionValueNameById(value_id);
+                    valueNameList.add(value_name);
+                }
+
+                map.put("valueNameList", valueNameList);
+                map.put("orderProductDto", orderProductDto);
+    
+                OrderProductDataList.add(map);
+            }
+
+            orderMap.put("storeOrderDto", storeOrderDto);
+            orderMap.put("OrderProductDataList", OrderProductDataList);
+
+            result.add(orderMap);
+        }
+
+        return result;
+    }
+
+    public Map<String, Object> getOrderStatusCountData(int user_id){
+        Map<String, Object> map = new HashMap<>();
+
+        map.put("orderCompleteCount", storeSqlMapper.orderCompleteCount(user_id));
+        map.put("deliveryCompleteCount", storeSqlMapper.deliveryCompleteCount(user_id));
+        map.put("purchaseConfirmationCount", storeSqlMapper.purchaseConfirmationCount(user_id));
+        map.put("allOrderCount", storeSqlMapper.allOrderCount(user_id));
+
+        return map;
     }
 }

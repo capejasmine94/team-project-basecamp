@@ -85,12 +85,27 @@ public class StoreController {
     }
 
     @RequestMapping("my")
-    public String my(){
-        return "store/mMy";
+    public String my(HttpSession session){
+        UserDto userDto = (UserDto)session.getAttribute("sessionUserInfo");
+
+        if(userDto == null){
+            return "redirect:/user/login";
+        }else{
+            return "store/mMy";
+        }
     }
 
     @RequestMapping("myOrderList")
-    public String myOrderList(){
+    public String myOrderList(HttpSession session, Model model){
+        UserDto userDto = (UserDto)session.getAttribute("sessionUserInfo");
+
+        if(userDto==null){
+            return "redirect:/user/login";
+        }else{
+            int user_id = userDto.getId();
+            Map<String, Object> map = storeService.getOrderStatusCountData(user_id);
+            model.addAttribute("orderStatusCountData", map);
+        }
 
         return "store/mMyOrderList";
     }

@@ -322,6 +322,7 @@ public class RestStoreController {
         return restResponseDto;
     }
 
+    // 확인용
     @RequestMapping("getOrderDataByOrderId")
     public RestResponseDto getOrderDataByOrderId(@RequestParam("id") int id){
         RestResponseDto restResponseDto = new RestResponseDto();
@@ -373,6 +374,20 @@ public class RestStoreController {
         RestResponseDto restResponseDto = new RestResponseDto();
 
         storeService.deleteUserDeliveryInfoById(id);
+
+        return restResponseDto;
+    }
+
+    @RequestMapping("getOrderDataList")
+    public RestResponseDto getOrderDataList(HttpSession session, @RequestParam("filterOption")String filterOption){
+        RestResponseDto restResponseDto = new RestResponseDto();
+
+        UserDto userDto = (UserDto)session.getAttribute("sessionUserInfo");
+        int user_id = userDto.getId();
+
+        List<Map<String, Object>> orderDataList = storeService.getStoreOrderDataListByUserId(user_id, filterOption);
+
+        restResponseDto.add("orderDataList", orderDataList);
 
         return restResponseDto;
     }

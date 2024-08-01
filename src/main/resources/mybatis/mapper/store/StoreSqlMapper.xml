@@ -486,7 +486,7 @@
             discount_percentage = #{discount_percentage},
             used_point = #{used_point},
             order_price = #{order_price},
-            status = '결제완료'
+            status = 주문완료'
         where id = #{id}
     </update>
 
@@ -522,6 +522,40 @@
     <select id="selectOrderProductListByOrderId" resultType="com.bulmeong.basecamp.store.dto.OrderProductDto">
         select * from order_product
         where order_id = #{order_id}
+        <if test="filterOption!=null and filterOption!='All' and filterOption!='전체' and filterOption!='주문완료' and  filterOption!='상품준비중'">
+            and status = #{filterOption}
+        </if>
+        <if test="filterOption=='주문완료'">
+            and status in ('주문완료', '상품준비중')
+        </if>
+    </select>
+
+    <select id="orderCompleteCount" resultType="int">
+        select count(*) from order_product op
+        inner join store_order so on op.order_id = so.id
+        where so.user_id = #{user_id}
+        and op.status in ('주문완료', '상품준비중')
+    </select>
+
+    <select id="deliveryCompleteCount" resultType="int">
+        select count(*) from order_product op
+        inner join store_order so on op.order_id = so.id
+        where so.user_id = #{user_id}
+        and op.status = '배송완료'
+    </select>
+
+    <select id="purchaseConfirmationCount" resultType="int">
+        select count(*) from order_product op
+        inner join store_order so on op.order_id = so.id
+        where so.user_id = #{user_id}
+        and op.status = '구매확정'
+    </select>
+
+    <select id="allOrderCount" resultType="int">
+        select count(*) from order_product op
+        inner join store_order so on op.order_id = so.id
+        where so.user_id = #{user_id}
+        and op.status not in ('pending', '환불완료', '주문취소')
     </select>
 
     <select id="selectOrderProductListByStoreId" resultType="com.bulmeong.basecamp.store.dto.OrderProductDto">
@@ -557,9 +591,9 @@
         )
     </insert>
 
-    <update id="updateOrderProductStatusToDelivering">
+    <update id="updateOrderProductStatusToDelivered">
         update order_product
-        set status = "배송중"
+        set status = "배송완료"
         where id = #{id}
     </update>
 
@@ -597,4 +631,10 @@
         delete from bc_user_delivery_info
         where id = #{id}
     </delete>
+
+    <select id="selectStoreOrderDtoListByUserId" resultType="com.bulmeong.basecamp.store.dto.StoreOrderDto">
+        select * from store_order
+        where user_id = #{user_id}
+        order by id desc
+    </select>
 </mapper>

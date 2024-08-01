@@ -108,30 +108,30 @@
                     <div class="col">
                         <div class="row">
                             <div class="col fw-bold">
-                                김첨지
+                                <span th:text="${session.sessionUserInfo.name}">고구마</span>
                             </div>
                         </div>
                         <div class="row pb-1 text-body-tertiary">
                             <div class="col">
-                                ID: goguma
+                                ID: <span th:text="${session.sessionUserInfo.account}">gamja</span>
                             </div>
                         </div>
                     </div>
                     <div class="col-auto">
-                        <button class="btn btn-sm btn-outline-dark">
+                        <a href="/user/logoutProcess" class="btn btn-sm btn-outline-dark">
                             로그아웃
-                        </button>
+                        </a>
                     </div>
                 </div>
 
                 <div class="row px-2 py-2">
-                    <div class="col py-3 fw-bold bg-white rounded-2 border">
+                    <div class="col py-3 fw-semibold bg-white rounded-2 border">
                         <div class="row">
                             <div class="col">
                                 B POINT
                             </div>
                             <div class="col-auto pe-0" style="color: orangered;">
-                                200P
+                                <span th:text="${session.sessionUserInfo.mileage}">200</span>P
                             </div>
                             <div class="col-auto" style="color: orangered;">
                                 <span class="material-symbols-outlined f09">
