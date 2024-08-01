@@ -478,14 +478,14 @@
             document.getElementById('backButton').addEventListener('click', function() {
                 history.back();
             });
-            reloadOrderList("All");
+            reloadOrderList("전체");
         });
 
         function reloadOrderList(selectedStatusFilter){
             
             let filterOption = ""
 
-            if(selectedStatusFilter == "All"){
+            if(selectedStatusFilter == "전체"){
                 filterOption = '전체'
             }else{
                 const statusFilters = document.querySelectorAll(".orderProductStatusFilter")
@@ -499,6 +499,7 @@
             fetch(url)
             .then(response => response.json())
             .then(response => {
+                
                 const orderDataList = response.data.orderDataList;
 
                 const orderContainer = document.getElementById("orderContainer");
@@ -508,9 +509,10 @@
                 
                 for(orderData of orderDataList){
 
-                    if(orderData.OrderProductDataList.length==0){
-                        return;
+                    if(orderData.OrderProductDataList.length==0||orderData.storeOrderDto.status=='pending'){
+                        continue;
                     }
+
                     const newOrderTemplate = orderTemplate.cloneNode(true);
 
                     const orderDate = newOrderTemplate.querySelector(".orderDate");
@@ -525,7 +527,7 @@
                     for(OrderProductData of orderData.OrderProductDataList){
 
                         if(OrderProductData.orderProductDto.status=='pending'){
-                            return;
+                            continue;
                         }
 
                         const newOrderProductTemplate = orderProductTemplate.cloneNode(true);

@@ -111,7 +111,11 @@ public class StoreController {
     }
 
     @RequestMapping("orderView")
-    public String orderView(){
+    public String orderView(@RequestParam("id") int id, Model model){
+
+        Map<String, Object> orderData = storeService.getStoreOrderDataListByOrderId(id);
+        model.addAttribute("orderData", orderData);
+
         return "store/mOrderView";
     }
 

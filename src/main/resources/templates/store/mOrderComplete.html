@@ -203,7 +203,7 @@
 
         <div class="row px-3 bg-white pt-2 pb-4">
             <div class="col p-0 d-grid">
-                <a href="/store/orderView" type="button" class="btn btn-outline-dark py-2 fw-bold f09 rounded-0">
+                <a th:href="@{/store/orderView(id=${orderData.storeOrderDto.id})}" type="button" class="btn btn-outline-dark py-2 fw-bold f09 rounded-0">
                     주문 상세보기
                 </a>
             </div>

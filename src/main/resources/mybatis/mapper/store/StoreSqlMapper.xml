@@ -473,6 +473,8 @@
         set used_point = #{used_point},
             delivery_address = #{delivery_address},
             payment_amount = #{payment_amount},
+            receiver_name = #{receiver_name},
+            phone = #{phone},
             status = 'complete',
             created_at = now()
         where id = #{id}
@@ -486,7 +488,7 @@
             discount_percentage = #{discount_percentage},
             used_point = #{used_point},
             order_price = #{order_price},
-            status = 주문완료'
+            status = '주문완료'
         where id = #{id}
     </update>
 
@@ -522,7 +524,7 @@
     <select id="selectOrderProductListByOrderId" resultType="com.bulmeong.basecamp.store.dto.OrderProductDto">
         select * from order_product
         where order_id = #{order_id}
-        <if test="filterOption!=null and filterOption!='All' and filterOption!='전체' and filterOption!='주문완료' and  filterOption!='상품준비중'">
+        <if test="filterOption!=null and filterOption!='전체' and filterOption!='주문완료' and  filterOption!='상품준비중'">
             and status = #{filterOption}
         </if>
         <if test="filterOption=='주문완료'">

@@ -17,6 +17,7 @@ import com.bulmeong.basecamp.store.dto.CartProductDto;
 import com.bulmeong.basecamp.store.dto.OrderDeliveryInfoDto;
 import com.bulmeong.basecamp.store.dto.ProductOptionNameDto;
 import com.bulmeong.basecamp.store.dto.StoreDto;
+import com.bulmeong.basecamp.store.dto.StoreOrderDto;
 import com.bulmeong.basecamp.store.dto.StoreProductDto;
 import com.bulmeong.basecamp.store.dto.StoreRestResponseDto;
 import com.bulmeong.basecamp.store.dto.UserDeliveryInfoDto;
@@ -270,20 +271,17 @@ public class RestStoreController {
         return restResponseDto;
     }
 
-    @RequestMapping("orderProcess")
+    @PostMapping("orderProcess")
     public RestResponseDto orderProcess(
-        @RequestParam("used_point")int used_point, 
-        @RequestParam("delivery_address") String delivery_address, 
-        @RequestParam("payment_amount") int payment_amount,
-        @RequestParam("receiver_name") String receiver_name,
-        @RequestParam("phone") String phone,
+        @RequestBody StoreOrderDto storeOrderDto,
         HttpSession session
     ){
         RestResponseDto restResponseDto = new RestResponseDto();
 
         UserDto userDto = (UserDto)session.getAttribute("sessionUserInfo");
         int user_id = userDto.getId();
-        int order_id = storeService.orderProcess(user_id, used_point, delivery_address, receiver_name, phone, payment_amount);
+
+        int order_id = storeService.orderProcess(user_id, storeOrderDto);
         
         int[] pendingOrderCartProductIds = (int[])session.getAttribute("pendingOrderCartProductIds");
 
@@ -292,8 +290,6 @@ public class RestStoreController {
         }
 
         restResponseDto.add("order_id", order_id);
-
-
 
         return restResponseDto;
     }

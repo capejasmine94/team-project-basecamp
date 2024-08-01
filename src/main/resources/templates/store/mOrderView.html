@@ -109,10 +109,10 @@
                     <div class="col p-0 border-bottom">
                         <div class="row py-3 align-items-center f08 fw-bold">
                             <div class="col-auto pe-0">
-                                <span>No. 123456789</span>
+                                <span th:text="|No. ${orderData.storeOrderDto.id}|">No. 123456789</span>
                             </div>
                             <div class="col text-end">
-                                <span class="text-body-tertiary">2024.06.07 12:32</span>
+                                <span class="text-body-tertiary" th:text="${#dates.format(orderData.storeOrderDto.created_at, 'yyyy.MM.dd hh:mm')}">2024.06.07 12:32</span>
                             </div>
                         </div>
                     </div>
@@ -122,42 +122,45 @@
                     <div class="col p-0">
         
                         <!-- 상품 하나의 정보 -->
-                        <div class="row">
+                        <div class="row" th:each="orderProductData : ${orderData.orderProductDataList}">
                             <div class="col">
                                 <div class="row py-3">
                                     <div class="col-auto pe-0 seller_profile">
-                                        <img class="border" src="https://www.cat-lab.co.kr/data/editor/1811/ebb93bf998cab0e92df4402e266c4e50_1541192645_5868.jpg">
+                                        <img class="border" th:src="|/images/${orderProductData.orderProductDto.product_main_image}|">
                                     </div>
                                     <div class="col">
                                         <div class="row pb-2">
                                             <div class="col fw-bold">
-                                                배송완료
+                                                <span th:text="${orderProductData.orderProductDto.status}">배송완료</span>
                                             </div>
                                         </div>
                                         <div class="row pb-1">
                                             <div class="col f09">
-                                                GamjaStore
+                                                <span th:text="${orderProductData.storeDto.name}">GamjaStore</span>
                                             </div>
                                         </div>
                                         <div class="row pb-1">
                                             <div class="col f09 fw-bold">
-                                                진짜 맛있는 납작복숭아
+                                                <span th:text="${orderProductData.orderProductDto.product_name}">진짜 맛있는 납작복숭아</span>
                                             </div>
                                         </div>
                                         <div class="row text-body-tertiary f09">
                                             <div class="col-auto pe-0">
-                                                Black / M
+                                                <span th:if="${orderProductData.valueNameList}" th:each="name, iterStat : ${orderProductData.valueNameList}">
+                                                    <span th:text="${name}">색상: 검정 / 사이즈: M / 또 무슨 옵션: 짜라잔</span>
+                                                    <span th:if="${!iterStat.last}">/</span>
+                                                </span>
                                             </div>
                                             <div class="col">
-                                                <span class="border-start border-2 px-1">5개</span>
+                                                <span class="border-start border-2 px-1" th:text="|${orderProductData.orderProductDto.quantity}개|">5개</span>
                                             </div>
                                         </div>
-                                        <div class="row f09 pt-3 toggle-icon" data-bs-toggle="collapse" data-bs-target="#first-collapse">
+                                        <div class="row f09 pt-3 toggle-icon" data-bs-toggle="collapse" th:data-bs-target="|#${orderProductData.orderProductDto.id}|">
                                             <div class="col">
                                                 주문금액 (상세)
                                             </div>
                                             <div class="col-auto pe-0 text-end fw-bold">
-                                                13,500원
+                                                <span th:text="|${#numbers.formatDecimal(orderProductData.orderProductDto.order_price, 1, 'COMMA', 0, 'POINT')}원|">13,500원</span>
                                             </div>
                                             <div class="col-auto ps-0">
                                                 <span class="material-symbols-outlined fw-light">
@@ -165,14 +168,14 @@
                                                 </span>
                                             </div>
                                         </div>
-                                        <div class="row accordion-collapse collapse" id="first-collapse">
+                                        <div class="row accordion-collapse collapse" th:id="${orderProductData.orderProductDto.id}">
                                             <div class="col">
                                                 <div class="row f08 pb-1">
                                                     <div class="col text-body-tertiary">
                                                         상품 금액
                                                     </div>
                                                     <div class="col text-end">
-                                                        45,000원
+                                                        <span th:text="|${#numbers.formatDecimal(orderProductData.orderProductDto.product_price*orderProductData.orderProductDto.quantity, 1, 'COMMA', 0, 'POINT')}원|">45,000원</span>
                                                     </div>
                                                 </div>
                                                 <div class="row f08 pb-1">
@@ -180,7 +183,7 @@
                                                         상품 할인
                                                     </div>
                                                     <div class="col text-end text-primary">
-                                                        -31,500원
+                                                        <span th:text="|-${#numbers.formatDecimal(orderProductData.orderProductDto.product_price*orderProductData.orderProductDto.discount_percentage*orderProductData.orderProductDto.quantity, 1, 'COMMA', 0, 'POINT')}원|">-31,500원</span>
                                                     </div>
                                                 </div>
                                                 <div class="row f08">
@@ -188,7 +191,7 @@
                                                         보유 적립금 사용
                                                     </div>
                                                     <div class="col text-end text-primary">
-                                                        -2,513원
+                                                        <span th:text="-|${#numbers.formatDecimal(orderProductData.orderProductDto.used_point, 1, 'COMMA', 0, 'POINT')}원|">-2,513원</span>
                                                     </div>
                                                 </div>
                                             </div>
@@ -196,7 +199,7 @@
 
                                     </div>
                                 </div>
-                                <div class="row py-3">
+                                <div class="row py-3" th:if="${orderProductData.orderProductDto.status}=='구매확정'">
                                     <div class="col d-grid pe-0">
                                         <button class="btn f09 border bg-white rounded-0">
                                             배송조회
@@ -208,87 +211,7 @@
                                         </button>
                                     </div>
                                 </div>
-                            </div>
-                        </div>
-                        
-                        <!-- 상품 하나의 정보 -->
-                        <div class="row">
-                            <div class="col">
-                                <div class="row py-3">
-                                    <div class="col-auto pe-0 seller_profile">
-                                        <img class="border" src="https://www.cat-lab.co.kr/data/editor/1811/ebb93bf998cab0e92df4402e266c4e50_1541192645_5868.jpg">
-                                    </div>
-                                    <div class="col">
-                                        <div class="row pb-2">
-                                            <div class="col fw-bold">
-                                                배송완료
-                                            </div>
-                                        </div>
-                                        <div class="row pb-1">
-                                            <div class="col f09">
-                                                GamjaStore
-                                            </div>
-                                        </div>
-                                        <div class="row pb-1">
-                                            <div class="col f09 fw-bold">
-                                                진짜 맛있는 납작복숭아
-                                            </div>
-                                        </div>
-                                        <div class="row text-body-tertiary f09">
-                                            <div class="col-auto pe-0">
-                                                Black / M
-                                            </div>
-                                            <div class="col">
-                                                <span class="border-start border-2 px-1">5개</span>
-                                            </div>
-                                        </div>
-
-                                        <div class="row f09 pt-3 toggle-icon" data-bs-toggle="collapse" data-bs-target="#second-collapse">
-                                            <div class="col">
-                                                주문금액 (상세)
-                                            </div>
-                                            <div class="col-auto pe-0 text-end fw-bold">
-                                                13,500원
-                                            </div>
-                                            <div class="col-auto ps-0">
-                                                <span class="material-symbols-outlined fw-light">
-                                                    keyboard_arrow_down
-                                                </span>
-                                            </div>
-                                        </div>
-                                        <div class="row accordion-collapse collapse" id="second-collapse">
-                                            <div class="col">
-                                                <div class="row f08 pb-1">
-                                                    <div class="col text-body-tertiary">
-                                                        상품 금액
-                                                    </div>
-                                                    <div class="col text-end">
-                                                        45,000원
-                                                    </div>
-                                                </div>
-                                                <div class="row f08 pb-1">
-                                                    <div class="col text-body-tertiary">
-                                                        상품 할인
-                                                    </div>
-                                                    <div class="col text-end text-primary">
-                                                        -31,500원
-                                                    </div>
-                                                </div>
-                                                <div class="row f08">
-                                                    <div class="col text-body-tertiary">
-                                                        보유 적립금 사용
-                                                    </div>
-                                                    <div class="col text-end text-primary">
-                                                        -2,513원
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                    </div>
-                                </div>
-
-                                <div class="row py-3">
+                                <div class="row py-3" th:if="${orderProductData.orderProductDto.status}=='배송완료'">
                                     <div class="col d-grid pe-0">
                                         <a type="button" class="btn px-0 f09 border bg-white rounded-0">
                                             환불요청
@@ -310,8 +233,21 @@
                                         </button>
                                     </div>
                                 </div>
+                                <div class="row py-3" th:if="${orderProductData.orderProductDto.status}=='주문완료'">
+                                    <div class="col d-grid pe-0">
+                                        <a type="button" class="btn px-0 f09 border bg-white rounded-0">
+                                            주문취소
+                                        </a>
+                                    </div>
+                                    <div class="col d-grid">
+                                        <a type="button" class="btn px-0 f09 border bg-white rounded-0">
+                                            배송지 변경
+                                        </a>
+                                    </div>
+                                </div>
                             </div>
                         </div>
+                        
                         
                     </div>
                 </div>
@@ -338,7 +274,7 @@
                                         받으시는 분
                                     </div>
                                     <div class="col text-end">
-                                        김첨지
+                                        <span th:text="${orderData.storeOrderDto.receiver_name}">김첨지</span>
                                     </div>
                                 </div>
                                 <div class="row pb-2">
@@ -346,16 +282,18 @@
                                         연락처
                                     </div>
                                     <div class="col text-end">
-                                        010-1234-5678
+                                        <span th:text="${orderData.storeOrderDto.phone}">010-1234-5678</span>
                                     </div>
                                 </div>
                                 <div class="row">
-                                    <div class="col text-body-tertiary">
+                                    <div class="col-auto text-body-tertiary">
                                         배송지
                                     </div>
-                                    <div class="col-auto text-end">
-                                        (12345) 서울특별시 강남구 역삼동
+                                    <div class="col text-end">
+                                        <span th:text="${orderData.storeOrderDto.delivery_address}">
+                                            (12345) 서울특별시 강남구 역삼동
                                         <br>테헤란로 7길 7
+                                        </span>
                                     </div>
                                 </div>
                                 <a onclick="notesOnDeliveryInfo()" type="button" class="row pt-3 pb-4 text-center">
@@ -407,7 +345,7 @@
                                         상품 할인
                                     </div>
                                     <div class="col text-end">
-                                        -4,010원
+                                        -<span th:text="${#numbers.formatDecimal(orderData.discountPriceSum, 1, 'COMMA', 0, 'POINT')}">-4,010</span>원
                                     </div>
                                 </div>
                                 <div class="row pb-3">
@@ -415,7 +353,7 @@
                                         보유 적립금 사용
                                     </div>
                                     <div class="col text-end">
-                                        -2,513원
+                                        <span th:text="|-${#numbers.formatDecimal(orderData.storeOrderDto.used_point, 1, 'COMMA', 0, 'POINT')}원|">-2,513원</span>
                                     </div>
                                 </div>
                             </div>
@@ -434,7 +372,7 @@
                                 -28% SAVE
                             </div>
                             <div class="col-auto text-end text-primary">
-                                -11,189원
+                                -<span th:text="${#numbers.formatDecimal(orderData.discountPriceSum+orderData.storeOrderDto.used_point, 1, 'COMMA', 0, 'POINT')}">-11,189원</span>
                             </div>
                         </div>
                     </div>
@@ -462,7 +400,7 @@
                                         상품 합계
                                     </div>
                                     <div class="col text-end">
-                                        124,000원
+                                        <span th:text="${#numbers.formatDecimal(orderData.productPriceSum, 1, 'COMMA', 0, 'POINT')}">124,000원</span>
                                     </div>
                                 </div>
                                 <div class="row pb-2">
@@ -481,7 +419,7 @@
                                         -28% SAVE
                                     </div>
                                     <div class="col-auto text-end text-primary fw-bold">
-                                        -11,189원
+                                        -<span th:text="${#numbers.formatDecimal(orderData.discountPriceSum+orderData.storeOrderDto.used_point, 1, 'COMMA', 0, 'POINT')}">-11,189원</span>
                                     </div>
                                 </div>
                             </div>
@@ -496,7 +434,7 @@
                                 결제 금액
                             </div>
                             <div class="col-auto text-end">
-                                100,075원
+                                <span th:text="${#numbers.formatDecimal(orderData.storeOrderDto.payment_amount, 1, 'COMMA', 0, 'POINT')}">100,075원</span>
                             </div>
                         </div>
                     </div>
@@ -524,7 +462,7 @@
                                         결제 방법
                                     </div>
                                     <div class="col text-end">
-                                        카카오페이 + 적립금
+                                        카카오페이 <span th:if="${orderData.storeOrderDto.used_point!=0}">+ 적립금</span>
                                     </div>
                                 </div>
                                 <div class="row fw-bold">
@@ -541,6 +479,7 @@
                 </div>
 
                 <!-- 환불정보 -->
+                <!-- 
                 <div class="row bg-white pb-4 px-3 border-top">
                     <div class="col p-0">
                         
@@ -590,6 +529,7 @@
                         </div>
                     </div>
                 </div>
+                 -->
 
                 <div class="row px-2 bg-white pt-3 pb-5 border-top">
                     <div class="col d-grid">

@@ -165,20 +165,43 @@
         }
 
         function submitPayment(){
+
             const used_point = document.getElementById("inputPoint").value;
-            const deliveryAddress = document.getElementById("deliveryAddress").innerText;
+            const deliveryAddress = document.getElementById("delivery_address").innerText;
             const phone = document.getElementById("phone").innerText;
             const receiver_name = document.getElementById("receiver_name").innerText;
             const paymentAmount = document.querySelector(".paymentAmount").innerText.replace(/,/g,"");
 
-            const url = `/api/store/orderProcess?used_point=${used_point}&delivery_address=${deliveryAddress}&payment_amount=${paymentAmount}&receiver_name=${receiver_name}&phone=${phone}`
-            fetch(url)
+            const storeOrder = {
+                receiver_name: receiver_name,
+                phone: phone,
+                used_point: used_point,
+                delivery_address: deliveryAddress,
+                payment_amount: paymentAmount
+            }
+
+            const url = `/api/store/orderProcess`
+            fetch(url, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(storeOrder)
+            })
             .then(response => response.json())
             .then(response => {
                 const order_id = response.data.order_id;
 
                 location.href=`/store/orderComplete?id=${order_id}`
             })
+        }
+
+        function useAllPoint(){
+            const userPoint = document.getElementById("userPoint").innerText
+            
+            const inputPoint = document.getElementById("inputPoint")
+            
+            inputPoint.value = userPoint.replace(/[^0-9]/g, '');
         }
 
         document.addEventListener('DOMContentLoaded', function() {
@@ -400,7 +423,7 @@
                                 </div>
                             </div>
                             <div class="col-auto pe-0">
-                                <input type="button" value="전액사용" class="btn border bg-white py-2">
+                                <input type="button" onclick="useAllPoint()" value="전액사용" class="btn border bg-white py-2">
                             </div>
                         </div>
 

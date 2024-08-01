@@ -495,7 +495,12 @@ public class StoreService {
         }
     }
 
-    public int orderProcess(int user_id, int used_point, String delivery_address, String receiver_name, String phone, int payment_amount){
+    public int orderProcess(int user_id, StoreOrderDto storeOrder){
+        String delivery_address = storeOrder.getDelivery_address();
+        String phone = storeOrder.getPhone();
+        String receiver_name = storeOrder.getReceiver_name();
+        int used_point = storeOrder.getUsed_point();
+        int payment_amount = storeOrder.getPayment_amount();
 
         List<StoreOrderDto> storeOrderDtoList = storeSqlMapper.selectPendingOrderDtoListByUserId(user_id);
 
@@ -503,6 +508,7 @@ public class StoreService {
 
         //어차피 하나겠지만 괜히 반복문을 돌려본다
         for(StoreOrderDto storeOrderDto : storeOrderDtoList){
+
             order_id = storeOrderDto.getId();
             storeOrderDto.setDelivery_address(delivery_address);
             storeOrderDto.setReceiver_name(receiver_name);
@@ -548,6 +554,9 @@ public class StoreService {
                         orderProductDto.setUsed_point(point_discoint);
 
                         orderProductDto.setOrder_price(salePrice-point_discoint);
+
+                        System.out.println("여기봐라!!!");
+                        System.out.println(orderProductDto);
 
                         storeSqlMapper.updateOrderProduct(orderProductDto);
                     }else{
@@ -632,7 +641,7 @@ public class StoreService {
         StoreOrderDto storeOrderDto = storeSqlMapper.selectStoreOrderDtoById(id);
 
         List<Map<String, Object>> orderProductDataList = new ArrayList<>();
-        List<OrderProductDto> orderProductDtoList = storeSqlMapper.selectOrderProductListByOrderId(id, "All");
+        List<OrderProductDto> orderProductDtoList = storeSqlMapper.selectOrderProductListByOrderId(id, "전체");
 
         for(OrderProductDto orderProductDto : orderProductDtoList){
             Map<String, Object> map = new HashMap<>();
@@ -803,6 +812,56 @@ public class StoreService {
         map.put("deliveryCompleteCount", storeSqlMapper.deliveryCompleteCount(user_id));
         map.put("purchaseConfirmationCount", storeSqlMapper.purchaseConfirmationCount(user_id));
         map.put("allOrderCount", storeSqlMapper.allOrderCount(user_id));
+
+        return map;
+    }
+
+    public Map<String, Object> getStoreOrderDataListByOrderId(int order_id){
+        Map<String, Object> map = new HashMap<>();
+
+        StoreOrderDto storeOrderDto = storeSqlMapper.selectStoreOrderDtoById(order_id);
+
+        List<OrderProductDto> orderProductDtoList = storeSqlMapper.selectOrderProductListByOrderId(order_id, "전체");
+        List<Map<String, Object>> orderProductDataList = new ArrayList<>();
+
+        int product_price_sum = 0;
+        
+        for(OrderProductDto orderProductDto : orderProductDtoList){
+            Map<String, Object> orderProductData = new HashMap<>();
+
+            int order_product_id = orderProductDto.getId();
+            
+            int[] value_ids = storeSqlMapper.selectOrderProductOptionValueIds(order_product_id);
+            List<String> valueNameList = new ArrayList<>();
+            for(int value_id : value_ids){
+                String value_name = storeSqlMapper.selectOptionValueNameById(value_id);
+                valueNameList.add(value_name);
+            }
+
+            StoreDto storeDto = storeSqlMapper.selectStoreDtoByOrderProductId(order_product_id);
+
+            orderProductData.put("valueNameList", valueNameList);
+            orderProductData.put("orderProductDto", orderProductDto);
+            orderProductData.put("storeDto", storeDto);
+
+            orderProductDataList.add(orderProductData);
+
+            int additional_info_id = storeSqlMapper.selectAdditionalInfoIdByValueIds(value_ids);
+            AdditionalInfoDto additionalInfoDto = storeSqlMapper.selectAdditionalInfoById(additional_info_id);
+
+            int additional_price = additionalInfoDto.getAdditional_price();
+
+            int product_price = (orderProductDto.getProduct_price()+additional_price)*orderProductDto.getQuantity();
+            product_price_sum += product_price;
+
+        }
+        int discount_price_sum = product_price_sum - storeOrderDto.getPayment_amount();
+
+        map.put("orderProductDataList", orderProductDataList);
+        map.put("storeOrderDto", storeOrderDto);
+
+        map.put("productPriceSum", product_price_sum);
+        map.put("discountPriceSum", discount_price_sum);
 
         return map;
     }
