@@ -38,6 +38,11 @@
             text-align: center; /* 텍스트를 중앙 정렬 */
             font-size: 11px; /* 폰트 크기 설정, 필요에 따라 조정 */
         }
+        .btn-block { /* 버튼 레이아웃 유지 */
+            max-width: 100%;
+            text-align: left;
+            display: inline-block; /* 버튼을 인라인 블록으로 설정하여 텍스트가 줄바꿈되지 않도록 합니다. */
+        }
     </style>
 </head>
 <body>
@@ -183,7 +188,7 @@
                         </div>
                         <div class="row">
                             <div class="col py-2">
-                                <button class="btn btn-light btn-block border border-0" id="carTypeDisplay" onClick="showCarTypeModal">유형 선택</button>
+                                <button class="btn btn-light btn-block border border-0 ellipsis-line-two" id="carTypeDisplay" onClick="showCarTypeModal()">유형 선택</button>
                             </div>
                         </div>
                     </div>
@@ -285,7 +290,7 @@
                     </div>
                 </div>
                 <div class="modal-footer d-flex justify-content-center">
-                    <button type="button" class="btn text-dark w-100" data-bs-dismiss="modal" style="background-color: #C6ED6F;">선택</button>
+                    <button type="button" class="carTypeBtn btn text-dark w-100" data-bs-dismiss="modal" style="background-color: #C6ED6F;" onClick="updateSelectedCarTypes()">선택</button>
                 </div>
             </div>
         </div>
@@ -410,12 +415,15 @@
     </div>
 
     <!-- 캠핑카 선택 Template -->
-    <div class="col-12 pb-2" id="carTypeCheckListTemplates">
-        <div class="carTypeCheckLisWrapper form-check d-flex align-items-center">
-            <input class="form-check-input" type="checkbox" onclick="selectCarType()">
-            <label class="form-check-label"></label>
+    <div id="carTypeCheckListTemplate" class="d-none">
+        <div class="col-12 pb-2">
+            <div class="carTypeCheckListWrapper form-check d-flex align-items-center">
+                <input class="carTypeCheck form-check-input" type="checkbox">
+                <label class="form-check-label"></label>
+            </div>
         </div>
     </div>
+
 
 
 
@@ -658,9 +666,10 @@
             for (const regionsList of response.data.allRegionsList) {
                 console.log("regionsList 반복리스트", regionsList.name);
                 
-                const newCampingcarListTemplate = regionsListWrapperTemplate.cloneNode(true);
+                const newCampingcarListWrapperTemplate = regionsListWrapperTemplate.cloneNode(true);
+                console.log("new 확인 :" ,newCampingcarListWrapperTemplate);
 
-                const newregionsButton = newCampingcarListTemplate.querySelector(".regionsBtn"); 
+                const newregionsButton = newCampingcarListWrapperTemplate.querySelector(".regionsBtn"); 
                 newregionsButton.innerText = regionsList.name;
                 
                 // 지역 버튼 클릭한 것을 click 이벤트 추가
@@ -672,29 +681,78 @@
                     modalInstance.hide();// 모달 닫기
 
                 });
-                
-                regionsListBox.appendChild(newCampingcarListTemplate);
+                // 이벤트 리스너 추가
+                newCarTypeCheck.addEventListener('click', (event) => selectCarType(event.target));
+                regionsListBox.appendChild(newCampingcarListWrapperTemplate);
             }
         });
     }
 
-    const showCarTypeModal = () => {
-        const campingcarModal = documnet.getElementById("campingcarModal"); 
-        const carTypeModal = new bootstrap.Modal(campingcarModal);
-        loadCampingCarTypeList();
-        carTypeModal.show();
+    let selectedCarTypes = [];
 
+    const showCarTypeModal = () => {
+        const campingcarModal = document.getElementById("campingcarModal"); 
+        const carTypeModal = new bootstrap.Modal(campingcarModal);
+        loadCampingCarTypeOptionList();
+        carTypeModal.show();
     }
 
-    function loadCampingCarTypeList() {
+    function loadCampingCarTypeOptionList() {
         const url = "/api/rent-user/getCarTypeAll";
         fetch(url)
         .then(response => response.json())
         .then(response => {
-            
+            console.log("getCarTypeAll 리스트 : ", response.data.allCarType);
+
+            const carTypeCheckListBox = document.getElementById("carTypeCheckListBox");
+            carTypeCheckListBox.innerHTML = "";
+
+            const carTypeListWrapperTemplate  = document.querySelector("#carTypeCheckListTemplate .carTypeCheckListWrapper"); 
+            console.log("템플릿 확인 : " ,carTypeListWrapperTemplate);
+
+            let id = 0;
+            // 캠핑카 유형 리스트의 각 항목을 반복 처리
+            for(const carTypeList of response.data.allCarType) {
+                console.log("carTypeList 반복리스트", carTypeList.name);
+                
+                const newCarTypeListWrapperTemplate = carTypeListWrapperTemplate.cloneNode(true);
+                console.log("new 확인", newCarTypeListWrapperTemplate);
+
+                const newCarTypeCheck = newCarTypeListWrapperTemplate.querySelector(".carTypeCheck"); 
+                newCarTypeCheck.value = carTypeList.name; // 체크박스의 값 설정
+                newCarTypeCheck.id = `carTypeCheck${id}`; // 체크박스의 고유한 ID 설정
+                newCarTypeCheck.setAttribute("onclick", "selectCarType(event)"); // 체크박스 클릭 시 실행할 함수 설정
+
+                const newCarTypeLabel = newCarTypeListWrapperTemplate.querySelector(".form-check-label");
+                newCarTypeLabel.innerText = carTypeList.name; // 라벨에 텍스트 설정
+                newCarTypeLabel.setAttribute("for", `carTypeCheck${id}`); // 라벨의 for 속성 설정
+
+                carTypeCheckListBox.appendChild(newCarTypeListWrapperTemplate); // 복제된 템플릿을 체크박스 목록에 추가
+                id++; // 고유한 ID를 위해 id 값 증가
+            }
         });
-        
     }
+
+    function selectCarType(event) { 
+        // console.log(event);
+        // console.log(event.target);
+
+        if (event.target.checked) {
+            // 체크박스가 체크되었으면 배열에 추가
+            selectedCarTypes.push(event.target.value);
+            console.log("event.target.value 확인: ", event.target.value);
+        } else {
+            // 체크박스가 체크 해제되었으면 배열에서 제거
+            selectedCarTypes = selectedCarTypes.filter(value => value !== event.target.value);
+        }
+    }
+
+
+
+
+
+
+
 /* 설명 주석
 1. newRegionButton.addEventListener('click', () => { ... });:
    - 설명: addEventListener는 지정된 이벤트가 대상에서 발생할 때 호출할 함수를 설정합니다. 여기서 'click' 이벤트를 설정하여 버튼이 클릭될 때 특정 동작을 수행하도록 합니다.
@@ -726,16 +784,6 @@
      결과: 모달이 화면에서 사라집니다.
 */
     </script>
-
-
-
-
-
-
-
-
-
-
     <!-- 모달 script -->
     <!-- <script>
         // 모달에서 전체 혹은 장소를 선택 했을때, 함수를 호출한다.
