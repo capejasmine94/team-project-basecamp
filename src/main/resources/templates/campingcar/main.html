@@ -535,7 +535,6 @@
         });
 
         // 전역 변수: 사용자 ID 초기화
-        // 페이지가 로드될 때 사용자 ID를 null로 초기화합니다.
         let myId = null;
 
         // 세션에서 사용자 ID를 가져오는 함수
@@ -645,6 +644,11 @@
 
                         // 각 캠핑카 항목의 좋아요 상태를 갱신
                         reloadLike(e.id);
+
+                        // 상세 페이지 이동을 위한 클릭 이벤트 리스너 추가
+                        newCampingcarListWrapper.addEventListener('click', () => {
+                            window.location.href = `/campingcarDetailPage?id=${e.id}`;
+                        });
                     }
                 });
         }
@@ -730,7 +734,6 @@
                 });
         }
 
-
         // 대여 장소 선택 모달 열기 함수 
         const showLocationModal = () => {
             const locationModal = document.getElementById("locationModal"); 
@@ -744,35 +747,29 @@
             fetch(url)
             .then(response => response.json())
             .then(response => {
-                // console.log("response 응답: ", response.data.allRegionsList);
-
                 const regionsListBox = document.getElementById("regionsListBox");
                 // 컨테이너의 기존 내용을 초기화
-                campingcarListBox.innerHTML = "";
+                regionsListBox.innerHTML = "";
 
                 const regionsListWrapperTemplate  = document.querySelector("#regionsListTemplate .regionstsListWrapper"); 
 
                 // 차량 지역 리스트의 각 항목을 반복 처리
                 for (const regionsList of response.data.allRegionsList) {
-                    // console.log("regionsList 반복리스트", regionsList.name);
-                    
-                    const newCampingcarListWrapperTemplate = regionsListWrapperTemplate.cloneNode(true);
-                    // console.log("new 확인 :" ,newCampingcarListWrapperTemplate);
+                    const newRegionsListWrapperTemplate = regionsListWrapperTemplate.cloneNode(true);
 
-                    const newregionsButton = newCampingcarListWrapperTemplate.querySelector(".regionsBtn"); 
+                    const newregionsButton = newRegionsListWrapperTemplate.querySelector(".regionsBtn"); 
                     newregionsButton.innerText = regionsList.name;
                     
                     // 지역 버튼 클릭한 것을 click 이벤트 추가
                     newregionsButton.addEventListener('click', () => {
-                    // 'locationDisplay'라는 ID를 가진 요소(장소 선택이라는 버튼)의 텍스트를 선택한 지역의 이름으로 동적으로 설정
-                    document.getElementById("locationDisplay").innerText = regionsList.name;
-                    // Bootstrap 모달 인스턴스를 가져와서 모달 닫기
-                    const modalInstance = bootstrap.Modal.getInstance(locationModal);// 모달 인스턴스 가져오기
-                    modalInstance.hide();// 모달 닫기
-
+                        // 'locationDisplay'라는 ID를 가진 요소(장소 선택이라는 버튼)의 텍스트를 선택한 지역의 이름으로 동적으로 설정
+                        document.getElementById("locationDisplay").innerText = regionsList.name;
+                        // Bootstrap 모달 인스턴스를 가져와서 모달 닫기
+                        const modalInstance = bootstrap.Modal.getInstance(locationModal);// 모달 인스턴스 가져오기
+                        modalInstance.hide();// 모달 닫기
                     });
 
-                    regionsListBox.appendChild(newCampingcarListWrapperTemplate);
+                    regionsListBox.appendChild(newRegionsListWrapperTemplate);
                 }
             });
         }
@@ -793,22 +790,16 @@
             fetch(url)
             .then(response => response.json())
             .then(response => {
-                // console.log("getCarTypeAll 리스트 : ", response.data.allCarType);
-
                 const carTypeCheckListBox = document.getElementById("carTypeCheckListBox");
                 // 컨테이너의 기존 내용을 초기화
                 carTypeCheckListBox.innerHTML = "";
 
                 const carTypeListWrapperTemplate  = document.querySelector("#carTypeCheckListTemplate .carTypeCheckListWrapper"); 
-                // console.log("템플릿 확인 : " , carTypeListWrapperTemplate);
 
                 let id = 0;
                 // 캠핑카 유형 리스트의 각 항목을 반복 처리
                 for(const carTypeList of response.data.allCarType) {
-                    // console.log("carTypeList 반복리스트", carTypeList.name);
-                    
                     const newCarTypeListWrapperTemplate = carTypeListWrapperTemplate.cloneNode(true);
-                    // console.log("new 확인", newCarTypeListWrapperTemplate);
 
                     const newCarTypeCheck = newCarTypeListWrapperTemplate.querySelector(".carTypeCheck"); 
                     newCarTypeCheck.value = carTypeList.name; // 체크박스의 값 설정
@@ -827,15 +818,11 @@
             });
         }
 
-        // 선택된!!! 캠핑카 유형  
+        // 선택된 캠핑카 유형  
         function selectCarType(event) { 
-            // console.log(event);
-            // console.log(event.target);
-
             if (event.target.checked) {
                 // 체크박스가 체크되었으면 배열에 추가
                 selectedCarTypes.push(event.target.value);
-                // console.log("event.target.value 확인: ", event.target.value);
             } else {
                 // 체크박스가 체크 해제되었으면 배열에서 제거
                 selectedCarTypes = selectedCarTypes.filter(value => value !== event.target.value);
@@ -843,14 +830,26 @@
         }
 
         function updateSelectedCarTypes() {
-        // 선택된 캠핑카 유형들을 콤마로 구분하여 표시
-        document.getElementById("carTypeDisplay").innerText = selectedCarTypes.join(', ');
+            // 선택된 캠핑카 유형들을 콤마로 구분하여 표시
+            document.getElementById("carTypeDisplay").innerText = selectedCarTypes.join(', ');
         }
 
+        // 대여일 모달 열기 함수 
+        const showRentDateModal = () => {
+            const rentDateModalOpen = document.getElementById("rentdateModal");
+            const rentDateModal = new bootstrap.Modal(rentDateModalOpen);
+            rentDateModal.show();
+            renderCalendar(currentMonth, currentYear);
+        }
 
-    </script>
+        // 반납일 모달 열기 함수 
+        const showReturnDateModal = () => {
+            const returnDateModalOpen = document.getElementById("returndateModal");
+            const returnDateModal = new bootstrap.Modal(returnDateModalOpen);
+            returnDateModal.show();
+            renderReturnCalendar(currentMonth, currentYear);
+        }
 
-    <script>
         const today = new Date();
         let currentMonth = today.getMonth();
         let currentYear = today.getFullYear();
@@ -861,20 +860,6 @@
             renderCalendar(currentMonth, currentYear);
             renderReturnCalendar(currentMonth, currentYear);
         });
-
-        function showRentDateModal() {
-            const rentDateModalOpen = document.getElementById("rentdateModal");
-            const rentDateModal = new bootstrap.Modal(rentDateModalOpen);
-            rentDateModal.show();
-            renderCalendar(currentMonth, currentYear);
-        }
-
-        function showReturnDateModal() {
-            const returnDateModalOpen = document.getElementById("returndateModal");
-            const returnDateModal = new bootstrap.Modal(returnDateModalOpen);
-            returnDateModal.show();
-            renderReturnCalendar(currentMonth, currentYear);
-        }
 
         function renderCalendar(month, year) {
             const firstDay = new Date(Date.UTC(year, month, 1)).getUTCDay();
@@ -1073,36 +1058,18 @@
                 document.getElementById("returnDateDisplay").textContent = displayDate.toISOString().split('T')[0];
             }
         }
+
+        // 검색 버튼 클릭 이벤트 리스너 추가
+        function search() {
+            const selectedLocation = document.getElementById("locationDisplay").innerText;
+            const selectedCarTypes = document.getElementById("carTypeDisplay").innerText.split(', ');
+            const selectedRentDate = document.getElementById("rendDateDisplay").innerText;
+            const selectedReturnDate = document.getElementById("returnDateDisplay").innerText;
+
+            // 필터링 조건에 맞는 검색 결과 페이지로 이동
+            const queryString = `location=${selectedLocation}&carTypes=${selectedCarTypes.join(',')}&rentDate=${selectedRentDate}&returnDate=${selectedReturnDate}`;
+            window.location.href = `/searchResultsPage?${queryString}`;
+        }
     </script>
 </body>
 </html>
-<!-- /* 설명 주석
-1. newRegionButton.addEventListener('click', () => { ... });:
-   - 설명: addEventListener는 지정된 이벤트가 대상에서 발생할 때 호출할 함수를 설정합니다. 여기서 'click' 이벤트를 설정하여 버튼이 클릭될 때 특정 동작을 수행하도록 합니다.
-   - 사용법:
-     element.addEventListener(event, function);
-     element: 이벤트 리스너를 추가할 대상 요소입니다. 여기서는 newRegionButton입니다.
-     event: 리스너를 추가할 이벤트 유형입니다. 여기서는 'click'입니다.
-     function: 이벤트가 발생했을 때 실행할 함수입니다. 여기서는 익명 함수(() => { ... })를 사용했습니다.
-
-2. document.getElementById('locationDisplay').innerText = region.name;
-   - 설명: document.getElementById는 HTML 문서에서 지정된 ID를 가진 요소를 반환합니다. innerText는 해당 요소의 텍스트 콘텐츠를 설정하거나 반환합니다. 여기서는 locationDisplay라는 ID를 가진 요소의 텍스트를 선택한 지역의 이름(region.name)으로 설정합니다.
-   - 사용법:
-     const element = document.getElementById(id);
-     element.innerText = text;
-     id: 찾고자 하는 요소의 ID입니다. 여기서는 'locationDisplay'입니다.
-     text: 요소에 설정할 텍스트 콘텐츠입니다. 여기서는 region.name입니다.
-
-3. const modalInstance = bootstrap.Modal.getInstance(locationModal);
-   - 설명: bootstrap.Modal.getInstance는 지정된 모달 요소에 대한 Bootstrap 모달 인스턴스를 반환합니다. 이 인스턴스를 사용하면 해당 모달에 대해 프로그램적으로 제어할 수 있습니다.
-   - 사용법:
-     const modalInstance = bootstrap.Modal.getInstance(element);
-     element: 모달 요소입니다. 여기서는 locationModal입니다.
-     결과: modalInstance는 모달에 대한 Bootstrap 인스턴스가 됩니다.
-
-4. modalInstance.hide();
-   - 설명: hide 메서드는 Bootstrap 모달 인스턴스를 숨기기 위해 사용됩니다. 여기서는 modalInstance가 가리키는 모달을 닫습니다.
-   - 사용법:
-     modalInstance.hide();
-     결과: 모달이 화면에서 사라집니다.
-*/ -->
