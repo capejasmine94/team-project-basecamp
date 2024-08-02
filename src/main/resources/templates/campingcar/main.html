@@ -11,9 +11,6 @@
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet">
 
     <link href="/public/css/common.css" rel="stylesheet">
-    <!-- 캘린더 js -->
-    <script src="/public/js/calendar.js"></script>
-
     <style>
         .carousel-inner img {
             height: 550px; /* 이미지 높이 조정 */
@@ -42,6 +39,105 @@
             max-width: 100%;
             text-align: left;
             display: inline-block; /* 버튼을 인라인 블록으로 설정하여 텍스트가 줄바꿈되지 않도록 합니다. */
+        }
+        .calendar-container {
+            text-align: center;
+            font-family: Arial, sans-serif;
+            overflow-x: hidden;
+        }
+
+        .calendar-container table {
+            width: 100%;
+            border-collapse: collapse; /* 테두리가 겹치지 않도록 설정 */
+            margin: 0 auto;
+            border: none; /* 전체 테두리 제거 */
+            table-layout: fixed; /* 모든 셀이 동일한 크기를 가지도록 설정 */
+        }
+
+        .calendar-container th, .calendar-container td {
+            padding: 0; /* 패딩을 제거하여 셀의 높이를 고정 */
+            text-align: center;
+            border: none; /* 셀 테두리 제거 */
+            height: 40px; /* 모든 셀의 높이를 동일하게 설정 */
+        }
+
+        .calendar-container th {
+            color: #999;
+            font-weight: bold;
+            height: 40px; /* 헤더 셀의 높이도 동일하게 설정 */
+            line-height: 40px; /* 수직 정렬을 위해 라인 높이 설정 */
+        }
+
+        .calendar-container td {
+            cursor: pointer;
+        }
+
+        .calendar-container .inactive {
+            color: #ccc;
+            pointer-events: none;
+        }
+
+        .calendar-container .cursor-pointer .date-circle {
+            cursor: pointer;
+        }
+
+        .calendar-container .selected .date-circle {
+            background-color: black;
+            color: white;
+            border-radius: 50%;
+        }
+
+        .calendar-container .today .date-circle {
+            border: 2px solid black;
+        }
+
+        .calendar-container .cursor-pointer {
+            cursor: pointer;
+        }
+
+        .calendar-container .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .calendar-container .header button {
+            border: none;
+            background: none;
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #333;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            border-radius: 8px;
+        }
+
+        .calendar-container .header button:hover {
+            background-color: #f0f0f0;
+        }
+
+        .calendar-container .header h4 {
+            margin: 0;
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+
+        .calendar-container .date-circle {
+            display: inline-block;
+            width: 30px; /* 날짜 원형 크기 조정 */
+            height: 30px; /* 날짜 원형 크기 조정 */
+            line-height: 30px; /* 텍스트 수직 정렬 */
+            border-radius: 50%;
+            text-align: center;
+            margin: -2px auto; /* 날짜 간격 조정 및 가운데 정렬 */
+        }
+
+        .calendar-container .text-primary {
+            color: #007bff;
         }
     </style>
 </head>
@@ -252,7 +348,6 @@
             </div>
         </div>
     </div>
-
     <!-- 대여 장소 선택 모달-->
     <div class="modal fade" id="locationModal" tabindex="-1" aria-labelledby="locationModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
@@ -299,42 +394,34 @@
     </div>
     <!-- 대여일 모달 -->
     <div class="modal fade" id="rentdateModal" tabindex="-1" aria-labelledby="rentdateModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
-                <div class="modal-header">
-                    <div class="modal-title fs-5 fw-semibold text-center w-100" id="rentdateModalLabel">대여일 선택</div>
+                <div class="modal-header border-0">
+                    <h5 class="modal-title text-center w-100" id="rentdateModalLabel">언제 필요한가요?</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <div class="row">
-                        <div class="col align-items-center justify-content-center">
-                            <div id="calendar_rentdate"></div>
-                        </div>
-                    </div>
+                    <div id="calendar"></div>
                 </div>
-                <div class="modal-footer d-flex justify-content-center">
-                    <button type="button" class="btn text-dark w-100" data-bs-dismiss="modal" style="background-color: #C6ED6F;" onclick="confirmRentDate()">확인</button>
+                <div class="modal-footer border-0">
+                    <button type="button" class="btn w-100 text-dark" style="background-color: #C6ED6F;" data-bs-dismiss="modal" onclick="confirmRentDate()">확인</button>
                 </div>
             </div>
         </div>
     </div>
     <!-- 반납일 모달 -->
     <div class="modal fade" id="returndateModal" tabindex="-1" aria-labelledby="returndateModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
-                <div class="modal-header">
-                    <div class="modal-title fs-5 fw-semibold text-center w-100" id="returndateModalLabel">반납일 선택</div>
+                <div class="modal-header border-0">
+                    <h5 class="modal-title text-center w-100" id="returndateModalLabel">반납일 선택</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <div class="row">
-                        <div class="col align-items-center justify-content-center">
-                            <div id="calendar_returndate"></div>
-                        </div>
-                    </div>
+                    <div id="calendarReturn"></div>
                 </div>
-                <div class="modal-footer d-flex justify-content-center">
-                    <button type="button" class="btn text-dark w-100" data-bs-dismiss="modal" style="background-color: #C6ED6F;" onclick="confirmReturnDate()">확인</button>
+                <div class="modal-footer border-0">
+                    <button type="button" class="btn w-100 text-dark" style="background-color: #C6ED6F;" data-bs-dismiss="modal" onclick="confirmReturnDate()">확인</button>
                 </div>
             </div>
         </div>
@@ -764,119 +851,230 @@
     </script>
 
     <script>
-// 현재 날짜와 시간을 포함하는 Date 객체 생성
-let nextYear = new Date();
-// Date 객체의 연도를 현재 연도에서 1년 더한 값으로 설정 
-nextYear.setFullYear(nextYear.getFullYear() + 1);
+        const today = new Date();
+        let currentMonth = today.getMonth();
+        let currentYear = today.getFullYear();
+        let lastSelectedDate = null;
+        let lastSelectedReturnDate = null;
 
-// "rentdate"라는 식별자로, 다음 해부터 365일간의 달력 데이터 생성 또는 처리 
-createCalendar("rentdate", nextYear);
+        document.addEventListener("DOMContentLoaded", () => {
+            renderCalendar(currentMonth, currentYear);
+            renderReturnCalendar(currentMonth, currentYear);
+        });
 
-// 모달을 보여주는 함수
-const showRentDateModal = () => {
-    const rentDateModalOpen = document.getElementById("rentdateModal");
-    const rentDateModal = new bootstrap.Modal(rentDateModalOpen);
-    rentDateModal.show();
-
-    // 모달이 열릴 때 비활성화 설정과 클릭 이벤트를 적용
-    setTimeout(() => {
-        disablePastDates(); // 현재 날짜 이전의 날짜를 비활성화
-        modifyCalendar(); // 클릭 이벤트를 설정
-    }, 10);  // 약간의 지연을 줘서 캘린더가 렌더링 된 후에 실행되도록 함
-}
-
-// 날짜 선택 확인 함수
-function confirmRentDate() {
-    const selectedDate = getStartDate("rentdate");
-    if (selectedDate) {
-        // 선택된 날짜를 화면에 표시
-        document.getElementById("rendDateDisplay").textContent = selectedDate.toLocaleDateString();
-    }
-}
-
-// 현재 날짜 이전의 날짜를 비활성화하고, 하나의 날짜만 선택할 수 있도록 수정하는 함수
-function disablePastDates() {
-    const calendarBody = document.querySelector('#calendar_rentdate #calendarBody');
-    let today = new Date();
-    today.setHours(0, 0, 0, 0);  // 오늘 날짜를 시간 없이 설정
-
-    // 달력의 각 셀을 검사하여 비활성화할 날짜를 설정
-    calendarBody.querySelectorAll('td').forEach(cell => {
-        const cellText = cell.innerText;
-        if (!cellText || isNaN(cellText)) return;
-
-        let cellDate;
-        // 셀이 이전 달의 날짜인 경우
-        if (cell.classList.contains('prev-month')) {
-            const prevMonth = today.getMonth() === 0 ? 11 : today.getMonth() - 1;
-            const prevYear = today.getMonth() === 0 ? today.getFullYear() - 1 : today.getFullYear();
-            cellDate = new Date(prevYear, prevMonth, cellText);
-        } 
-        // 셀이 다음 달의 날짜인 경우
-        else if (cell.classList.contains('next-month')) {
-            const nextMonth = today.getMonth() === 11 ? 0 : today.getMonth() + 1;
-            const nextYear = today.getMonth() === 11 ? today.getFullYear() + 1 : today.getFullYear();
-            cellDate = new Date(nextYear, nextMonth, cellText);
-        } 
-        // 셀이 현재 달의 날짜인 경우
-        else {
-            cellDate = new Date(today.getFullYear(), today.getMonth(), cellText);
-        }
-        cellDate.setHours(0, 0, 0, 0);  // 셀의 날짜를 시간 없이 설정
-
-        // 셀이 오늘 이전 날짜인 경우 비활성화
-        if (cellDate < today) {
-            cell.classList.add('inactive');
-            cell.style.pointerEvents = 'none';  // 클릭 비활성화
-            cell.style.color = '#ccc'; // 비활성화된 날짜를 회색으로 표시
-        } else {
-            cell.classList.remove('inactive');
-            cell.style.pointerEvents = 'auto';  // 클릭 활성화
-            cell.style.color = ''; // 활성화된 날짜의 색상 초기화
+        function showRentDateModal() {
+            const rentDateModalOpen = document.getElementById("rentdateModal");
+            const rentDateModal = new bootstrap.Modal(rentDateModalOpen);
+            rentDateModal.show();
+            renderCalendar(currentMonth, currentYear);
         }
 
-        // 각 셀에 날짜 정보를 저장
-        cell.setAttribute('data-date', cellDate.toISOString().split('T')[0]);
-    });
-}
+        function showReturnDateModal() {
+            const returnDateModalOpen = document.getElementById("returndateModal");
+            const returnDateModal = new bootstrap.Modal(returnDateModalOpen);
+            returnDateModal.show();
+            renderReturnCalendar(currentMonth, currentYear);
+        }
 
-// 날짜 선택 이벤트 처리 함수
-function modifyCalendar() {
-    const calendarBody = document.querySelector('#calendar_rentdate #calendarBody');
-    let today = new Date();
-    today.setHours(0, 0, 0, 0);  // 오늘 날짜를 시간 없이 설정
+        function renderCalendar(month, year) {
+            const firstDay = new Date(Date.UTC(year, month, 1)).getUTCDay();
+            const lastDate = new Date(Date.UTC(year, month + 1, 0)).getUTCDate();
+            const lastDatePrevMonth = new Date(Date.UTC(year, month, 0)).getUTCDate();
+            const calendar = document.getElementById("calendar");
 
-    // 달력 셀 클릭 이벤트 핸들러 추가
-    calendarBody.addEventListener('click', (event) => {
-        const target = event.target;
-        if (target.tagName === 'TD' && !target.classList.contains('inactive')) {
-            // 'data-date' 속성에서 날짜 정보를 가져옴
-            const selectedDate = new Date(target.getAttribute('data-date'));
-            selectedDate.setHours(0, 0, 0, 0);  // 선택된 날짜를 시간 없이 설정
+            let html = `
+                <div class="calendar-container">
+                    <div class="header">
+                        <button class="btn btn-light" id="prevMonth" onclick="changeMonth(-1)">
+                            <i class="fas fa-chevron-left"></i>
+                        </button>
+                        <h4 id="monthYear">${year}.${month + 1 < 10 ? '0' : ''}${month + 1}</h4>
+                        <button class="btn btn-light" id="nextMonth" onclick="changeMonth(1)">
+                            <i class="fas fa-chevron-right"></i>
+                        </button>
+                    </div>
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th class="text-danger">일</th>
+                                <th>월</th>
+                                <th>화</th>
+                                <th>수</th>
+                                <th>목</th>
+                                <th>금</th>
+                                <th class="text-primary">토</th>
+                            </tr>
+                        </thead>
+                        <tbody id="calendarBody">
+            `;
 
-            // 선택된 날짜가 오늘 이후인 경우에만 선택 가능
-            if (selectedDate >= today) {
-                // 기존 선택된 날짜 제거
-                calendarBody.querySelectorAll('.selected').forEach(cell => {
-                    cell.classList.remove('selected');
-                });
-                // 새로운 날짜 선택
-                target.classList.add('selected');
-                // 선택된 날짜를 'rentdate' 캘린더의 시작 날짜로 설정
-                setStartDate('rentdate', selectedDate);
-                disablePastDates();  // 선택 후 다시 비활성화 설정
+            let date = 1;
+            let nextMonthDate = 1;
+
+            for (let i = 0; i < 6; i++) {
+                html += '<tr>';
+                for (let j = 0; j < 7; j++) {
+                    if (i === 0 && j < firstDay) {
+                        html += `<td class="inactive">${lastDatePrevMonth - firstDay + 1 + j}</td>`;
+                    } else if (date > lastDate) {
+                        html += `<td class="inactive">${nextMonthDate++}</td>`;
+                    } else {
+                        let cellDate = new Date(Date.UTC(year, month, date));
+                        let cellClass = (cellDate < today && !(cellDate.getUTCDate() === today.getUTCDate() && cellDate.getUTCMonth() === today.getUTCMonth() && cellDate.getUTCFullYear() === today.getUTCFullYear())) ? 'inactive' : 'cursor-pointer';
+                        if (date === today.getUTCDate() && month === today.getUTCMonth() && year === today.getUTCFullYear() && !lastSelectedDate) {
+                            cellClass += ' today';
+                        }
+                        html += `<td class="${cellClass}" data-date="${cellDate.toISOString().split('T')[0]}" onclick="selectDate(this, '${cellDate.toISOString().split('T')[0]}')"><span class="date-circle">${date++}</span></td>`;
+                    }
+                }
+                html += '</tr>';
+            }
+
+            html += `
+                        </tbody>
+                    </table>
+                </div>
+            `;
+
+            calendar.innerHTML = html;
+
+            // 재선택된 날짜가 현재 월에 있으면 해당 날짜에 선택 표시 추가
+            if (lastSelectedDate) {
+                const selectedCell = document.querySelector(`[data-date="${lastSelectedDate}"]`);
+                if (selectedCell) {
+                    selectedCell.classList.add('selected');
+                }
             }
         }
-    });
-}
 
-// 캘린더 생성 후 수정 함수 호출
-document.addEventListener('DOMContentLoaded', () => {
-    // 초기 캘린더 설정 및 클릭 이벤트 핸들러 추가
-    modifyCalendar();
-});
+        function renderReturnCalendar(month, year) {
+            const firstDay = new Date(Date.UTC(year, month, 1)).getUTCDay();
+            const lastDate = new Date(Date.UTC(year, month + 1, 0)).getUTCDate();
+            const lastDatePrevMonth = new Date(Date.UTC(year, month, 0)).getUTCDate();
+            const calendarReturn = document.getElementById("calendarReturn");
 
-</script>
+            let html = `
+                <div class="calendar-container">
+                    <div class="header">
+                        <button class="btn btn-light" id="prevMonthReturn" onclick="changeReturnMonth(-1)">
+                            <i class="fas fa-chevron-left"></i>
+                        </button>
+                        <h4 id="monthYear">${year}.${month + 1 < 10 ? '0' : ''}${month + 1}</h4>
+                        <button class="btn btn-light" id="nextMonthReturn" onclick="changeReturnMonth(1)">
+                            <i class="fas fa-chevron-right"></i>
+                        </button>
+                    </div>
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th class="text-danger">일</th>
+                                <th>월</th>
+                                <th>화</th>
+                                <th>수</th>
+                                <th>목</th>
+                                <th>금</th>
+                                <th class="text-primary">토</th>
+                            </tr>
+                        </thead>
+                        <tbody id="calendarBodyReturn">
+            `;
+
+            let date = 1;
+            let nextMonthDate = 1;
+
+            for (let i = 0; i < 6; i++) {
+                html += '<tr>';
+                for (let j = 0; j < 7; j++) {
+                    if (i === 0 && j < firstDay) {
+                        html += `<td class="inactive">${lastDatePrevMonth - firstDay + 1 + j}</td>`;
+                    } else if (date > lastDate) {
+                        html += `<td class="inactive">${nextMonthDate++}</td>`;
+                    } else {
+                        let cellDate = new Date(Date.UTC(year, month, date));
+                        let cellClass = (cellDate < today && !(cellDate.getUTCDate() === today.getUTCDate() && cellDate.getUTCMonth() === today.getUTCMonth() && cellDate.getUTCFullYear() === today.getUTCFullYear())) ? 'inactive' : 'cursor-pointer';
+                        if (date === today.getUTCDate() && month === today.getUTCMonth() && year === today.getUTCFullYear() && !lastSelectedReturnDate) {
+                            cellClass += ' today';
+                        }
+                        html += `<td class="${cellClass}" data-date="${cellDate.toISOString().split('T')[0]}" onclick="selectReturnDate(this, '${cellDate.toISOString().split('T')[0]}')"><span class="date-circle">${date++}</span></td>`;
+                    }
+                }
+                html += '</tr>';
+            }
+
+            html += `
+                        </tbody>
+                    </table>
+                </div>
+            `;
+
+            calendarReturn.innerHTML = html;
+
+            // 재선택된 날짜가 현재 월에 있으면 해당 날짜에 선택 표시 추가
+            if (lastSelectedReturnDate) {
+                const selectedCell = document.querySelector(`[data-date="${lastSelectedReturnDate}"]`);
+                if (selectedCell) {
+                    selectedCell.classList.add('selected');
+                }
+            }
+        }
+
+        function changeMonth(direction) {
+            currentMonth += direction;
+            if (currentMonth < 0) {
+                currentMonth = 11;
+                currentYear--;
+            } else if (currentMonth > 11) {
+                currentMonth = 0;
+                currentYear++;
+            }
+            renderCalendar(currentMonth, currentYear);
+        }
+
+        function changeReturnMonth(direction) {
+            currentMonth += direction;
+            if (currentMonth < 0) {
+                currentMonth = 11;
+                currentYear--;
+            } else if (currentMonth > 11) {
+                currentMonth = 0;
+                currentYear++;
+            }
+            renderReturnCalendar(currentMonth, currentYear);
+        }
+
+        function selectDate(cell, date) {
+            document.querySelectorAll('#calendarBody td').forEach(td => td.classList.remove('selected', 'today'));
+            cell.classList.add('selected');
+
+            lastSelectedDate = date;
+            console.log(`Selected date: ${lastSelectedDate}`);
+        }
+
+        function selectReturnDate(cell, date) {
+            document.querySelectorAll('#calendarBodyReturn td').forEach(td => td.classList.remove('selected', 'today'));
+            cell.classList.add('selected');
+
+            lastSelectedReturnDate = date;
+            console.log(`Selected return date: ${lastSelectedReturnDate}`);
+        }
+
+        function confirmRentDate() {
+            const selectedDate = document.querySelector('#calendarBody td.selected').dataset.date;
+            if (selectedDate) {
+                const displayDate = new Date(selectedDate);
+                document.getElementById("rendDateDisplay").textContent = displayDate.toISOString().split('T')[0];
+            }
+        }
+
+        function confirmReturnDate() {
+            const selectedReturnDate = document.querySelector('#calendarBodyReturn td.selected').dataset.date;
+            if (selectedReturnDate) {
+                const displayDate = new Date(selectedReturnDate);
+                document.getElementById("returnDateDisplay").textContent = displayDate.toISOString().split('T')[0];
+            }
+        }
+    </script>
+
 <!-- /* 설명 주석
 1. newRegionButton.addEventListener('click', () => { ... });:
    - 설명: addEventListener는 지정된 이벤트가 대상에서 발생할 때 호출할 함수를 설정합니다. 여기서 'click' 이벤트를 설정하여 버튼이 클릭될 때 특정 동작을 수행하도록 합니다.
