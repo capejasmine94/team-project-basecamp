@@ -59,13 +59,15 @@ function initRegisterCamp() {
 }
 
 function initCategoryButtons(){
-    for(const category of camp_category) {
-        const button = document.getElementById('campCategory' + category.id);
-        if(button == null) return;
-        for(const selected of campsite.campCategory) {
-            if(selected.id == category.id) {
-                button.checked = true;
-                break;
+    if(camp_category != null){
+        for(const category of camp_category) {
+            const button = document.getElementById('campCategory' + category.id);
+            if(button == null) break;
+            for(const selected of campsite.campCategory) {
+                if(selected.id == category.id) {
+                    button.checked = true;
+                    break;
+                }
             }
         }
     }
@@ -126,7 +128,7 @@ function registerCampPopup() {
     popup('캠핑장 등록','우선 캠핑장을 등록해야합니다.','캠핑장 등록',function() { location.href = '/campsiteCenter/registerCamp'; });
  }
 
- //=====================================================================================
+//=====================================================================================
 // 선택
 //=====================================================================================
 // 구역 선택
@@ -141,8 +143,27 @@ function selectArea(id, onRefresh) {
                     sendSelectAreaToSession();
                     const list = document.getElementById('area_' + curArea.dto.id);
                     list.classList.add('bg-light');
-        
+                    
                     onRefresh();
+
+                    const id = document.getElementById('setID');
+                    id.value = curArea.dto.id;
+                    console.log(id.value);
+                
+                    if(area_category != null) {
+                        for(const category of area_category) {
+                            const button = document.getElementById('areaCategory' + category.id);
+                            if(button == null) return;
+                            for(const selected of curArea.category) {
+                                if(selected.id == category.id) {
+                                    button.checked = true;
+                                    break;
+                                }
+                            }
+                        }
+                    }
+
+                    refreshPointList();
 
                     const button = document.querySelector('#deleteAreaButton');
                     const request_delete = document.querySelector('#request_delete_area');
@@ -171,10 +192,30 @@ function selectArea(id, onRefresh) {
         for(const area of campsite.area){
             if(area.dto.id == id) {
                 curArea = area;
+                sendSelectAreaToSession();
                 const list = document.getElementById('area_' + curArea.dto.id);
                 list.classList.add('bg-light');
     
                 onRefresh();
+
+                const id = document.getElementById('setID');
+                id.value = curArea.dto.id;
+                console.log(id.value);
+            
+                if(area_category != null) {
+                    for(const category of area_category) {
+                        const button = document.getElementById('areaCategory' + category.id);
+                        if(button == null) return;
+                        for(const selected of curArea.category) {
+                            if(selected.id == category.id) {
+                                button.checked = true;
+                                break;
+                            }
+                        }
+                    }
+                }
+
+                refreshPointList();
 
                 const button = document.querySelector('#deleteAreaButton');
                 const request_delete = document.querySelector('#request_delete_area');
@@ -201,7 +242,7 @@ function refreshUpdateAreaView() {
     const updateAreaView = document.getElementById('updateAreaView');
 
     // 이름
-    let value = updateAreaView.querySelector('#name');
+    let value = updateAreaView.querySelector('#update_name');
     value.value = curArea.dto.name;
 
     // 가격
@@ -257,3 +298,79 @@ function setUploadedMainImages() {
     }
 }
                             
+//=====================================================================================
+// 포인트
+//=====================================================================================
+// 포인트 생성
+function registerPoint() {
+    let url = '/api/campsiteCenter/registerPointProcess?';
+
+    const form = document.getElementById('registerPointView');
+    url = url + `point_name=${form.querySelector('#point_name').value}`
+    url = url + `&point_count=${form.querySelector('#point_count').value}`
+    url = url + `&area_id=${curArea.dto.id}`;
+
+    fetch(url)
+    .then(response => response.json())
+    .then((response) => {
+        for(const area of response.data.campsite.area){
+            if(area.dto.id == curArea.dto.id) {
+                curArea = area;
+                refreshPointList();
+                return;
+            }
+        }
+        
+    });
+}
+
+// 포인트 하나 삭제
+function deletePoint(point_id) {
+    popup('포인트 삭제','해당 포인트를 삭제합니다. 계속하시겠습니까?','취소','삭제',popupClose, function(){deletePointPorcess(point_id)});
+}
+
+function deletePointPorcess(point_id){
+    let url = '/api/campsiteCenter/deletePointProcess?point_id=' + point_id;
+        fetch(url)
+        .then(response => response.json())
+        .then((response) => {
+            for(const area of response.data.campsite.area){
+                if(area.dto.id == curArea.dto.id) {
+                    curArea = area;
+                    refreshPointList();
+                    break;
+                }
+            }
+            
+            popupClose();
+            return;
+        });
+}
+
+function refreshPointList() {
+    console.log(curArea);
+    const pointList = document.getElementById('pointList');
+    pointList.innerHTML = '';
+    for(const point of curArea.point){
+        const pointView = document.createElement('div');
+        pointView.classList.add('row','ps-4','py-1','border-bottom');
+        pointView.innerHTML = 
+        `<div class="col-1">
+            <span id="text_name_point_${point.point_id}">${point.name}</span>
+            <input id="editable_name_point_${point.point_id}" class="form-control d-none" name="update_point_name" type="text" maxlength="7" value="${point.name}">
+         </div>
+        </div>
+        <div class="col-1 ms-2 me-5 text-end">
+            <span id="text_countpoint_${point.point_id}">${point.point_count}</span>
+            <input id="editable_countpoint_${point.point_id}" class="form-control d-none" name="update_point_count" type="number"  value="${point.point_count}">
+        </div>
+        <div class="col-3 ms-2 me-1 text-end text-primary"><i class ="bi bi-tools" id="button_${point.point_id}"></i></div>
+        <div class="col-auto ms-2 me-5 text-end text-danger"><i class ="bi bi-trash" onclick="deletePoint(${point.point_id})"></i></div>`;
+        const button = pointView.querySelector('#button_' + point.point_id);
+        button.onclick = ()=>{ 
+            editableText(`name_point_${point.point_id}`);
+            editableText(`countpoint_${point.point_id}`);
+        };
+        pointList.appendChild(pointView);
+    }
+}

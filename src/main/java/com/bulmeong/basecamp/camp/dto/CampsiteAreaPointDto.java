@@ -5,6 +5,6 @@ import lombok.Data;
 public class CampsiteAreaPointDto {
     private int id;
     private int area_id;
-    private int point_count;
+    private int point_id;
     private String name;
 }

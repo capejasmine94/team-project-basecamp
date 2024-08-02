@@ -190,16 +190,16 @@ function logOut() {
 }
 
 function editableText(name) {
-  const node = document.getElementById('editable_' + name);
+  const editable = document.getElementById('editable_' + name);
   const text = document.getElementById('text_' + name);
-  if(node.classList.contains('d-none')){
-    node.classList.remove('d-none');
-    node.value = text.innerText;
+  if(editable.classList.contains('d-none')){
+    editable.classList.remove('d-none');
+    editable.value = text.innerText;
     text.classList.add('d-none');
   }
   else { 
-    node.classList.add('d-none');
-    text.innerText = node.value;
+    editable.classList.add('d-none');
+    text.innerText = editable.value;
     if(name == 'url'){
       console.log("아니");
       text.href = text.innerText;

@@ -64,7 +64,7 @@
                                                                         <div class="row mt-3 align-items-center">
                                                                             <div class="col-1 text-secondary text-end">구역 이름</div>
                                                                             <div class="col-4">
-                                                                                <input required type="text" class="form-control fw-semibold" id="name" name="name" placeholder="구역 이름을 입력하세요"></input>
+                                                                                <input required type="text" class="form-control fw-semibold" id="register_name" name="register_name" placeholder="구역 이름을 입력하세요"></input>
                                                                             </div>
                                                                             
                                                                         </div>
@@ -136,7 +136,8 @@
                                                                 <div class="row py-2 border-bottom" th:unless="${session.campsite.area.size() <= 0}" th:id="'area_' + ${area.dto.id}" th:each="area:${session.campsite.area}" th:attr="onclick=|selectArea('${area.dto.id}',onSelectArea)|">
                                                                     <div class="col-4 ms-1" th:text="${area.dto.name}">구역이름</div>
                                                                     <div class="col-2 ps-0 ms-2 pe-3 text-end" th:text="${area.dto.prise}">가격</div>
-                                                                    <div class="col-2 ms-5 ps-0 pe-2 text-end" th:text="${area.point.size()}">포인트 수</div>
+                                                                    <div class="col-2 ms-5 ps-0 pe-2 text-end" th:unless="${area.point != null}">0</div>
+                                                                    <div class="col-2 ms-5 ps-0 pe-2 text-end" th:if="${area.point != null}" th:text="${area.point.size()}">포인트 수</div>
                                                                     <div class="col-2 text-end pe-3 me-5 text-primary" th:text="${area.dto.process}">양호</div>
                                                                     <div class="col text-end ms-1 me-1 text-primary"><i class="bi bi-tools"></i></div>
                                                                 </div>
@@ -150,7 +151,7 @@
                                 </div>
 
                                 
-                                <form id="updateArea" action="/campsiteCenter/updateAreaProcess" method="post" enctype="multipart/form-data">
+                                <form id="updateAreaProcess" action="/campsiteCenter/updateAreaProcess" method="post" enctype="multipart/form-data">
                                     <input id="setID" name="id" type="hidden">
                                     <div id="updateAreaView" class="d-none"> 
                                             <!-- 기본 정보 -->
@@ -166,7 +167,7 @@
                                                                 <div class="row mt-3 align-items-center">
                                                                     <div class="col-1 text-secondary text-end">구역 이름</div>
                                                                     <div class="col-4">
-                                                                        <input type="text" class="form-control fw-semibold" id="name" name="name" placeholder="구역 이름을 입력하세요"></input>
+                                                                        <input type="text" class="form-control fw-semibold" id="update_name" name="update_name" placeholder="구역 이름을 입력하세요"></input>
                                                                     </div>
                                                                     
                                                                 </div>
@@ -264,7 +265,7 @@
                                                     </div>
                                                     <div class="row">
                                                         <div class="col-8 ms-3">
-                                                            <div class="row" id="areaCategoryList">
+                                                            <div class="row" id="categoryList">
                                                                 <div class="col-8 ms-3 mt-2 px-0">
                                                                     <span th:each="area_Category : ${session.category.area}">
                                                                         <input name="areaCategory" type="checkbox" class="btn-check" th:id="'areaCategory' + ${area_Category.id}" th:value="${area_Category.id}" autocomplete="off">
@@ -293,38 +294,36 @@
                                                 </div>
 
                                                 <!-- 구역 생성 탭 (평소에 안보임) -->
-                                                <form id="registerPoint" method="post"> 
-                                                    <div id="registerPointView" class="d-none">
-                                                        <div class="row new-mt-45">
-                                                            <div class="col">
-                                                                <div class="row justify-content-center">
-                                                                    <div class="col border-top me-5">
-                                                                        <div class="row my-1">
-                                                                            <div class="col-auto ms-3 my-1 fs-5 fw-bold">포인트 생성</div>
-                                                                        </div>
-                                                                        <div class="row ps-1 pb-3 border-top">
-                                                                            <div class="col mx-2">
-                                                                                <div class="row mt-3 align-items-center">
-                                                                                    <div class="col-1 text-secondary text-end">포인트 이름</div>
-                                                                                    <div class="col-4">
-                                                                                        <input required type="text" class="form-control fw-semibold" id="point_name" name="name" placeholder="포인트 이름을 입력하세요"></input>
-                                                                                    </div>
-                                                                                </div>
-                                                                                <div class="row mt-4 align-items-center">
-                                                                                    <div class="col-1 text-secondary text-end">자리 수</div>
-                                                                                    <div class="col-1"><input class="fw-semibold form-control" type="number" max="99" name="point_count" id="point_count" value="1"></div>
+                                                <div id="registerPointView" class="d-none">
+                                                    <div class="row new-mt-45">
+                                                        <div class="col">
+                                                            <div class="row justify-content-center">
+                                                                <div class="col border-top me-5">
+                                                                    <div class="row my-1">
+                                                                        <div class="col-auto ms-3 my-1 fs-5 fw-bold">포인트 생성</div>
+                                                                    </div>
+                                                                    <div class="row ps-1 pb-3 border-top">
+                                                                        <div class="col mx-2">
+                                                                            <div class="row mt-3 align-items-center">
+                                                                                <div class="col-1 text-secondary text-end">포인트 이름</div>
+                                                                                <div class="col-4">
+                                                                                    <input required type="text" class="form-control fw-semibold" id="point_name" name="name" placeholder="포인트 이름을 입력하세요"></input>
                                                                                 </div>
                                                                             </div>
+                                                                            <div class="row mt-4 align-items-center">
+                                                                                <div class="col-1 text-secondary text-end">자리 수</div>
+                                                                                <div class="col-1"><input class="fw-semibold form-control" type="number" max="99" name="point_count" id="point_count" value="1"></div>
+                                                                            </div>
                                                                         </div>
-                                                                        <div class="row my-1 pt-3 border-top flex-column mb-5 pb-5">
-                                                                            <div class="col-auto mt-3"><button class="btn btn-primary" type="button" onclick="registerPoint()">포인트 생성</button></div>
-                                                                        </div>
+                                                                    </div>
+                                                                    <div class="row my-1 pt-3 border-top flex-column mb-5 pb-5">
+                                                                        <div class="col-auto mt-3"><button class="btn btn-primary" type="button" onclick="registerPoint()">포인트 생성</button></div>
                                                                     </div>
                                                                 </div>
                                                             </div>
                                                         </div>
                                                     </div>
-                                                </form>    
+                                                </div> 
 
 
                                                 <!-- 포인트 리스트 -->
@@ -334,7 +333,7 @@
                                                 </div>
                                                 <div class="row">
                                                     <div class="col" id="pointList">
-
+    
                                                     </div>
                                                 </div>
                                             </div>
@@ -640,7 +639,9 @@
                 refreshUpdateAreaView();
                 setUploadedMapImage();
                 setUploadedMainImages();
+                addColonMoneyInput();
             }
+
             function registerPointToggle() {
                 const registerAreaTab = document.getElementById('registerPointView');
                 if(registerAreaTab.classList.contains('d-none'))
@@ -648,7 +649,6 @@
                 else
                     registerAreaTab.classList.add('d-none');
             }
-
             function registerAreaToggle() {
                 const registerAreaTab = document.getElementById('registerAreaView');
                 if(registerAreaTab.classList.contains('d-none'))
@@ -656,6 +656,75 @@
                 else
                     registerAreaTab.classList.add('d-none');
                 }
+        
+            function initFormButton() {
+                const stateButton = document.getElementById('saveStateButton');
+                stateButton.onclick = function(event) { 
+                    event.preventDefault();  // 기본 제출 동작 방지
+                    validateAndSubmitForm(); 
+                };
+                const setId = document.getElementById('setID');
+                function validateAndSubmitForm() {
+                    // 초기화
+                    const form = document.getElementById('updateAreaProcess');
+
+                    const requiredFields = [
+                        // 'car_pay',
+                        // 'kid_pay',
+                        // 'adult_pay',
+                        // 'peak_pay',
+                        // 'min_ordertime',
+                        // 'limit_people',
+                        // 'max_car',
+                        // 'max_people',
+                        'description',
+                        'size_x',
+                        'size_y',
+                        'prise',
+                        'update_name'        
+                    ];
+                    let allValid = true;
+                    
+                    // 빈칸 확인
+                    requiredFields.forEach((fieldName) => {
+                        let field = form.querySelector(`[name="${fieldName}"]`);
+                        if (!field.value) {
+                            field.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                            allValid = false;
+                        }
+                    });
+                    const categoryInputs = form.querySelectorAll('input[name="areaCategory"]:checked');
+                    if(allValid) {
+                        // 카테고리 체크 확인
+                        if (categoryInputs.length === 0) {
+                            alert('구역 카테고리를 하나 이상 선택해주세요.');
+                            document.getElementById('categoryList').scrollIntoView({ behavior: 'smooth', block: 'center' });
+                            allValid = false;
+                        }
+                    }
+                    // 모든 유효성 마침 
+                    if (allValid) {
+                        // 돈 쉼표 제거
+                        replaceMoneyInput();
+
+                        // 카테고리 데이터화
+                        const categoryIds = Array.from(categoryInputs).map(input => input.value);
+                        categoryIds.forEach(categoryId => {
+                            const hiddenInput = document.createElement('input');
+                            hiddenInput.type = 'hidden';
+                            hiddenInput.name = 'areaCategory';
+                            hiddenInput.value = categoryId;
+                            form.appendChild(hiddenInput);
+                        });
+                        onSubmitSendUploader();
+                        console.log(document.getElementById('update_name').value);
+                        document.getElementById('updateAreaProcess').submit();
+                    }
+                }
+            }
+
+            initFormButton();
+            addColonMoneyInput();
         </script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
     </body>

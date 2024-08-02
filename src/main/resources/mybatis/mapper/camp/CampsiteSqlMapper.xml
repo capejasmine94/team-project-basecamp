@@ -142,9 +142,26 @@
             )
         </insert>
 
-        <!-- 캠핑장 선택 카테고리 변경 -->
+         <!-- 구역 선택 카테고리 등록 -->
+         <insert id="addSelectAreaCategory">
+            INSERT into bc_campsite_select_area_category (
+                area_id,
+                category_id
+            
+            ) values (
+                #{area_id},
+                #{category_id}
+            )
+        </insert>
+
+        <!-- 캠핑장 선택 카테고리 삭제 -->
         <delete id="deleteSelectCampCategory">
             DELETE from bc_campsite_select_category where campsite_id = #{campsite_id}
+        </delete>
+
+        <!-- 구역 선택 카테고리 삭제 -->
+        <delete id="deleteSelectAreaCategory">
+            DELETE from bc_campsite_select_area_category where area_id = #{area_id}
         </delete>
 
 
@@ -179,6 +196,26 @@
         <select id="campMainImage" resultType="com.bulmeong.basecamp.camp.dto.CampsiteImageDto">
             select * from bc_campsite_image where campsite_id = #{campsite_id} order by id asc
         </select>
+
+
+        <!-- 구역 이미지 추가 -->
+        <insert id="addAreaMainImage">
+            INSERT into bc_campsite_area_image (
+                area_id,
+                location,
+                origin_filename
+            
+            ) values (
+                #{area_id},
+                #{location},
+                #{origin_filename}
+            )
+        </insert>
+
+        <!-- 구역 이미지 삭제 -->
+        <delete id="deleteAreaMainImage">
+            DELETE from bc_campsite_area_image where area_id = #{area_id}
+        </delete>
 
         <!-- 구역 이미지 가져오기 -->
         <select id="areaMainImage" resultType="com.bulmeong.basecamp.camp.dto.CampsiteAreaImageDto">
@@ -261,6 +298,69 @@
                 #{description}
             )
         </insert>
+
+        <!-- 구역 수정 -->
+        <update id="updateArea">
+            UPDATE bc_campsite_area
+            SET 
+                name = #{name},
+                prise = #{prise},
+                size_x = #{size_x},
+                size_y = #{size_y},
+                description = #{description},
+                max_people = #{max_people},
+                max_car = #{max_car},
+                min_ordertime = #{min_ordertime},
+                adult_pay = #{adult_pay},
+                kid_pay = #{kid_pay},
+                car_pay = #{car_pay},
+                process = '대기'
+            where id = #{id}
+        </update>
+        
+         <!-- 포인트 추가 -->
+         <insert id="registerPoint">
+            <selectKey keyProperty="id" resultType="int" order="AFTER">
+                select max(id) from bc_campsite_area_point
+            </selectKey>
+            insert into bc_campsite_area_point (
+                area_id,
+                point_id,
+                name
+            )
+            values (
+                #{area_id},
+                #{point_id},
+                #{name}
+            )
+        </insert>   
+
+        <!-- 포인트 생성 시 첫번째 포인트의 아이디를 포인트 아이디로 -->
+        <update id="registerPointId">
+            UPDATE bc_campsite_area_point
+            SET 
+                point_id = #{id}
+            where id = #{id}
+        </update>
+
+        <!-- 포인트 삭제 -->
+        <delete id="deletePoint">
+            DELETE from bc_campsite_area_point where point_id = #{point_id}
+        </delete>
+
+        <delete id="deletePoints">
+            DELETE from bc_campsite_area_point where area_id = #{area_id}
+        </delete>
+
+        <!-- 포인트 리스트 -->
+        <select id="getPointList" resultType="map">
+            SELECT point_id, COUNT(*) AS point_count, MAX(name) AS name
+            FROM bc_campsite_area_point
+            WHERE area_id = #{area_id}
+            GROUP BY point_id  
+        </select>
+
+        
     <!-- ======================================================================== -->
 
 

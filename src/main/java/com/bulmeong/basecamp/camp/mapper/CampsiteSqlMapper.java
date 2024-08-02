@@ -9,6 +9,7 @@ import org.apache.ibatis.annotations.Param;
 import com.bulmeong.basecamp.camp.dto.CampsiteAreaDto;
 import com.bulmeong.basecamp.camp.dto.CampsiteAreaImageDto;
 import com.bulmeong.basecamp.camp.dto.CampsiteAreaPointDto;
+import com.bulmeong.basecamp.camp.dto.CampsiteAreaSelectCategoryDto;
 import com.bulmeong.basecamp.camp.dto.CampsiteBankDto;
 import com.bulmeong.basecamp.camp.dto.CampsiteCategoryDto;
 import com.bulmeong.basecamp.camp.dto.CampsiteDto;
@@ -31,8 +32,10 @@ public interface CampsiteSqlMapper {
     //===================================================================================================================
     public void addCampMainImage(CampsiteImageDto imageDto);
     public void deleteCampMainImage(@Param("campsite_id") int campsite_id);
-    public void addAreaMainImage(CampsiteAreaImageDto imageDto);
     public List<CampsiteImageDto> campMainImage(@Param("campsite_id") int campsite_id);
+
+    public void addAreaMainImage(CampsiteAreaImageDto imageDto);
+    public void deleteAreaMainImage(@Param("area_id") int area_id);
     public List<CampsiteAreaImageDto> areaMainImage(@Param("area_id") int area_id);
     
     //===================================================================================================================
@@ -43,8 +46,10 @@ public interface CampsiteSqlMapper {
     public List<Map<String,Object>> selectCampCategory(int campsite_id);
     public List<Map<String,Object>> selectAreaCategory(int area_id);
     public void addSelectCampCategory(CampsiteSelectCategoryDto selectCategoryDto);
+    public void addSelectAreaCategory(CampsiteAreaSelectCategoryDto selectAreaCategoryDto);
     public void deleteSelectCampCategory(@Param("campsite_id") int campsite_id);
-
+    public void deleteSelectAreaCategory(@Param("area_id") int area_id);
+    
     //===================================================================================================================
     // 캠핑장
     //===================================================================================================================
@@ -54,5 +59,11 @@ public interface CampsiteSqlMapper {
     public void updateCamp(CampsiteDto campsiteDto);
     public List<CampsiteAreaPointDto> pointListByAreaId(@Param("area_id") int area_id);
     public void registerArea(CampsiteAreaDto campsiteAreaDto);
+    public void updateArea(CampsiteAreaDto campsiteAreaDto);
+    public void registerPoint(CampsiteAreaPointDto pointDto);
+    public void deletePoints(@Param("area_id") int area_id);
+    public void deletePoint(@Param("point_id") int point_id);
+    public void registerPointId(CampsiteAreaPointDto pointDto);
+    public List<Map<String,Object>> getPointList(@Param("area_id") int area_id);
 
 }

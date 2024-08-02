@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.bulmeong.basecamp.camp.dto.CampsiteAreaDto;
+import com.bulmeong.basecamp.camp.dto.CampsiteAreaPointDto;
 import com.bulmeong.basecamp.camp.dto.CampsiteBankDto;
 import com.bulmeong.basecamp.camp.dto.CampsiteDto;
 import com.bulmeong.basecamp.camp.service.CampsiteService;
@@ -92,8 +93,8 @@ public class CampsiteSellerController {
     @RequestMapping("/updateCampProcess")
     public String updateCampProcess(
         CampsiteDto campsiteDto, 
-        @RequestParam(name="mapImage") MultipartFile mapImage, 
-        @RequestParam(name="mainImage") MultipartFile[] mainImages, 
+        @RequestParam("mapImage") MultipartFile mapImage, 
+        @RequestParam("mainImage") MultipartFile[] mainImages, 
         @RequestParam("opentime_start_date") @DateTimeFormat(pattern = "yyyy-MM-dd") Date opentime,
         @RequestParam("campCategory") String[] categories) {
         // 판매자 데이터 업데이트
@@ -103,14 +104,31 @@ public class CampsiteSellerController {
     }
 
     @RequestMapping("/registerAreaProcess")
-    public String registerAreaProcess(
-        CampsiteAreaDto areaDto) {
+    public String registerAreaProcess(CampsiteAreaDto areaDto,  @RequestParam("register_name") String name) {
+        areaDto.setName(name);
         service.registerArea(areaDto);
         // 세션 데이터 갱신
         CampsiteDto campsiteDto = sessionCampsiteDto();
         utils.setSession("campsite", service.campsiteInfo(campsiteDto.getId()));
         return "redirect:./area";      
     }
-    
+
+    @RequestMapping("/updateAreaProcess")
+    public String updateAreaProcess(
+        CampsiteAreaDto areaDto, 
+        @RequestParam("update_name") String name, 
+        @RequestParam("mapImage") MultipartFile mapImage, 
+        @RequestParam("mainImage") MultipartFile[] mainImages, 
+        @RequestParam("areaCategory") String[] categories,
+        @RequestParam(defaultValue = "", required = false, name="update_point_name") String[] update_point_name,
+        @RequestParam(defaultValue = "", required = false, name="update_point_count") int[] update_point_count
+        ) {
+        // 판매자 데이터 업데이트
+        areaDto.setName(name);
+        service.updateArea(areaDto, mapImage, mainImages, categories);
+        service.updatePoint(areaDto.getId(), update_point_name,update_point_count);
+        return "redirect:./area";      
+    }
+
     //============================================================================
 }

@@ -12,6 +12,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.bulmeong.basecamp.camp.dto.CampsiteAreaDto;
+import com.bulmeong.basecamp.camp.dto.CampsiteAreaImageDto;
+import com.bulmeong.basecamp.camp.dto.CampsiteAreaPointDto;
+import com.bulmeong.basecamp.camp.dto.CampsiteAreaSelectCategoryDto;
 import com.bulmeong.basecamp.camp.dto.CampsiteBankDto;
 import com.bulmeong.basecamp.camp.dto.CampsiteCategoryDto;
 import com.bulmeong.basecamp.camp.dto.CampsiteDto;
@@ -198,7 +201,7 @@ public class CampsiteService {
         result.put("dto", areaDto);
 
         // 포인트
-        result.put("point", campsiteSqlMapper.pointListByAreaId(area_id));
+        result.put("point", campsiteSqlMapper.getPointList(area_id));
 
         // 카테고리
         result.put("category", campsiteSqlMapper.selectAreaCategory(area_id));
@@ -258,6 +261,77 @@ public class CampsiteService {
     public void registerArea(CampsiteAreaDto campsiteAreaDto) {
         campsiteAreaDto.setCampsite_id(sessionCampsiteDto().getId());
         campsiteSqlMapper.registerArea(campsiteAreaDto);   
+    }
+
+    // 구역 수정
+    public void updateArea(CampsiteAreaDto campsiteAreaDto, MultipartFile mapImage, MultipartFile[] mainImages, String[] categories) {
+         //배치도 이미지 저장
+         if(mapImage != null && !mapImage.isEmpty()) {
+            String mapImageToString = ImageUtil.saveImageAndReturnLocation(mapImage);
+            campsiteAreaDto.setMap_image(mapImageToString);
+        }
+        else {
+            campsiteAreaDto.setMap_image(sessionCampsiteDto().getMap_image());
+        }
+        //메인 이미지 저장
+        if(mainImages != null && !mainImages[0].isEmpty()) {
+            campsiteSqlMapper.deleteAreaMainImage(campsiteAreaDto.getId());
+            List<ImageDto> mainImageList = ImageUtil.saveImageAndReturnDtoList(mainImages);
+            for(ImageDto img : mainImageList) {
+                CampsiteAreaImageDto imageDto = new CampsiteAreaImageDto();
+                imageDto.setArea_id(campsiteAreaDto.getId());
+                imageDto.setLocation(img.getLocation());
+                imageDto.setOrigin_filename(img.getOrigin_filename());
+                campsiteSqlMapper.addAreaMainImage(imageDto);
+            }
+        }
+
+        // 카테고리 수정
+        campsiteSqlMapper.deleteSelectAreaCategory(campsiteAreaDto.getId());
+        Set<String> set = new LinkedHashSet<>(Arrays.asList(categories));
+        categories = set.toArray(new String[0]);
+        for(String category : categories) {
+            System.out.println(category);
+            int category_id = Integer.parseInt(category);
+            CampsiteAreaSelectCategoryDto dto = new CampsiteAreaSelectCategoryDto();
+            dto.setArea_id(campsiteAreaDto.getId());
+            dto.setCategory_id(category_id);
+            campsiteSqlMapper.addSelectAreaCategory(dto);
+        }
+
+        // 판매자 정보 업데이트
+        campsiteSqlMapper.updateArea(campsiteAreaDto);
+
+        // 세션 데이터 갱신
+        utils.setSession("campsite", campsiteInfo(sessionCampsiteDto().getId()));
+    }
+
+    // 포인트 생성
+    public void registerPoint(CampsiteAreaPointDto pointDto, int count, int area_id) {
+        pointDto.setArea_id(area_id);
+        campsiteSqlMapper.registerPoint(pointDto);
+        campsiteSqlMapper.registerPointId(pointDto);
+        pointDto.setPoint_id(pointDto.getId());
+        for(int i = 0; i < count-1; i++) {
+            campsiteSqlMapper.registerPoint(pointDto);
+        }
+        // 세션 데이터 갱신
+        utils.setSession("campsite", campsiteInfo(sessionCampsiteDto().getId()));
+    }
+
+    // 포인트 수정
+    public void updatePoint(int area_id, String[] names, int[] counts) {
+        if(names == null || names.length == 0) return;
+        campsiteSqlMapper.deletePoints(area_id);
+        for(int i = 0; i < names.length; i++) {
+            CampsiteAreaPointDto pointDto = new CampsiteAreaPointDto();
+            pointDto.setName(names[i]);
+            registerPoint(pointDto, counts[i], area_id);
+        }
+    }
+
+    public void deletePoint(int point_id){
+        campsiteSqlMapper.deletePoint(point_id);
     }
     //-------------------------------------------------------------------------------------------------------------------
 
