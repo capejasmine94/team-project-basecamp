@@ -79,18 +79,25 @@
 
                 <!-- content -->
                 <div class="row mt-3 border-bottom pb-5">
-                    <div class="col">
-                        <textarea class="form-control" name="content" style="border: none;" placeholder="문구를 입력하세요..."></textarea>
+                    <div class="col pb-5">
+                        <textarea class="form-control" name="content" style="border: none; height: 240%;" placeholder="문구를 입력하세요..."></textarea>
                     </div>
                 </div>
 
                 <!-- tag -->
-                <div class="row mt-3 mb-5 border-bottom pb-3">
-                    <div class="col-1 pe-0 fs-1">
-                        <i class="bi bi-tag fs-4"></i>
+                <!-- <div class="row mt-3 ms-0 px-1 form-control" style="text-align: center;"> -->
+                <div class="row mt-3" style="text-align: center;">
+                    <div class="col fontNine px-0">
+                        <span>
+                            <i class="bi bi-tag"></i>
+                            여러 개의 해시태그를 입력할 때
+                            <span style="color: #0095f6;">쉼표</span>로 구분해주세요.
+                        </span>
                     </div>
+                </div>
+                <div class="row mt-3 border-bottom">
                     <div class="col">
-                        <input type="text" class="form-control full-width" style="border: none;" name="text" placeholder="해시태그">
+                        <textarea class="form-control" style="border: none; height: 30%;" name="text" placeholder="#해시태그1, #해시태그2, #해시태그3..."></textarea>
                     </div>
                 </div>
 

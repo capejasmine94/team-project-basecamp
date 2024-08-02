@@ -1,4 +1,7 @@
 /* 폰트 사이즈 */
+.fontSeven {
+    font-size: 0.7em;
+}
 .fontBasic {
     font-size: 0.8em;
 }
@@ -143,6 +146,11 @@
 /* 좋아요 눌렀을 때 컬러 */
 .likeColor {
     color: #F23054;
+}
+
+.hashtag {
+    margin-right: 5px; /* 각 해시태그의 오른쪽에 8px 간격 추가 */
+    display: inline-block; /* 인라인 블록으로 설정하여 간격 적용 */
 }
 
 

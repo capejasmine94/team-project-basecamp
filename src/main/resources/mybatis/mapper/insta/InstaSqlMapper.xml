@@ -184,13 +184,77 @@
         and user_id = #{user_id}
     </delete>
 
+
+
+
+
+    <!-- 드디어 해시태그>~< -->
+
+    <!-- 1. 이미 존재하는 태그 ID 확인 -->
+    <select id="instaHashtagConfirm" resultType="int">
+            select id from bc_insta_tag 
+            where replace(text, ' ', '')
+            like replace(#{text}, ' ', '')
+    </select>
+
+    <!-- 1 확인 후 if, else로 1 -> 2 -> 3 // 1 -> 3 -->
+
+    <!-- 2. 새로운 태그 삽입 -->
+    <insert id="insertHashtagLetsGo">
+        insert into bc_insta_tag(
+            text
+        )values(
+            #{text}
+        )
+    </insert>
+
+    <!-- 3. 게시글-태그 관계 삽입 -->
+    <insert id="insertArticletag">
+        insert into bc_insta_article_tag(
+            article_id, tag_id
+        )values(
+            #{article_id}, #{tag_id}
+        )
+    </insert>
+
+    <!-- 위에 3개 쿼리 다 합친거 _ insert에서 selectKey는 한번만 사용가능해서 쓸 수 없음 -->
+    <!-- <insert id="insertHashtagLetsGo">
+            insert전 태그가 존재하는지 확인 후 없으면 insert
+             있을 경우 keyProperty로 해당하는 id 사용
+        <selectKey keyProperty="id" resultType="int" order="BEFORE">
+            select id from bc_insta_tag 
+            where replace(text, ' ', '') like replace(#{text}, ' ', '')
+        </selectKey>        
+        
+            태그가 없으면 삽입
+        <if test="id == null">
+            insert into bc_insta_tag(
+                text
+            )values(
+                #{text}
+            )
+                새로 생성된 ID 가져오기
+            <selectKey keyProperty="id" resultType="int" order="AFTER">
+                select last_insert_id()
+            </selectKey>
+        </if>
+        
+            bc_insta_article_tag에 삽입
+        insert into bc_insta_article_tag(
+            article_id, tag_id
+        )values(
+            #{article_id}, #{id}
+        )
+    </insert> -->
+
+    <select id="selectHashtagByArticleId" resultType="java.lang.String">
+        select text from bc_insta_article_tag biat
+        inner join bc_insta_tag bit2 on bit2.id = biat.tag_id
+        where article_id = #{article_id}
+    </select>
+
+
 </mapper>
-
-
-
-
-
-
 
 
 

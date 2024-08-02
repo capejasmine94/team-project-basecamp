@@ -1,11 +1,13 @@
 package com.bulmeong.basecamp.insta.mapper;
 
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import com.bulmeong.basecamp.insta.dto.InstaArticleCommentDto;
 import com.bulmeong.basecamp.insta.dto.InstaArticleDto;
 import com.bulmeong.basecamp.insta.dto.InstaArticleImgDto;
 import com.bulmeong.basecamp.insta.dto.InstaArticleLikeDto;
+import com.bulmeong.basecamp.insta.dto.InstaArticleTagDto;
 import com.bulmeong.basecamp.insta.dto.InstaCommentLikeDto;
 import com.bulmeong.basecamp.insta.dto.InstaFollowDto;
 import com.bulmeong.basecamp.insta.dto.InstaUserInfoDto;
@@ -17,41 +19,47 @@ import java.util.*;
 public interface InstaSqlMapper {
     public int instaUserConfirom(UserDto userDto);
     public void insertInstaUserInfo(InstaUserInfoDto InstaUserInfoDto);
-    public InstaUserInfoDto selectUserInfoByUserId(int user_id);
+    public InstaUserInfoDto selectUserInfoByUserId(@Param("user_id") int user_id);
     public void insertInstaArticle(InstaArticleDto instaArticleDto);
     public void insertInstaArticleImg(InstaArticleImgDto instaArticleImgDto);
     public List<InstaArticleDto> selectArticleAll();
-    public List<InstaArticleImgDto> selectArticleImgByArticleId(int article_id);
-    public InstaUserInfoDto selectUserInfoById(int id);
-    public int selectArticleCountByUserId(int user_id);
-    public void deleteArticleById(int id);
+    public List<InstaArticleImgDto> selectArticleImgByArticleId(@Param("article_id") int article_id);
+    public InstaUserInfoDto selectUserInfoById(@Param("id") int id);
+    public int selectArticleCountByUserId(@Param("user_id") int user_id);
+    public void deleteArticleById(@Param("id") int id);
 
     // 댓글
     public void createComment(InstaArticleCommentDto instaArticleCommentDto);
-    public List<InstaArticleCommentDto> getCommentList(int article_id);
-    public void deleteComment(int id);
-    public int commentCountByArticleId(int article_id);
+    public List<InstaArticleCommentDto> getCommentList(@Param("article_id") int article_id);
+    public void deleteComment(@Param("id") int id);
+    public int commentCountByArticleId(@Param("article_id") int article_id);
 
     // 좋아요
     public void createLike(InstaArticleLikeDto instaArticleLikeDto);
-    public int countLikeByArticleId(int article_id); // 게시글 좋아요 개수
+    public int countLikeByArticleId(@Param("article_id") int article_id); // 게시글 좋아요 개수
     public int countLikeByArticleIdAndUserId(InstaArticleLikeDto instaArticleLikeDto); // 게시글 좋아요 상태 여부
     public void deleteLikeByArticleIdAndUserId(InstaArticleLikeDto instaArticleLikeDto);
 
     // 팔로우 _ 자바스크립트
     public void insertFollowByUserId(InstaFollowDto instaFollowDto);
-    public int followerCountByFollowerUserId(int follower_user_id); // 몇번 회원이 몇명을 팔로우 했는지
-    public int followingCountByFollowingUserId(int following_user_id); // 몇번 회원을 몇명이 팔로잉 했지
+    public int followerCountByFollowerUserId(@Param("follower_user_id") int follower_user_id); // 몇번 회원이 몇명을 팔로우 했는지
+    public int followingCountByFollowingUserId(@Param("following_user_id") int following_user_id); // 몇번 회원을 몇명이 팔로잉 했지
     public int confirmFollowStatus(InstaFollowDto instaFollowDto); // 내가 팔로우를 했는지
     public void deleteFollowByFollowerUserIdAndFollowingUserId(InstaFollowDto instaFollowDto);
 
     // 댓글 좋아요 _ 자바스크립트
     public void createCommentLike(InstaCommentLikeDto instaCommentLikeDto);
-    public int countLikeByCommentId(int comment_id); // 댓글 좋아요 개수
+    public int countLikeByCommentId(@Param("comment_id") int comment_id); // 댓글 좋아요 개수
     public int countLikeByCommentIdAndUserId(InstaCommentLikeDto instaCommentLikeDto); // 댓글 좋아요 상태 여부
     public void deleteLikeByCommentIdAndUserId(InstaCommentLikeDto instaCommentLikeDto);
 
+    // 해시태그 레츠고 _ 자바스크립트 사용 안 함
+    public Integer instaHashtagConfirm(@Param("text") String text); // 이미 존재하는 태그 ID 확인
+    // null을 반환 받아야 할 때는 리턴 값으로 int(기본타입)은 안되기 때문에 Integer로 반환 받아줘야 함
 
+    public void insertHashtagLetsGo(@Param("text") String text); // 새로운 태그 삽입
+    public void insertArticletag(InstaArticleTagDto instaArticleTagDto); // 게시글-태그 관계 삽입
+    public List<String> selectHashtagByArticleId(int article_id); // 게시글 해시태그 출력
 
 }
 

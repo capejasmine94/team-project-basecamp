@@ -8,6 +8,7 @@ import com.bulmeong.basecamp.insta.dto.InstaArticleCommentDto;
 import com.bulmeong.basecamp.insta.dto.InstaArticleDto;
 import com.bulmeong.basecamp.insta.dto.InstaArticleImgDto;
 import com.bulmeong.basecamp.insta.dto.InstaArticleLikeDto;
+import com.bulmeong.basecamp.insta.dto.InstaArticleTagDto;
 import com.bulmeong.basecamp.insta.dto.InstaCommentLikeDto;
 import com.bulmeong.basecamp.insta.dto.InstaFollowDto;
 import com.bulmeong.basecamp.insta.dto.InstaUserInfoDto;
@@ -54,8 +55,32 @@ public class InstaService {
     }
 
     // 게시판 글 작성
-    public void writeArticle(InstaArticleDto instaArticleDto){
+    public void writeArticle(InstaArticleDto instaArticleDto, String text){
         instaSqlMapper.insertInstaArticle(instaArticleDto);
+
+        // System.out.println("게시글ID: " + instaArticleDto.getId());
+        int article_id = instaArticleDto.getId();
+        // System.out.println("게시글ID:" + article_id);
+
+        String[] hashtags = text.split(",");
+
+        for(String hashtag : hashtags){
+            //리턴 타입에 null도 있을 수 있어서 반환 타입은 int(기본타입)이 아닌 Integer로 설정
+            Integer tag_id = instaSqlMapper.instaHashtagConfirm(hashtag.trim()); // 메모리 사용량이 적은 int대신 참조 타입 Integer사용
+            // trim = 양쪽 끝에 있는 공백(스페이스, 탭, 줄바꿈 등)을 제거하는 데 사용. 문자열의 내용 중간에 있는 공백은 제거하지 않음
+
+            if(tag_id == null){
+                instaSqlMapper.insertHashtagLetsGo(hashtag.trim());
+                tag_id = instaSqlMapper.instaHashtagConfirm(hashtag.trim());
+            }
+
+            InstaArticleTagDto instaArticleTagDto = new InstaArticleTagDto();
+            instaArticleTagDto.setArticle_id(article_id);
+            instaArticleTagDto.setTag_id(tag_id);
+
+            instaSqlMapper.insertArticletag(instaArticleTagDto);
+        }
+
     }
 
 
@@ -111,6 +136,12 @@ public class InstaService {
             // } 이렇게 작성하면 instaArticleImgDto라는 키로 여러 이미지가 덮어쓰여짐
 
             // System.out.println(instaArticleImgDtoList);
+
+
+            // 해시태그
+            List<String> hashtags = instaSqlMapper.selectHashtagByArticleId(article_id);
+            
+            map.put("hashtags", hashtags);
 
             result.add(map);
 
@@ -236,21 +267,6 @@ public class InstaService {
 
 
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

@@ -579,13 +579,18 @@
                                 th:href="${session.sessionUserInfo.id == instaArticleList.instaUserInfoDto.user_id} ?
                                             @{./instaMyPage(user_id=${instaArticleList.instaUserInfoDto.id})} : @{./instaUserPage(user_id=${instaArticleList.instaUserInfoDto.id})}">
                         <!-- <span class="fontBasic">saram</span> -->
-                        <span th:text="${instaArticleList.instaUserInfoDto.insta_nickname}" style="font-size: 0.8em;"></span>
+                        <span class="fontBasic" th:text="${instaArticleList.instaUserInfoDto.insta_nickname}"></span>
                     </a>
                     <div class="col-auto fontBasic ps-1 pe-0">
-                        <span th:text="${T(com.bulmeong.basecamp.common.util.TimeUtil).timeAgo(instaArticleList.instaArticleDto.created_at)}" style="color: rgb(162, 162, 162); font-size: 0.9em;"></span>                                             
+                        <span th:text="${T(com.bulmeong.basecamp.common.util.TimeUtil).timeAgo(instaArticleList.instaArticleDto.created_at)}" style="color: rgb(162, 162, 162);"></span>                                             
                     </div>
                     <div class="col ps-1 fontBasic">
-                        <span th:utext="${instaArticleList.instaArticleDto.content}" style="font-size: 0.92em;">good day✨</span>   
+                        <span th:text="${instaArticleList.instaArticleDto.content}">good day✨</span>   
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col fontBasic instaButtonColor">
+                        <span th:each="hashtag : ${instaArticleList.hashtags}" th:utext="${hashtag}" class="hashtag">해시태그</span>
                     </div>
                 </div>
 

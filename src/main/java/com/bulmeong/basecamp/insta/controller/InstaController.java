@@ -127,8 +127,10 @@ public class InstaController {
     }
 
     @RequestMapping("instaWriteProcess")
-    public String instaWriteProcess(InstaArticleDto instaArticleDto, @RequestParam("insta") MultipartFile[]insta_article_img){
-        instaService.writeArticle(instaArticleDto);
+    public String instaWriteProcess(InstaArticleDto instaArticleDto, @RequestParam("text") String text,
+                                    @RequestParam("insta") MultipartFile[]insta_article_img){
+
+        instaService.writeArticle(instaArticleDto, text);
         // System.out.println("instaArticleDto : " + instaArticleDto);
         // System.out.println("instaId" + instaArticleDto.getId());
 
