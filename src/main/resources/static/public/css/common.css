@@ -181,6 +181,17 @@ ul, li {
     list-style: none;
 }
 
+    /* 구글 아이콘 두께 조절 */
+    .thin-icon {
+    font-weight: 100; /* 두께를 얇게 설정 */
+    }
+    .normal-icon {
+    font-weight: 400; /* 기본 두께 설정 */
+    }
+    .bold-icon {
+    font-weight: 700; /* 두께를 두껍게 설정 */
+    }
+
 
 
 
