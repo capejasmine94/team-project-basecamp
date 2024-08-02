@@ -70,26 +70,39 @@
                                 </div>
                                 <div class="row">
                                     <div class="col" style="font-size: 0.8em;">
-                                        <span class="text-secondary">호스트</span> sy007
+                                        <span class="text-secondary">모임장</span> sy007
                                     </div>
                                 </div>
                             </div>
                             <div class="col-auto">
-                                <div class="col-auto" th:if="${session.sessionUserInfo != null}">
-                                    <a th:if="${confirmBookmark == 0}" th:href="@{/club/bookmarkProcess(club_id=${map.clubDto.id}, user_id=${session.sessionUserInfo.id})}">
-                                        <span><i class="bi bi-heart text-danger"></i></span>
-                                    </a>
-                                    <a th:unless="${confirmBookmark == 0}" th:href="@{/club/bookmarkProcess(club_id=${map.clubDto.id}, user_id=${session.sessionUserInfo.id})}">
-                                        <span><i class="bi bi-heart-fill text-danger"></i></span>
-                                    </a>
+                                <div class="col" th:if="${session.sessionUserInfo != null}">
+                                    <div class="row">
+                                        <div class="col pe-1">
+                                            <a th:if="${confirmBookmark == 0}" th:href="@{/club/bookmarkProcess(club_id=${map.clubDto.id}, user_id=${session.sessionUserInfo.id})}">
+                                                <span><i class="bi bi-heart text-danger"></i></span>
+                                            </a>
+                                            <a th:unless="${confirmBookmark == 0}" th:href="@{/club/bookmarkProcess(club_id=${map.clubDto.id}, user_id=${session.sessionUserInfo.id})}">
+                                                <span><i class="bi bi-heart-fill text-danger"></i></span>
+                                            </a>
+                                        </div>
+                                        <div class="col ps-0 text-center text-danger" th:text="${totalBookmark}">
+                                        </div>
+                                    </div>
                                 </div>
     
                                 <div class="col-auto" th:if="${session.sessionUserInfo == null}">
-                                    <a>
-                                        <span><i class="bi bi-heart"></i></span>
-                                    </a>
+                                    <div class="row">
+                                        <div class="col pe-1">
+                                            <a>
+                                                <span><i class="bi bi-heart"></i></span>
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col ps-0" th:text="${totalBookmark}">
+                                        </div>
+                                    </div>                                  
                                 </div>
-
                             </div>
                         </div>
                         <!-- <div class="row pt-2">
@@ -137,7 +150,7 @@
                                         <span class="material-symbols-outlined thin-icon">
                                             map
                                             </span>
-                                        &nbsp;활동 지역: 서울
+                                        &nbsp;활동 지역:&nbsp;<span th:text="${map.clubRegionCategoryDto.region_name}"></span>
                                     </div>
                                 </div>
                                 <div class="row pt-1">
@@ -145,15 +158,15 @@
                                         <span class="material-symbols-outlined thin-icon">
                                             account_circle
                                             </span>
-                                        &nbsp;참여 인원: 최대 10명
+                                        &nbsp;참여 인원:&nbsp;최대&nbsp;<span th:text="${map.clubDto.capacity}"></span>명
                                     </div>
                                 </div>
                                 <div class="row pt-1">
                                     <div class="col d-flex align-items-center" style="font-size: 0.9em;">
-                                        <span class="material-symbols-outlined thin">
+                                        <span class="material-symbols-outlined thin-icon">
                                             check_box
                                             </span>
-                                            &nbsp;참여 조건: 30대 | 성별무관 | 바로참여
+                                            &nbsp;참여 조건:&nbsp;30대 | 성별무관 | 바로참여
                                     </div>
                                 </div>
                             
@@ -219,18 +232,8 @@
                                 <i class="bi bi-gear"></i>
                             </div>
                         </div> -->
-<!-- 
-                        <div class="row pt-3 pb-1 border-bottom border-3">
-                            <div class="col text-center fw-bold">
-                                <a th:href="@{/club/home(id=${id})}" style="text-decoration:none; color:black;"><span>홈</span></a>
-                            </div>
-                            <div class="col text-center">
-                                <a th:href="@{/club/board(id=${id})}" style="text-decoration:none; color:black;"><span>게시판</span></a>
-                            </div>
-                            <div class="col text-center">
-                                <a th:href="@{/club/album(id=${id})}" style="text-decoration:none; color:black;"><span>사진첩</span></a>
-                            </div>
-                        </div> -->
+
+              
 
 
                         <div class="row border-bottom border-4 pt-2 pb-3">
@@ -381,6 +384,48 @@
                             </div>
                         </div>
 
+                        <div class="row border-top py-3 mt-3">
+                            <div class="col">
+                                
+                                <div class="row">
+                                    <div class="col">
+                                        <span>게시글</span>
+                                    </div>
+                                    <div class="col-auto text-end">
+                                        <a th:href="@{/club/board(id=${id})}" style="text-decoration:none; color:black;"><span>전체보기 ></span></a>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <div class="row border-top pt-3">
+                            <div class="col">
+                                
+                                <div class="row">
+                                    <div class="col">
+                                        <span>사진첩</span>
+                                    </div>
+                                    <div class="col-auto text-end">
+                                        <a th:href="@{/club/album(id=${id})}" style="text-decoration:none; color:black;"><span>전체보기 ></span></a>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+
+
+                                  <!-- <div class="row pt-3 pb-1 border-bottom border-3">
+                            <div class="col text-center fw-bold">
+                                <a th:href="@{/club/home(id=${id})}" style="text-decoration:none; color:black;"><span>홈</span></a>
+                            </div>
+                            <div class="col text-center">
+                                <a th:href="@{/club/board(id=${id})}" style="text-decoration:none; color:black;"><span>게시판</span></a>
+                            </div>
+                            <div class="col text-center">
+                                
+                            </div>
+                        </div> -->
 
 
                         
