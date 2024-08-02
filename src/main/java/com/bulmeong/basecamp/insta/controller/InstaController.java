@@ -96,10 +96,9 @@ public class InstaController {
         InstaArticleLikeDto instaArticleLikeDto = new InstaArticleLikeDto();
         instaArticleLikeDto.setUser_id(s_user_id);
 
+        // System.out.println(instaArticleListAll);
         List<Map<String, Object>> instaArticleListAll = instaService.selectInstaArticleList(s_user_id);
         model.addAttribute("instaArticleListAll", instaArticleListAll);
-
-        // System.out.println(instaArticleListAll);
 
         return "insta/instaMainPage";
     }

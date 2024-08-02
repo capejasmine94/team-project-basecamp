@@ -2,6 +2,7 @@ package com.bulmeong.basecamp.insta.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.thymeleaf.util.StringUtils;
 
 import com.bulmeong.basecamp.insta.dto.InstaArticleCommentDto;
 import com.bulmeong.basecamp.insta.dto.InstaArticleDto;
@@ -74,6 +75,11 @@ public class InstaService {
             Map<String, Object> map = new HashMap<>();
             
             map.put("instaArticleDto", instaArticleDto);
+            
+            // html escape _ 개행 (하긴 했는데 개행하면 레이아웃 지대 이상해짐)
+            String escapedContent = StringUtils.escapeXml(instaArticleDto.getContent());
+            escapedContent = escapedContent.replaceAll("\n", "<br>");
+            instaArticleDto.setContent(escapedContent);
 
             int article_id = instaArticleDto.getId();
             int user_id = instaArticleDto.getUser_id();
