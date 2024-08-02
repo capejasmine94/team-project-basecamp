@@ -447,8 +447,8 @@
                         </div>
                     </div>
                 </div>
-                <div class="row">
-                    <div class="col ps-4">
+                <div class="row px-3">
+                    <div class="col">
                         <!-- 회사명 + 차량명 -->
                         <div class="row">
                             <div class="col pe-0 pb-2">
@@ -469,8 +469,8 @@
                             </div>
                         </div>
                         <!-- 차고지 주소 + 운전 조건 -->
-                        <div class="row">
-                            <div class="col pt-2 pb-2 border-top fw-bold new-fs-85" style="color: #7C7B7B;">
+                        <div class="row border-top">
+                            <div class="col pt-2 pb-2 fw-bold new-fs-85" style="color: #7C7B7B;">
                                 <div class="campingcarGarage_address"></div>
                                 <div class="campingcarDriver_license_name"></div>
                                 <div class="campingcarDriver_age_condition_name"></div>
@@ -647,7 +647,7 @@
 
                         // 상세 페이지 이동을 위한 클릭 이벤트 리스너 추가
                         newCampingcarListWrapper.addEventListener('click', () => {
-                            window.location.href = `/campingcarDetailPage?id=${e.id}`;
+                            window.location.href = `/campingCarDetailPage?id=${e.id}`;
                         });
                     }
                 });
@@ -1073,3 +1073,33 @@
     </script>
 </body>
 </html>
+<!-- /* 설명 주석
+1. newRegionButton.addEventListener('click', () => { ... });:
+   - 설명: addEventListener는 지정된 이벤트가 대상에서 발생할 때 호출할 함수를 설정합니다. 여기서 'click' 이벤트를 설정하여 버튼이 클릭될 때 특정 동작을 수행하도록 합니다.
+   - 사용법:
+     element.addEventListener(event, function);
+     element: 이벤트 리스너를 추가할 대상 요소입니다. 여기서는 newRegionButton입니다.
+     event: 리스너를 추가할 이벤트 유형입니다. 여기서는 'click'입니다.
+     function: 이벤트가 발생했을 때 실행할 함수입니다. 여기서는 익명 함수(() => { ... })를 사용했습니다.
+
+2. document.getElementById('locationDisplay').innerText = region.name;
+   - 설명: document.getElementById는 HTML 문서에서 지정된 ID를 가진 요소를 반환합니다. innerText는 해당 요소의 텍스트 콘텐츠를 설정하거나 반환합니다. 여기서는 locationDisplay라는 ID를 가진 요소의 텍스트를 선택한 지역의 이름(region.name)으로 설정합니다.
+   - 사용법:
+     const element = document.getElementById(id);
+     element.innerText = text;
+     id: 찾고자 하는 요소의 ID입니다. 여기서는 'locationDisplay'입니다.
+     text: 요소에 설정할 텍스트 콘텐츠입니다. 여기서는 region.name입니다.
+
+3. const modalInstance = bootstrap.Modal.getInstance(locationModal);
+   - 설명: bootstrap.Modal.getInstance는 지정된 모달 요소에 대한 Bootstrap 모달 인스턴스를 반환합니다. 이 인스턴스를 사용하면 해당 모달에 대해 프로그램적으로 제어할 수 있습니다.
+   - 사용법:
+     const modalInstance = bootstrap.Modal.getInstance(element);
+     element: 모달 요소입니다. 여기서는 locationModal입니다.
+     결과: modalInstance는 모달에 대한 Bootstrap 인스턴스가 됩니다.
+
+4. modalInstance.hide();
+   - 설명: hide 메서드는 Bootstrap 모달 인스턴스를 숨기기 위해 사용됩니다. 여기서는 modalInstance가 가리키는 모달을 닫습니다.
+   - 사용법:
+     modalInstance.hide();
+     결과: 모달이 화면에서 사라집니다.
+*/ -->
