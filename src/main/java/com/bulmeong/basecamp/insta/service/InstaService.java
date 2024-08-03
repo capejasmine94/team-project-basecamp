@@ -80,7 +80,6 @@ public class InstaService {
 
             instaSqlMapper.insertArticletag(instaArticleTagDto);
         }
-
     }
 
 
