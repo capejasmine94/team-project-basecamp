@@ -192,5 +192,4 @@ function formatDate(dateString) {
 
 document.addEventListener('DOMContentLoaded', () => {
     getCommentList();
-
  });

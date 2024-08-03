@@ -26,6 +26,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Calendar;
+
 
 @Service
 public class ClubService {
@@ -173,9 +175,6 @@ public class ClubService {
 
         return bookmarkedClubDataList;
     }
-
-
-
 
 
     // 각 소모임 게시글 목록 뽑기 (by club_id)
@@ -450,4 +449,37 @@ public class ClubService {
 
             return totalMember;
         }
+
+        // 소모임 가입조건 확인
+        public boolean confirmUserCondition(int id, UserDto userDto){
+            ClubJoinConditionDto clubJoinConditionDto = clubSqlMapper.selectClubJoinCondition(id);
+
+            String gender = clubJoinConditionDto.getGender();
+            int start_year = clubJoinConditionDto.getStart_year();
+            int end_year = clubJoinConditionDto.getEnd_year();
+
+            String genderOfUser = userDto.getGender();
+
+            // 출생연도 추출
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTime(userDto.getBirth());
+            int birthYearOfUser = calendar.get(Calendar.YEAR);
+            System.out.println(birthYearOfUser);
+
+            // 조건확인
+            boolean isGenderMatch = gender.equals("all") || gender.equals(genderOfUser);
+            System.out.println(isGenderMatch);
+            boolean isYearMatch = birthYearOfUser >= start_year && birthYearOfUser <= end_year;
+            System.out.println(isYearMatch);
+;
+            if(isGenderMatch && isYearMatch){
+            return true;
+            }else{
+                return false;
+            }
+            
+        }
+
+
+
     }

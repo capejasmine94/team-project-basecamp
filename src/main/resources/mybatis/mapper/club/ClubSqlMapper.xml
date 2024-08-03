@@ -425,6 +425,12 @@
         where id = #{id}
     </select>
 
+    <!-- 소모임 가입조건 확인 -->
+    <select id="selectClubJoinCondition" resultType="com.bulmeong.basecamp.club.dto.ClubJoinConditionDto">
+        SELECT * FROM bc_club_join_condition
+        WHERE club_id = #{club_id}
+    </select>
+
 
 
 </mapper>

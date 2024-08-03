@@ -53,26 +53,30 @@ public class ClubController {
 
     @RequestMapping("main")
     public String clubMain(HttpSession session, Model model){
-        util.loginUser(2);
+        util.loginUser(1);
 
         UserDto userDto = (UserDto)session.getAttribute("sessionUserInfo");
+
         List<ClubRegionCategoryDto> regionCategoryDtoList = clubService.findRegionCategory();
         model.addAttribute("regionCategoryDtoList", regionCategoryDtoList);
 
-        // 북마크한 소모임 목록 3개 리미트 걸기
-        List<Map<String, Object>> bookmarkedClubDataList = clubService.getBookmarkedClubDtoList(userDto.getId());
-        List<Map<String,Object>> limitedBookmarkedClubDtoList = bookmarkedClubDataList.stream()
-        .limit(3)
-        .collect(Collectors.toList());
-        
-        model.addAttribute("bookmarkedClubDataList", limitedBookmarkedClubDtoList);
+        if (userDto != null) {
+            // 북마크한 소모임 목록 3개 리미트 걸기
+            List<Map<String, Object>> bookmarkedClubDataList = clubService.getBookmarkedClubDtoList(userDto.getId());
+            List<Map<String,Object>> limitedBookmarkedClubDtoList = bookmarkedClubDataList.stream()
+            .limit(3)
+            .collect(Collectors.toList());
+            
+            model.addAttribute("bookmarkedClubDataList", limitedBookmarkedClubDtoList);
 
-        //  내가 가입한 소모임 목록
-        List<ClubDto> joinClubDtoList = clubService.findJoinClubDtoList(userDto.getId());
-        List<ClubDto> limitedJoinClubDtoList = joinClubDtoList.stream()
-        .limit(3)
-        .collect(Collectors.toList());
-        model.addAttribute("joinClubDtoList", limitedJoinClubDtoList);
+            //  내가 가입한 소모임 목록
+            List<ClubDto> joinClubDtoList = clubService.findJoinClubDtoList(userDto.getId());
+            List<ClubDto> limitedJoinClubDtoList = joinClubDtoList.stream()
+            .limit(3)
+            .collect(Collectors.toList());
+            model.addAttribute("joinClubDtoList", limitedJoinClubDtoList);
+        }
+        
 
 
         // 새로운 소모임 목록
@@ -387,6 +391,7 @@ public class ClubController {
     //     return "redirect:/club/home?id=";
     // }
 
+    
     
 
    

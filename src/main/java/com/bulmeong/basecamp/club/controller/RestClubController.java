@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.bulmeong.basecamp.club.dto.ClubMemberDto;
 import com.bulmeong.basecamp.club.dto.ClubNestedCommentDto;
 import com.bulmeong.basecamp.club.dto.ClubPostCommentLikeDto;
 import com.bulmeong.basecamp.club.service.ClubService;
@@ -85,6 +86,32 @@ public class RestClubController {
         return restResponseDto;
     } 
 
+    @GetMapping("member")
+    public RestResponseDto confirmJoinCondition(@RequestParam("club_id") int club_id, HttpSession session){
+        RestResponseDto restResponseDto = new RestResponseDto();
+
+        UserDto userDto = (UserDto)session.getAttribute("sessionUserInfo");
+        boolean confirm = clubService.confirmUserCondition(club_id, userDto);
+        restResponseDto.add("confirm", confirm);
+        return restResponseDto;
+    }
+
+    @PostMapping("member")
+    public RestResponseDto joinClubMember(@RequestParam("club_id")int id, HttpSession session){
+        RestResponseDto restResponseDto = new RestResponseDto();
+        UserDto userDto = (UserDto)session.getAttribute("sessionUserInfo");
+        ClubMemberDto clubMemberDtoForRoleId3 = new ClubMemberDto();
+        clubMemberDtoForRoleId3.setClub_id(id);
+        clubMemberDtoForRoleId3.setUser_id(userDto.getId());
+        clubMemberDtoForRoleId3.setRole_id(3);
+
+        System.out.println(clubMemberDtoForRoleId3);
+        clubService.joinClub(clubMemberDtoForRoleId3);
+
+        return restResponseDto;
+    }
+
+
 
     public RestResponseDto template(){
         RestResponseDto restResponseDto = new RestResponseDto();
@@ -92,4 +119,5 @@ public class RestClubController {
         return restResponseDto;
     }
 
+   
 }

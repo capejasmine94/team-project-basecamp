@@ -98,5 +98,8 @@ public interface ClubSqlMapper {
 
     // 소모임 정원 확인
     public int confirmCapacity(int id);
+
+    // 소모임 가입조건 확인
+    public ClubJoinConditionDto selectClubJoinCondition(int id);
 }
 
