@@ -95,11 +95,11 @@ public class ClubController {
         Map<String, Object>map = clubService.clubDetail(id);
         model.addAttribute("map", map);
 
-        List<Map<String,Object>>  clubMeetingDataList =clubService.selectClubMeetingDtoList(id);
-        model.addAttribute("clubMeetingDataList", clubMeetingDataList);
+        // List<Map<String,Object>>  clubMeetingDataList =clubService.selectClubMeetingDtoList(id);
+        // model.addAttribute("clubMeetingDataList", clubMeetingDataList);
 
-        int totalMeetings = clubService.countTotalMeeting(id);
-        model.addAttribute("totalMeetings", totalMeetings);
+        // int totalMeetings = clubService.countTotalMeeting(id);
+        // model.addAttribute("totalMeetings", totalMeetings);
 
         ClubBookmarkDto clubBookmarkDto = new ClubBookmarkDto();
         UserDto userDto = (UserDto)session.getAttribute("sessionUserInfo");
@@ -382,14 +382,14 @@ public class ClubController {
         return "redirect:/club/home?id="+clubMeetingDto.getClub_id();
     }
 
-    // 정모 회원가입
+    // 정모 신청
 
-    // public String joinMeetingProcess(ClubMeetingMemberDto clubMeetingMemberDto){
-    //     clubService.insertClubMeetingMemberDto(clubMeetingMemberDto);
+    public String joinMeetingProcess(ClubMeetingMemberDto clubMeetingMemberDto){
+        clubService.insertClubMeetingMemberDto(clubMeetingMemberDto);
         
 
-    //     return "redirect:/club/home?id=";
-    // }
+        return "redirect:/club/home?id=";
+    }
 
     
     

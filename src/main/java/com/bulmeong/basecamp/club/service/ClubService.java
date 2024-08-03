@@ -464,16 +464,13 @@ public class ClubService {
             Calendar calendar = Calendar.getInstance();
             calendar.setTime(userDto.getBirth());
             int birthYearOfUser = calendar.get(Calendar.YEAR);
-            System.out.println(birthYearOfUser);
 
             // 조건확인
             boolean isGenderMatch = gender.equals("all") || gender.equals(genderOfUser);
-            System.out.println(isGenderMatch);
             boolean isYearMatch = birthYearOfUser >= start_year && birthYearOfUser <= end_year;
-            System.out.println(isYearMatch);
 ;
             if(isGenderMatch && isYearMatch){
-            return true;
+                return true;
             }else{
                 return false;
             }

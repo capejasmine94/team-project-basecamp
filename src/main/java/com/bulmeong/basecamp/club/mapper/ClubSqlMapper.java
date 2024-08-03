@@ -85,7 +85,7 @@ public interface ClubSqlMapper {
     public List<ClubPostImageDto> selectPostImageDtoByPostId(int id);
     public List<ClubDto> selectBookmarkedClubDtoList(int id);
     
-    //  정모 개설하기
+    //  정기모임
     public void insertClubMeetingDto(ClubMeetingDto clubMeetingDto);
     public void insertClubMeetingMemberDto(ClubMeetingMemberDto clubMeetingMemberDto);
     

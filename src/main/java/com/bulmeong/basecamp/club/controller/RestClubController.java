@@ -111,6 +111,18 @@ public class RestClubController {
         return restResponseDto;
     }
 
+    @GetMapping("meeting")
+    public RestResponseDto getMeeting(@RequestParam("club_id") int id){
+        RestResponseDto restResponseDto = new RestResponseDto();
+        
+        List<Map<String,Object>>  clubMeetingDataList =clubService.selectClubMeetingDtoList(id);
+        int totalMeetings = clubService.countTotalMeeting(id);
+        restResponseDto.add("clubMeetingDataList", clubMeetingDataList);
+        restResponseDto.add("totalMeetings", totalMeetings);
+
+        return restResponseDto;
+    }
+
 
 
     public RestResponseDto template(){
