@@ -2,10 +2,12 @@ package com.bulmeong.basecamp.camp.service;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -123,18 +125,22 @@ public class CampsiteService {
     private List<CampsiteCategoryDto> showCategory(int campsite_id) {
         List<CampsiteCategoryDto> result = new ArrayList<>();
         List<Map<String, Object>> list = campsiteSqlMapper.selectCampCategory(campsite_id);
-        for(Map<String, Object> category : list) {
+        
+        for (Map<String, Object> category : list) {
             CampsiteCategoryDto dto = new CampsiteCategoryDto();
             dto.setId((int)category.get("id"));
             dto.setName((String)category.get("name"));
             dto.setImage((String)category.get("image"));
             result.add(dto);
         }
+
         List<CampsiteAreaDto> areaList = campsiteSqlMapper.getAreaListByCampsiteId(campsite_id);
-        for(CampsiteAreaDto area : areaList) {
+        
+        for (CampsiteAreaDto area : areaList) {
             int area_id = area.getId();
             list = campsiteSqlMapper.selectAreaCategory(area_id);
-            for(Map<String, Object> category : list) {
+            
+            for (Map<String, Object> category : list) {
                 CampsiteCategoryDto dto = new CampsiteCategoryDto();
                 dto.setId((int)category.get("id"));
                 dto.setName((String)category.get("name"));
@@ -142,8 +148,17 @@ public class CampsiteService {
                 result.add(dto);
             }
         }
+
+        // 중복된 이름을 가진 dto들을 제거
+        Set<String> seenNames = new HashSet<>();
+        result = result.stream()
+                .filter(dto -> seenNames.add(dto.getName()))
+                .collect(Collectors.toList());
+
         return result;
     }
+
+    
 
     //-------------------------------------------------------------------------------------------------------------------
 
@@ -175,6 +190,10 @@ public class CampsiteService {
         }
         result.put("area", areaInfoList);
 
+        //기타 정보
+        int min_Prise = campsiteSqlMapper.minPriseByCampsiteId(campsite_id);
+        result.put("minPrise", min_Prise);
+
         //카테고리 
         result.put("campCategory", campsiteSqlMapper.selectCampCategory(campsite_id));
         result.put("showCategory", showCategory(campsite_id));
@@ -201,7 +220,10 @@ public class CampsiteService {
         result.put("dto", areaDto);
 
         // 포인트
-        result.put("point", campsiteSqlMapper.getPointList(area_id));
+        Map<String,Object> pointMap = new HashMap<>();
+        pointMap.put("point", campsiteSqlMapper.getPointList(area_id));
+        pointMap.put("dto", campsiteSqlMapper.pointByAreaId(area_id));
+        result.put("pointInfo", pointMap);
 
         // 카테고리
         result.put("category", campsiteSqlMapper.selectAreaCategory(area_id));
@@ -330,6 +352,7 @@ public class CampsiteService {
         }
     }
 
+    // 포인트 삭제
     public void deletePoint(int point_id){
         campsiteSqlMapper.deletePoint(point_id);
     }
@@ -338,9 +361,22 @@ public class CampsiteService {
 
 
     //===================================================================================================================
-    // 
+    // 구매자 구역
     //===================================================================================================================
+    // 모든 캠핑장 리스트
+    public List<Map<String,Object>> campsiteList() {
+        List<Map<String,Object>> result = new ArrayList<>();
+        List<CampsiteDto> campsiteList = campsiteSqlMapper.getAllCampsiteDto();
+        for(CampsiteDto dto : campsiteList) {
+            result.add(campsiteInfo(dto.getId()));
+        }
+        return result;
+    }
 
+    // 포인트로 포인트 리스트
+    public List<CampsiteAreaPointDto> pointByPointId(int point_id) {
+        return campsiteSqlMapper.pointByPointId(point_id);
+    }
     //-------------------------------------------------------------------------------------------------------------------
 
 

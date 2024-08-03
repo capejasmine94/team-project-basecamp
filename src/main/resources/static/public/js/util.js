@@ -151,8 +151,7 @@ function addColonMoneyInput() {
   if(inputNumbers.length <= 0 || inputNumbers == null)
     return;
   for(const node of inputNumbers){
-      let input = node.value;
-
+      let input = node.value ? node.value : node.innerText;
       // Remove all non-numeric characters except for period (.)
       input = input.replace(/[^0-9.]/g, '');
 
@@ -165,13 +164,16 @@ function addColonMoneyInput() {
       integerPart = integerPart.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
 
       // Combine the formatted integer part and the decimal part
-      node.value = integerPart + decimalPart;
+      if(node.value)
+        node.value = integerPart + decimalPart;
+      else 
+        node.innerText = integerPart + decimalPart;
     }
 }
 function replaceMoneyInput() {
   const inputNumbers = document.getElementsByClassName('moneyInput');
   for(const node of inputNumbers){
-          // 쉼표 제거
+    // 쉼표 제거
     let textWithoutComma = node.value.replace(/,/g, '');
 
     // 문자열을 정수로 변환
