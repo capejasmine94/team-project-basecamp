@@ -332,6 +332,14 @@
         and user_id = #{user_id}
     </delete>
 
+
+    <!-- 인스스 _ 로그인 유저가 팔로우 한 유저 출력 -->
+    <select id="selectInstaStoryUserInfoByFollowerUserId" resultType="com.bulmeong.basecamp.insta.dto.InstaUserInfoDto">
+        select biui.* from bc_insta_follow bif
+        inner join bc_insta_user_info biui on biui.id = bif.following_user_id
+        where follower_user_id = #{follower_user_id}
+    </select>
+
 </mapper>
 
 

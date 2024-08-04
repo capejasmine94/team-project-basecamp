@@ -457,7 +457,7 @@
         <div class="row border-bottom mb-2">
             <!-- 스크롤 바 없애는 거 scrollbar-width: none; _ overflow있는 곳에 넣어주기 -->
             <div class="col overflow-x-auto" style="scrollbar-width: none;">
-                <div class="row" style="width: 150%;">
+                <div class="row flex-nowrap"> <!-- flex-nowrap !!!대박!!! 반복문 길이에 자동으로 가로축 맞춰줌!!! -->
                     <a class="col-auto link-dark link-offset-2 link-underline link-underline-opacity-0 " th:href="@{./instaMyPage(user_id=${instaUserInfoDto.id})}">
                         <div class="row">
                             <!-- <div class="col">
@@ -481,86 +481,23 @@
                         </div>
                     </a>
 
-                    <a class="col-auto link-dark link-offset-2 link-underline link-underline-opacity-0 " href="./instaUserPage">
+                    <a class="col-auto px-2 link-dark link-offset-2 link-underline link-underline-opacity-0 " th:href="@{./instaUserPage(user_id=${instaStory.id})}" th:each="instaStory : ${instaStoryList}">
                         <div class="row">
                             <div class="col">
                                 <div class="row">
                                     <div class="col">
-                                        <img src="/public/img/instaImage/userImg.jpeg" class="img-fluid rounded-circle storyImage" alt="Profile Image">
+                                        <img th:src="|/images/${instaStory.insta_profile_img}|" class="img-fluid rounded-circle storyImage" alt="Profile Image">
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="col px-1 py-1 text-center" style="font-size: 0.7em;">
-                                        <span>닉네임</span>
+                                        <span th:text="${instaStory.insta_nickname}">닉네임</span>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </a>
-                    <a class="col-auto link-dark link-offset-2 link-underline link-underline-opacity-0 " href="./instaUserPage">
-                        <div class="row">
-                            <div class="col">
-                                <div class="row">
-                                    <div class="col">
-                                        <img src="/public/img/instaImage/userImg.jpeg" class="img-fluid rounded-circle storyImage" alt="Profile Image">
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col px-1 py-1 text-center" style="font-size: 0.7em;">
-                                        <span>닉네임</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </a>
-                    <a class="col-auto link-dark link-offset-2 link-underline link-underline-opacity-0 " href="./instaUserPage">
-                        <div class="row">
-                            <div class="col">
-                                <div class="row">
-                                    <div class="col">
-                                        <img src="/public/img/instaImage/userImg.jpeg" class="img-fluid rounded-circle storyImage" alt="Profile Image">
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col px-1 py-1 text-center" style="font-size: 0.7em;">
-                                        <span>닉네임</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </a>
-                    <a class="col-auto link-dark link-offset-2 link-underline link-underline-opacity-0 " href="./instaUserPage">
-                        <div class="row">
-                            <div class="col">
-                                <div class="row">
-                                    <div class="col">
-                                        <img src="/public/img/instaImage/userImg.jpeg" class="img-fluid rounded-circle storyImage" alt="Profile Image">
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col px-1 py-1 text-center" style="font-size: 0.7em;">
-                                        <span>닉네임</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </a>
-                    <a class="col-auto link-dark link-offset-2 link-underline link-underline-opacity-0 " href="./instaUserPage">
-                        <div class="row">
-                            <div class="col">
-                                <div class="row">
-                                    <div class="col">
-                                        <img src="/public/img/instaImage/userImg.jpeg" class="img-fluid rounded-circle storyImage" alt="Profile Image">
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col px-1 py-1 text-center" style="font-size: 0.7em;">
-                                        <span>닉네임</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </a>
+
                 </div>
             </div>
         </div>

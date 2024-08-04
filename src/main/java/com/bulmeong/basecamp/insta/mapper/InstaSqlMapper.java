@@ -71,6 +71,9 @@ public interface InstaSqlMapper {
     public void createBookmarkByUserIdAndArticleId(InstaBookmarkDto instaBookmarkDto);
     public int confirmBookmarkByArticleIdAndUserId(InstaBookmarkDto instaBookmarkDto); // 게시글 북마크 상태 여부
     public void deleteBookmarkByArticleIdAndUserId(InstaBookmarkDto instaBookmarkDto);
+
+    // 인스스 _ 로그인 유저가 팔로우 한 유저 출력
+    public List<InstaUserInfoDto> selectInstaStoryUserInfoByFollowerUserId(int follower_user_id); // follower_user_id =  로그인 한 유저 아이디
 }
 
 

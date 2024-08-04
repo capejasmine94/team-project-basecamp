@@ -306,6 +306,14 @@ public class InstaService {
         instaSqlMapper.deleteBookmarkByArticleIdAndUserId(instaBookmarkDto);
     }
 
+
+    // 인스스 _ 로그인 유저가 팔로우 한 유저 출력
+    public List<InstaUserInfoDto> likeInstaStoryButIsNotSoSad(int follower_user_id){
+        List<InstaUserInfoDto> instaStory = instaSqlMapper.selectInstaStoryUserInfoByFollowerUserId(follower_user_id);
+
+        return instaStory;
+    }
+
 }
 
 

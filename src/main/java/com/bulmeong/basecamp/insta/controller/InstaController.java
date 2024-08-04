@@ -101,6 +101,10 @@ public class InstaController {
         List<Map<String, Object>> instaArticleListAll = instaService.selectInstaArticleList(instaUserInfoDto.getId());
         model.addAttribute("instaArticleListAll", instaArticleListAll);
 
+        // 인스스 _ 로그인 유저가 팔로우 한 유저 출력
+        List<InstaUserInfoDto> instaStoryList = instaService.likeInstaStoryButIsNotSoSad(instaUserInfoDto.getId());
+        model.addAttribute("instaStoryList", instaStoryList);
+
         return "insta/instaMainPage";
     }
 
