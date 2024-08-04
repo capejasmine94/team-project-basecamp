@@ -109,6 +109,13 @@
     bottom: 1px; /* 인디케이터 위치 조정 */
 }
 
+/* instaMainPage */
+/* 모달의 내용 스타일 */
+.modal-content {
+    width: 70%; /* 모달 내용의 너비 */
+    transform: translate(20%, 0%); /* 모달 창 위치 조정 */
+}
+
 .carousel-indicators .active {
     background-color: #fff; /* 활성화된 점 색상 설정 (흰색) */
 }
@@ -123,6 +130,15 @@
     margin: 0 2px; /* 점 사이 간격 */
     cursor: pointer; /* 클릭 가능 표시 */
     display: inline-block; /* 인라인 블록으로 나란히 배치 */
+}
+
+/* userPage, myPage에서 사용 */
+.middle {
+    padding-left: 2px;
+    padding-right: 2px; 
+}
+.pb {
+    padding-bottom: 2px;
 }
 
 

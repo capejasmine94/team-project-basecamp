@@ -13,9 +13,15 @@
 
     <insert id="insertInstaUserInfo">
         insert into bc_insta_user_info(
-            user_id, insta_nickname, insta_profile_img, intro
+            user_id,
+            insta_nickname,
+            insta_profile_img,
+            intro
         )values(
-            #{user_id}, #{insta_nickname}, #{insta_profile_img}, #{intro}
+            #{user_id},
+            #{insta_nickname},
+            #{insta_profile_img},
+            #{intro}
         )
     </insert>
 
@@ -40,18 +46,22 @@
     <!-- 게시판 insert -->
     <insert id="insertInstaArticle" parameterType="com.bulmeong.basecamp.insta.dto.InstaArticleDto" useGeneratedKeys="true" keyProperty="id">
         insert into bc_insta_article(
-            user_id, content
+            user_id,
+            content
         )values(
-            #{user_id}, #{content}
+            #{user_id},
+            #{content}
         )
     </insert>
 
     <!-- 게시판 이미지 insert -->
     <insert id="insertInstaArticleImg" parameterType="com.bulmeong.basecamp.insta.dto.InstaArticleImgDto">
         insert into bc_insta_article_img(
-            article_id, img_link
+            article_id,
+            img_link
         )values(
-            #{article_id}, #{img_link}
+            #{article_id},
+            #{img_link}
         )
     </insert>
 
@@ -66,9 +76,13 @@
     <!-- 댓글 관련 (자바스크립트 사용) -->
     <insert id="createComment">
         insert into bc_insta_article_comment(
-            user_id, article_id, comment
+            user_id,
+            article_id,
+            comment
         )values(
-            #{user_id}, #{article_id}, #{comment}
+            #{user_id},
+            #{article_id},
+            #{comment}
         )
     </insert>
 
@@ -90,9 +104,11 @@
     <!-- 게시글 좋아요 -->
     <insert id="createLike">
         insert into bc_insta_article_like(
-            article_id, user_id
+            article_id,
+            user_id
         )values(
-            #{article_id}, #{user_id}
+            #{article_id},
+            #{user_id}
         )
     </insert>
 
@@ -123,9 +139,11 @@
     <!-- 팔로우 _ 좋아요 기능 사용(자바스크립트) -->
     <insert id="insertFollowByUserId">
         insert into bc_insta_follow(
-            follower_user_id, following_user_id
+            follower_user_id,
+            following_user_id
         )values(
-            #{follower_user_id}, #{following_user_id}
+            #{follower_user_id},
+            #{following_user_id}
         )
     </insert>
 
@@ -159,9 +177,11 @@
     <!-- 댓글 좋아요(자바스크립트) -->
     <insert id="createCommentLike">
         insert into bc_insta_comment_like(
-            user_id, comment_id
+            user_id,
+            comment_id
         )values(
-            #{user_id}, #{comment_id}
+            #{user_id},
+            #{comment_id}
         )
     </insert>
 
@@ -211,9 +231,11 @@
     <!-- 3. 게시글-태그 관계 삽입 -->
     <insert id="insertArticletag">
         insert into bc_insta_article_tag(
-            article_id, tag_id
+            article_id,
+            tag_id
         )values(
-            #{article_id}, #{tag_id}
+            #{article_id},
+            #{tag_id}
         )
     </insert>
 
@@ -253,6 +275,62 @@
         where article_id = #{article_id}
     </select>
 
+
+
+    <!-- 유저가 작성한 게시글 이미지List 출력 -->
+    <select id="instaWriteArticleGetImgByUserId" resultType="com.bulmeong.basecamp.insta.dto.InstaArticleImgDto">
+        select biai.*
+        from bc_insta_article bia
+        inner join (
+            select article_id, min(id) as max_image_id
+            from bc_insta_article_img
+            group by article_id
+        ) latest_images on bia.id = latest_images.article_id
+        inner join bc_insta_article_img biai on biai.id = latest_images.max_image_id
+        where user_id = #{user_id}
+        order by id desc
+    </select>
+
+    <!-- 유저가 저장한 북마크 게시글 이미지List 출력 -->
+    <!-- 최신 저장한게 최상단오게 -->
+    <select id="instaSaveBookmarkByUserId" resultType="com.bulmeong.basecamp.insta.dto.InstaArticleImgDto">
+        select biai.*
+        from bc_insta_bookmark bib
+        inner join (
+            select article_id, min(id) as max_image_id
+            from bc_insta_article_img
+            group by article_id
+        ) latest_images on bib.article_id = latest_images.article_id
+        inner join bc_insta_article_img biai on biai.id = latest_images.max_image_id
+        where user_id = #{user_id}
+        order by bib.id desc
+    </select>
+
+
+
+    <!-- 북마크 -->
+    <insert id="createBookmarkByUserIdAndArticleId">
+        insert into bc_insta_bookmark(
+            user_id,
+            article_id
+        )values(
+            #{user_id},
+            #{article_id}
+        )
+    </insert>
+
+    <!-- 0이면 북마크 안 누름, 1이면 북마크 누름 -->
+    <select id="confirmBookmarkByArticleIdAndUserId" resultType="int">
+        select count(*) from bc_insta_bookmark
+        where article_id = #{article_id}
+        and user_id = #{user_id}
+    </select>
+
+    <delete id="deleteBookmarkByArticleIdAndUserId">
+        delete from bc_insta_bookmark
+        where article_id = #{article_id}
+        and user_id = #{user_id}
+    </delete>
 
 </mapper>
 

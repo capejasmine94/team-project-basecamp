@@ -122,7 +122,7 @@
 
         // 댓글 insert _ post방식으로 작성
         function registerComment(articleId, reloadButton){    
-            console.log("reloadButton:", reloadButton); // 매개변수로 전달된 버튼 요소 출력            
+            // console.log("reloadButton:", reloadButton); // 매개변수로 전달된 버튼 요소 출력            
 
             if(myInstaId == null){
                 if(confirm("로그인 하셔야 이용 가능합니다. 로그인 페이지로 이동하시겠습니까?")){
@@ -396,6 +396,17 @@
         }
 
 
+        // toast
+        function showToast() {
+            const toast = bootstrap.Toast.getOrCreateInstance(document.getElementById("toast"));
+            toast.show();
+            setTimeout(() => {
+                toast.hide();
+            }, 5000);
+
+        }
+
+
         window.addEventListener("DOMContentLoaded", () => {
             // 페이지 로드 후 사실상 시작 지점
             setSessionId();
@@ -409,17 +420,14 @@
         /* 오프캠버스 css */
         .offcanvas-bottom {
             border-radius: 10px 10px 0 0; /* 위쪽 모서리 둥글게 */
-            /* 위쪽 모서리 두 개는 20px로 둥글게 만들고, 아래쪽 모서리 두 개는 둥글게 만들지 않겠다는 의미입니다. */
-
-             /* 내용이 모서리를 넘지 않도록 */
+            /* 위쪽 모서리 두 개는 10px로 둥글게 만들고, 아래쪽 모서리 두 개는 둥글게 만들지 않겠다는 의미입니다. */
         }
 
-        /* 모달의 내용 스타일 */
-        .modal-content {
-            width: 70%; /* 모달 내용의 너비 */
-            transform: translate(20%, 0%); /* 모달 창 위치 조정 */
+        .comment-button {
+            display: inline-flex;
+            align-items: baseline; /* 텍스트의 기본 위치에 맞춰 정렬 */
+            line-height: 0; /* 스팬과 동일한 라인 높이 설정 */
         }
-
 
     </style>
 
@@ -775,32 +783,28 @@
                 </div> -->
 
 
-                <div class="row" style="height: 30px;">
+                <div class="row align-items-center" style="height: 30px;">
                     <!-- 좋아요 -->
-                    <div class="col-auto px-0" th:if="${instaArticleList.like == 1}">
-                        <form action="./pushArticleLikeDeleteProcess" method="get">
-                            <button class="btn">
-                                <i class="fa-solid fa-heart likeColor"></i>
-                            </button>
+                    <form action="./pushArticleLikeDeleteProcess" method="get" class="col-auto px-0" th:if="${instaArticleList.like == 1}">
+                        <button class="btn d-flex align-items-center pb-0">
+                            <i class="fa-solid fa-heart likeColor"></i>
+                        </button>
 
-                            <input type="hidden" name="user_id" th:value="${session.sessionUserInfo.id}">
-                            <input type="hidden" name="article_id" th:value="${instaArticleList.instaArticleDto.id}">
-                        </form>
-                    </div>
-                    <div class="col-auto px-0" th:if="${instaArticleList.like != 1}">
-                        <form action="./pushArticleLikeProcess" method="get">
-                            <button class="btn">
-                                <!-- onclick="like(/*[[${instaArticleList.instaArticleDto.id}]]*/)" -->
-                                <i id="heart" onclick="like()" class="fa-regular fa-heart"></i>
+                        <input type="hidden" name="user_id" th:value="${instaUserInfoDto.id}">
+                        <input type="hidden" name="article_id" th:value="${instaArticleList.instaArticleDto.id}">
+                    </form>
+                    <form action="./pushArticleLikeProcess" method="get" class="col-auto px-0" th:if="${instaArticleList.like != 1}">
+                        <button class="btn d-flex align-items-center pb-0">
+                            <!-- onclick="like(/*[[${instaArticleList.instaArticleDto.id}]]*/)" -->
+                            <i id="heart" onclick="like()" class="fa-regular fa-heart"></i>
+                        </button>
 
-                                <input type="hidden" name="user_id" th:value="${session.sessionUserInfo.id}">
-                                <input type="hidden" name="article_id" th:value="${instaArticleList.instaArticleDto.id}">
-                            </button>
-                        </form>
-                    </div>
+                        <input type="hidden" name="user_id" th:value="${instaUserInfoDto.id}">
+                        <input type="hidden" name="article_id" th:value="${instaArticleList.instaArticleDto.id}">
+                    </form>
 
                     <!-- 댓글 -->
-                    <div class="col px-0">
+                    <!-- <div class="col px-0">
                         <form action="./commentWritePage" method="get">
                             <button class="btn px-0">
                                 <i class="fa-regular fa-comment"></i>
@@ -808,23 +812,46 @@
                             <input type="hidden" name="user_id" th:value="${instaUserInfoDto.id}">
                             <input type="hidden" name="article_id" th:value="${instaArticleList.instaArticleDto.id}">
                         </form>
+                    </div> -->
+                    <div class="col px-0">
+                        <button onclick="reloadCommentList(this)" class="btn pb-0 px-0 d-flex align-items-center" type="button">
+                            <i class="fa-regular fa-comment"></i>
+                            <input type="hidden" class="inputInstaArticleId" th:value="${instaArticleList.instaArticleDto.id}">
+                        </button>
+
+                        <!-- 오프 캠버스 실행 -->
                     </div>
 
                     <!-- 북마크 -->
-                    <div class="col text-end">
-                        <form action="./pushBookmarkProcess" method="get">
-                            <button class="btn pe-0">
-                                <i class="fa-regular fa-bookmark"></i>
-                            </button>
-                        </form>
-                    </div>
-                    <!-- <div class="col text-end">
-                        <form action="./pushBookmarkDeleteProcess" method="get">
-                            <button class="btn pe-0">
-                                <i class="fa-solid fa-bookmark"></i>
-                            </button>
-                        </form>
-                    </div> -->
+                    <form action="./pushBookmarkProcess" method="get" class="col-auto text-end" th:if="${instaArticleList.bookmark != 1}">
+                        <button type="submit" class="btn pe-0 pb-0 d-flex align-items-center" onclick="showToast(event)">
+                            <i class="fa-regular fa-bookmark"></i>
+                        </button>
+
+                        <!-- <input type="hidden" name="user_id" th:value="${session.sessionUserInfo.id}"> -->
+                        <input type="hidden" name="user_id" th:value="${instaUserInfoDto.id}">
+                        <input type="hidden" name="article_id" th:value="${instaArticleList.instaArticleDto.id}">
+
+                        <!-- 이거 쓰고싶다 -->
+                        <div id="toast" class="toast align-items-center text-bg-dark border-0 fade position-fixed" style="bottom: 95px; left: 50%; transform: translate(-50%, -50%); z-index: 2000;" role="alert" aria-live="assertive" aria-atomic="true">
+                            <div class="toast-body row align-items-center">
+                                <div class="col pe-0">
+                                    북마크 저장 완료
+                                </div>
+                                <div class="col-auto">
+                                    <a href="/store/cart" style="text-decoration: none;">장바구니로 가기</a>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                    <form action="./pushBookmarkDeleteProcess" method="get" class="col text-end" th:if="${instaArticleList.bookmark == 1}">
+                        <button class="btn pe-0">
+                            <i class="fa-solid fa-bookmark"></i>
+                        </button>
+
+                        <input type="hidden" name="user_id" th:value="${instaUserInfoDto.id}">
+                        <input type="hidden" name="article_id" th:value="${instaArticleList.instaArticleDto.id}">
+                    </form>
                 </div>
 
                 <!-- 좋아요 수 -->
@@ -863,12 +890,20 @@
 
                 <!-- 댓글 -->
                 <div class="row">
-                    <a class="col link-dark link-offset-2 link-underline link-underline-opacity-0"
+                    <!-- <a class="col link-dark link-offset-2 link-underline link-underline-opacity-0"
                         th:href="@{./commentWritePage(user_id=${instaUserInfoDto.id}, article_id=${instaArticleList.instaArticleDto.id})}">
                         <span class="fontBasic" style="color: rgb(162, 162, 162);">댓글
                             <span th:text="${instaArticleList.commentCount}"></span>개 모두 보기
                         </span>
-                    </a>
+                    </a> -->
+                    <div class="col">
+                        <button onclick="reloadCommentList(this)" class="btn p-0 comment-button" type="button">
+                            <span class="fontBasic" style="color: rgb(162, 162, 162);">댓글
+                                <span th:text="${instaArticleList.commentCount}"></span>개 모두 보기
+                            </span>
+                            <input type="hidden" class="inputInstaArticleId" th:value="${instaArticleList.instaArticleDto.id}">
+                        </button>
+                    </div>
                 </div>
 
                 <!-- 댓글 작성 -->
@@ -889,7 +924,7 @@
                         <img th:src="|/images/${instaUserInfoDto.insta_profile_img}|" class="img-fluid rounded-circle commentImage">
                     </div>
                     <div class="col ps-1">
-                        <button onclick="reloadCommentList(this)" class="btn p-0 pb-1" type="button">
+                        <button onclick="reloadCommentList(this)" class="btn p-0" type="button">
                             <span class="fontBasic" style="color: rgb(162, 162, 162);">댓글 달기...</span>
                             <input type="hidden" class="inputInstaArticleId" th:value="${instaArticleList.instaArticleDto.id}">
                         </button>

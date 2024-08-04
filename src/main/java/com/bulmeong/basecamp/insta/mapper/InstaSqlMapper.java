@@ -8,6 +8,7 @@ import com.bulmeong.basecamp.insta.dto.InstaArticleDto;
 import com.bulmeong.basecamp.insta.dto.InstaArticleImgDto;
 import com.bulmeong.basecamp.insta.dto.InstaArticleLikeDto;
 import com.bulmeong.basecamp.insta.dto.InstaArticleTagDto;
+import com.bulmeong.basecamp.insta.dto.InstaBookmarkDto;
 import com.bulmeong.basecamp.insta.dto.InstaCommentLikeDto;
 import com.bulmeong.basecamp.insta.dto.InstaFollowDto;
 import com.bulmeong.basecamp.insta.dto.InstaUserInfoDto;
@@ -28,7 +29,7 @@ public interface InstaSqlMapper {
     public int selectArticleCountByUserId(@Param("user_id") int user_id);
     public void deleteArticleById(@Param("id") int id);
 
-    // 댓글
+    // 댓글 _ 자바스크립트
     public void createComment(InstaArticleCommentDto instaArticleCommentDto);
     public List<InstaArticleCommentDto> getCommentList(@Param("article_id") int article_id);
     public void deleteComment(@Param("id") int id);
@@ -61,6 +62,15 @@ public interface InstaSqlMapper {
     public void insertArticletag(InstaArticleTagDto instaArticleTagDto); // 게시글-태그 관계 삽입
     public List<String> selectHashtagByArticleId(int article_id); // 게시글 해시태그 출력
 
+    // 유저가 작성한 게시글 이미지List 출력
+    public List<InstaArticleImgDto> instaWriteArticleGetImgByUserId(int user_id);
+    // 유저가 저장한 북마크 게시글 이미지List 출력
+    public List<InstaArticleImgDto> instaSaveBookmarkByUserId(int user_id);
+
+    // 북마크
+    public void createBookmarkByUserIdAndArticleId(InstaBookmarkDto instaBookmarkDto);
+    public int confirmBookmarkByArticleIdAndUserId(InstaBookmarkDto instaBookmarkDto); // 게시글 북마크 상태 여부
+    public void deleteBookmarkByArticleIdAndUserId(InstaBookmarkDto instaBookmarkDto);
 }
 
 

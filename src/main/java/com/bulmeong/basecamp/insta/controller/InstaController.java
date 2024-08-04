@@ -14,6 +14,7 @@ import com.bulmeong.basecamp.common.util.Utils;
 import com.bulmeong.basecamp.insta.dto.InstaArticleDto;
 import com.bulmeong.basecamp.insta.dto.InstaArticleImgDto;
 import com.bulmeong.basecamp.insta.dto.InstaArticleLikeDto;
+import com.bulmeong.basecamp.insta.dto.InstaBookmarkDto;
 import com.bulmeong.basecamp.insta.dto.InstaUserInfoDto;
 import com.bulmeong.basecamp.insta.service.InstaService;
 import com.bulmeong.basecamp.user.dto.UserDto;
@@ -94,10 +95,10 @@ public class InstaController {
         // System.out.println("instaUserInfoDto" + instaUserInfoDto);
 
         InstaArticleLikeDto instaArticleLikeDto = new InstaArticleLikeDto();
-        instaArticleLikeDto.setUser_id(s_user_id);
+        instaArticleLikeDto.setUser_id(instaUserInfoDto.getId());
 
         // System.out.println(instaArticleListAll);
-        List<Map<String, Object>> instaArticleListAll = instaService.selectInstaArticleList(s_user_id);
+        List<Map<String, Object>> instaArticleListAll = instaService.selectInstaArticleList(instaUserInfoDto.getId());
         model.addAttribute("instaArticleListAll", instaArticleListAll);
 
         return "insta/instaMainPage";
@@ -105,17 +106,21 @@ public class InstaController {
 
     // 좋아요
     @RequestMapping("pushArticleLikeProcess")
-    public String pushArticleLikeProcess(InstaArticleLikeDto instaArticleLikeDto){
+    public String pushArticleLikeProcess(HttpSession session, InstaArticleLikeDto instaArticleLikeDto){
+        UserDto userDto = (UserDto) session.getAttribute("sessionUserInfo");
+
         instaService.like(instaArticleLikeDto);
 
-        return "redirect:./instaMainPage?user_id=" + instaArticleLikeDto.getUser_id();
+        return "redirect:./instaMainPage?user_id=" + userDto.getId();
     }
 
     @RequestMapping("pushArticleLikeDeleteProcess")
-    public String pushArticleLikeDeleteProcess(InstaArticleLikeDto instaArticleLikeDto){
+    public String pushArticleLikeDeleteProcess(HttpSession session, InstaArticleLikeDto instaArticleLikeDto){
+        UserDto userDto = (UserDto) session.getAttribute("sessionUserInfo");
+
         instaService.unLike(instaArticleLikeDto);
 
-        return "redirect:./instaMainPage?user_id=" + instaArticleLikeDto.getUser_id();
+        return "redirect:./instaMainPage?user_id=" + userDto.getId();
     }
 
     @RequestMapping("instaWritePage")
@@ -178,6 +183,10 @@ public class InstaController {
         int followingCount = instaService.followingCount(id);
         model.addAttribute("followingCount", followingCount);
 
+        // 유저가 작성한 게시글 이미지 출력
+        List<InstaArticleImgDto> instaArticleImgDtoList = instaService.getInstaWriteArticleImgList(id); // id = user_id
+        model.addAttribute("instaArticleImgDtoList", instaArticleImgDtoList);
+
         return "insta/instaMyPage";
     }
 
@@ -189,7 +198,37 @@ public class InstaController {
         int articleCount = instaService.selectArticleCountByUserId(id);
         model.addAttribute("articleCount", articleCount);
 
+        // 몇번 회원이 몇명을 팔로우 했는지
+        int followerCount = instaService.followerCount(id);
+        model.addAttribute("followerCount", followerCount);
+
+        // 몇번 회원을 몇명이 팔로잉 했는지
+        int followingCount = instaService.followingCount(id);
+        model.addAttribute("followingCount", followingCount);
+
+        // 유저가 저장한 북마크 게시글 이미지List 출력
+        List<InstaArticleImgDto> instaBookmarkArticleImgDtoList = instaService.getInstaSaveBookmarkImgList(id);
+        model.addAttribute("instaBookmarkArticleImgDtoList", instaBookmarkArticleImgDtoList);
+
         return "insta/instaBookmarkPage";
+    }
+
+    @RequestMapping("pushBookmarkProcess")
+    public String pushBookmarkProcess(HttpSession session, InstaBookmarkDto instaBookmarkDto){
+        UserDto userDto = (UserDto) session.getAttribute("sessionUserInfo");
+
+        instaService.insertBookmark(instaBookmarkDto);
+
+        return "redirect:./instaMainPage?user_id=" + userDto.getId();
+    }
+
+    @RequestMapping("pushBookmarkDeleteProcess")
+    public String pushBookmarkDeleteProcess(HttpSession session, InstaBookmarkDto instaBookmarkDto){
+        UserDto userDto = (UserDto) session.getAttribute("sessionUserInfo");
+
+        instaService.deleteBookmark(instaBookmarkDto);
+        
+        return "redirect:./instaMainPage?user_id=" + userDto.getId();
     }
     
     @RequestMapping("instaUserPage")
@@ -204,6 +243,10 @@ public class InstaController {
         model.addAttribute("followerCount", followerCount);
 
         model.addAttribute("instaUserInfoDto", instaUserInfoDto);
+
+        // 유저가 작성한 게시글 이미지 출력
+        List<InstaArticleImgDto> instaArticleImgDtoList = instaService.getInstaWriteArticleImgList(id); // id = user_id
+        model.addAttribute("instaArticleImgDtoList", instaArticleImgDtoList);
 
         return "insta/instaUserPage";
     }
@@ -239,47 +282,6 @@ public class InstaController {
         return "redirect:./instaMainPage?user_id=" + user_id;
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

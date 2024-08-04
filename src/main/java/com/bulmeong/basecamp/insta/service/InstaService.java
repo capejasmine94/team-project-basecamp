@@ -9,6 +9,7 @@ import com.bulmeong.basecamp.insta.dto.InstaArticleDto;
 import com.bulmeong.basecamp.insta.dto.InstaArticleImgDto;
 import com.bulmeong.basecamp.insta.dto.InstaArticleLikeDto;
 import com.bulmeong.basecamp.insta.dto.InstaArticleTagDto;
+import com.bulmeong.basecamp.insta.dto.InstaBookmarkDto;
 import com.bulmeong.basecamp.insta.dto.InstaCommentLikeDto;
 import com.bulmeong.basecamp.insta.dto.InstaFollowDto;
 import com.bulmeong.basecamp.insta.dto.InstaUserInfoDto;
@@ -90,7 +91,7 @@ public class InstaService {
     }
 
     // 게시글 List
-    public List<Map<String, Object>> selectInstaArticleList(int s_user_id){
+    public List<Map<String, Object>> selectInstaArticleList(int insta_login_user_id){
         List<Map<String, Object>> result = new ArrayList<>();
 
         List<InstaArticleDto> instaArticleDtoList = instaSqlMapper.selectArticleAll();
@@ -117,7 +118,7 @@ public class InstaService {
 
             InstaArticleLikeDto instaArticleLikeDto = new InstaArticleLikeDto();
             instaArticleLikeDto.setArticle_id(article_id);
-            instaArticleLikeDto.setUser_id(s_user_id);
+            instaArticleLikeDto.setUser_id(insta_login_user_id);
             int like = instaSqlMapper.countLikeByArticleIdAndUserId(instaArticleLikeDto); // 게시글 좋아요 상태 여부
 
             // instaSqlMapper.deleteLikeByArticleIdAndUserId(instaArticleLikeDto);
@@ -127,6 +128,14 @@ public class InstaService {
 
             map.put("like", like);
             // System.out.println("like:" + like);
+
+
+            // 북마크 유무
+            InstaBookmarkDto instaBookmarkDto = new InstaBookmarkDto();
+            instaBookmarkDto.setArticle_id(article_id);
+            instaBookmarkDto.setUser_id(insta_login_user_id);
+            int bookmark = instaSqlMapper.confirmBookmarkByArticleIdAndUserId(instaBookmarkDto);
+            map.put("bookmark", bookmark);
 
             List<InstaArticleImgDto> instaArticleImgDtoList = instaSqlMapper.selectArticleImgByArticleId(article_id);
             map.put("instaArticleImgDtoList", instaArticleImgDtoList); // 이미지 리스트를 map에 추가
@@ -264,6 +273,38 @@ public class InstaService {
     }
 
 
+    // 유저가 작성한 게시글 이미지 출력
+    public List<InstaArticleImgDto> getInstaWriteArticleImgList(int user_id){
+
+        List<InstaArticleImgDto> instaArticleImgDtoList = instaSqlMapper.instaWriteArticleGetImgByUserId(user_id);
+
+        return instaArticleImgDtoList;
+    }
+
+    // 유저가 저장한 북마크 게시글 이미지List 출력
+    public List<InstaArticleImgDto> getInstaSaveBookmarkImgList(int user_id){
+
+        List<InstaArticleImgDto> instaBookmarkArticleImgDtoList = instaSqlMapper.instaSaveBookmarkByUserId(user_id);
+
+        return instaBookmarkArticleImgDtoList;
+    }
+
+
+
+    // 북마크
+    public void insertBookmark(InstaBookmarkDto instaBookmarkDto){
+        instaSqlMapper.createBookmarkByUserIdAndArticleId(instaBookmarkDto);
+    }
+
+    public boolean confirmBookmark(InstaBookmarkDto instaBookmarkDto){
+
+        // 0보다 크면 북마크 누른거
+        return instaSqlMapper.confirmBookmarkByArticleIdAndUserId(instaBookmarkDto) > 0;
+    }
+
+    public void deleteBookmark(InstaBookmarkDto instaBookmarkDto){
+        instaSqlMapper.deleteBookmarkByArticleIdAndUserId(instaBookmarkDto);
+    }
 
 }
 

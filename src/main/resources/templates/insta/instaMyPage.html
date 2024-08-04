@@ -155,7 +155,7 @@
             </div>
 
             <!-- 일단은 링크이동 어차피 두가지 템플릿이 다 필요해 그러니까 나중에 자바스크립트로 바꾸기~~~ 라고 원숭이가 그랬음 우끼끼 -->
-            <div class="row mt-4 fontNine">
+            <div class="row mt-4 fontNine" style="padding-bottom: 2px;">
                 <div class="col text-center pb-2 fw-bold" style="border-bottom: 1px solid;">
                     <span>내 게시물</span>
                 </div>
@@ -164,11 +164,13 @@
                 </a>
             </div>
 
-            <!-- 북마크 List -->
+            <!-- 내 게시물 List -->
             <div class="row">
-                <div class="col">
-
-                </div>
+                <a class="col-4 px-0 pb d-flex justify-content-center" th:href="@{./instaMainPage(user_id=${session.sessionUserInfo.id})}" th:each="instaArticleImgDto, iterStat : ${instaArticleImgDtoList}">
+                    <div th:class="${iterStat.index % 3 == 1} ? 'middle' : ''">
+                        <img th:src="|/images/${instaArticleImgDto.img_link}|" class="img-fluid" style="aspect-ratio: 1/1; height: 33.3333333333333vw;">
+                    </div>
+                </a>
             </div>
 
             <!-- 글쓰기 버튼 -->

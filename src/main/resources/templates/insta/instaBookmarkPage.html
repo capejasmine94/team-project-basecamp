@@ -16,37 +16,6 @@
         <script src="/public/js/util.js"></script>
 
         <style>
-            /* 고정 */
-            .fontBasic {
-                font-size: 0.8em;
-            }
-            .fontNine {
-                font-size: 0.9em;
-            }
-            /* 상단바 높이 */
-            .fixed-top {
-                text-align: center;
-                justify-content: space-around; /* 가로 중앙 정렬 */
-                align-items: center; /* 세로 중앙 정렬 */
-                height: 50px; /* 원하는 높이로 설정 */
-            }
-            .fixed-bottom {
-                text-align: center;
-                justify-content: space-around; /* 가로 중앙 정렬 */
-                align-items: center; /* 세로 중앙 정렬 */
-                height: 70px; /* 원하는 높이로 설정 */
-            }
-
-            /* 이미지 크기 */
-            .userImage {
-                width: 80px;  /* 원하는 너비 */
-                height: 80px; /* 원하는 높이 */
-                object-fit: cover; /* 이미지가 요소를 채우도록 조정 */
-            }
-
-            .instaButtonColor {
-                color: #0095f6;
-            }
 
         </style>
     </head>
@@ -77,10 +46,10 @@
                             <span th:text="${articleCount}">13</span>
                         </div>
                         <a class="col" href="./userFollowersPage" style="text-decoration: none; color: black;">
-                            <span>254</span>
+                            <span th:text="${followingCount}">254</span>
                         </a>
                         <a class="col" href="./userFollowingPage" style="text-decoration: none; color: black;">
-                            <span>250</span>
+                            <span th:text="${followerCount}">250</span>
                         </a>
                     </div>
                     <div class="row text-center">
@@ -112,7 +81,7 @@
             </div>
 
             <!-- 일단은 링크이동 어차피 두가지 템플릿이 다 필요해 그러니까 나중에 자바스크립트로 바꾸기~~~ 라고 원숭이가 그랬음 우끼끼 -->
-            <div class="row mt-4 fontNine">
+            <div class="row mt-4 fontNine" style="padding-bottom: 2px;">
                 <a class="col text-center border-bottom pb-2" th:href="@{./instaMyPage(user_id=${instaUserInfoDto.id})}" style="text-decoration: none; color: black;">
                     <span>내 게시물</span>
                 </a>
@@ -123,9 +92,11 @@
 
             <!-- 북마크 List -->
             <div class="row">
-                <div class="col">
-
-                </div>
+                <a class="col-4 px-0 pb d-flex justify-content-center" th:href="@{./instaMainPage(user_id=${session.sessionUserInfo.id})}" th:each="instaArticleImgDto, iterStat : ${instaBookmarkArticleImgDtoList}">
+                    <div th:class="${iterStat.index % 3 == 1} ? 'middle' : ''">
+                        <img th:src="|/images/${instaArticleImgDto.img_link}|" class="img-fluid" style="aspect-ratio: 1/1; height: 33.3333333333333vw;">
+                    </div>
+                </a>
             </div>
 
             <!-- 글쓰기 버튼 -->
