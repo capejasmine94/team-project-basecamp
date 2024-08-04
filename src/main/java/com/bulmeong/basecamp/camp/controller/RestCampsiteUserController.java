@@ -32,6 +32,16 @@ public class RestCampsiteUserController {
         return result;
     }
 
+    @RequestMapping("initReservationInfo")
+    public RestResponseDto initReservationInfo(@RequestParam("area_id") String area_id) {
+        RestResponseDto result = new RestResponseDto();
+        //세일 정보 불러오기
+        //result.add("saleInfo",service.getSaleInfo(Integer.parseInt(area_id)));
+        //utils.setModel("saleInfo", service.getSaleInfo(Integer.parseInt(area_id)));
+        result.add("sessionUserInfo", utils.getSession("sessionUserInfo"));
+        return result;
+    }
+
     @RequestMapping("selectPoint")
     public RestResponseDto selectPoint(@RequestParam("point_id") String point_id, @RequestParam("number") String number) {
         RestResponseDto result = new RestResponseDto();

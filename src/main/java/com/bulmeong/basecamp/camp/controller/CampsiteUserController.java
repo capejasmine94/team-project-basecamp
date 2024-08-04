@@ -5,6 +5,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.bulmeong.basecamp.camp.dto.CampsiteOrderDto;
 import com.bulmeong.basecamp.camp.service.CampsiteService;
 import com.bulmeong.basecamp.common.util.Utils;
 
@@ -24,7 +25,11 @@ public class CampsiteUserController {
     }
 
     @RequestMapping("")
-    public String redirectMain() {
+    public String redirectMain1() {
+        return "redirect:/camp/main";
+    }
+    @RequestMapping("/")
+    public String redirectMain2() {
         return "redirect:/camp/main";
     }
 
@@ -52,5 +57,16 @@ public class CampsiteUserController {
         utils.setModel("car", car);
         utils.setSession("curArea", service.areaInfo(area_id));
         return "camp/user/reservationPage_2";
+    }
+
+    @RequestMapping("/finalReservationProcess")
+    public String finalReservationProcess(CampsiteOrderDto campsiteOrderDto) {
+        System.out.println(campsiteOrderDto);
+        return "redirect:/camp/reservationComplete";
+    }
+
+    @RequestMapping("/reservationComplete")
+    public String reservationComplete() {
+        return "camp/user/reservationComplete";
     }
 }

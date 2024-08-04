@@ -50,6 +50,7 @@ function randomNumber() {
 
 function refreshSelectedArea(area) {
     const area_mainImages = document.getElementById('area_mainImages');
+    if(area_mainImages == null) return;
     area_mainImages.innerHTML = '';
     for(const mainImage of area.mainImages){
         const mainImageTemplate = document.createElement('img');
