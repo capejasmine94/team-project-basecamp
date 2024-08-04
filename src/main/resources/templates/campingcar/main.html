@@ -250,6 +250,7 @@
             </div>
         </div>
     </div>
+    
     <!-- 켐핑카 필터 -->
     <div class="container">
         <div class="row font-roboto">
@@ -520,11 +521,11 @@
     <div th:replace="~{campingcar/campingNavi::bottomNavi}"></div>
     
     <div th:replace="~{campingcar/campingNavi::quickNavi}"></div>
-
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js"></script>
-    
+
 
     <script>
         // 페이지 로드 시 실행되는 이벤트를 등록합니다.
@@ -647,7 +648,7 @@
 
                         // 상세 페이지 이동을 위한 클릭 이벤트 리스너 추가
                         newCampingcarListWrapper.addEventListener('click', () => {
-                            window.location.href = `/campingCarDetailPage?id=${e.id}`;
+                            window.location.href = `/campingcar/campingCarDetailPage?id=${e.id}`;
                         });
                     }
                 });

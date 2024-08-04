@@ -1,9 +1,14 @@
 package com.bulmeong.basecamp.campingcar.service;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.bulmeong.basecamp.campingcar.dto.CampingCarLikeDto;
+import com.bulmeong.basecamp.campingcar.dto.ProductDetailImgDto;
 import com.bulmeong.basecamp.campingcar.mapper.CampingcarSqlMapper;
 
 @Service
@@ -31,6 +36,26 @@ public class CampingcarService {
      public void unLike(CampingCarLikeDto campingCarLikeDto) {
         campingCarSqlMapper.deleteLikeByLikeDto(campingCarLikeDto);
      } 
+
+    //  상세페에지 
+    public Map<String,Object> getCampingCarDetailByid(int id) {
+        Map<String, Object> result = new HashMap<>();
+
+        // 캠핑카 기본 정보 
+        Map<String,Object> campingCar = campingCarSqlMapper.findCampingCarById(id);
+        result.put("campingcarDto", campingCar);
+
+        // 캠핑카 세부이미지
+        List<ProductDetailImgDto> detailImg = campingCarSqlMapper.findDetail_ImgByCarId(id);
+        result.put("detailImgDto", detailImg);
+
+        //캠핑카 기본 보유 옵션 조회
+        List<Map<String, Object>> basicFacilities  = campingCarSqlMapper.findBasicfacilitiesByCarId(id);
+        result.put("basicFacilitiesDto", basicFacilities);
+
+        return result;
+    }
+
 
 
 }
