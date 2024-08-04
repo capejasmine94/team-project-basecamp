@@ -136,8 +136,8 @@
                                                                 <div class="row py-2 border-bottom" th:unless="${session.campsite.area.size() <= 0}" th:id="'area_' + ${area.dto.id}" th:each="area:${session.campsite.area}" th:attr="onclick=|selectArea('${area.dto.id}',onSelectArea)|">
                                                                     <div class="col-4 ms-1" th:text="${area.dto.name}">구역이름</div>
                                                                     <div class="col-2 ps-0 ms-2 pe-3 text-end" th:text="${area.dto.prise}">가격</div>
-                                                                    <div class="col-2 ms-5 ps-0 pe-2 text-end" th:unless="${area.point != null}">0</div>
-                                                                    <div class="col-2 ms-5 ps-0 pe-2 text-end" th:if="${area.point != null}" th:text="${area.point.size()}">포인트 수</div>
+                                                                    <div class="col-2 ms-5 ps-0 pe-2 text-end" th:unless="${area.pointInfo.point != null}">0</div>
+                                                                    <div class="col-2 ms-5 ps-0 pe-2 text-end" th:if="${area.pointInfo.point != null}" th:text="${area.pointInfo.point.size()}">포인트 수</div>
                                                                     <div class="col-2 text-end pe-3 me-5 text-primary" th:text="${area.dto.process}">양호</div>
                                                                     <div class="col text-end ms-1 me-1 text-primary"><i class="bi bi-tools"></i></div>
                                                                 </div>

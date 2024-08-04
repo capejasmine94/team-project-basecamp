@@ -5,6 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/public/css/common.css">
     <link rel="stylesheet" href="/public/css/basecamp.css">
+    <script src="/public/js/util.js"></script>
+    <script src="/public/js/camp/user.js"></script>
+    <script>
+        initSession();
+    </script>    
     <style>
         .topNaviBasecamp{
             background-color: white;
@@ -53,18 +58,20 @@
         </div>
         <div class="row mt-5 pt-5">
             <div class="col new-mt-45 pt-4 pb-4">
-                <div class="campsiteTemplate row mx-1 py-4 border-bottom">
-                    <a href="./campsite?campsite_id=1">
+                <!-- 캠핑장 리스트 -->
+                <div class="campsiteTemplate row mx-1 py-4 border-bottom" th:each="campsite:${session.campsiteList}">
+                    <a th:href="@{/camp/campsite(campsite_id=${campsite.dto.id})}">
                         <div class="col">
                             <div class="row">
                                 <div class="col">
-                                    <img class="img-fluid px-0 rounded-3" src="/public/img/clubImage/mountain.jpg" alt="">
+                                    <!-- 수정 필요 -->
+                                    <img class="img-fluid px-0 rounded-3" th:src="'/images/'+${campsite.mainImages[0].location}" alt="캠핑장 사진">
                                 </div>
                             </div>
                         <div class="row justify-content-between">
                                 <div class="col-8 ms-1">
                                     <div class="row mt-2">
-                                        <span class="col fs-4 fw-semibold ellipsis">캠핑장 이름</span> 
+                                        <span class="col fs-4 fw-semibold ellipsis" th:text="${campsite.dto.camp_name}">캠핑장 이름</span> 
                                     </div>
                                 </div>
                                 <div class="col-auto">
@@ -79,18 +86,16 @@
                                 </div>
                             </div>
                             <div class="row ps-1 mt-1">
-                                <div class="col-12 new-fs-9 fw-semibold ellipsis text-secondary">
+                                <div class="col-12 new-fs-9 fw-semibold ellipsis text-secondary" th:text="${campsite.dto.address} +' '+ ${campsite.dto.detail_address}">
                                     캠핑장 주소
                                 </div>
                             </div>
                             <div class="row ps-1 mt-1 align-items-end">
                                 <div class="col pe-0 badgeList">
-                                    <span class="badge text-bg-secondary me-1">카테고리</span>
-                                    <span class="badge text-bg-secondary me-1">카테고리</span>
-                                    <span class="badge text-bg-secondary me-1">카테고리</span>
+                                    <span class="badge text-bg-secondary me-1" th:each="showCategory: ${campsite.showCategory}" th:text="${showCategory.name}">카테고리</span>
                                 </div>
-                                <div class="col-auto fw-semibold text-end">
-                                    <span class="fs-5 text-primary">1,000,000 원</span>
+                                <div class="col-auto fw-semibold text-end fs-5 text-primary">
+                                    <span class="moneyInput" th:text="${campsite.minPrise}">1,000,000</span> <span class="ms-2">원</span>
                                 </div>
                             </div>
                         </div>
@@ -106,7 +111,9 @@
 <!-- 네비가 추가됨 -->
 <div th:replace="camp/campNavi::popupCategory"></div>
 <div th:replace="camp/campNavi::popupSelectDay"></div>
-
+<script>
+    addColonMoneyInput();
+</script>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://kit.fontawesome.com/7b271bba58.js" crossorigin="anonymous"></script>

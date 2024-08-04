@@ -218,17 +218,17 @@
             </div>
             <div id="popupCategory-content" class="modal-body col">
                 <div class="row categoryList">
-                    <div class="col-auto p-0" th:each="category:${session.allCategory.campsite}">
+                    <div class="col-auto p-0" th:each="category:${session.category.camp}">
                         <input type="checkbox" class="btn-check" th:id="${category.id}" name="selectCategory" autocomplete="off">
                         <label class="btn btn-outline-primary rounded-5 m-1" th:for="${category.id}">
-                            <img class="img-fluid" src="/public/img/clubImage/mountain.jpg" alt="" style="width: 1.5em; height: 1.5em;">
+                            <i th:class="${category.image} + ' ' + 'text-secondary'" style="width: 1.5em; height: 1.5em;"></i>
                             <span th:text="${category.name}"></span>
                         </label><br>
                     </div>
-                    <div class="col-auto p-0" th:each="category:${session.allCategory.area}">
+                    <div class="col-auto p-0" th:each="category:${session.category.area}">
                         <input type="checkbox" class="btn-check" th:id="${category.id}" name="selectCategory" autocomplete="off">
                         <label class="btn btn-outline-primary rounded-5 m-1" th:for="${category.id}">
-                            <img class="img-fluid" src="/public/img/clubImage/mountain.jpg" alt="" style="width: 1.5em; height: 1.5em;">
+                            <i th:class="${category.image}" style="width: 1.5em; height: 1.5em;"></i>
                             <span th:text="${category.name}"></span>
                         </label><br>
                     </div>
@@ -241,3 +241,30 @@
         </div>
     </div>
 </div>
+
+
+<div th:fragment="popupAreaCategory" class="modal fade container-fluid" id="popupAreaCategory" tabindex="-1" aria-labelledby="popupAreaCategory-title" data-keyboard="true" data-backdrop="static" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="popupAreaCategory-title">카테고리</h1>
+            </div>
+            <div id="popupAreaCategory-content" class="modal-body col">
+                <div class="row categoryList">
+                    <div class="col-auto p-0" th:each="category:${session.category.area}">
+                        <input type="checkbox" class="btn-check" th:id="${category.id}" name="selectCategory" autocomplete="off">
+                        <label class="btn btn-outline-primary rounded-5 m-1" th:for="${category.id}">
+                            <i th:class="${category.image}" style="width: 1.5em; height: 1.5em;"></i>
+                            <span th:text="${category.name}"></span>
+                        </label><br>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button id="popupAreaCategory-clear" type="button" class="btn btn-secondary">초기화</button>
+                <button id="popupAreaCategory-no" type="button" class="btn btn-primary" data-bs-dismiss="modal">선택</button>
+            </div>
+        </div>
+    </div>
+</div>
+

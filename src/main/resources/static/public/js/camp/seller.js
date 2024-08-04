@@ -351,7 +351,7 @@ function refreshPointList() {
     console.log(curArea);
     const pointList = document.getElementById('pointList');
     pointList.innerHTML = '';
-    for(const point of curArea.point){
+    for(const point of curArea.pointInfo.point){
         const pointView = document.createElement('div');
         pointView.classList.add('row','ps-4','py-1','border-bottom');
         pointView.innerHTML = 

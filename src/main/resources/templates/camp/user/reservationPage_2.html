@@ -8,9 +8,8 @@
     <link rel="stylesheet" href="/public/css/basecamp.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css">
     
-    <script src="/public/js/calendar.js"></script>
     <script src="/public/js/util.js"></script>
-    <script src="/public/js/camp/campsite.js"></script>
+    <script src="/public/js/camp/user.js"></script>
 
     <style>
         .material-symbols-outlined {
@@ -38,6 +37,11 @@
             width: 5em; /* 필요에 따라 너비를 조정하세요 */
             text-align: center;
             margin-right: 10px; /* 아이템 간 간격 조정 */
+        }
+
+        .scrollable-vertical {
+            height: 20em;
+            overflow-y: auto;
         }
 
          /* 평상시 탭 스타일 */
@@ -96,6 +100,10 @@
             max-height: 45%; 
         }
 
+        .selectPoint {
+            background-color: rgb(120, 226, 226);
+        }
+
     </style>
 </head>
 <body>
@@ -111,17 +119,17 @@
                     <div class="col">
                         <div class="row mt-2 align-items-center">
                             <div class="col ellipsis">
-                                <span class="fs-4 fw-semibold" th:text="${session.campsite.name}">캠핑장 이름 솰라솰라솰라솰라솰라솰라솰라솰라</span>
+                                <span class="fs-4 fw-semibold" th:text="${session.campsiteUser.dto.camp_name}">캠핑장 이름 솰라솰라솰라솰라솰라솰라솰라솰라</span>
                             </div>
                         </div>
-                        <div class="row mt-1 align-items-center">
+                        <div class="row mt-3 align-items-center">
                             <div class="col text-secondary">
                                 <div class="row">
                                     <div class="col-1 text-end">
                                         <i class="bi bi-phone"></i>
                                     </div>
                                     <div class="col-auto ellipsis ms-2">
-                                        <span>연락처</span>
+                                        <span th:text="${session.campsiteUser.dto.camp_phone}">연락처</span>
                                     </div>
                                 </div>
                                 <div class="row mt-1 new-fs-9">
@@ -129,7 +137,7 @@
                                         <i class="bi bi-signpost-2"></i>                               
                                     </div>
                                     <div class="col-auto ellipsis ms-2">
-                                        <span>주소</span>     
+                                        <span th:text="${session.campsiteUser.dto.address} + ' ' + ${session.campsiteUser.dto.detail_address}">주소</span>     
                                     </div>
                                 </div>
                             </div>
@@ -157,7 +165,7 @@
                 <div class="col-auto">
                     <span class="fw-semibold">예약일</span>
                 </div> 
-                <div class="col ms-3 ps-1"><span>2024-08-11 ~ 2024-08-14</span></div>
+                <div class="col ms-3 ps-1"><span th:text="${param.selectDay_start_date}"></span> ~ <span th:text="${param.selectDay_end_date}">2024-08-14</span></div>
             </div>
 
             <!-- 차량 -->
@@ -173,7 +181,7 @@
                     <span class="fw-semibold fs-5">포인트 배치도</span>
                 </div> 
                 <div class="col mt-4 ms-2">
-                    <img class="img-fluid rounded-3" src="/public/img/clubImage/mountain.jpg" alt="">
+                    <img class="img-fluid rounded-3" th:src="'/images/' + ${session.curArea.dto.map_image}" alt="">
                 </div>
             </div>
 
@@ -187,27 +195,77 @@
                     배치도에 보여지는 이름과 같은 포인트로 배정됩니다.</span>
                 </div>
                 <div class="col mt-2">
-                    <div class="row ms-1 my-2 pb-5 pointList">
-                        <div class="col-auto py-2 me-1 mb-1 border">
-                            포인트
-                        </div>
+                    <div id="pointList">
+                      
                     </div>
                 </div>
             </div>
 
             <!-- 약관 동의 -->
-            <div class="row mt-3 flex-column border-bottom border-5 pb-5">
+            <div class="row mt-4">
                 <div class="col">
                     <span class="fw-semibold fs-5">약관</span>
                 </div>
+            </div>
+            <div class="row">
                 <div class="col">
                     <span class="new-fs-9 text-secondary">예약을 하기 위해서는 결제약관에 동의하셔야합니다.</span>
                 </div>
-                <div class="col ms-2 border rounded-2 mt-4 py-2">
-                    <span class="ms-1">약관</span>
-                </div>
-                <div class="col mt-4">
-                    <div class="row ms-1">
+            </div>
+            <div class="row mt-3 border-bottom border-5 pb-5">
+                <div class="col ms-2 border rounded-2 mt-2 py-2">
+                    <div class="row">
+                        <div class="col scrollable-vertical ">
+                            <h5>1. 개요</h5>
+                            <p>이 결제 약관(이하 "약관")은 베이스 캠프(이하 "회사")와 회사의 상품 및 서비스(이하 "서비스")를 구매하는 고객(이하 "고객") 간의 결제와 관련된 조건을 규정합니다. 고객은 회사의 서비스를 구매함으로써 이 약관에 동의하게 됩니다.</p>
+                            <br>
+                            <h5>2. 결제 방법</h5>
+                            <p>고객은 다음과 같은 결제 방법을 사용할 수 있습니다:</p>
+                            <ul>
+                                <li>신용카드 및 직불카드</li>
+                                <li>은행 송금</li>
+                                <li>전자 지갑 및 결제 서비스 (예: 페이팔, 카카오페이 등)</li>
+                                <li>기타 회사가 제공하는 결제 수단</li>
+                            </ul>
+                            <br>
+                            <h5>3. 결제 조건</h5>
+                            <p>모든 결제는 즉시 처리되며, 서비스 제공 전에 완료되어야 합니다.</p>
+                            <p>서비스의 가격은 결제 시점의 가격으로 결정되며, 이는 회사의 웹사이트에 명시된 가격을 따릅니다.</p>
+                            <p>모든 결제는 대한민국 원(KRW)으로 이루어지며, 외화 결제의 경우 환율 변동에 따라 추가 비용이 발생할 수 있습니다.</p>
+                            <br>
+                            <h5>4. 세금 및 수수료</h5>
+                            <p>고객은 결제 시 발생하는 모든 세금 및 수수료(부가가치세, 송금 수수료 등)를 부담해야 합니다.</p>
+                            <p>회사는 서비스 가격에 포함된 세금 및 수수료를 명시적으로 표시합니다.</p>
+                            <br>
+                            <h5>5. 환불 정책</h5>
+                            <p>고객은 결제 후 7일 이내에 환불을 요청할 수 있습니다. 단, 이미 제공된 서비스나 디지털 콘텐츠의 경우 환불이 불가능합니다.</p>
+                            <p>환불 요청은 고객 지원 팀을 통해 접수되며, 환불 절차는 접수 후 14일 이내에 완료됩니다.</p>
+                            <p>고객의 요청으로 인한 환불의 경우 환불 처리 수수료가 부과될 수 있습니다.</p>
+                            <br>
+                            <h5>6. 지불 지연 및 불이행</h5>
+                            <p>고객이 결제를 지연하거나 불이행할 경우, 회사는 서비스 제공을 중단하거나 지연할 수 있습니다.</p>
+                            <p>지불 지연 시, 회사는 연체 이자를 부과할 권리가 있으며, 이율은 법정 최고 이자율을 따릅니다.</p>
+                            <br>
+                            <h5>7. 개인정보 보호</h5>
+                            <p>회사는 결제 과정에서 수집된 고객의 개인정보를 안전하게 보호하며, 개인정보 보호법 등 관련 법령을 준수합니다.</p>
+                            <p>회사의 개인정보 처리방침은 회사의 웹사이트에서 확인할 수 있습니다.</p>
+                            <br>
+                            <h5>8. 약관의 변경</h5>
+                            <p>회사는 필요에 따라 이 약관을 변경할 수 있으며, 변경된 약관은 회사의 웹사이트에 게시된 시점부터 효력을 가집니다.</p>
+                            <p>고객은 약관 변경 후 서비스를 계속 이용함으로써 변경된 약관에 동의하는 것으로 간주됩니다.</p>
+                            <br>
+                            <h5>9. 문의</h5>
+                            <p>결제와 관련된 문의사항은 고객 지원 팀으로 연락해주시기 바랍니다.</p>
+                            <ul>
+                                <li>이메일: support@basecamp.com</li>
+                                <li>전화: 02-1234-5678</li>
+                            </ul>
+                            <br>
+                            <h5>10. 준거법 및 관할</h5>
+                            <p>이 약관은 대한민국 법률에 따라 해석되며, 약관과 관련된 모든 분쟁은 대한민국 법원의 전속 관할로 합니다.</p>
+                        </div>
+                    </div>
+                    <div class="row mt-3 ms-1">
                         <div class="form-check">
                             <input class="form-check-input" type="checkbox" value="T" id="agreeTerms">
                             <label class="form-check-label" for="agreeTerms">
@@ -261,8 +319,60 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://kit.fontawesome.com/7b271bba58.js" crossorigin="anonymous"></script>
 <script>
-    createRangeCalendar('selectDay',7, yearsAgo(1));
-   
+    let selectedPoint;
+    let selectedNumber;
+    function selectPoint(number, point_id) {
+        const url =`/api/camp/selectPoint?point_id=${point_id}&number=${number}`;
+        fetch(url)
+        .then(response => response.json())
+        .then((response) => {
+            let pointTemplate = document.querySelector('.selectPoint');
+            if(pointTemplate != null){
+                pointTemplate.classList.remove('selectPoint');
+            } 
+            selectedPoint = response.data.pointList;
+            selectedNumber = response.data.number;
+            pointTemplate = document.getElementById(`point_${point_id}_${number}`);
+            console.log(`point_${point_id}_${number}`);
+            pointTemplate.classList.add('selectPoint');
+        });
+    }
+    function initPointList() {
+        const pointList = document.getElementById('pointList');
+        const id = parseInt(new URLSearchParams(window.location.search).get('area_id'));
+        let url ='/api/camp/selectArea?area_id=' + id;
+        let deleteValue = 0;
+        fetch(url)
+        .then(response => response.json())
+        .then((response) => {
+            const curArea = response.data.curAreaUser;
+            for(const point of curArea.pointInfo.point) {
+                const row = document.createElement('div');
+                row.classList.add("row", "ms-1", "mt-1", "pb-1");
+                const name = document.createElement('span');
+                name.classList.add('fw-semibold','ps-0','mb-2');
+                name.innerText = point.name;
+                row.appendChild(name);
+                let url =`/api/camp/selectPoint?point_id=${point.point_id}&number=0`;
+                fetch(url)
+                .then(response => response.json())
+                .then((response) => {
+                    const list = response.data.pointList;
+                    for(let i = 0; i < list.length; i++) {
+                        const container = document.createElement('div');
+                        container.classList.add('col-auto','border','py-2','px-2','mb-2','ms-1');
+                        container.innerText = i+1;
+                        container.id = `point_${point.point_id}_${i+1}`
+                        container.onclick=function(){selectPoint(i+1, point.point_id)};
+                        row.appendChild(container);
+                    }
+                });
+                pointList.appendChild(row);
+            }
+        });
+    }
+    initPointList();
 </script>
 </body>
 </html>
+
