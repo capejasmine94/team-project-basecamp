@@ -173,3 +173,56 @@ body {
     border: 1px solid #ccc;
     border-radius: 0.5rem;
 }
+/*게시글 제목 */
+.title-line {
+    display: inline-block;
+    max-width: 12rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    vertical-align: bottom;
+}
+
+
+/* 모달 css */
+.modal.modal-bottom .modal-dialog {
+    margin: 0;
+    position: absolute;
+    bottom: 0;
+    left: 0.5rem;
+    right: 0.5rem;
+    max-width: none;
+    transition: transform 0.3s ease-out;
+    transform: translateY(100%);
+}
+.modal.modal-bottom.show .modal-dialog {
+    transform: translateY(0);
+}
+
+.modal.modal-bottom .modal-content {
+    border-radius: 1rem 1rem 1rem 1rem;
+}
+.list-group-item {
+    width: 100%;
+    text-align: center;
+    padding: 0.8rem 0.8rem;
+    font-size: 1.2rem;
+}
+/*삭제모달*/
+#deleteModal .modal-dialog {
+    max-width: 17rem;
+    margin: 1.75rem auto; /* 가운데 정렬을 위한 마진 */
+}
+#deleteModal .modal-header {
+    border-bottom: none;
+    padding-bottom: 0;
+}
+#deleteModal .modal-footer {
+    border-top: none;
+    padding-top: 0;
+}
+#deleteModal .btn-delete {
+    background-color: #ff6f0f; /* 삭제 버튼 색상 */
+    color: white;
+}
+

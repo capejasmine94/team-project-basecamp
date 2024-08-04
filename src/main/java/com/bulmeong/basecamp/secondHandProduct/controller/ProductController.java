@@ -88,7 +88,7 @@ public class ProductController {
                     todayFolderForCreate.mkdirs();
                 }
 
-                // 파일 충돌
+                // 파일 충돌 방지
                 String originalFileName = image.getOriginalFilename();
                 String uuid = UUID.randomUUID().toString();
                 long currentTime = System.currentTimeMillis();
@@ -120,9 +120,81 @@ public class ProductController {
         return "redirect:/secondhandProduct/mainPage";
     }
 
+    @PostMapping("productUpdate")
+    public String productUpdate(@ModelAttribute SecondhandProductDto secondhandProductDto,
+                                @RequestParam(name = "images", required = false) MultipartFile[] images,
+                                @RequestParam(name = "main_image", required = false) String mainImage,
+                                @RequestParam(name = "existing_images", required = false) String existingImages,
+                                @RequestParam(name = "user_id") int userId,
+                                @RequestParam(name = "product_id") int product_id) {
+
+        // 기존 이미지 삭제
+        List<ImageDto> existingImageList = productService.selectSecondhandProductImgList(product_id);
+        for (ImageDto imageDto : existingImageList) {
+            File imageFile = new File("/Users/simgyujin/basecampImage/" + imageDto.getImage_url());
+            if (imageFile.exists()) {
+                imageFile.delete();
+            }
+            productService.deleteImageByUrl(imageDto.getImage_url());
+        }
+
+
+        List<ImageDto> imageDtoList = new ArrayList<>();
+        if (images != null) {
+            for (int i = 0; i < images.length; i++) {
+                MultipartFile image = images[i];
+                if (image.isEmpty()) {
+                    continue;
+                }
+                String rootPath = "/Users/simgyujin/basecampImage/";
+
+                // 날짜 폴더
+                SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd/");
+                String todayPath = sdf.format(new Date());
+
+                File todayFolderForCreate = new File(rootPath + todayPath);
+
+                if (!todayFolderForCreate.exists()) {
+                    todayFolderForCreate.mkdirs();
+                }
+
+                // 파일 충돌 방지
+                String originalFileName = image.getOriginalFilename();
+                String uuid = UUID.randomUUID().toString();
+                long currentTime = System.currentTimeMillis();
+                String fileName = uuid + "_" + currentTime;
+                // 확장자 추출
+                String ext = originalFileName.substring(originalFileName.lastIndexOf("."));
+                fileName += ext;
+
+                try {
+                    image.transferTo(new File(rootPath + todayPath + fileName));
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                // 첫 번째 이미지를 메인 이미지로 설정
+                if (i == 0) {
+                    secondhandProductDto.setMain_image(todayPath + fileName);
+                }
+                // DB 저장 DTO
+                ImageDto imageDto = new ImageDto();
+                imageDto.setImage_url(todayPath + fileName);
+                imageDtoList.add(imageDto);
+            }
+
+        }
+
+        secondhandProductDto.setUser_id(userId);
+        productService.updateProduct(secondhandProductDto, imageDtoList);
+
+        return "redirect:/secondhandProduct/mainPage";
+    }
+
     @GetMapping("postDetailsPage")
     public String postDetailsPage(Model model,
                                   @RequestParam(name = "product_id") int product_id) {
+
+
 
         Map<String, Object> productTotalDtoList = productService.selectSecondhandDetailProduct(product_id);
         model.addAttribute("productTotalDtoList", productTotalDtoList);
@@ -250,6 +322,22 @@ public class ProductController {
     public String neighborhoodCertificationPage() {
 
         return "secondhandProduct/neighborhoodCertificationPage";
+    }
+
+    @GetMapping("productModificationPage")
+    public String productModificationPage(HttpSession session, Model model,
+                                          @RequestParam("product_id") int product_id) {
+
+        UserDto sessionUserInfo = (UserDto) session.getAttribute("sessionUserInfo");
+        model.addAttribute("sessionUserInfo", sessionUserInfo);
+
+        List<CategoryDto> categoryDtoList = productService.selectCategoryList();
+        model.addAttribute("categoryDtoList", categoryDtoList);
+
+        Map<String, Object> productTotalDtoMap = productService.selectSecondhandDetailProduct(product_id);
+        model.addAttribute("productTotalDtoMap", productTotalDtoMap);
+
+        return "secondhandProduct/productModificationPage";
     }
 
 

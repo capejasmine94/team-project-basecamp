@@ -12,6 +12,16 @@
         values
         (#{user_id},#{category_id}, #{main_image}, #{title}, #{price}, #{explanation}, #{status} , #{read_count}, 0)
     </insert>
+    <!-- 상품 수정 -->
+    <update id="updateSecondhandProduct">
+        UPDATE bc_secondhand_product
+        SET
+            main_image = #{main_image},
+            title = #{title},
+            price = #{price},
+            explanation = #{explanation}
+        WHERE product_id = #{product_id}
+    </update>
     <!--메인페이지 전체 게시글  리스트-->
     <select id="selectSecondhandProductList"
             resultType="com.bulmeong.basecamp.secondHandProduct.dto.AllContentsProductDto">
@@ -64,6 +74,11 @@
             (product_id, image_url)
         values (#{product_id}, #{image_url})
     </insert>
+    <!-- 상품 이미지 수정 -->
+    <delete id="deleteImageByUrl">
+        DELETE FROM bc_secondhand_product_image
+        WHERE image_url = #{image_url}
+    </delete>
     <!-- 상품 디테일 이미지 리스트 -->
     <select id="selectSecondhandProductImgList" resultType="com.bulmeong.basecamp.secondHandProduct.dto.ImageDto">
         SELECT *
@@ -114,8 +129,16 @@
         SELECT COUNT(*) AS wish_list_count
         FROM bc_secondhand_product_wish_list
         WHERE user_id = #{user_id}
-        AND product_id = #{product_id}
+          AND product_id = #{product_id}
     </select>
+    <!--게시글 삭제-->
+    <delete id="deletePost">
+        DELETE FROM bc_secondhand_product
+        WHERE product_id = #{product_id}
+    </delete>
+
+
+
     <!--채팅방 상풍정보-->
     <select id="selectChatRoomProductInformation" resultType="com.bulmeong.basecamp.secondHandProduct.dto.SecondhandProductDto">
         SELECT * FROM bc_secondhand_product WHERE product_id = #{product_id}

@@ -9,6 +9,8 @@ import java.util.List;
 public interface ProductSqlMapper {
     // 상품등록
     public void insertSecondhandProduct(SecondhandProductDto secondhandProductDto);
+    // 상품업데이트
+    public void updateSecondhandProduct(SecondhandProductDto secondhandProductDto);
     // 메인페이지 전체 게시글 리스트
     public List<AllContentsProductDto> selectSecondhandProductList();
     // 상품 정보 디테일
@@ -18,6 +20,8 @@ public interface ProductSqlMapper {
 
     // 이미지 등록
     public void insertSecondhandProductImg(ImageDto imageDto);
+    // 이미지 삭제
+    public void deleteImageByUrl(String image_url);
     // 이미지 리스트
     public List<ImageDto> selectSecondhandProductImgList(int product_id);
 
@@ -35,7 +39,10 @@ public interface ProductSqlMapper {
     public int selectProductByUserLike(WishListDto wishListDto);
     public List<AllContentsProductDto> selectSecondhandProductByWishList(int user_id);
 
+    // 게시글 수정,삭제
+    public void deletePost(int product_id);
+
     // 채팅방
     public SecondhandProductDto selectChatRoomProductInformation(int product_id);
-}
 
+}

@@ -28,12 +28,34 @@ public class ProductService {
         }
     }
 
+    // 이미지 리스트
+    public List<ImageDto> selectSecondhandProductImgList(int product_id) {
+        return productSqlMapper.selectSecondhandProductImgList(product_id);
+    }
+
+    // 이미지 삭제
+    public void deleteImageByUrl(String image_url) {
+        productSqlMapper.deleteImageByUrl(image_url);
+    }
+
+    public void updateProduct(SecondhandProductDto secondhandProductDto, List<ImageDto> imageDtoList) {
+        productSqlMapper.updateSecondhandProduct(secondhandProductDto);
+
+        for (ImageDto imageDto : imageDtoList) {
+            imageDto.setProduct_id(secondhandProductDto.getProduct_id());
+            productSqlMapper.insertSecondhandProductImg(imageDto);
+        }
+    }
+
+
     public List<AllContentsProductDto> selectSecondhandProductList() {
         return productSqlMapper.selectSecondhandProductList();
     }
+
     public List<AllContentsProductDto> selectSecondhandProductByCategoryNameList(int category_id) {
         return productSqlMapper.selectSecondhandProductByCategoryList(category_id);
     }
+
     public List<AllContentsProductDto> selectSecondhandProductByWishList(int user_id) {
         return productSqlMapper.selectSecondhandProductByWishList(user_id);
     }
@@ -70,14 +92,21 @@ public class ProductService {
     public void insertProductLike(WishListDto wishListDto) {
         productSqlMapper.insertProductLike(wishListDto);
     }
+
     public void deleteProductByUserLike(WishListDto wishListDto) {
         productSqlMapper.deleteProductByUserLike(wishListDto);
     }
-    public int selectProductTotalLikeCount (int product_id) {
+
+    public int selectProductTotalLikeCount(int product_id) {
         return productSqlMapper.selectProductTotalLikeCount(product_id);
     }
+
     public boolean selectProductByUserLike(WishListDto wishListDto) {
         return productSqlMapper.selectProductByUserLike(wishListDto) > 0;
+    }
+
+    public void deletePost(int product_id) {
+        productSqlMapper.deletePost(product_id);
     }
 
 
@@ -85,5 +114,4 @@ public class ProductService {
     public SecondhandProductDto selectChatRoomProductInformation(int product_id) {
         return productSqlMapper.selectChatRoomProductInformation(product_id);
     }
-
 }
