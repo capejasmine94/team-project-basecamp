@@ -53,7 +53,7 @@ public class ClubController {
 
     @RequestMapping("main")
     public String clubMain(HttpSession session, Model model){
-        util.loginUser(1);
+        util.loginUser(3);
 
         UserDto userDto = (UserDto)session.getAttribute("sessionUserInfo");
 
@@ -375,7 +375,7 @@ public class ClubController {
         meetingMemberDto.setMeeting_id(clubMeetingDto.getId());
         meetingMemberDto.setUser_id(clubMeetingDto.getUser_id());
 
-        clubService.insertClubMeetingMemberDto(meetingMemberDto);
+        clubService.joinMeeting(meetingMemberDto);
 
         ClubDto clubDto = clubService.selectClubDtoById(clubMeetingDto.getClub_id());
         model.addAttribute("clubDto", clubDto);
@@ -385,7 +385,7 @@ public class ClubController {
     // 정모 신청
 
     public String joinMeetingProcess(ClubMeetingMemberDto clubMeetingMemberDto){
-        clubService.insertClubMeetingMemberDto(clubMeetingMemberDto);
+        clubService.joinMeeting(clubMeetingMemberDto);
         
 
         return "redirect:/club/home?id=";

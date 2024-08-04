@@ -304,11 +304,12 @@
                                         <div class="row py-3" style="width: 200%;">
                                             <div class="col-auto" th:each="clubDto : ${clubDtoList}">
 
-                                                <div class="row border me-1 rounded-top border-bottom-0" style="width: 10em; height: 8em;">
+                                                <div class="row border me-1 rounded-top border-bottom-0" style="width: 10em; height: 8em; overflow: hidden">
                                                     <div class="col px-0 pb-0 mb-0">
-                                                        <img th:src="|/images/${clubDto.main_image}|" class="card-img-top img-fluid rounded-top fixed-image-size" alt="...">
+                                                        <img th:src="|/images/${clubDto.main_image}|" style="width: 100%; object-fit: cover;" class="card-img-top img-fluid rounded-top fixed-image-size" alt="...">
                                                     </div>
                                                 </div>
+                                         
                                                 <div class="row border shadow-sm rounded-bottom border-top-0" style="width: 10em; height: 8em;">
                                                     <div class="col">
                                                         <div class="row pt-3">
@@ -438,7 +439,7 @@
                                         <div class="row align-items-center">
                                                 <div class="col-6">
                                                     <a th:href="@{/club/home(id=${joinClubDto.id})}">
-                                                        <img th:src="|/images/${joinClubDto.main_image}|" class="img-fluid border rounded">
+                                                        <img th:src="|/images/${joinClubDto.main_image}|" class="img-fluid border rounded" style="height: 100px; width: 100%; object-fit: cover;">
                                                     </a>
                                                 </div>
                                             

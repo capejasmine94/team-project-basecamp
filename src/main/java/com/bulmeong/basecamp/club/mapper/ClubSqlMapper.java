@@ -88,6 +88,7 @@ public interface ClubSqlMapper {
     //  정기모임
     public void insertClubMeetingDto(ClubMeetingDto clubMeetingDto);
     public void insertClubMeetingMemberDto(ClubMeetingMemberDto clubMeetingMemberDto);
+    // public List<ClubMeetingMemberDto> selectMeetingMember(int meeting_id, int user_id);
     
     // 홈화면에 정모 정보 출력
     public List<ClubMeetingDto> selectClubMeetingDtoList(int id);

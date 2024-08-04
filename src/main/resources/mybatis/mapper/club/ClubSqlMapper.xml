@@ -431,6 +431,12 @@
         WHERE club_id = #{club_id}
     </select>
 
+    <!-- 정모 가입여부 확인 -->
+    <select id="selectMeetingMember" resultType="com.bulmeong.basecamp.club.dto.ClubMeetingMemberDto">
+        select * from bc_club_meeting_member
+        where meeting_id  = #{meeting_id}
+        and user_id = #{user_id}
+    </select>
 
 
 </mapper>

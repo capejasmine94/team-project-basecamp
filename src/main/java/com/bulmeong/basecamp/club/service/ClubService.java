@@ -407,7 +407,7 @@ public class ClubService {
         }
 
         // 정모 회원 DTO insert
-        public void insertClubMeetingMemberDto(ClubMeetingMemberDto clubMeetingMemberDto){
+        public void joinMeeting(ClubMeetingMemberDto clubMeetingMemberDto){
             clubSqlMapper.insertClubMeetingMemberDto(clubMeetingMemberDto);
 
         }
@@ -419,8 +419,22 @@ public class ClubService {
             for(ClubMeetingDto clubMeetingDto : clubMeetingDtoList){
                 int meetingPk = clubMeetingDto.getId();
                 int totalJoinMember = clubSqlMapper.countTotalMeetingMember(meetingPk);
-
                 Map<String, Object> meetingDataMap = new HashMap<>();
+
+                // List<ClubMeetingMemberDto> clubMeetingMemberDto = clubSqlMapper.selectMeetingMember(meetingPk, id);
+                // if(clubMeetingMemberDto == null){
+
+                // }else{
+
+                // }
+
+                // ClubMeetingMemberDto meetingMemberDto = clubSqlMapper.findMeetingMemberByUserId();
+                // if (meetingMemberDto == null) {
+                //     meetingDataMap.put("confirmMeetingMember", false);
+                // } else {
+                //     meetingDataMap.put("confirmMeetingMember", true);
+                // }
+                
                 meetingDataMap.put("clubMeetingDto", clubMeetingDto);
                 meetingDataMap.put("totalJoinMember", totalJoinMember);
 

@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.bulmeong.basecamp.club.dto.ClubMeetingMemberDto;
 import com.bulmeong.basecamp.club.dto.ClubMemberDto;
 import com.bulmeong.basecamp.club.dto.ClubNestedCommentDto;
 import com.bulmeong.basecamp.club.dto.ClubPostCommentLikeDto;
@@ -123,8 +124,20 @@ public class RestClubController {
         return restResponseDto;
     }
 
+    @PostMapping("meeting")
+    public RestResponseDto joinMeeting(ClubMeetingMemberDto clubMeetingMemberDto, HttpSession session){
+        RestResponseDto restResponseDto = new RestResponseDto();
+        UserDto userDto = (UserDto)session.getAttribute("sessionUserInfo");
+        clubMeetingMemberDto.setUser_id(userDto.getId());
+        System.out.println(clubMeetingMemberDto);
+        clubService.joinMeeting(clubMeetingMemberDto);
+
+        return restResponseDto;
+    }
+    
 
 
+   
     public RestResponseDto template(){
         RestResponseDto restResponseDto = new RestResponseDto();
         

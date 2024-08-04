@@ -11,24 +11,28 @@ document.addEventListener('DOMContentLoaded', () => {
 function registerBtnEvent() {
     const registerClubBtn = document.getElementById("register-club-btn");
     
-    registerClubBtn.onclick = () => {
+    if(registerClubBtn !== null) {
+        registerClubBtn.onclick = () => {
 
-        fetch(`/api/club/member?club_id=`+ param, {
-            method: 'GET'
-        })
-        .then(response => response.json())
-        .then(response => {
-            console.log(response.data.confirm);
-            
-            if (response.data.confirm) {
-                joinClub();
-                joinSuccessShowModal();
-            } else {
-                joinFailShowModal();
-            }
-        });
+            fetch(`/api/club/member?club_id=`+ param, {
+                method: 'GET'
+            })
+            .then(response => response.json())
+            .then(response => {
+                console.log(response.data.confirm);
+                
+                if (response.data.confirm) {
+                    joinClub();
+                    joinSuccessShowModal();
+                } else {
+                    joinFailShowModal();
+                }
+            });
+        }
     }
 }
+
+
 
 function getMeetingList() {
 
@@ -96,6 +100,11 @@ function getMeetingList() {
                 const meetingImage = newMeetingWrapper.querySelector(".meetingImage");
                 meetingImage.src = `/images/${meetingData.clubMeetingDto.main_image}`;
 
+                // const joinMeetingBtn = newMeetingWrapper.querySelector(".join-meeting-btn");
+                // joinMeetingBtn.onclick = () => {
+                //     joinMeeting(meetingData.clubMeetingDto.id);
+                // }
+
                 meetingWrapperBox.appendChild(newMeetingWrapper);
             }
         })
@@ -149,5 +158,22 @@ function joinClub(){
             const registerBtn = document.getElementById("registerBtn");
             registerBtn.remove();
         })
+}
+
+function joinMeeting(meetingId) {
+
+    console.log(meetingId);
+
+    fetch(`/api/club/meeting?meeting_id=${meetingId}`, {
+        method: 'POST'
+    })
+
+        .then(response => response.json())
+        .then(response => {
+            console.log(response);
+            
+            getMeetingList();
+        })
+    
 }
 
