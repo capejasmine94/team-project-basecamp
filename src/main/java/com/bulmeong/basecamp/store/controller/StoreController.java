@@ -156,4 +156,10 @@ public class StoreController {
         return "store/mWriteReview";
     }
 
+    @RequestMapping("reviewComplete")
+    public String reviewComplete(){
+
+        return "store/mReviewComplete";
+    }
+
 }
