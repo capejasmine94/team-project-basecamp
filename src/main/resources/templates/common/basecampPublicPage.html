@@ -5,13 +5,338 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/public/css/common.css">
     <link rel="stylesheet" href="/public/css/basecamp.css">
+    <style>
+        .icon-col img{
+            aspect-ratio: 1/1;
+            width: 100%;
+            object-fit: cover;
+            object-position: center;
+        }
+        .profileImage {
+            width: 35px;  /* 원하는 너비 */
+            height: 35px; /* 원하는 높이 */
+            object-fit: cover; /* 이미지가 요소를 채우도록 조정 */
+            aspect-ratio: 1/1;
+        }
+        .scroll-container {
+            overflow-x: auto;
+            scrollbar-width: none;
+            white-space: nowrap;
+            display: flex;
+            padding-left: 0.5rem; /* Optional: To give some padding at the start */
+        }
+        .scroll-item {
+            flex: 0 0 auto; /* Ensure the flex items do not shrink */
+            width: 12rem;
+            margin-right: 1rem; /* Space between items */
+        }
+        .fixed-image-size {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .scroll-list-box {
+            -ms-overflow-style: none;  /* Internet Explorer 10+ */
+            scrollbar-width: none;  /* Firefox */
+        }
+        body {
+            height: 100vh;
+            background: linear-gradient(to bottom, #344E41 50%, white 50%);
+            margin: 0;  /* 기본 margin 제거 */
+        }
+        .mainPage {
+            background-image: url('/public/img/common/배경.jpeg');
+            background-size: cover;
+            background-position: center;
+            width: 100%;
+            height: 100vh;
+        }
+        .fixed-background {
+            background-color: #0F273C !important; /* 원하는 배경색으로 변경 */
+        }
+        .topNav {
+            transition: background-color 0.2s;
+        }
+        .image-wrapper {
+            padding: 0 0.2rem; /* 이미지 간의 간격 조정 */
+        }
+
+        .rounded-image {
+            width: 100%;
+            height: 10rem;
+            border-radius: 0.7rem;
+            object-fit: cover;
+        }
+    </style>
 </head>
-<body>
+<body class="mainPage">
 <!-- 네비가 추가 됨 -->
-<div th:replace="common/navi::topNaviBasecamp"></div>
-<div th:replace="common/navi::bottomNaviBasecamp"></div>
-<div class="main">
-    <div class="container">
+<!--<div th:replace="common/navi::topNaviBasecamp"></div>-->
+<!--<div th:replace="common/navi::bottomNaviBasecamp"></div>-->
+<!--<div th:replace="common/navi::bottomBasecamp"></div>-->
+<div class="container-fluid fixed-top topNav">
+    <div class="row px-1 pt-4 pb-3">
+        <div class="col fs-3">
+            <img src="/public/img/common/로고최종.png" style="width: 10rem; height: 3rem">
+        </div>
+        <div class="col text-end fs-1 d-flex align-items-center justify-content-end">
+            <span class="text-white"><i class="bi bi-justify"></i></span>
+        </div>
+    </div>
+</div>
+<div class="container-fluid" style="padding-top: 5.5rem;">
+    <!-- 조준희, 양은자 -->
+    <div class="row">
+        <div class="col bg-white" style="border-top-left-radius: 2rem; border-top-right-radius: 2rem;">
+            <div class="row px-1 py-3">
+                <div class="col fs-3">
+                    예약하기
+                </div>
+            </div>
+            <div class="row px-2">
+                <div class="col image-wrapper">
+                    <img src="/public/img/common/캠핑장최종.png" class="rounded-image">
+                </div>
+                <div class="col image-wrapper">
+                    <img src="/public/img/common/캠핑카최종.png" class="rounded-image">
+                </div>
+            </div>
+            <!-- 변초연 -->
+            <div class="row px-1 mt-4">
+                <div class="col fs-3">
+                    쇼핑하기
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <div class="row pt-3 px-1">
+                        <a href="/store/category?category_id=1" class="col-3 pb-2">
+                            <div class="row">
+                                <div class="col icon-col">
+                                    <img src="/public/img/storeImage/icon001.png">
+                                </div>
+                            </div>
+                            <div class="row pt-2 text-center">
+                                <div class="col f08 fw-bold text-body-tertiary">
+                                    텐트
+                                </div>
+                            </div>
+                        </a>
+                        <a href="/store/category?category_id=2" class="col-3 pb-3">
+                            <div class="row">
+                                <div class="col icon-col">
+                                    <img src="/public/img/storeImage/icon001.png">
+                                </div>
+                            </div>
+                            <div class="row pt-2 text-center">
+                                <div class="col f08 fw-bold text-body-tertiary">
+                                    타프
+                                </div>
+                            </div>
+                        </a>
+                        <a href="/store/category?category_id=3" class="col-3 pb-3">
+                            <div class="row">
+                                <div class="col icon-col">
+                                    <img src="/public/img/storeImage/icon002.png">
+                                </div>
+                            </div>
+                            <div class="row pt-2 text-center">
+                                <div class="col f08 fw-bold text-body-tertiary">
+                                    캠핑가구
+                                </div>
+                            </div>
+                        </a>
+                        <a href="/store/category?category_id=4" class="col-3 pb-3">
+                            <div class="row">
+                                <div class="col icon-col">
+                                    <img src="/public/img/storeImage/icon007.png">
+                                </div>
+                            </div>
+                            <div class="row pt-2 text-center">
+                                <div class="col f08 fw-bold text-body-tertiary">
+                                    취침용품
+                                </div>
+                            </div>
+                        </a>
+                        <a href="/store/category?category_id=5" class="col-3 pb-3">
+                            <div class="row">
+                                <div class="col icon-col">
+                                    <img src="/public/img/storeImage/icon003.png">
+                                </div>
+                            </div>
+                            <div class="row pt-2 text-center">
+                                <div class="col f08 fw-bold text-body-tertiary">
+                                    주방용품
+                                </div>
+                            </div>
+                        </a>
+                        <a href="/store/category?category_id=6" class="col-3 pb-3">
+                            <div class="row">
+                                <div class="col icon-col">
+                                    <img src="/public/img/storeImage/icon004.png">
+                                </div>
+                            </div>
+                            <div class="row pt-2 text-center">
+                                <div class="col f08 fw-bold text-body-tertiary">
+                                    계절용품
+                                </div>
+                            </div>
+                        </a>
+                        <a href="/store/category?category_id=7" class="col-3 pb-3">
+                            <div class="row">
+                                <div class="col icon-col">
+                                    <img src="/public/img/storeImage/icon001.png">
+                                </div>
+                            </div>
+                            <div class="row pt-2 text-center">
+                                <div class="col f08 fw-bold text-body-tertiary">
+                                    밀키트...
+                                </div>
+                            </div>
+                        </a>
+                        <div class="col-3 pb-3">
+                            <div class="row">
+                                <div class="col icon-col">
+                                    <img src="/public/img/storeImage/icon012.png">
+                                </div>
+                            </div>
+                            <div class="row pt-2 text-center">
+                                <div class="col f08 fw-bold text-body-tertiary">
+                                    베스트
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- 남현지 -->
+            <div class="row px-1 mt-4">
+                <div class="col fs-3">
+                    인스타
+                </div>
+            </div>
+            <div class="row pt-3 px-1">
+                <div class="scroll-container">
+                    <!-- 1 -->
+                    <div class="fs-3 scroll-item">
+                        <div class="row">
+                            <div class="col-auto">
+                                <img src="/public/img/common/캠핑장최종.png" class="profileImage rounded-circle">
+                            </div>
+                            <div class="col ps-0 d-flex align-items-center" style="font-size: 0.8em">
+                                아이디
+                            </div>
+                        </div>
+                        <div class="row mt-1">
+                            <div class="fs-3 me-1">
+                                <img src="/public/img/common/캠핑장최종.png" style="width: 12rem; height: 17rem;">
+                            </div>
+                        </div>
+                    </div>
+                    <!-- 2 -->
+                    <div class="fs-3 scroll-item">
+                        <div class="row">
+                            <div class="col-auto">
+                                <img src="/public/img/common/캠핑장최종.png" class="profileImage rounded-circle">
+                            </div>
+                            <div class="col ps-0 d-flex align-items-center" style="font-size: 0.8em">
+                                아이디
+                            </div>
+                        </div>
+                        <div class="row mt-1">
+                            <div class="fs-3 me-1">
+                                <img src="/public/img/common/캠핑장최종.png" style="width: 12rem; height: 17rem;">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- 이시은 -->
+            <div class="row">
+                <div class="col">
+                    <div class="row px-1 mt-4">
+                        <div class="col fs-3">
+                            <span>소모임</span>
+                        </div>
+                        <div class="col text-end text-secondary d-flex align-items-center justify-content-end fs-3">
+                            <a href="/club/newClubs"><span class="text-secondary">더보기 <i class="bi bi-chevron-right"></i></span></a>
+                        </div>
+                    </div>
+                    <div class="row ms-1 me-1 border-bottom">
+                        <div class="col scroll-list-box overflow-x-auto">
+                            <div class="row py-3" style="width: 200%;">
+                                <div class="col-auto">
+                                    <div class="row border me-1 rounded-top border-bottom-0" style="width: 11.8em; height: 15em; overflow: hidden">
+                                        <div class="col px-0 pb-0 mb-0">
+                                            <img src="/public/img/common/캠핑장1.png" style="width: 100%; object-fit: cover;" class="img-fluid fixed-image-size">>
+                                        </div>
+                                    </div>
+
+                                    <div class="row border shadow-sm rounded-bottom border-top-0" style="width: 11.8em; height: 8em;">
+                                        <div class="col">
+                                            <div class="row pt-3">
+                                                <div class="col text-center fw-semi-bold text-truncate" style="font-size: 0.9em;">
+                                                    <span>소모임명</span>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col ellipsis-line-two text-secondary text-center" style="font-size: 0.8em;">
+                                                    <span >소모임 설명</span>
+                                                </div>
+                                            </div>
+                                            <div class="row mt-1 pt-1 justify-content-center">
+                                                <a class="btn btn-outline-secondary col-auto py-1 d-grid">
+                                                    둘러보기
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- 심규진 -->
+            <div class="row px-1 mt-4">
+                <div class="col fs-3">
+                    중고마켓
+                </div>
+            </div>
+            <div class="row pt-3 px-1">
+                <div class="scroll-container">
+                    <!-- 1 -->
+                    <div class="fs-3 scroll-item">
+                        <div class="row mt-1">
+                            <div class="fs-3 me-1">
+                                <img src="/public/img/common/캠핑장최종.png" style="width: 12rem; height: 10rem;">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-auto">
+                                <span>150000원</span>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- 2 -->
+                    <div class="fs-3 scroll-item">
+                        <div class="row mt-1">
+                            <div class="fs-3">
+                                <img src="/public/img/common/캠핑장최종.png" style="width: 12rem; height: 10rem;">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-auto">
+                                <span>150000원</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
     </div>
 </div>
 
@@ -20,5 +345,16 @@
 <!-- 네비가 추가됨 -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://kit.fontawesome.com/7b271bba58.js" crossorigin="anonymous"></script>
+<script>
+    const topNav = document.querySelector('.topNav');
+
+    window.addEventListener('scroll', function() {
+        if (window.scrollY >= topNav.offsetHeight) {
+            topNav.classList.add('fixed-background');
+        } else {
+            topNav.classList.remove('fixed-background');
+        }
+    });
+</script>
 </body>
 </html>
