@@ -14,6 +14,7 @@ import com.bulmeong.basecamp.store.dto.OrderProductDto;
 import com.bulmeong.basecamp.store.dto.OrderProductOptionValueDto;
 import com.bulmeong.basecamp.store.dto.ProductOptionNameDto;
 import com.bulmeong.basecamp.store.dto.ProductOptionValueDto;
+import com.bulmeong.basecamp.store.dto.ProductReviewDto;
 import com.bulmeong.basecamp.store.dto.ProductSubcategoryDto;
 import com.bulmeong.basecamp.store.dto.StoreBankAccountDto;
 import com.bulmeong.basecamp.store.dto.StoreDeliveryInfoDto;
@@ -971,5 +972,9 @@ public class StoreService {
         }
 
         return map;
+    }
+
+    public void writeReview(ProductReviewDto productReviewDto){
+        storeSqlMapper.insertProductReview(productReviewDto);
     }
 }

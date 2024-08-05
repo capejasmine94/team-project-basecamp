@@ -698,4 +698,12 @@
         inner join store s on sp.store_id = s.id
         where op.id = #{order_product_id}
     </select>
+
+    <insert id="insertProductReview">
+        insert into product_review(
+            user_id, order_product_id, content, rating
+        )values(
+            #{user_id}, #{order_product_id}, #{content}, #{rating}
+        )
+    </insert>
 </mapper>

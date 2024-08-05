@@ -16,6 +16,7 @@ import com.bulmeong.basecamp.store.dto.AdditionalInfoDto;
 import com.bulmeong.basecamp.store.dto.CartProductDto;
 import com.bulmeong.basecamp.store.dto.OrderDeliveryInfoDto;
 import com.bulmeong.basecamp.store.dto.ProductOptionNameDto;
+import com.bulmeong.basecamp.store.dto.ProductReviewDto;
 import com.bulmeong.basecamp.store.dto.StoreDto;
 import com.bulmeong.basecamp.store.dto.StoreOrderDto;
 import com.bulmeong.basecamp.store.dto.StoreProductDto;
@@ -433,6 +434,15 @@ public class RestStoreController {
 
         restResponseDto.add("orderStatusCount", map);
         
+        return restResponseDto;
+    }
+
+    @RequestMapping("writeReview")
+    public RestResponseDto writeReview(@RequestBody ProductReviewDto productReviewDto){
+        RestResponseDto restResponseDto = new RestResponseDto();
+
+        storeService.writeReview(productReviewDto);
+
         return restResponseDto;
     }
 }

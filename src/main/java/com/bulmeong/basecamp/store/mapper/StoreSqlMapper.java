@@ -15,6 +15,7 @@ import com.bulmeong.basecamp.store.dto.OrderProductDto;
 import com.bulmeong.basecamp.store.dto.OrderProductOptionValueDto;
 import com.bulmeong.basecamp.store.dto.ProductOptionNameDto;
 import com.bulmeong.basecamp.store.dto.ProductOptionValueDto;
+import com.bulmeong.basecamp.store.dto.ProductReviewDto;
 import com.bulmeong.basecamp.store.dto.ProductSubcategoryDto;
 import com.bulmeong.basecamp.store.dto.StoreBankAccountDto;
 import com.bulmeong.basecamp.store.dto.StoreDeliveryInfoDto;
@@ -163,4 +164,6 @@ public interface StoreSqlMapper {
     public void updateOrderProductStatusToConfirm(int order_product_id);
 
     public Map<String, Object> selectOrderProductDataForReview(int order_product_id);
+
+    public void insertProductReview(ProductReviewDto productReviewDto);
 }
