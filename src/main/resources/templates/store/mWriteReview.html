@@ -262,14 +262,30 @@
         const urlParams = new URL(window.location.href).searchParams;
         const orderProductId = urlParams.get("id");
 
+        let myId = null;
+
+        function setSessionId(){
+            const url = "/api/user/getSessionUserId";
+            fetch(url)
+            .then(response => response.json())
+            .then((response) => {
+                myId = response.data.userId;
+            })
+        }
+
         function formatNumberToPrice(number) {
             return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+        }
+
+        function validateInput(){
+            document.getElementById("reviewTextCount").innerText = document.getElementById("reviewTextarea").value.length;
         }
 
         document.addEventListener('DOMContentLoaded', function() {
             document.getElementById('backButton').addEventListener('click', function() {
                 history.back();
             });
+            setSessionId();
         });
 
         function rating(star){
@@ -284,17 +300,13 @@
             document.getElementById("ratingValue").value=star.id;
         }
 
-        function validateInput(){
-            document.getElementById("reviewTextCount").innerText = document.getElementById("reviewTextarea").value.length;
-        }
-
         function writeReview(){
 
             const reviewTextCount = document.getElementById("reviewTextCount").innerText
             const reviewTextarea = document.getElementById("reviewTextarea")
 
             if(reviewTextCount<20){
-                alert("리뷰 내용은 10자 이상 입력해주세요.");
+                alert("리뷰 내용은 20자 이상 입력해주세요.");
                 reviewTextarea.focus();
                 return;
             }
@@ -307,6 +319,27 @@
             
             const rating = document.getElementById("ratingValue").value;
             const content = reviewTextarea.value
+
+            
+            const productReview = {
+                user_id: myId,
+                order_product_id: orderProductId,
+                content: content,
+                rating: rating
+            };
+
+            const url = '/api/store/writeReview'
+            fetch(url, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(productReview)
+            })
+            .then(response => response.json())
+            .then((response) => {
+                
+            })
         }
 
         document.querySelectorAll('.toggle-icon').forEach(button => {
