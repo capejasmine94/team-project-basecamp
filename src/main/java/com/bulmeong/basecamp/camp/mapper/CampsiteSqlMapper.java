@@ -11,9 +11,12 @@ import com.bulmeong.basecamp.camp.dto.CampsiteAreaImageDto;
 import com.bulmeong.basecamp.camp.dto.CampsiteAreaPointDto;
 import com.bulmeong.basecamp.camp.dto.CampsiteAreaSelectCategoryDto;
 import com.bulmeong.basecamp.camp.dto.CampsiteBankDto;
+import com.bulmeong.basecamp.camp.dto.CampsiteCarNumberDto;
 import com.bulmeong.basecamp.camp.dto.CampsiteCategoryDto;
 import com.bulmeong.basecamp.camp.dto.CampsiteDto;
 import com.bulmeong.basecamp.camp.dto.CampsiteImageDto;
+import com.bulmeong.basecamp.camp.dto.CampsiteOrderDto;
+import com.bulmeong.basecamp.camp.dto.CampsiteOrderUserInfoDto;
 import com.bulmeong.basecamp.camp.dto.CampsiteSelectCategoryDto;
 
 @Mapper
@@ -68,5 +71,12 @@ public interface CampsiteSqlMapper {
     public void deletePoint(@Param("point_id") int point_id);
     public void registerPointId(CampsiteAreaPointDto pointDto);
     public List<Map<String,Object>> getPointList(@Param("area_id") int area_id);
+    public void registerOrder(CampsiteOrderDto campsiteOrderDto);
+    public void registerOrderUserInfo(CampsiteOrderUserInfoDto userInfoDto);
+    public void registerCarNumber(CampsiteCarNumberDto carNumberDto);
+    public CampsiteOrderDto getOrderByResvCode(@Param("reservation_code") String resvCode);
+    public List<CampsiteCarNumberDto> getCarNumberList(@Param("order_id")int order_id);
+    public List<CampsiteOrderUserInfoDto> getUserInfoByOrderId(@Param("order_id")int order_id);
+    public List<CampsiteOrderDto> getOrderByUserId(@Param("user_id")int user_id);
 
 }

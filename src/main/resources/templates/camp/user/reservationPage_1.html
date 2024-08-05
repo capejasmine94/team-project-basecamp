@@ -119,8 +119,8 @@
                             <div id="carousel" class="carousel slide row p-0" data-bs-ride="carousel">
                                 <div class="carousel-inner col p-0">
                                 <!-- 이미지 탬플릿 -->
-                                <div class="carousel-item"  th:each="mainImage : ${session.campsiteUser.mainImages}">
-                                    <img th:src="'/images/' + ${mainImage.location}" class="d-block w-100 p-0" alt="...">
+                                <div class="carousel-item"  th:each="mainImage, iterStat : ${session.campsiteUser.mainImages}" th:classappend="${iterStat.index == 0} ? 'active'">
+                                    <img th:src="'/images/' + ${mainImage.location}" class="d-block w-100 p-0" alt="..." style="height: 20em;">
                                 </div>
                                 </div>
                             </div>
@@ -167,7 +167,7 @@
                         <span class="fw-semibold fs-5">구역 위치</span>
                     </div> 
                     <div class="col mt-4">
-                        <img class="img-fluid rounded-3" th:src="'/images/' + ${session.campsiteUser.dto.map_image}" alt="">
+                        <img class="img-fluid rounded-3" th:src="'/images/' + ${session.campsiteUser.dto.map_image}" alt="" style="height: 16em; width: 100%;">
                     </div>
                 </div>
 
@@ -244,18 +244,18 @@
                     <div class="col-3 text-end">
                         <span>성인</span>
                     </div>
-                    <input type="hidden" name="adult" id="adult" value="1">
+                    <input type="hidden" name="adult" id="adult" value="0">
                     <div class="col-auto"><button class="btn btn-outline-secondary px-2" type="button" onclick="addValue('adult',-1)">◀</button></div>
-                    <div class="col-2 text-center"><span class="fs-5" id="value_adult">1</span></div>
+                    <div class="col-2 text-center"><span class="fs-5" id="value_adult">0</span></div>
                     <div class="col-auto"><button class="btn btn-outline-secondary px-2" type="button" onclick="addValue('adult',1)">▶</button></div>
                 </div>
                 <div class="row align-items-center mt-2 text-end">
                     <div class="col-3">
                         <span>미성년자</span>
                     </div>
-                    <input type="hidden" name="kid" id="kid" value="1">
+                    <input type="hidden" name="kid" id="kid" value="0">
                     <div class="col-auto"><button class="btn btn-outline-secondary px-2" type="button" onclick="addValue('kid',-1)">◀</button></div>
-                    <div class="col-2 text-center"><span class="fs-5" id="value_kid">1</span></div>
+                    <div class="col-2 text-center"><span class="fs-5" id="value_kid">0</span></div>
                     <div class="col-auto"><button class="btn btn-outline-secondary px-2" type="button" onclick="addValue('kid',1)">▶</button></div>
                 </div>
                 <div class="row align-items-center mt-2 text-end">
@@ -382,7 +382,14 @@
     createRangeCalendar('selectDay',7, yearsAgo(1));
     function checkBeforePay() {
         //날짜선택 확인
-        //
+        const calendar_start = document.getElementById('selectDay_start_date');
+        const calendar_end = document.getElementById('selectDay_end_date');
+        if(!calendar_start.value || !calendar_end.value) {
+            alert('예약 날짜를 선택해주세요.');
+            document.getElementById('calendar_selectDay').scrollIntoView({ behavior: 'smooth', block: 'center' });
+            bootstrap.Offcanvas.getOrCreateInstance('#offcanvasSelectOption').hide();
+            return;
+        }
         const submit = document.getElementById('reservationCheck');
         if(sessionInfo) {
             popup3Button('로그인','로그인하시면 마일리지 적립이 가능합니다. 로그인하시겠습니까?','취소','비회원으로 주문','로그인',

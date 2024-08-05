@@ -178,13 +178,13 @@
                             <div class="row my-2 align-items-center">
                                 <div class="col-2 p-0 text-end">이름</div>
                                 <div class="col">
-                                    <input class="form-control" type="text" name="customer_name" placeholder="예약자 이름">
+                                    <input class="form-control" id="customer_name" type="text" name="customer_name" placeholder="예약자 이름" required>
                                 </div>
                             </div>
                             <div class="row my-2 align-items-center">
                                 <div class="col-2 p-0 text-end">연락처</div>
                                 <div class="col">
-                                    <input class="form-control" type="text" name="customer_phone" placeholder="예약자 연락처">
+                                    <input class="form-control" id="customer_phone" type="text" name="customer_phone" placeholder="예약자 연락처" required>
                                 </div>
                             </div>
                         </div>
@@ -220,7 +220,7 @@
                     <div class="row my-2 align-items-center" th:each="i : ${#numbers.sequence(1, car)}">
                         <div class="col-2 p-0 text-end new-fs-9">차량번호</div>
                         <div class="col">
-                            <input class="form-control" type="text" name="car_number" placeholder="차량번호 입력">
+                            <input class="form-control carList" type="text" name="car_number" placeholder="차량번호 입력" required>
                         </div>
                     </div>
                 </div>
@@ -341,8 +341,8 @@
                 </div>
                 <div class="row">
                         <div class="col mt-3">
-                            <select class="form-select" aria-label="Default select example">
-                                <option selected >선택해주세요</option>
+                            <select id="selectPay" class="form-select" aria-label="Default select example">
+                                <option selected value="0">선택해주세요</option>
                                 <option value="1">카카오페이</option>
                                 <option value="2">핸드폰 결제</option>
                                 <option value="3">카드 결제</option>
@@ -527,24 +527,70 @@
         const totalPrise = document.getElementById('totalPrise');
         const curArea = currentArea();
         let totalValue= curArea.dto.prise;
-        //인원 / 차량 수 별 추가 요금
+        
+        const adults = parseInt(new URLSearchParams(window.location.search).get('adult'));
+        const kids = parseInt(new URLSearchParams(window.location.search).get('kid'));
+        const cars = parseInt(new URLSearchParams(window.location.search).get('car'));
+        let mileage = 0;
+        if(document.getElementById('useMileage') != null)
+           mileage = parseInt(document.getElementById('useMileage').innerText.replace(',',''));
+        const carValue = curArea.dto.car_pay * cars;
+        const kidValue = curArea.dto.kid_pay * kids;
+        const adultValue = curArea.dto.adult_pay * adults;
+       
+        totalValue = totalValue + adultValue + kidValue + carValue;
+        totalValue -= mileage;
+       
+
         totalPrise.innerText = totalValue;
         addColonMoneyInput();
+        return totalValue;
     }
 
     function onPayment() {
         const finalReservationProcess = document.getElementById('finalReservationProcess');
         const terms = document.getElementById('agreeTerms');
+        const customer_name = document.getElementById('customer_name');
+        const customer_phone = document.getElementById('customer_phone');
+
+        if(customer_name != null){
+            if(customer_name.value=='' || customer_phone.value == '') {
+                alert('예약자 정보를 입력해주세요.');
+                customer_name.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                return;
+            }
+        }
+
+        const carList = document.getElementsByClassName('carList');
+        for(const carInfo of carList) {
+            if(carInfo.value == '')
+            {
+                alert('차량 번호를 입력해주세요.');
+                carInfo.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                return;
+            }
+        }
+
         if(!terms.checked) {
             alert('결제약관에 동의하셔야 결제를 진행할 수 있습니다.');
+            terms.scrollIntoView({ behavior: 'smooth', block: 'center' });
             return;
         }
         //포인트 선택 확인
-        //연락처/성명/차량번호
+        if(selectedPoint == null) {
+            alert('이용하실 포인트를 선택해주세요.');
+            document.getElementById('pointList').scrollIntoView({ behavior: 'smooth', block: 'center' });
+            return;
+        }
         //결제 옵션 선택
-
+        const selectPay = document.getElementById('selectPay');
+        if(selectPay.value == '0') {
+            alert('결제 방법을 선택해주세요.');
+            selectPay.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            return;
+        }
         //input에 데이터 넣어주기
-        document.getElementById('totalPriseInput').value = 555;
+        document.getElementById('totalPriseInput').value = refreshTotalPrise();
         document.getElementById('saleRateInput').value = 0;
 
 

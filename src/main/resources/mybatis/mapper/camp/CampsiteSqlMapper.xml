@@ -372,7 +372,66 @@
             GROUP BY point_id  
         </select>
 
+        <!-- 포인트 생성 -->
         
+        <!-- 예약 등록 -->
+        <insert id="registerOrder">
+            <selectKey keyProperty="id" resultType="int" order="AFTER">
+                select max(id) from bc_campsite_order
+            </selectKey>
+            INSERT into bc_campsite_order (
+                point_id,
+                start_date,
+                end_date,
+                customer_name,
+                prise,
+                sale,
+                customer_phone,
+                adult_count,
+                kid_count,
+                reservation_code,
+                progress
+            
+            ) values (
+                #{point_id},
+                #{start_date},
+                #{end_date},
+                #{customer_name},
+                #{prise},
+                #{sale},
+                #{customer_phone},
+                #{adult_count},
+                #{kid_count},
+                #{reservation_code},
+                '예약 대기 중'
+            )
+        </insert> 
+
+        <!-- 예약 (회원) 등록 -->
+        <insert id="registerOrderUserInfo">
+            INSERT into bc_campsite_order_userinfo (
+                order_id,
+                user_id,
+                use_mileage
+            
+            ) values (
+                #{order_id},
+                #{user_id},
+                #{use_mileage}
+            )
+        </insert>
+
+        <!-- 차량번호 등록 -->
+        <insert id="bc_campsite_car_number">
+            INSERT into bc_campsite_car_number (
+                order_id,
+                car_number
+            
+            ) values (
+                #{order_id},
+                #{car_number}
+            )
+        </insert>
     <!-- ======================================================================== -->
 
 

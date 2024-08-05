@@ -18,14 +18,18 @@ import com.bulmeong.basecamp.camp.dto.CampsiteAreaImageDto;
 import com.bulmeong.basecamp.camp.dto.CampsiteAreaPointDto;
 import com.bulmeong.basecamp.camp.dto.CampsiteAreaSelectCategoryDto;
 import com.bulmeong.basecamp.camp.dto.CampsiteBankDto;
+import com.bulmeong.basecamp.camp.dto.CampsiteCarNumberDto;
 import com.bulmeong.basecamp.camp.dto.CampsiteCategoryDto;
 import com.bulmeong.basecamp.camp.dto.CampsiteDto;
 import com.bulmeong.basecamp.camp.dto.CampsiteImageDto;
+import com.bulmeong.basecamp.camp.dto.CampsiteOrderDto;
+import com.bulmeong.basecamp.camp.dto.CampsiteOrderUserInfoDto;
 import com.bulmeong.basecamp.camp.dto.CampsiteSelectCategoryDto;
 import com.bulmeong.basecamp.camp.mapper.CampsiteSqlMapper;
 import com.bulmeong.basecamp.common.dto.ImageDto;
 import com.bulmeong.basecamp.common.util.ImageUtil;
 import com.bulmeong.basecamp.common.util.Utils;
+import com.bulmeong.basecamp.user.dto.UserDto;
 
 @Service
 public class CampsiteService {
@@ -372,10 +376,53 @@ public class CampsiteService {
         }
         return result;
     }
-
+    public Map<String, Object> getOrderByCode(String resvCode) {
+        Map<String, Object> result = new HashMap<>();
+        CampsiteOrderDto orderDto = campsiteSqlMapper.getOrderByResvCode(resvCode);
+        result.put("dto", orderDto);
+        result.put("carNumbers", campsiteSqlMapper.getCarNumberList(orderDto.getId()));
+        result.put("userInfo", campsiteSqlMapper.getUserInfoByOrderId(orderDto.getId()));
+        return result;
+    }
+    public List<Map<String, Object>> getOrderByUserId(int user_id) {
+        List<Map<String, Object>> result = new ArrayList<>();
+        List<CampsiteOrderDto> list = campsiteSqlMapper.getOrderByUserId(user_id);
+        for(CampsiteOrderDto orderDto : list){
+        Map<String, Object> map = new HashMap<>();
+            map.put("dto", orderDto);
+            map.put("carNumbers", campsiteSqlMapper.getCarNumberList(orderDto.getId()));
+            map.put("userInfo", campsiteSqlMapper.getUserInfoByOrderId(orderDto.getId()));
+            result.add(map);
+        }
+        return result;
+    }
     // 포인트로 포인트 리스트
     public List<CampsiteAreaPointDto> pointByPointId(int point_id) {
         return campsiteSqlMapper.pointByPointId(point_id);
+    }
+
+    public void registerOrder(CampsiteOrderDto campsiteOrderDto, int useMileage, String[] carNumbers) {
+        campsiteSqlMapper.registerOrder(campsiteOrderDto);
+
+         // 회원인 경우 회원번호
+        if(utils.getSession("sessionUserInfo") != null) {
+            UserDto user = utils.getSession("sessionUserInfo");
+            CampsiteOrderUserInfoDto userInfoDto = new CampsiteOrderUserInfoDto();
+            userInfoDto.setOrder_id(campsiteOrderDto.getId());
+            userInfoDto.setUser_id(user.getId());
+            userInfoDto.setUse_mileage(useMileage);
+            campsiteSqlMapper.registerOrderUserInfo(userInfoDto);
+        }
+
+        // 차량 번호
+        if(carNumbers == null || carNumbers.length <= 0) 
+            return;
+        for(String carNumber : carNumbers) {
+            CampsiteCarNumberDto carNumberDto = new CampsiteCarNumberDto();
+            carNumberDto.setOrder_id(campsiteOrderDto.getId());
+            carNumberDto.setCar_number(carNumber);
+            campsiteSqlMapper.registerCarNumber(carNumberDto);
+        }
     }
     //-------------------------------------------------------------------------------------------------------------------
 

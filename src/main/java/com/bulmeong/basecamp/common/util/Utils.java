@@ -1,5 +1,7 @@
 package com.bulmeong.basecamp.common.util;
 
+import java.util.UUID;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -106,6 +108,12 @@ public class Utils {
          } else {
              return "URL에 세부 키워드가 없습니다.";
          }
+    }
+
+    public String randomCode(int length) {
+        UUID uuid = UUID.randomUUID();
+        String code = uuid.toString().substring(0,length);
+        return code;
     }
 
      /** 현재 url의 카테고리 이름을 가져옵니다.

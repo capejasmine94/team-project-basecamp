@@ -6,8 +6,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.bulmeong.basecamp.camp.dto.CampsiteOrderDto;
+import com.bulmeong.basecamp.camp.dto.CampsiteOrderUserInfoDto;
 import com.bulmeong.basecamp.camp.service.CampsiteService;
 import com.bulmeong.basecamp.common.util.Utils;
+import com.bulmeong.basecamp.user.dto.UserDto;
 
 @Controller
 @RequestMapping("camp")
@@ -60,8 +62,13 @@ public class CampsiteUserController {
     }
 
     @RequestMapping("/finalReservationProcess")
-    public String finalReservationProcess(CampsiteOrderDto campsiteOrderDto) {
-        System.out.println(campsiteOrderDto);
+    public String finalReservationProcess(CampsiteOrderDto campsiteOrderDto,
+        @RequestParam(defaultValue = "",name="car_number") String[] carNumbers,
+        @RequestParam(defaultValue = "0", name= "useMileage") int useMileage) {
+        // 예약 번호
+        campsiteOrderDto.setReservation_code(utils.randomCode(12));
+        service.registerOrder(campsiteOrderDto, useMileage, carNumbers);
+        utils.setSession("order", service.getOrderByCode(campsiteOrderDto.getReservation_code()));
         return "redirect:/camp/reservationComplete";
     }
 
