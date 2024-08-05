@@ -390,6 +390,13 @@ public class ClubController {
         return "redirect:/club/home?id=";
     }
 
+    // 소모일 설정
+    @RequestMapping("managementClub")
+    public String managementClub(){
+
+        return "club/clubManagementPage";
+    }
+
     
     
 
