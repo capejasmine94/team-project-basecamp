@@ -438,5 +438,11 @@
         and user_id = #{user_id}
     </select>
 
+    <!-- 정모 탈퇴 -->
+    <delete id = "deleteMeetingMember">
+        delete from bc_club_meeting_member
+        where meeting_id = #{meeting_id}
+        and user_id = #{user_id}
+    </delete>
 
 </mapper>

@@ -412,31 +412,25 @@ public class ClubService {
 
         }
 
+        // 정모 회원 DTO Delete
+        public void declineMeeting(int meeting_id, int user_id){
+            clubSqlMapper.deleteMeetingMember(meeting_id, user_id);
+        }
+
         // 홈화면 정모 정보 출력하기
-        public List<Map<String, Object>> selectClubMeetingDtoList(int id){
+        public List<Map<String, Object>> selectClubMeetingDtoList(int id, int user_id){
             List<ClubMeetingDto> clubMeetingDtoList = clubSqlMapper.selectClubMeetingDtoList(id);
             List<Map<String, Object>> meetingDataList = new ArrayList<>();
             for(ClubMeetingDto clubMeetingDto : clubMeetingDtoList){
-                int meetingPk = clubMeetingDto.getId();
-                int totalJoinMember = clubSqlMapper.countTotalMeetingMember(meetingPk);
+                int meeting_id = clubMeetingDto.getId();
+                int totalJoinMember = clubSqlMapper.countTotalMeetingMember(meeting_id);
                 Map<String, Object> meetingDataMap = new HashMap<>();
 
-                // List<ClubMeetingMemberDto> clubMeetingMemberDto = clubSqlMapper.selectMeetingMember(meetingPk, id);
-                // if(clubMeetingMemberDto == null){
-
-                // }else{
-
-                // }
-
-                // ClubMeetingMemberDto meetingMemberDto = clubSqlMapper.findMeetingMemberByUserId();
-                // if (meetingMemberDto == null) {
-                //     meetingDataMap.put("confirmMeetingMember", false);
-                // } else {
-                //     meetingDataMap.put("confirmMeetingMember", true);
-                // }
+                ClubMeetingMemberDto clubMeetingMemberDto = clubSqlMapper.selectMeetingMember(meeting_id, user_id);
                 
                 meetingDataMap.put("clubMeetingDto", clubMeetingDto);
                 meetingDataMap.put("totalJoinMember", totalJoinMember);
+                meetingDataMap.put("clubMeetingMemberDto",clubMeetingMemberDto);
 
                 meetingDataList.add(meetingDataMap);
             }

@@ -3,6 +3,8 @@ package com.bulmeong.basecamp.club.controller;
 import java.util.List;
 import java.util.Map;
 
+import javax.net.ssl.HttpsURLConnection;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,6 +18,7 @@ import com.bulmeong.basecamp.club.dto.ClubMeetingMemberDto;
 import com.bulmeong.basecamp.club.dto.ClubMemberDto;
 import com.bulmeong.basecamp.club.dto.ClubNestedCommentDto;
 import com.bulmeong.basecamp.club.dto.ClubPostCommentLikeDto;
+import com.bulmeong.basecamp.club.mapper.ClubSqlMapper;
 import com.bulmeong.basecamp.club.service.ClubService;
 import com.bulmeong.basecamp.common.dto.RestResponseDto;
 import com.bulmeong.basecamp.user.dto.UserDto;
@@ -28,6 +31,9 @@ public class RestClubController {
 
     @Autowired
     private ClubService clubService;
+
+    @Autowired
+    private ClubSqlMapper clubSqlMapper;
 
     @GetMapping("comment")
     public RestResponseDto getComment (@RequestParam("post_id") int post_id){
@@ -113,13 +119,24 @@ public class RestClubController {
     }
 
     @GetMapping("meeting")
-    public RestResponseDto getMeeting(@RequestParam("club_id") int id){
+    public RestResponseDto getMeeting(@RequestParam("club_id") int id, HttpSession session){
         RestResponseDto restResponseDto = new RestResponseDto();
         
-        List<Map<String,Object>>  clubMeetingDataList =clubService.selectClubMeetingDtoList(id);
+        UserDto userDto = (UserDto)session.getAttribute("sessionUserInfo");
+        List<Map<String,Object>>  clubMeetingDataList =clubService.selectClubMeetingDtoList(id, userDto.getId());
         int totalMeetings = clubService.countTotalMeeting(id);
+        
+        ClubMemberDto clubMemberDto = new ClubMemberDto();
+        clubMemberDto.setClub_id(id);
+        clubMemberDto.setUser_id(userDto.getId());
+        clubMemberDto.setRole_id(3);
+
+        int isMemberInClub = clubSqlMapper.checkClubMembership(clubMemberDto);
+
         restResponseDto.add("clubMeetingDataList", clubMeetingDataList);
         restResponseDto.add("totalMeetings", totalMeetings);
+        restResponseDto.add("isMemberInClub", isMemberInClub);
+
 
         return restResponseDto;
     }
@@ -132,6 +149,15 @@ public class RestClubController {
         System.out.println(clubMeetingMemberDto);
         clubService.joinMeeting(clubMeetingMemberDto);
 
+        return restResponseDto;
+    }
+
+    @DeleteMapping("meeting")
+    public RestResponseDto declineMeeting(@RequestParam("meeting_id") int meeting_id, HttpSession session){
+        UserDto userDto = (UserDto)session.getAttribute("sessionUserInfo");
+        RestResponseDto restResponseDto = new RestResponseDto();
+        clubService.declineMeeting(meeting_id, userDto.getId());
+        
         return restResponseDto;
     }
     

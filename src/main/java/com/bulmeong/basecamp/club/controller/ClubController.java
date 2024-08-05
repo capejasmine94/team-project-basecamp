@@ -76,7 +76,6 @@ public class ClubController {
             .collect(Collectors.toList());
             model.addAttribute("joinClubDtoList", limitedJoinClubDtoList);
         }
-        
 
 
         // 새로운 소모임 목록

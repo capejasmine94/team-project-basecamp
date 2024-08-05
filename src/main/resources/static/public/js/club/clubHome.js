@@ -6,6 +6,9 @@ document.addEventListener('DOMContentLoaded', () => {
     registerBtnEvent();
     getMeetingList();
 
+    document.getElementById('register-club-btn').addEventListener('click', () => {
+        getMeetingList();
+    });
 });
 
 function registerBtnEvent() {
@@ -60,24 +63,44 @@ function getMeetingList() {
                 meetingDetailDate.innerText = meetingDetailDate2;
 
                 const totalJoinMember = newMeetingWrapper.querySelector(".totalJoinMember");
-                console.log(totalJoinMember);
                 
                 const capacity = meetingData.clubMeetingDto.capacity;
-                console.log(capacity);
                 const joinMember = meetingData.totalJoinMember;
-                console.log(joinMember);
 
                const capacityTag = newMeetingWrapper.querySelector(".capacity");
-               console.log(capacityTag);
                capacityTag.innerText = meetingData.clubMeetingDto.capacity;
 
+               const joinMeetingBtn = newMeetingWrapper.querySelector(".join-meeting-btn");
+               
+                if(joinMember >= capacity) {
+                    joinMeetingBtn.classList.add('disabled');
+                    joinMeetingBtn.innerText='마감';
+                    joinMeetingBtn.classList.remove('btn-outline-secondary');
+                    joinMeetingBtn.classList.add('btn-danger');
+                    
+                }
+
+                joinMeetingBtn.onclick = () => {
+                    joinMeeting(meetingData.clubMeetingDto.id);
+                }
+
+                if(meetingData.clubMeetingMemberDto != null){
+                    joinMeetingBtn.innerText='불참';
+                    joinMeetingBtn.classList.remove('btn-outline-secondary');
+                    joinMeetingBtn.classList.add('btn-outline-danger');
+
+                    joinMeetingBtn.onclick = () => {
+                        declineMeeting(meetingData.clubMeetingDto.id);
+                    }
+                }
+
+                meetingWrapperBox.appendChild(newMeetingWrapper);
+
+
                const remainCapacityTag = newMeetingWrapper.querySelector(".remainCapacity");
-               console.log(remainCapacityTag);
-               console.log(meetingData.clubMeetingDto.capacity-meetingData.totalJoinMember);
                
                remainCapacityTag.innerText = `(${(meetingData.clubMeetingDto.capacity)-(meetingData.totalJoinMember)}자리 남음)`
                
-
                
                 
                 totalJoinMember.innerText = joinMember;
@@ -100,15 +123,12 @@ function getMeetingList() {
                 const meetingImage = newMeetingWrapper.querySelector(".meetingImage");
                 meetingImage.src = `/images/${meetingData.clubMeetingDto.main_image}`;
 
-                const joinMeetingBtn = newMeetingWrapper.querySelector(".join-meeting-btn");
-                console.log(joinMeetingBtn);
-                
-                joinMeetingBtn.onclick = () => {
-                    joinMeeting(meetingData.clubMeetingDto.id);
+                if(response.data.isMemberInClub == 0){
+                    joinMeetingBtn.classList.add('d-none');
                 }
-
-                meetingWrapperBox.appendChild(newMeetingWrapper);
+            
             }
+           
         })
     
 }
@@ -164,8 +184,6 @@ function joinClub(){
 
 function joinMeeting(meetingId) {
 
-    console.log(meetingId);
-
     fetch(`/api/club/meeting?meeting_id=${meetingId}`, {
         method: 'POST'
     })
@@ -177,5 +195,19 @@ function joinMeeting(meetingId) {
             getMeetingList();
         })
     
+}
+
+function declineMeeting(meetingId) {
+    fetch(`/api/club/meeting?meeting_id=${meetingId}`, {
+        method: 'DELETE'
+    })
+
+        .then(response => response.json())
+        .then(response => {
+            console.log(response);
+
+            getMeetingList();
+            
+        })
 }
 

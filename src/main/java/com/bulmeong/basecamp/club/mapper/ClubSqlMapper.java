@@ -3,6 +3,7 @@ package com.bulmeong.basecamp.club.mapper;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import com.bulmeong.basecamp.club.dto.ClubBookmarkDto;
 import com.bulmeong.basecamp.club.dto.ClubCategoryDto;
@@ -88,8 +89,10 @@ public interface ClubSqlMapper {
     //  정기모임
     public void insertClubMeetingDto(ClubMeetingDto clubMeetingDto);
     public void insertClubMeetingMemberDto(ClubMeetingMemberDto clubMeetingMemberDto);
-    // public List<ClubMeetingMemberDto> selectMeetingMember(int meeting_id, int user_id);
-    
+    public ClubMeetingMemberDto selectMeetingMember(@Param("meeting_id") int meeting_id, @Param("user_id")int user_id);
+    public void deleteMeetingMember(@Param("meeting_id") int meeting_id, @Param("user_id") int user_id);
+
+
     // 홈화면에 정모 정보 출력
     public List<ClubMeetingDto> selectClubMeetingDtoList(int id);
     public int countTotalMeetingMember(int id);

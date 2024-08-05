@@ -381,7 +381,7 @@
             <div class="container fixed-bottom py-4" id="registerBtn" th:if="${session.sessionUserInfo != null && isMemberInClub == 0}">
                 <div class="row pt-2 pb-3 text-center" th:if="${totalClubMember &lt; confirmCapacity}">
                     <div class="col">
-                        <span id="register-club-btn" class="btn form-control btn-dark">가입하기</span>
+                        <span onclick="getMeetingList()" id="register-club-btn" class="btn form-control btn-dark">가입하기</span>
                     </div>
                 </div>
                 <div class="row text-center" th:unless="${totalClubMember &lt; confirmCapacity}">
@@ -433,7 +433,7 @@
 
             <!-- 정기모임 템플릿 -->
         <div class="row d-none" id="meeting-template">
-            <div class="col meeting-wrapper pt-2 pb-3 border rounded shadow-sm">
+            <div class="col-11 me-2 meeting-wrapper pt-2 pb-3 border rounded shadow-sm">
 
                 <div class="row">
                     <div class="col" style="font-size: 0.8em;">
