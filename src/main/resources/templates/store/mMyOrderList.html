@@ -127,7 +127,7 @@
                         <a type="button" class="row text-dark p-0 text-center border-0 bg-transparent">
                             <div onclick="reloadOrderList(this)" class="col orderProductStatusFilter text-primary">
                                 <div class="row pb-2 fw-bold fs-4">
-                                    <div class="col orderCount" th:text="${orderStatusCountData.allOrderCount}">0</div>
+                                    <div class="col" id="allOrderCount">0</div>
                                 </div>
                                 <div class="row f08">
                                     <div class="col px-1 filterOption">전체</div>
@@ -139,7 +139,7 @@
                         <button type="button" class="row text-secondary p-0 text-center border-0 bg-transparent">
                             <div onclick="reloadOrderList(this)" class="col orderProductStatusFilter">
                                 <div class="row pb-2 fw-bold fs-4">
-                                    <div class="col orderCount" th:text="${orderStatusCountData.orderCompleteCount}">0</div>
+                                    <div class="col" id="orderCompleteCount">0</div>
                                 </div>
                                 <div class="row f08">
                                     <div class="col px-1 filterOption">주문완료</div>
@@ -151,7 +151,7 @@
                         <button type="button" class="row text-secondary p-0 text-center border-0 bg-transparent">
                             <div onclick="reloadOrderList(this)" class="col orderProductStatusFilter">
                                 <div class="row pb-2 fw-bold fs-4">
-                                    <div class="col orderCount">0</div>
+                                    <div class="col">0</div>
                                 </div>
                                 <div class="row f08">
                                     <div class="col px-1 filterOption">배송중</div>
@@ -163,7 +163,7 @@
                         <button type="button" class="row text-secondary p-0 text-center border-0 bg-transparent">
                             <div onclick="reloadOrderList(this)" class="col orderProductStatusFilter">
                                 <div class="row pb-2 fw-bold fs-4">
-                                    <div class="col orderCount" th:text="${orderStatusCountData.deliveryCompleteCount}">0</div>
+                                    <div class="col" id="deliveryCompleteCount">0</div>
                                 </div>
                                 <div class="row f08">
                                     <div class="col px-1 filterOption">배송완료</div>
@@ -175,7 +175,7 @@
                         <button type="button" class="row text-dark p-0 text-center border-0 bg-transparent">
                             <div onclick="reloadOrderList(this)" class="col orderProductStatusFilter">
                                 <div class="row pb-2 fw-bold fs-4">
-                                    <div class="col orderCount" th:text="${orderStatusCountData.purchaseConfirmationCount}">0</div>
+                                    <div class="col" id="purchaseConfirmationCount">0</div>
                                 </div>
                                 <div class="row f08">
                                     <div class="col px-1 filterOption">구매확정</div>
@@ -400,9 +400,9 @@
                             </div>
                         </div>
                         <div class="row pb-1">
-                            <div class="col f09 fw-bold name">
+                            <a class="col-auto f09 fw-bold name">
                                 진짜 맛있는 납작복숭아
-                            </div>
+                            </a>
                         </div>
                         <div class="row pb-1 text-body-tertiary f09">
                             <div class="col-auto pe-0 valueName">
@@ -430,9 +430,9 @@
                 </button>
             </div>
             <div class="col d-grid">
-                <button class="btn border py-2 bg-white rounded-0 f09">
+                <a class="btn reviewButton border py-2 bg-white rounded-0 f09">
                     리뷰작성
-                </button>
+                </a>
             </div>
         </div>
         
@@ -461,15 +461,17 @@
                 </button>
             </div>
             <div class="col d-grid">
-                <button class="btn border py-2 bg-white rounded-0 f09">
+                <a type="button" class="purchaseConfirmationButton btn border py-2 bg-white rounded-0 f09">
                     구매확정
-                </button>
+                </a>
             </div>
         </div>
 
     </div>
 
     <script>
+        let filterOption = "전체"
+
         function formatNumberToPrice(number) {
             return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
         }
@@ -479,11 +481,23 @@
                 history.back();
             });
             reloadOrderList("전체");
+            getOrderStatusCount();
         });
 
+        function getOrderStatusCount(){
+            const url = "/api/store/getOrderStatusCount"
+            fetch(url)
+            .then(response => response.json())
+            .then(response => {
+                const orderStatusCount = response.data.orderStatusCount
+                document.getElementById("allOrderCount").innerText = orderStatusCount.allOrderCount;
+                document.getElementById("orderCompleteCount").innerText = orderStatusCount.orderCompleteCount;
+                document.getElementById("deliveryCompleteCount").innerText = orderStatusCount.deliveryCompleteCount;
+                document.getElementById("purchaseConfirmationCount").innerText = orderStatusCount.purchaseConfirmationCount;
+            })
+        }
+
         function reloadOrderList(selectedStatusFilter){
-            
-            let filterOption = ""
 
             if(selectedStatusFilter == "전체"){
                 filterOption = '전체'
@@ -534,7 +548,11 @@
                         const status = OrderProductData.orderProductDto.status;
                         newOrderProductTemplate.querySelector(".status").innerText = status;
                         newOrderProductTemplate.querySelector(".storeName").innerText = OrderProductData.store_name;
-                        newOrderProductTemplate.querySelector(".name").innerText = OrderProductData.orderProductDto.product_name;
+                        
+                        const productName = newOrderProductTemplate.querySelector(".name")
+                        productName.innerText = OrderProductData.orderProductDto.product_name;
+                        productName.setAttribute("href", `/store/productDetails?id=${OrderProductData.orderProductDto.product_id}`)
+
                         newOrderProductTemplate.querySelector(".valueName").innerText = OrderProductData.valueNameList.join("/");
                         newOrderProductTemplate.querySelector(".productImg").setAttribute("src", `/images/${OrderProductData.orderProductDto.product_main_image}`)
 
@@ -543,8 +561,11 @@
 
                         const orderProductCol = newOrderProductTemplate.querySelector(".orderProductCol");
 
+                        newOrderProductTemplate.setAttribute("id", OrderProductData.orderProductDto.id);
+
                         if(status=='배송완료'){
                             const buttonsForDelivered = document.querySelector("#template .buttonsForDelivered").cloneNode(true);
+                            buttonsForDelivered.querySelector(".purchaseConfirmationButton").setAttribute("onclick", `purchaseConfirmation(${OrderProductData.orderProductDto.id})`)
                             orderProductCol.appendChild(buttonsForDelivered)
                         }else if(status=='주문완료'){
                             const buttonsForOrderComplete = document.querySelector("#template .buttonsForOrderComplete").cloneNode(true);
@@ -554,6 +575,7 @@
                             orderProductCol.appendChild(buttonsForOrderComplete)
                         }else if(status=='구매확정'){
                             const buttonsForPurchaseConfirmation = document.querySelector("#template .buttonsForPurchaseConfirmation").cloneNode(true);
+                            buttonsForPurchaseConfirmation.querySelector(".reviewButton").setAttribute("href", `/store/writeReview?id=${OrderProductData.orderProductDto.id}`)
                             orderProductCol.appendChild(buttonsForPurchaseConfirmation)
                         }
 
@@ -563,6 +585,25 @@
                     orderContainer.appendChild(newOrderTemplate);
                 }
             })
+        }
+
+        function purchaseConfirmation(order_product_id){
+            if(confirm("구매 확정 하시겠습니까? (구매 확정 처리 이후 교환/환불이 어렵습니다.)")){
+                const url = `/api/store/purchaseConfirmation?id=${order_product_id}`
+                fetch(url)
+                .then(response => {
+                    const orderProductTemplate = document.getElementById(order_product_id);
+                    const buttonsForDelivered = orderProductTemplate.querySelector(".buttonsForDelivered");
+                    buttonsForDelivered.parentNode.removeChild(buttonsForDelivered)
+
+                    const orderProductCol = orderProductTemplate.querySelector(".orderProductCol");
+                    const buttonsForPurchaseConfirmation = document.querySelector("#template .buttonsForPurchaseConfirmation").cloneNode(true);
+                    buttonsForPurchaseConfirmation.querySelector(".reviewButton").setAttribute("href", `/store/writeReview?id=${OrderProductData.orderProductDto.id}`)
+                    orderProductCol.appendChild(buttonsForPurchaseConfirmation);
+                    
+                    getOrderStatusCount();
+                })
+            }
         }
     </script>
 

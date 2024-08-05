@@ -92,19 +92,28 @@ public class StoreCenterController {
 
         return "store/orderProductDetails";
     }
-    //////////////////////////////////////////////////////////////////////////
 
     @RequestMapping("productManage")
-    public String productManage(){
+    public String productManage(Model model){
+        
+        model.addAttribute("productCategoryDtoList", storeService.getProductCategoryAll());
+
         return "store/XproductManage";
     }
+    
+    @RequestMapping("manageReview")
+    public String manageReview(Model model){
+
+        model.addAttribute("productCategoryDtoList", storeService.getProductCategoryAll());
+
+        return "store/XmanageReview";
+    }
+    //////////////////////////////////////////////////////////////////////////
 
     @RequestMapping("orderIntegration")
     public String orderIntegration(){
         return "store/XorderIntegration";
     }
-
-
 
     @RequestMapping("cancelManage")
     public String cancelManage(){
@@ -119,11 +128,6 @@ public class StoreCenterController {
     @RequestMapping("manageQnA")
     public String manageQnA(){
         return "store/XmanageQnA";
-    }
-
-    @RequestMapping("manageReview")
-    public String manageReview(){
-        return "store/XmanageReview";
     }
 
     @RequestMapping("balanceAccountsList")

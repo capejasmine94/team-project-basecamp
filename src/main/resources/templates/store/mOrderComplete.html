@@ -31,6 +31,8 @@
         .product-col img{
             aspect-ratio: 1/1;
             width: 100%;
+            object-fit: cover;
+            object-position: center;
         }
         .ad-banner-col img{
             width: 100%;
@@ -179,7 +181,7 @@
                                 <span th:if="${orderProductData.valueNameList}" th:each="name, iterStat : ${orderProductData.valueNameList}">
                                     <span th:text="${name}">Black / M</span>
                                     <span th:if="${!iterStat.last}">/</span>
-                                </span> | <span th:text="${orderProductData.orderProductDto.quantity}">1</span>개
+                                </span> <span th:if="${orderProductData.valueNameList.size!=0}">|</span> <span th:text="${orderProductData.orderProductDto.quantity}">1</span>개
                             </div>
                             <div class="col fw-bold text-end">
                                 <span th:text="${#numbers.formatDecimal(orderProductData.orderProductDto.order_price, 1, 'COMMA', 0, 'POINT')}">28,000</span>원

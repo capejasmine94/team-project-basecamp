@@ -45,7 +45,8 @@ public class StoreController {
         Map<String, Object> productData = storeService.getProductDataByProductId(id);
         model.addAttribute("productData", productData);
 
-        return "store/mProductDetails";
+        // return "store/mProductDetails";
+        return "store/newProductDetails";
     }
 
     @RequestMapping("cart")
@@ -119,6 +120,12 @@ public class StoreController {
         return "store/mOrderView";
     }
 
+    @RequestMapping("orderRefund")
+    public String orderRefund(){
+
+        return "store/mOrderRefund";
+    }
+
     @RequestMapping("addressBook")
     public String addressBook(HttpSession session, Model model){
 
@@ -138,6 +145,15 @@ public class StoreController {
     public String deliveryForm(){
 
         return "store/mDeliveryForm";
+    }
+
+    @RequestMapping("writeReview")
+    public String writeReview(@RequestParam("id")int id, Model model){
+        //이 유저의 주문상품이 아니면 접근 불가...
+
+        model.addAttribute("orderProductData", storeService.getOrderProductDataForReview(id));
+        
+        return "store/mWriteReview";
     }
 
 }

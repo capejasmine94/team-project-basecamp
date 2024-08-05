@@ -202,6 +202,10 @@
             const inputPoint = document.getElementById("inputPoint")
             
             inputPoint.value = userPoint.replace(/[^0-9]/g, '');
+
+            document.getElementById("usePoint").innerText = `${formatNumberToPrice(inputPoint.value)}`;
+            document.getElementById("usePointRow").classList.remove("d-none")
+            setPaymentAmount();
         }
 
         document.addEventListener('DOMContentLoaded', function() {
@@ -306,18 +310,19 @@
                                         <span th:text="${e.name}">진짜 맛있는 납작복숭아</span>
                                     </div>
                                 </div>
-                                <div class="row pb-1 text-body-tertiary f09">
-                                    <div class="col-auto pe-0 d-flex align-items-center">
+                                <div class="row pb-1 text-body-tertiary f09 align-items-center">
+                                    <div th:if="${e.valueNameList}!=null" class="col-auto pe-0 d-flex align-items-center">
                                         <span class="badge text-bg-white border text-body-tertiary">
                                             옵션
                                         </span>
                                     </div>
-                                    <div class="col">
-                                        <span th:if="${e.valueNameList}" th:each="name, iterStat : ${e.valueNameList}">
+                                    <div class="col-auto pe-0">
+                                        <span th:if="${e.valueNameList}!=null" th:each="name, iterStat : ${e.valueNameList}">
                                             <span th:text="${name}">색상: 검정 / 사이즈: M / 또 무슨 옵션: 짜라잔</span>
                                             <span th:if="${!iterStat.last}">/</span>
                                         </span>
-                                        <span class="border-start border-2 px-1" th:text="|${e.quantity}개|"></span>
+                                        <span th:if="${e.valueNameList}!=null">|</span>
+                                        <span class="px-1" th:text="|${e.quantity}개|"></span>
                                         <span th:if="${e.additional_price!=0}" th:text="|(+${#numbers.formatDecimal(e.quantity*e.additional_price, 1, 'COMMA', 0, 'POINT')}원)|">3,000</span>
                                     </div>
                                 </div>

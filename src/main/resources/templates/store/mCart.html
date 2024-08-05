@@ -68,9 +68,9 @@
 
         let myId = null;
 
-        function formatNumberToPrice(number) {
-            return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-        }
+        // function formatNumberToPrice(number) {
+        //     return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+        // }
 
         function setSessionId(){
             const url = "/api/user/getSessionUserId";
@@ -83,6 +83,8 @@
         }
 
         function allSelect(checkbox){
+            const AllSelectCheckBox = document.getElementById("AllSelectCheckBox")
+            
             if(checkbox.classList.contains('storeCheckbox')){
                 const productSelectCheckboxes = checkbox.closest(".storeWrapper").querySelectorAll(".productSelectCheckbox")
                 if(checkbox.checked){
@@ -93,6 +95,7 @@
                     for(e of productSelectCheckboxes){
                         e.checked = false;
                     }
+                    AllSelectCheckBox.checked = false;
                 }
             }else{
                 const productSelectCheckboxes = document.querySelectorAll(".productSelectCheckbox");
@@ -182,13 +185,23 @@
                         }
 
                         newProductWrapper.querySelector(".quantity").innerText = `${cartProductData.quantity}`
-                        if(cartProductData.additional_price != 0){
+                        if(cartProductData.additional_price != 0 && cartProductData.additional_price != null){
                             newProductWrapper.querySelector(".additional_price").innerText = `(+${formatNumberToPrice(cartProductData.additional_price)})`
                         }
-                        newProductWrapper.querySelector(".value_names").innerText = cartProductData.valueNameList.join("/")
 
-                        const final_price = formatNumberToPrice((salePrice+cartProductData.additional_price)*cartProductData.quantity)
-                        newProductWrapper.querySelector(".final_price").innerText = `${final_price}원`
+                        if(cartProductData.additional_price != null){
+                            const final_price = formatNumberToPrice((salePrice+cartProductData.additional_price)*cartProductData.quantity)
+                            newProductWrapper.querySelector(".final_price").innerText = `${final_price}원`
+                        }else{
+                            const final_price = formatNumberToPrice(salePrice*cartProductData.quantity)
+                            newProductWrapper.querySelector(".final_price").innerText = `${final_price}원`
+                        }
+                        
+                        if(cartProductData.valueNameList!=null){
+                            newProductWrapper.querySelector(".value_names").innerText = `| ${cartProductData.valueNameList.join("/")}`
+                        }else{
+                            newProductWrapper.querySelector(".value_names").innerText = ""
+                        }
 
                         productContainer.appendChild(newProductWrapper);
                     }
@@ -841,7 +854,7 @@
                         </div>
                         <div class="row py-2 px-3">
                             <div class="col py-2 f09 bg-body-tertiary">
-                                수량 : <span class="quantity">1</span>개 |
+                                수량 : <span class="quantity">1</span>개
                                 <span class="value_names">Black / M</span>
                                 <span class="additional_price"></span>
                             </div>

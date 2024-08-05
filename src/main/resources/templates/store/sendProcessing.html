@@ -589,7 +589,7 @@
                             const date = new Date(storeOrderData.orderDeliveryInfoDto.delivered_date);
                             shippedDate.innerText = `${date.getFullYear()}.${date.getMonth()+1}.${date.getDate()}`;
                         }
-                        const createdAtDate = new Date(storeOrderData.orderProductDto.created_at);
+                        const createdAtDate = new Date(storeOrderData.storeOrderDto.created_at);
                         const deliveryDeadlineDate = new Date(createdAtDate);
                         deliveryDeadlineDate.setDate(createdAtDate.getDate() + 3);
 

@@ -77,6 +77,9 @@ public interface StoreSqlMapper {
     public int selectNextOptionId(@Param("product_id")int product_id, @Param("offset") int offset);
 
     public int selectAdditionalInfoIdByValueIds(@Param("valueIds") int[] valueIds);
+    public int countOrderProductByOptionValueIds(@Param("orderProductOptionValueIds") int[] orderProductOptionValueIds, @Param("optionValueCount") int optionValueCount);
+
+    public int selectPurchaseCountByProductId(int product_id);
 
     public AdditionalInfoDto selectAdditionalInfoById(int additional_info_id);
 
@@ -152,4 +155,12 @@ public interface StoreSqlMapper {
     public int deliveryCompleteCount(int user_id);
     public int purchaseConfirmationCount(int user_id);
     public int allOrderCount(int user_id);
+
+    public List<StoreProductDto> selectStoreProductByStoreId(int store_id);
+
+    public List<Map<String, Object>> selectStoreProductDataListByStoreId(int store_id);
+
+    public void updateOrderProductStatusToConfirm(int order_product_id);
+
+    public Map<String, Object> selectOrderProductDataForReview(int order_product_id);
 }

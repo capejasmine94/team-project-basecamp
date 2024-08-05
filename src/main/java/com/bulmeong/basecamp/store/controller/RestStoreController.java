@@ -167,6 +167,15 @@ public class RestStoreController {
 
         return restResponseDto;
     }
+
+    @RequestMapping("getStockQuantityByProudctId")
+    public RestResponseDto getStockQuantityByProudctId(@RequestParam("id") int id){
+        RestResponseDto restResponseDto = new RestResponseDto();
+
+        restResponseDto.add("stock_quantity", storeService.getStockQuantityByProudctId(id));
+
+        return restResponseDto;
+    }
     
     @RequestMapping("getAdditionalInfo")
     public RestResponseDto getAdditionalInfo(
@@ -187,11 +196,11 @@ public class RestStoreController {
         return restResponseDto;
     }
 
-    @RequestMapping("getAdditionalInfoDto")
-    public RestResponseDto getAdditionalInfoDto(@RequestParam("value_ids") int[] value_ids){
+    @RequestMapping("getAdditionalInfoData")
+    public RestResponseDto getAdditionalInfoData(@RequestParam("value_ids") int[] value_ids){
         RestResponseDto restResponseDto = new RestResponseDto();
 
-        restResponseDto.add("additionalInfoDto", storeService.getAdditionalInfoDto(value_ids));
+        restResponseDto.add("additionalInfoData", storeService.getAdditionalInfoData(value_ids));
 
         return restResponseDto;
     }
@@ -235,16 +244,17 @@ public class RestStoreController {
         return restResponseDto;
     }
 
-    // @RequestMapping("getPendingOrderProductList")
-    // public RestResponseDto getPendingOrderProductList(@RequestParam("user_id") int user_id){
-    //     RestResponseDto restResponseDto = new RestResponseDto();
+    //test
+    @RequestMapping("getPendingOrderProductList")
+    public RestResponseDto getPendingOrderProductList(@RequestParam("user_id") int user_id){
+        RestResponseDto restResponseDto = new RestResponseDto();
 
-    //     List<Map<String, Object>> pendingOrderProductInfoDataList = storeService.getPendingOrderDataList(user_id);
+        List<Map<String, Object>> pendingOrderProductInfoDataList = storeService.getPendingOrderDataList(user_id);
 
-    //     restResponseDto.add("pendingOrderProductInfoDataList", pendingOrderProductInfoDataList);
+        restResponseDto.add("pendingOrderProductInfoDataList", pendingOrderProductInfoDataList);
 
-    //     return restResponseDto;
-    // }
+        return restResponseDto;
+    }
 
     @RequestMapping("deletePendingOrderDtoList")
     public RestResponseDto deletePendingOrderDtoList(@RequestParam("user_id") int user_id){
@@ -387,5 +397,42 @@ public class RestStoreController {
 
         return restResponseDto;
     }
+
+    @RequestMapping("getStoreProductList")
+    public RestResponseDto getStoreProductList(HttpSession session){
+        RestResponseDto restResponseDto = new RestResponseDto();
+
+        StoreDto storeDto = (StoreDto)session.getAttribute("sessionStoreInfo");
+
+        int store_id = storeDto.getId();
+        
+        restResponseDto.add("storeProductDataList", storeService.getStoreProductByStoreId(store_id));
+
+        return restResponseDto;
+    }
+
+    @RequestMapping("purchaseConfirmation")
+    public RestResponseDto purchaseConfirmation(@RequestParam("id") int id){
+        RestResponseDto restResponseDto = new RestResponseDto();
+
+        storeService.purchaseConfirmation(id);
+
+        restResponseDto.setResult("success");
+
+        return restResponseDto;
+    }
     
+    @RequestMapping("getOrderStatusCount")
+    public RestResponseDto getOrderStatusCount(HttpSession session){
+        RestResponseDto restResponseDto = new RestResponseDto();
+
+        UserDto userDto = (UserDto)session.getAttribute("sessionUserInfo");
+        int user_id = userDto.getId();
+
+        Map<String, Object> map = storeService.getOrderStatusCountData(user_id);
+
+        restResponseDto.add("orderStatusCount", map);
+        
+        return restResponseDto;
+    }
 }

@@ -146,7 +146,7 @@
                                         </div>
                                         <div class="row text-body-tertiary f09">
                                             <div class="col-auto pe-0">
-                                                <span th:if="${orderProductData.valueNameList}" th:each="name, iterStat : ${orderProductData.valueNameList}">
+                                                <span th:if="${orderProductData.valueNameList}!=null" th:each="name, iterStat : ${orderProductData.valueNameList}">
                                                     <span th:text="${name}">색상: 검정 / 사이즈: M / 또 무슨 옵션: 짜라잔</span>
                                                     <span th:if="${!iterStat.last}">/</span>
                                                 </span>
@@ -178,15 +178,15 @@
                                                         <span th:text="|${#numbers.formatDecimal(orderProductData.orderProductDto.product_price*orderProductData.orderProductDto.quantity, 1, 'COMMA', 0, 'POINT')}원|">45,000원</span>
                                                     </div>
                                                 </div>
-                                                <div class="row f08 pb-1">
+                                                <div class="row f08 pb-1" th:if="${orderProductData.orderProductDto.product_price*orderProductData.orderProductDto.quantity-orderProductData.orderProductDto.order_price!=0}">
                                                     <div class="col text-body-tertiary">
                                                         상품 할인
                                                     </div>
                                                     <div class="col text-end text-primary">
-                                                        <span th:text="|-${#numbers.formatDecimal(orderProductData.orderProductDto.product_price*orderProductData.orderProductDto.discount_percentage*orderProductData.orderProductDto.quantity, 1, 'COMMA', 0, 'POINT')}원|">-31,500원</span>
+                                                        <span th:text="|-${#numbers.formatDecimal(orderProductData.orderProductDto.product_price*orderProductData.orderProductDto.quantity-orderProductData.orderProductDto.order_price, 1, 'COMMA', 0, 'POINT')}원|">-31,500원</span>
                                                     </div>
                                                 </div>
-                                                <div class="row f08">
+                                                <div class="row f08" th:if="${orderProductData.orderProductDto.used_point!=0}">
                                                     <div class="col text-body-tertiary">
                                                         보유 적립금 사용
                                                     </div>
@@ -213,7 +213,7 @@
                                 </div>
                                 <div class="row py-3" th:if="${orderProductData.orderProductDto.status}=='배송완료'">
                                     <div class="col d-grid pe-0">
-                                        <a type="button" class="btn px-0 f09 border bg-white rounded-0">
+                                        <a href="/store/orderRefund" type="button" class="btn px-0 f09 border bg-white rounded-0">
                                             환불요청
                                         </a>
                                     </div>
@@ -348,7 +348,7 @@
                                         -<span th:text="${#numbers.formatDecimal(orderData.discountPriceSum, 1, 'COMMA', 0, 'POINT')}">-4,010</span>원
                                     </div>
                                 </div>
-                                <div class="row pb-3">
+                                <div class="row pb-3" th:if="${orderData.storeOrderDto.used_point!=0}">
                                     <div class="col text-body-tertiary">
                                         보유 적립금 사용
                                     </div>
