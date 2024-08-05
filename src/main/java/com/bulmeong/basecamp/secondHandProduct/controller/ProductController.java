@@ -28,23 +28,17 @@ public class ProductController {
 
     @GetMapping("mainPage")
     public String mainPage(Model model) {
-
         List<AllContentsProductDto> productDtoList = productService.selectSecondhandProductList();
         model.addAttribute("productDtoList", productDtoList);
-
         return "secondhandProduct/mainPage";
     }
 
     @GetMapping("productRegistrationPage")
-    public String productRegistrationPage(HttpSession session,
-                                          Model model) {
-
+    public String productRegistrationPage(HttpSession session, Model model) {
         UserDto sessionUserInfo = (UserDto) session.getAttribute("sessionUserInfo");
         model.addAttribute("sessionUserInfo", sessionUserInfo);
-
         List<CategoryDto> categoryDtoList = productService.selectCategoryList();
         model.addAttribute("categoryDtoList", categoryDtoList);
-
         return "secondhandProduct/productRegistrationPage";
     }
 
@@ -54,12 +48,9 @@ public class ProductController {
     }
 
     @GetMapping("myPage")
-    public String myPage(HttpSession session,
-                         Model model) {
-
+    public String myPage(HttpSession session, Model model) {
         UserDto sessionUserInfo = (UserDto) session.getAttribute("sessionUserInfo");
         model.addAttribute("sessionUserInfo", sessionUserInfo);
-
         return "secondhandProduct/myPage";
     }
 
@@ -85,7 +76,10 @@ public class ProductController {
                 File todayFolderForCreate = new File(rootPath + todayPath);
 
                 if (!todayFolderForCreate.exists()) {
-                    todayFolderForCreate.mkdirs();
+                    if (!todayFolderForCreate.mkdirs()) {
+                        System.err.println("Failed to create directory: " + todayFolderForCreate.getPath());
+                        return "redirect:/error";
+                    }
                 }
 
                 // 파일 충돌 방지
@@ -101,6 +95,7 @@ public class ProductController {
                     image.transferTo(new File(rootPath + todayPath + fileName));
                 } catch (Exception e) {
                     e.printStackTrace();
+                    return "redirect:/error";
                 }
                 // 첫 번째 이미지를 메인 이미지로 설정
                 if (i == 0) {
@@ -111,7 +106,6 @@ public class ProductController {
                 imageDto.setImage_url(todayPath + fileName);
                 imageDtoList.add(imageDto);
             }
-
         }
 
         secondhandProductDto.setUser_id(userId);
@@ -133,11 +127,12 @@ public class ProductController {
         for (ImageDto imageDto : existingImageList) {
             File imageFile = new File("/Users/simgyujin/basecampImage/" + imageDto.getImage_url());
             if (imageFile.exists()) {
-                imageFile.delete();
+                if (!imageFile.delete()) {
+                    System.err.println("Failed to delete file: " + imageFile.getPath());
+                }
             }
             productService.deleteImageByUrl(imageDto.getImage_url());
         }
-
 
         List<ImageDto> imageDtoList = new ArrayList<>();
         if (images != null) {
@@ -155,7 +150,10 @@ public class ProductController {
                 File todayFolderForCreate = new File(rootPath + todayPath);
 
                 if (!todayFolderForCreate.exists()) {
-                    todayFolderForCreate.mkdirs();
+                    if (!todayFolderForCreate.mkdirs()) {
+                        System.err.println("Failed to create directory: " + todayFolderForCreate.getPath());
+                        return "redirect:/error";
+                    }
                 }
 
                 // 파일 충돌 방지
@@ -171,6 +169,7 @@ public class ProductController {
                     image.transferTo(new File(rootPath + todayPath + fileName));
                 } catch (Exception e) {
                     e.printStackTrace();
+                    return "redirect:/error";
                 }
                 // 첫 번째 이미지를 메인 이미지로 설정
                 if (i == 0) {
@@ -181,7 +180,6 @@ public class ProductController {
                 imageDto.setImage_url(todayPath + fileName);
                 imageDtoList.add(imageDto);
             }
-
         }
 
         secondhandProductDto.setUser_id(userId);
@@ -191,65 +189,51 @@ public class ProductController {
     }
 
     @GetMapping("postDetailsPage")
-    public String postDetailsPage(Model model,
-                                  @RequestParam(name = "product_id") int product_id) {
-
-
-
+    public String postDetailsPage(Model model, @RequestParam(name = "product_id") int product_id) {
         Map<String, Object> productTotalDtoList = productService.selectSecondhandDetailProduct(product_id);
         model.addAttribute("productTotalDtoList", productTotalDtoList);
-
         productService.updateSecondhandDetailProductCount(product_id);
-
         return "secondhandProduct/postDetailsPage";
     }
 
     @GetMapping("chatRoomPage")
     public String chatRoomPage() {
-
         return "secondhandProduct/chatRoomPage";
     }
+
     // 채팅방 생성 - 전체
     @RequestMapping("allChatRoomPage")
     public String allChatRoomPage(HttpSession session, Model model) {
-
         UserDto sessionUserInfo = (UserDto) session.getAttribute("sessionUserInfo");
         List<SaleChatRoomDto> allChatRoomDto = chatService.selectAllChatRoomList(sessionUserInfo.getId());
-
         model.addAttribute("allChatRoomDto", allChatRoomDto);
         model.addAttribute("currentUserId", sessionUserInfo.getId());
-
         return "partials/secondhandProduct/allChatRoomPage :: content";
     }
+
     // 채팅방 생성 - 구매
     @RequestMapping("buyChatRoomPage")
     public String buyChatRoomPage(HttpSession session, Model model) {
-
         UserDto sessionUserInfo = (UserDto) session.getAttribute("sessionUserInfo");
         List<SaleChatRoomDto> buyChatRoomDto = chatService.selectBuyChatRoomList(sessionUserInfo.getId());
-
         model.addAttribute("buyChatRoomDto", buyChatRoomDto);
-
         return "partials/secondhandProduct/buyChatRoomPage :: content";
     }
+
     // 채팅방 생성 - 판매
     @RequestMapping("saleChatRoomPage")
     public String saleChatRoomPage(HttpSession session, Model model) {
-
         UserDto sessionUserInfo = (UserDto) session.getAttribute("sessionUserInfo");
         List<SaleChatRoomDto> saleChatRoomDto = chatService.selectSaleChatRoomList(sessionUserInfo.getId());
-
         model.addAttribute("saleChatRoomDto", saleChatRoomDto);
-
         return "partials/secondhandProduct/saleChatRoomPage :: content";
     }
 
     @GetMapping("productChatMessagePage")
     public String productChatMessagePage(Model model,
-                                        @RequestParam(name = "product_id") int product_id,
-                                        @RequestParam(name = "chat_room_id") int chat_room_id,
+                                         @RequestParam(name = "product_id") int product_id,
+                                         @RequestParam(name = "chat_room_id") int chat_room_id,
                                          @RequestParam(name = "nickname", required = false) String nickname) {
-
 
         Map<String, Object> productTotalDtoList = productService.selectSecondhandDetailProduct(product_id);
         productTotalDtoList.put("nickname", nickname);
@@ -258,8 +242,6 @@ public class ProductController {
         List<ChatMessageDto> chatMessageDtoList = chatService.selectChatRoomMessage(chat_room_id);
         model.addAttribute("chatMessageDtoList", chatMessageDtoList);
 
-
-
         return "secondhandProduct/productChatMessagePage";
     }
 
@@ -267,40 +249,31 @@ public class ProductController {
     @GetMapping("conversationChatPage")
     public String conversationChatPage(Model model,
                                        @RequestParam("product_id") int product_id) {
-
         List<SaleChatRoomDto> saleChatRoomDto = chatService.selectByProductChatRoomList(product_id);
-
         model.addAttribute("saleChatRoomDto", saleChatRoomDto);
-
         return "secondhandProduct/conversationChatPage";
     }
 
     @GetMapping("selectCategoryPage")
     public String selectCategoryPage(Model model) {
-
         List<CategoryDto> categoryDtoList = productService.selectCategoryList();
         model.addAttribute("categoryDtoList", categoryDtoList);
-
         return "secondhandProduct/selectCategoryPage";
     }
 
     @GetMapping("selectCategoryDetailListPage")
     public String selectCategoryDetailListPage(Model model,
                                                @RequestParam(name = "category_id") int category_id) {
-
         List<AllContentsProductDto> selectSecondhandProductByCategoryNameList = productService.selectSecondhandProductByCategoryNameList(category_id);
         model.addAttribute("categoryNameList", selectSecondhandProductByCategoryNameList);
         String categoryName = productService.selectCategoryName(category_id);
         model.addAttribute("categoryName", categoryName);
-
-
         return "secondhandProduct/selectCategoryDetailListPage";
     }
 
     @GetMapping("watchlistPage")
     public String watchlistPage(Model model,
                                 @RequestParam(name = "user_id") int user_id) {
-
         List<AllContentsProductDto> userByWishList = productService.selectSecondhandProductByWishList(user_id);
         model.addAttribute("userByWishList", userByWishList);
         return "secondhandProduct/watchlistPage";
@@ -308,26 +281,22 @@ public class ProductController {
 
     @GetMapping("purchaseHistoryPage")
     public String purchaseHistoryPage() {
-
         return "secondhandProduct/purchaseHistoryPage";
     }
 
     @GetMapping("myNeighborhoodSettingsPage")
     public String myNeighborhoodSettingsPage() {
-
         return "secondhandProduct/myNeighborhoodSettingsPage";
     }
 
     @GetMapping("neighborhoodCertificationPage")
     public String neighborhoodCertificationPage() {
-
         return "secondhandProduct/neighborhoodCertificationPage";
     }
 
     @GetMapping("productModificationPage")
     public String productModificationPage(HttpSession session, Model model,
                                           @RequestParam("product_id") int product_id) {
-
         UserDto sessionUserInfo = (UserDto) session.getAttribute("sessionUserInfo");
         model.addAttribute("sessionUserInfo", sessionUserInfo);
 
@@ -339,6 +308,4 @@ public class ProductController {
 
         return "secondhandProduct/productModificationPage";
     }
-
-
 }
