@@ -100,10 +100,12 @@ function getMeetingList() {
                 const meetingImage = newMeetingWrapper.querySelector(".meetingImage");
                 meetingImage.src = `/images/${meetingData.clubMeetingDto.main_image}`;
 
-                // const joinMeetingBtn = newMeetingWrapper.querySelector(".join-meeting-btn");
-                // joinMeetingBtn.onclick = () => {
-                //     joinMeeting(meetingData.clubMeetingDto.id);
-                // }
+                const joinMeetingBtn = newMeetingWrapper.querySelector(".join-meeting-btn");
+                console.log(joinMeetingBtn);
+                
+                joinMeetingBtn.onclick = () => {
+                    joinMeeting(meetingData.clubMeetingDto.id);
+                }
 
                 meetingWrapperBox.appendChild(newMeetingWrapper);
             }
