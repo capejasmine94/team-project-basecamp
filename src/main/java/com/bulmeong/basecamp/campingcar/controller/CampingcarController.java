@@ -38,6 +38,55 @@ public class CampingcarController {
         return "campingcar/campingCarDetailPage";
     }
 
+    @RequestMapping("dRules")
+    public String dRules(@RequestParam("id") int id, Model model) {
+        utils.loginUser();
+        return "campingcar/dRules";
+    }
+
+    @RequestMapping("dCarInfo")
+    public String dCarInfo(@RequestParam("id") int id, Model model) {
+        utils.loginUser();
+        return "campingcar?dCarInfo";
+    }
+
+    @RequestMapping("dCarDetail")
+    public String dCarDetail(@RequestParam("id") int id, Model model) {
+        utils.loginUser();
+        return "campingcar/dCarDetail";
+    }
+
+    @RequestMapping("dCarOption")
+    public String dCarOption(@RequestParam("id") int id, Model model) {
+        utils.loginUser();
+        return "cmapingcar/dCarOption";
+    }
+
+    @RequestMapping("dRentalCondition")
+    public String dRentalCondition(@RequestParam("id") int id, Model model) {
+        utils.loginUser();
+        Map<String,Object> campingcarDetails = campingcarService.getCampingCarDetailByid(id);
+        model.addAttribute("campingcarDetails", campingcarDetails);
+
+        return "campingcar/dRentalCondition";
+    }
+
+    @RequestMapping("dReviews") 
+    public String dReviews(@RequestParam("id") int id, Model model) {
+        utils.loginUser();
+        return "campingcar/dReviews";
+    }
 
 
+    @RequestMapping("dCancelPolicy")
+    public String dCancelPolicy(@RequestParam("id") int id, Model model) {
+        utils.loginUser();
+        return "campingcar/dCancelPolicy";
+    }
+
+    @RequestMapping("test")
+    public String test() {
+
+        return "campingcar/commontest";
+    }
 }
