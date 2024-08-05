@@ -10,7 +10,9 @@
     
     <script src="/public/js/util.js"></script>
     <script src="/public/js/camp/user.js"></script>
-
+    <script>
+        initUser();
+    </script>
     <style>
         .material-symbols-outlined {
           font-variation-settings:
@@ -404,7 +406,7 @@
                     <div class="row" th:if="${session.sessionUserInfo != null}">
                         <div class="col mt-1 text-end pe-3 text-primary">
                             <span class="fw-semibold">마일리지 사용</span>
-                            <span class="moneyInput ms-3" id="useMileage"></span>
+                            <span class="moneyInput ms-3" id="useMileage">0</span>
                             <span class="ms-2">원</span>
                         </div>
                     </div>
@@ -532,8 +534,10 @@
         const kids = parseInt(new URLSearchParams(window.location.search).get('kid'));
         const cars = parseInt(new URLSearchParams(window.location.search).get('car'));
         let mileage = 0;
-        if(document.getElementById('useMileage') != null)
-           mileage = parseInt(document.getElementById('useMileage').innerText.replace(',',''));
+        if(document.getElementById('useMileage').innerText != null){
+            let mileageValue = parseInt(document.getElementById('useMileage').innerText.replace(',',''));
+            mileage = mileageValue;
+        }
         const carValue = curArea.dto.car_pay * cars;
         const kidValue = curArea.dto.kid_pay * kids;
         const adultValue = curArea.dto.adult_pay * adults;
@@ -541,7 +545,6 @@
         totalValue = totalValue + adultValue + kidValue + carValue;
         totalValue -= mileage;
        
-
         totalPrise.innerText = totalValue;
         addColonMoneyInput();
         return totalValue;
@@ -604,10 +607,15 @@
         });
     }
     function onMileageInput(e) {
+        if(currentUser() == null) {
+            checkLogin();
+            return;
+        }
         let number = e.target.value;
         if(number > 100) //마일리지 일정 이상
             number = 100;
         const mileage = document.getElementById('useMileage');
+        number = number <= 0 ? 0 : number;
         mileage.innerText = number;
         refreshTotalPrise();
     }

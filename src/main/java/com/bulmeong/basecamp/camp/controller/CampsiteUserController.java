@@ -6,10 +6,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.bulmeong.basecamp.camp.dto.CampsiteOrderDto;
-import com.bulmeong.basecamp.camp.dto.CampsiteOrderUserInfoDto;
 import com.bulmeong.basecamp.camp.service.CampsiteService;
 import com.bulmeong.basecamp.common.util.Utils;
-import com.bulmeong.basecamp.user.dto.UserDto;
 
 @Controller
 @RequestMapping("camp")

@@ -53,7 +53,7 @@ public class ClubController {
 
     @RequestMapping("main")
     public String clubMain(HttpSession session, Model model){
-        util.loginUser(3);
+        util.loginUser(2);
 
         UserDto userDto = (UserDto)session.getAttribute("sessionUserInfo");
 

@@ -32,6 +32,13 @@ public class RestCampsiteUserController {
         return result;
     }
 
+    @RequestMapping("initUser")
+    public RestResponseDto initUser() {
+        RestResponseDto result = new RestResponseDto();
+        result.add("sessionUser", utils.getSession("sessionUserInfo"));
+        return result;
+    }
+
     @RequestMapping("initReservationInfo")
     public RestResponseDto initReservationInfo(@RequestParam("area_id") String area_id) {
         RestResponseDto result = new RestResponseDto();

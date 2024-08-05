@@ -437,7 +437,7 @@ public class RestStoreController {
         return restResponseDto;
     }
 
-    @RequestMapping("writeReview")
+    @PostMapping("writeReview")
     public RestResponseDto writeReview(@RequestBody ProductReviewDto productReviewDto){
         RestResponseDto restResponseDto = new RestResponseDto();
 
