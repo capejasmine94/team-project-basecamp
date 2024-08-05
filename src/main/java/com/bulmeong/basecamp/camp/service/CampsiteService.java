@@ -380,8 +380,11 @@ public class CampsiteService {
         Map<String, Object> result = new HashMap<>();
         CampsiteOrderDto orderDto = campsiteSqlMapper.getOrderByResvCode(resvCode);
         result.put("dto", orderDto);
+        result.put("camp", campsiteSqlMapper.getCampsiteByPointId(orderDto.getPoint_id()));
+        result.put("area", campsiteSqlMapper.getAreaByPointId(orderDto.getPoint_id()));
         result.put("carNumbers", campsiteSqlMapper.getCarNumberList(orderDto.getId()));
         result.put("userInfo", campsiteSqlMapper.getUserInfoByOrderId(orderDto.getId()));
+        result.put("point", campsiteSqlMapper.pointByPointId(orderDto.getPoint_id()));
         return result;
     }
     public List<Map<String, Object>> getOrderByUserId(int user_id) {
@@ -390,8 +393,11 @@ public class CampsiteService {
         for(CampsiteOrderDto orderDto : list){
         Map<String, Object> map = new HashMap<>();
             map.put("dto", orderDto);
+            map.put("camp", campsiteSqlMapper.getCampsiteByPointId(orderDto.getPoint_id()));
+            map.put("area", campsiteSqlMapper.getAreaByPointId(orderDto.getPoint_id()));
             map.put("carNumbers", campsiteSqlMapper.getCarNumberList(orderDto.getId()));
             map.put("userInfo", campsiteSqlMapper.getUserInfoByOrderId(orderDto.getId()));
+            map.put("point", campsiteSqlMapper.pointByPointId(orderDto.getPoint_id()));
             result.add(map);
         }
         return result;

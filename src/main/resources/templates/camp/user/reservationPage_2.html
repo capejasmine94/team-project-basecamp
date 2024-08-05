@@ -533,8 +533,9 @@
         const adults = parseInt(new URLSearchParams(window.location.search).get('adult'));
         const kids = parseInt(new URLSearchParams(window.location.search).get('kid'));
         const cars = parseInt(new URLSearchParams(window.location.search).get('car'));
+        const mileageInput = document.getElementById('useMileage');
         let mileage = 0;
-        if(document.getElementById('useMileage').innerText != null){
+        if(mileageInput != null && mileageInput.innerText != null){
             let mileageValue = parseInt(document.getElementById('useMileage').innerText.replace(',',''));
             mileage = mileageValue;
         }

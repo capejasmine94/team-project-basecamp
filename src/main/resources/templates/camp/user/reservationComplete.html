@@ -23,22 +23,74 @@
 <div class="main">
     <div class="container-fluid">
        <div class="row mt-5 fs-5 pt-3">
-            <div class="col fw-semibold">
+            <div class="col fw-semibold text-center">
                 <span>예약이 완료되었습니다!</span>
             </div>
        </div>
-       <div class="row">
+       <div class="row mt-2">
             <div class="col mx-2 border p-2">
-                <div class="row">
+                <div class="row ms-1">
                     <div class="col">
-                        <span class="fw-semibold">이름</span>
-                        <span class="ms-2" th:text="${session.order.dto.name}"></span>
+                        <div class="row">
+                            <div class="col-3 text-end">
+                                <span class="fw-semibold">캠핑장</span>
+                            </div>
+                            <div class="col"> <span class="ms-3" th:text="${session.order.camp.camp_name}"></span></div>
+                        </div>
+                        <div class="row mt-1">
+                            <div class="col-3 text-end">
+                                <span class="fw-semibold">구역</span>
+                            </div>
+                            <div class="col">
+                                <span class="ms-3" th:text="${session.order.area.name}"></span>
+                                <span class="text-secondary ms-2">(</span>
+                                <span class="text-secondary" th:text="${session.order.point[0].name}"></span>
+                                <span class="text-secondary">)</span>
+                            </div>
+                        </div>
+                        <div class="row mt-3">
+                            <div class="col-3 text-end">
+                                <span class="fw-semibold">이름</span>
+                            </div>
+                            <div class="col"><span class="ms-3" th:text="${session.order.dto.customer_name}"></span></div>
+                        </div>
+                        <div class="row mt-1">
+                            <div class="col-3 text-end">
+                                <span class="fw-semibold">연락처</span>
+                            </div>
+                            <div class="col"><span class="ms-3" th:text="${session.order.dto.customer_phone}"></span></div>
+                        </div>
+                        <div class="row mt-2" th:if="${session.order.carNumbers.size() > 0}">
+                            <div class="col-3 text-end">
+                                <span class="fw-semibold">차량</span>
+                            </div>
+                        </div>
+                        <div class="row mt-1" th:each="car : ${session.order.carNumbers}">
+                            <div class="col"><span th:text="${car.car_number}"></span></div>
+                        </div>
+                        <div class="row mt-1">
+                            <div class="col-3 text-end">
+                                <span class="fw-semibold">가격</span>
+                            </div>
+                            <div class="col"><span class="ms-3 moneyInput" th:text="${session.order.dto.prise}"></span></div>
+                        </div>
+                        <div class="row mt-3">
+                            <div class="col-3 text-end">
+                                <span class="fw-semibold">예약일</span>
+                            </div>
+                            <div class="col ms-3"><span th:text="${#dates.format(session.order.dto.start_date, 'YYYY-MM-dd')}"></span> ~ <span th:text="${#dates.format(session.order.dto.end_date, 'YYYY-MM-dd')}"></span></div>
+                        </div>
+                        
                     </div>
                 </div>
-                <div class="row mt-1">
-                    <div class="col">
-                        <span class="fw-semibold">연락처</span>
-                        <span class="ms-2" th:text="${session.order.dto.phone}"></span>
+                <div class="row my-4 fs-5 justify-content-center">
+                    <div class="col-auto p-3 py-2 text-center border">
+                        <span class="fw-semibold me-3">예약번호</span>
+                        <span th:text="${session.order.dto.reservation_code}"></span>
+                        <div class="text-secondary new-fs-9">
+                            예약번호를 통해 예약을 조회하실 수 있습니다.<br>
+                            비회원의 경우 꼭 예약번호를 기억하세요!
+                        </div>
                     </div>
                 </div>
             </div>

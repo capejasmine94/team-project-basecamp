@@ -243,7 +243,7 @@
         </select>
         <!-- 포인트번호로 포인트 -->
         <select id="pointByPointId" resultType="com.bulmeong.basecamp.camp.dto.CampsiteAreaPointDto">
-            select * from bc_campsite_area_point where point_id = #{point_id} order by id
+            select * from bc_campsite_area_point where id = #{point_id} order by id
         </select>
         <!-- 고유번호로 캠핑장 -->
         <select id="getCampsiteDtoById" resultType="com.bulmeong.basecamp.camp.dto.CampsiteDto">
@@ -422,7 +422,7 @@
         </insert>
 
         <!-- 차량번호 등록 -->
-        <insert id="bc_campsite_car_number">
+        <insert id="registerCarNumber">
             INSERT into bc_campsite_car_number (
                 order_id,
                 car_number
@@ -432,6 +432,55 @@
                 #{car_number}
             )
         </insert>
+
+        <!-- 예약번호로 예약 -->
+        <select id="getOrderByResvCode" resultType="com.bulmeong.basecamp.camp.dto.CampsiteOrderDto">
+            SELECT * from bc_campsite_order
+            where reservation_code = #{reservation_code}
+        </select>
+
+        <select id="getOrderByUserId" resultType="com.bulmeong.basecamp.camp.dto.CampsiteOrderDto">
+            SELECT odr.* from bc_campsite_order odr
+            inner join bc_campsite_order_userinfo uinfo
+            on odr.id = uinfo.order_id
+            where user_id = #{user_id}
+        </select>
+
+        <!-- 차량번호 가져오기 -->
+        <select id="getCarNumberList" resultType="com.bulmeong.basecamp.camp.dto.CampsiteCarNumberDto">
+            SELECT * from bc_campsite_car_number
+            where order_id = #{order_id}
+        </select>
+
+        <!-- 예약번호로 유저정보 가져오기 -->
+        <select id="getUserInfoByOrderId" resultType="com.bulmeong.basecamp.camp.dto.CampsiteOrderUserInfoDto">
+            SELECT * from bc_campsite_order_userinfo
+            where order_id = #{order_id}
+        </select>
+
+        <select id="getCampsiteByPointId"  resultType="com.bulmeong.basecamp.camp.dto.CampsiteDto">
+            SELECT
+                c.*
+            FROM
+                bc_campsite_area_point p
+            JOIN
+                bc_campsite_area a ON p.area_id = a.id
+            JOIN
+                bc_campsite c ON a.campsite_id = c.id
+            WHERE
+                p.id = #{point_id};
+        </select>
+
+        <select id="getAreaByPointId"  resultType="com.bulmeong.basecamp.camp.dto.CampsiteAreaDto">
+            SELECT
+                a.*
+            FROM
+                bc_campsite_area_point p
+            JOIN
+                bc_campsite_area a ON p.area_id = a.id
+            WHERE
+                p.id = #{point_id};
+        </select>
     <!-- ======================================================================== -->
 
 

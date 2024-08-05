@@ -41,15 +41,7 @@ function initSession() {
 function currentUserInfo(){
     return userInfo;
 }
-function initUser() {
-    url = '/api/campsiteCenter/initUser';
-    fetch(url)
-    .then(response => response.json())
-    .then((response) => {
-        //로그인 체크
-        userInfo = response.data.sessionUser;
-    });
-}
+
 function getCampsite() { return campsite; }
 
 function initRegisterCamp() {

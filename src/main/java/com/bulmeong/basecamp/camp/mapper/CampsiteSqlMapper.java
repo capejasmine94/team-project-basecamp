@@ -78,5 +78,7 @@ public interface CampsiteSqlMapper {
     public List<CampsiteCarNumberDto> getCarNumberList(@Param("order_id")int order_id);
     public List<CampsiteOrderUserInfoDto> getUserInfoByOrderId(@Param("order_id")int order_id);
     public List<CampsiteOrderDto> getOrderByUserId(@Param("user_id")int user_id);
+    public CampsiteDto getCampsiteByPointId(@Param("point_id") int point_id);
+    public CampsiteAreaDto getAreaByPointId(@Param("point_id") int point_id);
 
 }

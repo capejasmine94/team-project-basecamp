@@ -39,6 +39,13 @@ public class RestCampsiteUserController {
         return result;
     }
 
+    @RequestMapping("saveReservationData")
+    public RestResponseDto saveReservationData() {
+        RestResponseDto result = new RestResponseDto();
+        utils.setSession("redirectAfterLogin", "/camp/reservation");
+        return result;
+    }
+
     @RequestMapping("initReservationInfo")
     public RestResponseDto initReservationInfo(@RequestParam("area_id") String area_id) {
         RestResponseDto result = new RestResponseDto();

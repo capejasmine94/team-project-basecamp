@@ -400,7 +400,12 @@
                 submit.submit();
             },
             function(){
-                location.href='/user/login';
+                const url ='/api/camp/saveReservationData';
+                fetch(url)
+                .then(response => response.json())
+                .then((response) => { 
+                    location.href='/user/login';
+                });
             }
         );
         }
