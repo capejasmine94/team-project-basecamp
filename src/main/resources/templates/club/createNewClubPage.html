@@ -125,7 +125,7 @@
                           
                                 <div class="col d-grid">
                                     <select id="start_year" class="form-control" name="start_year">
-                                        <option value="제한없음">제한없음</option>
+                                        <option value="0">제한없음</option>
                                         <option th:each="year : ${#numbers.sequence(1941, 2024)}"
                                                 th:value="${year}" th:text="${year}"></option>
                                     </select>
@@ -135,7 +135,7 @@
                                 </div>
                                 <div class="col d-grid">
                                     <select id="end_year" class="form-control" name="end_year">
-                                        <option value="제한없음">제한없음</option>
+                                        <option value="5000">제한없음</option>
                                         <option th:each="year : ${#numbers.sequence(1941, 2024)}"
                                                 th:value="${year}" th:text="${year}"></option>
                                     </select>

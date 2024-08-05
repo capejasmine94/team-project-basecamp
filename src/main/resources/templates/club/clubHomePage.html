@@ -48,6 +48,26 @@
             border: none !important;
             }
 
+            .fixed-size {
+            width: 200px; /* 원하는 너비로 설정 */
+            height: 200px; /* 원하는 높이로 설정 */
+            object-fit: cover; /* 이미지 비율을 유지하면서 크기에 맞게 자르기 */
+            }
+
+            .navbar-custom {
+            transition: background-color 0.3s, color 0.3s;
+            }
+            .navbar-transparent {
+                background-color: transparent !important;
+                color: white !important;
+            }
+            .navbar-solid {
+                background-color: #f8f9fa !important;
+                color: black !important;
+            }
+            .navbar-custom .btn, .navbar-custom .material-icons {
+                transition: color 0.3s;
+            }
         </style>
 
     </head>
@@ -60,6 +80,7 @@
                 </div>
             </div>
         </div>
+
   
         <div class="container new-bg-gray px-0 overflow-x-hidden">
             <!-- 전체 박스 -->
@@ -111,19 +132,6 @@
                                 </div>
                             </div>
                         </div>
-                        <!-- <div class="row pt-2">
-                            <div class="col-auto d-flex align-items-center" style="font-size: 0.9em;">
-                                <span class="material-symbols-outlined text-secondary">location_on</span>
-                                <span class="text-secondary" th:text="${map.clubRegionCategoryDto.region_name}"></span>
-                            </div>
-                            <div class="col-auto d-flex align-items-center" style="font-size: 0.9em;">
-                                <span class="material-symbols-outlined text-secondary">group</span>
-                                <span class="fw-semi-bold" th:text="${map.totalClubMember}"></span>
-                                        <span class="text-secondary" th:text="' / ' +${map.clubDto.capacity}"></span>
-                            </div>
-                            
-                        </div> -->
-
 
                         <div class="row border-bottom border-2 pb-4">
                             <div class="col">
@@ -180,66 +188,6 @@
                             </div>
                         </div>
 
-
-
-
-
-                       
-                        <!-- <div class="row border rounded mb-3">
-                            <div class="col text-center px-0">
-                                <div class="rectangles" style="display: flex; gap: 10px;">
-                                    <div class="rectangle" style="width: 25em; height: 10em; border: 1px solid #fff; overflow: hidden; position: relative;">
-                                        
-                                        <img th:src="|/images/${map.clubDto.main_image}|"style="width: 100%; height: 100%; object-fit: cover;">
-                                        <div class="badge bg-opacity-50 bg-dark" style="position: absolute; top: 5px; right: 5px;  color: #fff; padding: 10px;">
-                                            <i class="bi bi-heart" th:text="' ' + ${totalBookmark}"></i><span></span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div> -->
-
-                        
-
-
-                         <!-- 소모임 홈 - 소모임 정보 카드부분 -->
-                        <!-- <div class="row border rounded py-2 shadow-sm">
-                            <div class="col-auto">
-
-                                <div class="row pb-2">
-                                    <div class="col" style="font-size: 0.8em;">
-                                        <div class="row">
-                                            <div class="col-auto pe-0 d-flex align-items-center">
-                                                <span class="badge text-bg-danger d-flex align-items-center">NEW</span>
-                                            </div>
-                                            <div class="col ps-1">                                         
-                                                <span class="text-secondary" th:text="${map.clubRegionCategoryDto.region_name}"></span>
-                                                <span class="text-secondary">|</span>
-                                                <span class="text-secondary" th:text="'멤버 ' + ${map.totalClubMember}"></span>
-                                                <span class="text-secondary">|</span>
-                                                <span class="text-secondary" th:text="${#dates.format(map.clubDto.created_at, 'yy.MM.dd')}"></span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                
-
-                                <div class="row pb-1">
-                                    <div class="col fw-semi-bold" th:text="${map.clubDto.description}" >
-                                    </div> 
-                                </div>
-                                <div class="row">
-                                    <div class="col" style="font-size: 0.8em;" th:text="${map.clubDto.description}">
-                                        소모임 설명
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col text-end text-secondary" style="font-size: 0.8em;">
-                                <i class="bi bi-gear"></i>
-                            </div>
-                        </div> -->
-
-              
 
 
                         <div class="row border-bottom border-4 pt-2 pb-3">
@@ -350,22 +298,7 @@
 
                             </div>
                         </div>
-
-
-                                  <!-- <div class="row pt-3 pb-1 border-bottom border-3">
-                            <div class="col text-center fw-bold">
-                                <a th:href="@{/club/home(id=${id})}" style="text-decoration:none; color:black;"><span>홈</span></a>
-                            </div>
-                            <div class="col text-center">
-                                <a th:href="@{/club/board(id=${id})}" style="text-decoration:none; color:black;"><span>게시판</span></a>
-                            </div>
-                            <div class="col text-center">
-                                
-                            </div>
-                        </div> -->
-
-
-                        
+           
 
                     </div>
                 </div>
@@ -374,14 +307,25 @@
                             <!-- <i class="bi bi-plus-circle-fill"></i> -->
                             <i class="bi bi-person-raised-hand"></i>
                         </a>
-            
-            
+            </div>
+
+            <!-- 상단 네비바 -->
+
+            <div class="container fixed-top py-2 navbar-custom navbar-transparent">
+                <div class="row">
+                    <div class="col-auto navbar-brand fs-3" onclick="history.back()">
+                        <i class="bi bi-chevron-left"></i>
+                    </div>
+                    <div class="col align-self-center text-end fs-3">
+                        <i class="bi bi-gear"></i>
+                    </div>
+                </div>
             </div>
 
             <div class="container fixed-bottom py-4" id="registerBtn" th:if="${session.sessionUserInfo != null && isMemberInClub == 0}">
                 <div class="row pt-2 pb-3 text-center" th:if="${totalClubMember &lt; confirmCapacity}">
                     <div class="col">
-                        <span onclick="getMeetingList()" id="register-club-btn" class="btn form-control btn-dark">가입하기</span>
+                        <span id="register-club-btn" class="btn form-control btn-dark">가입하기</span>
                     </div>
                 </div>
                 <div class="row text-center" th:unless="${totalClubMember &lt; confirmCapacity}">
@@ -397,118 +341,127 @@
              <!-- 레이아웃이 같은 모달은 재활용이 가능 -->
             <div class="modal fade" id="joinModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                 <div class="modal-dialog modal-dialog-centered">
-                <div class="modal-content">
-                    <div class="modal-body py-4">
+                    <div class="modal-content">
+                        <div class="modal-body py-4">
 
-                        <div class="row">
-                            <div class="col text-center">
-                                <span>모임장이 지정한 성별 또는 나이 조건에 맞지 않아 가입할 수 없습니다.</span>
+                            <div class="row">
+                                <div class="col text-center">
+                                    <span>모임장이 지정한 성별 또는 나이 조건에 맞지 않아 가입할 수 없습니다.</span>
+                                </div>
                             </div>
-                        </div>
-                        <div class="row pt-3">
-                            <div class="col">
-                                <div class="btn btn-success form-control" onclick="joinFailHideModal()">확인</div>
+                            <div class="row pt-3">
+                                <div class="col">
+                                    <div class="btn btn-success form-control" onclick="joinFailHideModal()">확인</div>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
                 </div>
             </div>
 
             <div class="modal fade" id="joinSuccessModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                 <div class="modal-dialog modal-dialog-centered">
-                <div class="modal-content">
-                    <div class="modal-body py-4">
-
-                        <div class="row">
-                            <div class="col text-center">
-                                <span>가입이 완료되었습니다.</span>
+                    <div class="modal-content">
+                        <div class="modal-body py-4">
+                            <div class="row">
+                                <div class="col text-center">
+                                    <span>가입이 완료되었습니다.</span>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
                 </div>
             </div>
 
 
             <!-- 정기모임 템플릿 -->
-        <div class="row d-none" id="meeting-template">
-            <div class="col-11 me-2 meeting-wrapper pt-2 pb-3 border rounded shadow-sm">
+            <div class="row d-none" id="meeting-template">
+                <div class="col-11 me-2 meeting-wrapper pt-2 pb-3 border rounded shadow-sm">
 
-                <div class="row">
-                    <div class="col" style="font-size: 0.8em;">
-                        <span class="meetingDate"></span>
-                        <!-- <span th:text="${#dates.format(meetingData.clubMeetingDto.meeting_date,'MM/dd')}"> </span> -->
-                        <span class="text-danger"> D-4</span>
+                    <div class="row">
+                        <div class="col" style="font-size: 0.8em;">
+                            <span class="meetingDate"></span>
+                            <!-- <span th:text="${#dates.format(meetingData.clubMeetingDto.meeting_date,'MM/dd')}"> </span> -->
+                            <span class="text-danger"> D-4</span>
+                        </div>
+                        <div class="col text-end text-secondary" style="font-size: 0.8em;">
+                            <span>수정</span>
+                        </div>
                     </div>
-                    <div class="col text-end text-secondary" style="font-size: 0.8em;">
-                        <span>수정</span>
+                    <div class="row pb-1 pt-1">
+                        <div class="col fw-bold" style="font-size: 0.9em;">
+                            <span class="meetingName"></span>
+                            <!-- <span th:text="${meetingData.clubMeetingDto.name}"></span> -->
+                        </div>
                     </div>
-                </div>
-                <div class="row pb-1 pt-1">
-                    <div class="col fw-bold" style="font-size: 0.9em;">
-                        <span class="meetingName"></span>
-                        <!-- <span th:text="${meetingData.clubMeetingDto.name}"></span> -->
+                    <div class="row pb-2 mb-2">
+                        <div class="col" style="font-size: 0.8em;">
+                            <span class="meetingDescription"></span>
+                            <!-- <span th:text="${meetingData.clubMeetingDto.description}"></span> -->
+                        </div>
                     </div>
-                </div>
-                <div class="row pb-2 mb-2">
-                    <div class="col" style="font-size: 0.8em;">
-                        <span class="meetingDescription"></span>
-                        <!-- <span th:text="${meetingData.clubMeetingDto.description}"></span> -->
-                    </div>
-                </div>
 
-                <div class="row">
-                    <div class="col">
-                        <div class="row">
-                            <div class="col-4 pe-0">  
-                                
-                                <img class="rounded-2 meetingImage" style="width: 100%; height: 100%;">
-                            </div>
-                            <div class="col" style="font-size: 0.8em;">
-                                <div class="row">
-                                    <div class="col">
-                                        <span class="text-secondary">일시</span>
-                                        <span class="meetingDetailDate"></span>
-                                        <!-- <span th:text="${#dates.format(meetingData.clubMeetingDto.meeting_date, 'yyyy.MM.dd')}"></span> -->
-                                    
-                                    </div>   
+                    <div class="row">
+                        <div class="col">
+                            <div class="row">
+                                <div class="col-4 pe-0">  
+                                    <img class="rounded-2 meetingImage" style="width: 100%; height: 100%;">
                                 </div>
-                                <div class="row">
-                                    <div class="col">
-                                        <span class="text-secondary">위치</span>
-                                        <span class="meetingLocation"></span>
-                                    </div>   
+                                <div class="col" style="font-size: 0.8em;">
+                                    <div class="row">
+                                        <div class="col">
+                                            <span class="text-secondary">일시</span>
+                                            <span class="meetingDetailDate"></span>
+                                            <!-- <span th:text="${#dates.format(meetingData.clubMeetingDto.meeting_date, 'yyyy.MM.dd')}"></span> -->
+                                        </div>   
+                                    </div>
+                                    <div class="row">
+                                        <div class="col">
+                                            <span class="text-secondary">위치</span>
+                                            <span class="meetingLocation"></span>
+                                        </div>   
+                                    </div>
+                                    <div class="row">
+                                        <div class="col">
+                                            <span class="text-secondary">비용</span>
+                                            <span class="meetingFee"></span>
+                                        </div>   
+                                    </div>
+                                    <div class="row">
+                                        <div class="col">
+                                            <span class="text-secondary">참석</span> 
+                                            <span class="text-danger totalJoinMember"></span> / <span class="capacity"></span>
+                                            <span class="text-secondary remainCapacity"></span>
+                                        </div>   
+                                    </div>
                                 </div>
-                                <div class="row">
-                                    <div class="col">
-                                        <span class="text-secondary">비용</span>
-                                        <span class="meetingFee"></span>
-                                    </div>   
-                                </div>
-                                <div class="row">
-                                    <div class="col">
-                                        <span class="text-secondary">참석</span> 
-                                        <span class="text-danger totalJoinMember"></span> / <span class="capacity"></span>
-                                        <span class="text-secondary remainCapacity"></span>
-                                    </div>   
-                                </div>
-                            </div>
-                            <div class="col-auto align-self-center">
-                                <div class="row">
-                                    <div class="col">
-                                        <button type="button" class="btn btn-outline-secondary join-meeting-btn">참석</button>
+                                <div class="col-auto align-self-center">
+                                    <div class="row">
+                                        <div class="col">
+                                            <button type="button" class="btn btn-outline-secondary join-meeting-btn">참석</button>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                       </div>
-
+                        </div>
                     </div>
-                </div>
-               
-            </div>
-        </div>
 
+                </div>
+            </div>
+
+        
+            <script>
+                window.addEventListener('scroll', function() {
+                    var navbar = document.querySelector('.navbar-custom');
+                    if (window.scrollY > 50) {
+                        navbar.classList.remove('navbar-transparent');
+                        navbar.classList.add('navbar-solid');
+                    } else {
+                        navbar.classList.remove('navbar-solid');
+                        navbar.classList.add('navbar-transparent');
+                    }
+                });
+            </script>
    
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
         <script src="/public/js/club/clubHome.js"></script>
