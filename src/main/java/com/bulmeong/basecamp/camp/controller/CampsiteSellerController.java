@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.bulmeong.basecamp.camp.dto.CampsiteAreaDto;
-import com.bulmeong.basecamp.camp.dto.CampsiteAreaPointDto;
 import com.bulmeong.basecamp.camp.dto.CampsiteBankDto;
 import com.bulmeong.basecamp.camp.dto.CampsiteDto;
 import com.bulmeong.basecamp.camp.service.CampsiteService;

@@ -6,6 +6,7 @@ let curPoint = null;
 let camp_category = null;
 let area_category = null;
 
+let userInfo = null;
 //=====================================================================================
 // 세션 초기화
 //=====================================================================================
@@ -35,6 +36,18 @@ function initSession() {
 
         //카테고리 버튼
         initCategoryButtons();
+    });
+}
+function currentUserInfo(){
+    return userInfo;
+}
+function initUser() {
+    url = '/api/campsiteCenter/initUser';
+    fetch(url)
+    .then(response => response.json())
+    .then((response) => {
+        //로그인 체크
+        userInfo = response.data.sessionUser;
     });
 }
 function getCampsite() { return campsite; }
