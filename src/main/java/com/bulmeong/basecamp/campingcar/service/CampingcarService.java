@@ -7,6 +7,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.bulmeong.basecamp.campingcar.dto.BasicFacilitiesDto;
 import com.bulmeong.basecamp.campingcar.dto.CampingCarLikeDto;
 import com.bulmeong.basecamp.campingcar.dto.ProductDetailImgDto;
 import com.bulmeong.basecamp.campingcar.mapper.CampingcarSqlMapper;
@@ -37,24 +38,33 @@ public class CampingcarService {
         campingCarSqlMapper.deleteLikeByLikeDto(campingCarLikeDto);
      } 
 
-    //  상세페에지 
+    //  상세페이지 
     public Map<String,Object> getCampingCarDetailByid(int id) {
         Map<String, Object> result = new HashMap<>();
 
         // 캠핑카 기본 정보 
         Map<String,Object> campingCar = campingCarSqlMapper.findCampingCarById(id);
         result.put("campingcarDto", campingCar);
-
-        // 캠핑카 세부이미지
-        List<ProductDetailImgDto> detailImg = campingCarSqlMapper.findDetail_ImgByCarId(id);
-        result.put("detailImgDto", detailImg);
-
-        //캠핑카 기본 보유 옵션 조회
-        List<Map<String, Object>> basicFacilities  = campingCarSqlMapper.findBasicfacilitiesByCarId(id);
-        result.put("basicFacilitiesDto", basicFacilities);
-
+        // 상세 페이지 리뷰수
+        int countReview = campingCarSqlMapper.countByProductId(id);
+        result.put("countReview", countReview);
         return result;
     }
+
+    //상세페이지_세부이미지 
+    public List<ProductDetailImgDto> getProductDetailImgByProductId(int id) {
+
+        List<ProductDetailImgDto> productDetailImgDto=campingCarSqlMapper.findDetail_ImgByCarId(id);
+        System.out.println("DImg:" + productDetailImgDto);
+        return productDetailImgDto;
+    }
+
+    // 상세페이지_기본 보유 옵션 
+    public List<BasicFacilitiesDto> getBasicFacilitiesByProductId(int id) {
+        List<BasicFacilitiesDto> basicFacilities  = campingCarSqlMapper.findBasicfacilitiesByCarId(id);
+        return basicFacilities;
+    }
+
 
 
 

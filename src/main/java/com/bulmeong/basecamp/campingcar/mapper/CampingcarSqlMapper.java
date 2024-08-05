@@ -6,6 +6,7 @@ import java.util.Map;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
+import com.bulmeong.basecamp.campingcar.dto.BasicFacilitiesDto;
 import com.bulmeong.basecamp.campingcar.dto.CampingCarLikeDto;
 import com.bulmeong.basecamp.campingcar.dto.ProductDetailImgDto;
 
@@ -31,5 +32,7 @@ public interface CampingcarSqlMapper {
     public List<ProductDetailImgDto> findDetail_ImgByCarId(@Param("id") int id);
 
     // 상세페이지_기본보유옵션
-    public List<Map<String,Object>> findBasicfacilitiesByCarId(@Param("id") int id);
+    public List<BasicFacilitiesDto> findBasicfacilitiesByCarId(@Param("id") int id);
+    // 상세페이지_리뷰수
+    public int countByProductId(int id);
 }
