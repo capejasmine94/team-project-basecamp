@@ -185,7 +185,7 @@
 <div th:fragment="topNaviBasecamp" class="container-fluid g-0 border fixed-top bg-white">
     <div class="row mx-2 py-2">
         <div class="col fs4 mt-1 ps-1">
-            <span class="fw-bold" onclick="back()">◀</span>
+            <span id="backKey" class="fw-bold" onclick="back()">◀</span>
         </div>
         <div class="col fs-3 text-end">
             <span class="fw-bold">?</span>
@@ -199,7 +199,10 @@
             <span class="fw-bold">BaseCamp</span>
         </div>
         <div class="col fs-3 text-end">
-            <span class="fw-bold">?</span>
+            <a href="/user/login" class="fw-bold" th:if="${session.sessionUserInfo == null}"><i class="bi bi-person-circle" ></i></a>
+            <a href="/user/myPage" class="fw-bold" th:unless="${session.sessionUserInfo == null}">
+                <img th:src="'/images/' + ${session.sessionUserInfo.profile_image}" alt="" style="width: 1.5em; height: 1.5em;">
+            </a>
         </div>
     </div>
 </div>

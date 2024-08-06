@@ -22,12 +22,12 @@
 <div th:replace="common/navi::bottomNaviBasecamp"></div>
 <div class="main">
     <div class="container-fluid">
-       <div class="row mt-5 fs-5 pt-3">
+       <div class="row mt-5 fs-5 pt-5">
             <div class="col fw-semibold text-center">
                 <span>예약이 완료되었습니다!</span>
             </div>
        </div>
-       <div class="row mt-2">
+       <div class="row mt-3">
             <div class="col mx-2 border p-2">
                 <div class="row ms-1">
                     <div class="col">
@@ -44,7 +44,8 @@
                             <div class="col">
                                 <span class="ms-3" th:text="${session.order.area.name}"></span>
                                 <span class="text-secondary ms-2">(</span>
-                                <span class="text-secondary" th:text="${session.order.point[0].name}"></span>
+                                <span class="text-secondary" th:text="${session.order.point.name}"></span>
+                                <span class="ms-1 text-secondary" th:text="${session.pointNumber}"></span>
                                 <span class="text-secondary">)</span>
                             </div>
                         </div>
@@ -65,7 +66,7 @@
                                 <span class="fw-semibold">차량</span>
                             </div>
                         </div>
-                        <div class="row mt-1" th:each="car : ${session.order.carNumbers}">
+                        <div class="row mt-1 ms-4" th:each="car : ${session.order.carNumbers}">
                             <div class="col"><span th:text="${car.car_number}"></span></div>
                         </div>
                         <div class="row mt-1">
@@ -95,13 +96,72 @@
                 </div>
             </div>
        </div>
+       <div class="row py-4"></div>
+       <div class="row pb-5">
+            <div class="col">
+                <div class="row">
+                    <div class="col fw-semibold fs-5">
+                        함께 하실래요?
+                    </div>
+                </div>
+                <div class="row mt-2">
+                    <div class="col">
+                        <!-- 모임 -->
+                        <div class="row px-1 py-3">
+                            <div class="col fs-4">
+                                <span>CommunityGroup</span>
+                            </div>
+                            <div class="col d-flex align-items-end justify-content-end">
+                                <a href="/club/newClubs"><span class="text-secondary">더보기<i class="bi bi-chevron-right"></i></span></a>
+                            </div>
+                        </div>
+                        <div class="row ms-1 me-1">
+                            <div class="col scroll-list-box overflow-x-auto">
+                                <div class="row">
+                                    <div class="col-auto">
+                                        <div class="row border me-1 rounded-top border-bottom-0" style="width: 11.8em; height: 15em; overflow: hidden">
+                                            <div class="col px-0 pb-0 mb-0">
+                                                <img src="/public/img/common/캠핑장최종.png" style="width: 100%; object-fit: cover;" class="img-fluid fixed-image-size">>
+                                            </div>
+                                        </div>
+    
+                                        <div class="row border shadow-sm rounded-bottom border-top-0" style="width: 11.8em; height: 8em;">
+                                            <div class="col">
+                                                <div class="row pt-3">
+                                                    <div class="col text-center fw-semi-bold text-truncate" style="font-size: 0.9em;">
+                                                        <span>소모임명</span>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col ellipsis-line-two text-secondary text-center" style="font-size: 0.8em;">
+                                                        <span >소모임 설명</span>
+                                                    </div>
+                                                </div>
+                                                <div class="row mt-1 pt-1 justify-content-center">
+                                                    <a class="btn btn-outline-secondary col-auto py-1 d-grid">
+                                                        둘러보기
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div>
+    
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+       </div>
     </div>
 </div>
 
 
 <!-- 네비가 추가됨 -->
 <script>
+    document.getElementById('backKey').classList.add('d-none');
     addColonMoneyInput();
+    
 </script>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>

@@ -64,6 +64,7 @@ public interface CampsiteSqlMapper {
     public void updateCamp(CampsiteDto campsiteDto);
     public List<CampsiteAreaPointDto> pointByAreaId(@Param("area_id") int area_id);
     public List<CampsiteAreaPointDto> pointByPointId(@Param("point_id") int point_id);
+    public CampsiteAreaPointDto pointById(@Param("id") int id);
     public void registerArea(CampsiteAreaDto campsiteAreaDto);
     public void updateArea(CampsiteAreaDto campsiteAreaDto);
     public void registerPoint(CampsiteAreaPointDto pointDto);

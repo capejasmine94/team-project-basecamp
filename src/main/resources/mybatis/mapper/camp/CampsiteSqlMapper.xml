@@ -243,7 +243,11 @@
         </select>
         <!-- 포인트번호로 포인트 -->
         <select id="pointByPointId" resultType="com.bulmeong.basecamp.camp.dto.CampsiteAreaPointDto">
-            select * from bc_campsite_area_point where id = #{point_id} order by id
+            select * from bc_campsite_area_point where point_id = #{point_id} order by id
+        </select>
+        <!-- 고유번호로 포인트 -->
+        <select id="pointById" resultType="com.bulmeong.basecamp.camp.dto.CampsiteAreaPointDto">
+            select * from bc_campsite_area_point where id = #{id}
         </select>
         <!-- 고유번호로 캠핑장 -->
         <select id="getCampsiteDtoById" resultType="com.bulmeong.basecamp.camp.dto.CampsiteDto">

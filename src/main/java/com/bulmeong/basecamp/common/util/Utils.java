@@ -66,6 +66,15 @@ public class Utils {
         return data;
     }
 
+    public String currentUrl() {
+        StringBuilder currentUrlWithParams = new StringBuilder(request.getRequestURL().toString());
+        String queryString = request.getQueryString();
+        if (queryString != null) {
+            currentUrlWithParams.append("?").append(queryString);
+        }
+        return currentUrlWithParams.toString();
+    }
+
     /** 로그인이 필요한지 여부를 알아냅니다. 결과가 true라면 로그인이 필요한 상태입니다. */
     public boolean isNeedLogin() {
         return request.getSession().getAttribute("sessionUserInfo") == null;
