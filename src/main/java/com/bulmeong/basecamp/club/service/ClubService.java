@@ -308,11 +308,13 @@ public class ClubService {
             ClubDto clubDto = clubSqlMapper.selectClubDtoById(id);
             ClubRegionCategoryDto clubRegionCategoryDto = clubSqlMapper.selectRegionCategoryDtoById(clubDto.getRegion_id());
             int totalClubMember = clubSqlMapper.countTotalClubMember(id);
+            UserDto userDto = clubSqlMapper.selectUserDtoById(clubDto.getUser_id());
 
             Map<String, Object> map = new HashMap<>();
             map.put("clubDto", clubDto);
             map.put("clubRegionCategoryDto", clubRegionCategoryDto);
             map.put("totalClubMember", totalClubMember);
+            map.put("userDto", userDto);
 
 
             return map;
@@ -483,6 +485,32 @@ public class ClubService {
                 return false;
             }
             
+        }
+
+        // 소모임 어제 게시글 수 집계
+        public int countYesterdayPost(int id){
+            int yesterdayNewPosts = clubSqlMapper.yesterdayPostCount(id);
+
+            return yesterdayNewPosts;
+        }
+
+        // 소모임 어제 가입자수 집계
+        public int countYesterdayNewMembers(int id){
+            int yesterdayNewMembers = clubSqlMapper.yesterdayNewMembers(id);
+
+            return yesterdayNewMembers;
+        }
+
+        // 소모임 어제 방문자수 집계
+        public int countYesterdayVisit(int id){
+           int yesterdayVisitCount = clubSqlMapper.yesterdayVisitCount(id);
+           return yesterdayVisitCount;
+        }
+
+        // 소모임 오늘 방문자수 집계
+        public int countTodayVisit(int id){
+            int countTodayVisit = clubSqlMapper.todayVisitCount(id);
+            return countTodayVisit;
         }
 
 

@@ -445,4 +445,48 @@
         and user_id = #{user_id}
     </delete>
 
+    <!-- 소모임 어제의 게시글 수 집계 -->
+    <select id="yesterdayPostCount" resultType="int">
+        <![CDATA[
+        select count(*) 
+        from bc_club_post
+        where club_id = #{club_id}
+        and created_at >= curdate() - interval 1 DAY
+        and created_at < curdate()
+        ]]>
+    </select>
+
+    <!-- 소모임 어제의 가입자 수 집계 -->
+     <select id="yesterdayNewMembers" resultType="int">
+        <![CDATA[
+        select count(*)
+        from bc_club_member
+        where club_id = #{club_id}
+        and joined_at >= curdate() - interval 1 DAY 
+        and joined_at < curdate()
+        ]]>
+    </select>
+    
+    <!-- 소모임 어제의 방문자 수 집계 (중복 포함) -->
+    <select id="yesterdayVisitCount" resultType="int">
+        <![CDATA[
+        SELECT COUNT(*)
+        FROM bc_club_visit
+        WHERE club_id = #{club_id}
+        AND visit_date >= CURDATE() - INTERVAL 1 DAY
+        AND visit_date < CURDATE()
+        ]]>
+    </select>
+
+        <!-- 소모임 오늘의 방문자 수 집계 (중복 포함) -->
+    <select id="todayVisitCount" resultType="int">
+        <![CDATA[
+        SELECT COUNT(*)
+        FROM bc_club_visit
+        WHERE club_id = #{club_id}
+        AND visit_date >= CURDATE()
+        AND visit_date < CURDATE() + INTERVAL 1 DAY
+        ]]>
+    </select>
+
 </mapper>

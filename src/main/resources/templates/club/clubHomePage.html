@@ -95,9 +95,17 @@
                                         CLUB NAME
                                     </div>
                                 </div>
-                                <div class="row">
-                                    <div class="col" style="font-size: 0.8em;">
-                                        <span class="text-secondary">모임장</span> sy007
+                                <!-- <div class="row">
+                                    <div class="col" style="font-size: 0.9em;">
+                                        <span class="text-secondary" th:text="'모임장 ' + ${map.userDto.nickname}">모임장</span>
+                                    </div>
+                                </div> -->
+                                <div class="row text-secondary">
+                                    <div class="col-auto pe-0">
+                                        멤버 <span th:text="${totalClubMember}"></span>
+                                    </div>
+                                    <div class="col-auto ps-1">
+                                        <span th:text="' | 방문 ' +${countTodayVisit}"></span>
                                     </div>
                                 </div>
                             </div>

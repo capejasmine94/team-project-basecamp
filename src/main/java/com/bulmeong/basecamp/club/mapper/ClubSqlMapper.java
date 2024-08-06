@@ -105,5 +105,13 @@ public interface ClubSqlMapper {
 
     // 소모임 가입조건 확인
     public ClubJoinConditionDto selectClubJoinCondition(int id);
+
+    // 소모임 관리 페이지
+    public int yesterdayPostCount(int id);
+    public int yesterdayNewMembers(int id);
+    
+    // 소모임 방문자수 집계
+    public int yesterdayVisitCount(int id);
+    public int todayVisitCount(int id);
 }
 

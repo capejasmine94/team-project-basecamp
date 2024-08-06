@@ -10,36 +10,39 @@
     </head>
     <body>
         <div class="container new-bg-gray px-0 overflow-x-hidden">
+
+            <div class="row border-bottom bg-body-tertiary py-3">
+                <div class="col">
+                    <div class="row">
+                        <div class="col text-center">
+                            소모임 관리
+                        </div>
+                    </div>
+                </div>
+            </div>
            
             <!-- 전체박스 -->
             <div class="row">
                 <div class="col mx-4">
 
-                    <div class="row border py-3">
-                        <div class="col">
-                            <div class="row">
-                                <div class="col text-center">
-                                    소모임 관리
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                  
 
                      <!-- 소모임 정보 -->
-                    <div class="row my-3 border">
+                    <div class="row my-3 border py-3 bg-body-tertiary">
                         <div class="col">
-                             <div class="row">
+                             <div class="row pb-1">
                                 <div class="col">
-                                    소모임명
+                                    <span th:text="${clubDetail.clubDto.name}"></span>
                                 </div>
                              </div>
-                             <div class="row">
+                             <div class="row pb-1 text-secondary">
                                 <div class="col">
-                                    소모임 개설일
+                                    <span>since </span>
+                                    <span th:text="${clubDetail.clubDto.created_at}"></span>
                                 </div>
                              </div>
-                             <div class="row">
-                                <div class="col">
+                             <div class="row text-secondary">
+                                <div class="col" th:text="${clubDetail.userDto.nickname}">
                                     소모임장 닉네임
                                 </div>
                              </div>
@@ -50,10 +53,9 @@
                      <div class="row  text-center">
                         <div class="col">
                             <div class="row pb-2">
-                                <div class="col border me-2">
+                                <div class="col border me-2 bg-body-tertiary">
                                     <div class="row">
-                                        <div class="col">
-                                            3
+                                        <div class="col" th:text="${totalMember}">
                                         </div>
                                     </div>
                                     <div class="row">
@@ -62,10 +64,10 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col border">
+                                <div class="col border bg-body-tertiary">
                                     <div class="row">
                                         <div class="col">
-                                            3
+                                            <span th:text="${yesterdayNewPosts}"></span>
                                         </div>
                                     </div>
                                     <div class="row">
@@ -76,10 +78,10 @@
                                 </div>
                             </div>
                             <div class="row pb-3">
-                                <div class="col me-2 border">
+                                <div class="col me-2 border bg-body-tertiary">
                                     <div class="row">
                                         <div class="col">
-                                            3
+                                            <span th:text="${yesterdayNewMembers}"></span>
                                         </div>
                                     </div>
                                     <div class="row">
@@ -89,10 +91,10 @@
                                     </div>
                                 
                                 </div>
-                                <div class="col border">
+                                <div class="col border bg-body-tertiary">
                                     <div class="row">
                                         <div class="col">
-                                            3
+                                            <span th:text="${yesterdayVisitCount}"></span>
                                         </div>
                                     </div>
                                     <div class="row">
@@ -106,10 +108,10 @@
                      </div>
 
                      <!-- 소모임 관리 기능 -->
-                      <div class="row text-center">
+                      <div class="row text-center bg-body-tertiary">
                         <div class="col">
                             <div class="row">
-                                <div class="col-3 border">
+                                <div class="col-3 border py-2">
                                     <div class="row">
                                         <div class="col">
                                             <span class="material-symbols-outlined">
@@ -118,12 +120,12 @@
                                         </div>
                                     </div>
                                     <div class="row">
-                                        <div class="col">
+                                        <div class="col px-0" style="font-size: 0.8em;">
                                             게시글 관리
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-3 border border-start-0">
+                                <div class="col-3 border py-2 border-start-0">
                                     <div class="row">
                                         <div class="col">
                                             <span class="material-symbols-outlined">
@@ -132,12 +134,12 @@
                                         </div>
                                     </div>
                                     <div class="row">
-                                        <div class="col">
+                                        <div class="col px-0" style="font-size: 0.8em;">
                                             멤버 관리
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-3 border border-start-0">
+                                <div class="col-3 py-2 border border-start-0">
                                     <div class="row">
                                         <div class="col">
                                             <span class="material-symbols-outlined">
@@ -146,12 +148,12 @@
                                         </div>
                                     </div>
                                     <div class="row">
-                                        <div class="col">
+                                        <div class="col px-0" style="font-size: 0.8em;">
                                             가입 관리
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-3 border border-start-0">
+                                <div class="col-3 py-2 border border-start-0">
                                     <div class="row">
                                         <div class="col">
                                             <span class="material-symbols-outlined">
@@ -160,14 +162,14 @@
                                         </div>
                                     </div>
                                     <div class="row">
-                                        <div class="col">
+                                        <div class="col px-0" style="font-size: 0.8em;">
                                             등급 관리
                                         </div>
                                     </div>
                                 </div>
                             </div>
                             <div class="row">
-                                <div class="col-3 border border-top-0">
+                                <div class="col-3 border py-2 border-top-0">
                                     <div class="row">
                                         <div class="col">
                                             <span class="material-symbols-outlined">
@@ -176,12 +178,12 @@
                                         </div>
                                     </div>
                                     <div class="row">
-                                        <div class="col">
+                                        <div class="col px-0" style="font-size: 0.8em;">
                                             스탭 관리
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-3 border-bottom border-end">
+                                <div class="col-3 py-2 border-bottom border-end">
                                     <div class="row">
                                         <div class="col">
                                             <span class="material-symbols-outlined">
@@ -190,12 +192,12 @@
                                         </div>
                                     </div>
                                     <div class="row">
-                                        <div class="col">
+                                        <div class="col px-0" style="font-size: 0.8em;">
                                             메뉴 관리
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-3 border-bottom border-end">
+                                <div class="col-3 py-2 border-bottom border-end">
                                     <div class="row">
                                         <div class="col">
                                             <span class="material-symbols-outlined">
@@ -204,12 +206,12 @@
                                         </div>
                                     </div>
                                     <div class="row">
-                                        <div class="col">
+                                        <div class="col px-0" style="font-size: 0.8em;">
                                             카페 통게
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-3 border-bottom border-end">
+                                <div class="col-3 py-2 border-bottom border-end">
                                     <div class="row">
                                         <div class="col">
                                             <span class="material-symbols-outlined">
@@ -218,7 +220,7 @@
                                         </div>
                                     </div>
                                     <div class="row">
-                                        <div class="col">
+                                        <div class="col px-0" style="font-size: 0.8em;">
                                             카페 기본 정보  
                                         </div>
                                     </div>
@@ -228,9 +230,9 @@
                       </div>
 
                       <!-- 광고 -->
-                      <div class="row mt-3 border">
+                      <div class="row mt-3 py-4 mb-5 border">
                         <div class="col">
-                                카페 스마트봇
+                                카페 스마트봇 광고 배너
                         </div>
                       </div>
 

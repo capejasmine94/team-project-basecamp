@@ -53,7 +53,7 @@ public class ClubController {
 
     @RequestMapping("main")
     public String clubMain(HttpSession session, Model model){
-        util.loginUser(2);
+        util.loginUser(3);
 
         UserDto userDto = (UserDto)session.getAttribute("sessionUserInfo");
 
@@ -128,9 +128,11 @@ public class ClubController {
         }
         int totalClubMember = clubService.countTotalClubMember(id);
         int confirmCapacity = clubService.confirmCapacity(id);
+        int countTodayVisit = clubService.countTodayVisit(id);
 
         model.addAttribute("totalClubMember", totalClubMember);
         model.addAttribute("confirmCapacity", confirmCapacity);
+        model.addAttribute("countTodayVisit", countTodayVisit);
 
         return "club/clubHomePage";
     }
@@ -353,7 +355,6 @@ public class ClubController {
     }
 
 
-
 //  정모 개설하기
     @RequestMapping("createNewMeeting")
     public String createNewMeeting(@RequestParam("id") int id, Model model){
@@ -390,9 +391,20 @@ public class ClubController {
         return "redirect:/club/home?id=";
     }
 
-    // 소모일 설정
+    // 소모일 관리
     @RequestMapping("managementClub")
-    public String managementClub(){
+    public String managementClub(@RequestParam("id")int id, Model model){
+        int totalMember = clubService.countTotalClubMember(id);
+        Map<String, Object> clubDetail = clubService.clubDetail(id);
+        int yesterdayNewPosts = clubService.countYesterdayPost(id);
+        int yesterdayNewMembers = clubService.countYesterdayNewMembers(id);
+        int yesterdayVisitCount = clubService.countYesterdayVisit(id);
+
+        model.addAttribute("totalMember", totalMember);
+        model.addAttribute("clubDetail", clubDetail);
+        model.addAttribute("yesterdayNewPosts", yesterdayNewPosts);
+        model.addAttribute("yesterdayNewMembers", yesterdayNewMembers);
+        model.addAttribute("yesterdayVisitCount", yesterdayVisitCount);
 
         return "club/clubManagementPage";
     }
