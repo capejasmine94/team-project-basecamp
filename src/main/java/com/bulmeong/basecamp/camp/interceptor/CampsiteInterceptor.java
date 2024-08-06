@@ -80,7 +80,6 @@ public class CampsiteInterceptor implements HandlerInterceptor {
 
             case "reservation":
                 pageDetail = "예약 조회";
-                isButtonActive = true;
                 break;
         }
         resultMap.put("title", pageDetail);

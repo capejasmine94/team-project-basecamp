@@ -27,7 +27,7 @@ function back() {
 }
 
 function initUser() {
-    url = '/api/campsiteCenter/initUser';
+    url = '/api/camp/initUser';
     fetch(url)
     .then(response => response.json())
     .then((response) => {

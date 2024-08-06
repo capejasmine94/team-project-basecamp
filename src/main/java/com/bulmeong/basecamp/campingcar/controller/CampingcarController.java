@@ -1,5 +1,6 @@
 package com.bulmeong.basecamp.campingcar.controller;
 
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,6 +9,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.bulmeong.basecamp.campingcar.dto.BasicFacilitiesDto;
+import com.bulmeong.basecamp.campingcar.dto.ProductDetailImgDto;
 import com.bulmeong.basecamp.campingcar.service.CampingcarService;
 import com.bulmeong.basecamp.common.util.Utils;
 
@@ -41,25 +44,32 @@ public class CampingcarController {
     @RequestMapping("dRules")
     public String dRules(@RequestParam("id") int id, Model model) {
         utils.loginUser();
+        Map<String,Object> campingcarDetails = campingcarService.getCampingCarDetailByid(id);
+        model.addAttribute("campingcarDetails", campingcarDetails);
         return "campingcar/dRules";
     }
 
     @RequestMapping("dCarInfo")
     public String dCarInfo(@RequestParam("id") int id, Model model) {
         utils.loginUser();
-        return "campingcar?dCarInfo";
-    }
-
-    @RequestMapping("dCarDetail")
-    public String dCarDetail(@RequestParam("id") int id, Model model) {
-        utils.loginUser();
-        return "campingcar/dCarDetail";
+        Map<String,Object> campingcarDetails = campingcarService.getCampingCarDetailByid(id);
+        model.addAttribute("campingcarDetails", campingcarDetails);
+        
+        List<ProductDetailImgDto> detailImgDto = campingcarService.getProductDetailImgByProductId(id);
+        model.addAttribute("detailImgDto", detailImgDto);
+        return "campingcar/dCarInfo";
     }
 
     @RequestMapping("dCarOption")
     public String dCarOption(@RequestParam("id") int id, Model model) {
         utils.loginUser();
-        return "cmapingcar/dCarOption";
+        Map<String,Object> campingcarDetails = campingcarService.getCampingCarDetailByid(id);
+        model.addAttribute("campingcarDetails", campingcarDetails);
+
+        List<BasicFacilitiesDto> facilities = campingcarService.getBasicFacilitiesByProductId(id);
+        model.addAttribute("facilities", facilities);
+
+        return "campingcar/dCarOption";
     }
 
     @RequestMapping("dRentalCondition")
@@ -74,6 +84,8 @@ public class CampingcarController {
     @RequestMapping("dReviews") 
     public String dReviews(@RequestParam("id") int id, Model model) {
         utils.loginUser();
+        Map<String,Object> campingcarDetails = campingcarService.getCampingCarDetailByid(id);
+        model.addAttribute("campingcarDetails", campingcarDetails);
         return "campingcar/dReviews";
     }
 
@@ -81,6 +93,8 @@ public class CampingcarController {
     @RequestMapping("dCancelPolicy")
     public String dCancelPolicy(@RequestParam("id") int id, Model model) {
         utils.loginUser();
+        Map<String,Object> campingcarDetails = campingcarService.getCampingCarDetailByid(id);
+        model.addAttribute("campingcarDetails", campingcarDetails);
         return "campingcar/dCancelPolicy";
     }
 

@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.bulmeong.basecamp.camp.service.CampsiteService;
 import com.bulmeong.basecamp.campingcar.dto.RestResponseDto;
 import com.bulmeong.basecamp.common.util.Utils;
+import com.bulmeong.basecamp.user.dto.UserDto;
 
 @RestController
 
@@ -63,4 +64,5 @@ public class RestCampsiteUserController {
         result.add("number", Integer.parseInt(number));
         return result;
     }
+
 }

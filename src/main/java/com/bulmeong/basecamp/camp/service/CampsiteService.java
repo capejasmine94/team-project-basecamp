@@ -141,6 +141,10 @@ public class CampsiteService {
         List<CampsiteAreaDto> areaList = campsiteSqlMapper.getAreaListByCampsiteId(campsite_id);
         
         for (CampsiteAreaDto area : areaList) {
+            if(area.getProcess().equals("설정 필요") ||
+               campsiteSqlMapper.getPointList(area.getId()).isEmpty() ||
+               campsiteSqlMapper.getPointList(area.getId()) == null)
+               continue;
             int area_id = area.getId();
             list = campsiteSqlMapper.selectAreaCategory(area_id);
             
@@ -205,12 +209,14 @@ public class CampsiteService {
         // 메인 이미지
         result.put("mainImages", campsiteSqlMapper.campMainImage(campsite_id));
 
+        //예약
+        result.put("reservation", getOrderByCampsiteId(campsite_id));
         //리뷰
 
         // 마무리
         return result;
     }
-    
+
     //고유 번호로 구역 모든 정보
     public Map<String,Object> areaInfo(int area_id) {
         // 초기값
@@ -232,8 +238,8 @@ public class CampsiteService {
         // 카테고리
         result.put("category", campsiteSqlMapper.selectAreaCategory(area_id));
 
-         // 메인 이미지
-         result.put("mainImages", campsiteSqlMapper.areaMainImage(area_id));
+        // 메인 이미지
+        result.put("mainImages", campsiteSqlMapper.areaMainImage(area_id));
 
         // 마무리
         return result;
@@ -372,10 +378,56 @@ public class CampsiteService {
         List<Map<String,Object>> result = new ArrayList<>();
         List<CampsiteDto> campsiteList = campsiteSqlMapper.getAllCampsiteDto();
         for(CampsiteDto dto : campsiteList) {
-            result.add(campsiteInfo(dto.getId()));
+            result.add(campsiteInfoForUser(dto.getId()));
         }
         return result;
     }
+
+    //유저가 보는 캠핑장리스트
+    public Map<String,Object> campsiteInfoForUser(int campsite_id) {
+        // 초기값
+        Map<String, Object> result = new HashMap<>();
+
+        // Dto 확인
+        CampsiteDto campsiteDto = campsiteSqlMapper.getCampsiteDtoById(campsite_id);
+        if(campsiteDto == null) return null;
+        
+        // Dto
+        result.put("dto", campsiteDto);
+
+        // 구역
+        List<CampsiteAreaDto> areaList = campsiteSqlMapper.getAreaListByCampsiteId(campsite_id);
+        List<Map<String,Object>> areaInfoList = new ArrayList<>();
+        for(CampsiteAreaDto area : areaList) {
+            if(area == null) continue;
+            if(area.getProcess().equals("설정 필요")) continue;
+            if(campsiteSqlMapper.getPointList(area.getId()).isEmpty() ||
+            campsiteSqlMapper.getPointList(area.getId()) == null) continue;
+            int area_id = area.getId();
+            Map<String,Object> areaInfo = areaInfo(area_id);
+            areaInfoList.add(areaInfo);
+        }
+        result.put("area", areaInfoList);
+
+        //기타 정보
+        int min_Prise = campsiteSqlMapper.minPriseByCampsiteId(campsite_id);
+        result.put("minPrise", min_Prise);
+
+        //카테고리 
+        result.put("campCategory", campsiteSqlMapper.selectCampCategory(campsite_id));
+        result.put("showCategory", showCategory(campsite_id));
+
+        // 메인 이미지
+        result.put("mainImages", campsiteSqlMapper.campMainImage(campsite_id));
+
+        //리뷰
+
+        // 마무리
+        return result;
+    }
+    
+
+    // 예약번호로 예약 가져오기
     public Map<String, Object> getOrderByCode(String resvCode) {
         Map<String, Object> result = new HashMap<>();
         CampsiteOrderDto orderDto = campsiteSqlMapper.getOrderByResvCode(resvCode);
@@ -384,9 +436,11 @@ public class CampsiteService {
         result.put("area", campsiteSqlMapper.getAreaByPointId(orderDto.getPoint_id()));
         result.put("carNumbers", campsiteSqlMapper.getCarNumberList(orderDto.getId()));
         result.put("userInfo", campsiteSqlMapper.getUserInfoByOrderId(orderDto.getId()));
-        result.put("point", campsiteSqlMapper.pointByPointId(orderDto.getPoint_id()));
+        result.put("point", campsiteSqlMapper.pointById(orderDto.getPoint_id()));
         return result;
     }
+    
+    // 회원의 모든 예약 리스트
     public List<Map<String, Object>> getOrderByUserId(int user_id) {
         List<Map<String, Object>> result = new ArrayList<>();
         List<CampsiteOrderDto> list = campsiteSqlMapper.getOrderByUserId(user_id);
@@ -397,16 +451,34 @@ public class CampsiteService {
             map.put("area", campsiteSqlMapper.getAreaByPointId(orderDto.getPoint_id()));
             map.put("carNumbers", campsiteSqlMapper.getCarNumberList(orderDto.getId()));
             map.put("userInfo", campsiteSqlMapper.getUserInfoByOrderId(orderDto.getId()));
-            map.put("point", campsiteSqlMapper.pointByPointId(orderDto.getPoint_id()));
+            map.put("point", campsiteSqlMapper.pointById(orderDto.getPoint_id()));
             result.add(map);
         }
         return result;
     }
-    // 포인트로 포인트 리스트
+
+    // 캠프장의 모든 예약 리스트
+    public List<Map<String, Object>> getOrderByCampsiteId(int campsite_id) {
+        List<Map<String, Object>> result = new ArrayList<>();
+        List<CampsiteOrderDto> list = campsiteSqlMapper.getOrderByCampsiteId(campsite_id);
+        for(CampsiteOrderDto orderDto : list){
+        Map<String, Object> map = new HashMap<>();
+            map.put("dto", orderDto);
+            map.put("carNumbers", campsiteSqlMapper.getCarNumberList(orderDto.getId()));
+            map.put("area", campsiteSqlMapper.getAreaByPointId(orderDto.getPoint_id()));
+            map.put("userInfo", campsiteSqlMapper.getUserInfoByOrderId(orderDto.getId()));
+            map.put("point", campsiteSqlMapper.pointById(orderDto.getPoint_id()));
+            result.add(map);
+        }
+        return result;
+    }
+    
+    // 포인트 번호로 포인트 리스트
     public List<CampsiteAreaPointDto> pointByPointId(int point_id) {
         return campsiteSqlMapper.pointByPointId(point_id);
     }
 
+    // 예약 등록
     public void registerOrder(CampsiteOrderDto campsiteOrderDto, int useMileage, String[] carNumbers) {
         campsiteSqlMapper.registerOrder(campsiteOrderDto);
 

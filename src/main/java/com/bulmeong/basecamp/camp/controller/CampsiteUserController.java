@@ -16,14 +16,14 @@ public class CampsiteUserController {
     private CampsiteService service;
     @Autowired
     private Utils utils;
-    
+
     @RequestMapping("/main")
     public String mainPage() {
+        utils.setSession("redirectAfterLogin",utils.currentUrl());
         utils.setSession("campsiteList", service.campsiteList());
         utils.setSession("category", service.categories());
         return "camp/user/main";
     }
-
     @RequestMapping("")
     public String redirectMain1() {
         return "redirect:/camp/main";
@@ -35,12 +35,14 @@ public class CampsiteUserController {
 
     @RequestMapping("/campsite")
     public String campsitePage(@RequestParam("campsite_id") int campsite_id) {
-        utils.setSession("campsiteUser", service.campsiteInfo(campsite_id));
+        utils.setSession("redirectAfterLogin",utils.currentUrl());
+        utils.setSession("campsiteUser", service.campsiteInfoForUser(campsite_id));
         return "camp/user/showCampsite";
     }
 
     @RequestMapping("/reservation")
     public String reservationPage(@RequestParam(name="area_id",defaultValue = "0") int area_id) {
+        utils.setSession("redirectAfterLogin",utils.currentUrl());
         utils.setModel("selectArea", area_id);
         return "camp/user/reservationPage_1";
     }
@@ -52,6 +54,7 @@ public class CampsiteUserController {
         @RequestParam("kid") int kid,
         @RequestParam("car") int car
     ) {
+        utils.setSession("redirectAfterLogin",utils.currentUrl());
         utils.setModel("adult", adult);
         utils.setModel("kid", kid);
         utils.setModel("car", car);
@@ -62,11 +65,13 @@ public class CampsiteUserController {
     @RequestMapping("/finalReservationProcess")
     public String finalReservationProcess(CampsiteOrderDto campsiteOrderDto,
         @RequestParam(defaultValue = "",name="car_number") String[] carNumbers,
-        @RequestParam(defaultValue = "0", name= "useMileage") int useMileage) {
+        @RequestParam(defaultValue = "0", name= "useMileage") int useMileage,
+        @RequestParam("number") int number) {
         // 예약 번호
         campsiteOrderDto.setReservation_code(utils.randomCode(12));
         service.registerOrder(campsiteOrderDto, useMileage, carNumbers);
         utils.setSession("order", service.getOrderByCode(campsiteOrderDto.getReservation_code()));
+        utils.setSession("pointNumber", number);
         return "redirect:/camp/reservationComplete";
     }
 

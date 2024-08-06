@@ -50,6 +50,21 @@ public class CampsiteSellerController {
         return "camp/seller/area";
     }
 
+    @RequestMapping("/reservation")
+    public String manageReservation() {
+        return "camp/seller/reservation";
+    }
+
+    @RequestMapping("/review")
+    public String manageReview() {
+        return "camp/seller/review";
+    }
+
+    @RequestMapping("/asset")
+    public String manageAsset() {
+        return "camp/seller/asset";
+    }
+
     @RequestMapping("/registerUser")
     public String registerUser() {
         utils.setModel("newCampsiteId", service.newCampsiteId());

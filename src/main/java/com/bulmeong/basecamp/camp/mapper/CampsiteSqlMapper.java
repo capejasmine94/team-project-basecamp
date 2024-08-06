@@ -64,6 +64,7 @@ public interface CampsiteSqlMapper {
     public void updateCamp(CampsiteDto campsiteDto);
     public List<CampsiteAreaPointDto> pointByAreaId(@Param("area_id") int area_id);
     public List<CampsiteAreaPointDto> pointByPointId(@Param("point_id") int point_id);
+    public CampsiteAreaPointDto pointById(@Param("id") int id);
     public void registerArea(CampsiteAreaDto campsiteAreaDto);
     public void updateArea(CampsiteAreaDto campsiteAreaDto);
     public void registerPoint(CampsiteAreaPointDto pointDto);
@@ -80,5 +81,6 @@ public interface CampsiteSqlMapper {
     public List<CampsiteOrderDto> getOrderByUserId(@Param("user_id")int user_id);
     public CampsiteDto getCampsiteByPointId(@Param("point_id") int point_id);
     public CampsiteAreaDto getAreaByPointId(@Param("point_id") int point_id);
+    public List<CampsiteOrderDto> getOrderByCampsiteId(@Param("campsite_id") int campsite_id);
 
 }

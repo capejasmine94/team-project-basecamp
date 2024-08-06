@@ -33,24 +33,31 @@
     <!-- 상세페이지_캠핑카 기본 정보 조회-->
     <select id="findCampingCarById" resultType="Map">
         select         
-                bc.id, 
-                bc.rental_company_id,
-                brci.comp_name, 
-                bctc.name AS car_type_name, 
-                bc.product_name, 
-                bc.main_img, 
-                bc.short_description,
-                bc.rental_fee_weekdays, 
-                bc.rental_fee_weekend,
-                bc.garage_address, 
-                bc.overnight_stay,
-                bc.seating_capacity, 
-                bc.sleeping_capacity, 
-                bdlc.name AS driver_license_name, 
-                bdac.name AS driver_age_condition_name, 
-                bdec.name AS driver_experience_condition_name,
-                bc.pet_friendly, 
-                bc.is_opened
+            bc.id, 
+            bc.rental_company_id,
+            brci.comp_name, 
+            brci.comp_profile_image,
+            brci.representative_name, 
+            brci.comp_email,
+            bctc.name AS car_type_name, 
+            bc.product_name, 
+            bc.main_img, 
+            bc.short_description,
+            bc.detailed_description,
+            bc.avaid_time,
+            bc.return_dateTime,
+            bc.rental_fee_weekdays, 
+            bc.rental_fee_weekend,
+            bc.garage_address, 
+            bc.overnight_stay,
+            bc.seating_capacity, 
+            bc.sleeping_capacity, 
+            bdlc.name AS driver_license_name,  
+            bdac.name AS driver_age_condition_name, 
+            bdec.name AS driver_experience_condition_name,
+            bc.cancellation_policy,
+            bc.pet_friendly, 
+            bc.is_opened
             from bc_campingcar bc 
             INNER join bc_rental_company_info brci on bc.rental_company_id = brci.id
             INNER join bc_location_category blc on brci.location_category_id = blc.id
@@ -63,7 +70,7 @@
     </select>
     <!-- 상세페이지_세부이미지 -->
     <select id="findDetail_ImgByCarId" resultType="com.bulmeong.basecamp.campingcar.dto.ProductDetailImgDto">
-        select * from bc_product_detail_img bpdi 
+        select original_filename from bc_product_detail_img bpdi 
         where product_id=#{id}
     </select>
 
@@ -76,5 +83,11 @@
         inner join bc_product_x_basic_facilities bpxbf on bc.id = bpxbf.product_id
         inner join bc_car_basic_facilities bcbf on bpxbf.basic_facilities_id  = bcbf.id 
         where bc.id = #{id}    
+    </select>
+
+    <!-- 상세페이지_리뷰 카운트 -->
+    <select id="countByProductId" resultType="int">
+        select count(*) from bc_campingcar_like
+        where product_id=#{id}
     </select>
 </mapper>

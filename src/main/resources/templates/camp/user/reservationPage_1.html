@@ -398,6 +398,8 @@
             function(){
                 document.getElementById('selectAreaId').value = currentArea().dto.id;
                 submit.submit();
+                popupClose();
+                bootstrap.Offcanvas.getOrCreateInstance('#offcanvasSelectOption').hide();
             },
             function(){
                 const url ='/api/camp/saveReservationData';
@@ -405,6 +407,8 @@
                 .then(response => response.json())
                 .then((response) => { 
                     location.href='/user/login';
+                    popupClose();
+                    bootstrap.Offcanvas.getOrCreateInstance('#offcanvasSelectOption').hide();
                 });
             }
         );
@@ -412,6 +416,8 @@
         else{
             document.getElementById('selectAreaId').value = currentArea().dto.id;
             submit.submit();
+            popupClose();
+            bootstrap.Offcanvas.getOrCreateInstance('#offcanvasSelectOption').hide();
         }   
     }
 
@@ -458,6 +464,7 @@
             sessionInfo = response.data.needLogin;  
         });
     }
+    
 </script>
 </body>
 </html>

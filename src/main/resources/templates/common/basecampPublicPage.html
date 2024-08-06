@@ -13,22 +13,24 @@
             object-position: center;
         }
         .profileImage {
-            width: 35px;  /* 원하는 너비 */
-            height: 35px; /* 원하는 높이 */
+            width: 60px;  /* 원하는 너비 */
+            height: 60px; /* 원하는 높이 */
             object-fit: cover; /* 이미지가 요소를 채우도록 조정 */
             aspect-ratio: 1/1;
         }
         .scroll-container {
             overflow-x: auto;
-            scrollbar-width: none;
             white-space: nowrap;
             display: flex;
-            padding-left: 0.5rem; /* Optional: To give some padding at the start */
+            gap: 1rem; /* 간격 조절 */
+            padding-left: 0.5rem;
+        }
+        .scroll-container::-webkit-scrollbar {
+            display: none;  /* Chrome, Safari, Opera */
         }
         .scroll-item {
-            flex: 0 0 auto; /* Ensure the flex items do not shrink */
-            width: 12rem;
-            margin-right: 1rem; /* Space between items */
+            flex: 0 0 auto;
+            width: auto;
         }
         .fixed-image-size {
             width: 100%;
@@ -52,7 +54,10 @@
             height: 100vh;
         }
         .fixed-background {
-            background-color: #0F273C !important; /* 원하는 배경색으로 변경 */
+            /* background-color: #0F273C !important; /* 원하는 배경색으로 변경 */
+            background: #091724;
+            background: linear-gradient(to left, #0D263C, #091724);
+            background: -webkit-linear-gradient(to right, #1C3F5B, #0D263C);
         }
         .topNav {
             transition: background-color 0.1s;
@@ -76,7 +81,7 @@
             align-items: end;
         }
         .custom-offcanvas-background {
-            background-image: url('/public/img/common/오프배경.jpeg'); /* 배경 이미지 경로 */
+            /*background-image: url('/public/img/common/오프배경.jpeg'); !* 배경 이미지 경로 *!*/
             background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
@@ -104,7 +109,7 @@
             </button>
         </div>
         <!-- canvas 시작 -->
-        <div class="row g-0 offcanvas offcanvas-end custom-offcanvas-width custom-offcanvas-background text-white" id="offcanvasRight" style="width: 12rem;">
+        <div class="row g-0 offcanvas offcanvas-end custom-offcanvas-width custom-offcanvas-background" id="offcanvasRight" style="width: 12rem;">
             <div class="col">
                 <!-- 로그인 & 비로그인 -->
                 <div class="row offcanvas-header">
@@ -112,20 +117,20 @@
                         <div class="row">
                             <div class="col">
                                 <a href="/user/login" th:if="${session.sessionUserInfo == null}">
-                                    <span class="fs-4 text-white">로그인</span>
+                                    <span class="fs-4 ">로그인</span>
                                 </a>
                                 <span th:text="${session.sessionUserInfo.nickname}" th:if="${session.sessionUserInfo != null}"
-                                      class="fs-4 text-white">닉네임</span>
-                                <span class="fs-4 text-white" th:if="${session.sessionUserInfo != null}"> 님</span>
+                                      class="fs-4">닉네임</span>
+                                <span class="fs-4" th:if="${session.sessionUserInfo != null}"> 님</span>
                             </div>
                         </div>
                     </div>
                     <div class="col-3 text-end d-flex align-items-end">
                         <button th:if="${session.sessionUserInfo == null}"
                                 type="button" class="btn-close-custom" data-bs-dismiss="offcanvas">
-                            <span class="fs-1 material-symbols-outlined text-white mt-1">close</span>
+                            <span class="fs-1 material-symbols-outlined mt-1">close</span>
                         </button>
-                        <a th:if="${session.sessionUserInfo != null}" href="/user/logoutProcess" class="text-white mt-2">
+                        <a th:if="${session.sessionUserInfo != null}" href="/user/logoutProcess" class="mt-2">
                             <span class="fs-1 material-symbols-outlined">door_open</span>
                         </a>
                     </div>
@@ -135,7 +140,7 @@
                 <div class="row offcanvas-body">
                     <div class="col">
                         <!-- 캠핑장 -->
-                        <a href="#" class="row align-end text-white">
+                        <a href="#" class="row align-end">
                             <div class="col-auto pe-0">
                                 <span class="fs-1 material-symbols-outlined">camping</span>
                             </div>
@@ -144,7 +149,7 @@
                             </div>
                         </a>
                         <!-- 캠핑카 -->
-                        <a href="#" class="row mt-2 align-end text-white">
+                        <a href="#" class="row mt-2 align-end">
                             <div class="col-auto pe-0">
                                 <span class="fs-1 material-symbols-outlined">car_repair</span>
                             </div>
@@ -153,7 +158,7 @@
                             </div>
                         </a>
                         <!-- 상점 -->
-                        <a href="#" class="row mt-2 align-end text-white">
+                        <a href="#" class="row mt-2 align-end ">
                             <div class="col-auto pe-0">
                                 <span class="material-symbols-outlined">storefront</span>
                             </div>
@@ -162,7 +167,7 @@
                             </div>
                         </a>
                         <!-- 인스타 -->
-                        <a href="#" class="row mt-2 align-end text-white">
+                        <a href="#" class="row mt-2 align-end ">
                             <div class="col-auto pe-0">
                                 <span class="material-symbols-outlined">shopping_cart_checkout</span>
                             </div>
@@ -171,7 +176,7 @@
                             </div>
                         </a>
                         <!-- 모임 -->
-                        <a href="#" class="row mt-2 align-end text-white">
+                        <a href="#" class="row mt-2 align-end ">
                             <div class="col-auto pe-0">
                                 <span class="material-symbols-outlined">settings_accessibility</span>
                             </div>
@@ -180,7 +185,7 @@
                             </div>
                         </a>
                         <!-- 중고거래 -->
-                        <a href="#" class="row mt-2 align-end text-white">
+                        <a href="/secondhandProduct/mainPage" class="row mt-2 align-end ">
                             <div class="col-auto pe-0">
                                 <span class="material-symbols-outlined">settings_accessibility</span>
                             </div>
@@ -189,7 +194,7 @@
                             </div>
                         </a>
                         <!-- My -->
-                        <a href="#" class="row mt-2 align-end text-white">
+                        <a href="#" class="row mt-2 align-end ">
                             <div class="col-auto pe-0">
                                 <span class="material-symbols-outlined">settings_accessibility</span>
                             </div>
@@ -197,7 +202,7 @@
                                 <span class="fs-2">My</span>
                             </div>
                         </a>
-<!--                        -->
+                        <!--                        -->
                     </div>
                 </div>
             </div>
@@ -215,11 +220,8 @@
                 <div class="col">
                     <!--예약하기-->
                     <div class="row px-1 py-3">
-                        <div class="col fs-4">
-                            <span>Reservation</span>
-                        </div>
-                        <div class="col d-flex align-items-end justify-content-end">
-                            <a href="#"><span class="text-secondary">더보기<i class="bi bi-chevron-right"></i></span></a>
+                        <div class="col-auto fs-4">
+                            <span>Reservation</span><span class="ms-1 text-secondary" style="font-size: 0.7rem">예약하기</span>
                         </div>
                     </div>
                     <div class="row px-2">
@@ -242,11 +244,11 @@
                 <div class="col">
                     <!-- 상품 구매 -->
                     <div class="row px-1 py-3">
-                        <div class="col fs-4">
-                            <span>Market</span>
+                        <div class="col-auto fs-4">
+                            <span>Market</span><span class="ms-1 text-secondary" style="font-size: 0.7rem">상점</span>
                         </div>
                         <div class="col d-flex align-items-end justify-content-end">
-                            <a href="#"><span class="text-secondary">더보기<i class="bi bi-chevron-right"></i></span></a>
+                            <a href="#"><span class="text-secondary" style="font-size: 0.7rem">더보기<i class="bi bi-chevron-right"></i></span></a>
                         </div>
                     </div>
                     <div class="row">
@@ -258,91 +260,91 @@
                                             <img src="/public/img/storeImage/icon001.png">
                                         </div>
                                     </div>
-                                    <div class="row pt-2 text-center">
+                                    <div class="row pt-1 text-center">
                                         <div class="col f08 fw-bold text-body-tertiary">
                                             텐트
                                         </div>
                                     </div>
                                 </a>
-                                <a href="/store/category?category_id=2" class="col-3 pb-3">
+                                <a href="/store/category?category_id=2" class="col-3 pb-2">
                                     <div class="row">
                                         <div class="col icon-col">
                                             <img src="/public/img/storeImage/icon001.png">
                                         </div>
                                     </div>
-                                    <div class="row pt-2 text-center">
+                                    <div class="row pt-1 text-center">
                                         <div class="col f08 fw-bold text-body-tertiary">
                                             타프
                                         </div>
                                     </div>
                                 </a>
-                                <a href="/store/category?category_id=3" class="col-3 pb-3">
+                                <a href="/store/category?category_id=3" class="col-3 pb-2">
                                     <div class="row">
                                         <div class="col icon-col">
                                             <img src="/public/img/storeImage/icon002.png">
                                         </div>
                                     </div>
-                                    <div class="row pt-2 text-center">
+                                    <div class="row pt-1 text-center">
                                         <div class="col f08 fw-bold text-body-tertiary">
                                             캠핑가구
                                         </div>
                                     </div>
                                 </a>
-                                <a href="/store/category?category_id=4" class="col-3 pb-3">
+                                <a href="/store/category?category_id=4" class="col-3 pb-2">
                                     <div class="row">
                                         <div class="col icon-col">
                                             <img src="/public/img/storeImage/icon007.png">
                                         </div>
                                     </div>
-                                    <div class="row pt-2 text-center">
+                                    <div class="row pt-1 text-center">
                                         <div class="col f08 fw-bold text-body-tertiary">
                                             취침용품
                                         </div>
                                     </div>
                                 </a>
-                                <a href="/store/category?category_id=5" class="col-3 pb-3">
+                                <a href="/store/category?category_id=5" class="col-3 pb-2">
                                     <div class="row">
                                         <div class="col icon-col">
                                             <img src="/public/img/storeImage/icon003.png">
                                         </div>
                                     </div>
-                                    <div class="row pt-2 text-center">
+                                    <div class="row pt-1 text-center">
                                         <div class="col f08 fw-bold text-body-tertiary">
                                             주방용품
                                         </div>
                                     </div>
                                 </a>
-                                <a href="/store/category?category_id=6" class="col-3 pb-3">
+                                <a href="/store/category?category_id=6" class="col-3 pb-2">
                                     <div class="row">
                                         <div class="col icon-col">
                                             <img src="/public/img/storeImage/icon004.png">
                                         </div>
                                     </div>
-                                    <div class="row pt-2 text-center">
+                                    <div class="row pt-1 text-center">
                                         <div class="col f08 fw-bold text-body-tertiary">
                                             계절용품
                                         </div>
                                     </div>
                                 </a>
-                                <a href="/store/category?category_id=7" class="col-3 pb-3">
+                                <a href="/store/category?category_id=7" class="col-3 pb-2">
                                     <div class="row">
                                         <div class="col icon-col">
                                             <img src="/public/img/storeImage/icon001.png">
                                         </div>
                                     </div>
-                                    <div class="row pt-2 text-center">
+                                    <div class="row pt-1 text-center">
                                         <div class="col f08 fw-bold text-body-tertiary">
                                             밀키트
                                         </div>
                                     </div>
                                 </a>
-                                <div class="col-3 pb-3">
+                                <div class="col-3 pb-2">
                                     <div class="row">
                                         <div class="col icon-col">
                                             <img src="/public/img/storeImage/icon012.png">
                                         </div>
                                     </div>
-                                    <div class="row pt-2 text-center">
+                                    <div class="row pt-1 text-center">
                                         <div class="col f08 fw-bold text-body-tertiary">
                                             베스트
                                         </div>
@@ -355,71 +357,16 @@
             </div>
             <!-- border -->
             <div class="row mt-3 mx-1 border-bottom"></div>
-            <!-- 남현지 -->
-            <div class="row">
-                <div class="col">
-                    <!--인스타-->
-                    <div class="row px-1 py-3">
-                        <div class="col fs-4">
-                            <span>Insta</span>
-                        </div>
-                        <div class="col d-flex align-items-end justify-content-end">
-                            <a href="#"><span class="text-secondary">더보기<i class="bi bi-chevron-right"></i></span></a>
-                        </div>
-                    </div>
-                    <div class="row px-2">
-                        <div class="scroll-container">
-                            <!-- ex1 -->
-                            <div class="fs-3 scroll-item">
-                                <div class="row">
-                                    <div class="col-auto">
-                                        <img src="/public/img/common/캠핑장최종.png" class="profileImage rounded-circle">
-                                    </div>
-                                    <div class="col ps-0 d-flex align-items-center" style="font-size: 0.8em">
-                                        아이디
-                                    </div>
-                                </div>
-                                <div class="row mt-1">
-                                    <!-- 사진링크 -->
-                                    <a href="#" class="col fs-3 me-1">
-                                        <img src="/public/img/common/캠핑장최종.png" style="width: 12rem; height: 17rem;">
-                                    </a>
-                                </div>
-                            </div>
-                            <!-- ex2 추후 삭제 -->
-                            <div class="fs-3 scroll-item">
-                                <div class="row">
-                                    <div class="col-auto">
-                                        <img src="/public/img/common/캠핑장최종.png" class="profileImage rounded-circle">
-                                    </div>
-                                    <div class="col ps-0 d-flex align-items-center" style="font-size: 0.8em">
-                                        아이디
-                                    </div>
-                                </div>
-                                <div class="row mt-1">
-                                    <!-- 사진링크 -->
-                                    <a href="#" class="col fs-3 me-1">
-                                        <img src="/public/img/common/캠핑장최종.png" style="width: 12rem; height: 17rem;">
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
-            </div>
-            <!-- border -->
-            <div class="row mt-4 mx-1 border-bottom"></div>
             <!-- 이시은 -->
             <div class="row">
                 <div class="col">
                     <!-- 모임 -->
                     <div class="row px-1 py-3">
-                        <div class="col fs-4">
-                            <span>CommunityGroup</span>
+                        <div class="col-auto fs-4">
+                            <span>CommunityGroup</span><span class="ms-1 text-secondary" style="font-size: 0.7rem">소모임</span>
                         </div>
                         <div class="col d-flex align-items-end justify-content-end">
-                            <a href="/club/newClubs"><span class="text-secondary">더보기<i class="bi bi-chevron-right"></i></span></a>
+                            <a href="#"><span class="text-secondary" style="font-size: 0.7rem">더보기<i class="bi bi-chevron-right"></i></span></a>
                         </div>
                     </div>
                     <div class="row ms-1 me-1">
@@ -460,16 +407,65 @@
             </div>
             <!-- border -->
             <div class="row mt-4 mx-1 border-bottom"></div>
+            <!-- 남현지 -->
+            <div class="row">
+                <div class="col">
+                    <!--인스타-->
+                    <div class="row px-1 py-3">
+                        <div class="col-auto fs-4">
+                            <span>Insta</span><span class="ms-1 text-secondary" style="font-size: 0.7rem">인스타</span>
+                        </div>
+                        <div class="col d-flex align-items-end justify-content-end">
+                            <a href="#"><span class="text-secondary" style="font-size: 0.7rem">더보기<i class="bi bi-chevron-right"></i></span></a>
+                        </div>
+                    </div>
+                    <div class="row px-2">
+                        <div class="scroll-container">
+                            <!-- ex1 -->
+                            <div class="col-auto fs-3 scroll-item">
+                                <div class="row">
+                                    <div class="col text-center">
+                                        <img src="/public/img/common/캠핑장최종.png" class="profileImage rounded-circle">
+                                    </div>
+                                </div>
+                                <div class="row mt-1">
+                                    <!-- 사진링크 -->
+                                    <div class="col text-center" style="font-size: 0.7em">
+                                        <span>아이디</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- ex2 추후 삭제 -->
+                            <div class="col-auto fs-3 scroll-item">
+                                <div class="row">
+                                    <div class="col text-center">
+                                        <img src="/public/img/common/캠핑장최종.png" class="profileImage rounded-circle">
+                                    </div>
+                                </div>
+                                <div class="row mt-1">
+                                    <!-- 사진링크 -->
+                                    <div class="col text-center" style="font-size: 0.7em">
+                                        <span>아이디</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <!-- border -->
+            <div class="row mt-4 mx-1 border-bottom"></div>
             <!-- 심규진 -->
             <div class="row">
                 <div class="col">
-                 <!-- 중고상품 -->
+                    <!-- 중고상품 -->
                     <div class="row px-1 mt-4">
-                        <div class="col fs-4">
-                            <span>SecondHandMarket</span>
+                        <div class="col-auto fs-4">
+                            <span>SecondHandMarket</span><span class="ms-1 text-secondary" style="font-size: 0.7rem">중고상품</span>
                         </div>
                         <div class="col d-flex align-items-end justify-content-end">
-                            <a href="/club/newClubs"><span class="text-secondary">더보기<i class="bi bi-chevron-right"></i></span></a>
+                            <a href="#"><span class="text-secondary" style="font-size: 0.7rem">더보기<i class="bi bi-chevron-right"></i></span></a>
                         </div>
                     </div>
                     <div class="row pt-3 px-1">
@@ -483,8 +479,10 @@
                                     </a>
                                 </div>
                                 <div class="row pt-1">
-                                    <div class="col-auto">
-                                        <span class="text-secondary" style="font-size: 1.3rem">15,000원</span>
+                                    <div class="col" style="font-size: 0.8rem">
+                                        <span class="pe-0">텐트</span><span>・</span>
+                                        <span class="g-0">1.2km</span><span>・</span>
+                                        <span class="g-0">15,000원</span>
                                     </div>
                                 </div>
                             </div>
@@ -497,8 +495,10 @@
                                     </a>
                                 </div>
                                 <div class="row pt-1">
-                                    <div class="col-auto">
-                                        <span class="text-secondary" style="font-size: 1.3rem">15,000원</span>
+                                    <div class="col" style="font-size: 0.8rem">
+                                        <span class="pe-0">타프</span><span>・</span>
+                                        <span class="g-0">0.8km</span><span>・</span>
+                                        <span class="g-0">100,000원</span>
                                     </div>
                                 </div>
                             </div>
@@ -506,7 +506,7 @@
                     </div>
                 </div>
             </div>
-<!-- 홈페이지 설명  시작 -->
+            <!-- 홈페이지 설명  시작 -->
             <div class="row mt-4 py-2 bg-dark-subtle text-white text-center f09">
                 <div class="col fw-bold border-end">
                     로그아웃
@@ -582,7 +582,7 @@
                     </div>
                 </div>
             </div>
-<!-- 홈페이지 설명 끝 -->
+            <!-- 홈페이지 설명 끝 -->
         </div>
     </div>
 </div>

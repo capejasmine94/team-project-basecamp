@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <!-- Bootstrap CSS -->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+        <!-- Font Awesome -->
+        <script src="https://kit.fontawesome.com/7b271bba58.js" crossorigin="anonymous"></script>
+        <!-- Google Material Icons -->
+        <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet">
+    
+        <link href="/public/css/common.css" rel="stylesheet">
+        <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        .carousel-item {
+            width: 100%;
+            height: 100%;
+        }
+        .carousel-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            background-color: #f0f0f0; /* 배경색 추가 (필요 시) */
+        }
+        .section {
+            margin-bottom: 5px;
+            padding: 16px;
+            background-color: #fff;
+            border: 1px solid #e0e0e0;
+        }
+        .section img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 8px;
+        }
+        .section-title {
+            font-size: 16px;
+            font-weight: bold;
+            margin-bottom: 8px;
+        }
+        .section-text {
+            font-size: 14px;
+            color: #888;
+            margin-bottom: 8px;
+        }
+        .highlight-text {
+            color: #ff5e57;
+            font-weight: bold;
+        }
+        .final-price {
+            font-size: 24px;
+            font-weight: bold;
+            color: #007aff;
+            text-align: center;
+            margin-bottom: 16px;
+        }
+        .info-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 16px 0;
+            border-bottom: 1px solid #e0e0e0;
+            font-size: 14px;
+        }
+        .info-item:last-child {
+            border-bottom: none;
+        }
+        .info-item-title {
+            color: #333;
+            font-weight: bold;
+        }
+        .info-item-value {
+            color: #555;
+        }
+        .nav-underline {
+        display: flex;
+        flex-wrap: nowrap;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        padding-bottom: 8px;
+        }
+
+        .nav-underline::-webkit-scrollbar {
+            display: none; /* 웹킷 브라우저에서 스크롤바 숨기기 */
+        }
+
+        .nav-underline {
+            -ms-overflow-style: none;
+            scrollbar-width: none; 
+        }
+
+        .nav-item {
+            flex: 0 0 auto;
+        }
+
+        .nav-link {
+            white-space: nowrap;
+            margin-right: 8px;
+            text-decoration: none;
+            color: black;
+            position: relative; /* 상대적 위치 설정으로 자식 요소에 절대 위치를 지정할 수 있도록 함 */
+        }
+
+        .nav-link.active {
+            font-weight: bold;
+            color: black !important;
+            background-color: transparent !important;
+        }
+        </style>
+    </head>
+    <body class="bg-body-tertiary">
+        <div class="container-fluid px-0">
+            <div class="row fixed-top bg-white align-items-center py-2 border-bottom">
+                <div class="col-auto ps-3">
+                    <i class="bi bi-chevron-left" onclick="history.back();" style="cursor: pointer;"></i>
+                </div>
+                <div class="col text-center">
+                    <h5 class="mb-0 fw-semibold" style="font-size: 16px;">캠핑카 상세 정보</h5>
+                </div>
+                <div class="col-auto">
+                </div>
+            </div>
+        </div>
+            <div class="container">
+                <div class="row"style="margin-top: 50px;">
+                    <div class="col-12 px-3">
+                        <div class="text-center mb-1 text-white fw-medium rounded-pill" style="background-color: #4AAEFF; font-size: 0.782em; padding: 0.1em;">
+                            💰 지금 12개월 계약하면, 네이버페이 50만원 받아요!
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col section">
+                        <div class="row">
+                            <div class="col-12">
+                                <div id="carouselExample" class="carousel slide mb-3" data-bs-ride="carousel" data-bs-touch="true" data-bs-wrap="true">
+                                    <div class="carousel-indicators">
+                                        <button type="button" data-bs-target="#carouselExample" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+                                    </div>
+                                    <div class="carousel-inner">
+                                        <!-- 첫 번째 슬라이드 (모터홈) -->
+                                        <div th:if="${#strings.equals(campingcarDetails.campingcarDto.car_type_name, '모터홈')}" class="carousel-item active">
+                                            <img th:src="@{/public/img/campingCarImage/모터홈.jpg}" class="d-block w-100 img-fluid" alt="모터홈">
+                                            <div class="position-absolute d-flex gap-2" style="top: 10px; right: 10px;">
+                                                <i class="bi bi-heart" style="font-size: 12px; font-weight: bold; color: white; padding: 4px; border-radius: 50%;"></i>
+                                                <i class="bi bi-house-door" style="font-size: 12px; font-weight: bold; color: white; padding: 4px; border-radius: 50%;"></i>
+                                            </div>
+                                        </div>
+                                        <!-- 두 번째 슬라이드 (차박형(중형)) -->
+                                        <div th:if="${#strings.equals(campingcarDetails.campingcarDto.car_type_name, '차박형(중형)')}" class="carousel-item active">
+                                            <img th:src="@{/public/img/campingCarImage/차박형(중형).jpg}" class="d-block w-100 img-fluid" alt="차박형(중형)">
+                                            <div class="position-absolute d-flex gap-2" style="top: 10px; right: 10px;">
+                                                <i class="bi bi-heart" style="font-size: 12px; font-weight: bold; color: white; padding: 4px; border-radius: 50%;"></i>
+                                                <i class="bi bi-house-door" style="font-size: 12px; font-weight: bold; color: white; padding: 4px; border-radius: 50%;"></i>
+                                            </div>
+                                        </div>
+                                        <!-- 세 번째 슬라이드 (차박형(소형)) -->
+                                        <div th:if="${#strings.equals(campingcarDetails.campingcarDto.car_type_name, '차박형(소형)')}" class="carousel-item active">
+                                            <img th:src="@{/public/img/campingCarImage/차박형(소형).jpg}" class="d-block w-100 img-fluid" alt="차박형(소형)">
+                                            <div class="position-absolute d-flex gap-2" style="top: 10px; right: 10px;">
+                                                <i class="bi bi-heart" style="font-size: 12px; font-weight: bold; color: white; padding: 4px; border-radius: 50%;"></i>
+                                                <i class="bi bi-house-door" style="font-size: 12px; font-weight: bold; color: white; padding: 4px; border-radius: 50%;"></i>
+                                            </div>
+                                        </div>
+                                        <!-- 네 번째 슬라이드 (카라반펜션) -->
+                                        <div th:if="${#strings.equals(campingcarDetails.campingcarDto.car_type_name, '카라반펜션')}" class="carousel-item active">
+                                            <img th:src="@{/public/img/campingCarImage/카라반펜션.jpg}" class="d-block w-100 img-fluid" alt="카라반펜션">
+                                            <div class="position-absolute d-flex gap-2" style="top: 10px; right: 10px;">
+                                                <i class="bi bi-heart" style="font-size: 12px; font-weight: bold; color: white; padding: 4px; border-radius: 50%;"></i>
+                                                <i class="bi bi-house-door" style="font-size: 12px; font-weight: bold; color: white; padding: 4px; border-radius: 50%;"></i>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="new-fs-6 text-center fw-light text-body-secondary" style="font-size: 0.65rem;">차량 이미지는 이해를 돕기 위한 예시입니다.</div>
+                                <div class="new-fs-6 text-center fw-light text-body-secondary">상세 정보에서 차량 내부, 외부 사진을 확인하시기 바랍니다.</div>
+                            </div>
+                        </div>
+                        <div class="row new-mt-45 pb-3">
+                            <div class="col">
+                                <div class="row">
+                                    <div class="col new-fs-7 fw-medium">
+                                        </i><span>캠핑카 유형</span><i class="bi bi-chevron-right"></i><span th:text="${campingcarDetails.campingcarDto.car_type_name}">모터홈</span>
+                                    </div>
+                                </div>
+                                <div class="row pt-2">
+                                    <div class="col">
+                                        <span class="fw-semibold" th:text="${campingcarDetails.campingcarDto.product_name}"></span>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col fst-italic text-center pt-4">
+                                        <i class="fa-solid fa-quote-left" style="color: #CECECE;"></i><span class="fw-semibold fs-6 px-3 text-muted" th:text="${campingcarDetails.campingcarDto.short_description}"></span><i class="fa-solid fa-quote-right" style="color: #CECECE;"></i>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col py-4">
+                                        <div class="d-flex border border-start-0 border-end-0">
+                                            <!-- 출고 가능 시간 -->
+                                            <div class="d-flex flex-column justify-content-center align-items-center p-2" style="flex: 1; border-left: none;border-right: none; border-top: none; border-bottom: none;">
+                                                <div class="text-muted" style="font-size: 0.85rem;">출고가능시간</div>
+                                                <div class="fw-normal new-fs-95" th:text="${#dates.format(campingcarDetails.campingcarDto.avaid_time, 'HH') + '시간'}"></div>
+                                            </div>
+                                            <!-- 대여 기간 -->
+                                            <div class="d-flex flex-column justify-content-center align-items-center p-2" style="flex: 1; border-top: none; border-bottom: none;">
+                                                <div class="text-muted" style="font-size: 0.85rem;">1박기준 시간</div>
+                                                <div class="badge bg-light text-muted new-fs-95" th:text="${campingcarDetails.campingcarDto.overnight_stay}">24시간</div>
+                                            </div>
+                                            <!-- 반납 가능 시간 -->
+                                            <div class="d-flex flex-column justify-content-center align-items-center p-2" style="flex: 1; border-left: none;border-right: none; border-top: none; border-bottom: none;">
+                                                <div class="text-muted" style="font-size: 0.85rem;">반납가능시간</div>
+                                                <div class="fw-normal new-fs-95" th:text="${#dates.format(campingcarDetails.campingcarDto.return_dateTime, 'HH')+ '시간'}">18:00</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row pt-1">
+                                    <div class="col">
+                                        <i class="bi bi-star-fill" style="color: #FFD700;"></i><span class="fw-5 fw-bold"> 4.8</span><span class="new-fs-85" style="font-family: initial; color: #7C7B7B;" th:text="'['+ ${campingcarDetails.countReview}+ '+' + ' Review]'"> [140+ Review]</span>
+                                        <div class="new-fs-65 d-flex justify-content-start align-items-start">
+                                            <span class="pe-1">현재까지</span><span class="text-danger"th:text="${campingcarDetails.countReview}+ '명'"> 50명</span><span>이 차량을 예약하였습니다</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row py-4">
+                                    <div class="col d-flex flex-column d-flex justify-content-between align-items-between">
+                                        <div class="row">
+                                            <div class="col">
+                                                <div class="text-muted" style="font-size: 0.85rem;">평일 가격</div>
+                                                <span class="fw-bold text-danger text-end" style="font-size: 24px;" th:text="${#numbers.formatInteger(campingcarDetails.campingcarDto.rental_fee_weekdays, 3, 'COMMA')} + '원'"></span>
+                                            </div>
+                                            <div class="col d-flex flex-column d-flex justify-content-between align-items-between">
+                                                <div class="text-muted" style="font-size: 0.85rem;">주말 가격</div>
+                                                <span class="fw-bold text-danger text-end" style="font-size: 24px;" th:text="${#numbers.formatInteger(campingcarDetails.campingcarDto.rental_fee_weekend, 3, 'COMMA')} + '원'"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+    
+                                <!-- 구분선 -->
+                                <div class="border-top pt-3"></div>
+                                <!-- 렌트카 회사 정보 -->
+                                <div class="row">
+                                    <div class="col d-flex align-items-center justify-content-center px-3">
+                                        <img th:src="@{/images/${campingcarDetails.campingcarDto.comp_profile_image}}" class="rounded-circle me-3" style="width: 44px; height: 44px;">
+                                        <div class="flex-grow-1">
+                                            <div class="fw-bold" th:text="${campingcarDetails.campingcarDto.comp_name}"></div>
+                                            <div class="text-muted" th:text="${campingcarDetails.campingcarDto.comp_email}"></div>
+                                        </div>
+                                        <div class="d-flex">
+                                            <div class="d-flex justify-content-center align-items-center rounded-circle" style="width: 40px; height: 40px; background-color: #FFD700;">
+                                                <!-- 회사별 채팅 기능 -->
+                                                <i class="bi bi-chat-fill" style="color: #000000; font-size: 18px;"></i>
+                                            </div>
+                                            <div class="d-flex align-items-center justify-content-center rounded-circle border ms-2" style="width: 40px; height: 40px;">
+                                                <!-- 회사별 전화 통화 기능 -->
+                                                <i class="bi bi-telephone-fill"></i>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="section">
+                <ul class="nav nav-underline">
+                    <li class="nav-item">
+                        <a class="nav-link active fw-bold" th:href="@{/campingcar/dRules(id=${campingcarDetails.campingcarDto.id})}">이용규정</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" th:href="@{/campingcar/dCarInfo(id=${campingcarDetails.campingcarDto.id})}">예약정보</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" th:href="@{/campingcar/dCarOption(id=${campingcarDetails.campingcarDto.id})}">차량 옵션</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" th:href="@{/campingcar/dRentalCondition(id=${campingcarDetails.campingcarDto.id})}">운전자 대여조건</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" th:href="@{/campingcar/dReviews(id=${campingcarDetails.campingcarDto.id})}">리뷰</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" th:href="@{/campingcar/dCancelPolicy(id=${campingcarDetails.campingcarDto.id})}">취소규정</a>
+                    </li>
+                </ul>
+            </div>
+        <div class="container">
+            <div class="row section">
+                <div class="col">
+                    <div class="row border-bottom pb-4">
+                        <div class="col-4 text-center pe-0">
+                            <div class="badge text-bg-secondary fw-semibold text-center px-2">
+                                <span class="fw-semibold new-fs-7" th:text="${campingcarDetails.countReview}+ '개 리뷰 별점 평균'"></span>
+                            </div>
+                            <div class="fs-2 text-center">
+                                <i class="bi bi-star-fill " style="color: #FFD700;"></i>
+                                <div class="fw-semibold" th:text="${reviewAvg}"></div>
+                            </div>
+                        </div>
+                        <!-- 리뷰 평균 -->
+                        <div class="col-8">
+                            <div th:each="rating : ${ratings}">
+                                <div class="d-flex align-items-center">
+                                    <!-- 점수 표시 -->
+                                    <span class="font-roboto new-fs-8 fw-semibold" th:text="${rating.rate} + '점'"></span>
+                                    <!-- progress bar -->
+                                    <div class="progress flex-grow-1 mx-2" style="height: 10px; background-color: #e9ecef;">
+                                        <div class="progress-bar bg-dark" role="progressbar" th:style="'width: ' + (${campingcarDetails.countReview} > 1 ? ${campingcarDetails.countReview} : 1) + '%'">
+                                        </div>
+                                    </div> 
+                                    <span class="font-roboto new-fs-8 fw-semibold" th:text="${campingcarDetails.countReview} + '명'" style="color: #7C7B7B;"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--리뷰 리스트-->
+                    <div class="row pt-2" th:each="reviewList : ${reviewData}">
+                        <div class="col">
+                            <!--리뷰 리스트: 후기 쓴 사용자 이미지와 닉네임-->
+                            <div class="row">
+                                <div class="col fw-semibold py-2">
+                                    <img th:if="${reviewList.userDto.profile_image != null}" th:src="|/images/${reviewList.userDto.profile_image}|" class="rounded-circle me-2 img-fluid"
+                                    style="width: 20px; height: 20px;">
+                                    <img th:unless="${reviewList.userDto.profile_image != null}" style="width: 20px; height: 20px;">
+                                    <span class="font-roboto new-fs-85" th:text="${reviewList.userDto.nickname}"></span>
+                                </div>
+                            </div>
+                            <!--리뷰 리스트: 후기 쓴 사용자 별점,리뷰 쓴 시간-->
+                            <div class="row d-flex justify-content-between">
+                                <div class="col-8 fw-semibold font-roboto">
+                                    <i class="bi bi-star-fill" style="color: #FFD700;"></i>
+                                    <span class="new-fs-85" th:text="${campingcarDetails.countReview}"></span> 
+                                </div>
+                                <div class="col text-end pt-1">
+                                    <!-- <div class="fw-semibold font-roboto new-fs-7 createdAt" th:text="${#dates.format(reviewList.reviewList.create_at, 'yyyy.MM.dd HH.mm')}" style="color: #7C7B7B;"></div> -->
+                                </div>
+                            </div>
+                            <!--리뷰 리스트: 후기 내용-->
+                            <div class="row pt-2 pb-3 border-bottom">
+                                <div class="col">
+                                    <!-- <span class="font-roboto fs-7" th:text="${reviewList.reviewList.content}" style="word-wrap: break-word;"></span> -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+            
+            <!-- <div class="section">
+                <h5 class="section-title">이용 조건 선택</h5>
+                <div class="info-item">
+                    <span class="info-item-title">이용 기간</span>
+                    <span class="info-item-value">12개월</span>
+                </div>
+                <div class="info-item">
+                    <span class="info-item-title">이용 시작일</span>
+                    <span class="info-item-value">24. 8. 6. (화)</span>
+                </div>
+                <div class="info-item">
+                    <span class="info-item-title">선납금 비율</span>
+                    <span class="info-item-value">50%</span>
+                </div>
+                <div class="info-item">
+                    <span class="info-item-title">차량손해면책상품</span>
+                    <span class="info-item-value">만 26세 이상 / 최대 100만원</span>
+                </div>
+            </div>
+            <div class="section">
+                <h6 class="section-title">요금 정보</h6>
+                <div class="info-item">
+                    <span class="info-item-title">월 요금</span>
+                    <span class="info-item-value"><del>732,000원</del> 256,500원</span>
+                </div>
+                <div class="info-item">
+                    <span class="info-item-title">선납금</span>
+                    <span class="info-item-value">2,718,000원</span>
+                </div>
+                <p class="highlight-text mt-2">혜택: 12개월 동안 298만원 할인을 받아요.</p>
+            </div>
+            <div class="final-price">
+                월 256,500원
+            </div> -->
+        <div class="row">
+            <div class="col py-3 px-3 d-grid">
+                <button class="btn btn-dark btn-lg fw-bold" style="color: #C6ED6F;">예약하기</button>
+            </div>
+        </div>
+
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    </body>
+</html>
