@@ -64,111 +64,114 @@
                                 </div>
                                 <div class="row">
                                     <div class="col mb-2">
-                                        <div class="row my-1 py-1 text-center border-top border-bottom">
-                                            <div class="col">구역명</div>
-                                            <div class="col">예약자</div>
-                                            <div class="col">2024.01.01 ~ 2024.03.18</div>
-                                            <div class="col">가격</div>
-                                            <div class="col">2024.03.03</div>
+                                        <div class="row my-1 py-1 text-center border-top border-bottom" th:each="reservation:${session.campsite.reservation}">
+                                            <div class="col" th:text="${reservation.area.name}">구역명</div>
+                                            <div class="col" th:text="${reservation.dto.customer_name}">예약자</div>
+                                            <div class="col"><span th:text="${#dates.format(reservation.dto.start_date, 'YYYY-MM-dd')}">2024.01.01</span> ~ <span th:text="${#dates.format(reservation.dto.end_date, 'YYYY-MM-dd')}">2024.03.18</span></div>
+                                            <div class="col moneyInput" th:text="${reservation.dto.prise}">가격</div>
+                                            <div class="col" th:text="${#dates.format(reservation.dto.created_at, 'YYYY-MM-dd')}">2024.03.03</div>
                                         </div>
-                                        <div class="row mt-3 justify-content-center">
-                                            <div class="col-5 border rounded-2 me-5">
-                                                <div class="row fs-5 my-2 mt-3">
-                                                    <div class="col mx-4">
-                                                        <div class="row">
-                                                            <div class="col-3 text-end">구역명</div>
-                                                            <div class="col-5 ms-5 fw-semibold text-start">구역 이름</div>
+                                        <div class="row d-none" id="showDetail">
+                                            <div class="col">
+                                                <div class="row mt-3 justify-content-center">
+                                                    <div class="col-5 border rounded-2 me-5">
+                                                        <div class="row fs-5 my-2 mt-3">
+                                                            <div class="col mx-4">
+                                                                <div class="row">
+                                                                    <div class="col-3 text-end">구역명</div>
+                                                                    <div class="col-5 ms-5 fw-semibold text-start" id="area_name">구역 이름</div>
+                                                                </div>
+                                                                <div class="row mt-2">
+                                                                    <div class="col-3 text-end">포인트 명</div>
+                                                                    <div class="col-5 ms-5 fw-semibold text-start" id="point_name">P1</div>
+                                                                </div>
+                                                                <div class="row mt-2">
+                                                                    <div class="col-3 text-end">예약자명</div>
+                                                                    <div class="col-5 ms-5 fw-semibold text-start" id="customer_name">김예약</div>
+                                                                </div>
+                                                                <div class="row mt-2">
+                                                                    <div class="col-3 text-end">예약자 연락처</div>
+                                                                    <div class="col-5 ms-5 fw-semibold text-start" id="customer_phone">010-1234-1234</div>
+                                                                </div>
+                                                            </div>
                                                         </div>
-                                                        <div class="row mt-2">
-                                                            <div class="col-3 text-end">포인트 명</div>
-                                                            <div class="col-5 ms-5 fw-semibold text-start">P1</div>
-                                                        </div>
-                                                        <div class="row mt-2">
-                                                            <div class="col-3 text-end">예약자명</div>
-                                                            <div class="col-5 ms-5 fw-semibold text-start">김예약</div>
-                                                        </div>
-                                                        <div class="row mt-2">
-                                                            <div class="col-3 text-end">예약자 연락처</div>
-                                                            <div class="col-5 ms-5 fw-semibold text-start">010-1234-1234</div>
+                                                    </div>
+                                        
+                                                    <div class="col-5 border rounded-2 me-5">
+                                                        <div class="row fs-5 my-2 mt-3">
+                                                            <div class="col mx-4">
+                                                                <div class="row">
+                                                                    <div class="col-3 text-end">예약 인원</div>
+                                                                    <div class="col-5 ms-5 fw-semibold text-start" id="people_count">3</div>
+                                                                </div>
+                                                                <div class="row mt-2 text-secondary fs-6">
+                                                                    <div class="col-3 text-end">성인</div>
+                                                                    <div class="col-5 ms-5 fw-semibold text-start" id="adult">3</div>
+                                                                </div>
+                                                                <div class="row mt-2 text-secondary fs-6">
+                                                                    <div class="col-3 text-end">미성년자</div>
+                                                                    <div class="col-5 ms-5 fw-semibold text-start" id="kid">0</div>
+                                                                </div>
+                                                                <div class="row my-3">
+                                                                    <div class="col-3 text-end">차량</div>
+                                                                </div>
+                                                                <div class="row mt-1 flex-column" id="carList">
+                                                                    <div class="col-5 mt-1 ms-5 fw-semibold text-start"></div>
+                                                                </div>
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
-                                            </div>
-                                
-                                            <div class="col-5 border rounded-2 me-5">
-                                                <div class="row fs-5 my-2 mt-3">
-                                                    <div class="col mx-4">
-                                                        <div class="row">
-                                                            <div class="col-3 text-end">예약 인원</div>
-                                                            <div class="col-5 ms-5 fw-semibold text-start">3</div>
+                                                <div class="row mt-3 justify-content-center">
+                                                    <div class="col-5 border rounded-2 me-5">
+                                                        <div class="row fs-5 my-2 mt-3">
+                                                            <div class="col mx-4">
+                                                                <div class="row">
+                                                                    <div class="col-3 text-end">가격</div>
+                                                                    <div class="col-5 ms-5 fw-semibold text-start"><span id="totalPrise"></span><span class="ms-1">원</span></div>
+                                                                </div>
+                                                                <div class="row mt-2 text-secondary fs-6">
+                                                                    <div class="col-3 text-end">기본 가격</div>
+                                                                    <div class="col-5 ms-5 fw-semibold text-start moneyInput" id="prise">1,000,000</div>
+                                                                </div>
+                                                                <!-- <div class="row mt-2 text-secondary fs-6">
+                                                                    <div class="col-3 text-end">할인 가격 (10%)</div>
+                                                                    <div class="col-5 ms-5 fw-semibold text-start">-100,000</div>
+                                                                </div> -->
+                                                                <div class="row mt-2 text-secondary fs-6" id="mileageTab">
+                                                                    <div class="col-3 text-end">마일리지</div>
+                                                                    <div class="col-5 ms-5 fw-semibold text-start" id="mileage">-100,000</div>
+                                                                </div>
+                                                            </div>
                                                         </div>
-                                                        <div class="row mt-2 text-secondary fs-6">
-                                                            <div class="col-3 text-end">성인</div>
-                                                            <div class="col-5 ms-5 fw-semibold text-start">3</div>
-                                                        </div>
-                                                        <div class="row mt-2 text-secondary fs-6">
-                                                            <div class="col-3 text-end">미성년자</div>
-                                                            <div class="col-5 ms-5 fw-semibold text-start">0</div>
-                                                        </div>
-                                                        <div class="row my-3">
-                                                            <div class="col-3 text-end">차량 수</div>
-                                                            <div class="col-5 ms-5 fw-semibold text-start">3</div>
+                                                    </div>
+                                        
+                                                    <div class="col-5 border rounded-2 me-5">
+                                                        <div class="row fs-5 my-2 mt-3">
+                                                            <div class="col mx-4">
+                                                                <div class="row">
+                                                                    <div class="col-3 text-end">현황</div>
+                                                                    <div class="col-5 ms-5 fw-semibold">대기중</div>
+                                                                </div>
+                                                                <div class="row mt-2">
+                                                                    <div class="col-3 text-end">예약 날짜</div>
+                                                                    <div class="col-auto ms-5 fw-semibold">2024.01.01 ~ 2024.02.01</div>
+                                                                </div>
+                                                                <div class="row my-2">
+                                                                    <div class="col-3 text-end">요청일</div>
+                                                                    <div class="col-5 ms-5 fw-semibold">2023.12.11</div>
+                                                                </div>
+                                                                <div class="row mt-2">
+                                                                    <div class="col-3 text-end">결제일</div>
+                                                                    <div class="col-5 ms-5 fw-semibold">2023.12.11</div>
+                                                                </div>
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="row mt-3 justify-content-center">
-                                            <div class="col-5 border rounded-2 me-5">
-                                                <div class="row fs-5 my-2 mt-3">
-                                                    <div class="col mx-4">
-                                                        <div class="row">
-                                                            <div class="col-3 text-end">가격</div>
-                                                            <div class="col-5 ms-5 fw-semibold text-start">1,000,000원</div>
-                                                        </div>
-                                                        <div class="row mt-2 text-secondary fs-6">
-                                                            <div class="col-3 text-end">기본 가격</div>
-                                                            <div class="col-5 ms-5 fw-semibold text-start">1,000,000</div>
-                                                        </div>
-                                                        <div class="row mt-2 text-secondary fs-6">
-                                                            <div class="col-3 text-end">할인 가격 (10%)</div>
-                                                            <div class="col-5 ms-5 fw-semibold text-start">-100,000</div>
-                                                        </div>
-                                                        <div class="row mt-2 text-secondary fs-6">
-                                                            <div class="col-3 text-end">마일리지</div>
-                                                            <div class="col-5 ms-5 fw-semibold text-start">-100,000</div>
-                                                        </div>
-                                                        <div class="row my-3">
-                                                            <div class="col-3 text-end">예약자 연락처</div>
-                                                            <div class="col-5 ms-5 fw-semibold text-start">010-1234-1234</div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                
-                                            <div class="col-5 border rounded-2 me-5">
-                                                <div class="row fs-5 my-2 mt-3">
-                                                    <div class="col mx-4">
-                                                        <div class="row">
-                                                            <div class="col-3 text-end">현황</div>
-                                                            <div class="col-5 ms-5 fw-semibold">대기중</div>
-                                                        </div>
-                                                        <div class="row mt-2">
-                                                            <div class="col-3 text-end">예약 날짜</div>
-                                                            <div class="col-auto ms-5 fw-semibold">2024.01.01 ~ 2024.02.01</div>
-                                                        </div>
-                                                        <div class="row my-2">
-                                                            <div class="col-3 text-end">요청일</div>
-                                                            <div class="col-5 ms-5 fw-semibold">2023.12.11</div>
-                                                        </div>
-                                                        <div class="row mt-2">
-                                                            <div class="col-3 text-end">결제일</div>
-                                                            <div class="col-5 ms-5 fw-semibold">2023.12.11</div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
+                                       
                                     </div>
                                 </div>
                                 
@@ -182,7 +185,7 @@
         </div>
         <div th:replace="~{common/navi::popup}"></div>
         <script>
-
+            addColonMoneyInput();
         </script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
     </body>
