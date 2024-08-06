@@ -633,8 +633,18 @@
         <script>  
             createCalendar('opentime', yearsAgo(1));
             createRangeCalendar('sale',365, yearsAgo(1));
+            
             createMultipleUploader('mainImage');
             createUploader('mapImage');
+            
+            function reloadMapImage() {
+                const preview = createPreviewImage(curArea.dto.map_image, 'mapImage', false);
+                preview.classList.add('isAlreadyUploaded');
+                // imgList에 미리보기 이미지 추가
+                const imgList = document.getElementById('imgList_' + uploaderName);
+                imgList.appendChild(preview);
+            }
+
             function onSelectArea() {
                 refreshUpdateAreaView();
                 setUploadedMapImage();
