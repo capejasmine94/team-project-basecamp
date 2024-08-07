@@ -6,6 +6,13 @@
     <link rel="stylesheet" href="/public/css/common.css">
     <link rel="stylesheet" href="/public/css/basecamp.css">
 
+    <!-- Google Material Icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet">
+
+
+    <style>
+
+    </style>
 </head>
 <body>
 
@@ -56,72 +63,134 @@
 </div>
 <!--메인 하단네비 -->
 <div th:fragment="bottomNaviBasecamp" class="container-fluid g-0 bg-light fixed-bottom">
-    <div class="row mx-1 py-2 text-center fs-3">
+    <div class="row mx-1 py-2 text-center">
         <!--HOME-->
         <a href="/" class="col icon-and-text">
-            <span class="icon"><i class="bi bi-house"></i></span>
-            <span class="text-navi">HOME</span>
-        </a>
-        <!--예약-->
-        <div class="col fs-3 icon-and-text dropdown dropup">
-            <span data-bs-toggle="dropdown"><i class="fa-regular fa-calendar"></i></span>
-            <span class="text-navi">예약하기</span>
-            <ul class="dropdown-menu custom-dropdown-menu">
-                <!-- 조준희 -->
-                <li><a class="dropdown-item" href="#">
-                    <i class="fa-solid fa-house"></i>
-                    <span>캠핑장</span>
-                </a></li>
-                <!-- 양은자 -->
-                <li><a class="dropdown-item" href="#">
-                    <i class="fa-solid fa-caravan"></i>
-                    <span>캠핑카</span>
-                </a></li>
-            </ul>
-        </div>
+            <!-- <span class="icon"><i class="bi bi-house"></i></span> -->
+            <!-- <span class="text-navi">HOME</span> -->
+            <span class="material-symbols-outlined fw-light" style="font-size: 1.8em;">
+                home
+            </span>
+            <span class="text-navi pt-1" style="font-size: 0.7em;">홈</span>
+        </a>        
         <!--구매-->
-        <div class="col fs-3 icon-and-text dropdown dropup">
-            <span data-bs-toggle="dropdown"><i class="bi bi-cart"></i></span>
-            <span class="text-navi">구매하기</span>
+        <div class="col icon-and-text dropdown dropup">
+            <span data-bs-toggle="dropdown" class="material-symbols-outlined fw-light" style="font-size: 1.7em;">
+                storefront
+            </span>
+            <span class="text-navi pt-1" style="font-size: 0.7em;">구매</span>
             <ul class="dropdown-menu custom-dropdown-menu">
                 <!-- 변초연 -->
-                <li><a class="dropdown-item" href="#">
-                    <i class="fa-solid fa-truck"></i>
-                    <span>store</span>
-                </a></li>
+                <a class="dropdown-item col" href="/store">
+                    <div class="row w-100">
+                        <div class="col-auto d-flex">
+                            <span class="material-symbols-outlined pe-1 ps-1 fw-light">
+                                shopping_bag
+                            </span>
+                            <span style="font-size: 0.9em;">스토어</span>
+                        </div>
+                    </div>
+                </a>
                 <!-- 심규진 -->
-                <li><a class="dropdown-item" href="/secondhandProduct/mainPage">
-                    <i class="fa-solid fa-carrot"></i>
-                    <span>중고</span>
-                </a></li>
+                <a class="dropdown-item col" href="/secondhandProduct/mainPage">
+                    <div class="row w-100">
+                        <div class="col-auto d-flex">
+                            <span class="material-symbols-outlined pe-1 ps-1 fw-light">
+                                eco
+                            </span>
+                            <span style="font-size: 0.9em;">중고</span>
+                        </div>
+                    </div>
+                </a>
+            </ul>
+        </div>
+        <!--예약-->
+        <div class="col icon-and-text dropdown dropup">
+            <!-- <span data-bs-toggle="dropdown"><i class="fa-regular fa-calendar"></i></span> -->
+            <span data-bs-toggle="dropdown" class="material-symbols-outlined fw-light" style="font-size: 1.7em;">
+                event_available
+            </span>
+            <span class="text-navi pt-1" style="font-size: 0.7em;">예약</span>
+            <ul class="dropdown-menu row custom-dropdown-menu">
+                <!-- 조준희 -->
+                <a class="dropdown-item col" href="/camp/main">
+                    <div class="row w-100">
+                        <div class="col-auto d-flex">
+                            <span class="material-symbols-outlined pe-1 ps-1 fw-light">
+                                camping
+                            </span>
+                            <span style="font-size: 0.9em;">캠핑장</span>
+                        </div>
+                    </div>
+                </a>
+                <!-- 양은자 -->
+                <a class="dropdown-item col" href="/campingcar/main">
+                    <div class="row w-100">
+                        <div class="col-auto d-flex">
+                            <span class="material-symbols-outlined pe-1 ps-1 fw-light">
+                                airport_shuttle
+                            </span>
+                            <span style="font-size: 0.9em;">캠핑카</span>
+                        </div>
+                    </div>
+                </a>
+                <!-- <a class="dropdown-item" href="#" style="display: flex; align-items: center;">
+                    <span class="material-symbols-outlined pe-1">
+                        airport_shuttle
+                    </span>
+                    <span style="font-size: 0.9em;">캠핑카</span>
+                </a> -->
+
             </ul>
         </div>
         <!--커뮤-->
-        <div class="col fs-3 icon-and-text dropdown dropup">
-            <span data-bs-toggle="dropdown"><i class="fa-solid fa-people-carry-box"></i></span>
-            <span class="text-navi">커뮤니티</span>
+        <div class="col icon-and-text dropdown dropup">
+            <span data-bs-toggle="dropdown" class="material-symbols-outlined fw-light" style="font-size: 1.7em;">
+                forum
+            </span>
+            <span class="text-navi pt-1" style="font-size: 0.7em;">커뮤니티</span>
             <ul class="dropdown-menu custom-dropdown-menu">
                 <!-- 이시은 -->
-                <li><a class="dropdown-item" href="#">
-                    <i class="fa-solid fa-gamepad"></i>
-                    <span>소모임</span>
-                </a></li>
+                <a class="dropdown-item col" href="/club/main">
+                    <div class="row w-100">
+                        <div class="col-auto d-flex">
+                            <span class="material-symbols-outlined pe-1 ps-1 fw-light">
+                                group
+                            </span>
+                            <span style="font-size: 0.9em;">소모임</span>
+                        </div>
+                    </div>
+                </a>
                 <!-- 남현지 -->
-                <li><a class="dropdown-item" href="#">
-                    <i style="font-size: 1.3rem" class="fa-brands fa-instagram"></i>
-                    <span>insta</span>
-                </a></li>
+                <a class="dropdown-item col" href="/insta/instaMainPage">
+                    <!-- <div class="row w-100">
+                        <div class="col-auto d-flex">
+                            <span data-bs-toggle="dropdown" class="material-symbols-outlined pe-1 ps-1 fw-light" style="font-size: 1.4em;">
+                                phone_iphone 
+                            </span>
+                            <span style="font-size: 0.9em;">인스타</span>
+                        </div>
+                    </div> -->
+
+                    <span>
+                        <img src="/public/img/instaImage/campstagram.png" class="img-fluid">
+                    </span>
+                </a>
             </ul>
         </div>
         <!--내정보-->
-        <div class="col fs-3 icon-and-text">
+        <div class="col icon-and-text">
             <a href="/user/login" th:if="${session.sessionUserInfo == null}" class="icon-and-text">
-                <span><i class="fa-solid fa-gear"></i></span>
-                <span class="text-navi">My</span>
+                <span data-bs-toggle="dropdown" class="material-symbols-outlined fw-light" style="font-size: 1.7em;">
+                    person
+                </span>
+                <span class="text-navi pt-1" style="font-size: 0.7em;">마이</span>
             </a>
-            <a href="/user/myPage" th:unless="${session.sessionUserInfo == null}" class="icon-and-text">
-                <span><i class="fa-solid fa-gear"></i></span>
-                <span class="text-navi">My</span>
+            <a href="#" th:unless="${session.sessionUserInfo == null}" class="icon-and-text">
+                <span data-bs-toggle="dropdown" class="material-symbols-outlined fw-light" style="font-size: 1.7em;">
+                    person
+                </span>
+                <span class="text-navi pt-1" style="font-size: 0.7em;">마이</span>
             </a>
         </div>
     </div>
