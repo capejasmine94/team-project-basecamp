@@ -9,6 +9,7 @@ import org.apache.ibatis.annotations.Param;
 import com.bulmeong.basecamp.campingcar.dto.BasicFacilitiesDto;
 import com.bulmeong.basecamp.campingcar.dto.CampingCarLikeDto;
 import com.bulmeong.basecamp.campingcar.dto.ProductDetailImgDto;
+import com.bulmeong.basecamp.campingcar.dto.RentUserDto;
 
 @Mapper
 public interface CampingcarSqlMapper {
@@ -35,4 +36,7 @@ public interface CampingcarSqlMapper {
     public List<BasicFacilitiesDto> findBasicfacilitiesByCarId(@Param("id") int id);
     // 상세페이지_리뷰수
     public int countByProductId(int id);
+
+    //렌트 고객 등록
+    public void createRentUser(RentUserDto rentUserParams);
 }
