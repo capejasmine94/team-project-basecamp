@@ -62,9 +62,9 @@
             margin-left: 5px;
         }
         /*동네 설정 드롭다운*/
-        .custom-dropdown-menu {
-            min-width: 7rem; /* 드롭다운 메뉴 최소 너비 */
-            max-width: 7rem; /* 드롭다운 메뉴 최대 너비 */
+        .location-dropdown-menu {
+            width: 11rem;
+            width: 6rem;
             bottom: 0.5rem !important; /* 드롭다운 위치 */
         }
         .icon-and-text {
@@ -92,20 +92,20 @@
 <!--하단네비-->
 <div th:replace="common/navi::bottomNaviBasecamp"></div>
 <!--상단네비-->
-<div class="container-fluid g-0 py-2 bg-white fixed-top border-bottom">
-    <div class="row mx-2">
-        <div class="col fs-3 icon-and-text dropdown dropup">
-            <span data-bs-toggle="dropdown" class="text-navi">내 동네 설정</span>
-            <ul class="dropdown-menu custom-dropdown-menu">
-
-                <li><a class="dropdown-item" href="#">
-                    <i class="fa-solid fa-house"></i>
-                    <span>11</span>
+<div class="container-fluid g-0 bg-white fixed-top border-bottom">
+    <div class="row py-2 mx-2">
+        <div class="col-auto fs-3 icon-and-text dropdown dropup">
+            <span data-bs-toggle="dropdown" class="text-navi fs-5">
+                내 동네 설정 <span><i class="bi bi-chevron-down"></i></span>
+            </span>
+            <ul class="dropdown-menu location-dropdown-menu">
+                <li><a class="dropdown-item mt-1" href="#">
+                    <span>나중에 추가</span>
                 </a></li>
-
-                <li><a class="dropdown-item" href="#">
-                    <i class="fa-solid fa-caravan"></i>
-                    <span>22</span>
+            </ul>
+            <ul class="dropdown-menu location-dropdown-menu">
+                <li><a class="dropdown-item mt-2" href="/secondhandProduct/myNeighborhoodSettingsPage">
+                    <span>내 동네 설정</span>
                 </a></li>
             </ul>
         </div>
