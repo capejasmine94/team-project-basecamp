@@ -7,6 +7,7 @@ import com.bulmeong.basecamp.insta.dto.InstaArticleCommentDto;
 import com.bulmeong.basecamp.insta.dto.InstaArticleDto;
 import com.bulmeong.basecamp.insta.dto.InstaArticleImgDto;
 import com.bulmeong.basecamp.insta.dto.InstaArticleLikeDto;
+import com.bulmeong.basecamp.insta.dto.InstaArticleReplyDto;
 import com.bulmeong.basecamp.insta.dto.InstaArticleTagDto;
 import com.bulmeong.basecamp.insta.dto.InstaBookmarkDto;
 import com.bulmeong.basecamp.insta.dto.InstaCommentLikeDto;
@@ -34,6 +35,12 @@ public interface InstaSqlMapper {
     public List<InstaArticleCommentDto> getCommentList(@Param("article_id") int article_id);
     public void deleteComment(@Param("id") int id);
     public int commentCountByArticleId(@Param("article_id") int article_id);
+
+    // 대댓글 _ 자바스크립트
+    public void createReply(InstaArticleReplyDto instaArticleReplyDto);
+    public List<InstaArticleReplyDto> getReplyList(int comment_id);
+    public void deleteReply (int id);
+    public int replyCountByCommentId(int comment_id);
 
     // 좋아요
     public void createLike(InstaArticleLikeDto instaArticleLikeDto);

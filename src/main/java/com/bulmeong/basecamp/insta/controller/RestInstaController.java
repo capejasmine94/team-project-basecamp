@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.bulmeong.basecamp.insta.dto.InstaArticleCommentDto;
 import com.bulmeong.basecamp.insta.dto.InstaArticleLikeDto;
+import com.bulmeong.basecamp.insta.dto.InstaArticleReplyDto;
 import com.bulmeong.basecamp.insta.dto.InstaCommentLikeDto;
 import com.bulmeong.basecamp.insta.dto.InstaFollowDto;
 import com.bulmeong.basecamp.insta.dto.InstaRestResponseDto;
@@ -22,17 +23,6 @@ public class RestInstaController {
 
     @Autowired
     private InstaService instaService;
-
-    // 댓글 List 참고
-    // @RequestMapping("getCommentList")
-    // public InstaRestResponseDto getCommentList(@RequestParam("article_id") int article_id){
-    //     InstaRestResponseDto instaRestResponseDto = new InstaRestResponseDto();
-    //     instaRestResponseDto.setResult("success");
-
-    //     instaRestResponseDto.add("commentList", instaService.getCommentList(article_id));
-
-    //     return instaRestResponseDto;
-    // }
 
     // 게시글 List
     @RequestMapping("getArticleList")
@@ -211,6 +201,24 @@ public class RestInstaController {
 
         return instaRestResponseDto;
     }
+
+    // 대댓글
+    @RequestMapping("registerReply")
+    public InstaRestResponseDto registerReply(InstaArticleReplyDto params, HttpSession session){
+        InstaRestResponseDto instaRestResponseDto = new InstaRestResponseDto();
+        instaRestResponseDto.setResult("success");
+
+        // 로그인이 되어있다는 가정하에
+        UserDto userDto = (UserDto) session.getAttribute("sessionUserInfo");
+        InstaUserInfoDto instaUserInfoDto = instaService.userInfoByUserId(userDto.getId());
+
+        params.setUser_id(instaUserInfoDto.getId());
+
+        instaService.registerReply(params);
+
+        return instaRestResponseDto;
+    }
+
 
 
     // session id 받아와서 인스타 정보 뽑는 쿼리
