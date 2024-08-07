@@ -118,6 +118,7 @@
     <select id="getReplyList" resultType="com.bulmeong.basecamp.insta.dto.InstaArticleReplyDto">
         select * from bc_insta_article_reply
         where comment_id = #{comment_id}
+        order by id desc
     </select>
 
     <delete id="deleteReply">

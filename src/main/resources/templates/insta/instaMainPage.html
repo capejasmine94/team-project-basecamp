@@ -593,17 +593,12 @@
         <!-- 하나의 댓글 -->
         <div class="commentWrapper row mt-1">
             <div class="col mt-3">
-                <div class="row pe-1">    
+                <div class="row pe-1 align-items-center">    
                     <a class="col-auto pe-0 align-self-center link-dark link-offset-2 link-underline link-underline-opacity-0" href="./instaUserPage">
                         <img class="commentProfile img-fluid rounded-circle commentWriteImage">
                     </a>
-                    <div class="col align-self-center">
-                        <div class="row">
-                            <!-- <a class="col-auto commentName ps-0 link-dark link-offset-2 link-underline link-underline-opacity-0"
-                                        th:href="${session.sessionUserInfo.id == instaArticleList.instaUserInfoDto.user_id} ?
-                                                    @{./instaMyPage(user_id=${instaArticleList.instaUserInfoDto.id})} : @{./instaUserPage(user_id=${instaArticleList.instaUserInfoDto.id})}">
-                                <span th:text="${instaArticleList.instaUserInfoDto.insta_nickname}" style="font-size: 0.8em;"></span>
-                            </a> -->
+                    <div class="col">
+                        <div class="row align-items-center">
                             <a class="commentName col-auto pe-0 link-dark link-offset-2 link-underline link-underline-opacity-0" href="./instaUserPage">
                                 닉네임
                             </a>
@@ -663,62 +658,87 @@
                     </div>
                 </div>
 
-                <!-- 하나의 대댓글 -->
-                <div class="replyWrapper row mt-3" style="padding-left: 16%;">
-                    <div class="col">
-                        <div class="row pe-1">    
-                            <a class="col-auto pe-0 align-self-center link-dark link-offset-2 link-underline link-underline-opacity-0" href="./instaUserPage">
-                                <img src="/public/img/instaImage/userImg.jpeg" class="replyProfile img-fluid rounded-circle replyWriteImage">
-                                <!-- <img th:src="|/images/${instaUserInfoDto.insta_profile_img}|" class="replyProfile img-fluid rounded-circle replyWriteImage"> -->
-                            </a>
-                            <div class="col align-self-center">
-                                <div class="row">
-                                    <a class="replyName col-auto pe-0 link-dark link-offset-2 link-underline link-underline-opacity-0" href="./instaUserPage">
-                                        닉네임
-                                    </a>
-                                    <div class="replyDate col-auto ps-1 pe-0 fontNine" style="color: rgb(162, 162, 162); padding-top: 0.5%;">날짜</div>
-                                    <!-- 삭제버튼 -->
-                                    <div class="replyDeleteButton d-none col" style="color: rgb(162, 162, 162);">
-                                        <span class="buttonDelete">
-                                            <i class="fa-duotone fa-solid fa-xmark"></i>
-                                        </span>
-                                    </div>                                                                          
-                                </div>
-                                <div class="row">
-                                    <div class="replyText col pe-0">내용</div>
-                                </div>
-                            </div>
-        
-                            <!-- 좋아요 -->
-                            <div class="col-auto align-self-center">
-                                <div class="row">
+                <!-- 답글 보기/숨기기 버튼 추가 -->
+                <!-- <div class="row mt-3">
+                    <div class="replyToggle col fontNine pe-0" style="padding-left: 16.5%; color: rgb(162, 162, 162); cursor: pointer;" onclick="toggleReplies(this)">
+                        <span>--------- 답글 <span class="replyCount">1개 </span>보기</span>
+                    </div>
+                </div> -->
 
-                                    <!-- 이거 삭제하셈 레이아웃때문에 -->
-                                    <div class="col">
-                                        <span>
-                                            <i class="fa-regular fa-heart"></i>
-                                        </span>
-                                    </div>
-                                    
-                                    <!-- 좋아요 안 눌렀을 때 -->
-                                    <div class="likeReplyButton col align-self-center d-none">
-                                        <span>
-                                            <i class="fa-regular fa-heart"></i>
-                                        </span>
-                                    </div>
-        
-                                    <!-- 좋아요 눌렀을 때 -->
-                                    <div class="unLikeReplyButton col align-self-center d-none">
-                                        <span>
-                                            <i class="fa-solid fa-heart likeColor"></i>
-                                        </span>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col p-0 fontNine text-center">
-                                        <span class="likeReplyCount">4</span>
-                                    </div>
-                                </div>
+                <!-- 대댓글 템플릿 -->
+                <div class="row">
+
+                    <!-- 답글 보기/숨기기 버튼 추가 -->
+                    <div class="replyToggle col-12 fontNine mt-3" style="padding-left: 18%; color: rgb(162, 162, 162); cursor: pointer; display: none;" onclick="toggleReplies(replyWrapper, this)">
+                        <span>--------- 답글 <span class="replyCount"></span>개 보기</span>
+                    </div>
+
+                    <!-- 대댓글 리스트 -->
+                    <div class="col-12 replyWrapper">
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+
+        <!-- 하나의 대댓글 -->
+        <div class="replyTemplete row mt-3" style="padding-left: 16.5%;">
+            <div class="col">
+
+                <div class="row pe-1">    
+                    <a class="col-auto pe-0 align-self-center link-dark link-offset-2 link-underline link-underline-opacity-0" href="./instaUserPage">
+                        <img class="replyProfile img-fluid rounded-circle replyWriteImage">
+                        <!-- <img src="/public/img/instaImage/userImg.jpeg" class="replyProfile img-fluid rounded-circle replyWriteImage"> -->
+                        <!-- <img th:src="|/images/${instaUserInfoDto.insta_profile_img}|" class="replyProfile img-fluid rounded-circle replyWriteImage"> -->
+                    </a>
+                    <div class="col align-self-center">
+                        <div class="row">
+                            <a class="replyName col-auto pe-0 link-dark link-offset-2 link-underline link-underline-opacity-0" href="./instaUserPage">
+                                닉네임
+                            </a>
+                            <div class="replyDate col-auto ps-1 pe-0 fontNine" style="color: rgb(162, 162, 162); padding-top: 0.5%;">날짜</div>
+                            <!-- 삭제버튼 -->
+                            <div class="replyDeleteButton d-none col" style="color: rgb(162, 162, 162);">
+                                <span class="buttonDelete">
+                                    <i class="fa-duotone fa-solid fa-xmark"></i>
+                                </span>
+                            </div>                                                                          
+                        </div>
+                        <div class="row">
+                            <div class="replyText col pe-0">내용</div>
+                        </div>
+                    </div>
+
+                    <!-- 대댓글 좋아요 -->
+                    <div class="col-auto align-self-center">
+                        <div class="row">
+
+                            <!-- 이거 삭제하셈 레이아웃때문에 -->
+                            <div class="col">
+                                <span>
+                                    <i class="fa-regular fa-heart"></i>
+                                </span>
+                            </div>
+                            
+                            <!-- 좋아요 안 눌렀을 때 -->
+                            <div class="likeReplyButton col align-self-center d-none">
+                                <span>
+                                    <i class="fa-regular fa-heart"></i>
+                                </span>
+                            </div>
+
+                            <!-- 좋아요 눌렀을 때 -->
+                            <div class="unLikeReplyButton col align-self-center d-none">
+                                <span>
+                                    <i class="fa-solid fa-heart likeColor"></i>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col p-0 fontNine text-center">
+                                <span class="likeReplyCount">4</span>
                             </div>
                         </div>
                     </div>
@@ -729,37 +749,13 @@
 
 
 
-    <!-- 팀 공용 하단바 -->
-    <!-- <div class="container mt-5">
-        <div class="row">
-            <div class="col">
-                <div class="row border-top fixed-bottom" style="background-color: white;">
-                    <div class="col">
-                        <span>홈</span>
-                    </div>
-                    <div class="col">
-                        <span>쇼핑</span>
-                    </div> 
-                    <div class="col">
-                        <span>예약</span>
-                    </div> 
-                    <div class="col">
-                        <span>커뮤</span>
-                    </div> 
-                    <div class="col">
-                        <span>마이</span>
-                    </div> 
-                </div>
-            </div>
-        </div>
-    </div> -->
-
 <!-- 네비가 추가됨 -->
 <!-- <div th:replace="camp/campNavi::popupCategory"></div> -->
 <div th:replace="camp/campNavi::popupSelectDay"></div>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 <script src="https://kit.fontawesome.com/7b271bba58.js" crossorigin="anonymous"></script>
+
 <script>
     const urlParams = new URL(window.location.href).searchParams;
     // const articleId = urlParams.get("article_id");
@@ -1004,18 +1000,18 @@
                 // commentDate.innerText = `${date.getFullYear()}.${date.getMonth()+1}.${date.getDate()}`; // 기존 시간 출력 코드
 
                 // 상대 시간 계산 및 설정
-                const diffInSeconds = Math.floor((new Date() - createdAt) / 1000);
+                const replyDiffInSeconds = Math.floor((new Date() - createdAt) / 1000);
                 const rtf = new Intl.RelativeTimeFormat('ko', { numeric: 'auto' });
 
                 let formattedDate;
-                if (diffInSeconds < 60) {
-                    formattedDate = rtf.format(-diffInSeconds, 'second');
-                } else if (diffInSeconds < 3600) {
-                    formattedDate = rtf.format(-Math.floor(diffInSeconds / 60), 'minute');
-                } else if (diffInSeconds < 86400) {
-                    formattedDate = rtf.format(-Math.floor(diffInSeconds / 3600), 'hour');
+                if (replyDiffInSeconds < 60) {
+                    formattedDate = rtf.format(-replyDiffInSeconds, 'second');
+                } else if (replyDiffInSeconds < 3600) {
+                    formattedDate = rtf.format(-Math.floor(replyDiffInSeconds / 60), 'minute');
+                } else if (replyDiffInSeconds < 86400) {
+                    formattedDate = rtf.format(-Math.floor(replyDiffInSeconds / 3600), 'hour');
                 } else {
-                    formattedDate = rtf.format(-Math.floor(diffInSeconds / 86400), 'day');
+                    formattedDate = rtf.format(-Math.floor(replyDiffInSeconds / 86400), 'day');
                 }
 
                 commentDate.innerText = formattedDate;
@@ -1062,41 +1058,115 @@
 
                 // 좋아요 카운트
                 const likeCount = newCommentWrapper.querySelector(".likeCount");
-                likeCount.setAttribute("onclick", `commentLikeCount(${c.instaArticleCommentDto.id})`);
                 commentLikeCount(c.instaArticleCommentDto.id, likeCount);
 
 
 
 
-
                 // 대댓글 템플릿 요소 선택
-                const replyTemplate  = newCommentWrapper.querySelector(".replyWrapper");
+                const replyWrapper  = newCommentWrapper.querySelector(".replyWrapper");
+                const replyTemplete = document.querySelector("#templete .replyTemplete")
+
+                // 답글 열고 닫는 쿼리
+                const replyToggle = newCommentWrapper.querySelector(".replyToggle");
+                const replyCount = c.replyCount || 0;
+
+                // 답글 개수에 따라 답글 보기/숨기기 버튼 설정
+                if (replyCount > 0) {
+                    replyToggle.style.display = 'block';
+                    replyToggle.querySelector('.replyCount').textContent = replyCount;
+                    replyToggle.onclick = function() { 
+                        toggleReplies(replyWrapper, replyToggle); 
+                    }; // 토글 버튼에 클릭 이벤트 추가
+                } else {
+                    replyToggle.style.display = 'none';
+                }
 
                 // 대댓글 목록 반복
                 for(const r of c.replyList){
-                    const newReplyWrapper = replyTemplate.cloneNode(true);
+                    const newReplyTemplate = replyTemplete.cloneNode(true);
 
                     // 대댓글 세부 정보 설정
-                    const replyName = newReplyWrapper.querySelector(".replyName")
+                    const replyName = newReplyTemplate.querySelector(".replyName"); // 대댓글 닉네임
                     replyName.innerText = r.instaUserInfoDtoReply.insta_nickname;
+
+                    // const replyText = newReplyWrapper.querySelector(".replyText");
+                    // replyText.innerText = r.instaArticleReplyDto.reply;
+
+
+
+                    // 대댓글 내용 @닉네임 부분만 파랗게 출력하기위한 코드 작성 _ 뭔 코드인지 모름 지피티 작품
+                    const replyText = newReplyTemplate.querySelector(".replyText");
+
+                    // 정규 표현식 패턴을 사용하여 닉네임 추출
+                    const regex = /@(\S+)/;
+                    const matches = regex.exec(r.instaArticleReplyDto.reply);
+
+                    if (matches) {
+                    // 닉네임과 나머지 내용을 분리
+                    const nickname = matches[0]; // '@닉네임'
+                    const restOfContent = r.instaArticleReplyDto.reply.slice(matches.index + matches[0].length);
+
+                    // <span> 요소로 감싸고 색상 스타일 추가
+                    replyText.innerHTML = `<span style="color: #3A668C;">${nickname}</span>${restOfContent}`;
+                    } else {
+                    // 매치가 없으면 전체 내용을 기본 스타일로 출력
+                    replyText.innerText = r.instaArticleReplyDto.reply;
+                    }
+
+
+
+
+                    const replyDate = newReplyTemplate.querySelector(".replyDate"); // 대댓글 날짜
+                    const replyCreatedAt = new Date(r.instaArticleReplyDto.created_at);
+
+                    const replyDiffInSeconds = Math.floor((new Date() - replyCreatedAt) / 1000);
+                    const rtf2 = new Intl.RelativeTimeFormat('ko', { numeric: 'auto' });
+
+                    let replyFormattedDate;
+                    if (replyDiffInSeconds < 60) {
+                        replyFormattedDate = rtf2.format(-replyDiffInSeconds, 'second');
+                    } else if (replyDiffInSeconds < 3600) {
+                        replyFormattedDate = rtf2.format(-Math.floor(replyDiffInSeconds / 60), 'minute');
+                    } else if (replyDiffInSeconds < 86400) {
+                        replyFormattedDate = rtf2.format(-Math.floor(replyDiffInSeconds / 3600), 'hour');
+                    } else {
+                        replyFormattedDate = rtf2.format(-Math.floor(replyDiffInSeconds / 86400), 'day');
+                    }
+
+                    replyDate.innerText = replyFormattedDate;
+
+                    const replyProfile = newReplyTemplate.querySelector(".replyProfile"); // 대댓글 작성 유저 프로필
+                    replyProfile.setAttribute("src", `/images/${r.instaUserInfoDtoReply.insta_profile_img}`);
+
+                    // 대댓글 삭제
+                    if(myInstaId != null && r.instaArticleReplyDto.user_id == myInstaId){
+                        const replyDeleteButton = newReplyTemplate.querySelector(".replyDeleteButton");
+                        replyDeleteButton.classList.remove("d-none");
+                        replyDeleteButton.onclick = function() { deleteReply(r.instaArticleReplyDto.id, reloadButton); };
+                    }
+
+                    
+                    // 대댓글 좋아요
+                    // const likeReplyButton = newReplyWrapper.querySelector(".likeReplyButton");
+                    // likeReplyButton.onclick = function() { replyLike(r.instaArticleReplyDto, reloadButton); };
+
+                    // const unLikeReplyButton = newReplyWrapper.querySelector(".unLikeReplyButton");
+                    // unLikeReplyButton.onclick = function() {replyUnLike(r.instaArticleReplyDto.id, reloadButton); };
+
+                    // replyIsLiked(r.instaArticleReplyDto.id, likeReplyButton, unLikeReplyButton);
+
+                    // const likeReplyCount = newReplyWrapper.querySelector(".likeReplyCount");
+                    // replyLikeCount(r.instaArticleReplyDto.id, likeReplyCount);
 
 
                     // 대댓글 요소를 댓글 요소에 추가
-                    newCommentWrapper.appendChild(newReplyWrapper);
+                    replyWrapper.appendChild(newReplyTemplate)
                 }
-                
-
-                // commentReply 답글 버튼
-                // const commentReply = newCommentWrapper.querySelector(".commentReply");
-                // commentReply.innerText = e.instaUserInfoDto.insta_nickname;
 
                 commentListBox.appendChild(newCommentWrapper);
             }
 
-
-            // const inputText = document.getElementById("inputText");
-            // console.log(inputText);
-            // inputText.focus();
         });
     }
 
@@ -1116,7 +1186,20 @@
         }
     }
 
+    // 대댓글 삭제
+    function deleteReply(replyId, reloadButton) {
 
+        if (confirm("답글을 삭제하시겠습니까?")) {
+            const url = "/api/insta/deleteReply?id=" + replyId;
+
+            fetch(url)
+            .then(response => response.json())
+            .then(response => {
+
+                reloadCommentList(reloadButton);
+            });
+        }
+    }
 
 
     // 댓글 좋아요
@@ -1142,7 +1225,7 @@
         ;
     }
 
-    // 좋아요 유무 확인
+    // 댓글 좋아요 유무 확인
     function commentIsLiked(commentId, likeButton, unLikeButton) {
         // const likeButton = document.querySelector("likeButton");
         // const unLikeButton = document.querySelector("unLikeButton");
@@ -1258,6 +1341,25 @@
         })
         ;
     }
+
+    // 답글 목록을 숨기거나 보이기
+    function toggleReplies(replyWrapper, replyToggle) {
+        // 현재 답글이 보이는 상태인지 확인
+        const isVisible = replyWrapper.style.display === 'block';
+
+        // replyWrapper의 가시성을 토글
+        replyWrapper.style.display = isVisible ? 'none' : 'block';
+
+        // 가시성에 따라 토글 버튼 텍스트 업데이트
+        if (isVisible) {
+            const replyCount = replyWrapper.querySelectorAll('.replyTemplete').length;
+            replyToggle.querySelector('span').textContent = `--------- 답글 ${replyCount}개 보기`;
+        } else {
+            replyToggle.querySelector('span').textContent = '--------- 답글 숨기기';
+        }
+    }
+
+
 
 
     // toast

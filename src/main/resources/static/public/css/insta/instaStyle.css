@@ -66,9 +66,19 @@
     object-fit: cover; /* 이미지가 요소를 채우도록 조정 */
     aspect-ratio: 1/1;
 }
+.replyWriteImage {
+    width: 25px;  /* 원하는 너비 */
+    height: 25%; /* 원하는 높이 */
+    object-fit: cover; /* 이미지가 요소를 채우도록 조정 */
+    aspect-ratio: 1/1;
+}
 
 .instaButtonColor {
     color: #0095f6;
+}
+
+.replyWrapper {
+    display: none;
 }
 
 /* 검색창 */
