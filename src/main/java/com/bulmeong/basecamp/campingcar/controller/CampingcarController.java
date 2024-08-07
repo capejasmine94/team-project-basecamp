@@ -143,7 +143,7 @@ public class CampingcarController {
 
 
     }
-    @RequestMapping("rentUserInfoProcess")
+    @RequestMapping("reservationProcess")
     public String rentUserInfoProcess(HttpSession session, RentUserDto rentUser,
                                      @RequestParam("driveImage")MultipartFile driveImage, ReservationDto reservationDto) {
         System.out.println("fdfdfdfd"+ reservationDto.getStart_date() + reservationDto.getEnd_date());
@@ -182,5 +182,17 @@ public class CampingcarController {
         System.out.println("렌트고객 가입:" + rentUser);
 
         return "redirect:/campingcar/main";
+    }
+
+    
+    @RequestMapping("myRentalHistory")
+    public String myRentalHistory() {
+
+        return "campingcar/myRentalHistory";
+    }
+    
+    @RequestMapping("carExteriorInteriorShoot")
+    public String carExteriorInteriorShoot() {
+        return "campingcar/carExteriorInteriorShoot";
     }
 }
