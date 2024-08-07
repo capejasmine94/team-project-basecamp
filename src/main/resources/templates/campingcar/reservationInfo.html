@@ -66,7 +66,6 @@
             display: flex;
             justify-content: space-between;
             padding: 16px 0;
-            border-bottom: 1px solid #e0e0e0;
             font-size: 14px;
         }
         .info-item:last-child {
@@ -162,42 +161,39 @@
                                             <div class="fw-normal new-fs-95" th:text="${#dates.format(campingcarDetails.campingcarDto.return_dateTime, 'HH')+ '시간'}">18:00</div>
                                         </div>
                                     </div>
-                                    <div class="d-flex justify-content-center align-items-center">
-                                        <button class="btn btn bg-white text-center d-flex justify-content-center align-items-center" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
-                                            <i class="bi bi-chevron-compact-down text-center"></i>
-                                            <div class="collapse" id="collapseExample">
-                                                <div class="info-item">
-                                                  Some placeholder content for the collapse component. This panel is hidden by default but revealed when the user activates the relevant trigger.
-                                                </div>
-                                            </div>
-                                        </button>
-                                    </div>
 
                                 </div>
                             </div>
-                            <div class="row pt-1">
-                                <div class="col">
-                                    <i class="bi bi-star-fill" style="color: #FFD700;"></i><span class="fw-5 fw-bold"> 4.8</span><span class="new-fs-85" style="font-family: initial; color: #7C7B7B;" th:text="'['+ ${campingcarDetails.countReview}+ '+' + ' Review]'"> [140+ Review]</span>
-                                    <div class="new-fs-65 d-flex justify-content-start align-items-start">
-                                        <span class="pe-1">현재까지</span><span class="text-danger"th:text="${campingcarDetails.countReview}+ '명'"> 50명</span><span>이 차량을 예약하였습니다</span>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- 구분선
-                            <div class="border-top pt-3"></div> -->
+
                             <!-- 렌트카 회사 정보 -->
                             <div class="row">
-                                <div class="col d-flex align-items-center justify-content-center px-3">
-                                    <img th:src="@{/images/${campingcarDetails.campingcarDto.comp_profile_image}}" class="rounded-circle me-3" style="width: 44px; height: 44px;">
-
-                                    <div class="d-flex">
-                                        <div class="d-flex justify-content-center align-items-center rounded-circle" style="width: 40px; height: 40px; background-color: #FFD700;">
-                                            <!-- 회사별 채팅 기능 -->
-                                            <i class="bi bi-chat-fill" style="color: #000000; font-size: 18px;"></i>
+                                <div class="col">
+                                    <div class="row ps-3 mb-3">
+                                        <div class="col-2 d-flex align-items-center info-item">
+                                            <span class="info-item-title">차량정보</span>
                                         </div>
-                                        <div class="d-flex align-items-center justify-content-center rounded-circle border ms-2" style="width: 40px; height: 40px;">
-                                            <!-- 회사별 전화 통화 기능 -->
-                                            <i class="bi bi-telephone-fill"></i>
+                                        <div class="col">
+                                            <div class="d-flex flex-wrap">
+                                                <span class="me-3" th:text="${campingcarDetails.campingcarDto.driver_license_name}"></span>
+                                                <span class="me-3" th:text="${campingcarDetails.campingcarDto.driver_age_condition_name}"></span>
+                                                <span class="me-3" th:text="${campingcarDetails.campingcarDto.driver_experience_condition_name}"></span>
+                                                <span class="me-3" th:text="'동승인원 ' + ${campingcarDetails.campingcarDto.seating_capacity} + '명'"></span>
+                                                <span class="me-3" th:text="'취침인원 ' + ${campingcarDetails.campingcarDto.sleeping_capacity} + '명'"></span>
+                                                <span class="me-3" th:text="'반려동물 ' + ${campingcarDetails.campingcarDto.pet_friendly}"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row ps-3">
+                                        <div class="col-2 d-flex align-items-center info-item">
+                                            <span class="fw-bold info-title">차량옵션</span>
+                                        </div>
+                                        <div class="col">
+                                            <div class="d-flex flex-wrap align-items-center">
+                                                <!-- 이 부분이 수정된 부분입니다 -->
+                                                <span class="d-flex align-items-center pe-2 mb-2" th:each="facility : ${facilities}">
+                                                    <span th:text="${facility.name}"></span>
+                                                </span>      
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -207,70 +203,167 @@
                 </div>
             </div>
         </div>
-        <div class="section">
-            <ul class="nav nav-underline">
-                <li class="nav-item">
-                    <a class="nav-link active fw-bold" th:href="@{/campingcar/dRules(id=${campingcarDetails.campingcarDto.id})}">이용규정</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" th:href="@{/campingcar/dCarInfo(id=${campingcarDetails.campingcarDto.id})}">예약정보</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" th:href="@{/campingcar/dCarOption(id=${campingcarDetails.campingcarDto.id})}">차량 옵션</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" th:href="@{/campingcar/dRentalCondition(id=${campingcarDetails.campingcarDto.id})}">운전자 대여조건</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" th:href="@{/campingcar/dReviews(id=${campingcarDetails.campingcarDto.id})}">리뷰</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" th:href="@{/campingcar/dCancelPolicy(id=${campingcarDetails.campingcarDto.id})}">취소규정</a>
-                </li>
-            </ul>
-        </div>
-        
-        <!-- <div class="section">
-            <h5 class="section-title">이용 조건 선택</h5>
-            <div class="info-item">
-                <span class="info-item-title">이용 기간</span>
-                <span class="info-item-value">12개월</span>
-            </div>
-            <div class="info-item">
-                <span class="info-item-title">이용 시작일</span>
-                <span class="info-item-value">24. 8. 6. (화)</span>
-            </div>
-            <div class="info-item">
-                <span class="info-item-title">선납금 비율</span>
-                <span class="info-item-value">50%</span>
-            </div>
-            <div class="info-item">
-                <span class="info-item-title">차량손해면책상품</span>
-                <span class="info-item-value">만 26세 이상 / 최대 100만원</span>
-            </div>
-        </div>
-        <div class="section">
-            <h6 class="section-title">요금 정보</h6>
-            <div class="info-item">
-                <span class="info-item-title">월 요금</span>
-                <span class="info-item-value"><del>732,000원</del> 256,500원</span>
-            </div>
-            <div class="info-item">
-                <span class="info-item-title">선납금</span>
-                <span class="info-item-value">2,718,000원</span>
-            </div>
-            <p class="highlight-text mt-2">혜택: 12개월 동안 298만원 할인을 받아요.</p>
-        </div>
-        <div class="final-price">
-            월 256,500원
-        </div> -->
-        <div class="container">
-            <div class="row">
-                <div class="col py-3 px-3 d-grid">
-                    <button class="btn btn-dark btn-lg fw-bold" style="color: #C6ED6F;">예약하기</button>
+        <form action="/campingcar/rentUserInfoProcess" method="post" enctype="multipart/form-data">
+            <div class="container">
+                <div class="row section">
+                    <div class="col form-group px-1 0mx-0">
+                        <row>
+                            <div class="col section-title">
+                                <span class="fs-5 fw-semibold">예약자 정보</span>
+                            </div>
+                        </row>
+                        <div class="row">
+                            <div class="col">
+                                <label for="driver_number" class="control-label new-fs-85 fw-semibold pb-1" style="font-size: 0.875rem;">운전자면허증 번호</label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col pb-4">
+                                <input name="driver_license_number"  type="text" class="form-control" placeholder="운번자면허증 번호를 입력해주세요" id="driver_number">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <label for="driver_license_condition" class="control-label new-fs-85 fw-semibold pb-1" style="font-size: 0.875rem;">운전자 면허 종류</label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col pb-4">
+                                <select class="form-select" aria-label="Default select example" id="driver_license_condition" name="driver_license_id">
+                                    <option th:value="'selectPlease'" th:text="'운전자 면허증 선택'"></option>
+                                    <option th:each="driverLicenseDto : ${driverLicense}" 
+                                            th:value="${driverLicenseDto.id}" 
+                                            th:text="${driverLicenseDto.name}">
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <label for="driver_age_condition" class="control-label new-fs-85 fw-semibold pb-1" style="font-size: 0.875rem;">운전자 최소 연령</label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col pb-4">
+                                <select class="form-select" aria-label="Default select example" id="driver_age_condition" name="driver_age_id">
+                                    <option th:value="'selectPlease'" th:text="'운전자 최소 연령 선택'"></option>
+                                    <option th:each="driverAgeCondDto : ${driverAge}" 
+                                            th:value="${driverAgeCondDto.id}" 
+                                            th:text="${driverAgeCondDto.name}">
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <label for="driver_experience_condition" class="control-label new-fs-85 fw-semibold pb-1" style="font-size: 0.875rem;">운전자 운전 경력</label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col pb-4">
+                                <select class="form-select" aria-label="Default select example" id="driver_experience_condition" name="driver_experience_id">
+                                    <option th:value="'selectPlease'" th:text="'운전자 운전 경력 선택'"></option>
+                                    <option th:each="driverExpericneceConDto : ${driverExpericnece}" 
+                                            th:value="${driverExpericneceConDto.id}" 
+                                            th:text="${driverExpericneceConDto.name}">
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <label for="driverFile" class="form-label new-fs-85 fw-semibold pb-1" style="font-size: 0.875rem;">운전 면허증 사진</label>
+                            </div>
+                        </div>
+                        <div class="row pb-4" style="padding-left: 0.75rem; padding-right: 0.75rem;">
+                            <input class="form-control" type="file" id="driverFile" style="font-size: 0.875rem;" placeholder="운전면허증을 등록하세요" name="driveImage" accept="image/*">
+                            </div>
+                        </div>
+                        <div class="row mx-0 px-1">
+                            <div class="col border p-4 rounded text-center bg-white">
+                                <div class="row">
+                                    <div class="col">
+                                        <div class="d-flex justify-content-center align-items-center text-center">
+                                            <span class="material-symbols-outlined" style="font-size: 48px;">person_apron</span>
+                                            <span class="text-warning pe-2" style="font-size: 48px;padding-bottom: 0.55rem;">+</span>
+                                            <span class="material-symbols-outlined" style="font-size: 48px;">id_card</span>
+                                        </div>
+                                        <div class="fw-medium new-fs-65">캠핑카 대여시, 운전자는 운전면허증을 꼭 지참해주세요</div>
+                                        <div class="fw-light new-fs-6 text-muted">면허증 확인 및 계약서 작성이 필요합니다.</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
-        </div>
+            <div class="container">
+                <div class="row section">
+                    <div class="col">
+                        <div class="row">
+                            <div class="col">
+                                <div class="row">
+                                    <div class="col">
+                                        <div class="fs-5">자동차 보험</div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col info-item">
+                                        <div class="info-item-title ps-3">대인/대물/자손 보상한도 및 자가부담금</div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col">
+                                        <table class="table border">
+                                            <thead class="text-center fw-normal">
+                                                <tr>
+                                                <th scope="col">구분</th>
+                                                <th scope="col">보상한도</th>
+                                                <th scope="col">자기부담금</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody class="text-center">
+                                                <tr>
+                                                <td>대인1·2</td>
+                                                <td>무한</td>
+                                                <td>50만원</td>
+                                                </tr>
+                                                <tr>
+                                                <td>대물</td>
+                                                <td>최대2,000만원</td>
+                                                <td>50만원</td>
+                                                </tr>
+                                                <tr>
+                                                <td>자손</td>
+                                                <td>최대1,500만원</td>
+                                                <td>50만원</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col">
+                                        <div class="text-muted new-fs-65">보험은 현장에서 작성하는 계약서를 기준으로 적용합니다.</div>
+                                        <div class="text-muted new-fs-65">반드시 계약서를 확인해주시기 바랍니다.</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col pt-3">
+                                <span class="fw-semibold text-muted new-fs-75">위 내용을 모두 확인하였으며, 예약 하기 버튼을 눌러주세요</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="container">
+                <div class="row section">
+                    <div class="col d-grid">
+                        <button class="btn btn-dark btn-lg fw-bold" style="color: #C6ED6F;">예약하기</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+       
 
 
     <!-- 부트스트랩 JS -->

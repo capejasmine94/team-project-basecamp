@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import com.bulmeong.basecamp.campingcar.dto.BasicFacilitiesDto;
 import com.bulmeong.basecamp.campingcar.dto.CampingCarLikeDto;
 import com.bulmeong.basecamp.campingcar.dto.ProductDetailImgDto;
+import com.bulmeong.basecamp.campingcar.dto.RentUserDto;
 import com.bulmeong.basecamp.campingcar.mapper.CampingcarSqlMapper;
 
 @Service
@@ -63,6 +64,11 @@ public class CampingcarService {
     public List<BasicFacilitiesDto> getBasicFacilitiesByProductId(int id) {
         List<BasicFacilitiesDto> basicFacilities  = campingCarSqlMapper.findBasicfacilitiesByCarId(id);
         return basicFacilities;
+    }
+
+    // 렌트 고객 등록
+    public void registeRentUser(RentUserDto parms) {
+        campingCarSqlMapper.createRentUser(parms);
     }
 
 

@@ -70,7 +70,7 @@
     </select>
     <!-- 상세페이지_세부이미지 -->
     <select id="findDetail_ImgByCarId" resultType="com.bulmeong.basecamp.campingcar.dto.ProductDetailImgDto">
-        select original_filename from bc_product_detail_img bpdi 
+        select * from bc_product_detail_img bpdi 
         where product_id=#{id}
     </select>
 
@@ -90,4 +90,12 @@
         select count(*) from bc_campingcar_like
         where product_id=#{id}
     </select>
+    <!-- rentuser 등록-->
+    <insert id="createRentUser">
+        insert into bc_rent_user name(
+            user_id, driver_license_number, driver_license_id, driver_age_id, driving_experience_id, driver_license_image
+        )values(
+            #{user_id}, #{driver_license_number}, #{driver_license_id}, #{driver_age_id}, #{drivier_experience_id}, #{driver_license_image}
+        )
+    </insert>
 </mapper>

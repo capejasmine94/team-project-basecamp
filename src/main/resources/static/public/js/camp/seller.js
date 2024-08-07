@@ -130,7 +130,7 @@ function popupAccept(title,content,accept,action) {
 
 // 로그인 팝업
 function registerCampPopup() {
-    popup('캠핑장 등록','우선 캠핑장을 등록해야합니다.','캠핑장 등록',function() { location.href = '/campsiteCenter/registerCamp'; });
+    popupForce('캠핑장 등록','우선 캠핑장을 등록해야합니다.','캠핑장 등록',function() { location.href = '/campsiteCenter/registerCamp'; });
  }
 
 //=====================================================================================
@@ -173,7 +173,7 @@ function selectArea(id, onRefresh) {
                     const button = document.querySelector('#deleteAreaButton');
                     const request_delete = document.querySelector('#request_delete_area');
                     button.onclick = function(){
-                        if(request_delete.innerText == request_delete.getAttribute('placeholder'))
+                        if(request_delete.value == request_delete.getAttribute('placeholder'))
                             location.href='/campsiteCenter/deleteAreaProcess?id=' + curArea.dto.id;
                         else
                         popupAccept('삭제 키워드 불일치', '삭제 키워드가 일치하지 않습니다.','예',popupClose);

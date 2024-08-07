@@ -10,9 +10,17 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.bulmeong.basecamp.campingcar.dto.BasicFacilitiesDto;
+import com.bulmeong.basecamp.campingcar.dto.DriverAgeCondDto;
+import com.bulmeong.basecamp.campingcar.dto.DriverExperienceCondDto;
+import com.bulmeong.basecamp.campingcar.dto.DriverLicenseDto;
 import com.bulmeong.basecamp.campingcar.dto.ProductDetailImgDto;
+import com.bulmeong.basecamp.campingcar.dto.RentUserDto;
 import com.bulmeong.basecamp.campingcar.service.CampingcarService;
+import com.bulmeong.basecamp.campingcar.service.PartnerCampingCarService;
 import com.bulmeong.basecamp.common.util.Utils;
+import com.bulmeong.basecamp.user.dto.UserDto;
+
+import jakarta.servlet.http.HttpSession;
 
 @Controller
 @RequestMapping("campingcar")
@@ -23,6 +31,9 @@ public class CampingcarController {
 
     @Autowired
     private CampingcarService campingcarService;
+
+    @Autowired
+    private PartnerCampingCarService partnerCampingCarService;
 
     @RequestMapping("main")
     public String main(){
@@ -100,13 +111,67 @@ public class CampingcarController {
     }
 
     @RequestMapping("reservationInfo")
-    public String reservationInfo(@RequestParam("id") int id, Model model) {
+    public String reservationInfo(@RequestParam("id") int id, Model model){
         utils.loginUser();
+
         Map<String,Object> campingcarDetails = campingcarService.getCampingCarDetailByid(id);
         model.addAttribute("campingcarDetails", campingcarDetails);
         
         List<BasicFacilitiesDto> facilities = campingcarService.getBasicFacilitiesByProductId(id);
         model.addAttribute("facilities", facilities);
+
+        // 차량등록_운전자 나이 Category List
+        List<DriverAgeCondDto> driverAge = partnerCampingCarService.getDriverAgeAll(); 
+        model.addAttribute("driverAge", driverAge);
+
+    // 차량등록_운전 면허증 Category List
+        List<DriverLicenseDto> driverLicense = partnerCampingCarService.getDriverLicenseAll();
+        model.addAttribute("driverLicense", driverLicense);
+
+    // 차량등록_운전자 경력 Category List
+        List<DriverExperienceCondDto> driverExpericnece = partnerCampingCarService.getDriverExperienceAll();
+        model.addAttribute("driverExpericnece", driverExpericnece);
         return "campingcar/reservationInfo";
+
+        //         String rootPath = "C:/coffeprincess_uploadFiles/";
+        // SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd/");
+        // String todayPath = sdf.format(new Date());
+
+        // File todayFolderForCreate = new File(rootPath+ todayPath);
+        // if(!todayFolderForCreate.exists()) {
+        //     todayFolderForCreate.mkdirs();
+        // }
+
+        // String originalFilename = cafeImg.getOriginalFilename();
+
+        // String uuid = UUID.randomUUID().toString();
+        // long currentTime = System.currentTimeMillis();
+
+        // String filename = uuid + "_" + currentTime;
+        // String ext = originalFilename.substring(originalFilename.lastIndexOf("."));
+
+        // filename += ext;
+
+        // try {
+        //     cafeImg.transferTo(new File(rootPath + todayPath + filename));
+        // }catch(Exception e) {
+        //     e.printStackTrace();
+        // }
+
+
+    }
+    @RequestMapping("rentUserInfoProcess")
+    public String rentUserInfoProcess(HttpSession session, RentUserDto rentUser,
+                                     @RequestParam("driveImage") int driveImage) {
+        
+        utils.loginUser();                               
+
+        UserDto sessionUserInfo = (UserDto)session.getAttribute("sessionUserInfo");
+        int userPk = sessionUserInfo.getId();
+        rentUser.setUser_id(userPk);
+        
+        campingcarService.registeRentUser(rentUser);
+        System.out.println("렌트고객 가입:" + rentUser);
+        return "/campingcar/reservationComplete";
     }
 }

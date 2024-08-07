@@ -56,7 +56,7 @@ public interface CampsiteSqlMapper {
     //===================================================================================================================
     // 캠핑장
     //===================================================================================================================
-    public int minPriseByCampsiteId(@Param("campsite_id") int campsite_id);
+    public Integer minPriseByCampsiteId(@Param("campsite_id") int campsite_id);
     public List<CampsiteDto> getAllCampsiteDto();
     public CampsiteDto getCampsiteDtoById(@Param("campsite_id") int campsite_id);
     public List<CampsiteAreaDto> getAreaListByCampsiteId(@Param("campsite_id") int campsite_id);
@@ -67,6 +67,7 @@ public interface CampsiteSqlMapper {
     public CampsiteAreaPointDto pointById(@Param("id") int id);
     public void registerArea(CampsiteAreaDto campsiteAreaDto);
     public void updateArea(CampsiteAreaDto campsiteAreaDto);
+    public void deleteArea(@Param("area_id") int area_id);
     public void registerPoint(CampsiteAreaPointDto pointDto);
     public void deletePoints(@Param("area_id") int area_id);
     public void deletePoint(@Param("point_id") int point_id);

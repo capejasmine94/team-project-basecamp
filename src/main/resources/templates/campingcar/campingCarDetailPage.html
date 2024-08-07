@@ -332,10 +332,14 @@
         <div class="container">
             <div class="row">
                 <div class="col py-3 px-3 d-grid">
-                    <a class="btn btn-dark btn-lg fw-bold" th:text="${#numbers.formatInteger(campingcarDetails.campingcarDto.rental_fee_weekdays,3,'COMMA')+'원'}" th:href="@{/campingcar/reservationInfo(id=${campingcarDetails.campingcarDto.id})}" style="color: #C6ED6F;">예약하기</a>
+                    <a class="text-white btn btn-lg fw-bold" th:href="@{/campingcar/reservationInfo(id=${campingcarDetails.campingcarDto.id})}" style="background-color: #C6ED6F;">
+                        <span th:text="${#numbers.formatInteger(campingcarDetails.campingcarDto.rental_fee_weekdays, 3, 'COMMA') + '원'}"></span>
+                        <div class="fs-6">예약하기</div>
+                    </a>
                 </div>
             </div>
         </div>
+
 
 
     <!-- 부트스트랩 JS -->
