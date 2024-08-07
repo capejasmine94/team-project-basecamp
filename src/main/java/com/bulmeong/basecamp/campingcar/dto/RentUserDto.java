@@ -11,7 +11,7 @@ public class RentUserDto {
     private String driver_license_number;
     private int driver_license_id;
     private int driver_age_id;
-    private int driving_experience_id;
-    private String driver_license_file;
+    private int driver_experience_id;
+    private String driver_license_image;
     private Date created_at;
 }
