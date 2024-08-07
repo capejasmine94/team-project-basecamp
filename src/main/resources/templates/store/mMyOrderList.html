@@ -405,11 +405,11 @@
                             </a>
                         </div>
                         <div class="row pb-1 text-body-tertiary f09">
-                            <div class="col-auto pe-0 valueName">
+                            <div class="col-auto pe-0 valueName d-none">
                                 Black / M
                             </div>
                             <div class="col">
-                                <span class="border-start border-2 px-1 quantity">5개</span>
+                                <span class="quantity">5개</span>
                             </div>
                         </div>
                         <div class="row">
@@ -553,7 +553,11 @@
                         productName.innerText = OrderProductData.orderProductDto.product_name;
                         productName.setAttribute("href", `/store/productDetails?id=${OrderProductData.orderProductDto.product_id}`)
 
-                        newOrderProductTemplate.querySelector(".valueName").innerText = OrderProductData.valueNameList.join("/");
+                        if(OrderProductData.valueNameList.length!=0){
+                            const valueName = newOrderProductTemplate.querySelector(".valueName")
+                            valueName.innerText = `${OrderProductData.valueNameList.join("/")} |`;
+                            valueName.classList.remove("d-none");
+                        }
                         newOrderProductTemplate.querySelector(".productImg").setAttribute("src", `/images/${OrderProductData.orderProductDto.product_main_image}`)
 
                         newOrderProductTemplate.querySelector(".quantity").innerText = `${OrderProductData.orderProductDto.quantity}개`;

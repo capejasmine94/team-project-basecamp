@@ -21,6 +21,7 @@ import com.bulmeong.basecamp.store.dto.StoreDto;
 import com.bulmeong.basecamp.store.dto.StoreOrderDto;
 import com.bulmeong.basecamp.store.dto.StoreProductDto;
 import com.bulmeong.basecamp.store.dto.StoreRestResponseDto;
+import com.bulmeong.basecamp.store.dto.StoreSellerReplyDto;
 import com.bulmeong.basecamp.store.dto.UserDeliveryInfoDto;
 import com.bulmeong.basecamp.store.service.StoreService;
 import com.bulmeong.basecamp.user.dto.UserDto;
@@ -442,6 +443,57 @@ public class RestStoreController {
         RestResponseDto restResponseDto = new RestResponseDto();
 
         storeService.writeReview(productReviewDto);
+
+        return restResponseDto;
+    }
+
+    @RequestMapping("getPurchaseConfirmationOrderList")
+    public RestResponseDto getPurchaseConfirmationOrderList(HttpSession session){
+        RestResponseDto restResponseDto = new RestResponseDto();
+
+        UserDto userDto = (UserDto)session.getAttribute("sessionUserInfo");
+
+        restResponseDto.add("purchaseConfirmationList", storeService.getPurchaseConfirmationList(userDto.getId()));
+
+        return restResponseDto;
+    }
+
+    @RequestMapping("getMyReviewList")
+    public RestResponseDto getMyReviewList(HttpSession session){
+        RestResponseDto restResponseDto = new RestResponseDto();
+        
+        UserDto userDto = (UserDto)session.getAttribute("sessionUserInfo");
+
+        restResponseDto.add("reviewCompleteList", storeService.getReviewCompleteList(userDto.getId()));
+        
+        return restResponseDto;
+    }
+
+    @RequestMapping("getStoreReviewList")
+    public RestResponseDto getStoreReviewList(HttpSession session){
+        RestResponseDto restResponseDto = new RestResponseDto();
+
+        StoreDto storeDto = (StoreDto)session.getAttribute("sessionStoreInfo");
+
+        restResponseDto.add("storeReviewList", storeService.getStoreReviewList(storeDto.getId()));
+
+        return restResponseDto;
+    }
+
+    @RequestMapping("getStoreReviewData")
+    public RestResponseDto getStoreReviewData(@RequestParam("id") int id){
+        RestResponseDto restResponseDto = new RestResponseDto();
+
+        restResponseDto.add("reviewData", storeService.selectReviewData(id));
+
+        return restResponseDto;
+    }
+
+    @RequestMapping("writeSellerReply")
+    public RestResponseDto writeSellerReply(@RequestBody StoreSellerReplyDto storeSellerReplyDto){
+        RestResponseDto restResponseDto = new RestResponseDto();
+
+        storeService.writeSellerReply(storeSellerReplyDto);
 
         return restResponseDto;
     }

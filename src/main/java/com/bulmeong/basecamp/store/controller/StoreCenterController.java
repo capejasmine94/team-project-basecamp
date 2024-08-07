@@ -30,7 +30,7 @@ public class StoreCenterController {
 
     @RequestMapping("storeRegister")
     public String storeRegister(){
-        return "store/storeRegisterPage";
+        return "store/pStoreRegisterPage";
     }
 
     @RequestMapping("storeRegisterProcess")
@@ -43,13 +43,13 @@ public class StoreCenterController {
 
     @RequestMapping("dashboard")
     public String dashboard(){
-        return "store/dashboard";
+        return "store/pDashboard";
     }
 
     @RequestMapping("productRegister")
     public String productRegister(Model model){
         model.addAttribute("productCategoryDtoList", storeService.getProductCategoryAll());
-        return "store/productRegister";
+        return "store/pProductRegister";
     }
     
     @RequestMapping("sellerInfo")
@@ -61,22 +61,22 @@ public class StoreCenterController {
             StoreBankAccountDto storeBankAccountDto = storeService.getStoreBankAccountDtoByStoreId(sessionStore.getId());
             model.addAttribute("storeBankAccountDto", storeBankAccountDto);
 
-            return "store/sellerInfo";
+            return "store/pSellerInfo";
         }else{
-            return "redirect:/storeCenter/login";
+            return "redirect:/seller/login";
         }
         
     }
 
     @RequestMapping("deliveryInfo")
     public String deliveryInfo(){
-        return "store/deliveryInfo";
+        return "store/pDeliveryInfo";
     }
 
     @RequestMapping("sendProcessing")
     public String sendProcessing(){
 
-        return "store/sendProcessing";
+        return "store/pSendProcessing";
     }
 
     @RequestMapping("orderProductDetails")
@@ -106,7 +106,7 @@ public class StoreCenterController {
 
         model.addAttribute("productCategoryDtoList", storeService.getProductCategoryAll());
 
-        return "store/XmanageReview";
+        return "store/pManageReview";
     }
     //////////////////////////////////////////////////////////////////////////
 

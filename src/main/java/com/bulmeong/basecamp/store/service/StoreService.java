@@ -23,6 +23,7 @@ import com.bulmeong.basecamp.store.dto.StoreOrderDto;
 import com.bulmeong.basecamp.store.dto.StoreProductCategoryDto;
 import com.bulmeong.basecamp.store.dto.StoreProductDiscountDto;
 import com.bulmeong.basecamp.store.dto.StoreProductDto;
+import com.bulmeong.basecamp.store.dto.StoreSellerReplyDto;
 import com.bulmeong.basecamp.store.dto.UserDeliveryInfoDto;
 import com.bulmeong.basecamp.store.mapper.StoreSqlMapper;
 import com.bulmeong.basecamp.user.dto.MileageLogDto;
@@ -885,6 +886,7 @@ public class StoreService {
         map.put("deliveryCompleteCount", storeSqlMapper.deliveryCompleteCount(user_id));
         map.put("purchaseConfirmationCount", storeSqlMapper.purchaseConfirmationCount(user_id));
         map.put("allOrderCount", storeSqlMapper.allOrderCount(user_id));
+        map.put("reviewCompleteCount", storeSqlMapper.reviewCompleteCount(user_id));
 
         return map;
     }
@@ -976,5 +978,104 @@ public class StoreService {
 
     public void writeReview(ProductReviewDto productReviewDto){
         storeSqlMapper.insertProductReview(productReviewDto);
+        int order_product_id = productReviewDto.getOrder_product_id();
+        storeSqlMapper.updateOrderProductStatusToReviewComplete(order_product_id);
     }
+
+    public List<Map<String, Object>> getPurchaseConfirmationList(int user_id){
+
+        List<Map<String, Object>> result = new ArrayList<>();
+
+        List<Map<String, Object>> orderProductDataList = storeSqlMapper.selectPurchaseConfirmationList(user_id);
+
+        for(Map<String, Object> orderProudctData : orderProductDataList){
+
+            int order_product_id = (int)orderProudctData.get("id");
+            int[] valueIds = storeSqlMapper.selectOrderProductOptionValueIds(order_product_id);
+            if(valueIds.length!=0){
+                List<String> valueNameList = new ArrayList<>();
+                for(int value_id : valueIds){
+                    String value_name = storeSqlMapper.selectOptionValueNameById(value_id);
+                    valueNameList.add(value_name);
+                }
+                orderProudctData.put("valueNameList", valueNameList);
+            }else{
+                orderProudctData.put("valueNameList", null);
+            }
+            
+            result.add(orderProudctData);
+        }
+
+        return result;
+    }
+
+    public List<Map<String, Object>> getReviewCompleteList(int user_id){
+
+        List<Map<String, Object>> result = new ArrayList<>();
+
+        List<Map<String, Object>> reviewDataList = storeSqlMapper.selectReviewList(user_id);
+
+        if(reviewDataList.size()!=0){
+            for(Map<String, Object> orderProductData : reviewDataList){
+
+                int order_product_id = (int)orderProductData.get("id");
+                int[] valueIds = storeSqlMapper.selectOrderProductOptionValueIds(order_product_id);
+                if(valueIds.length!=0){
+                    List<String> valueNameList = new ArrayList<>();
+                    for(int value_id : valueIds){
+                        String value_name = storeSqlMapper.selectOptionValueNameById(value_id);
+                        valueNameList.add(value_name);
+                    }
+                    orderProductData.put("valueNameList", valueNameList);
+                }else{
+                    orderProductData.put("valueNameList", null);
+                }
+
+                int review_id = (int)orderProductData.get("review_id");
+                StoreSellerReplyDto storeSellerReplyDto = storeSqlMapper.selectStoreSellerReplyByReviewId(review_id);
+                orderProductData.put("storeSellerReplyDto", storeSellerReplyDto);
+                
+                result.add(orderProductData);
+            }
+        }
+
+        return result;
+    }
+
+    public List<Map<String, Object>> getStoreReviewList(int store_id){
+
+        return storeSqlMapper.selectStoreReviewList(store_id);
+    }
+
+    public Map<String, Object> selectReviewData(int review_id){
+        Map<String, Object> map = storeSqlMapper.selectReviewData(review_id);
+
+        int order_product_id = (int)map.get("order_product_id");
+
+        int[] value_ids = storeSqlMapper.selectOrderProductOptionValueIds(order_product_id);
+        if(value_ids.length!=0){
+            List<String> valueNameList = new ArrayList<>();
+            for(int value_id : value_ids){
+                String value_name = storeSqlMapper.selectOptionValueNameById(value_id);
+                valueNameList.add(value_name);
+            }
+            map.put("valueNameList", valueNameList);
+        }else{
+            map.put("valueNameList", null);
+        }
+        map.put("currentReviewNumber", storeSqlMapper.selectCurrentReviewNumberById(review_id));
+        map.put("storeSellerReplyDto", storeSqlMapper.selectStoreSellerReplyByReviewId(review_id));
+
+        return map;
+    }
+
+    // public Map<String, Object>
+
+    public void writeSellerReply(StoreSellerReplyDto storeSellerReplyDto){
+        storeSqlMapper.insertSellerReply(storeSellerReplyDto);
+    }
+
+    // public StoreSellerReplyDto getStoreSellerReplyDto(int review_id){
+    //     return storeSqlMapper.selectStoreSellerReplyByReviewId(review_id);
+    // }
 }

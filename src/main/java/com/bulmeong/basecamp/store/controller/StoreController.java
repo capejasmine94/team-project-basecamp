@@ -162,4 +162,13 @@ public class StoreController {
         return "store/mReviewComplete";
     }
 
+    @RequestMapping("myReview")
+    public String myReview(HttpSession session, Model model){
+        UserDto userDto = (UserDto)session.getAttribute("sessionUserInfo");
+
+        model.addAttribute("orderStatusCountData", storeService.getOrderStatusCountData(userDto.getId()));
+
+        return "store/mMyReview";
+    }
+
 }

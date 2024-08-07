@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">    
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+    <script src="https://kit.fontawesome.com/7b271bba58.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="/public/css/font.css">
+
+    <style>
+        .fill-on {
+            font-variation-settings: 'FILL' 1;
+        }
+        .fill-off {
+            font-variation-settings: 'FILL' 0;
+        }
+        .seller_profile img{
+            aspect-ratio: 1/1;
+            width: 80px;
+            object-fit: cover;
+            object-position: center;
+        }
+        .icon-col img{
+            aspect-ratio: 1/1;
+            width: 100%;
+            object-fit: cover;
+            object-position: center;
+        }
+        .product-col img{
+            aspect-ratio: 1/1;
+            width: 60px;
+            object-fit: cover;
+            object-position: center;
+        }
+        a{
+            text-decoration: none;
+            color: black;
+        }
+        button{
+            color: black;
+        }
+        .f05{
+            font-size: 0.5em;
+        }
+        .f08{
+            font-size: 0.8em;
+        }
+        .f09{
+            font-size: 0.9em;
+        }
+        .f12{
+            font-size: 1.2em;
+        }
+        .f17{
+            font-size: 1.7em;
+        }
+        .f20{
+            font-size: 2em;
+        }
+        .f40{
+            font-size: 4em;
+        }
+        .active{
+            font-weight: bold;
+            border-bottom: 2px solid black;
+        }
+        #reviewTextarea:focus{
+            outline: none;
+        }
+        #reviewTextarea::placeholder{
+            font-size: 0.8em;
+            color: rgb(159, 159, 159);
+        }
+        #agreeTermsButton:focus{
+            outline: none;
+        }
+        li::marker {
+            font-size: 8px;
+        }
+        .ratingCol{
+            cursor: pointer;
+        }
+        .orangered{
+            color: orangered;
+        }
+    </style>
+</head>
+<body class="bg-body-tertiary">
+
+    <!-- top-nav -->
+    <div class="fixed-top px-4 row bg-white">
+        <div class="col">
+            <div class="row py-3 align-items-center justify-content-between">
+                <div class="col-auto ps-0">
+                    <button id="backButton" class="border-0 bg-transparent d-flex align-items-center">
+                        <span class="material-symbols-outlined fw-light">
+                            arrow_back_ios
+                        </span>
+                    </button>
+                </div>
+                <div class="col text-center fw-semibold">
+                    리뷰
+                </div>
+                <a href="/store/cart" class="col-auto pe-0 d-flex align-items-center text-black">
+                    <span class="material-symbols-outlined">
+                        shopping_bag
+                    </span>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <div class="container" style="padding-top: 58px;">
+
+        <div class="row">
+            <div class="col">
+                
+                <div class="row text-center fw-semibold bg-white">
+                    <div id="tab1" class="col f09 py-3 text-dark tab" onclick="changeTab(this)">
+                        작성 가능한 리뷰(<span th:text="${orderStatusCountData.purchaseConfirmationCount}"></span>)
+                    </div>
+                    <div id="tab2" class="col f09 py-3 text-dark tab text-opacity-25 bg-body-tertiary" onclick="changeTab(this)">
+                        내 리뷰(<span th:text="${orderStatusCountData.reviewCompleteCount}"></span>)
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col" id="reviewContainer">
+
+                        <div class="row">
+                            <div class="col">
+
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <!-- footer -->
+                <div class="row py-2 bg-dark-subtle text-white text-center f09">
+                    <div class="col fw-bold border-end">
+                        로그아웃
+                    </div>
+                    <div class="col fw-bold border-end">
+                        고객센터
+                    </div>
+                    <div class="col fw-bold">
+                        NEWS
+                    </div>
+                </div>
+                <div class="row py-4 px-3 bg-body-secondary text-secondary">
+                    <div class="col">
+                        <div class="row pb-2">
+                            <div class="col-auto p-0">
+                                <span class="material-symbols-outlined f20">
+                                    camping
+                                </span>
+                            </div>
+                            <div class="col p-0 fw-bold fs-3">
+                                <span>&nbsp;BASECAMP</span>
+                            </div>
+                        </div>
+                        <div class="row pb-3 border-bottom border-2">
+                            <div class="col p-0 f08">
+                                BASECAMP는 통신판매 중개자로서 통신판매의 당사자가 아니며 상품의 예약, 이용 및 환불 등과 관련한 의무와 책임은 각 판매자에게 있습니다.
+                            </div>
+                        </div>
+
+                        <div class="row pt-3 py-3 border-bottom border-2">
+                            <div class="col-auto p-0">
+                                <button class="btn btn-sm bg-dark-subtle text-white fw-bold f08 d-flex align-items-center">
+                                    <span class="material-symbols-outlined f12">
+                                        phone_in_talk
+                                    </span>
+                                    <span>&nbsp;고객센터</span>
+                                </button>
+                            </div>
+                            <div class="col-auto">
+                                <button class="btn btn-sm bg-dark-subtle text-white fw-bold f08">
+                                    카카오 1:1 문의
+                                </button>
+                            </div>
+                            <div class="col p-0 f08">
+                                <div class="row">
+                                    <div class="col">
+                                        <span>평일</span> : 10:00 ~ 17:00
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col">
+                                        <span>점심</span> : 12:00 ~ 13:00
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col">
+                                        * 주말 공휴일 휴무
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row pt-3 align-items-center">
+                            <div class="col-auto me-2 bg-dark-subtle rounded-circle d-flex align-items-center" style="aspect-ratio: 1/1;">
+                                <i class="bi bi-google-play"></i>
+                            </div>
+                            <div class="col-auto me-2 bg-dark-subtle rounded-circle d-flex align-items-center" style="aspect-ratio: 1/1;">
+                                <i class="bi bi-youtube"></i>
+                            </div>
+                            <div class="col-auto me-2 bg-dark-subtle rounded-circle d-flex align-items-center" style="aspect-ratio: 1/1;">
+                                <i class="bi bi-instagram"></i>
+                            </div>
+                            <div class="col-auto pe-0 f08">
+                                이용약관
+                            </div>
+                            <div class="col f08">
+                                개인정보처리방침
+                            </div>
+                        </div>
+                        <div class="row py-5"></div>
+                        <div class="row py-4"></div>
+                    </div>
+                </div>
+                <div class="row py-4"></div>
+            </div>
+        </div>
+        
+    </div>
+
+    <!-- bottom-nav(임시) -->
+    <div class="row px-2 bg-white fixed-bottom pt-2 pb-4 border-top">
+        <div class="col text-center">
+            <div class="row">
+                <div class="col">
+                    <span class="material-symbols-outlined f17">
+                        home
+                    </span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col f05 fw-bold">
+                    HOME
+                </div>
+            </div>
+        </div>
+        <a href="/store" class="col text-center">
+            <div class="row">
+                <div class="col">
+                    <span class="material-symbols-outlined f17">
+                        storefront
+                    </span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col f05 fw-bold">
+                    SHOP
+                </div>
+            </div>
+        </a>
+        <div class="col text-center">
+            <div class="row">
+                <div class="col">
+                    <span class="material-symbols-outlined f17">
+                        camping
+                    </span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col f05 fw-bold">
+                    CAMP
+                </div>
+            </div>
+        </div>
+        <div class="col text-center">
+            <div class="row">
+                <div class="col">
+                    <span class="material-symbols-outlined f17">
+                        forum
+                    </span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col f05 fw-bold">
+                    COMMUNITY
+                </div>
+            </div>
+        </div>
+        <a href="/store/my" class="col text-center" style="color: orangered;">
+            <div class="row">
+                <div class="col">
+                    <span class="material-symbols-outlined f17">
+                        person
+                    </span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col f05 fw-bold">
+                    MY
+                </div>
+            </div>
+        </a>
+    </div>
+
+    <div id="template" class="d-none">
+        <!-- 리뷰 작성 가능한 상품 하나의 정보 -->
+        <a class="row productRow py-3 mb-3 bg-white align-items-center">
+            <div class="col-auto pe-0 seller_profile">
+                <img src="/public/img/storeImage/productImg1.jpg" class="border productImg">
+            </div>
+            <div class="col">
+                <div class="row">
+                    <div class="col f08 text-dark text-opacity-25 storeName">
+                        GamjaStore
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col f08 fw-semibold productName">
+                        호박고구마
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col f08 text-secondary optionName">
+                        라이트블루 / M
+                    </div>
+                </div>
+                <!-- <div class="row">
+                    <div class="col f08 text-body-tertiary updatedAt">
+                        2024.05.07 구매확정
+                    </div>
+                </div> -->
+            </div>
+        </a>
+
+        <!-- 아직 리뷰를 작성할 수 있는 어쩌구 -->
+        <div class="row py-5 bg-white noPurchaseConfirmationList">
+            <div class="col text-center f09">
+                <div class="row">
+                    <div class="col">
+                        아직 리뷰를 작성할 수 있는
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        주문내역이 없습니다.
+                    </div>
+                </div>        
+            </div>
+        </div>
+
+        <!-- 리뷰 하나의 정보 -->
+        <div class="row reviewRow mb-3 bg-white">
+            <div class="col">
+                <div class="row px-3">
+                    <div class="col py-3 p-0 border-bottom">
+                        <div class="row">
+                            <div class="col-auto pe-0 product-col align-items-center">
+                                <img src="/public/img/storeImage/productImg1.jpg" class="border productImg">
+                            </div>
+                            <div class="col align-items-center">
+                                <div class="row">
+                                    <div class="col f08 text-dark text-opacity-25 storeName">
+                                        GamjaStore
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col f08 fw-semibold productName">
+                                        호박고구마
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col f08 text-secondary optionName">
+                                        라이트블루 / M
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-auto align-items-start text-body-tertiary">
+                                <span class="material-symbols-outlined">
+                                    more_vert
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row px-3">
+                    <div class="col p-0">
+                        <div class="row py-2">
+                            <div class="col fw-semibold orangered rating">
+                                <span class="star-rating d-none" id="star1">★☆☆☆☆</span>
+                                <span class="star-rating d-none" id="star2">★★☆☆☆</span>
+                                <span class="star-rating d-none" id="star3">★★★☆☆</span>
+                                <span class="star-rating d-none" id="star4">★★★★☆</span>
+                                <span class="star-rating d-none" id="star5">★★★★★</span>
+                            </div>
+                        </div>
+                        <div class="row pb-3">
+                            <div class="col f08 reviewContent">
+                                내용내용
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- 판매자 답글 -->
+                <div class="row px-3 pb-3 replyRow">
+                    <div class="col py-3 px-3 p-0 bg-body-secondary rounded-2">
+                        <div class="row align-items-center">
+                            <div class="col-auto pe-0 fw-bold f09">
+                                <span>판매자</span>
+                            </div>
+                            <div class="col text-body-tertiary f08">
+                                <span class="replyDate">2024.05.06</span>
+                            </div>
+                        </div>
+                        <div class="row f08 pt-1">
+                            <div class="col">
+                                <span class="replyContent">소중한 후기 고맙군요(아직 안 함)</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+
+        document.addEventListener('DOMContentLoaded', function() {
+            document.getElementById('backButton').addEventListener('click', function() {
+                history.back();
+            });
+            reloadConfirmPurchaseList();
+        });
+
+        function changeTab(thisTab){
+            const tabs = document.querySelectorAll(".tab")
+
+            for(tab of tabs){
+                tab.classList.add("text-opacity-25");
+                tab.classList.add("bg-body-tertiary");
+            }
+            
+            thisTab.classList.remove("text-opacity-25");
+            thisTab.classList.remove("bg-body-tertiary");
+
+            if(thisTab.id=='tab1'){
+                reloadConfirmPurchaseList();
+            }else{
+                reloadMyReviewList();
+            }
+        }
+
+        function reloadConfirmPurchaseList(){
+            fetch("/api/store/getPurchaseConfirmationOrderList")
+            .then(response => response.json())
+            .then(response => {
+                const purchaseConfirmationList = response.data.purchaseConfirmationList;
+
+                const reviewContainer = document.getElementById("reviewContainer")
+                reviewContainer.innerHTML = ""
+                
+                if(purchaseConfirmationList.length != 0){
+                    for(purchaseConfirmation of purchaseConfirmationList){
+                        const productRow = document.querySelector("#template .productRow").cloneNode(true);
+                        productRow.querySelector(".productImg").setAttribute("src", `/images/${purchaseConfirmation.product_main_image}`)
+                        productRow.querySelector(".storeName").innerText = purchaseConfirmation.store_name;
+                        productRow.querySelector(".productName").innerText = purchaseConfirmation.product_name;
+
+                        if(purchaseConfirmation.valueNameList!=null){
+                            productRow.querySelector(".optionName").innerText = `${purchaseConfirmation.valueNameList.join("/")}`
+                        }else{
+                            productRow.querySelector(".optionName").innerText = ""
+                        }
+
+                        productRow.setAttribute("href", `/store/writeReview?id=${purchaseConfirmation.id}`)
+                        reviewContainer.appendChild(productRow);
+                    }
+                }else{
+                    const noPurchaseConfirmationList = document.querySelector("#template .noPurchaseConfirmationList").cloneNode(true);
+                    reviewContainer.appendChild(noPurchaseConfirmationList);
+                }
+
+            })
+        }
+
+        function reloadMyReviewList(){ 
+
+            fetch("/api/store/getMyReviewList")
+            .then(response => response.json())
+            .then(response => {
+                const reviewCompleteList = response.data.reviewCompleteList;
+
+                const reviewContainer = document.getElementById("reviewContainer")
+                reviewContainer.innerHTML = ""
+                
+                if(reviewCompleteList.length!=0){
+                    for(reviewComplete of reviewCompleteList){
+                        const reviewRow = document.querySelector("#template .reviewRow").cloneNode(true);
+                        reviewRow.querySelector(".productImg").setAttribute("src", `/images/${reviewComplete.product_main_image}`)
+                        reviewRow.querySelector(".storeName").innerText = reviewComplete.store_name;
+                        reviewRow.querySelector(".productName").innerText = reviewComplete.product_name;
+
+                        if(reviewComplete.valueNameList!=null){
+                            reviewRow.querySelector(".optionName").innerText = `${reviewComplete.valueNameList.join("/")}`
+                        }else{
+                            reviewRow.querySelector(".optionName").innerText = ""
+                        }
+
+                        reviewRow.querySelector(".reviewContent").innerText = reviewComplete.content;
+
+                        const stars = reviewRow.querySelectorAll(".star-rating");
+                        stars.forEach(star => {
+                            if(star.id==`star${reviewComplete.rating}`){
+                                star.classList.remove("d-none")
+                            }
+                        })
+
+                        if(reviewComplete.storeSellerReplyDto != null){
+                            reviewRow.querySelector(".replyRow").classList.remove("d-none")
+                            reviewRow.querySelector(".replyContent").innerText = reviewComplete.storeSellerReplyDto.content
+                        }else{
+                            reviewRow.querySelector(".replyRow").classList.add("d-none")
+                        }
+
+                        reviewContainer.appendChild(reviewRow);
+                    }
+                }
+            })
+
+        }
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+</body>
+</html>

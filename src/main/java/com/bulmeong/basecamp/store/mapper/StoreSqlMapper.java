@@ -24,6 +24,7 @@ import com.bulmeong.basecamp.store.dto.StoreOrderDto;
 import com.bulmeong.basecamp.store.dto.StoreProductCategoryDto;
 import com.bulmeong.basecamp.store.dto.StoreProductDiscountDto;
 import com.bulmeong.basecamp.store.dto.StoreProductDto;
+import com.bulmeong.basecamp.store.dto.StoreSellerReplyDto;
 import com.bulmeong.basecamp.store.dto.UserDeliveryInfoDto;
 import com.bulmeong.basecamp.user.dto.MileageLogDto;
 import com.bulmeong.basecamp.user.dto.UserDto;
@@ -156,6 +157,7 @@ public interface StoreSqlMapper {
     public int deliveryCompleteCount(int user_id);
     public int purchaseConfirmationCount(int user_id);
     public int allOrderCount(int user_id);
+    public int reviewCompleteCount(int user_id);
 
     public List<StoreProductDto> selectStoreProductByStoreId(int store_id);
 
@@ -166,4 +168,17 @@ public interface StoreSqlMapper {
     public Map<String, Object> selectOrderProductDataForReview(int order_product_id);
 
     public void insertProductReview(ProductReviewDto productReviewDto);
+
+    public void updateOrderProductStatusToReviewComplete(int order_product_id);
+
+    public List<Map<String, Object>> selectPurchaseConfirmationList(int user_id);
+    public List<Map<String, Object>> selectReviewList(int user_id);
+    public List<Map<String, Object>> selectStoreReviewList(int store_id);
+
+    public Map<String, Object> selectReviewData(int review_id);
+    public int selectCurrentReviewNumberById(int review_id);
+    // public int selecReviewIdByOffset(@Param("store_id") int store_id, @Param("offset") int offset);
+
+    public StoreSellerReplyDto selectStoreSellerReplyByReviewId(int review_id);
+    public void insertSellerReply(StoreSellerReplyDto storeSellerReplyDto);
 }

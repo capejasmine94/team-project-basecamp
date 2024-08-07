@@ -39,11 +39,11 @@
             .bi-chevron-down, .bi-chevron-up{
                 color: #8F9399;
             }
-            a{
-                text-decoration: none;
-            }
             .product-category a{
                 color: black;
+            }
+            a{
+                text-decoration: none;
             }
             .left a{
                 color: #F4F4F5;
@@ -102,6 +102,21 @@
 
             .scrollBar::-webkit-scrollbar-track {
                 background: rgba(33, 122, 244, .1);  /*스크롤바 뒷 배경 색상*/
+            }
+            .orangered{
+                color: orangered;
+            }
+            #replyTextarea::placeholder{
+                font-size: 0.9em;
+                color: #818181;
+                font-weight: 300;
+            }
+            #replyTextarea{
+                height: 100px;
+                border: 1px solid #e3e3e3;
+            }
+            #replyTextarea:focus{
+                outline: 1px solid #5e9cc8;
             }
         </style>
     </head>
@@ -365,7 +380,7 @@
                                 <div class="col-2">
                                     <input type="date" class="form-control rounded-0">
                                 </div>
-                                <div class="col-2" id="productSubcategoryContainer">
+                                <div class="col-2">
                                     <input type="date" class="form-control rounded-0">
                                 </div>
                             </div>
@@ -436,7 +451,7 @@
                         <div class="col border bg-white">
                             <div class="row py-3 px-3 border-bottom">
                                 <div class="col fw-semibold">
-                                    리뷰 목록 (총 <span id="productCount">27</span>개)
+                                    리뷰 목록 (총 <span class="reviewCount">27</span>개)
                                 </div>
                             </div>
 
@@ -446,18 +461,18 @@
                                         <div class="col-auto py-3 align-items-center justify-content-center d-flex">
                                             <input id="allOptionsSelectCheckBox" type="checkbox" class="form-check-input">
                                         </div>
-                                        <div class="align-items-center justify-content-center d-flex border-end border-start" style="width: 3em;">
+                                        <!-- <div class="align-items-center justify-content-center d-flex border-end border-start" style="width: 3em;">
                                             No
-                                        </div>
-                                        <div class="col align-items-center justify-content-center d-flex border-end">
+                                        </div> -->
+                                        <div class="col align-items-center justify-content-center d-flex border-start border-end">
                                             상품명
                                         </div>
                                         <div class="col align-items-center justify-content-center d-flex border-end">
                                             평점
                                         </div>
-                                        <div class="col align-items-center justify-content-center d-flex border-end">
+                                        <!-- <div class="col align-items-center justify-content-center d-flex border-end">
                                             포토
-                                        </div>
+                                        </div> -->
                                         <div class="col-3 align-items-center justify-content-center d-flex border-end">
                                             내용
                                         </div>
@@ -470,8 +485,8 @@
                                     </div>
 
                                     <div class="row">
-                                        <div class="col" id="storeProductContainer">
-                                            <!-- 요기에 상품 목록 -->
+                                        <div class="col" id="storeReviewContainer">
+                                            <!-- 요기에 리뷰 목록 -->
                                         </div>
                                     </div>
 
@@ -490,33 +505,200 @@
             </select>
             <option value="" class="subcategoryOption"></option>
 
-            <div class="storeProductRow row d-flex align-items-stretch border-bottom text-center align-items-center bg-white">
+            <div class="storeReviewRow row d-flex align-items-stretch border-bottom text-center align-items-center bg-white">
                 <div class="col-auto py-3 align-items-center justify-content-center d-flex">
                     <input type="checkbox" class="form-check-input">
                 </div>
-                <div class="align-items-center justify-content-center d-flex border-end border-start" style="width: 3em;">
+                <!-- <div class="align-items-center justify-content-center d-flex border-end border-start" style="width: 3em;">
                     <span class="productNumber">8</span>
-                </div>
-                <div class="col-3 align-items-center justify-content-center d-flex border-end">
+                </div> -->
+                <div class="col align-items-center justify-content-center d-flex border-start border-end">
                     <span class="productName">상품명</span>
                 </div>
                 <div class="col align-items-center justify-content-center d-flex border-end">
                     <span class="productRating">평점</span>
                 </div>
-                <div class="col align-items-center justify-content-center d-flex border-end">
+                <!-- <div class="col align-items-center justify-content-center d-flex border-end">
                     <span class="productStockQuantity">포토</span>
+                </div> -->
+                <div class="col-3 align-items-center justify-content-center d-flex border-end">
+                    <span class="content">내용</span>
                 </div>
                 <div class="col align-items-center justify-content-center d-flex border-end">
-                    <span class="productStatus">내용</span>
-                </div>
-                <div class="col align-items-center justify-content-center d-flex border-end">
-                    <span class="productPrice">등록자</span>
+                    <span class="accountId">등록자</span>
                 </div>
                 <div class="col align-items-center justify-content-center d-flex">
-                    <span class="productSalePrice">등록일</span>
+                    <span class="createdAt">등록일</span>
                 </div>
             </div>
 
+        </div>
+
+        <!-- modal -->
+        <div class="modal" tabindex="-1" id="reviewModal">
+            <div class="modal-dialog modal-dialog-scrollable" style="max-width: 650px;">
+                <div class="modal-content rounded-0" style="height: 90vh;">
+                    <div class="modal-header rounded-0 text-white" style="background-color: #1F2D3D;">
+                        <div class="col">
+                            리뷰 상세보기
+                        </div>
+                        <div class="col-auto">
+                            <button type="button" class="border-0 bg-transparent text-white d-flex align-items-center text-end p-0" data-bs-dismiss="modal" aria-label="Close">
+                                <span class="material-symbols-outlined">
+                                    close
+                                </span>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="modal-body px-4 pb-0">
+                        <div class="col">
+
+                            <div class="row f08">
+                                <div class="col py-3" style="border: 3px solid #1f2d3d1b; background-color: #1f2d3d18;">
+                                    리뷰 글 번호 <span id="reviewNumber">123456789</span>
+                                </div>
+                            </div>
+    
+                            <div class="row">
+                                <div class="col border-top-0" style="border: 3px solid #E2E3E5;">
+    
+                                    <div class="row">
+                                        <div class="col py-3">
+                                            <div class="row px-3">
+                                                <div class="col p-0 pb-2 f09">
+                                                    <div class="row align-items-center pb-1">
+                                                        <!-- <div class="col">
+                                                            <span class="orangered">★★★</span><span class="text-dark text-opacity-25">★★</span>
+                                                            <span class="fw-semibold" id="reviewRating">5</span>
+                                                        </div> -->
+                                                        <div class="col">
+                                                            <span class="star-rating d-none" id="star1">
+                                                                <span class="orangered">★</span><span class="text-dark text-opacity-25">★★★★</span>
+                                                            </span>
+                                                            <span class="star-rating d-none orangered" id="star2">
+                                                                <span class="orangered">★★</span><span class="text-dark text-opacity-25">★★★</span>
+                                                            </span>
+                                                            <span class="star-rating d-none orangered" id="star3">
+                                                                <span class="orangered">★★★</span><span class="text-dark text-opacity-25">★★</span>
+                                                            </span>
+                                                            <span class="star-rating d-none orangered" id="star4">
+                                                                <span class="orangered">★★★★</span><span class="text-dark text-opacity-25">★</span>
+                                                            </span>
+                                                            <span class="star-rating d-none orangered" id="star5">
+                                                                <span class="orangered">★★★★★</span>
+                                                            </span>
+                                                            <span class="fw-semibold" id="reviewRating">5</span>
+                                                        </div>
+                                                        <div class="col text-end text-body-tertiary f08">
+                                                            <span id="reviewAccount">guguma</span> | <span id="reviewCreatedAt">2024.08.06</span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row text-body-tertiary">
+                                                        <div class="col">
+                                                            옵션: <span id="reviewOption">무슨 어떤 옵션</span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col">
+                                                            <span class="text-body-tertiary">상품명 : </span><a href="" id="reveiwProductName" style="text-decoration: underline;">납작복숭아</a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+    
+                                            <div class="row px-3 f09">
+                                                <div class="col p-0 pt-2 border-top" id="reviewContent">
+                                                    내용내용 리뷰리뷰
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+    
+                                    <div class="row">
+                                        <div class="col py-3 bg-body-tertiary">
+                                            <div class="row pb-2">
+                                                <div class="col fw-semibold">
+                                                    판매자 답글
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col d-grid">
+                                                    <textarea id="replyTextarea" oninput="validateInput()" class="rounded-0 px-2" placeholder="반복적인 답글이 아닌 정성스러운 답글을 남겨주세요. 낮은 평점의 리뷰에도 귀 기울여 진심을 담아 구매자와 소통해주시면 스토어 만족도가 높아집니다.^^"></textarea>
+                                                </div>
+                                            </div>
+                                            <div class="row text-end py-2 f09">
+                                                <div class="col">
+                                                    <span class="text-success" id="replyCount">0</span>/1000(최소 10자)
+                                                </div>
+                                            </div>
+                                            <div class="row text-end" id="beforeReplyButtonRow">
+                                                <div class="col">
+                                                    <button id="writeReplyButton" class="btn btn-sm bg-white border rounded-0">답글 등록</button>
+                                                </div>
+                                            </div>
+                                            <div class="row justify-content-end" id="afterReplyButtonRow">
+                                                <div class="col-auto pe-0">
+                                                    <button id="updateReplyButton" class="btn btn-sm bg-white border rounded-0">답글 수정</button>
+                                                </div>
+                                                <div class="col-auto">
+                                                    <button id="deleteReplyButton" class="btn btn-sm bg-white border rounded-0">답글 삭제</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row bg-secondary-subtle py-2">
+                                        <div class="col">
+                                            <div class="row align-items-center">
+                                                <div class="col-auto">
+                                                    <button class="btn f09 bg-white text-secondary border rounded-0 d-flex align-items-center ps-0">
+                                                        <span class="material-symbols-outlined fw-light">
+                                                            chevron_left
+                                                        </span>이전리뷰
+                                                    </button>
+                                                </div>
+                                                <div class="col text-center f09">
+                                                    <span id="currentCount">2</span>/<span class="reviewCount">21</span>
+                                                </div>
+                                                <div class="col-auto">
+                                                    <button class="btn f09 bg-white text-secondary border rounded-0 d-flex align-items-center pe-0">
+                                                        다음리뷰
+                                                        <span class="material-symbols-outlined fw-light">
+                                                            chevron_right
+                                                        </span>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+            
+                                </div>
+                            </div>
+
+                            <div class="row px-3 pt-3 f08 text-body-tertiary">
+                                <ul class="col p-0">
+                                    <li>
+                                        상품을 구매한 회원이 작성한 리뷰입니다.
+                                    </li>
+                                    <li>
+                                        상품과 관련없는 내용 혹은 이미지 첨부, 욕설, 허위사실, 도배/중복등록 등의 리뷰는 [신고하기]를 통해 삭제요청 하실 수 있습니다.
+                                    </li>
+                                    <li>
+                                        관련없는 이미지, 관련없는 내용, 욕성, 홍보성 도배글로 신고해주시면 신속히 처리됩니다. 다만, 상품불만 내용 등 판매활동에 불이익을 준다는 이유만으로는 처리되지 않습니다.
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="row pt-4">
+                                <div class="col"></div>
+                                <div class="col d-grid text-center">
+                                    <button type="button" class="btn bg-white py-2 f09 border border-secondary-subtle rounded-0" data-bs-dismiss="modal">닫기</button>
+                                </div>
+                                <div class="col"></div>
+                            </div>
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
@@ -576,7 +758,6 @@
             function onResize(){
                 const topNaviSeller = document.getElementById("topNaviSeller");
                 const height = topNaviSeller.offsetHeight;
-                console.log(height);
                 const leftMenu = document.getElementById("leftAccordion");
                 leftMenu.style.paddingTop = height + 'px';
             }
@@ -586,8 +767,145 @@
 
             window.addEventListener("DOMContentLoaded", () => {
                 productCategorySelectBox.addEventListener("change", getProductSubcategoryList);
-                reloadProductList();
+                reloadReviewList();
             })
+
+            function reloadReviewList(){
+                const url = "/api/store/getStoreReviewList"
+                fetch(url)
+                .then(response => response.json())
+                .then((response) => {
+                    const storeReviewList = response.data.storeReviewList
+
+                    const reviewCounts = document.querySelectorAll(".reviewCount")
+                    reviewCounts.forEach(reviewCount => reviewCount.innerText = storeReviewList.length)
+
+                    const storeReviewContainer = document.getElementById("storeReviewContainer")
+                    storeReviewContainer.innerHTML = ""
+
+                    for(storeReview of storeReviewList){
+                        const storeReviewRow = document.querySelector("#template .storeReviewRow").cloneNode(true)
+                        
+                        storeReviewRow.querySelector(".productName").innerText = storeReview.product_name;
+                        storeReviewRow.querySelector(".productRating").innerText = storeReview.rating;
+                        const content = storeReviewRow.querySelector(".content")
+                        content.innerText = storeReview.content;
+                        
+                        storeReviewRow.querySelector(".accountId").innerText = storeReview.account;
+
+                        const createdAt = storeReviewRow.querySelector(".createdAt");
+                        const date = new Date(storeReview.created_at);
+                        const year = date.getFullYear();
+                        const month = String(date.getMonth() + 1).padStart(2, '0');
+                        const day = String(date.getDate()).padStart(2, '0');
+                        const hours = String(date.getHours()).padStart(2, '0');
+                        const minutes = String(date.getMinutes()).padStart(2, '0');
+
+                        createdAt.innerText = `${year}.${month}.${day} ${hours}:${minutes}`;
+
+                        storeReviewRow.setAttribute("onclick", `showReviewModal(${storeReview.id})`)
+
+                        storeReviewContainer.appendChild(storeReviewRow)
+                    }
+                })
+            }
+
+            function showReviewModal(id){
+
+                const url = `/api/store/getStoreReviewData?id=${id}`
+                fetch(url)
+                .then(response => response.json())
+                .then((response) => {
+                    const reviewModal = bootstrap.Modal.getOrCreateInstance("#reviewModal")
+
+                    const reviewData = response.data.reviewData
+
+                    document.getElementById("reviewNumber").innerText = reviewData.id;
+                    document.getElementById("reviewRating").innerText = reviewData.rating;
+                    const stars = document.querySelectorAll(".star-rating");
+                    stars.forEach(star => {
+                        if(star.id==`star${reviewData.rating}`){
+                            star.classList.remove("d-none")
+                        }else{
+                            star.classList.add("d-none")
+                        }
+                    })
+
+                    document.getElementById("reviewAccount").innerText = reviewData.account;
+
+                    const reviewCreatedAt = document.getElementById("reviewCreatedAt");
+                    const date = new Date(reviewData.created_at);
+                    const year = date.getFullYear();
+                    const month = String(date.getMonth() + 1).padStart(2, '0');
+                    const day = String(date.getDate()).padStart(2, '0');
+                    reviewCreatedAt.innerText = `${year}.${month}.${day}`;
+
+                    
+                    if(reviewData.valueNameList != null){
+                        const reviewOption = document.getElementById("reviewOption")
+                        reviewOption.innerText = `${reviewData.valueNameList.join("/")}`;
+                        reviewOption.classList.remove("d-none");
+                    }
+
+                    const reveiwProductName = document.getElementById("reveiwProductName")
+                    reveiwProductName.innerText = reviewData.product_name;
+                    reveiwProductName.setAttribute("href", `/store/productDetails?id=${reviewData.product_id}`)
+                    reveiwProductName.setAttribute("target", `_blank`)
+
+                    document.getElementById("reviewContent").innerText = reviewData.content;
+                    document.getElementById("currentCount").innerText = reviewData.currentReviewNumber;
+
+                    if(reviewData.storeSellerReplyDto==null){
+                        document.getElementById("beforeReplyButtonRow").classList.remove("d-none");
+                        document.getElementById("afterReplyButtonRow").classList.add("d-none");
+                        document.getElementById("replyTextarea").value = ""
+                        document.getElementById("replyCount").innerText = 0
+                    }else{
+                        document.getElementById("beforeReplyButtonRow").classList.add("d-none");
+                        document.getElementById("afterReplyButtonRow").classList.remove("d-none");
+                        document.getElementById("replyTextarea").value = reviewData.storeSellerReplyDto.content
+                        document.getElementById("replyCount").innerText = reviewData.storeSellerReplyDto.content.length;
+                    }
+
+                    document.getElementById("writeReplyButton").setAttribute("onclick", `writeReply(${reviewData.id})`)
+                
+                    reviewModal.show();                    
+                })
+            }
+
+            function writeReply(reviewId){
+                const replyCount = document.getElementById("replyCount");
+                const replyTextarea = document.getElementById("replyTextarea")
+                if(replyCount.innerText<10){
+                    alert("답글을 최소 10자 이상 작성해주세요")
+                    replyTextarea.focus();
+                    return;
+                }
+                const replyContent = replyTextarea.value;
+
+                const sellerReply = {
+                    review_id: reviewId,
+                    content: replyContent
+                }
+
+                const url = '/api/store/writeSellerReply'
+                fetch(url, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(sellerReply)
+                })
+                .then(response => response.json())
+                .then((response) => {
+                    alert("답글이 등록 되었습니다")
+                    showReviewModal(reviewId)
+                })
+            }
+
+            function validateInput(){
+                document.getElementById("replyCount").innerText = document.getElementById("replyTextarea").value.length;
+            }
         </script>
     </body>
 </html>

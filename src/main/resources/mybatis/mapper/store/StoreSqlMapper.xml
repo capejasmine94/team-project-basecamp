@@ -573,6 +573,13 @@
         and op.status = '구매확정'
     </select>
 
+    <select id="reviewCompleteCount" resultType="int">
+        select count(*) from order_product op
+        inner join store_order so on op.order_id = so.id
+        where so.user_id = #{user_id}
+        and op.status = '리뷰작성완료'
+    </select>
+
     <select id="allOrderCount" resultType="int">
         select count(*) from order_product op
         inner join store_order so on op.order_id = so.id
@@ -706,4 +713,78 @@
             #{user_id}, #{order_product_id}, #{content}, #{rating}
         )
     </insert>
+
+    <update id="updateOrderProductStatusToReviewComplete">
+        update order_product
+        set status = '리뷰작성완료'
+        where id = #{order_product_id}
+    </update>
+
+    <select id="selectPurchaseConfirmationList" resultType="java.util.HashMap">
+        select op.*, s.name as store_name from order_product op 
+        inner join store_product sp on op.product_id = sp.id
+        inner join store_order so on so.id = op.order_id 
+        inner join store s on s.id = sp.store_id 
+        where so.user_id = #{user_id}
+        and op.status = '구매확정'
+    </select>
+
+    <select id="selectReviewList" resultType="java.util.HashMap">
+        select op.*, s.name as store_name, pr.content, pr.rating, pr.id as review_id from order_product op 
+        inner join store_product sp on op.product_id = sp.id
+        inner join store_order so on so.id = op.order_id 
+        inner join store s on s.id = sp.store_id 
+        inner join product_review pr on pr.order_product_id = op.id
+        where so.user_id = #{user_id}
+        and op.status = '리뷰작성완료'
+    </select>
+
+    <select id="selectStoreReviewList" resultType="java.util.HashMap">
+        select pr.*, op.product_name, bu.account from product_review pr
+        inner join bc_user bu on pr.user_id = bu.id
+        inner join order_product op on pr.order_product_id = op.id 
+        inner join store_product sp on op.product_id = sp.id 
+        inner join store s on s.id = sp.store_id 
+        where s.id  = #{store_id}
+        order by pr.id desc
+    </select>
+
+    <select id="selectReviewData" resultType="java.util.HashMap">
+        select pr.*, op.product_name, op.product_id, bu.account from product_review pr
+        inner join bc_user bu on pr.user_id = bu.id 
+        inner join order_product op on op.id = pr.order_product_id 
+        where pr.id = #{review_id}
+    </select>
+
+    <select id="selectCurrentReviewNumberById" resultType="int">
+        select row_num
+        from (
+            select *, row_number() over (order by id desc) as row_num
+            from product_review
+        ) as numbered
+        where id = #{review_id}
+    </select>
+
+    <!-- <select id="selecReviewIdByOffset" resultType="int">
+        select pr.id from product_review pr 
+        inner join order_product op on pr.order_product_id = op.id 
+        inner join store_product sp on op.product_id = sp.id 
+        inner join store s on sp.store_id = s.id 
+        where s.id = #{store_id}
+		limit 1 offset #{offset}
+    </select> -->
+
+    <select id="selectStoreSellerReplyByReviewId" resultType="com.bulmeong.basecamp.store.dto.StoreSellerReplyDto">
+        select * from store_seller_reply
+        where review_id = #{review_id}
+    </select>
+
+    <insert id="insertSellerReply">
+        insert into store_seller_reply(
+            review_id, content
+        )values(
+            #{review_id}, #{content}
+        )
+    </insert>
+
 </mapper>

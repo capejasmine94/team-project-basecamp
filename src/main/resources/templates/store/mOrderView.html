@@ -145,14 +145,14 @@
                                             </div>
                                         </div>
                                         <div class="row text-body-tertiary f09">
-                                            <div class="col-auto pe-0">
-                                                <span th:if="${orderProductData.valueNameList}!=null" th:each="name, iterStat : ${orderProductData.valueNameList}">
+                                            <div class="col-auto pe-0" th:if="${orderProductData.valueNameList}!=null">
+                                                <span th:each="name, iterStat : ${orderProductData.valueNameList}">
                                                     <span th:text="${name}">색상: 검정 / 사이즈: M / 또 무슨 옵션: 짜라잔</span>
                                                     <span th:if="${!iterStat.last}">/</span>
                                                 </span>
                                             </div>
                                             <div class="col">
-                                                <span class="border-start border-2 px-1" th:text="|${orderProductData.orderProductDto.quantity}개|">5개</span>
+                                                <span th:text="|${orderProductData.orderProductDto.quantity}개|">5개</span>
                                             </div>
                                         </div>
                                         <div class="row f09 pt-3 toggle-icon" data-bs-toggle="collapse" th:data-bs-target="|#${orderProductData.orderProductDto.id}|">
@@ -183,7 +183,7 @@
                                                         상품 할인
                                                     </div>
                                                     <div class="col text-end text-primary">
-                                                        <span th:text="|-${#numbers.formatDecimal(orderProductData.orderProductDto.product_price*orderProductData.orderProductDto.quantity-orderProductData.orderProductDto.order_price, 1, 'COMMA', 0, 'POINT')}원|">-31,500원</span>
+                                                        <span th:text="|${#numbers.formatDecimal(orderProductData.orderProductDto.product_price*orderProductData.orderProductDto.quantity-orderProductData.orderProductDto.order_price, 1, 'COMMA', 0, 'POINT')}원|">-31,500원</span>
                                                     </div>
                                                 </div>
                                                 <div class="row f08" th:if="${orderProductData.orderProductDto.used_point!=0}">
