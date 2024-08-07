@@ -62,7 +62,7 @@
     </div>
 </div>
 <!--메인 하단네비 -->
-<div th:fragment="bottomNaviBasecamp" class="container-fluid g-0 bg-white border-top fixed-bottom mb-3">
+<div th:fragment="bottomNaviBasecamp" class="container-fluid g-0 bg-white border-top fixed-bottom pb-3">
     <div class="row mx-1 py-2 text-center">
         <!--HOME-->
         <a href="/" class="col icon-and-text">
@@ -179,18 +179,18 @@
             </ul>
         </div>
         <!--내정보-->
-        <div class="col icon-and-text">
+        <div class="col icon-and-text pb-1">
             <a href="/user/login" th:if="${session.sessionUserInfo == null}" class="icon-and-text">
-                <span data-bs-toggle="dropdown" class="material-symbols-outlined fw-light" style="font-size: 1.7em;">
-                    person
+                <span data-bs-toggle="dropdown" class="fw-light" style="font-size: 1.7em;">
+                    <i class="bi bi-person"></i>
                 </span>
-                <span class="text-navi pt-1" style="font-size: 0.7em;">마이</span>
+                <span class="text-navi" style="font-size: 0.7em;">마이</span>
             </a>
             <a href="/user/myPage" th:unless="${session.sessionUserInfo == null}" class="icon-and-text">
-                <span data-bs-toggle="dropdown" class="material-symbols-outlined fw-light" style="font-size: 1.7em;">
-                    person
+                <span data-bs-toggle="dropdown" class="fw-light" style="font-size: 1.7em;">
+                    <i class="bi bi-person"></i>
                 </span>
-                <span class="text-navi pt-1" style="font-size: 0.7em;">마이</span>
+                <span class="text-navi" style="font-size: 0.7em;">마이</span>
             </a>
         </div>
     </div>
