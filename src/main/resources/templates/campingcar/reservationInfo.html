@@ -127,6 +127,8 @@
             </div>
         </div>
     </div>
+    <form action="/campingcar/rentUserInfoProcess" method="post" enctype="multipart/form-data">
+
         <div class="container">
             <div class="row">
                 <div class="col section">
@@ -142,27 +144,33 @@
                                     <span class="fw-bold fs-5" th:text="${campingcarDetails.campingcarDto.product_name}"></span>
                                 </div>
                             </div>
-                            <div class="row">
+                            <div class="row form-group">
                                 <div class="col py-4">
-                                    <div class="d-flex border border-start-0 border-end-0">
-                                        <!-- 출고 가능 시간 -->
-                                        <div class="d-flex flex-column justify-content-center align-items-center p-2" style="flex: 1; border-left: none;border-right: none; border-top: none; border-bottom: none;">
-                                            <div class="text-muted" style="font-size: 0.85rem;">출고가능시간</div>
-                                            <div class="fw-normal new-fs-95" th:text="${#dates.format(campingcarDetails.campingcarDto.avaid_time, 'HH') + '시간'}"></div>
-                                        </div>
-                                        <!-- 대여 기간 -->
-                                        <div class="d-flex flex-column justify-content-center align-items-center p-2" style="flex: 1; border-top: none; border-bottom: none;">
-                                            <div class="text-muted" style="font-size: 0.85rem;">1박기준 시간</div>
-                                            <div class="badge bg-light text-muted new-fs-95" th:text="${campingcarDetails.campingcarDto.overnight_stay}">24시간</div>
-                                        </div>
-                                        <!-- 반납 가능 시간 -->
-                                        <div class="d-flex flex-column justify-content-center align-items-center p-2" style="flex: 1; border-left: none;border-right: none; border-top: none; border-bottom: none;">
-                                            <div class="text-muted" style="font-size: 0.85rem;">반납가능시간</div>
-                                            <div class="fw-normal new-fs-95" th:text="${#dates.format(campingcarDetails.campingcarDto.return_dateTime, 'HH')+ '시간'}">18:00</div>
+                                    <div class="row">
+                                        <div class="col">
+                                            <div class="border border-0">
+                                                <!-- 출고 가능 시간 -->
+                                                <div class="d-flex flex-column justify-content-center align-items-start p-1" style="flex: 1; border-left: none;border-right: none; border-top: none; border-bottom: none;">
+                                                    <label for="datetime" class="fw-semibold pb-2" style="font-size: 0.85rem">대여날짜</label>
+                                                    <input name="start_date" type="datetime-local" id="datetime" max="2077-06-20T21:00" min="2024-08-07T12:30" svalue="2077-06-15T13:27" class="form-control">
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
-
+                                    <row>
+                                        <div class="col">
+                                            <div class="border border-0">
+                                                <!-- 반납 가능 시간 -->
+                                                <div class="d-flex flex-column justify-content-center align-items-start p-1" style="flex: 1; border-left: none;border-right: none; border-top: none; border-bottom: none;">
+                                                    <label for="datetime" class="text-start fw-semibold pb-2" style="font-size: 0.85rem">반납날짜</label>
+                                                    <input name="end_date"type="datetime-local" id="datetime" max="2077-06-20T21:00" min="2024-08-07T12:30" svalue="2077-06-15T13:27" class="form-control">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </row>
+                                    
                                 </div>
+                                
                             </div>
 
                             <!-- 렌트카 회사 정보 -->
@@ -203,7 +211,6 @@
                 </div>
             </div>
         </div>
-        <form action="/campingcar/rentUserInfoProcess" method="post" enctype="multipart/form-data">
             <div class="container">
                 <div class="row section">
                     <div class="col form-group px-1 0mx-0">
@@ -276,6 +283,7 @@
                             <input class="form-control" type="file" id="driverFile" style="font-size: 0.875rem;" placeholder="운전면허증을 등록하세요" name="driveImage" accept="image/*">
                             </div>
                         </div>
+                        <input type="hidden" th:value="${campingcarDetails.campingcarDto.id}" name="product_id">
                         <div class="row mx-0 px-1">
                             <div class="col border p-4 rounded text-center bg-white">
                                 <div class="row">

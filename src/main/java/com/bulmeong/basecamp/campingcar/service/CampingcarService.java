@@ -11,6 +11,7 @@ import com.bulmeong.basecamp.campingcar.dto.BasicFacilitiesDto;
 import com.bulmeong.basecamp.campingcar.dto.CampingCarLikeDto;
 import com.bulmeong.basecamp.campingcar.dto.ProductDetailImgDto;
 import com.bulmeong.basecamp.campingcar.dto.RentUserDto;
+import com.bulmeong.basecamp.campingcar.dto.ReservationDto;
 import com.bulmeong.basecamp.campingcar.mapper.CampingcarSqlMapper;
 
 @Service
@@ -18,6 +19,7 @@ public class CampingcarService {
 
     @Autowired
     private CampingcarSqlMapper campingCarSqlMapper;
+
 
     // 좋아요 관련 
     public void like(CampingCarLikeDto campingCarLikeDto){
@@ -67,8 +69,12 @@ public class CampingcarService {
     }
 
     // 렌트 고객 등록
-    public void registeRentUser(RentUserDto parms) {
+    public void registeRentUser(RentUserDto parms, ReservationDto reservationDto) {
         campingCarSqlMapper.createRentUser(parms);
+
+        reservationDto.setRent_user_id(parms.getId());
+
+        campingCarSqlMapper.createReservation(reservationDto);
     }
 
 

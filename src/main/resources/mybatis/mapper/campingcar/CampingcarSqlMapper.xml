@@ -92,10 +92,20 @@
     </select>
     <!-- rentuser 등록-->
     <insert id="createRentUser">
-        insert into bc_rent_user name(
-            user_id, driver_license_number, driver_license_id, driver_age_id, driving_experience_id, driver_license_image
+        <selectKey keyProperty="id" resultType="int" order="AFTER">
+            select max(id) from bc_rent_user
+        </selectKey>
+        insert into bc_rent_user(
+            user_id, driver_license_number, driver_license_id, driver_age_id, driver_experience_id, driver_license_image
         )values(
-            #{user_id}, #{driver_license_number}, #{driver_license_id}, #{driver_age_id}, #{drivier_experience_id}, #{driver_license_image}
+            #{user_id}, #{driver_license_number}, #{driver_license_id}, #{driver_age_id}, #{driver_experience_id}, #{driver_license_image}
+        )
+    </insert>
+    <insert id="createReservation">
+        insert into bc_reservation(
+            rent_user_id, product_id, start_date, end_date, progress, cancellation_date
+        )values(
+            #{rent_user_id}, #{product_id}, #{start_date}, #{end_date}, '예약접수', #{cancellation_date}
         )
     </insert>
 </mapper>

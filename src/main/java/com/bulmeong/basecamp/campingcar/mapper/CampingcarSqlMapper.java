@@ -10,6 +10,7 @@ import com.bulmeong.basecamp.campingcar.dto.BasicFacilitiesDto;
 import com.bulmeong.basecamp.campingcar.dto.CampingCarLikeDto;
 import com.bulmeong.basecamp.campingcar.dto.ProductDetailImgDto;
 import com.bulmeong.basecamp.campingcar.dto.RentUserDto;
+import com.bulmeong.basecamp.campingcar.dto.ReservationDto;
 
 @Mapper
 public interface CampingcarSqlMapper {
@@ -39,4 +40,7 @@ public interface CampingcarSqlMapper {
 
     //렌트 고객 등록
     public void createRentUser(RentUserDto rentUserParams);
+
+    // 예약하기
+    public void createReservation(ReservationDto reservationDto);
 }

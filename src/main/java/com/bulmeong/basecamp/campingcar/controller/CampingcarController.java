@@ -1,13 +1,18 @@
 package com.bulmeong.basecamp.campingcar.controller;
 
+import java.io.File;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.bulmeong.basecamp.campingcar.dto.BasicFacilitiesDto;
 import com.bulmeong.basecamp.campingcar.dto.DriverAgeCondDto;
@@ -15,6 +20,7 @@ import com.bulmeong.basecamp.campingcar.dto.DriverExperienceCondDto;
 import com.bulmeong.basecamp.campingcar.dto.DriverLicenseDto;
 import com.bulmeong.basecamp.campingcar.dto.ProductDetailImgDto;
 import com.bulmeong.basecamp.campingcar.dto.RentUserDto;
+import com.bulmeong.basecamp.campingcar.dto.ReservationDto;
 import com.bulmeong.basecamp.campingcar.service.CampingcarService;
 import com.bulmeong.basecamp.campingcar.service.PartnerCampingCarService;
 import com.bulmeong.basecamp.common.util.Utils;
@@ -133,45 +139,48 @@ public class CampingcarController {
         model.addAttribute("driverExpericnece", driverExpericnece);
         return "campingcar/reservationInfo";
 
-        //         String rootPath = "C:/coffeprincess_uploadFiles/";
-        // SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd/");
-        // String todayPath = sdf.format(new Date());
 
-        // File todayFolderForCreate = new File(rootPath+ todayPath);
-        // if(!todayFolderForCreate.exists()) {
-        //     todayFolderForCreate.mkdirs();
-        // }
-
-        // String originalFilename = cafeImg.getOriginalFilename();
-
-        // String uuid = UUID.randomUUID().toString();
-        // long currentTime = System.currentTimeMillis();
-
-        // String filename = uuid + "_" + currentTime;
-        // String ext = originalFilename.substring(originalFilename.lastIndexOf("."));
-
-        // filename += ext;
-
-        // try {
-        //     cafeImg.transferTo(new File(rootPath + todayPath + filename));
-        // }catch(Exception e) {
-        //     e.printStackTrace();
-        // }
 
 
     }
     @RequestMapping("rentUserInfoProcess")
     public String rentUserInfoProcess(HttpSession session, RentUserDto rentUser,
-                                     @RequestParam("driveImage") int driveImage) {
-        
+                                     @RequestParam("driveImage")MultipartFile driveImage, ReservationDto reservationDto) {
+        System.out.println("fdfdfdfd"+ reservationDto.getStart_date() + reservationDto.getEnd_date());
         utils.loginUser();                               
 
         UserDto sessionUserInfo = (UserDto)session.getAttribute("sessionUserInfo");
         int userPk = sessionUserInfo.getId();
         rentUser.setUser_id(userPk);
+
+        String rootPath = "C:/basecampeImage_rentuser/";
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd/");
+        String todayPath = sdf.format(new Date());
+
+        File todayFolderForCreate = new File(rootPath+ todayPath);
+        if(!todayFolderForCreate.exists()) {
+            todayFolderForCreate.mkdirs();
+        }
+
+        String originalFilename = driveImage.getOriginalFilename();
+
+        String uuid = UUID.randomUUID().toString();
+        long currentTime = System.currentTimeMillis();
+
+        String filename = uuid + "_" + currentTime;
+        String ext = originalFilename.substring(originalFilename.lastIndexOf("."));
+
+        filename += ext;
+
+        try {
+            driveImage.transferTo(new File(rootPath + todayPath + filename));
+        }catch(Exception e) {
+            e.printStackTrace();
+        }
         
-        campingcarService.registeRentUser(rentUser);
+        campingcarService.registeRentUser(rentUser,reservationDto);
         System.out.println("렌트고객 가입:" + rentUser);
-        return "/campingcar/reservationComplete";
+
+        return "redirect:/campingcar/main";
     }
 }
