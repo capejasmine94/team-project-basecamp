@@ -192,12 +192,24 @@ public class RestInstaController {
         return instaRestResponseDto;
     }
 
+    // 댓글 삭제
     @RequestMapping("deleteComment")
     public InstaRestResponseDto deleteComment(@RequestParam("id") int id){
         InstaRestResponseDto instaRestResponseDto = new InstaRestResponseDto();
         instaRestResponseDto.setResult("success");
 
         instaService.deleteComment(id);
+
+        return instaRestResponseDto;
+    }
+
+    // 대댓글 삭제
+    @RequestMapping("deleteReply")
+    public InstaRestResponseDto deleteReply(@RequestParam("id") int id){
+        InstaRestResponseDto instaRestResponseDto = new InstaRestResponseDto();
+        instaRestResponseDto.setResult("success");
+
+        instaService.deleteReply(id);
 
         return instaRestResponseDto;
     }

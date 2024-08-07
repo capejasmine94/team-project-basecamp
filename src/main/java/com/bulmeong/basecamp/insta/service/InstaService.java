@@ -171,12 +171,33 @@ public class InstaService {
         List<InstaArticleCommentDto> commentList = instaSqlMapper.getCommentList(article_id);
 
         for(InstaArticleCommentDto instaArticleCommentDto : commentList){
-            InstaUserInfoDto instaUserInfoDto = instaSqlMapper.selectUserInfoById(instaArticleCommentDto.getUser_id());
-
             Map<String, Object> map = new HashMap<>();
 
-            map.put("instaArticleCommentDto", instaArticleCommentDto);
+            InstaUserInfoDto instaUserInfoDto = instaSqlMapper.selectUserInfoById(instaArticleCommentDto.getUser_id());
+
+            // 대댓글 List 쿼리
+            int comment_id = instaArticleCommentDto.getId();
+            List<InstaArticleReplyDto> replyList = instaSqlMapper.getReplyList(comment_id);
+
+            // 대댓글 리스트를 담을 리스트
+            List<Map<String, Object>> getReplyList = new ArrayList<>();
+            for(InstaArticleReplyDto instaArticleReplyDto : replyList){
+                InstaUserInfoDto instaUserInfoDtoReply = instaSqlMapper.selectUserInfoById(instaArticleReplyDto.getUser_id());
+
+                Map<String, Object> replyMap = new HashMap<>();
+                replyMap.put("instaUserInfoDtoReply", instaUserInfoDtoReply);
+                replyMap.put("instaArticleReplyDto", instaArticleReplyDto);
+
+                getReplyList.add(replyMap);
+            }
+
+            // 댓글에 달린 답글의 개수
+            int replyCount = instaSqlMapper.replyCountByCommentId(comment_id);
+            map.put("replyCount", replyCount);
+
             map.put("instaUserInfoDto", instaUserInfoDto);
+            map.put("instaArticleCommentDto", instaArticleCommentDto);
+            map.put("replyList", getReplyList); // 대댓글 리스트 추가
 
             result.add(map);
         }
