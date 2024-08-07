@@ -23,6 +23,7 @@ public class RestCampsiteUserController {
     public RestResponseDto selectArea(@RequestParam("area_id") String area_id) {
         RestResponseDto result = new RestResponseDto();
         result.add("curAreaUser", service.areaInfo(Integer.parseInt(area_id)));
+        result.add("campsiteUser",utils.getSession("campsiteUser"));
         return result;
     }
 

@@ -386,11 +386,15 @@
                 start_date,
                 end_date,
                 customer_name,
-                prise,
+                origin_prise,
+                total_prise,
                 sale,
                 customer_phone,
                 adult_count,
                 kid_count,
+                adult_pay,
+                kid_pay,
+                car_pay,
                 reservation_code,
                 progress
             
@@ -399,11 +403,15 @@
                 #{start_date},
                 #{end_date},
                 #{customer_name},
-                #{prise},
+                #{origin_prise},
+                #{total_prise},
                 #{sale},
                 #{customer_phone},
                 #{adult_count},
                 #{kid_count},
+                #{adult_pay},
+                #{kid_pay},
+                #{car_pay},
                 #{reservation_code},
                 '예약 대기 중'
             )

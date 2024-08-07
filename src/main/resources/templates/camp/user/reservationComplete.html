@@ -68,13 +68,13 @@
                             </div>
                         </div>
                         <div class="row mt-1 ms-4" th:each="car : ${session.order.carNumbers}">
-                            <div class="col"><span th:text="${car.car_number}"></span></div>
+                            <div class="col new-fs-9"><span th:text="${car.car_number}"></span></div>
                         </div>
-                        <div class="row mt-1">
+                        <div class="row mt-4">
                             <div class="col-3 text-end">
                                 <span class="fw-semibold">가격</span>
                             </div>
-                            <div class="col"><span class="ms-3 moneyInput" th:text="${session.order.dto.prise}"></span></div>
+                            <div class="col"><span class="ms-3 moneyInput" th:text="${session.order.dto.total_prise}"></span></div>
                         </div>
                         <div class="row mt-3">
                             <div class="col-3 text-end">
@@ -154,6 +154,7 @@
                 </div>
             </div>
        </div>
+       <div class="row mt-3"></div>
     </div>
 </div>
 

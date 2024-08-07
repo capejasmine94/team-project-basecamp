@@ -17,9 +17,13 @@ public class CampsiteOrderDto {
     private String customer_name;
     private String customer_phone;
     private int origin_prise;
+    private int total_prise;
     private int sale;
     private int adult_count;
     private int kid_count;
+    private int kid_pay;
+    private int adult_pay;
+    private int car_pay;
     private String progress;
     private String reservation_code;
     private Date created_at;

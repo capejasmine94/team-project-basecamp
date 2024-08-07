@@ -15,7 +15,7 @@ function selectCamp() {
     const id = parseInt(new URLSearchParams(window.location.search).get('campsite_id'));
     for(const camp of campsiteList){
         if(camp['dto']['id'] == id){
-            curCampsite = camp;
+            const curCampsite = camp;
             return curCampsite;
         }
     }
@@ -93,15 +93,17 @@ function refreshSelectedArea(area) {
     const area_description = document.getElementById('area_description');
     area_description.innerText = area.dto.description;
 
+    const area_people = document.getElementById('area_people');
+    area_people.innerText = area.dto.max_people + ' 명';
 
-    const area_adult = document.getElementById('area_adult');
-    area_adult.innerText = randomNumber() + ' 명';
+    // const area_adult = document.getElementById('area_adult');
+    // area_adult.innerText = area.dto.adult_count + ' 명';
 
-    const area_kid = document.getElementById('area_kid');
-    area_kid.innerText = randomNumber() + ' 명';
+    // const area_kid = document.getElementById('area_kid');
+    // area_kid.innerText = area.dto.kid_count + ' 명';
 
-    const area_car = document.getElementById('area_car');
-    area_car.innerText = randomNumber() + ' 대';
+    // const area_car = document.getElementById('area_car');
+    // area_car.innerText = area.dto.car_count + ' 대';
 
     const area_prise = document.getElementById('area_prise');
     area_prise.innerText = area.dto.prise;
@@ -118,14 +120,16 @@ function refreshSelectedArea(area) {
     const area_mapImage = document.getElementById('area_mapImage');
     area_mapImage.setAttribute('src','/images/' + area.dto.map_image);
 
+    const curCampsite = selectCamp();
+
     const area_add_adult = document.getElementById('area_add_adult');
-    area_add_adult.innerText = area.dto.adult_pay;
+    area_add_adult.innerText = curCampsite.dto.adult_pay;
 
     const area_add_kid = document.getElementById('area_add_kid');
-    area_add_kid.innerText = area.dto.kid_pay;
+    area_add_kid.innerText = curCampsite.dto.kid_pay;
 
     const area_add_car = document.getElementById('area_add_car');
-    area_add_car.innerText = area.dto.car_pay;
+    area_add_car.innerText = curCampsite.dto.car_pay;
 
     addColonMoneyInput();
 }

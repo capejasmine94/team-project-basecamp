@@ -110,6 +110,8 @@
 <div th:replace="common/navi::bottomNaviBasecamp"></div>
 <form id="reservationCheck" action="/camp/reservationCheck">
     <input type="hidden" name="area_id" id="selectAreaId">
+    <input type="hidden" name="campsite_id" th:value="${session.campsiteUser.dto.id}">
+    
     <div class="main">
         <div class="container-fluid">
             <!-- 상단 이미지 섹션 -->
@@ -224,7 +226,7 @@
             <div class="row" style="margin-bottom: 4em;"></div> 
         </div>
     </div>
-    <div class="row fixed-bottom border-top bg-white py-2 justify-content-center" style="margin-bottom: 4.4em;">
+    <div class="row fixed-bottom border-top bg-white py-2 justify-content-center" style="margin-bottom: 5.9em;">
         <div class="col d-grid px-0 mx-5">
             <button class="btn btn-primary" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasSelectOption" aria-controls="offcanvasSelectOption" >다음</button>
         </div>
@@ -311,16 +313,20 @@
                     <div class="col new-fs-95" id="area_description">설명</div>
                 </div>
                 <div class="row mt-5 text-end text-secondary new-fs-9">
+                    <div class="col-3 p-0 ms-3 text-start"><span>기본 정원</span></div>
+                    <div class="col-3 p-0 text-start"><span id="area_people"></span></div>
+                </div>
+                <!-- <div class="row mt-5 text-end text-secondary new-fs-9">
                     <div class="col-2 p-0"><span>성인</span></div>
                     <div class="col p-0 text-start"><span class="ms-2" id="area_adult">1명</span></div>
                 </div>
                 <div class="row text-end text-secondary new-fs-9">
                     <div class="col-2 p-0"><span>미성년</span></div>
                     <div class="col p-0 text-start"><span class="ms-2" id="area_kid">1명</span></div>
-                </div>
+                </div> -->
                 <div class="row text-end text-secondary new-fs-9">
-                    <div class="col-2 p-0"><span>차량</span></div>
-                    <div class="col p-0 text-start"><span class="ms-2" id="area_car">1대</span></div>
+                    <div class="col-3 p-0 text-start ms-3"><span>차량</span></div>
+                    <div class="col-3 p-0 text-start"><span id="area_car">1대</span></div>
                 </div>
                 <div class="row mt-3 text-end fw-semibold text-primary">
                     <div class="col"><span id="area_prise" class="moneyInput">가격</span><span class="ms-2">원</span></div>

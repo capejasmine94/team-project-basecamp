@@ -77,7 +77,7 @@
                                                     <div class="col" th:text="${reservation.area.name}">구역명</div>
                                                     <div class="col" th:text="${reservation.dto.customer_name}">예약자</div>
                                                     <div class="col"><span th:text="${#dates.format(reservation.dto.start_date, 'YYYY-MM-dd')}">2024.01.01</span> ~ <span th:text="${#dates.format(reservation.dto.end_date, 'YYYY-MM-dd')}">2024.03.18</span></div>
-                                                    <div class="col moneyInput" th:text="${reservation.dto.prise}">가격</div>
+                                                    <div class="col moneyInput" th:text="${reservation.dto.total_prise}">가격</div>
                                                     <div class="col" th:text="${#dates.format(reservation.dto.created_at, 'YYYY-MM-dd')}">2024.03.03</div>
                                                 </div>
                                             </div>
@@ -144,6 +144,18 @@
                                                                 <div class="row mt-2 text-secondary fs-6">
                                                                     <div class="col-3 text-end">기본 가격</div>
                                                                     <div class="col-5 ms-5 fw-semibold text-start moneyInput" id="prise">1,000,000</div>
+                                                                </div>
+                                                                <div class="row mt-2 text-secondary fs-6" id="adultTab">
+                                                                    <div class="col-3 text-end">추가 (성인)</div>
+                                                                    <div class="col-5 ms-5 fw-semibold text-start moneyInput" id="adultPrise">1,000,000</div>
+                                                                </div>
+                                                                <div class="row mt-2 text-secondary fs-6" id="kidTab">
+                                                                    <div class="col-3 text-end">추가 (미성년자)</div>
+                                                                    <div class="col-5 ms-5 fw-semibold text-start moneyInput" id="kidPrise">1,000,000</div>
+                                                                </div>
+                                                                <div class="row mt-2 text-secondary fs-6" id="carTab">
+                                                                    <div class="col-3 text-end">추가 (차량)</div>
+                                                                    <div class="col-5 ms-5 fw-semibold text-start moneyInput" id="carPrise">1,000,000</div>
                                                                 </div>
                                                                 <div class="row mt-2 text-secondary fs-6" id="mileageTab">
                                                                     <div class="col-3 text-end">마일리지</div>
@@ -228,6 +240,12 @@
 
                 const totalPrise = document.getElementById('totalPrise');
                 const prise = document.getElementById('prise');
+                const adultPrise = document.getElementById('adultPrise');
+                const kidPrise = document.getElementById('kidPrise');
+                const carPrise = document.getElementById('carPrise');
+                const adultTab = document.getElementById('adultTab');
+                const kidTab = document.getElementById('kidTab');
+                const carTab = document.getElementById('carTab');
                 const mileageTab = document.getElementById('mileageTab');
                 const mileage = document.getElementById('mileage');
                 const order_day = document.getElementById('order_day');
@@ -246,7 +264,7 @@
                 carList.innerHTML='';
                 for(const value of order.carNumbers) {
                     const car = document.createElement('div');
-                    car.classList.add('col-auto', 'mt-1','ms-5', 'text-start');
+                    car.classList.add('col-auto', 'mt-1','ms-5', 'new-fs-95','text-secondary','text-start');
                     car.innerText = value.car_number;
                     carList.appendChild(car);
                 }
@@ -257,9 +275,34 @@
                     progress.innerText = '대기';
                 }
 
-                totalPrise.innerText = order.dto.prise;
-                prise.innerText = order.dto.prise;
-                if(order.userInfo == null) {
+                totalPrise.innerText = order.dto.total_prise;
+                prise.innerText = order.dto.origin_prise;
+                if(order.dto.adult_count > 0) {
+                    adultPrise.innerText = order.dto.adult_count * order.dto.adult_pay;
+                    adultTab.classList.remove('d-none');
+                }
+                else {
+                    adultTab.classList.add('d-none');
+                }
+
+                if(order.dto.kid_count > 0) {
+                    kidPrise.innerText = order.dto.kid_count * order.dto.kid_pay;
+                    kidTab.classList.remove('d-none');
+                }
+                else {
+                    kidTab.classList.add('d-none');
+                }
+
+                if(order.carNumbers.length > 0) {
+                    carPrise.innerText = order.carNumbers.length * order.dto.car_pay;
+                    carTab.classList.remove('d-none');
+                }
+                else {
+                    carTab.classList.add('d-none');
+                }
+
+
+                if(order.userInfo.use_mileage != null) {
                     mileage.innerText = order.userInfo.use_mileage;
                     mileageTab.classList.remove('d-none');
                 }

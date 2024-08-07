@@ -187,7 +187,7 @@
                             <div class="row my-2 align-items-center">
                                 <div class="col-2 p-0 text-end">연락처</div>
                                 <div class="col">
-                                    <input class="form-control" id="customer_phone" type="text" name="customer_phone" placeholder="예약자 연락처" required>
+                                    <input class="form-control " id="customer_phone" type="text" name="customer_phone" placeholder="예약자 연락처" oninput="formatPhoneNumber(this)" required>
                                 </div>
                             </div>
                         </div>
@@ -384,23 +384,23 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col mt-1 text-end pe-3" th:if="${(session.curArea.dto.adult_pay * adult) > 0}">
+                        <div class="col mt-1 text-end pe-3" th:if="${(session.campsiteUser.dto.adult_pay * adult) > 0}">
                             <span class="fw-semibold">초과 성인 요금</span>
-                            <span class="moneyInput ms-3"  th:text="${session.curArea.dto.adult_pay * adult}"></span>
+                            <span class="moneyInput ms-3"  th:text="${session.campsiteUser.dto.adult_pay * adult}"></span>
                             <span class="ms-2">원</span>
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col mt-1 text-end pe-3" th:if="${(session.curArea.dto.kid_pay * kid) > 0}">
+                        <div class="col mt-1 text-end pe-3" th:if="${(session.campsiteUser.dto.kid_pay * kid) > 0}">
                             <span class="fw-semibold">초과 미성년자 요금</span>
-                            <span class="moneyInput ms-3"  th:text="${session.curArea.dto.kid_pay * kid}"></span>
+                            <span class="moneyInput ms-3"  th:text="${session.campsiteUser.dto.kid_pay * kid}"></span>
                             <span class="ms-2">원</span>
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col mt-1 text-end pe-3" th:if="${(session.curArea.dto.car_pay * car) > 0}">
+                        <div class="col mt-1 text-end pe-3" th:if="${(session.campsiteUser.dto.car_pay * car) > 0}">
                             <span class="fw-semibold">초과 차량 요금</span>
-                            <span class="moneyInput ms-3"  th:text="${session.curArea.dto.car_pay * car}"></span>
+                            <span class="moneyInput ms-3"  th:text="${session.campsiteUser.dto.car_pay * car}"></span>
                             <span class="ms-2">원</span>
                         </div>
                     </div>
@@ -438,13 +438,17 @@
 
             <!-- 히든 inputs -->
             <input type="hidden" id="point_id" name="point_id">
-            <input type="hidden" id="totalPriseInput" name="prise">
+            <input type="hidden" id="totalPriseInput" name="total_prise">
+            <input type="hidden" name="origin_prise" th:value="${session.curArea.dto.prise}">
             <input type="hidden" id="saleRateInput" name="sale">
             <input type="hidden" id="numberInput" name="number">
             <input type="hidden" name="start_date" th:value="${param.selectDay_start_date}">
             <input type="hidden" name="end_date" th:value="${param.selectDay_end_date}">
             <input type="hidden" id="adult_count" name="adult_count" th:value="${param.adult}">
             <input type="hidden" id="kid_count" name="kid_count" th:value="${param.kid}">
+            <input type="hidden" name="adult_pay" th:value="${session.campsiteUser.dto.adult_pay}">
+            <input type="hidden" name="kid_pay" th:value="${session.campsiteUser.dto.kid_pay}">
+            <input type="hidden" name="car_pay" th:value="${session.campsiteUser.dto.car_pay}">
 
         </form>
 </div>
@@ -462,6 +466,7 @@
     let selectedPoint;
     let selectedNumber;
     let saleInfo;
+    let selectedCamp;
 
     function selectPoint(number, point_id, realPointID) {
         //실제 포인트 고유번호 input에 추가    
@@ -525,6 +530,7 @@
         .then(response => response.json())
         .then((response) => {
             curArea = response.data.curAreaUser;
+            selectedCamp = response.data.campsiteUser;
             refreshTotalPrise();
         });
     }
@@ -542,9 +548,10 @@
             let mileageValue = parseInt(document.getElementById('useMileage').innerText.replace(',',''));
             mileage = mileageValue;
         }
-        const carValue = curArea.dto.car_pay * cars;
-        const kidValue = curArea.dto.kid_pay * kids;
-        const adultValue = curArea.dto.adult_pay * adults;
+        const curCamp = selectedCamp;
+        const carValue = curCamp.dto.car_pay * cars;
+        const kidValue = curCamp.dto.kid_pay * kids;
+        const adultValue = curCamp.dto.adult_pay * adults;
        
         totalValue = totalValue + adultValue + kidValue + carValue;
         totalValue -= mileage;
@@ -624,6 +631,7 @@
         mileage.innerText = number;
         refreshTotalPrise();
     }
+    
     initSelect();
     initSession();
     initPointList();
