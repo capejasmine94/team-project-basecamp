@@ -591,7 +591,7 @@
     <!-- display-none = 안에 있는 내용은 보이지 않음 -->
     <div id="templete" class="d-none">
         <!-- 하나의 댓글 -->
-        <div class="commentWrapper row">
+        <div class="commentWrapper row mt-1">
             <div class="col mt-3">
                 <div class="row pe-1">    
                     <a class="col-auto pe-0 align-self-center link-dark link-offset-2 link-underline link-underline-opacity-0" href="./instaUserPage">
@@ -662,6 +662,67 @@
                         <span>답글 달기</span>
                     </div>
                 </div>
+
+                <!-- 하나의 대댓글 -->
+                <div class="replyWrapper row mt-3" style="padding-left: 16%;">
+                    <div class="col">
+                        <div class="row pe-1">    
+                            <a class="col-auto pe-0 align-self-center link-dark link-offset-2 link-underline link-underline-opacity-0" href="./instaUserPage">
+                                <img src="/public/img/instaImage/userImg.jpeg" class="replyProfile img-fluid rounded-circle replyWriteImage">
+                                <!-- <img th:src="|/images/${instaUserInfoDto.insta_profile_img}|" class="replyProfile img-fluid rounded-circle replyWriteImage"> -->
+                            </a>
+                            <div class="col align-self-center">
+                                <div class="row">
+                                    <a class="replyName col-auto pe-0 link-dark link-offset-2 link-underline link-underline-opacity-0" href="./instaUserPage">
+                                        닉네임
+                                    </a>
+                                    <div class="replyDate col-auto ps-1 pe-0 fontNine" style="color: rgb(162, 162, 162); padding-top: 0.5%;">날짜</div>
+                                    <!-- 삭제버튼 -->
+                                    <div class="replyDeleteButton d-none col" style="color: rgb(162, 162, 162);">
+                                        <span class="buttonDelete">
+                                            <i class="fa-duotone fa-solid fa-xmark"></i>
+                                        </span>
+                                    </div>                                                                          
+                                </div>
+                                <div class="row">
+                                    <div class="replyText col pe-0">내용</div>
+                                </div>
+                            </div>
+        
+                            <!-- 좋아요 -->
+                            <div class="col-auto align-self-center">
+                                <div class="row">
+
+                                    <!-- 이거 삭제하셈 레이아웃때문에 -->
+                                    <div class="col">
+                                        <span>
+                                            <i class="fa-regular fa-heart"></i>
+                                        </span>
+                                    </div>
+                                    
+                                    <!-- 좋아요 안 눌렀을 때 -->
+                                    <div class="likeReplyButton col align-self-center d-none">
+                                        <span>
+                                            <i class="fa-regular fa-heart"></i>
+                                        </span>
+                                    </div>
+        
+                                    <!-- 좋아요 눌렀을 때 -->
+                                    <div class="unLikeReplyButton col align-self-center d-none">
+                                        <span>
+                                            <i class="fa-solid fa-heart likeColor"></i>
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col p-0 fontNine text-center">
+                                        <span class="likeReplyCount">4</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -694,7 +755,7 @@
     </div> -->
 
 <!-- 네비가 추가됨 -->
-<div th:replace="camp/campNavi::popupCategory"></div>
+<!-- <div th:replace="camp/campNavi::popupCategory"></div> -->
 <div th:replace="camp/campNavi::popupSelectDay"></div>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
@@ -1003,6 +1064,26 @@
                 const likeCount = newCommentWrapper.querySelector(".likeCount");
                 likeCount.setAttribute("onclick", `commentLikeCount(${c.instaArticleCommentDto.id})`);
                 commentLikeCount(c.instaArticleCommentDto.id, likeCount);
+
+
+
+
+
+                // 대댓글 템플릿 요소 선택
+                const replyTemplate  = newCommentWrapper.querySelector(".replyWrapper");
+
+                // 대댓글 목록 반복
+                for(const r of c.replyList){
+                    const newReplyWrapper = replyTemplate.cloneNode(true);
+
+                    // 대댓글 세부 정보 설정
+                    const replyName = newReplyWrapper.querySelector(".replyName")
+                    replyName.innerText = r.instaUserInfoDtoReply.insta_nickname;
+
+
+                    // 대댓글 요소를 댓글 요소에 추가
+                    newCommentWrapper.appendChild(newReplyWrapper);
+                }
                 
 
                 // commentReply 답글 버튼
