@@ -141,7 +141,8 @@ public class CampsiteService {
         List<CampsiteAreaDto> areaList = campsiteSqlMapper.getAreaListByCampsiteId(campsite_id);
         
         for (CampsiteAreaDto area : areaList) {
-            if(area.getProcess().equals("설정 필요") ||
+            if(area.getProcess() == null || 
+               area.getProcess().equals("설정 필요") ||
                campsiteSqlMapper.getPointList(area.getId()).isEmpty() ||
                campsiteSqlMapper.getPointList(area.getId()) == null)
                continue;
@@ -199,7 +200,10 @@ public class CampsiteService {
         result.put("area", areaInfoList);
 
         //기타 정보
-        int min_Prise = campsiteSqlMapper.minPriseByCampsiteId(campsite_id);
+        int min_Prise = 0;
+        Integer value = campsiteSqlMapper.minPriseByCampsiteId(campsite_id);
+        if(value != null)
+            min_Prise = value;
         result.put("minPrise", min_Prise);
 
         //카테고리 
@@ -298,6 +302,7 @@ public class CampsiteService {
     // 구역 수정
     public void updateArea(CampsiteAreaDto campsiteAreaDto, MultipartFile mapImage, MultipartFile[] mainImages, String[] categories) {
          //배치도 이미지 저장
+        
          if(mapImage != null && !mapImage.isEmpty()) {
             String mapImageToString = ImageUtil.saveImageAndReturnLocation(mapImage);
             campsiteAreaDto.setMap_image(mapImageToString);
@@ -365,6 +370,11 @@ public class CampsiteService {
     // 포인트 삭제
     public void deletePoint(int point_id){
         campsiteSqlMapper.deletePoint(point_id);
+    }
+
+    public void deleteArea(int area_id) {
+        campsiteSqlMapper.deletePoints(area_id);
+        campsiteSqlMapper.deleteArea(area_id);
     }
     //-------------------------------------------------------------------------------------------------------------------
 

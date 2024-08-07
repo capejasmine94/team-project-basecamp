@@ -294,7 +294,7 @@
                     </div> 
                     <div class="col mt-4 new-fs-9 scroll-horizontal">
                         <div class="facility py-2 me-3" th:each="category : ${session.campsiteUser.campCategory}">
-                            <i th:class="${category.image}"></i>
+                            <!-- <i th:class="${category.image}"></i> -->
                             <div class="col-auto" th:text="${category.name}"></div>
                         </div>
                     </div>
@@ -354,7 +354,7 @@
         <div class="row" style="margin-bottom: 6em;"></div> 
     </div>
 </div>
-<div class="row fixed-bottom border-top bg-white py-2 justify-content-center" style="margin-bottom: 4.4em;">
+<div class="row fixed-bottom border-top bg-white py-2 justify-content-center" style="margin-bottom: 4em;">
     <div class="col d-grid px-0 mx-5">
         <a class="btn btn-primary" href="/camp/reservation">예약하기</a>
     </div>
@@ -370,12 +370,10 @@
             <div id="popupSite-content" class="modal-body col">
                 <div class="row">
                     <div class="col">
-                        <div id="carousel" class="carousel slide row p-0" data-bs-ride="carousel">
-                            <div class="carousel-inner col p-0">
-                              <!-- 이미지 탬플릿 -->
-                              <div class="carousel-item" id="area_mainImages">
-                                    <img class="d-block w-100 p-0" alt="메인이미지">
-                              </div>
+                        <div class="carousel slide row p-0" data-bs-ride="carousel">
+                            <div class="carousel-inner p-0" id="area_mainImages">
+                                <!-- 이미지 탬플릿 -->
+                                
                             </div>
                         </div>
                     </div>

@@ -230,7 +230,7 @@
         캠핑장 데이터
         ======================================================================== -->
         <!-- 최소 금액 -->
-        <select id="minPriseByCampsiteId" resultType="int">
+        <select id="minPriseByCampsiteId" resultType="Integer">
             select min(prise) from bc_campsite_area where campsite_id = #{campsite_id}
         </select>
         <!-- 모든 캠핑장 리스트 -->
@@ -325,8 +325,8 @@
                 size_y = #{size_y},
                 description = #{description},
                 max_people = #{max_people},
-                max_car = #{max_car},
                 min_ordertime = #{min_ordertime},
+                map_image  = #{map_image},
                 adult_pay = #{adult_pay},
                 kid_pay = #{kid_pay},
                 car_pay = #{car_pay},
@@ -334,8 +334,8 @@
             where id = #{id}
         </update>
         
-         <!-- 포인트 추가 -->
-         <insert id="registerPoint">
+        <!-- 포인트 추가 -->
+        <insert id="registerPoint">
             <selectKey keyProperty="id" resultType="int" order="AFTER">
                 select max(id) from bc_campsite_area_point
             </selectKey>
@@ -505,6 +505,11 @@
             WHERE
                 p.id = #{point_id};
         </select>
+
+        <!-- 구역 삭제 -->
+        <delete id="deleteArea">
+            DELETE from bc_campsite_area where id = #{area_id}
+        </delete>
     <!-- ======================================================================== -->
 
 
