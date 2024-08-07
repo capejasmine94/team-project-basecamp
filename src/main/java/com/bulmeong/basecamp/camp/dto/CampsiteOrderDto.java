@@ -15,9 +15,9 @@ public class CampsiteOrderDto {
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date end_date;
     private String customer_name;
+    private String customer_phone;
     private int prise;
     private int sale;
-    private String customer_phone;
     private int adult_count;
     private int kid_count;
     private String progress;

@@ -12,11 +12,9 @@ public class CampsiteAreaDto {
     private int prise;
     private int size_x;
     private int size_y;
-    private String main_image;
     private String map_image;
     private String description;
     private int max_people;
-    private int max_car;
     private int min_ordertime;
     private int max_ordertime;
     private int adult_pay;
