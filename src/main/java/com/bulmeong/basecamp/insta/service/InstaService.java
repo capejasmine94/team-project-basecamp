@@ -8,6 +8,7 @@ import com.bulmeong.basecamp.insta.dto.InstaArticleCommentDto;
 import com.bulmeong.basecamp.insta.dto.InstaArticleDto;
 import com.bulmeong.basecamp.insta.dto.InstaArticleImgDto;
 import com.bulmeong.basecamp.insta.dto.InstaArticleLikeDto;
+import com.bulmeong.basecamp.insta.dto.InstaArticleReplyDto;
 import com.bulmeong.basecamp.insta.dto.InstaArticleTagDto;
 import com.bulmeong.basecamp.insta.dto.InstaBookmarkDto;
 import com.bulmeong.basecamp.insta.dto.InstaCommentLikeDto;
@@ -175,9 +176,7 @@ public class InstaService {
             Map<String, Object> map = new HashMap<>();
 
             map.put("instaArticleCommentDto", instaArticleCommentDto);
-            // System.out.println(instaArticleCommentDto);
             map.put("instaUserInfoDto", instaUserInfoDto);
-            // System.out.println(instaUserInfoDto);
 
             result.add(map);
         }
@@ -187,6 +186,34 @@ public class InstaService {
 
     public void deleteComment(int id){
         instaSqlMapper.deleteComment(id);
+    }
+
+    // 대댓글
+    public void registerReply(InstaArticleReplyDto instaArticleReplyDto){
+        instaSqlMapper.createReply(instaArticleReplyDto);
+    }
+
+    public List<Map<String, Object>> getReplyList(int comment_id){
+        List<Map<String, Object>> result = new ArrayList<>();
+
+        List<InstaArticleReplyDto> ReplyList = instaSqlMapper.getReplyList(comment_id);
+
+        for(InstaArticleReplyDto instaArticleReplyDto : ReplyList){
+            InstaUserInfoDto instaUserInfoDto = instaSqlMapper.selectUserInfoById(instaArticleReplyDto.getUser_id());
+
+            Map<String, Object> map = new HashMap<>();
+
+            map.put("instaArticleReplyDto", instaArticleReplyDto);
+            map.put("instaUserInfoDto", instaUserInfoDto);
+
+            result.add(map);
+        }
+
+        return result;
+    }
+
+    public void deleteReply(int id){
+        instaSqlMapper.deleteReply(id);
     }
 
 

@@ -86,6 +86,7 @@ public class CampingcarController {
         utils.loginUser();
         Map<String,Object> campingcarDetails = campingcarService.getCampingCarDetailByid(id);
         model.addAttribute("campingcarDetails", campingcarDetails);
+
         return "campingcar/dReviews";
     }
 
@@ -98,9 +99,14 @@ public class CampingcarController {
         return "campingcar/dCancelPolicy";
     }
 
-    @RequestMapping("test")
-    public String test() {
-
-        return "campingcar/commontest";
+    @RequestMapping("reservationInfo")
+    public String reservationInfo(@RequestParam("id") int id, Model model) {
+        utils.loginUser();
+        Map<String,Object> campingcarDetails = campingcarService.getCampingCarDetailByid(id);
+        model.addAttribute("campingcarDetails", campingcarDetails);
+        
+        List<BasicFacilitiesDto> facilities = campingcarService.getBasicFacilitiesByProductId(id);
+        model.addAttribute("facilities", facilities);
+        return "campingcar/reservationInfo";
     }
 }

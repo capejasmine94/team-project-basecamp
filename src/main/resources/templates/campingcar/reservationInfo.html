@@ -122,82 +122,25 @@
                 <i class="bi bi-chevron-left" onclick="history.back();" style="cursor: pointer;"></i>
             </div>
             <div class="col text-center">
-                <h5 class="mb-0 fw-semibold" style="font-size: 16px;">캠핑카 상세 정보</h5>
+                <div class="mb-0 fw-semibold" style="font-size: 16px;">예약 정보</div>
             </div>
             <div class="col-auto">
             </div>
         </div>
     </div>
         <div class="container">
-            <div class="row"style="margin-top: 50px;">
-                <div class="col-12 px-3">
-                    <div class="text-center mb-1 text-white fw-medium rounded-pill" style="background-color: #4AAEFF; font-size: 0.782em; padding: 0.1em;">
-                        💰 지금 12개월 계약하면, 네이버페이 50만원 받아요!
-                    </div>
-                </div>
-            </div>
             <div class="row">
                 <div class="col section">
-                    <div class="row">
-                        <div class="col-12">
-                            <div id="carouselExample" class="carousel slide mb-3" data-bs-ride="carousel" data-bs-touch="true" data-bs-wrap="true">
-                                <div class="carousel-indicators">
-                                    <button type="button" data-bs-target="#carouselExample" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
-                                </div>
-                                <div class="carousel-inner">
-                                    <!-- 첫 번째 슬라이드 (모터홈) -->
-                                    <div th:if="${#strings.equals(campingcarDetails.campingcarDto.car_type_name, '모터홈')}" class="carousel-item active">
-                                        <img th:src="@{/public/img/campingCarImage/모터홈.jpg}" class="d-block w-100 img-fluid" alt="모터홈">
-                                        <div class="position-absolute d-flex gap-2" style="top: 10px; right: 10px;">
-                                            <i class="bi bi-heart" style="font-size: 12px; font-weight: bold; color: white; padding: 4px; border-radius: 50%;"></i>
-                                            <i class="bi bi-house-door" style="font-size: 12px; font-weight: bold; color: white; padding: 4px; border-radius: 50%;"></i>
-                                        </div>
-                                    </div>
-                                    <!-- 두 번째 슬라이드 (차박형(중형)) -->
-                                    <div th:if="${#strings.equals(campingcarDetails.campingcarDto.car_type_name, '차박형(중형)')}" class="carousel-item active">
-                                        <img th:src="@{/public/img/campingCarImage/차박형(중형).jpg}" class="d-block w-100 img-fluid" alt="차박형(중형)">
-                                        <div class="position-absolute d-flex gap-2" style="top: 10px; right: 10px;">
-                                            <i class="bi bi-heart" style="font-size: 12px; font-weight: bold; color: white; padding: 4px; border-radius: 50%;"></i>
-                                            <i class="bi bi-house-door" style="font-size: 12px; font-weight: bold; color: white; padding: 4px; border-radius: 50%;"></i>
-                                        </div>
-                                    </div>
-                                    <!-- 세 번째 슬라이드 (차박형(소형)) -->
-                                    <div th:if="${#strings.equals(campingcarDetails.campingcarDto.car_type_name, '차박형(소형)')}" class="carousel-item active">
-                                        <img th:src="@{/public/img/campingCarImage/차박형(소형).jpg}" class="d-block w-100 img-fluid" alt="차박형(소형)">
-                                        <div class="position-absolute d-flex gap-2" style="top: 10px; right: 10px;">
-                                            <i class="bi bi-heart" style="font-size: 12px; font-weight: bold; color: white; padding: 4px; border-radius: 50%;"></i>
-                                            <i class="bi bi-house-door" style="font-size: 12px; font-weight: bold; color: white; padding: 4px; border-radius: 50%;"></i>
-                                        </div>
-                                    </div>
-                                    <!-- 네 번째 슬라이드 (카라반펜션) -->
-                                    <div th:if="${#strings.equals(campingcarDetails.campingcarDto.car_type_name, '카라반펜션')}" class="carousel-item active">
-                                        <img th:src="@{/public/img/campingCarImage/카라반펜션.jpg}" class="d-block w-100 img-fluid" alt="카라반펜션">
-                                        <div class="position-absolute d-flex gap-2" style="top: 10px; right: 10px;">
-                                            <i class="bi bi-heart" style="font-size: 12px; font-weight: bold; color: white; padding: 4px; border-radius: 50%;"></i>
-                                            <i class="bi bi-house-door" style="font-size: 12px; font-weight: bold; color: white; padding: 4px; border-radius: 50%;"></i>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="new-fs-6 text-center fw-light text-body-secondary" style="font-size: 0.65rem;">차량 이미지는 이해를 돕기 위한 예시입니다.</div>
-                            <div class="new-fs-6 text-center fw-light text-body-secondary">상세 정보에서 차량 내부, 외부 사진을 확인하시기 바랍니다.</div>
-                        </div>
-                    </div>
                     <div class="row new-mt-45 pb-3">
                         <div class="col">
                             <div class="row">
-                                <div class="col new-fs-7 fw-medium">
-                                    </i><span>캠핑카 유형</span><i class="bi bi-chevron-right"></i><span th:text="${campingcarDetails.campingcarDto.car_type_name}">모터홈</span>
+                                <div class="col fw-medium">
+                                    <span class="new-fs-8 bg-body-secondary badge text-body-secondary material-symbols-outlined">rv_hookup<span class="new-fs-65"th:text="${campingcarDetails.campingcarDto.car_type_name}">모터홈</span></span>
                                 </div>
                             </div>
                             <div class="row pt-2">
                                 <div class="col">
-                                    <span class="fw-semibold" th:text="${campingcarDetails.campingcarDto.product_name}"></span>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col fst-italic text-center pt-4">
-                                    <i class="fa-solid fa-quote-left" style="color: #CECECE;"></i><span class="fw-semibold fs-6 px-3 text-muted" th:text="${campingcarDetails.campingcarDto.short_description}"></span><i class="fa-solid fa-quote-right" style="color: #CECECE;"></i>
+                                    <span class="fw-bold fs-5" th:text="${campingcarDetails.campingcarDto.product_name}"></span>
                                 </div>
                             </div>
                             <div class="row">
@@ -219,6 +162,17 @@
                                             <div class="fw-normal new-fs-95" th:text="${#dates.format(campingcarDetails.campingcarDto.return_dateTime, 'HH')+ '시간'}">18:00</div>
                                         </div>
                                     </div>
+                                    <div class="d-flex justify-content-center align-items-center">
+                                        <button class="btn btn bg-white text-center d-flex justify-content-center align-items-center" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+                                            <i class="bi bi-chevron-compact-down text-center"></i>
+                                            <div class="collapse" id="collapseExample">
+                                                <div class="info-item">
+                                                  Some placeholder content for the collapse component. This panel is hidden by default but revealed when the user activates the relevant trigger.
+                                                </div>
+                                            </div>
+                                        </button>
+                                    </div>
+
                                 </div>
                             </div>
                             <div class="row pt-1">
@@ -229,31 +183,13 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="row py-4">
-                                <div class="col d-flex flex-column d-flex justify-content-between align-items-between">
-                                    <div class="row">
-                                        <div class="col">
-                                            <div class="text-muted" style="font-size: 0.85rem;">평일 가격</div>
-                                            <span class="fw-bold text-danger text-end" style="font-size: 24px;" th:text="${#numbers.formatInteger(campingcarDetails.campingcarDto.rental_fee_weekdays, 3, 'COMMA')} + '원'"></span>
-                                        </div>
-                                        <div class="col d-flex flex-column d-flex justify-content-between align-items-between">
-                                            <div class="text-muted text-end" style="font-size: 0.85rem;">주말 가격</div>
-                                            <span class="fw-bold text-danger text-end" style="font-size: 24px;" th:text="${#numbers.formatInteger(campingcarDetails.campingcarDto.rental_fee_weekend, 3, 'COMMA')} + '원'"></span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <!-- 구분선 -->
-                            <div class="border-top pt-3"></div>
+                            <!-- 구분선
+                            <div class="border-top pt-3"></div> -->
                             <!-- 렌트카 회사 정보 -->
                             <div class="row">
                                 <div class="col d-flex align-items-center justify-content-center px-3">
                                     <img th:src="@{/images/${campingcarDetails.campingcarDto.comp_profile_image}}" class="rounded-circle me-3" style="width: 44px; height: 44px;">
-                                    <div class="flex-grow-1">
-                                        <div class="fw-bold" th:text="${campingcarDetails.campingcarDto.comp_name}"></div>
-                                        <div class="text-muted" th:text="${campingcarDetails.campingcarDto.comp_email}"></div>
-                                    </div>
+
                                     <div class="d-flex">
                                         <div class="d-flex justify-content-center align-items-center rounded-circle" style="width: 40px; height: 40px; background-color: #FFD700;">
                                             <!-- 회사별 채팅 기능 -->
@@ -271,7 +207,6 @@
                 </div>
             </div>
         </div>
-
         <div class="section">
             <ul class="nav nav-underline">
                 <li class="nav-item">
@@ -332,7 +267,7 @@
         <div class="container">
             <div class="row">
                 <div class="col py-3 px-3 d-grid">
-                    <a class="btn btn-dark btn-lg fw-bold" th:text="${#numbers.formatInteger(campingcarDetails.campingcarDto.rental_fee_weekdays,3,'COMMA')+'원'}" th:href="@{/campingcar/reservationInfo(id=${campingcarDetails.campingcarDto.id})}" style="color: #C6ED6F;">예약하기</a>
+                    <button class="btn btn-dark btn-lg fw-bold" style="color: #C6ED6F;">예약하기</button>
                 </div>
             </div>
         </div>

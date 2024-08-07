@@ -101,6 +101,37 @@
         where article_id = #{article_id}
     </select>
 
+
+    <!-- 대댓글 _ 자바스크립트 -->
+    <insert id="createReply">
+        insert into bc_insta_article_reply(
+            user_id,
+            comment_id,
+            reply
+        )values(
+            #{user_id},
+            #{comment_id},
+            #{reply}
+        )
+    </insert>
+
+    <select id="getReplyList" resultType="com.bulmeong.basecamp.insta.dto.InstaArticleReplyDto">
+        select * from bc_insta_article_reply
+        where comment_id = #{comment_id}
+    </select>
+
+    <delete id="deleteReply">
+        delete from bc_insta_article_reply
+        where id = #{id}
+    </delete>
+
+    <select id="replyCountByCommentId" resultType="int">
+        select count(*) from bc_insta_article_reply
+        where comment_id = #{comment_id}
+    </select>
+
+
+
     <!-- 게시글 좋아요 -->
     <insert id="createLike">
         insert into bc_insta_article_like(
