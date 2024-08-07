@@ -171,4 +171,10 @@ public class StoreController {
         return "store/mMyReview";
     }
 
+    @RequestMapping("tempLogin")
+    public String tempLogin(){
+
+        return "common/tempLogin";
+    }
+
 }

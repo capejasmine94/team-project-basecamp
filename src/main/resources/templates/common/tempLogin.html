@@ -12,7 +12,7 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com">
     <link rel="stylesheet" href="https://fonts.gstatic.com">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap">
-    <title>회원가입</title>
+    <title>로그인</title>
 
     <style>
 
@@ -35,7 +35,7 @@
         }
         .icon-col img{
             aspect-ratio: 1/1;
-            width: 100%;
+            width: 35px;
             object-fit: cover;
             object-position: center;
         }
@@ -80,26 +80,36 @@
             font-weight: bold;
             border-bottom: 2px solid black;
         }
-        .borderInput{
+        .loginInput{
             border: 0px;
             border-bottom: 1.2px solid rgb(220, 220, 220);
         }
         .loginInput:focus{
-            outline: 1px solid black;
+            outline: none;
+            border-bottom: 1.2px solid black;
         }
         .loginInput::placeholder{
             font-size: 0.9em;
         }
-
     </style>
 </head>
 <body>
     <!-- top-nav -->
     <div class="container-fluid fixed-top">
         <div class="row bg-white py-3 bg-opacity-75 align-items-center">
+            <a class="col-auto d-flex align-items-center" id="backButton">
+                <span class="material-symbols-outlined fw-light">
+                    arrow_back
+                </span>
+            </a>
             <div class="col fw-semibold text-center">
-                LOGO
+                로그인
             </div>
+            <a href="/" class="col-auto d-flex align-items-center text-black">
+                <span class="material-symbols-outlined fw-light">
+                    home
+                </span>
+            </a>
         </div>
     </div>
 
@@ -107,7 +117,7 @@
         <div class="row px-3">
             <div class="col p-0">
 
-                <div class="row py-4">
+                <div class="row">
                     <div class="col">
                         <div class="row f20 pt-5 text-center">
                             <div class="col">
@@ -129,51 +139,54 @@
                             </div>
                         </div>
 
-                        <div class="row pt-3">
-                            <div class="col f08 fw-semibold">
-                                아이디
-                            </div>
-                        </div>
                         <div class="row pt-2">
                             <div class="col d-grid">
-                                <input type="text" class="loginInput rounded-2 border py-2">
-                            </div>
-                        </div>
-                        <div class="row pt-3">
-                            <div class="col f08 fw-semibold">
-                                비밀번호
-                            </div>
-                        </div>
-                        <div class="row pt-2">
-                            <div class="col d-grid">
-                                <input type="text" class="loginInput rounded-2 border py-2">
+                                <input type="text" class="loginInput py-3" placeholder="아이디 입력">
                             </div>
                         </div>
 
-                        <div class="row align-items-center pt-2">
-                            <div class="col-auto pe-0">
-                                <input type="checkbox" class="form-check-input">
-                            </div>
-                            <div class="col f08">
-                                로그인 유지
-                            </div>
-                            <div class="col-auto">
-                                비밀번호 찾기
+                        <div class="row pt-2">
+                            <div class="col d-grid">
+                                <input type="text" class="loginInput py-3" placeholder="비밀번호 입력">
                             </div>
                         </div>
 
                         <div class="row py-4">
                             <div class="col d-grid">
-                                <button class="btn btn-dark py-3 f08 fw-semibold">
+                                <button class="btn btn-dark rounded-0 py-3 f08 fw-semibold">
                                     로그인
                                 </button>
                             </div>
                         </div>
+                        <div class="row justify-content-center f08">
+                            <div class="col text-end border-end">
+                                아이디 찾기
+                            </div>
+                            <div class="col">
+                                비밀번호 찾기
+                            </div>
+                        </div>
+
+                        <div class="row pt-4 justify-content-center">
+                            <div class="col-auto ps-0 icon-col">
+                                <!-- 여기에 아이콘 동글동글 -->
+                                <img src="/public/img/common/KakaoTalk_icon.png">
+                            </div>
+                            <div class="col-auto bg-dark text-white justify-content-center rounded-circle d-flex align-items-center" style="aspect-ratio: 1/1; width: 35px; padding-bottom: 2.5px;">
+                                <i class="bi bi-apple"></i>
+                            </div>
+                        </div>
+
+                        <div class="row py-5 f08 justify-content-center">
+                            <div class="col-auto pe-0">
+                                아직 BASECAMP 회원이 아니신가요?
+                            </div>
+                            <a class="col-auto text-primary">
+                                회원가입
+                            </a>
+                        </div>
                     </div>
                 </div>
-
-                <div class="row py-5"></div>
-                <div class="row py-5"></div>
 
             </div>
         </div>
