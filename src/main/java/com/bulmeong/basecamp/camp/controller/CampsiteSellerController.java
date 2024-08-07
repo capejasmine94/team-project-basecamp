@@ -104,6 +104,14 @@ public class CampsiteSellerController {
         return "camp/seller/main";      
     }
 
+    @RequestMapping("/deleteAreaProcess")
+    public String deleteAreaProcess(@RequestParam("id")int area_id) {
+        service.deleteArea(area_id);
+        CampsiteDto campsiteDto = sessionCampsiteDto();
+        utils.setSession("campsite", service.campsiteInfo(campsiteDto.getId()));
+        return "redirect:./area";   
+    }
+
     @RequestMapping("/updateCampProcess")
     public String updateCampProcess(
         CampsiteDto campsiteDto, 

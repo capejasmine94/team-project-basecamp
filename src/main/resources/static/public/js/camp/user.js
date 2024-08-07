@@ -66,12 +66,21 @@ function randomNumber() {
 function refreshSelectedArea(area) {
     const area_mainImages = document.getElementById('area_mainImages');
     if(area_mainImages == null) return;
+    let active = false;
     area_mainImages.innerHTML = '';
     for(const mainImage of area.mainImages){
+        const container = document.createElement('div');
+        container.classList.add('carousel-item');
+        if(!active) {
+            container.classList.add('active');
+            active = true;
+        }
         const mainImageTemplate = document.createElement('img');
-        mainImageTemplate.classList.add("d-block","w-100","p-0");
-        mainImageTemplate.setAttribute('src',`images/${mainImage.location}`);
-        area_mainImages.appendChild(mainImageTemplate);
+        mainImageTemplate.classList.add("img-fluid",'p-0');
+        mainImageTemplate.style.height='12em';
+        mainImageTemplate.setAttribute('src',`/images/${mainImage.location}`);
+        container.appendChild(mainImageTemplate);
+        area_mainImages.appendChild(container);
     }
     const area_name = document.getElementById('area_name');
     const popupSite = document.getElementById('popupSite-title');

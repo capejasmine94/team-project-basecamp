@@ -70,6 +70,9 @@
                                         <!-- OrderList -->
                                          <div class="row">
                                             <div class="col order-list-scroll" style="height: 13em;">
+                                                <div class="row justify-content-center align-items-center" th:if="${session.campsite.reservation.size() <= 0}">
+                                                    <div class="col-auto mt-5 pt-4 text-secondary">예약된 내역이 없습니다.</div>
+                                                </div>
                                                 <div class="row my-1 py-1 text-center border-top border-bottom" th:id="'order_' + ${reservation.dto.id}" th:each="reservation:${session.campsite.reservation}" th:onclick="'selectOrder(' + ${reservation.dto.id} + ')'">
                                                     <div class="col" th:text="${reservation.area.name}">구역명</div>
                                                     <div class="col" th:text="${reservation.dto.customer_name}">예약자</div>
@@ -142,10 +145,6 @@
                                                                     <div class="col-3 text-end">기본 가격</div>
                                                                     <div class="col-5 ms-5 fw-semibold text-start moneyInput" id="prise">1,000,000</div>
                                                                 </div>
-                                                                <!-- <div class="row mt-2 text-secondary fs-6">
-                                                                    <div class="col-3 text-end">할인 가격 (10%)</div>
-                                                                    <div class="col-5 ms-5 fw-semibold text-start">-100,000</div>
-                                                                </div> -->
                                                                 <div class="row mt-2 text-secondary fs-6" id="mileageTab">
                                                                     <div class="col-3 text-end">마일리지</div>
                                                                     <div class="col-5 ms-5 fw-semibold text-start" id="mileage">-100,000</div>
