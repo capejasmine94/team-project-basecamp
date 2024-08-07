@@ -75,6 +75,7 @@ public interface CampsiteSqlMapper {
     public void registerOrder(CampsiteOrderDto campsiteOrderDto);
     public void registerOrderUserInfo(CampsiteOrderUserInfoDto userInfoDto);
     public void registerCarNumber(CampsiteCarNumberDto carNumberDto);
+    public CampsiteOrderDto getOrderById(@Param("order_id")int order_id);
     public CampsiteOrderDto getOrderByResvCode(@Param("reservation_code") String resvCode);
     public List<CampsiteCarNumberDto> getCarNumberList(@Param("order_id")int order_id);
     public List<CampsiteOrderUserInfoDto> getUserInfoByOrderId(@Param("order_id")int order_id);

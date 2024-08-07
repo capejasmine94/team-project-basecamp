@@ -440,6 +440,12 @@
             SELECT * from bc_campsite_order
             where reservation_code = #{reservation_code}
         </select>
+        
+        <!-- 고유번호로 예약 -->
+        <select id="getOrderById" resultType="com.bulmeong.basecamp.camp.dto.CampsiteOrderDto">
+            SELECT * from bc_campsite_order
+            where id = #{order_id}
+        </select>
 
         <!-- 캠핑장 예약리스트 -->
          <select id="getOrderByCampsiteId" resultType="com.bulmeong.basecamp.camp.dto.CampsiteOrderDto">

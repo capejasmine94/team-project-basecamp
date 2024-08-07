@@ -425,7 +425,6 @@ public class CampsiteService {
         // 마무리
         return result;
     }
-    
 
     // 예약번호로 예약 가져오기
     public Map<String, Object> getOrderByCode(String resvCode) {
@@ -454,6 +453,18 @@ public class CampsiteService {
             map.put("point", campsiteSqlMapper.pointById(orderDto.getPoint_id()));
             result.add(map);
         }
+        return result;
+    }
+
+    public Map<String, Object> getOrderById(int order_id) {
+        Map<String, Object> result = new HashMap<>();
+        CampsiteOrderDto orderDto = campsiteSqlMapper.getOrderById(order_id);
+        result.put("dto", orderDto);
+        result.put("camp", campsiteSqlMapper.getCampsiteByPointId(orderDto.getPoint_id()));
+        result.put("area", campsiteSqlMapper.getAreaByPointId(orderDto.getPoint_id()));
+        result.put("carNumbers", campsiteSqlMapper.getCarNumberList(orderDto.getId()));
+        result.put("userInfo", campsiteSqlMapper.getUserInfoByOrderId(orderDto.getId()));
+        result.put("point", campsiteSqlMapper.pointById(orderDto.getPoint_id()));
         return result;
     }
 

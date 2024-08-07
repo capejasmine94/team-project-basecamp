@@ -65,4 +65,11 @@ public class RestCampsiteSellerController {
         result.add("campsite", service.campsiteInfo(campsiteDto.getId()));
         return result;      
     }
+    
+    @RequestMapping("selectOrder")
+    public RestResponseDto selectOrder(@RequestParam("order_id") String order_id) {
+        RestResponseDto result = new RestResponseDto();
+        result.add("curOrder", service.getOrderById(Integer.parseInt(order_id)));
+        return result;
+    }
 }

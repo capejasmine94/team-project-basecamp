@@ -13,12 +13,15 @@
         
         <script src="/public/js/calendar.js"></script>
         <script src="/public/js/util.js"></script>
-        <script src="/public/js/sellerPage.js"></script>
-        <script src="/public/js/camp/campsite.js"></script>
+        <script src="/public/js/camp/seller.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
         <style>
             input[type="text"]:focus {
-        border-color: #aaa; /* 클릭 시 테두리 색상 변경 */
+                    border-color: #aaa; /* 클릭 시 테두리 색상 변경 */
+                }
+            .order-list-scroll {
+                max-height: 500px; /* 원하는 높이 설정 */
+                overflow-y: auto;
             }
         </style>
     </head>
@@ -64,14 +67,19 @@
                                 </div>
                                 <div class="row">
                                     <div class="col mb-2">
-                                        <div class="row my-1 py-1 text-center border-top border-bottom" th:each="reservation:${session.campsite.reservation}">
-                                            <div class="col" th:text="${reservation.area.name}">구역명</div>
-                                            <div class="col" th:text="${reservation.dto.customer_name}">예약자</div>
-                                            <div class="col"><span th:text="${#dates.format(reservation.dto.start_date, 'YYYY-MM-dd')}">2024.01.01</span> ~ <span th:text="${#dates.format(reservation.dto.end_date, 'YYYY-MM-dd')}">2024.03.18</span></div>
-                                            <div class="col moneyInput" th:text="${reservation.dto.prise}">가격</div>
-                                            <div class="col" th:text="${#dates.format(reservation.dto.created_at, 'YYYY-MM-dd')}">2024.03.03</div>
-                                        </div>
-                                        <div class="row d-none" id="showDetail">
+                                        <!-- OrderList -->
+                                         <div class="row">
+                                            <div class="col order-list-scroll" style="height: 13em;">
+                                                <div class="row my-1 py-1 text-center border-top border-bottom" th:id="'order_' + ${reservation.dto.id}" th:each="reservation:${session.campsite.reservation}" th:onclick="'selectOrder(' + ${reservation.dto.id} + ')'">
+                                                    <div class="col" th:text="${reservation.area.name}">구역명</div>
+                                                    <div class="col" th:text="${reservation.dto.customer_name}">예약자</div>
+                                                    <div class="col"><span th:text="${#dates.format(reservation.dto.start_date, 'YYYY-MM-dd')}">2024.01.01</span> ~ <span th:text="${#dates.format(reservation.dto.end_date, 'YYYY-MM-dd')}">2024.03.18</span></div>
+                                                    <div class="col moneyInput" th:text="${reservation.dto.prise}">가격</div>
+                                                    <div class="col" th:text="${#dates.format(reservation.dto.created_at, 'YYYY-MM-dd')}">2024.03.03</div>
+                                                </div>
+                                            </div>
+                                         </div>
+                                        <div class="row d-none mt-2 border-top" id="showDetail">
                                             <div class="col">
                                                 <div class="row mt-3 justify-content-center">
                                                     <div class="col-5 border rounded-2 me-5">
@@ -112,11 +120,11 @@
                                                                     <div class="col-3 text-end">미성년자</div>
                                                                     <div class="col-5 ms-5 fw-semibold text-start" id="kid">0</div>
                                                                 </div>
-                                                                <div class="row my-3">
+                                                                <div class="row mt-3">
                                                                     <div class="col-3 text-end">차량</div>
                                                                 </div>
                                                                 <div class="row mt-1 flex-column" id="carList">
-                                                                    <div class="col-5 mt-1 ms-5 fw-semibold text-start"></div>
+                                                                   
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -128,7 +136,7 @@
                                                             <div class="col mx-4">
                                                                 <div class="row">
                                                                     <div class="col-3 text-end">가격</div>
-                                                                    <div class="col-5 ms-5 fw-semibold text-start"><span id="totalPrise"></span><span class="ms-1">원</span></div>
+                                                                    <div class="col-5 ms-5 fw-semibold text-start"><span class="moneyInput" id="totalPrise"></span><span class="ms-1">원</span></div>
                                                                 </div>
                                                                 <div class="row mt-2 text-secondary fs-6">
                                                                     <div class="col-3 text-end">기본 가격</div>
@@ -151,19 +159,19 @@
                                                             <div class="col mx-4">
                                                                 <div class="row">
                                                                     <div class="col-3 text-end">현황</div>
-                                                                    <div class="col-5 ms-5 fw-semibold">대기중</div>
+                                                                    <div class="col-5 ms-5 fw-semibold" id="progress">대기중</div>
                                                                 </div>
                                                                 <div class="row mt-2">
                                                                     <div class="col-3 text-end">예약 날짜</div>
-                                                                    <div class="col-auto ms-5 fw-semibold">2024.01.01 ~ 2024.02.01</div>
+                                                                    <div class="col-auto ms-5 fw-semibold" id="order_day">2024.01.01 ~ 2024.02.01</div>
                                                                 </div>
                                                                 <div class="row my-2">
                                                                     <div class="col-3 text-end">요청일</div>
-                                                                    <div class="col-5 ms-5 fw-semibold">2023.12.11</div>
+                                                                    <div class="col-5 ms-5 fw-semibold created_at">2023.12.11</div>
                                                                 </div>
                                                                 <div class="row mt-2">
                                                                     <div class="col-3 text-end">결제일</div>
-                                                                    <div class="col-5 ms-5 fw-semibold">2023.12.11</div>
+                                                                    <div class="col-5 ms-5 fw-semibold created_at">2023.12.11</div>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -185,7 +193,111 @@
         </div>
         <div th:replace="~{common/navi::popup}"></div>
         <script>
+            let curOrder;
             addColonMoneyInput();
+            function selectOrder(id) {
+                if(curOrder != null) {
+                    const cur = document.getElementById('order_' + curOrder.dto.id);
+                    cur.classList.remove("bg-light");
+                    const showDetail = document.getElementById('showDetail');
+                    if(curOrder.dto.id == id) {
+                        showDetail.classList.add('d-none')
+                        return;
+                    }
+                }
+                const url='/api/campsiteCenter/selectOrder?order_id=' + id;
+                fetch(url)
+                .then(response => response.json())
+                .then((response) => {
+                    curOrder = response.data.curOrder;
+                    const cur = document.getElementById('order_' + curOrder.dto.id);
+                    cur.classList.add("bg-light");
+                    refreshDetail(curOrder);
+                })
+            }
+
+            function refreshDetail(order) {
+                const area_name = document.getElementById('area_name');
+                const point_name = document.getElementById('point_name');
+                const customer_name = document.getElementById('customer_name');
+                const customer_phone = document.getElementById('customer_phone');
+                const people_count = document.getElementById('people_count');
+                const adult = document.getElementById('adult');
+                const kid = document.getElementById('kid');
+
+                const carList = document.getElementById('carList');
+
+                const totalPrise = document.getElementById('totalPrise');
+                const prise = document.getElementById('prise');
+                const mileageTab = document.getElementById('mileageTab');
+                const mileage = document.getElementById('mileage');
+                const order_day = document.getElementById('order_day');
+                const created_at = document.getElementsByClassName('created_at');
+                const progress = document.getElementById('progress');
+
+                area_name.innerText = order.area.name;
+                point_name.innerText = order.point.name;
+                customer_name.innerText = order.dto.customer_name;
+                customer_phone.innerText = order.dto.customer_phone;
+                const peopleCount = order.dto.adult_count + order.dto.kid_count;
+                people_count.innerText = peopleCount;
+                adult.innerText = order.dto.adult_count;
+                kid.innerText = order.dto.kid_count;
+
+                carList.innerHTML='';
+                for(const value of order.carNumbers) {
+                    const car = document.createElement('div');
+                    car.classList.add('col-auto', 'mt-1','ms-5', 'text-start');
+                    car.innerText = value.car_number;
+                    carList.appendChild(car);
+                }
+                if(new Date(order.dto.start_date) <= new Date()){
+                progress.innerText = '완료';
+                }
+                else {
+                    progress.innerText = '대기';
+                }
+
+                totalPrise.innerText = order.dto.prise;
+                prise.innerText = order.dto.prise;
+                if(order.userInfo == null) {
+                    mileage.innerText = order.userInfo.use_mileage;
+                    mileageTab.classList.remove('d-none');
+                }
+                else {
+                    mileageTab.classList.add('d-none');
+                }
+                
+                order_day.innerText = `${formatDate(order.dto.start_date)} ~ ${formatDate(order.dto.end_date)}`;
+
+                for(const ca of created_at) {
+                    ca.innerText = formatDate(order.dto.created_at);
+                }
+                addColonMoneyInput();
+                showDetail.classList.remove('d-none')
+            }
+           
+
+            function formatDate(dateString) {
+                // 문자열을 Date 객체로 변환
+                const date = new Date(dateString);
+                
+                // 년, 월, 일 값을 추출
+                const year = date.getFullYear();
+                let month = (date.getMonth() + 1).toString();
+                let day = date.getDate().toString();
+
+                // 월과 일이 한 자리수일 경우 앞에 0을 추가
+                if (month.length < 2) {
+                    month = '0' + month;
+                }
+                if (day.length < 2) {
+                    day = '0' + day;
+                }
+
+                // yyyy-mm-dd 형식으로 반환
+                return `${year}-${month}-${day}`;
+            }
         </script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
     </body>
