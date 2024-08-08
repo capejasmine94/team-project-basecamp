@@ -41,9 +41,12 @@ public interface ClubSqlMapper {
     public List<ClubMemberDto> selectClubMemberDtoList(int id);
     public ClubPostCategoryDto selectPostCategoryDtoById(int id);
     public List<ClubPostCategoryDto> selectPostCategoryDto();
+    public String selectPostCategoryName(int id);
+    public String selectClubCategoryName(int id);
     public List<ClubPostImageDto> selectPostImageDtoList();
     public List<ClubPostImageDto> selectPostImageDtoListById(int id);
     public ClubPostDto selectPostDtoById(int id);
+    public List<ClubPostDto> selectAllPosts();
 
     public void insertClubPostCommentDto(ClubPostCommentDto clubPostCommentDto);
     // public void updateComment(ClubPostCommentDto clubPostCommentDto);
@@ -93,11 +96,13 @@ public interface ClubSqlMapper {
     public void insertClubMeetingMemberDto(ClubMeetingMemberDto clubMeetingMemberDto);
     public ClubMeetingMemberDto selectMeetingMember(@Param("meeting_id") int meeting_id, @Param("user_id")int user_id);
     public void deleteMeetingMember(@Param("meeting_id") int meeting_id, @Param("user_id") int user_id);
+    public String calculateDdaysForMeetings(@Param("meeting_id") int meeting_id);
 
 
     // 홈화면에 정모 정보 출력
     public List<ClubMeetingDto> selectClubMeetingDtoList(int id);
     public int countTotalMeetingMember(int id);
+    public String findClubCategoryNameById(int id);
 
     // 정모 개수 집계
     public int countTotalMeeting(int id);

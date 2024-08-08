@@ -430,15 +430,19 @@ public class ClubService {
                 Map<String, Object> meetingDataMap = new HashMap<>();
 
                 ClubMeetingMemberDto clubMeetingMemberDto = clubSqlMapper.selectMeetingMember(meeting_id, user_id);
+                String dDay = clubSqlMapper.calculateDdaysForMeetings(meeting_id);
                 
                 meetingDataMap.put("clubMeetingDto", clubMeetingDto);
                 meetingDataMap.put("totalJoinMember", totalJoinMember);
                 meetingDataMap.put("clubMeetingMemberDto",clubMeetingMemberDto);
+                meetingDataMap.put("dDay", dDay);
 
                 meetingDataList.add(meetingDataMap);
             }
             return meetingDataList;
         }
+
+
 
         // 정모 개수 집계하기
         public int countTotalMeeting(int id){
@@ -546,7 +550,30 @@ public class ClubService {
           return clubSqlMapper.selectTodayVisitCount(club_id);
         }
 
+        // 소모임 메인 인기글
+        public Map<String, Object> getHotPosts(int id){
+            Map<String, Object> mapForHotPosts = new HashMap<>();
 
+           List<ClubPostDto> clubPostDtoList = clubSqlMapper.selectAllPosts();
+            for(ClubPostDto clubPostDto : clubPostDtoList){
+                int postPk = clubPostDto.getId();
+                List<ClubPostImageDto> clubPostImageList = clubSqlMapper.selectPostImageDtoByPostId(postPk);
+                String postCategory = clubSqlMapper.selectPostCategoryName(postPk);
+                int userPk = clubPostDto.getUser_id();
+                UserDto userDto = clubSqlMapper.selectUserDtoById(userPk);
+                ClubDto clubDto = clubSqlMapper.selectClubDtoById(clubPostDto.getClub_id());
+                String clubCategory = clubSqlMapper.selectClubCategoryName(clubDto.getCategory_id());
+
+                mapForHotPosts.put("clubPostDto", clubPostDto);
+                mapForHotPosts.put("clubPostImageList", clubPostImageList);
+                mapForHotPosts.put("postCategory", postCategory);
+                mapForHotPosts.put("userDto", userDto);
+                mapForHotPosts.put("clubDto", clubDto);
+                mapForHotPosts.put("clubCategory", clubCategory);
+
+            }
+                return mapForHotPosts;
+        }
 
 
     }

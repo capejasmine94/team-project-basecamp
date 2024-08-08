@@ -57,6 +57,7 @@ public class ClubController {
         util.loginUser(3);
 
         UserDto userDto = (UserDto)session.getAttribute("sessionUserInfo");
+        model.addAttribute("userDto", userDto);
 
         List<ClubRegionCategoryDto> regionCategoryDtoList = clubService.findRegionCategory();
         model.addAttribute("regionCategoryDtoList", regionCategoryDtoList);

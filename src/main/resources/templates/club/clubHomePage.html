@@ -386,28 +386,41 @@
             <div class="row d-none" id="meeting-template">
                 <div class="col-11 me-2 meeting-wrapper pt-2 pb-3 border rounded shadow-sm">
 
+                   
                     <div class="row">
-                        <div class="col" style="font-size: 0.8em;">
-                            <span class="meetingDate"></span>
-                            <!-- <span th:text="${#dates.format(meetingData.clubMeetingDto.meeting_date,'MM/dd')}"> </span> -->
-                            <span class="text-danger"> D-4</span>
+                        <div class="col">
+                            <div class="row">
+                                <div class="col" style="font-size: 0.8em;">
+                                    <span class="meetingDate"></span>
+                                     <!-- <span th:text="${#dates.format(meetingData.clubMeetingDto.meeting_date,'MM/dd')}"> </span> -->
+                                    <!-- <span class="text-danger d-day"> D-4</span> -->
+                                </div>
+                            </div>
+                            <div class="row pb-1 pt-1">
+                                <div class="col fw-semi-bold">
+                                    <span class="meetingName"></span>
+                                    <span class="d-day text-danger"></span>
+                                    <!-- <span th:text="${meetingData.clubMeetingDto.name}"></span> -->
+                                </div>
+                            </div>
+                            <div class="row pb-2 mb-2">
+                                <div class="col text-secondary" style="font-size: 0.8em;">
+                                    <span class="meetingDescription"></span>
+                                    <!-- <span th:text="${meetingData.clubMeetingDto.description}"></span> -->
+                                </div>
+                            </div>
                         </div>
-                        <div class="col text-end text-secondary" style="font-size: 0.8em;">
-                            <span>수정</span>
+                        <div class="col-auto text-end align-items-center d-flex">
+                            <div class="col-auto align-self-center">
+                                <div class="row">
+                                    <div class="col">
+                                        <button type="button" class="btn btn-outline-secondary join-meeting-btn">참석</button>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                    <div class="row pb-1 pt-1">
-                        <div class="col fw-bold" style="font-size: 0.9em;">
-                            <span class="meetingName"></span>
-                            <!-- <span th:text="${meetingData.clubMeetingDto.name}"></span> -->
-                        </div>
-                    </div>
-                    <div class="row pb-2 mb-2">
-                        <div class="col" style="font-size: 0.8em;">
-                            <span class="meetingDescription"></span>
-                            <!-- <span th:text="${meetingData.clubMeetingDto.description}"></span> -->
-                        </div>
-                    </div>
+                 
 
                     <div class="row">
                         <div class="col">
@@ -420,6 +433,7 @@
                                         <div class="col">
                                             <span class="text-secondary">일시</span>
                                             <span class="meetingDetailDate"></span>
+                                            
                                             <!-- <span th:text="${#dates.format(meetingData.clubMeetingDto.meeting_date, 'yyyy.MM.dd')}"></span> -->
                                         </div>   
                                     </div>
@@ -443,13 +457,7 @@
                                         </div>   
                                     </div>
                                 </div>
-                                <div class="col-auto align-self-center">
-                                    <div class="row">
-                                        <div class="col">
-                                            <button type="button" class="btn btn-outline-secondary join-meeting-btn">참석</button>
-                                        </div>
-                                    </div>
-                                </div>
+                              
                             </div>
                         </div>
                     </div>

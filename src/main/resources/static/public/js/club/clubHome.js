@@ -54,13 +54,20 @@ function getMeetingList() {
 
                 const newMeetingWrapper = meetingWrapper.cloneNode(true);
 
-                const meetingDate = newMeetingWrapper.querySelector(".meetingDate");
-                const meetingDate2 = formatDate(meetingData.clubMeetingDto.meeting_date);
-                meetingDate.innerText = meetingDate2;
+                // const meetingDate = newMeetingWrapper.querySelector(".meetingDate");
+                // const meetingDate2 = formatDate(meetingData.clubMeetingDto.meeting_date);
+                // meetingDate.innerText = meetingDate2;
+                
 
                 const meetingDetailDate = newMeetingWrapper.querySelector(".meetingDetailDate");
                 const meetingDetailDate2 = formatDateDetail(meetingData.clubMeetingDto.meeting_date);
                 meetingDetailDate.innerText = meetingDetailDate2;
+
+                const dDay = newMeetingWrapper.querySelector(".d-day");
+                console.log(dDay);
+                
+                dDay.innerText = meetingData.dDay;
+                
 
                 const totalJoinMember = newMeetingWrapper.querySelector(".totalJoinMember");
                 
@@ -118,7 +125,7 @@ function getMeetingList() {
                 meetingLocation.innerText = meetingData.clubMeetingDto.location;
 
                 const meetingFee = newMeetingWrapper.querySelector(".meetingFee");
-                meetingFee.innerText = `${meetingData.clubMeetingDto.fee}`;
+                meetingFee.innerText = `${meetingData.clubMeetingDto.fee.toLocaleString()}`;
 
                 const meetingImage = newMeetingWrapper.querySelector(".meetingImage");
                 meetingImage.src = `/images/${meetingData.clubMeetingDto.main_image}`;
@@ -210,4 +217,5 @@ function declineMeeting(meetingId) {
             
         })
 }
+
 
