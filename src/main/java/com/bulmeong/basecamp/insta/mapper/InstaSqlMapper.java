@@ -12,6 +12,7 @@ import com.bulmeong.basecamp.insta.dto.InstaArticleTagDto;
 import com.bulmeong.basecamp.insta.dto.InstaBookmarkDto;
 import com.bulmeong.basecamp.insta.dto.InstaCommentLikeDto;
 import com.bulmeong.basecamp.insta.dto.InstaFollowDto;
+import com.bulmeong.basecamp.insta.dto.InstaTagDto;
 import com.bulmeong.basecamp.insta.dto.InstaUserInfoDto;
 import com.bulmeong.basecamp.user.dto.UserDto;
 
@@ -67,7 +68,7 @@ public interface InstaSqlMapper {
 
     public void insertHashtagLetsGo(@Param("text") String text); // 새로운 태그 삽입
     public void insertArticletag(InstaArticleTagDto instaArticleTagDto); // 게시글-태그 관계 삽입
-    public List<String> selectHashtagByArticleId(int article_id); // 게시글 해시태그 출력
+    public List<InstaTagDto> selectHashtagByArticleId(int article_id); // 게시글 해시태그 출력
 
     // 유저가 작성한 게시글 이미지List 출력
     public List<InstaArticleImgDto> instaWriteArticleGetImgByUserId(int user_id);
@@ -81,6 +82,10 @@ public interface InstaSqlMapper {
 
     // 인스스 _ 로그인 유저가 팔로우 한 유저 출력
     public List<InstaUserInfoDto> selectInstaStoryUserInfoByFollowerUserId(int follower_user_id); // follower_user_id =  로그인 한 유저 아이디
+
+    // 태그 클릭시 나오는 페이지
+    public List<InstaArticleImgDto> selectArticleFirstImgByTagId(int tag_id);
+    public InstaTagDto selectTagByTagId(int id); // id = tag_id
 }
 
 

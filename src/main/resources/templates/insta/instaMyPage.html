@@ -166,7 +166,7 @@
 
             <!-- 내 게시물 List -->
             <div class="row">
-                <a class="col-4 px-0 pb d-flex justify-content-center" th:href="@{./instaMainPage(user_id=${session.sessionUserInfo.id})}" th:each="instaArticleImgDto, iterStat : ${instaArticleImgDtoList}">
+                <a class="col-4 px-0 pb d-flex" th:href="@{./instaMainPage(user_id=${session.sessionUserInfo.id})}" th:each="instaArticleImgDto, iterStat : ${instaArticleImgDtoList}">
                     <div th:class="${iterStat.index % 3 == 1} ? 'middle' : ''">
                         <img th:src="|/images/${instaArticleImgDto.img_link}|" class="img-fluid" style="aspect-ratio: 1/1; height: 33.3333333333333vw;">
                     </div>

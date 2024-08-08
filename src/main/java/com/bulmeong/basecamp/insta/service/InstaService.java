@@ -13,6 +13,7 @@ import com.bulmeong.basecamp.insta.dto.InstaArticleTagDto;
 import com.bulmeong.basecamp.insta.dto.InstaBookmarkDto;
 import com.bulmeong.basecamp.insta.dto.InstaCommentLikeDto;
 import com.bulmeong.basecamp.insta.dto.InstaFollowDto;
+import com.bulmeong.basecamp.insta.dto.InstaTagDto;
 import com.bulmeong.basecamp.insta.dto.InstaUserInfoDto;
 import com.bulmeong.basecamp.insta.mapper.InstaSqlMapper;
 import com.bulmeong.basecamp.user.dto.UserDto;
@@ -148,7 +149,7 @@ public class InstaService {
 
 
             // 해시태그
-            List<String> hashtags = instaSqlMapper.selectHashtagByArticleId(article_id);
+            List<InstaTagDto> hashtags = instaSqlMapper.selectHashtagByArticleId(article_id);
             
             map.put("hashtags", hashtags);
 
@@ -360,6 +361,19 @@ public class InstaService {
         List<InstaUserInfoDto> instaStory = instaSqlMapper.selectInstaStoryUserInfoByFollowerUserId(follower_user_id);
 
         return instaStory;
+    }
+
+    // 태그 클릭시 나오는 페이지
+    public List<InstaArticleImgDto> selectArticleFirstImg(int tag_id){
+        List<InstaArticleImgDto> instaArticleImgDtoList = instaSqlMapper.selectArticleFirstImgByTagId(tag_id);
+
+        return instaArticleImgDtoList;
+    }
+
+    public InstaTagDto selectTag(int id){
+        InstaTagDto instaTagDto = instaSqlMapper.selectTagByTagId(id);
+
+        return instaTagDto;
     }
 
 }

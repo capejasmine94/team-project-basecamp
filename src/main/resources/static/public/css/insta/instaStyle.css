@@ -175,14 +175,7 @@
 }
 
 .hashtag {
-    margin-right: 5px; /* 각 해시태그의 오른쪽에 8px 간격 추가 */
+    margin-right: 3px; /* 각 해시태그의 오른쪽에 8px 간격 추가 */
     display: inline-block; /* 인라인 블록으로 설정하여 간격 적용 */
 }
-
-
-
-
-
-
-
 

@@ -15,6 +15,7 @@ import com.bulmeong.basecamp.insta.dto.InstaArticleDto;
 import com.bulmeong.basecamp.insta.dto.InstaArticleImgDto;
 import com.bulmeong.basecamp.insta.dto.InstaArticleLikeDto;
 import com.bulmeong.basecamp.insta.dto.InstaBookmarkDto;
+import com.bulmeong.basecamp.insta.dto.InstaTagDto;
 import com.bulmeong.basecamp.insta.dto.InstaUserInfoDto;
 import com.bulmeong.basecamp.insta.service.InstaService;
 import com.bulmeong.basecamp.user.dto.UserDto;
@@ -284,6 +285,20 @@ public class InstaController {
         instaService.deleteArticle(id);
 
         return "redirect:./instaMainPage?user_id=" + user_id;
+    }
+
+    // 검색페이지
+    @RequestMapping("instaSearchResultPage")
+    public String instaSearchResultPage(Model model, @RequestParam("tag_id") int tag_id){
+        List<InstaArticleImgDto> instaArticleImgDtoList = instaService.selectArticleFirstImg(tag_id);
+
+        // 어떤 태그 검색했는지 태그 아이디 받아서 text 뽑는 쿼리
+        InstaTagDto instaTagDto = instaService.selectTag(tag_id);
+        model.addAttribute("instaTagDto", instaTagDto);
+
+        model.addAttribute("instaArticleImgDtoList", instaArticleImgDtoList);
+
+        return "insta/instaSearchResultPage";
     }
 }
 

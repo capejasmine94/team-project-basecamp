@@ -301,8 +301,9 @@
         )
     </insert> -->
 
-    <select id="selectHashtagByArticleId" resultType="java.lang.String">
-        select text from bc_insta_article_tag biat
+    <!-- resultType="java.lang.String" _ id를 받아야해서 resultType 변경해줬음 -->
+    <select id="selectHashtagByArticleId" resultType="com.bulmeong.basecamp.insta.dto.InstaTagDto">
+        select bit2.* from bc_insta_article_tag biat
         inner join bc_insta_tag bit2 on bit2.id = biat.tag_id
         where article_id = #{article_id}
     </select>
@@ -370,6 +371,24 @@
         select biui.* from bc_insta_follow bif
         inner join bc_insta_user_info biui on biui.id = bif.following_user_id
         where follower_user_id = #{follower_user_id}
+    </select>
+
+    <!-- 태그 클릭시 나오는 페이지 -->
+    <select id="selectArticleFirstImgByTagId" resultType="com.bulmeong.basecamp.insta.dto.InstaArticleImgDto">
+        select biai.* from bc_insta_tag bit2
+        inner join bc_insta_article_tag biat on biat.tag_id = bit2.id
+        inner join bc_insta_article_img biai on biai.article_id = biat.article_id
+        inner join (
+            select article_id, min(id) AS min_id
+            from bc_insta_article_img
+            group by article_id
+        ) biai_min on biai.id = biai_min.min_id
+        where bit2.id = #{tag_id}
+    </select>
+
+    <select id="selectTagByTagId" resultType="com.bulmeong.basecamp.insta.dto.InstaTagDto">
+        select * from bc_insta_tag
+        where id = #{id}
     </select>
 
 </mapper>
