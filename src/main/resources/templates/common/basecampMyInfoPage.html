@@ -113,24 +113,24 @@
     </div>
 </div>
 
-<!--메인 하단네비 -->
+<!--마이페이지 하단네비 -->
 <div th:fragment="bottomNaviBasecamp" class="container-fluid g-0 border-top bg-white fixed-bottom pb-3">
     <div class="row mx-1 py-2 text-center">
+        
         <!--HOME-->
         <a href="/" class="col icon-and-text">
-            <!-- <span class="icon"><i class="bi bi-house"></i></span> -->
-            <!-- <span class="text-navi">HOME</span> -->
             <span class="material-symbols-outlined fw-light" style="font-size: 1.8em; color: darkgray;">
                 home
             </span>
             <span class="text-navi pt-1" style="font-size: 0.7em; color: darkgray">홈</span>
         </a>        
+
         <!--구매-->
         <div class="col icon-and-text dropdown dropup">
-            <span data-bs-toggle="dropdown" class="material-symbols-outlined fw-light" style="font-size: 1.7em; color: darkgray">
+            <span data-bs-toggle="dropdown" class="material-symbols-outlined fw-light" style="font-size: 1.7em; color: darkgray;">
                 storefront
             </span>
-            <span class="text-navi pt-1" style="font-size: 0.7em; color: darkgray">구매</span>
+            <span class="text-navi pt-1" style="font-size: 0.7em; color: darkgray;">구매</span>
             <ul class="dropdown-menu custom-dropdown-menu">
                 <!-- 변초연 -->
                 <a class="dropdown-item col" href="/store">
@@ -156,13 +156,13 @@
                 </a>
             </ul>
         </div>
+
         <!--예약-->
         <div class="col icon-and-text dropdown dropup">
-            <!-- <span data-bs-toggle="dropdown"><i class="fa-regular fa-calendar"></i></span> -->
-            <span data-bs-toggle="dropdown" class="material-symbols-outlined fw-light" style="font-size: 1.7em; color: darkgray">
+            <span data-bs-toggle="dropdown" class="material-symbols-outlined fw-light" style="font-size: 1.7em; color: darkgray;">
                 event_available
             </span>
-            <span class="text-navi pt-1" style="font-size: 0.7em; color: darkgray">예약</span>
+            <span class="text-navi pt-1" style="font-size: 0.7em; color: darkgray;">예약</span>
             <ul class="dropdown-menu row custom-dropdown-menu">
                 <!-- 조준희 -->
                 <a class="dropdown-item col" href="/camp/main">
@@ -186,21 +186,15 @@
                         </div>
                     </div>
                 </a>
-                <!-- <a class="dropdown-item" href="#" style="display: flex; align-items: center;">
-                    <span class="material-symbols-outlined pe-1">
-                        airport_shuttle
-                    </span>
-                    <span style="font-size: 0.9em;">캠핑카</span>
-                </a> -->
-
             </ul>
         </div>
+
         <!--커뮤-->
         <div class="col icon-and-text dropdown dropup">
-            <span data-bs-toggle="dropdown" class="material-symbols-outlined fw-light" style="font-size: 1.7em; color: darkgray">
+            <span data-bs-toggle="dropdown" class="material-symbols-outlined fw-light" style="font-size: 1.7em; color: darkgray;">
                 forum
             </span>
-            <span class="text-navi pt-1" style="font-size: 0.7em; color: darkgray">커뮤니티</span>
+            <span class="text-navi pt-1" style="font-size: 0.7em; color: darkgray;">커뮤니티</span>
             <ul class="dropdown-menu custom-dropdown-menu">
                 <!-- 이시은 -->
                 <a class="dropdown-item col" href="/club/main">
@@ -215,36 +209,26 @@
                 </a>
                 <!-- 남현지 -->
                 <a class="dropdown-item col" href="/insta/instaMainPage">
-                    <!-- <div class="row w-100">
-                        <div class="col-auto d-flex">
-                            <span data-bs-toggle="dropdown" class="material-symbols-outlined pe-1 ps-1 fw-light" style="font-size: 1.4em;">
-                                phone_iphone 
-                            </span>
-                            <span style="font-size: 0.9em;">인스타</span>
-                        </div>
-                    </div> -->
-
                     <span>
                         <img src="/public/img/instaImage/campstagram.png" class="img-fluid">
                     </span>
                 </a>
             </ul>
         </div>
+        
         <!--내정보-->
-        <div class="col icon-and-text">
-            <a href="/user/login" th:if="${session.sessionUserInfo == null}" class="icon-and-text">
-                <span data-bs-toggle="dropdown" class="material-symbols-outlined" style="font-size: 1.7em; color: #1C3F5B;">
-                    <i class="bi bi-person-fill"></i>
-                </span>
-                <span class="text-navi pt-1" style="font-size: 0.7em; color: #1C3F5B;">마이</span>
-            </a>
-            <a href="/user/myPage" th:unless="${session.sessionUserInfo == null}" class="icon-and-text">
-                <span data-bs-toggle="dropdown" class="material-symbols-outlined" style="font-size: 1.7em; color: #1C3F5B;">
-                    <i class="bi bi-person-fill"></i>
-                </span>
-                <span class="text-navi pt-1" style="font-size: 0.7em; color: #1C3F5B;">마이</span>
-            </a>
-        </div>
+        <a class="col icon-and-text" href="/user/login" th:if="${session.sessionUserInfo == null}">
+            <span class="material-symbols-outlined pe-1 ps-1"style="font-size: 1.7em;">
+                person
+            </span>
+            <span class="text-navi pt-1 fw-bold" style="font-size: 0.7em;">마이</span>
+        </a>
+        <a class="col icon-and-text" href="/user/myPage" th:unless="${session.sessionUserInfo == null}">
+            <span class="material-symbols-outlined pe-1 ps-1"style="font-size: 1.7em;">
+                person
+            </span>
+            <span class="text-navi pt-1 fw-bold" style="font-size: 0.7em;">마이</span>
+        </a>
     </div>
 </div>
 
