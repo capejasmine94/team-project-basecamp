@@ -79,15 +79,21 @@ public class ClubController {
             model.addAttribute("joinClubDtoList", limitedJoinClubDtoList);
         }
 
+            // 새로운 소모임 목록
+            List<ClubDto> clubDtoList = clubService.findClubDtoList();
+            List<ClubDto> limitedClubDtoList = clubDtoList.stream()
+            .limit(3)
+            .collect(Collectors.toList());
+            model.addAttribute("clubDtoList", limitedClubDtoList);
 
-        // 새로운 소모임 목록
-        List<ClubDto> clubDtoList = clubService.findClubDtoList();
-        List<ClubDto> limitedClubDtoList = clubDtoList.stream()
-        .limit(3)
-        .collect(Collectors.toList());
-        model.addAttribute("clubDtoList", limitedClubDtoList);
+            // 인기글
+            List<Map<String,Object>> hotPostDataList = clubService.getHotPosts();
+            model.addAttribute("hotPostDataList", hotPostDataList);
+            System.out.println(hotPostDataList);
 
-        return "club/clubMainPage";
+            return "club/clubMainPage";
+
+       
     }
 
     @RequestMapping("home")

@@ -551,19 +551,20 @@ public class ClubService {
         }
 
         // 소모임 메인 인기글
-        public Map<String, Object> getHotPosts(int id){
-            Map<String, Object> mapForHotPosts = new HashMap<>();
-
+        public List<Map<String,Object>> getHotPosts(){
+           List<Map<String,Object>> hotPostsList = new ArrayList<>();
+           
            List<ClubPostDto> clubPostDtoList = clubSqlMapper.selectAllPosts();
             for(ClubPostDto clubPostDto : clubPostDtoList){
                 int postPk = clubPostDto.getId();
                 List<ClubPostImageDto> clubPostImageList = clubSqlMapper.selectPostImageDtoByPostId(postPk);
-                String postCategory = clubSqlMapper.selectPostCategoryName(postPk);
+                String postCategory = clubSqlMapper.selectPostCategoryName(clubPostDto.getCategory_id());
                 int userPk = clubPostDto.getUser_id();
                 UserDto userDto = clubSqlMapper.selectUserDtoById(userPk);
                 ClubDto clubDto = clubSqlMapper.selectClubDtoById(clubPostDto.getClub_id());
                 String clubCategory = clubSqlMapper.selectClubCategoryName(clubDto.getCategory_id());
 
+                Map<String, Object> mapForHotPosts = new HashMap<>();
                 mapForHotPosts.put("clubPostDto", clubPostDto);
                 mapForHotPosts.put("clubPostImageList", clubPostImageList);
                 mapForHotPosts.put("postCategory", postCategory);
@@ -571,8 +572,11 @@ public class ClubService {
                 mapForHotPosts.put("clubDto", clubDto);
                 mapForHotPosts.put("clubCategory", clubCategory);
 
+                hotPostsList.add(mapForHotPosts);
+
             }
-                return mapForHotPosts;
+            
+                return hotPostsList;
         }
 
 

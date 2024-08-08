@@ -338,8 +338,8 @@
                          
                         
 
-                    
-                        <div class="row bg-white px-3 pb-4 mb-3">
+                    <!-- 인기 게시글 오버플로우 -->
+                        <div class="row bg-white px-3 pb-4 mb-3 " >
                             <div class="col">
 
                                 <div class="row pt-4 pb-2">
@@ -348,20 +348,21 @@
                                     </div>
                                 </div>
 
-                                <div class="row">
-                                    <div class="col">
+                                <div class="row" >
+                                    <div class="col-11 scroll-list-box overflow-x-auto best-items-scroll flex-nowrap" th:each= "hotPostData : ${hotPostDataList}">
 
-                                        <div class="row border p-2 rounded shadow-sm">
-                                            <div class="col">
+                                        <div class="row border p-2 rounded shadow-sm" style="height: 15em; overflow: hidden">
+                                            <div class="col" >
 
                                                 <div class="row pt-2">
-                                                    <div class="col fw-semi-bold">
-                                                        충곡서원
+                                                    <div class="col-auto fw-semi-bold">
+                                                        <span th:text="${hotPostData.clubPostDto.title}"></span>
                                                     </div>
-                                                    <div class="col-auto text-end align-items-center d-flex text-secondary" style="font-size: 0.8em;">
+                                                    <div class="col-auto align-items-center d-flex text-secondary" style="font-size: 0.8em;">
                                                         <span class="material-symbols-outlined fw-light">
                                                             bolt
-                                                        </span> 153
+                                                        </span> 
+                                                        <span th:text="${hotPostData.clubPostDto.read_count}"></span>
                                                     </div>
                                                 </div>
                                                 <div class="row pt-2" style="font-size: 0.9em;">
@@ -369,7 +370,7 @@
                                                         <span class="material-symbols-outlined fw-light">
                                                             travel
                                                             </span>
-                                                        여행 소모임
+                                                            <span th:text="${hotPostData.clubDto.name}"></span>
                                                     </div>
                                                 </div>
                                                 <div class="row" style="font-size: 0.9em;">
@@ -377,7 +378,7 @@
                                                         <span class="material-symbols-outlined fw-light">
                                                             account_circle
                                                             </span>
-                                                            에비앙
+                                                            <span th:text="${hotPostData.userDto.nickname}"></span>
                                                     </div>
                                                 </div>
                                                 <div class="row">
@@ -387,7 +388,7 @@
                                                 </div>
                                                 <div class="row pb-2">
                                                     <div class="col">
-                                                        내용
+                                                        <span th:text="${hotPostData.clubPostDto.content}"></span>
                                                     </div>
                                                 </div>
 
@@ -396,6 +397,8 @@
 
                                     </div>
                                 </div>
+
+                                
 
                                 <!-- <div class="row border rounded-top border-bottom-0" style="height: 6em; overflow: hidden">
                                     <div class="col px-0 pb-0 mb-0">
