@@ -28,6 +28,7 @@ import com.bulmeong.basecamp.club.dto.ClubPostDto;
 import com.bulmeong.basecamp.club.dto.ClubPostImageDto;
 import com.bulmeong.basecamp.club.dto.ClubPostLikeDto;
 import com.bulmeong.basecamp.club.dto.ClubRegionCategoryDto;
+import com.bulmeong.basecamp.club.dto.ClubVisitDto;
 import com.bulmeong.basecamp.club.service.ClubService;
 import com.bulmeong.basecamp.common.dto.ImageDto;
 
@@ -133,6 +134,14 @@ public class ClubController {
         model.addAttribute("totalClubMember", totalClubMember);
         model.addAttribute("confirmCapacity", confirmCapacity);
         model.addAttribute("countTodayVisit", countTodayVisit);
+
+        ClubVisitDto clubVisitDto = new ClubVisitDto();
+        clubVisitDto.setClub_id(id);
+        clubVisitDto.setUser_id(userDto.getId());
+
+        clubService.increaseVisitCount(clubVisitDto);
+        int visitCount = clubService.selectTodayVisitCount(id);
+        model.addAttribute("visitCount", visitCount);
 
         return "club/clubHomePage";
     }
@@ -406,10 +415,25 @@ public class ClubController {
         model.addAttribute("yesterdayNewMembers", yesterdayNewMembers);
         model.addAttribute("yesterdayVisitCount", yesterdayVisitCount);
 
-        return "club/clubManagementPage";
+        return "club/managementClubPage";
     }
 
-    
+    @RequestMapping("managementStaff")
+    public String managementStaff(@RequestParam("id") int id, Model model){
+
+        List<Map<String, Object>> memberList = clubService.findClubMemerDataList(id);
+
+        model.addAttribute("id", id);
+        model.addAttribute("memberList", memberList);
+
+        return "club/managementStaffPage";
+    }
+
+    @RequestMapping("managementStaffLevel")
+    public String managementStaffLevel(@RequestParam("club_id") int id, @RequestParam("user_id") int user_id){
+
+        return "club/staffLevelPage";
+    }
     
 
    

@@ -17,6 +17,7 @@ import com.bulmeong.basecamp.club.dto.ClubPostDto;
 import com.bulmeong.basecamp.club.dto.ClubPostImageDto;
 import com.bulmeong.basecamp.club.dto.ClubPostLikeDto;
 import com.bulmeong.basecamp.club.dto.ClubRegionCategoryDto;
+import com.bulmeong.basecamp.club.dto.ClubVisitDto;
 import com.bulmeong.basecamp.club.mapper.ClubSqlMapper;
 import com.bulmeong.basecamp.common.dto.ImageDto;
 import com.bulmeong.basecamp.user.dto.UserDto;
@@ -100,13 +101,13 @@ public class ClubService {
         return clubMemberDataList;
     }
 
+
     // 관심사 카테고리
     public List<ClubCategoryDto> findClubCategory(){
         List<ClubCategoryDto> clubCategoryDtoList = clubSqlMapper.selectClubCategory();
 
         return clubCategoryDtoList;
     }
-
 
 
     // 지역 카테고리
@@ -512,6 +513,39 @@ public class ClubService {
             int countTodayVisit = clubSqlMapper.todayVisitCount(id);
             return countTodayVisit;
         }
+
+        //  소모임 권한수정
+        public void roleUpdate(ClubMemberDto clubMemberDto){
+            clubSqlMapper.roleUpdate(clubMemberDto);
+        }
+
+        // 소모임 회원 1명의 UserDto, ClubMemberDto
+        public Map<String, Object> findClubMemberData(int club_id, int user_id){
+           UserDto userDto = clubSqlMapper.selectUserDtoById(user_id);
+           ClubMemberDto clubMemberDto = clubSqlMapper.selectClubMemberDto(club_id, user_id);
+
+           Map<String, Object> memberDataMap = new HashMap<>();
+           memberDataMap.put("userDto", userDto);
+           memberDataMap.put("clubMemberDto", clubMemberDto);
+
+           return memberDataMap;
+        }
+
+        // 방문자 증가 쿼리
+        public void increaseVisitCount(ClubVisitDto clubVisitDto){
+            ClubVisitDto todayClubVisitDto = clubSqlMapper.selectTodayVisit(clubVisitDto);
+            if(todayClubVisitDto == null){
+                clubSqlMapper.increaseVisitCount(clubVisitDto);
+            }else{
+                return;
+            }
+        }
+
+        // 방문자 조회
+        public int selectTodayVisitCount(int club_id){
+          return clubSqlMapper.selectTodayVisitCount(club_id);
+        }
+
 
 
 

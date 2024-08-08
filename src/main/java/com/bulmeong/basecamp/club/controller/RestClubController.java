@@ -3,11 +3,10 @@ package com.bulmeong.basecamp.club.controller;
 import java.util.List;
 import java.util.Map;
 
-import javax.net.ssl.HttpsURLConnection;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,6 +22,7 @@ import com.bulmeong.basecamp.club.service.ClubService;
 import com.bulmeong.basecamp.common.dto.RestResponseDto;
 import com.bulmeong.basecamp.user.dto.UserDto;
 
+import ch.qos.logback.core.model.Model;
 import jakarta.servlet.http.HttpSession;
 
 @RestController
@@ -160,15 +160,32 @@ public class RestClubController {
         
         return restResponseDto;
     }
+
+    @PatchMapping("role")
+    public RestResponseDto roleUpdate(ClubMemberDto clubMemberDto){
+        RestResponseDto restResponseDto = new RestResponseDto();
+        
+        clubService.roleUpdate(clubMemberDto);
+        // restResponseDto.add("result", "됐어유");5
+        
+        return restResponseDto;
+    }
+    @GetMapping("user")
+    public RestResponseDto getUserData(@RequestParam("club_id") int club_id, @RequestParam("user_id") int user_id){
+        RestResponseDto restResponseDto = new RestResponseDto();
+        Map<String, Object> clubMemberData = clubService.findClubMemberData(club_id, user_id);
+        restResponseDto.add("clubMemberData", clubMemberData);
+        return restResponseDto;
+    }
     
 
-
-   
     public RestResponseDto template(){
         RestResponseDto restResponseDto = new RestResponseDto();
         
         return restResponseDto;
     }
+
+    
 
    
 }

@@ -20,6 +20,7 @@ import com.bulmeong.basecamp.club.dto.ClubPostDto;
 import com.bulmeong.basecamp.club.dto.ClubPostLikeDto;
 import com.bulmeong.basecamp.club.dto.ClubPostImageDto;
 import com.bulmeong.basecamp.club.dto.ClubRegionCategoryDto;
+import com.bulmeong.basecamp.club.dto.ClubVisitDto;
 import com.bulmeong.basecamp.user.dto.UserDto;
 
 
@@ -36,6 +37,7 @@ public interface ClubSqlMapper {
     public List<ClubMemberDto> selectJoinClubList(int user_id);
     public List<ClubPostDto> selectClubPostDtoList(int club_id);
     public UserDto selectUserDtoById(int id);
+    public ClubMemberDto selectClubMemberDto(@Param("club_id")int club_id, @Param("user_id")int user_id);
     public List<ClubMemberDto> selectClubMemberDtoList(int id);
     public ClubPostCategoryDto selectPostCategoryDtoById(int id);
     public List<ClubPostCategoryDto> selectPostCategoryDto();
@@ -113,5 +115,15 @@ public interface ClubSqlMapper {
     // 소모임 방문자수 집계
     public int yesterdayVisitCount(int id);
     public int todayVisitCount(int id);
+
+    // 소모임 권한수정
+    public void roleUpdate(ClubMemberDto clubMemberDto);
+
+    // 방문자수 쿼리
+    public void increaseVisitCount(ClubVisitDto clubVisitDto);
+    public ClubVisitDto selectTodayVisit(ClubVisitDto clubVisitDto);
+    // 오늘 총방문자수
+    public int selectTodayVisitCount(int club_id);
 }
+
 
