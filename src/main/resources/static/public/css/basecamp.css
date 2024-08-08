@@ -13,6 +13,20 @@ a {
     color: #212529
 }
 
+/* 대표 색상 */
+.darkFont {
+    color: #28323C;
+}
+.lightFont {
+    color: #00B8FF;
+}
+.darkBg {
+    background-color: #28323C;
+}
+.lightBg {
+    background-color: #00B8FF;
+}
+
 .custom-dropdown-menu {
     min-width: 7rem; /* 드롭다운 메뉴 최소 너비 */
     max-width: 7rem; /* 드롭다운 메뉴 최대 너비 */
