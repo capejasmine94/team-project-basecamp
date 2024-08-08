@@ -107,7 +107,7 @@
 <body>
 <!-- 네비가 추가 됨 -->
 <div th:replace="camp/campNavi::topNaviBasecamp"></div>
-<div th:replace="common/navi::bottomNaviBasecamp"></div>
+<div th:replace="camp/campNavi::bottomNaviBasecamp"></div>
 <form id="reservationCheck" action="/camp/reservationCheck">
     <input type="hidden" name="area_id" id="selectAreaId">
     <input type="hidden" name="campsite_id" th:value="${session.campsiteUser.dto.id}">
@@ -226,7 +226,7 @@
             <div class="row" style="margin-bottom: 4em;"></div> 
         </div>
     </div>
-    <div class="row fixed-bottom border-top bg-white py-2 justify-content-center" style="margin-bottom: 5.9em;">
+    <div class="row fixed-bottom border-top bg-white py-2 justify-content-center" style="margin-bottom: 5em;">
         <div class="col d-grid px-0 mx-5">
             <button class="btn btn-primary" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasSelectOption" aria-controls="offcanvasSelectOption" >다음</button>
         </div>
