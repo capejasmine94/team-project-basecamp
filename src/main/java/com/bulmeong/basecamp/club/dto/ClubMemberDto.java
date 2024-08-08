@@ -10,5 +10,6 @@ public class ClubMemberDto {
     private int club_id;
     private int user_id;
     private int role_id;
+    private Date updated_at;
     private Date joined_at;
 }

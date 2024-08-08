@@ -8,8 +8,8 @@
         <link rel="stylesheet" href="/public/css/common.css">
     
     </head>
-    <body>
-        <div class="container new-bg-gray px-0 overflow-x-hidden">
+    <body class=" new-bg-gray">
+        <div class="container px-0 overflow-x-hidden">
 
             <div class="row border-bottom bg-body-tertiary py-3">
                 <div class="col">
@@ -24,11 +24,10 @@
             <!-- 전체박스 -->
             <div class="row">
                 <div class="col mx-4">
-
                   
 
                      <!-- 소모임 정보 -->
-                    <div class="row my-3 border py-3 bg-body-tertiary">
+                    <div class="row my-3 border shadow-sm py-3 bg-body-tertiary">
                         <div class="col">
                              <div class="row pb-1">
                                 <div class="col">
@@ -169,7 +168,7 @@
                                 </div>
                             </div>
                             <div class="row">
-                                <div class="col-3 border py-2 border-top-0">
+                                <a th:href="@{/club/managementStaff(id=${param.id})}" class="col-3 border py-2 border-top-0">
                                     <div class="row">
                                         <div class="col">
                                             <span class="material-symbols-outlined">
@@ -179,10 +178,10 @@
                                     </div>
                                     <div class="row">
                                         <div class="col px-0" style="font-size: 0.8em;">
-                                            스탭 관리
+                                                스탭 관리
                                         </div>
                                     </div>
-                                </div>
+                                </a>
                                 <div class="col-3 py-2 border-bottom border-end">
                                     <div class="row">
                                         <div class="col">
@@ -207,7 +206,7 @@
                                     </div>
                                     <div class="row">
                                         <div class="col px-0" style="font-size: 0.8em;">
-                                            카페 통게
+                                            모임 통게
                                         </div>
                                     </div>
                                 </div>
@@ -221,7 +220,7 @@
                                     </div>
                                     <div class="row">
                                         <div class="col px-0" style="font-size: 0.8em;">
-                                            카페 기본 정보  
+                                            모임 기본 정보  
                                         </div>
                                     </div>
                                 </div>
@@ -232,7 +231,7 @@
                       <!-- 광고 -->
                       <div class="row mt-3 py-4 mb-5 border">
                         <div class="col">
-                                카페 스마트봇 광고 배너
+                                스마트봇 광고 배너
                         </div>
                       </div>
 
