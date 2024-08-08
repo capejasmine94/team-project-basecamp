@@ -103,13 +103,13 @@
         </div>
 
         <!--내정보-->
-        <a class="col icon-and-text" href="/user/myPage" th:if="${session.sessionUserInfo == null}">
+        <a class="col icon-and-text" href="/user/login" th:if="${session.sessionUserInfo == null}">
             <span class="material-symbols-outlined pe-1 ps-1 fw-light"style="font-size: 1.7em; color: darkgray;">
                 person
             </span>
             <span class="text-navi pt-1" style="font-size: 0.7em; color: darkgray;">마이</span>
         </a>
-        <a class="col icon-and-text" href="/user/login" th:unless="${session.sessionUserInfo == null}">
+        <a class="col icon-and-text" href="/user/myPage" th:unless="${session.sessionUserInfo == null}">
             <span class="material-symbols-outlined pe-1 ps-1 fw-light"style="font-size: 1.7em; color: darkgray;">
                 person
             </span>
@@ -222,13 +222,13 @@
         </div>
 
         <!--내정보-->
-        <a class="col icon-and-text" href="/user/myPage" th:if="${session.sessionUserInfo == null}">
+        <a class="col icon-and-text" href="/user/login" th:if="${session.sessionUserInfo == null}">
             <span class="material-symbols-outlined pe-1 ps-1 fw-light"style="font-size: 1.7em; color: darkgray;">
                 person
             </span>
             <span class="text-navi pt-1" style="font-size: 0.7em; color: darkgray;">마이</span>
         </a>
-        <a class="col icon-and-text" href="/user/login" th:unless="${session.sessionUserInfo == null}">
+        <a class="col icon-and-text" href="/user/myPage" th:unless="${session.sessionUserInfo == null}">
             <span class="material-symbols-outlined pe-1 ps-1 fw-light"style="font-size: 1.7em; color: darkgray;">
                 person
             </span>
@@ -339,15 +339,15 @@
                 </a>
             </ul>
         </div>
-
+        
         <!--내정보-->
-        <a class="col icon-and-text" href="/user/myPage" th:if="${session.sessionUserInfo == null}">
+        <a class="col icon-and-text" href="/user/login" th:if="${session.sessionUserInfo == null}">
             <span class="material-symbols-outlined pe-1 ps-1 fw-light"style="font-size: 1.7em; color: darkgray;">
                 person
             </span>
             <span class="text-navi pt-1" style="font-size: 0.7em; color: darkgray;">마이</span>
         </a>
-        <a class="col icon-and-text" href="/user/login" th:unless="${session.sessionUserInfo == null}">
+        <a class="col icon-and-text" href="/user/myPage" th:unless="${session.sessionUserInfo == null}">
             <span class="material-symbols-outlined pe-1 ps-1 fw-light"style="font-size: 1.7em; color: darkgray;">
                 person
             </span>
