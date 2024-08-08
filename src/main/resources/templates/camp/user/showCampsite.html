@@ -297,7 +297,7 @@
                     </div> 
                     <div class="col mt-4 new-fs-9 scroll-horizontal">
                         <div class="facility py-2 me-3" th:each="category : ${session.campsiteUser.campCategory}">
-                            <!-- <img class="img-fluid" th:src="'/images/' + ${category.image}" alt="" style="height: 6em; width: 6em;"> -->
+                            <img class="img-fluid" th:src="${category.image}" alt="" style="height: 3em; width: 3em;">
                             <div class="col-auto" th:text="${category.name}"></div>
                         </div>
                     </div>

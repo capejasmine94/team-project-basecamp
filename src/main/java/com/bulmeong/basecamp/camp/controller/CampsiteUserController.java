@@ -63,6 +63,11 @@ public class CampsiteUserController {
         return "camp/user/reservationPage_2";
     }
 
+    @RequestMapping("/myReservation")
+    public String myReservation() {
+        return "camp/user/myReservation";
+    }
+
     @RequestMapping("/finalReservationProcess")
     public String finalReservationProcess(CampsiteOrderDto campsiteOrderDto,
         @RequestParam(defaultValue = "",name="car_number") String[] carNumbers,
