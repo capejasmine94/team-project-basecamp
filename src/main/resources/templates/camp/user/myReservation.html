@@ -39,95 +39,87 @@
 <body>
 <!-- 네비가 추가 됨 -->
 <div th:replace="camp/campNavi::topNaviMain"></div>
-<div th:replace="common/navi::bottomNaviBasecamp"></div>
+<div th:replace="camp/campNavi::bottomNaviBasecamp"></div>
 <div class="main">
     <div class="container-fluid">
-        <div class="row mt-5 pt-3">
+        <div class="row mt-5"></div>
+        <div class="row mt-3 align-items-center pb-3 border-bottom">
             <div class="col">
-                <div class="row nav nav-tabs" role="tablist">
-                    <div class="col nav-item" role="presentation">
-                      <button class="nav-link active" id="none-member-tab" data-bs-toggle="tab" data-bs-target="#none-member-tab-pane" type="button" role="tab" aria-controls="none-member-tab-pane" aria-selected="true">비회원 예매확인</button>
-                    </div>
-                    <div class="col nav-item" role="presentation">
-                      <button class="nav-link" id="member-tab" data-bs-toggle="tab" data-bs-target="#member-tab-pane" type="button" role="tab" aria-controls="member-tab-pane" aria-selected="false">회원 예매확인</button>
-                    </div>
-                </div>
+                <input type="text" class="form-control rounded-5" placeholder="예약번호를 입력해주세요." id="reservation_code">
+            </div>
+            <div class="col-auto me-3 px-0">
+                <i class="fs-5 fw-semibold bi bi-search" onclick="refreshReservation()"></i>
             </div>
         </div>
-        <div class="tab-pane fade show active" id="none-member-tab-pane" role="tabpanel" aria-labelledby="none-member-tab" tabindex="0">
-            <div class="row mt-3 align-items-center pb-3 border-bottom">
-                <div class="col">
-                    <input type="text" class="form-control rounded-5" placeholder="예약번호를 입력해주세요.">
-                </div>
-                <div class="col-auto me-3 px-0">
-                    <i class="fs-5 fw-semibold bi bi-search"></i>
-                </div>
+        <div class="row mt-2">
+            <div class="col fs-5 fw-semibold">
+                예약 확인
             </div>
-            <div class="row d-none mt-4" id="reservation">
-                <div class="col">
-                    <div class="row mt-3">
-                        <div class="col mx-2 border p-2">
-                            <div class="row ms-1">
-                                <div class="col">
-                                    <div class="row">
-                                        <div class="col-3 text-end">
-                                            <span class="fw-semibold">캠핑장</span>
-                                        </div>
-                                        <div class="col"> <span class="ms-3" id="camp_name"></span></div>
+        </div>
+        <div class="row d-none" id="reservation">
+            <div class="col">
+                <div class="row mt-3">
+                    <div class="col mx-3 border p-2 py-4">
+                        <div class="row ms-1">
+                            <div class="col">
+                                <div class="row">
+                                    <div class="col-3 text-end">
+                                        <span class="fw-semibold">캠핑장</span>
                                     </div>
-                                    <div class="row mt-1">
-                                        <div class="col-3 text-end">
-                                            <span class="fw-semibold">구역</span>
-                                        </div>
-                                        <div class="col">
-                                            <span class="ms-3" id="area_name"></span>
-                                            <span class="text-secondary ms-2">(</span>
-                                            <span class="text-secondary" id="point_name"></span>
-                                            <span class="ms-1 text-secondary" id="pointNumber"></span>
-                                            <span class="text-secondary">)</span>
-                                        </div>
+                                    <div class="col"> <span class="ms-3" id="camp_name"></span></div>
+                                </div>
+                                <div class="row mt-1">
+                                    <div class="col-3 text-end">
+                                        <span class="fw-semibold">구역</span>
                                     </div>
-                                    <div class="row mt-3">
-                                        <div class="col-3 text-end">
-                                            <span class="fw-semibold">이름</span>
-                                        </div>
-                                        <div class="col"><span class="ms-3" id="customer_name"></span></div>
+                                    <div class="col">
+                                        <span class="ms-3" id="area_name"></span>
+                                        <span class="text-secondary ms-2">(</span>
+                                        <span class="text-secondary" id="point_name"></span>
+                                        <span class="text-secondary">)</span>
                                     </div>
-                                    <div class="row mt-1">
-                                        <div class="col-3 text-end">
-                                            <span class="fw-semibold">연락처</span>
-                                        </div>
-                                        <div class="col"><span class="ms-3" id="customer_phone"></span></div>
+                                </div>
+                                <div class="row mt-3">
+                                    <div class="col-3 text-end">
+                                        <span class="fw-semibold">이름</span>
                                     </div>
-                                    <div class="row mt-2 flex-column" id="carListTab">
-                                        <div class="col-3 text-end">
-                                            <span class="fw-semibold">차량</span>
-                                        </div>
-                                        <div class="col" id="car_list">
-                                            <div class="row mt-1 ms-4">
-                                                <div class="col new-fs-9"><span th:text="${car.car_number}"></span></div>
-                                            </div>
-                                        </div>
+                                    <div class="col"><span class="ms-3" id="customer_name"></span></div>
+                                </div>
+                                <div class="row mt-1">
+                                    <div class="col-3 text-end">
+                                        <span class="fw-semibold">연락처</span>
                                     </div>
-                                    
-                                    <div class="row mt-4">
-                                        <div class="col-3 text-end">
-                                            <span class="fw-semibold">가격</span>
-                                        </div>
-                                        <div class="col"><span class="ms-3 moneyInput" id="total_prise"></span></div>
+                                    <div class="col"><span class="ms-3" id="customer_phone"></span></div>
+                                </div>
+                                <div class="row mt-2 flex-column" id="car_tab">
+                                    <div class="col-3 text-end">
+                                        <span class="fw-semibold">차량</span>
                                     </div>
-                                    <div class="row mt-3">
-                                        <div class="col-3 text-end">
-                                            <span class="fw-semibold">예약일</span>
-                                        </div>
-                                        <div class="col ms-3" id="orderDay"></div>
+                                    <div class="col" id="car_list">
+                                       
                                     </div>
+                                </div>
+                                
+                                <div class="row mt-4">
+                                    <div class="col-3 text-end">
+                                        <span class="fw-semibold">가격</span>
+                                    </div>
+                                    <div class="col"><span class="ms-3 moneyInput" id="total_prise"></span></div>
+                                </div>
+                                <div class="row mt-3">
+                                    <div class="col-3 text-end">
+                                        <span class="fw-semibold">예약일</span>
+                                    </div>
+                                    <div class="col ms-3" id="orderDay"></div>
                                 </div>
                             </div>
                         </div>
-                   </div>
-                </div>
+                    </div>
+               </div>
             </div>
+        </div>
+        <div id="emptyReservation" class="row mt-3 justify-content-center new-fs-9 fw-semibold text-secondary">
+            <div class="col-auto">예약 내역이 존재하지 않습니다.</div>
         </div>
     </div>
 </div>
@@ -135,6 +127,85 @@
 
 <script>
     addColonMoneyInput();
+
+    function refreshReservation() {
+        const code = document.getElementById('reservation_code').value;
+        const emptyReservation = document.getElementById('emptyReservation');
+        const reservation = document.getElementById('reservation');
+
+        const car_tab = document.getElementById('car_tab');
+        const camp_name = document.getElementById('camp_name');
+        const area_name = document.getElementById('area_name');
+        const point_name = document.getElementById('point_name');
+        const customer_name = document.getElementById('customer_name');
+        const customer_phone = document.getElementById('customer_phone');
+
+        const car_list = document.getElementById('car_list');
+
+        const total_prise = document.getElementById('total_prise');
+        const orderDay = document.getElementById('orderDay');
+
+        let url ='/api/camp/selectOrderByCode?reservCode=' + code;
+        fetch(url)
+        .then(response => response.json())
+        .then((response) => { 
+            const orderData = response.data.orderByCode;
+            if(orderData != null) {
+                camp_name.innerText = orderData.camp.camp_name;
+                area_name.innerText = orderData.area.name;
+                point_name.innerText = orderData.point.name;
+                customer_name.innerText = orderData.dto.customer_name;
+                customer_phone.innerText = orderData.dto.customer_phone;
+                total_prise.innerText = orderData.dto.total_prise;
+                orderDay.innerText = `${formatDate(orderData.dto.start_date)} ~  ${formatDate(orderData.dto.end_date)}`;
+                if(orderData.carNumbers.length > 0) {
+                    for(const car of orderData.carNumbers){
+                        const carTab = document.createElement('div');
+                        carTab.classList.add("row", "mt-1", "ms-4");
+                        carTab.innerHTML = `<div class="col new-fs-9">${car.car_number}</div>`;
+                        car_list.appendChild(carTab);
+                    }
+                    car_tab.classList.remove('d-none');
+                }
+                else
+                    car_tab.classList.add('d-none');
+                reservation.classList.remove('d-none');
+                emptyReservation.classList.add('d-none');
+            }
+            else {
+                reservation.classList.add('d-none');
+                emptyReservation.classList.remove('d-none');
+            }
+            addColonMoneyInput();
+        });
+    }
+
+    function formatDate(dateString) {
+        // 문자열을 Date 객체로 변환
+        const date = new Date(dateString);
+        
+        // 년, 월, 일 값을 추출
+        const year = date.getFullYear();
+        let month = (date.getMonth() + 1).toString();
+        let day = date.getDate().toString();
+
+        // 월과 일이 한 자리수일 경우 앞에 0을 추가
+        if (month.length < 2) {
+            month = '0' + month;
+        }
+        if (day.length < 2) {
+            day = '0' + day;
+        }
+
+        // yyyy-mm-dd 형식으로 반환
+        return `${year}-${month}-${day}`;
+    }
+
+    function initReservationListByUser() {
+        
+    }
+
+
 </script>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>

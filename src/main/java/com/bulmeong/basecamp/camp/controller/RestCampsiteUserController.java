@@ -11,7 +11,6 @@ import com.bulmeong.basecamp.common.util.Utils;
 import com.bulmeong.basecamp.user.dto.UserDto;
 
 @RestController
-
 @RequestMapping("api/camp/")
 public class RestCampsiteUserController {
     @Autowired
@@ -19,6 +18,10 @@ public class RestCampsiteUserController {
     @Autowired
     private Utils utils;
 
+    private UserDto sessionUserDto() {
+        UserDto info = utils.getSession("sessionUserInfo");
+        return info;
+    }
     @RequestMapping("selectArea")
     public RestResponseDto selectArea(@RequestParam("area_id") String area_id) {
         RestResponseDto result = new RestResponseDto();
@@ -66,4 +69,25 @@ public class RestCampsiteUserController {
         return result;
     }
 
+    @RequestMapping("selectOrder")
+    public RestResponseDto selectOrder(@RequestParam("order_id") int order_id) {
+        RestResponseDto result = new RestResponseDto();
+        result.add("selectOrder", service.getOrderById(order_id));
+        return result;
+    }
+
+    @RequestMapping("selectOrderByUser")
+    public RestResponseDto selectOrderByUser() {
+        RestResponseDto result = new RestResponseDto();
+        UserDto user = sessionUserDto();
+        result.add("orderByUser", user == null ? null : service.getOrderByUserId(user.getId()));
+        return result;
+    }
+
+    @RequestMapping("selectOrderByCode")
+    public RestResponseDto selectOrderByCode(@RequestParam("reservCode") String reservCode) {
+        RestResponseDto result = new RestResponseDto();
+        result.add("orderByCode", service.getOrderByCode(reservCode));
+        return result;
+    }
 }
