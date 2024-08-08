@@ -1,47 +1,249 @@
 <!DOCTYPE html>
-<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<html lang="ko">
 <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/public/css/common.css">
-    <link rel="stylesheet" href="/public/css/basecamp.css">
-</head>
-<body style="background-color: #52AD8B">
-<div class="container-fluid">
-    <div class="row" style="padding-top: 10rem">
-        <a href="/" class="col text-center" style="font-family: 'EF_jejudoldam', sans-serif; font-size: 2.5rem; color: white">
-            BASECAMP
-        </a>
-    </div>
-    <form action="/user/loginProcess" method="post">
-        <div class="row mx-2" style="margin-top: 6.5rem">
-            <div class="col d-grid text-center">
-                <input name="account" type="text" placeholder="아이디" class="py-3 ps-3 border border-0 rounded bg-light d-inline-flex focus-ring focus-ring-success">
-            </div>
-        </div>
-        <div class="row mx-2 mt-2">
-            <div class="col d-grid text-center">
-                <input name="password" type="text" placeholder="비밀번호" class="py-3 ps-3 border border-0 rounded bg-light d-inline-flex focus-ring focus-ring-success">
-            </div>
-        </div>
-        <div class="row mx-2 mt-2">
-            <div class="col d-grid text-center">
-                <button type="submit" class="py-2 border border-0 rounded bg-success">
-                    <span class="fs-2" style="color: white;">로그인</span>
-                </button>
-            </div>
-        </div>
-    </form>
-    <div class="row mx-2 mt-2">
-        <div class="text-center" style="font-size: 0.8rem;">
-            <span>계정이 없으신가요?</span>
-            <a href="/user/register" class="text-decoration-underline">회원가입</a>
-        </div>
-    </div>
-</div>
+    <meta name="viewport" content="width=device-width, initial-scale=1">    
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+    <script src="https://kit.fontawesome.com/7b271bba58.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="/public/css/font.css">
 
-<!-- 네비가 추가됨 -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-<script src="https://kit.fontawesome.com/7b271bba58.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://fonts.googleapis.com">
+    <link rel="stylesheet" href="https://fonts.gstatic.com">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap">
+    <title>로그인</title>
+
+    <style>
+        body {
+            font-family: "Noto Sans KR", sans-serif;
+            font-optical-sizing: auto;
+            font-style: normal;
+        }   
+        .fill-on {
+            font-variation-settings: 'FILL' 1;
+        }
+        .fill-off {
+            font-variation-settings: 'FILL' 0;
+        }
+        .seller_profile img{
+            aspect-ratio: 1/1;
+            width: 100px;
+            object-fit: cover;
+            object-position: center;
+        }
+        .icon-col img{
+            aspect-ratio: 1/1;
+            width: 35px;
+            object-fit: cover;
+            object-position: center;
+        }
+        .product-col img{
+            aspect-ratio: 1/1;
+            width: 100%;
+            object-fit: cover;
+            object-position: center;
+        }
+        a{
+            text-decoration: none;
+            color: black;
+        }
+        button{
+            color: black;
+        }
+        .f05{
+            font-size: 0.5em;
+        }
+        .f08{
+            font-size: 0.8em;
+        }
+        .f09{
+            font-size: 0.9em;
+        }
+        .f12{
+            font-size: 1.2em;
+        }
+        .f15{
+            font-size: 1.5em;
+        }
+        .f17{
+            font-size: 1.7em;
+        }
+        .f20{
+            font-size: 2em;
+        }
+        .f40{
+            font-size: 4em;
+        }
+        .active{
+            font-weight: bold;
+            border-bottom: 2px solid black;
+        }
+        .loginInput{
+            border: 0px;
+            border-bottom: 1.2px solid rgb(220, 220, 220);
+        }
+        .loginInput:focus{
+            outline: none;
+            border-bottom: 1.2px solid black;
+        }
+        .loginInput::placeholder{
+            font-size: 0.9em;
+        }
+    </style>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const loginForm = document.getElementById("loginForm");
+
+            loginForm.addEventListener("submit", (event) => {
+                event.preventDefault();
+
+                const inputId = document.getElementById("inputId");
+                const inputPw = document.getElementById("inputPw");
+
+                const userDto = {
+                    account: inputId.value,
+                    password: inputPw.value
+                };
+
+                const url = `/api/user/getUserDtoByAccountInfo`
+                fetch(url, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(userDto)
+                })
+                .then(response => response.json())
+                .then((response) => {
+
+                    if(response.data.userDto==null){
+                        const loginFailToast = bootstrap.Toast.getOrCreateInstance(document.getElementById("loginFailToast"))
+                        loginFailToast.show();
+                        setTimeout(() => {
+                            loginFailToast.hide();
+                        }, 3000);
+                    }else{
+                        const loginForm = document.getElementById("loginForm");
+                        loginForm.submit();
+                    }
+
+                })
+            });
+        });
+
+        function backButton(){
+            history.back();
+        }
+    </script>
+</head>
+<body>
+    <!-- top-nav -->
+    <div class="container-fluid fixed-top">
+        <div class="row bg-white py-3 bg-opacity-75 align-items-center">
+            <a class="col-auto d-flex align-items-center" id="backButton" onclick="backButton()">
+                <span class="material-symbols-outlined fw-light">
+                    arrow_back
+                </span>
+            </a>
+            <div class="col fw-semibold text-center">
+                로그인
+            </div>
+            <a href="/" class="col-auto d-flex align-items-center text-black">
+                <span class="material-symbols-outlined fw-light">
+                    home
+                </span>
+            </a>
+        </div>
+    </div>
+
+    <div class="container" style="padding-top: 60.792px;">
+        <div class="row px-3">
+            <div class="col p-0">
+
+                <form id="loginForm" action="/user/loginProcess" class="row" method="post">
+                    <div class="col">
+                        <div class="row f20 pt-5 text-center">
+                            <div class="col">
+                                LOGO-IMG
+                            </div>
+                        </div>
+                        <div class="row py-3">
+                            <div class="col">
+                                <div class="row f12 fw-semibold text-center">
+                                    <div class="col">
+                                        로그인 하고 나만의 캠핑을
+                                    </div>
+                                </div>
+                                <div class="row f12 fw-semibold text-center">
+                                    <div class="col">
+                                        시작해 보세요
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row pt-2">
+                            <div class="col d-grid">
+                                <input type="text" id="inputId" name="account" class="loginInput py-3 rounded-0" placeholder="아이디 입력">
+                            </div>
+                        </div>
+
+                        <div class="row pt-2">
+                            <div class="col d-grid">
+                                <input type="text" id="inputPw" name="password" class="loginInput py-3 rounded-0" placeholder="비밀번호 입력">
+                            </div>
+                        </div>
+
+                        <div class="row py-4">
+                            <div class="col d-grid">
+                                <button class="btn btn-dark rounded-0 py-3 f08 fw-semibold">
+                                    로그인
+                                </button>
+                            </div>
+                        </div>
+                        <div class="row justify-content-center f08">
+                            <div class="col text-end border-end">
+                                아이디 찾기
+                            </div>
+                            <div class="col">
+                                비밀번호 찾기
+                            </div>
+                        </div>
+
+                        <div class="row pt-4 justify-content-center">
+                            <div class="col-auto ps-0 icon-col">
+                                <img src="/public/img/common/KakaoTalk_icon.png">
+                            </div>
+                            <div class="col-auto bg-dark text-white justify-content-center rounded-circle d-flex align-items-center" style="aspect-ratio: 1/1; width: 35px; padding-bottom: 2.5px;">
+                                <i class="bi bi-apple"></i>
+                            </div>
+                        </div>
+
+                        <div class="row py-5 f08 justify-content-center">
+                            <div class="col-auto pe-0">
+                                아직 BASECAMP 회원이 아니신가요?
+                            </div>
+                            <a href="/user/register" class="col-auto text-primary">
+                                회원가입
+                            </a>
+                        </div>
+                    </div>
+                </form>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- loginFailToast -->
+    <div id="loginFailToast" class="toast align-items-center text-bg-danger bg-opacity-75 border-0 rounded-pill fade position-fixed" style="bottom: 45px; left: 50%; transform: translate(-50%, -50%); z-index: 2000; width: 80vw;" role="alert" aria-live="assertive" aria-atomic="true">
+        <div class="toast-body row align-items-center text-center">
+            <div class="col pe-0">
+                잘못된 아이디 또는 비밀번호입니다
+            </div>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 </body>
 </html>

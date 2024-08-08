@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/public/css/common.css">
+    <link rel="stylesheet" href="/public/css/basecamp.css">
+</head>
+<body style="background-color: #52AD8B">
+<div class="container-fluid">
+    <div class="row" style="padding-top: 10rem">
+        <a href="/" class="col text-center" style="font-family: 'EF_jejudoldam', sans-serif; font-size: 2.5rem; color: white">
+            BASECAMP
+        </a>
+    </div>
+    <form action="/user/loginProcess" method="post">
+        <div class="row mx-2" style="margin-top: 6.5rem">
+            <div class="col d-grid text-center">
+                <input name="account" type="text" placeholder="아이디" class="py-3 ps-3 border border-0 rounded bg-light d-inline-flex focus-ring focus-ring-success">
+            </div>
+        </div>
+        <div class="row mx-2 mt-2">
+            <div class="col d-grid text-center">
+                <input name="password" type="text" placeholder="비밀번호" class="py-3 ps-3 border border-0 rounded bg-light d-inline-flex focus-ring focus-ring-success">
+            </div>
+        </div>
+        <div class="row mx-2 mt-2">
+            <div class="col d-grid text-center">
+                <button type="submit" class="py-2 border border-0 rounded bg-success">
+                    <span class="fs-2" style="color: white;">로그인</span>
+                </button>
+            </div>
+        </div>
+    </form>
+    <div class="row mx-2 mt-2">
+        <div class="text-center" style="font-size: 0.8rem;">
+            <span>계정이 없으신가요?</span>
+            <a href="/user/register" class="text-decoration-underline">회원가입</a>
+        </div>
+    </div>
+</div>
+
+<!-- 네비가 추가됨 -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://kit.fontawesome.com/7b271bba58.js" crossorigin="anonymous"></script>
+</body>
+</html>
