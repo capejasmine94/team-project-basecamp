@@ -89,7 +89,6 @@ public class ClubController {
             // 인기글
             List<Map<String,Object>> hotPostDataList = clubService.getHotPosts();
             model.addAttribute("hotPostDataList", hotPostDataList);
-            System.out.println(hotPostDataList);
 
             return "club/clubMainPage";
 
