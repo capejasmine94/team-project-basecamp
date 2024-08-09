@@ -1,4 +1,7 @@
 /* 폰트 사이즈 */
+.fontSix {
+    font-size: 0.6em;
+}
 .fontSeven {
     font-size: 0.7em;
 }
@@ -8,6 +11,9 @@
 .fontNine {
     font-size: 0.9em;
 }
+
+
+
 
 /* a태그 데코 none */
 /* class _ link-dark link-underline-opacity-0 */
@@ -26,6 +32,28 @@
     align-items: center; /* 세로 중앙 정렬 */
     height: 70px; /* 원하는 높이로 설정 */
 }
+
+/* 스크롤 */
+.insta-list-scroll {
+    padding-left: 12px;
+}
+.insta-list-scroll::-webkit-scrollbar {
+    display: none; /* Chrome, Safari, Opera에서 스크롤바 숨기기 */
+}
+/* border-wrapper 클래스에 보더 적용 */
+.border-wrapper {
+    border: 1px solid #e5e5e5c4; /* 원하는 보더 색상으로 변경 가능 */
+    border-radius: 22px; /* 모서리를 둥글게 하고 싶다면 추가 */
+    display: inline-flex; /* 인라인 플렉스 박스로 설정 */
+}
+
+
+/* col의 패딩을 제거해 콘텐츠가 컨테이너 안에 맞도록 함 */
+.col-auto {
+    padding-left: 0;
+    padding-right: 0;
+}
+
 
 /* 이미지 크기 */
 .commentImage {
@@ -153,7 +181,6 @@
 
 
 /* commentWritePage */
-
 /* 전송버튼 */
 .send-icon {
     width: 10%;
@@ -167,6 +194,16 @@
     position: absolute;
     top: 25%;
     left: 35%;
+}
+
+/* instaSearchPage */
+/* 검색 버튼 */
+.search-icon {
+    width: 10%;
+    height: 39%;
+    position: absolute;
+    right: 1.5rem;
+    top: 0.62rem;
 }
 
 /* 좋아요 눌렀을 때 컬러 */
