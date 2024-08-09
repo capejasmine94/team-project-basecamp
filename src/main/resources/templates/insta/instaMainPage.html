@@ -329,7 +329,7 @@
             </div> -->
 
 
-            <div class="row align-items-center" style="height: 30px;">
+            <div class="row align-items-center" style="height: 25px;">
                 <!-- 좋아요 -->
                 <form action="./pushArticleLikeDeleteProcess" method="get" class="col-auto px-0" th:if="${instaArticleList.like == 1}">
                     <button class="btn d-flex align-items-center pb-0">
@@ -381,17 +381,14 @@
                     <!-- 이거 쓰고싶다 -->
                     <div id="toast" class="toast align-items-center text-bg-dark border-0 fade position-fixed" style="bottom: 95px; left: 50%; transform: translate(-50%, -50%); z-index: 2000;" role="alert" aria-live="assertive" aria-atomic="true">
                         <div class="toast-body row align-items-center">
-                            <div class="col pe-0">
+                            <div class="col-12 text-center pe-0">
                                 북마크 저장 완료
-                            </div>
-                            <div class="col-auto">
-                                <a href="/store/cart" style="text-decoration: none;">장바구니로 가기</a>
                             </div>
                         </div>
                     </div>
                 </form>
-                <form action="./pushBookmarkDeleteProcess" method="get" class="col text-end" th:if="${instaArticleList.bookmark == 1}">
-                    <button class="btn pe-0">
+                <form action="./pushBookmarkDeleteProcess" method="get" class="col-auto text-end" th:if="${instaArticleList.bookmark == 1}">
+                    <button type="submit" class="btn pe-0 pb-0 d-flex align-items-center">
                         <i class="fa-solid fa-bookmark"></i>
                     </button>
 

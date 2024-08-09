@@ -12,9 +12,6 @@
     font-size: 0.9em;
 }
 
-
-
-
 /* a태그 데코 none */
 /* class _ link-dark link-underline-opacity-0 */
 
@@ -45,13 +42,6 @@
     border: 1px solid #e5e5e5c4; /* 원하는 보더 색상으로 변경 가능 */
     border-radius: 22px; /* 모서리를 둥글게 하고 싶다면 추가 */
     display: inline-flex; /* 인라인 플렉스 박스로 설정 */
-}
-
-
-/* col의 패딩을 제거해 콘텐츠가 컨테이너 안에 맞도록 함 */
-.col-auto {
-    padding-left: 0;
-    padding-right: 0;
 }
 
 
