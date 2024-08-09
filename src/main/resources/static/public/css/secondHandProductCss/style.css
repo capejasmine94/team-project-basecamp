@@ -225,4 +225,41 @@ body {
     background-color: #ff6f0f; /* 삭제 버튼 색상 */
     color: white;
 }
+/*위치 등록 모달*/
+#locationModal .modal-dialog {
+    width: 22rem;
+    margin: 1.75rem auto; /* 가운데 정렬을 위한 마진 */
+}
+#locationModal .modal-header {
+    border-bottom: none;
+    padding-bottom: 0;
+}
+#locationModal .modal-footer {
+    border-top: none;
+    padding-top: 0;
+}
+#locationModal .btn-consent {
+    background-color: #ff6f0f; /* 삭제 버튼 색상 */
+    color: white;
+    height: 3rem;
+}
+/*위치 등록중 모달*/
+#registeringLocation .modal-dialog {
+    width: 22rem;
+    margin: 1.75rem auto; /* 가운데 정렬을 위한 마진 */
+}
+#registeringLocation .modal-header {
+    text-align: center;
+    border-bottom: none;
+    padding-bottom: 0;
+}
+#registeringLocation .modal-footer {
+    border-top: none;
+    padding-top: 0;
+}
+#registeringLocation .btn-consent {
+    text-align: center;
+    color: red;
+    height: 3rem;
+}
 

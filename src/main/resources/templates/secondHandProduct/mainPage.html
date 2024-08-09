@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <link rel="stylesheet" href="/public/css/secondHandProductCss/style.css">
     <link rel="stylesheet" href="/public/css/basecamp.css">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet">
     <style>
         .floating-btn {
             position: fixed;
@@ -61,10 +62,9 @@
         .floating-menu .menu-item span {
             margin-left: 5px;
         }
-        /*동네 설정 드롭다운*/
         .location-dropdown-menu {
             width: 11rem;
-            width: 6rem;
+            height: 6rem;
             bottom: 0.5rem !important; /* 드롭다운 위치 */
         }
         .icon-and-text {
@@ -90,30 +90,145 @@
 </head>
 <body>
 <!--하단네비-->
-<div th:replace="common/navi::bottomNaviBasecamp"></div>
+<!--구매 하단네비 -->
+<div th:fragment="bottomNaviBasecamp" class="container-fluid g-0 border-top bg-white fixed-bottom pb-3">
+    <div class="row mx-1 py-2 text-center">
+
+        <!--HOME-->
+        <a href="/" class="col icon-and-text">
+            <span class="material-symbols-outlined fw-light" style="font-size: 1.8em; color: darkgray;">
+                home
+            </span>
+            <span class="text-navi pt-1" style="font-size: 0.7em; color: darkgray">홈</span>
+        </a>
+
+        <!--구매-->
+        <div class="col icon-and-text dropdown dropup">
+            <span data-bs-toggle="dropdown" class="material-symbols-outlined" style="font-size: 1.7em;">
+                storefront
+            </span>
+            <span class="text-navi pt-1 fw-bold" style="font-size: 0.7em;">구매</span>
+            <ul class="dropdown-menu custom-dropdown-menu">
+                <!-- 변초연 -->
+                <a class="dropdown-item col" href="/store">
+                    <div class="row w-100">
+                        <div class="col-auto d-flex">
+                            <span class="material-symbols-outlined pe-1 ps-1 fw-light">
+                                shopping_bag
+                            </span>
+                            <span style="font-size: 0.9em;">스토어</span>
+                        </div>
+                    </div>
+                </a>
+                <!-- 심규진 -->
+                <a class="dropdown-item col" href="/secondhandProduct/mainPage">
+                    <div class="row w-100">
+                        <div class="col-auto d-flex">
+                            <span class="material-symbols-outlined pe-1 ps-1 fw-light">
+                                eco
+                            </span>
+                            <span style="font-size: 0.9em;">중고</span>
+                        </div>
+                    </div>
+                </a>
+            </ul>
+        </div>
+
+        <!--예약-->
+        <div class="col icon-and-text dropdown dropup">
+            <span data-bs-toggle="dropdown" class="material-symbols-outlined fw-light" style="font-size: 1.7em; color: darkgray">
+                event_available
+            </span>
+            <span class="text-navi pt-1" style="font-size: 0.7em; color: darkgray">예약</span>
+            <ul class="dropdown-menu row custom-dropdown-menu">
+                <!-- 조준희 -->
+                <a class="dropdown-item col" href="/camp/main">
+                    <div class="row w-100">
+                        <div class="col-auto d-flex">
+                            <span class="material-symbols-outlined pe-1 ps-1 fw-light">
+                                camping
+                            </span>
+                            <span style="font-size: 0.9em;">캠핑장</span>
+                        </div>
+                    </div>
+                </a>
+                <!-- 양은자 -->
+                <a class="dropdown-item col" href="/campingcar/main">
+                    <div class="row w-100">
+                        <div class="col-auto d-flex">
+                            <span class="material-symbols-outlined pe-1 ps-1 fw-light">
+                                airport_shuttle
+                            </span>
+                            <span style="font-size: 0.9em;">캠핑카</span>
+                        </div>
+                    </div>
+                </a>
+            </ul>
+        </div>
+
+        <!--커뮤-->
+        <div class="col icon-and-text dropdown dropup">
+            <span data-bs-toggle="dropdown" class="material-symbols-outlined fw-light" style="font-size: 1.7em; color: darkgray">
+                forum
+            </span>
+            <span class="text-navi pt-1" style="font-size: 0.7em; color: darkgray">커뮤니티</span>
+            <ul class="dropdown-menu custom-dropdown-menu">
+                <!-- 이시은 -->
+                <a class="dropdown-item col" href="/club/main">
+                    <div class="row w-100">
+                        <div class="col-auto d-flex">
+                            <span class="material-symbols-outlined pe-1 ps-1 fw-light">
+                                group
+                            </span>
+                            <span style="font-size: 0.9em;">소모임</span>
+                        </div>
+                    </div>
+                </a>
+                <!-- 남현지 -->
+                <a class="dropdown-item col" href="/insta/instaMainPage">
+                    <span>
+                        <img src="/public/img/instaImage/campstagram.png" class="img-fluid">
+                    </span>
+                </a>
+            </ul>
+        </div>
+
+        <!--내정보-->
+        <a class="col icon-and-text" href="/user/login" th:if="${session.sessionUserInfo == null}">
+            <span class="material-symbols-outlined pe-1 ps-1 fw-light"style="font-size: 1.7em; color: darkgray;">
+                person
+            </span>
+            <span class="text-navi pt-1" style="font-size: 0.7em; color: darkgray;">마이</span>
+        </a>
+        <a class="col icon-and-text" href="/user/myPage" th:unless="${session.sessionUserInfo == null}">
+            <span class="material-symbols-outlined pe-1 ps-1 fw-light"style="font-size: 1.7em; color: darkgray;">
+                person
+            </span>
+            <span class="text-navi pt-1" style="font-size: 0.7em; color: darkgray;">마이</span>
+        </a>
+    </div>
+</div>
+<div th:replace="secondHandProduct/commonModal::registeringLocation"></div>
 <!--상단네비-->
 <div class="container-fluid g-0 bg-white fixed-top border-bottom">
     <div class="row py-2 mx-2">
         <div class="col-auto fs-3 icon-and-text dropdown dropup">
             <span data-bs-toggle="dropdown" class="text-navi fs-5">
-                내 동네 설정 <span><i class="bi bi-chevron-down"></i></span>
+                내 동네 설정 <span class="ms-1"><i class="bi bi-chevron-down"></i></span>
             </span>
             <ul class="dropdown-menu location-dropdown-menu">
                 <li><a class="dropdown-item mt-1" href="#">
                     <span>나중에 추가</span>
                 </a></li>
-            </ul>
-            <ul class="dropdown-menu location-dropdown-menu">
-                <li><a class="dropdown-item mt-2" href="/secondhandProduct/myNeighborhoodSettingsPage">
-                    <span>내 동네 설정</span>
-                </a></li>
+                <li><div class="dropdown-item mt-2">
+                    <span onclick="myLocation()">내 동네 설정</span>
+                </div></li>
             </ul>
         </div>
         <div class="col"></div>
         <div class="col"></div>
     </div>
 </div>
-
 <div class="container-fluid g-0" style="margin-top: 4rem; padding-bottom: 5rem">
     <div class="row mx-2">
         <a href="/secondhandProduct/selectCategoryPage" class="col-auto mainPostLink-custom">
@@ -165,7 +280,25 @@
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://kit.fontawesome.com/7b271bba58.js" crossorigin="anonymous"></script>
+<script src="/public/js/secondHandProduct/map.js"></script>
 <script>
+    let myId = null;
+    const urlParams = new URL(window.location.href).searchParams;
+
+    // js 로그인여부
+    function setSessionUserId() {
+        const url = "/api/user/getSessionUserId"
+        fetch(url)
+            .then(response => response.json())
+            .then((response) => {
+                myId = response.data.userId;
+            })
+        ;
+    }
+    window.addEventListener("DOMContentLoaded", () => {
+        setSessionUserId();
+    });
+
     document.getElementById('floatingBtn').addEventListener('click', function () {
         var menu = document.getElementById('floatingMenu');
         if (menu.style.display === 'none' || menu.style.display === '') {
@@ -179,6 +312,57 @@
             location.reload();
         }
     });
+
+    // 내 위치 등록중 + 모달
+    function myLocation() {
+        if (navigator.geolocation) {
+            console.log("내 위치저장 시작");
+
+            var registeringLocation = new bootstrap.Modal(document.getElementById('registeringLocation'), {
+                backdrop: 'static',
+                keyboard: false
+            });
+            registeringLocation.show();
+
+            navigator.geolocation.getCurrentPosition(function (position) {
+                var legionX = position.coords.latitude; // 위도
+                var legionY = position.coords.longitude; // 경도
+
+                console.log("위도X: " + legionX);
+                console.log("경도Y: " + legionY);
+
+                const url = "/api/location/saveLocation";
+                fetch(url, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({user_id: myId, my_region_x: legionX, my_region_y: legionY })
+                })
+                    .then(response => response.json())
+                    .then((response) => {
+                        console.log("내 위치저장 끝");
+                        setTimeout(() => {
+                            registeringLocation.hide();
+                            loadLocation();
+                        }, 500); // 0.5초 지연
+                    })
+            });
+        }
+    }
+    // 내위치 보내기
+    function loadLocation() {
+        const url = "/api/location/loadLocation"
+        fetch(url)
+            .then(response => response.json())
+                .then(response => {
+                if (response.result === "success") {
+                    const regionX  = response.data.location.my_region_x;
+                    const regionY = response.data.location.my_region_y;
+                    window.location.href = `/secondhandProduct/neighborhoodCertificationPage?my_region_x=${regionX}&my_region_y=${regionY}`;
+                }
+            });
+    }
 </script>
 </body>
 </html>
