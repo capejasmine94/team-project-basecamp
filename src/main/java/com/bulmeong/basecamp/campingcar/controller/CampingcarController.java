@@ -20,6 +20,7 @@ import com.bulmeong.basecamp.campingcar.dto.DriverExperienceCondDto;
 import com.bulmeong.basecamp.campingcar.dto.DriverLicenseDto;
 import com.bulmeong.basecamp.campingcar.dto.ProductDetailImgDto;
 import com.bulmeong.basecamp.campingcar.dto.RentUserDto;
+import com.bulmeong.basecamp.campingcar.dto.RentalExternalInspectionDto;
 import com.bulmeong.basecamp.campingcar.dto.ReservationDto;
 import com.bulmeong.basecamp.campingcar.service.CampingcarService;
 import com.bulmeong.basecamp.campingcar.service.PartnerCampingCarService;
@@ -153,31 +154,10 @@ public class CampingcarController {
         int userPk = sessionUserInfo.getId();
         rentUser.setUser_id(userPk);
 
-        String rootPath = "C:/basecampeImage_rentuser/";
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd/");
-        String todayPath = sdf.format(new Date());
-
-        File todayFolderForCreate = new File(rootPath+ todayPath);
-        if(!todayFolderForCreate.exists()) {
-            todayFolderForCreate.mkdirs();
-        }
-
-        String originalFilename = driveImage.getOriginalFilename();
-
-        String uuid = UUID.randomUUID().toString();
-        long currentTime = System.currentTimeMillis();
-
-        String filename = uuid + "_" + currentTime;
-        String ext = originalFilename.substring(originalFilename.lastIndexOf("."));
-
-        filename += ext;
-
-        try {
-            driveImage.transferTo(new File(rootPath + todayPath + filename));
-        }catch(Exception e) {
-            e.printStackTrace();
-        }
+        String basecamp_rentUser = rentalShoot(driveImage);
         
+        rentUser.setDriver_license_image(basecamp_rentUser);
+
         campingcarService.registeRentUser(rentUser,reservationDto);
         System.out.println("렌트고객 가입:" + rentUser);
 
@@ -195,4 +175,67 @@ public class CampingcarController {
     public String carExteriorInteriorShoot() {
         return "campingcar/carExteriorInteriorShoot";
     }
+
+    @RequestMapping("rentShootProcess")
+    public String rentShootProcess(@RequestParam("front_view") MultipartFile frontView,
+                                    @RequestParam("passenger_front_view") MultipartFile passengerFrontView,
+                                    @RequestParam("passenger_rear_view") MultipartFile passengerRearView,
+                                    @RequestParam("rear_view") MultipartFile rearView,
+                                    @RequestParam("driver_rear_view") MultipartFile driverRearView,
+                                    @RequestParam("driver_front_view") MultipartFile driverFrontView,
+                                    Model model) {
+
+        String frontViewImg = rentalShoot(frontView);
+        String passengerFrontViewImg = rentalShoot(passengerFrontView);
+        String passengerRearViewImg = rentalShoot(passengerRearView);
+        String rearViewImg = rentalShoot(rearView);
+        String driverRearViewImg = rentalShoot(driverRearView);
+        String driverFrontViewImg = rentalShoot(driverFrontView);
+
+        RentalExternalInspectionDto rentalExternalInspectionDto = new RentalExternalInspectionDto();
+        rentalExternalInspectionDto.setFront_view(frontViewImg);
+        rentalExternalInspectionDto.setPassenger_front_view(passengerFrontViewImg);
+        rentalExternalInspectionDto.setPassenger_rear_view(passengerRearViewImg);
+        rentalExternalInspectionDto.setRear_view(rearViewImg);
+        rentalExternalInspectionDto.setDriver_rear_view(driverRearViewImg);
+        rentalExternalInspectionDto.setDriver_front_view(driverFrontViewImg);
+
+        campingcarService.registerRentShoot(rentalExternalInspectionDto);
+        System.out.println("rrrrrr" + rentalExternalInspectionDto);
+
+    
+    model.addAttribute("message", "파일이 성공적으로 업로드되었습니다.");
+    return "redirect:/campingcar/myRentalHistory";
+    }
+
+    public String rentalShoot(MultipartFile newImage) {
+        String rootPath = "C:/basecampeImage_rentuser/";
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd/");
+        String todayPath = sdf.format(new Date());
+
+        File todayFolderForCreate = new File(rootPath + todayPath);
+        if(!todayFolderForCreate.exists()) {
+            todayFolderForCreate.mkdirs();
+        }
+
+        String originalFilename = newImage.getOriginalFilename();
+
+        String uuid = UUID.randomUUID().toString();
+        long currentTime = System.currentTimeMillis();
+
+        String filename = uuid + "_" + currentTime;
+        String ext = originalFilename.substring(originalFilename.lastIndexOf("."));
+
+        filename += ext;
+
+        try {
+            newImage.transferTo(new File(rootPath + todayPath + filename));
+        }catch(Exception e) {
+            e.printStackTrace();
+        }
+        String newName = todayPath + filename;
+        return newName;
+    }
+
+
 }

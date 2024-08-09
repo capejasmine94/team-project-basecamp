@@ -108,4 +108,30 @@
             #{rent_user_id}, #{product_id}, #{start_date}, #{end_date}, '예약접수', #{cancellation_date}
         )
     </insert>
+    <!-- 대여시 차량 점검 -->
+    <insert id="createRentShoot">
+        insert into bc_rental_external_inspection(
+            reservation_id, front_view, passenger_front_view, passenger_rear_view, rear_view, driver_rear_view,
+            driver_front_view
+        )values(
+            #{reservation_id},#{front_view},#{passenger_front_view},#{passenger_rear_view},#{rear_view},#{driver_rear_view},
+            #{driver_front_view}
+        )
+    </insert>
+
+    <insert id="createReturnShoot">
+        insert into bc_return_external_inspection(
+            reservation_id, front_view, passenger_front_view, passenger_rear_view, rear_view, driver_rear_view,
+            driver_front_view
+        )values(
+            #{reservation_id},#{front_view},#{passenger_front_view},#{passenger_rear_view},#{rear_view},#{driver_rear_view}
+            #{driver_front_view}
+        )
+    </insert>
+    <!-- 내 예약관리 --> 
+    <select id="findReservationByRentUserAndCar" resultType="Map">
+        select * from bc_reservation br
+        inner join bc_campingcar bc on br.product_id = bc.id
+        where br.rent_user_id = #{rent_user_id} and br. product_id = #{product_id}
+    </select>
 </mapper>

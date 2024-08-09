@@ -6,10 +6,12 @@ import java.util.Map;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
+import com.bulmeong.basecamp.campingcar.controller.ReturnExternalInspectionDto;
 import com.bulmeong.basecamp.campingcar.dto.BasicFacilitiesDto;
 import com.bulmeong.basecamp.campingcar.dto.CampingCarLikeDto;
 import com.bulmeong.basecamp.campingcar.dto.ProductDetailImgDto;
 import com.bulmeong.basecamp.campingcar.dto.RentUserDto;
+import com.bulmeong.basecamp.campingcar.dto.RentalExternalInspectionDto;
 import com.bulmeong.basecamp.campingcar.dto.ReservationDto;
 
 @Mapper
@@ -43,4 +45,9 @@ public interface CampingcarSqlMapper {
 
     // 예약하기
     public void createReservation(ReservationDto reservationDto);
+
+    //차량 대여 점검 
+    public void createRentShoot(RentalExternalInspectionDto parmas);
+
+    public void createReturnShoot(ReturnExternalInspectionDto parmas);
 }
