@@ -1,5 +1,6 @@
 package com.bulmeong.basecamp.secondHandProduct.controller;
 
+import com.bulmeong.basecamp.common.dto.RestResponseDto;
 import com.bulmeong.basecamp.common.util.Utils;
 import com.bulmeong.basecamp.secondHandProduct.dto.*;
 import com.bulmeong.basecamp.secondHandProduct.service.ChatService;
@@ -61,63 +62,6 @@ public class ProductController {
         model.addAttribute("sessionUserInfo", sessionUserInfo);
 
         return "secondhandProduct/myPage";
-    }
-
-    @PostMapping("productProcess")
-    public String productProcess(@ModelAttribute SecondhandProductDto secondhandProductDto,
-                                 @RequestParam(name = "images") MultipartFile[] images,
-                                 @RequestParam(name = "main_image") String mainImage,
-                                 @RequestParam(name = "user_id") int userId) {
-
-        List<ImageDto> imageDtoList = new ArrayList<>();
-        if (images != null) {
-            for (int i = 0; i < images.length; i++) {
-                MultipartFile image = images[i];
-                if (image.isEmpty()) {
-                    continue;
-                }
-                String rootPath = "/Users/simgyujin/basecampImage/";
-
-                // 날짜 폴더
-                SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd/");
-                String todayPath = sdf.format(new Date());
-
-                File todayFolderForCreate = new File(rootPath + todayPath);
-
-                if (!todayFolderForCreate.exists()) {
-                    todayFolderForCreate.mkdirs();
-                }
-
-                // 파일 충돌 방지
-                String originalFileName = image.getOriginalFilename();
-                String uuid = UUID.randomUUID().toString();
-                long currentTime = System.currentTimeMillis();
-                String fileName = uuid + "_" + currentTime;
-                // 확장자 추출
-                String ext = originalFileName.substring(originalFileName.lastIndexOf("."));
-                fileName += ext;
-
-                try {
-                    image.transferTo(new File(rootPath + todayPath + fileName));
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-                // 첫 번째 이미지를 메인 이미지로 설정
-                if (i == 0) {
-                    secondhandProductDto.setMain_image(todayPath + fileName);
-                }
-                // DB 저장 DTO
-                ImageDto imageDto = new ImageDto();
-                imageDto.setImage_url(todayPath + fileName);
-                imageDtoList.add(imageDto);
-            }
-
-        }
-
-        secondhandProductDto.setUser_id(userId);
-        productService.insertProduct(secondhandProductDto, imageDtoList);
-
-        return "redirect:/secondhandProduct/mainPage";
     }
 
     @PostMapping("productUpdate")
@@ -186,6 +130,63 @@ public class ProductController {
 
         secondhandProductDto.setUser_id(userId);
         productService.updateProduct(secondhandProductDto, imageDtoList);
+
+        return "redirect:/secondhandProduct/mainPage";
+    }
+
+    @PostMapping("productProcess")
+    public String productProcess(@ModelAttribute SecondhandProductDto secondhandProductDto,
+                                 @RequestParam(name = "images") MultipartFile[] images,
+                                 @RequestParam(name = "main_image") String mainImage,
+                                 @RequestParam(name = "user_id") int userId) {
+
+        List<ImageDto> imageDtoList = new ArrayList<>();
+        if (images != null) {
+            for (int i = 0; i < images.length; i++) {
+                MultipartFile image = images[i];
+                if (image.isEmpty()) {
+                    continue;
+                }
+                String rootPath = "/Users/simgyujin/basecampImage/";
+
+                // 날짜 폴더
+                SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd/");
+                String todayPath = sdf.format(new Date());
+
+                File todayFolderForCreate = new File(rootPath + todayPath);
+
+                if (!todayFolderForCreate.exists()) {
+                    todayFolderForCreate.mkdirs();
+                }
+
+                // 파일 충돌 방지
+                String originalFileName = image.getOriginalFilename();
+                String uuid = UUID.randomUUID().toString();
+                long currentTime = System.currentTimeMillis();
+                String fileName = uuid + "_" + currentTime;
+                // 확장자 추출
+                String ext = originalFileName.substring(originalFileName.lastIndexOf("."));
+                fileName += ext;
+
+                try {
+                    image.transferTo(new File(rootPath + todayPath + fileName));
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                // 첫 번째 이미지를 메인 이미지로 설정
+                if (i == 0) {
+                    secondhandProductDto.setMain_image(todayPath + fileName);
+                }
+                // DB 저장 DTO
+                ImageDto imageDto = new ImageDto();
+                imageDto.setImage_url(todayPath + fileName);
+                imageDtoList.add(imageDto);
+            }
+
+        }
+
+        secondhandProductDto.setUser_id(userId);
+        productService.insertProduct(secondhandProductDto, imageDtoList);
 
         return "redirect:/secondhandProduct/mainPage";
     }
@@ -340,5 +341,10 @@ public class ProductController {
         return "secondhandProduct/productModificationPage";
     }
 
+    @GetMapping("administrativeRegionListPage")
+    public String administrativeRegionListPage() {
+
+        return "secondhandProduct/administrativeRegionListPage";
+    }
 
 }

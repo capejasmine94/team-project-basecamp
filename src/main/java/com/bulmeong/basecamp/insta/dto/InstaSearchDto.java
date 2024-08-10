@@ -8,6 +8,7 @@ import lombok.Data;
 public class InstaSearchDto {
     private int id;
     private int user_id;
+    private int tag_id;
     private String content;
     private Date created_at;
 }

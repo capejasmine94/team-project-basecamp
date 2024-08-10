@@ -287,7 +287,15 @@ public class InstaController {
         return "redirect:./instaMainPage?user_id=" + user_id;
     }
 
-    // 검색페이지
+    // 검색 페이지
+    @RequestMapping("instaSearchPage")
+    public String instaSearchPage(){
+
+        return "insta/instaSearchPage";
+    }
+
+
+    // 검색 결과 페이지
     @RequestMapping("instaSearchResultPage")
     public String instaSearchResultPage(Model model, @RequestParam("tag_id") int tag_id){
         List<InstaArticleImgDto> instaArticleImgDtoList = instaService.selectArticleFirstImg(tag_id);
@@ -300,6 +308,8 @@ public class InstaController {
 
         return "insta/instaSearchResultPage";
     }
+
+
 }
 
 

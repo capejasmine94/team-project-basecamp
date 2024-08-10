@@ -48,6 +48,9 @@ public interface ClubSqlMapper {
     public ClubPostDto selectPostDtoById(int id);
     public List<ClubPostDto> selectAllPosts();
 
+    // 인기글 사진
+    public List<ClubPostImageDto> selectPostImageList(int post_id);
+
     public void insertClubPostCommentDto(ClubPostCommentDto clubPostCommentDto);
     // public void updateComment(ClubPostCommentDto clubPostCommentDto);
     // public void deleteComment(int id);

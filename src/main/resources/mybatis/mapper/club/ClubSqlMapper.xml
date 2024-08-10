@@ -377,6 +377,12 @@
         )
     </select>
 
+    <!-- 특정 게시글의 사진 리스트 뽑기 하나으 글에 들어가있는 사진을 뽑아오는 쿼리 위에 쿼리 수정필요-->
+    <select id="selectPostImageList" resultType="com.bulmeong.basecamp.club.dto.ClubPostImageDto">
+        SELECT * FROM bc_club_post_image bcpi
+        where post_id = #{post_id}
+    </select>
+
     <!-- 북마크한 소모임 뽑아오기 -->
     <select id="selectBookmarkedClubDtoList" resultType="com.bulmeong.basecamp.club.dto.ClubDto">
         select * from bc_club

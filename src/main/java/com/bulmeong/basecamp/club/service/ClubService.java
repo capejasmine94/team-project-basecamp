@@ -557,7 +557,7 @@ public class ClubService {
            List<ClubPostDto> clubPostDtoList = clubSqlMapper.selectAllPosts();
             for(ClubPostDto clubPostDto : clubPostDtoList){
                 int postPk = clubPostDto.getId();
-                List<ClubPostImageDto> clubPostImageList = clubSqlMapper.selectPostImageDtoByPostId(postPk);
+                List<ClubPostImageDto> clubPostImageList = clubSqlMapper.selectPostImageList(postPk);
                 String postCategory = clubSqlMapper.selectPostCategoryName(clubPostDto.getCategory_id());
                 int userPk = clubPostDto.getUser_id();
                 UserDto userDto = clubSqlMapper.selectUserDtoById(userPk);
