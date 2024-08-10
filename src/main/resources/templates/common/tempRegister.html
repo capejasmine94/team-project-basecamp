@@ -138,7 +138,7 @@
                     </div>
                 </div>
 
-                <form action="" class="row pt-4">
+                <form action="/user/registerProcess" id="registerForm" method="post" class="row pt-4">
                     <div class="col">
                         <div class="row d-flex align-items-bottomline">
                             <div class="col fw-semibold">
@@ -256,7 +256,7 @@
                         </div>
                         <div class="row pt-2">
                             <div class="col d-grid">
-                                <input type="date" name="birth" class="border col py-2 px-2 bg-white rounded-0 borderInput">
+                                <input type="date" name="birth" id="inputBirth" class="border col py-2 px-2 bg-white rounded-0 borderInput">
                             </div>
                         </div>
                     </div>
@@ -349,6 +349,7 @@
         }
 
         function formSubmit(){
+
             const inputId = document.getElementById("inputId");
             const confirmResult = document.getElementById("confirmResult");
             if(inputId.value == '' || confirmResult.innerText=="이미 사용중인 아이디입니다") {
@@ -394,9 +395,17 @@
                 return;
             }
 
+            const inputBirth = document.getElementById("inputBirth");
+            if(inputBirth.value == ''){
+                inputBirth.focus();
+                return;
+            }
+
             //아이디 중복검사
-            //생년월일 필수입력
             //이메일인증, 유효성검사
+
+            const registerForm = document.getElementById("registerForm");
+            registerForm.submit();
         }
 
     </script>

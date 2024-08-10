@@ -78,34 +78,52 @@
 <body class="bg-light">
 
     <!-- top-nav -->
-    <div class="fixed-top px-4 row border-bottom bg-white">
+    <!-- <div class="fixed-top px-4 row border-bottom bg-white">
         <div class="col">
             <div class="row py-3 align-items-center">
                 <div class="col-auto ps-0">
                     <button id="backButton" class="border-0 bg-transparent d-flex align-items-center">
-                        <span class="material-symbols-outlined">
+                        <span class="material-symbols-outlined fw-light">
                             arrow_back_ios
                         </span>
                     </button>
                 </div>
-                <div class="col ps-0 fw-bold f12 text-center">
+                <div class="col ps-0 fw-semibold text-center">
                     환불 요청
                 </div>
                 <a href="/" class="col-auto pe-0 d-flex align-items-center text-black">
-                    <span class="material-symbols-outlined">
+                    <span class="material-symbols-outlined fw-light">
                         home
                     </span>
                 </a>
             </div>
         </div>
+    </div> -->
+    <!-- top-nav -->
+    <div class="container-fluid fixed-top">
+        <div class="row bg-white py-3 align-items-center">
+            <a class="col-auto d-flex align-items-center" id="backButton">
+                <span class="material-symbols-outlined fw-light">
+                    arrow_back
+                </span>
+            </a>
+            <div class="col fw-semibold text-center">
+                환불요청
+            </div>
+            <a href="/" class="col-auto d-flex align-items-center text-black">
+                <span class="material-symbols-outlined fw-light">
+                    home
+                </span>
+            </a>
+        </div>
     </div>
 
-    <div class="container" style="padding-top: 60.792px;">
+    <div class="container" style="padding-top: 56px;">
 
         <div class="row">
             <div class="col">
 
-                <div class="row px-3 mb-3 border-bottom bg-white">
+                <div class="row px-3 my-2 bg-white">
                     <div class="col p-0">
         
                         <div class="row py-3">
@@ -115,40 +133,40 @@
                         </div>
                         <div class="row pb-4">
                             <div class="col-auto pe-0 seller_profile">
-                                <img class="border">
+                                <img class="border" th:src="|/images/${orderProductData.product_main_image}|">
                             </div>
                             <div class="col">
                                 <div class="row pb-1">
-                                    <div class="col f09">
-                                        <span>GamjaStore</span>
+                                    <div class="col f08">
+                                        <span th:text="${orderProductData.store_name}">GamjaStore</span>
                                     </div>
                                 </div>
                                 <div class="row pb-1">
-                                    <div class="col f09 fw-bold">
-                                        <span>진짜 맛있는 납작복숭아</span>
+                                    <div class="col f09 fw-semibold">
+                                        <span th:text="${orderProductData.product_name}">진짜 맛있는 납작복숭아</span>
                                     </div>
                                 </div>
-                                <div class="row text-body-tertiary f09">
-                                    <div class="col-auto pe-0">
+                                <div class="row pb-1 text-body-secondary f08 align-items-center">
+                                    <div class="col-auto">
                                         <span>검정 / M / 짜라잔</span>
                                     </div>
+                                    <div class="col-auto p-0">|</div>
                                     <div class="col">
-                                        <span class="border-start border-2 px-1">5개</span>
+                                        <span th:text="${orderProductData.quantity}">5</span>개
                                     </div>
                                 </div>
-                                <div class="row f09 toggle-icon" data-bs-toggle="collapse">
-                                    <div class="col-auto pe-0 text-end fw-bold">
-                                        <span>13,500원</span>
+                                <div class="row toggle-icon" data-bs-toggle="collapse">
+                                    <div class="col-auto pe-0 text-end fw-semibold">
+                                        <span th:text="${#numbers.formatDecimal(orderProductData.order_price, 1, 'COMMA', 0, 'POINT')}">13,500</span>원
                                     </div>
                                 </div>
-
                             </div>
                         </div>
                         
                     </div>
                 </div>
 
-                <div class="row bg-white px-3 border-bottom border-top mb-3">
+                <div class="row bg-white px-3 mb-2">
                     <div class="col p-0">
                         <div class="row py-4">
                             <div class="col fw-bold">
@@ -163,37 +181,29 @@
 
                         <div class="row">
                             <div class="col">
-                                <div class="row pb-2">
-                                    <div class="col text-body-tertiary">
+                                <div class="row pb-2 f09">
+                                    <div class="col text-dark">
                                         구매자 책임 사유
                                     </div>
                                 </div>
                                 <div class="row pb-3">
                                     <div class="col text-body-tertiary">
-                                        <select id="" class="form-select rounded-0 py-2">
-                                            <option value="" disabled selected>환불 사유를 선택하세요</option>
-                                            <option value="">단순변심</option>
-                                            <option value="">옵션(사이즈, 색상 등) 잘못 선택함</option>
-                                            <option value="">수량을 잘못 선택함</option>
-                                            <option value="">사이즈가 맞지 않음</option>
+                                        <select id="buyerResponsible" class="form-select rounded-1 py-3 f09" onchange="selectRefundReason(this)">
+                                            <option value="disabled-select-option" disabled selected>환불 사유를 선택하세요</option>
+                                            <option th:each="refundReasonDto : ${refundReasonList}" th:value="${refundReasonDto.id}" th:if="${refundReasonDto.is_buyer_responsible}" th:text="${refundReasonDto.description}">단순변심</option>
                                         </select>
                                     </div>
                                 </div>
-                                <div class="row pb-2">
-                                    <div class="col text-body-tertiary">
+                                <div class="row pb-2 f09">
+                                    <div class="col text-dark">
                                         판매자 책임 사유
                                     </div>
                                 </div>
                                 <div class="row pb-4">
                                     <div class="col text-body-tertiary">
-                                        <select id="" class="form-select rounded-0 py-2">
-                                            <option value="" disabled selected>환불 사유를 선택하세요</option>
-                                            <option value="">상품불량</option>
-                                            <option value="">주문과 다른 상품이 배송됨</option>
-                                            <option value="">주문과 다른 색상이 배송됨</option>
-                                            <option value="">주문과 다른 디자인이 배송됨</option>
-                                            <option value="">배송사고 안내 받음</option>
-                                            <option value="">주문과 실측이 다름</option>
+                                        <select id="sellerResponsible" class="form-select rounded-1 py-3 f09" onchange="selectRefundReason(this)">
+                                            <option value="disabled-select-option" disabled selected>환불 사유를 선택하세요</option>
+                                            <option th:each="refundReasonDto : ${refundReasonList}" th:value="${refundReasonDto.id}" th:if="${!refundReasonDto.is_buyer_responsible}" th:text="${refundReasonDto.description}">단순변심</option>
                                         </select>
                                     </div>
                                 </div>
@@ -204,12 +214,12 @@
                 </div>
 
                 <!-- 배송지 정보 -->
-                <div class="row bg-white px-3 border-bottom border-top mb-3">
+                <div class="row bg-white px-3 mb-2">
                     <div class="col p-0">
                         
                         <div class="row py-4">
                             <div class="col fw-bold">
-                                회수지
+                                회수지 정보
                             </div>
                             <div class="col d-flex align-items-center justify-content-end">
                                 <span class="showButton material-symbols-outlined fw-light">
@@ -220,28 +230,25 @@
 
                         <div class="row py-3 border-bottom border-top">
                             <div class="col">
-                                <div class="row fw-semibold">
-                                    <div class="col">
-                                        김첨지
+                                <div class="row">
+                                    <div class="col fw-semibold" id="receiver_name"></div>
+                                    <div class="col-auto f08 text-body-secondary">
+                                        회수지 변경
                                     </div>
                                 </div>
                                 <div class="row pt-2 text-body-tertiary f09">
-                                    <div class="col">
-                                        010-1234-5678
-                                    </div>
+                                    <div class="col" id="phone"></div>
                                 </div>
                                 <div class="row f09 pt-1">
-                                    <div class="col">
-                                        [12345] 서울특별시 강남구 테헤란로 7길 7 123-456
-                                    </div>
+                                    <div class="col" id="return_address"></div>
                                 </div>
-                                <div class="row pt-3">
+                                <!-- <div class="row pt-3">
                                     <div class="col d-grid">
                                         <button type="button" class="btn btn-outline-primary rounded-0">
                                             이 주소로 회수 요청
                                         </button>
                                     </div>
-                                </div>
+                                </div> -->
                             </div>
                         </div>
                         <div class="row py-3 f09">
@@ -259,7 +266,7 @@
                                         환불 배송비
                                     </div>
                                     <div class="col text-end">
-                                        <span class="fw-semibold">6,000</span>원
+                                        <span class="fw-semibold">무료반품</span>
                                     </div>
                                 </div>
                             </div>
@@ -268,7 +275,7 @@
                     </div>
                 </div>
 
-                <div class="row bg-white px-3 border-bottom border-top mb-3">
+                <div class="row bg-white px-3 mb-2">
                     <div class="col p-0">
                         
                         <div class="row py-4">
@@ -320,7 +327,7 @@
                                         반품 배송비
                                     </div>
                                     <div class="col text-danger text-end">
-                                        -6,000원
+                                        무료반품
                                     </div>
                                 </div>
                             </div>
@@ -329,10 +336,10 @@
                     </div>
                 </div>
 
-                <div class="row bg-white px-3 border-bottom border-top mb-3">
+                <div class="row bg-white px-3 mb-3">
                     <div class="col p-0">
                         
-                        <div class="row py-3">
+                        <div class="row py-3 f09 fw-semibold">
                             <div class="col">
                                 주의사항
                             </div>
@@ -347,6 +354,9 @@
                             <li>
                                 환불 시에는 함께 받은 '사은품' 까지 모두 회수되어야 합니다. (단, 교환 시에는 함께 보내지 않아도 됨)
                             </li>
+                            <li>
+                                같은 브랜드에서 여러 상품의 회수를 위해 배송비를 '한 번만' 결제한 경우, 반드시 묶음 포장(1박스)해야 합니다.
+                            </li>
                         </ul>
                     </div>
                 </div>
@@ -355,7 +365,7 @@
 
                 <div class="row px-2 bg-white pt-3 pb-5 border-top fixed-bottom">
                     <div class="col d-grid">
-                        <a href="" type="button" class="btn btn-primary rounded-0 f09 py-2">
+                        <a href="/store/refundRequestComplete" type="button" class="btn btn-dark rounded-0 f09 py-2"><!-- onclick="requestRefund()" -->
                             환불 요청
                         </a>
                     </div>
@@ -365,6 +375,81 @@
 
 
     </div>
+
+    <script>
+        const urlParams = new URL(window.location.href).searchParams;
+        let order_product_id = urlParams.get("id");
+
+        function setReturnAddress(){
+
+            console.log(order_product_id)
+
+            fetch(`/api/store/getOrderProductDataForRefund?id=${order_product_id}`)
+            .then(response => response.json())
+            .then(response => {
+                const orderProductData = response.data.orderProductData
+                document.getElementById("receiver_name").innerText = orderProductData.receiver_name;
+                document.getElementById("phone").innerText = orderProductData.phone;
+                document.getElementById("return_address").innerText = orderProductData.delivery_address;
+            })
+        }
+        
+        function selectRefundReason(select){
+            if(select.id=='buyerResponsible'){
+                document.getElementById("sellerResponsible").value = 'disabled-select-option'
+            }else{
+                document.getElementById("buyerResponsible").value = 'disabled-select-option'
+            }
+        }
+
+        function requestRefund(){
+            const buyerResponsible = document.getElementById("buyerResponsible").value;
+            const sellerResponsible = document.getElementById("sellerResponsible").value;
+
+            let reason_refund_id = 0;
+
+            if(buyerResponsible=='disabled-select-option' && sellerResponsible=='disabled-select-option'){
+                alert("환불 사유를 선택해주세요.")
+                return;
+            }else if(buyerResponsible!='disabled-select-option'){
+                reason_refund_id = buyerResponsible;
+            }else{
+                reason_refund_id = sellerResponsible;
+            }
+
+            const receiver_name = document.getElementById("receiver_name");
+            const phone = document.getElementById("phone");
+            const return_address = document.getElementById("return_address");
+
+            const productRefund = {
+                reason_refund_id: reason_refund_id,
+                order_product_id: order_product_id,
+                receiver_name: receiver_name.innerText,
+                phone: phone.innerText,
+                return_address: return_address.innerText
+            }
+            
+            console.log("Sending data:", productRefund);
+
+            const url = '/api/store/requestRefund'
+            fetch(url, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(productRefund)
+            })
+            .then(response => response.json())
+            .then((response) => {
+                window.location.href = "/store/refundRequestComplete";
+            })
+
+        }
+
+        window.addEventListener("DOMContentLoaded",() => {
+            setReturnAddress();
+        })
+    </script>
 
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>

@@ -7,7 +7,12 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
     <script src="https://kit.fontawesome.com/7b271bba58.js" crossorigin="anonymous"></script>
+    <script src="/public/js/store/store.js"></script>
+
     <link rel="stylesheet" href="/public/css/font.css">
+    <link rel="stylesheet" href="/public/css/basecamp.css">
+
+    <script src="/public/js/lockLikeMobile.js"></script>
 
     <style>
         .fill-on {
@@ -33,6 +38,7 @@
         }
         a{
             text-decoration: none;
+            color: black;
         }
         button{
             color: black;
@@ -65,324 +71,28 @@
             outline:none;
         }
     </style>
-    <script>
-        const urlParams = new URL(window.location.href).searchParams;
-        const product_id = urlParams.get("id");
-
-        let myId = null;
-
-        document.addEventListener('DOMContentLoaded', function() {
-            document.getElementById('backButton').addEventListener('click', function() {
-                history.back();
-            });
-            setOptionData();
-            setSessionId();
-        });
-
-        function setSessionId(){
-            const url = "/api/user/getSessionUserId";
-            fetch(url)
-            .then(response => response.json())
-            .then((response) => {
-                myId = response.data.userId;
-            })
-        }
-
-        function setSelectedOption(selectElement){
-            
-            const currentIndex = parseInt(selectElement.dataset.index, 10);
-            const optionSelectBoxes = document.querySelectorAll("#optionContainer .optionSelectBox")
-
-            // 선택할 옵션이 두개 이상 남은 경우 다음 옵션 활성화 후 return
-            if (currentIndex < optionSelectBoxes.length - 2) { 
-                for(optionSelectBox of optionSelectBoxes){
-                    const selectbox_index = parseInt(optionSelectBox.dataset.index, 10)
-                    if(selectbox_index==currentIndex+1){
-                        optionSelectBox.disabled = false;
-                        return;
-                    }
-                }
-                return;
-            }
-
-            // 마지막 옵션일 경우
-            if(currentIndex == optionSelectBoxes.length-1){
-                const selectedOptionContainer = document.getElementById("selectedOptionContainer");
-                const selectedOptionRow = document.querySelector("#template .selectedOptionRow");
-                const selectedOptionValue = document.querySelector("#template .selectedOptionValue");
-                const selectedOptionId = document.querySelector("#template .selectedOptionId");
-
-                const newSelectedOptionRow = selectedOptionRow.cloneNode(true)
-                for(optionSelectBox of optionSelectBoxes){
-                    const newSelectedOptionValue = selectedOptionValue.cloneNode(true)
-                    const newSelectedOptionId = selectedOptionId.cloneNode(true)
-
-                    const selectedOption = optionSelectBox.options[optionSelectBox.selectedIndex];
-                    newSelectedOptionValue.innerText = selectedOption.innerText;
-                    
-                    //input hidden으로 아이디도 추가
-                    newSelectedOptionId.value = selectedOption.value;
-
-                    const selectedOptionValueCol = newSelectedOptionRow.querySelector(".selectedOptionValueCol");
-                    
-                    selectedOptionValueCol.appendChild(newSelectedOptionValue);
-                    selectedOptionValueCol.appendChild(newSelectedOptionId);
-                }
-
-                const optionPrice = newSelectedOptionRow.querySelector(".optionPrice")//추가금?
-                const inputOptionPrice = newSelectedOptionRow.querySelector(".inputOptionPrice");
-                const selectedValues = Array.from(optionSelectBoxes)
-                    .filter(optionSelectBox => {
-                        const selectedOption = optionSelectBox.options[optionSelectBox.selectedIndex];
-                        return selectedOption && !selectedOption.disabled;
-                    })
-                    .map(optionSelectBox => optionSelectBox.options[optionSelectBox.selectedIndex].value);
-
-                const value_ids = selectedValues.join(",");
-
-                const url = `/api/store/getAdditionalInfoDto?value_ids=${value_ids}`
-                fetch(url)
-                .then(response => response.json())
-                .then((response) => {
-                    const additional_price = response.data.additionalInfoDto.additional_price;
-                    const salePrice = document.getElementById("salePrice").innerText.replace(/,/g, '');
-
-                    optionPrice.innerText = parseInt(additional_price, 10)+parseInt(salePrice, 10)
-                    inputOptionPrice.value = parseInt(additional_price, 10)+parseInt(salePrice, 10)
-                })
-
-                selectedOptionContainer.appendChild(newSelectedOptionRow);
-                
-                setOptionData();
-
-                return;
-            }
-
-            // 마지막 옵션만 남았을 경우
-            const selectedValues = Array.from(optionSelectBoxes)
-                .filter(optionSelectBox => {
-                    const selectedOption = optionSelectBox.options[optionSelectBox.selectedIndex];
-                    return selectedOption && !selectedOption.disabled;
-                })
-                .map(optionSelectBox => optionSelectBox.options[optionSelectBox.selectedIndex].value);
-
-            const value_ids = selectedValues.join(",");
-
-            const url = `/api/store/getAdditionalInfo?product_id=${product_id}&currentIndex=${currentIndex}&value_ids=${value_ids}`
-            fetch(url)
-            .then(response => response.json())
-            .then((response) => {
-                const additionalInfoDataList = response.data.additionalInfoDataList;
-                for(additionalInfoData of additionalInfoDataList){
-                    const lastSelectOption = document.getElementById("lastSelectOption");
-                    const optionValues = lastSelectOption.querySelectorAll(".optionValue");
-
-                    for(optionValue of optionValues){
-                        if(additionalInfoData.productOptionValueDto.id == optionValue.value && additionalInfoData.additionalInfoDto.additional_price!=0){
-                            optionValue.innerText=`${additionalInfoData.productOptionValueDto.name}(+${additionalInfoData.additionalInfoDto.additional_price})`
-                        }
-                    }
-
-                    lastSelectOption.disabled = false;
-                }
-            })
-
-        }
-
-        function setOptionData(){
-            const url = `/api/store/getOptionDataList?product_id=${product_id}`
-
-            fetch(url)
-            .then(response => response.json())
-            .then(response =>{
-                let index = 0;
-
-                const optionDataList = response.data.optionDataList;
-
-                if(optionDataList.length == 0){
-                    const optionQuantityRow = document.querySelector("#template .optionQuantityRow").cloneNode(true);
-
-                    // optionQuantityRow.classList.add("selectedOptionRow");
-                    
-                    const salePrice = document.getElementById("salePrice").innerText
-                    
-                    optionQuantityRow.querySelector(".optionPrice").innerText = salePrice
-                    optionQuantityRow.querySelector(".inputOptionPrice").value = salePrice.replace(/,/g, '');
-
-                    document.getElementById("selectedOptionContainer").appendChild(optionQuantityRow)
-                    return;
-                }
-
-                if(optionDataList.length == 1){
-                    const url = `/api/store/getAdditionalInfo?product_id=${product_id}&currentIndex=0&value_ids=`
-                    fetch(url)
-                    .then(response => response.json())
-                    .then((response) => {
-                        const additionalInfoDataList = response.data.additionalInfoDataList;
-                        for(additionalInfoData of additionalInfoDataList){
-                            const lastSelectOption = document.getElementById("lastSelectOption");
-                            const optionValues = lastSelectOption.querySelectorAll(".optionValue");
-
-                            for(optionValue of optionValues){
-                                if(additionalInfoData.productOptionValueDto.id == optionValue.value && additionalInfoData.additionalInfoDto.additional_price!=0){
-                                    optionValue.innerText=`${additionalInfoData.productOptionValueDto.name}(+${additionalInfoData.additionalInfoDto.additional_price})`
-                                }
-                            }
-
-                            lastSelectOption.disabled = false;
-                        }
-                    })
-                }
-
-                const optionContainer = document.getElementById("optionContainer");
-                optionContainer.innerHTML="";
-                const optionSelectRow = document.querySelector("#template .optionSelectRow");
-                
-                for(optionData of optionDataList){
-                    const newOptionSelectRow = optionSelectRow.cloneNode(true);
-
-                    const optionSelectBox = newOptionSelectRow.querySelector(".optionSelectBox")
-                    
-                    optionSelectBox.setAttribute("name", "value_id");
-                    optionSelectBox.setAttribute("data-index", index);
-
-                    optionSelectBox.querySelector(".optionName").innerText = optionData.productOptionNameDto.name;
-
-                    const optionValue = newOptionSelectRow.querySelector(".optionValue");
-
-                    for(productOptionValueDto of optionData.productOptionValueDtoList){
-                        const newOptionValue = optionValue.cloneNode(true)
-                        optionValue.innerText = productOptionValueDto.name;
-                        optionValue.value = productOptionValueDto.id;
-                        optionValue.classList.remove("d-none");
-
-                        optionSelectBox.appendChild(newOptionValue);
-                    }
-
-                    if(index == 0){
-                        optionSelectBox.disabled = false;
-                    } else {
-                        optionSelectBox.disabled = true;
-                    }
-
-                    if(index == optionDataList.length-1){
-                        optionSelectBox.setAttribute("id", "lastSelectOption");
-                    }
-
-                    optionContainer.appendChild(newOptionSelectRow);
-
-                    index++;
-                }
-                
-            })
-        }
-
-        function decreaseOptionQuantity(decreaseButton){
-            const optionQuantityRow = decreaseButton.closest(".optionQuantityRow")
-            const inputQuantity = optionQuantityRow.querySelector(".inputQuantity");
-            const optionPrice = optionQuantityRow.querySelector(".optionPrice");
-            const inputOptionPrice = optionQuantityRow.querySelector(".inputOptionPrice");
-
-            if(inputQuantity.value == 1){
-                return;
-            }else{
-                inputQuantity.value = parseInt(inputQuantity.value, 10) - 1
-            }
-
-            optionPrice.innerText = parseInt(inputOptionPrice.value, 10) * parseInt(inputQuantity.value, 10)
-        }
-
-        function increaseOptionQuantity(increaseButton){
-            const optionQuantityRow = increaseButton.closest(".optionQuantityRow")
-            const inputQuantity = optionQuantityRow.querySelector(".inputQuantity");
-            const optionPrice = optionQuantityRow.querySelector(".optionPrice");
-            const inputOptionPrice = optionQuantityRow.querySelector(".inputOptionPrice");
-
-            inputQuantity.value = parseInt(inputQuantity.value, 10) + 1
-            optionPrice.innerText = parseInt(inputOptionPrice.value, 10) * parseInt(inputQuantity.value, 10)
-            //그 머더라 막아야지 수량
-        }
-
-        function deleteOption(deleteOptionButton){
-            const selectedOptionRow = deleteOptionButton.closest(".selectedOptionRow")
-            selectedOptionRow.parentNode.removeChild(selectedOptionRow);
-        }
-
-        async function addToCart(){
-            if(myId==null){
-                if(confirm("로그인 후 이용 가능합니다. 로그인 페이지로 이동하시겠습니까?")){
-                    location.href="/user/login";
-                }
-                return;
-            }
-
-            const forms = document.querySelectorAll('#selectedOptionContainer .selectedOptionRow');
-
-            if(forms.length==0){
-                alert("상품 옵션을 선택해주세요");
-                return;
-            }
-
-            for (const form of forms) {
-                const quantity = form.querySelector('.inputQuantity').value;
-                const price = form.querySelector('.inputOptionPrice').value;
-                
-                const selectedOptionIds = form.querySelectorAll('.selectedOptionId');
-
-                const valueIds = Array.from(selectedOptionIds).map(option => parseInt(option.value, 10));
-
-                const value_ids = valueIds.join(",");
-
-                const url = `/api/store/addToCart?quantity=${quantity}&product_id=${product_id}&value_ids=${value_ids}&user_id=${myId}`;
-                await fetch(url);
-            }
-
-            const offcanvasBottom = bootstrap.Offcanvas.getOrCreateInstance("#offcanvasBottom")
-            offcanvasBottom.hide();
-
-            const toast = bootstrap.Toast.getOrCreateInstance(document.getElementById("toast"));
-            toast.show();
-            setTimeout(() => {
-                toast.hide();
-            }, 3000);
-
-            // if(confirm("장바구니로 갈까?(이거 나중에 토스트로)")){
-            //     location.href = "/store/cart";
-            // }
-
-
-            
-        }
-
-        // function 
-
-        // function checkDisabled(optionSelectRow){
-        //     if(optionSelectRow.querySelector(".optionSelectBox").disabled == true){
-        //         alert("상위 옵션을 먼저 선택해주세요")
-        //     }
-        // }
-
-    </script>
 </head>
 <body class="bg-body-tertiary">
 
     <!-- top-nav -->
-    <div class="fixed-top px-4 row border-bottom bg-white">
-        <div class="col">
-            <div class="row py-3">
-                <div class="col-auto ps-0">
-                    <button id="backButton" class="border-0 bg-transparent d-flex align-items-center">
-                        <span class="material-symbols-outlined">
-                            arrow_back_ios
+    <div class="container">
+        <div class="fixed-top px-4 row border-bottom bg-white">
+            <div class="col">
+                <div class="row py-3">
+                    <div class="col-auto ps-0">
+                        <button id="backButton" class="border-0 bg-transparent d-flex align-items-center">
+                            <span class="material-symbols-outlined fw-light">
+                                arrow_back
+                            </span>
+                        </button>
+                    </div>
+                    <div class="col"></div>
+                    <a href="/store/cart" class="col-auto pe-0 d-flex align-items-center text-black">
+                        <span class="material-symbols-outlined fw-light">
+                            shopping_bag
                         </span>
-                    </button>
+                    </a>
                 </div>
-                <div class="col"></div>
-                <a href="/store/cart" class="col-auto pe-0 d-flex align-items-center text-black">
-                    <span class="material-symbols-outlined">
-                        shopping_bag
-                    </span>
-                </a>
             </div>
         </div>
     </div>
@@ -420,14 +130,19 @@
                         <span th:text="${productData.storeDto.name}">GamjaStore</span>
                     </div>
                 </div>
-                <div class="row px-3 pt-3 pb-2">
+                <div class="row px-3 pt-3">
                     <div class="col px-0 fw-bold">
                         <span th:text="${productData.storeProductDto.name}">진짜 맛있는 납작복숭아</span>
                     </div>
                     <div class="col-auto px-0 d-flex align-items-center">
-                        <span class="material-symbols-outlined">
+                        <span class="material-symbols-outlined fw-light">
                             share
                         </span>
+                    </div>
+                </div>
+                <div class="row px-3 py-2 f08">
+                    <div class="col p-0">
+                        <span th:text="${productData.storeProductDto.description}"></span>
                     </div>
                 </div>
                 <div class="row px-3" th:if="${productData.percentage!=0}">
@@ -437,8 +152,8 @@
                 </div>
                 <div class="row px-3 pb-3">
                     <div class="col px-0 d-flex align-items-center">
-                        <span class="fw-bold f12" style="color: orangered;" th:if="${productData.percentage!=0}" th:text="|${productData.percentage}%&nbsp;&nbsp;|">30%</span>
-                        <span class="fw-bold f12" id="salePrice" th:text="|${#numbers.formatDecimal(productData.salePrice, 1, 'COMMA', 0, 'POINT')}|">28,000</span>
+                        <span class="fw-semibold lightFont" th:if="${productData.percentage!=0}" th:text="|${productData.percentage}%&nbsp;&nbsp;|">30%</span>
+                        <span class="fw-semibold" id="salePrice" th:text="|${#numbers.formatDecimal(productData.salePrice, 1, 'COMMA', 0, 'POINT')}|">28,000</span>
                         <span class="f08">원</span>
                     </div>
                 </div>
@@ -479,14 +194,11 @@
         </div>
 
         <div class="row bg-white sticky-top text-center border-bottom fw-bold f09" style="top: 58px;">
-            <div class="col py-3" style="color: orangered; border-bottom: orangered solid 2px;">
+            <div class="col py-3 lightFont" style="border-bottom: #00B8FF solid 2px;">
                 상품정보
             </div>
             <div class="col py-3">
                 리뷰
-            </div>
-            <div class="col py-3">
-                문의
             </div>
         </div>
 
@@ -617,8 +329,8 @@
         <div class="row px-3 bg-white fixed-bottom pt-2 pb-4 border-top align-items-center">
             <div class="col-auto pe-0 text-center">
                 <div class="row">
-                    <div class="col d-flex align-items-center">
-                        <span class="material-symbols-outlined f15">
+                    <div class="col d-flex align-items-center" onclick="productLike()">
+                        <span class="material-symbols-outlined f15 fw-light">
                             favorite
                         </span>
                     </div>
@@ -630,86 +342,14 @@
                 </div>
             </div>
             <div class="col d-grid">
-                <button type="button" class="btn btn-dark rounded-0 py-3" data-bs-toggle="offcanvas" data-bs-target="#offcanvasBottom">
+                <button type="button" class="btn lightBg text-white rounded-0 py-2" data-bs-toggle="offcanvas" data-bs-target="#offcanvasBottom">
                     구매하기
                 </button>
             </div>
         </div>
     </div>
 
-    <div id="template" class="d-none">
-        
-        <!-- 옵션 셀렉박스 -->
-        <div class="row px-3 pb-2 optionSelectRow">
-            <div class="col p-0">
-                <select class="form-select rounded-0 optionSelectBox" onchange="setSelectedOption(this)">
-                    <option disabled selected class="optionName">색상 선택</option>
-                    <option value="1" class="optionValue d-none"></option>
-                </select>
-            </div>
-        </div>
-
-        <!-- 그냥 다 템플릿으로 만들어버려 -->
-        <span class="selectedOptionValue">black</span>
-
-        <!-- 진짜 다 만드네 -->
-        <input type="hidden" class="selectedOptionId">
-
-        <!-- 선택상품 정보 -->
-        <form class="row px-3 py-2 selectedOptionRow">
-            <div class="col bg-body-tertiary py-2">
-                <div class="row pb-2">
-                    <div class="col selectedOptionValueCol">
-                        
-                        <!-- <span> / free</span> -->
-                    </div>
-                    <div class="col-auto">
-                        <button type="button" class="border-0 p-0 bg-transparent deleteOptionButton" onclick="deleteOption(this)">
-                            <span class="material-symbols-outlined f09">
-                                close
-                            </span>
-                        </button>
-                    </div>
-                </div>
-                <div class="row optionQuantityRow">
-                    <div class="col-auto pe-0 align-items-center">
-                        <button type="button" class="border border-end-0 bg-white decreaseButton" onclick="decreaseOptionQuantity(this)">
-                            <span class="material-symbols-outlined f09">
-                                remove
-                            </span>
-                        </button>
-                    </div>
-                    <div class="col-auto border bg-white">
-                        <input type="text" class="bg-white border-0 text-center inputQuantity" readonly value="1" style="width: 2em;">
-                    </div>
-                    <div class="col-auto ps-0 align-items-center">
-                        <button type="button" class="border border-start-0 bg-white increaseButton" onclick="increaseOptionQuantity(this)">
-                            <span class="material-symbols-outlined f09">
-                                add
-                            </span>
-                        </button>
-                    </div>
-                    <div class="col text-end">
-                        <span class="fw-bold optionPrice">28,000</span>원
-                        <input type="hidden" class="inputOptionPrice">
-                    </div>
-                </div>
-            </div>
-        </form>
-    </div>
-
-    <!-- 이거 쓰고싶다 -->
-    <div id="toast" class="toast align-items-center text-bg-dark border-0 fade position-fixed" style="bottom: 95px; left: 50%; transform: translate(-50%, -50%); z-index: 2000;" role="alert" aria-live="assertive" aria-atomic="true">
-        <div class="toast-body row align-items-center">
-          <div class="col pe-0">
-            장바구니에 상품이 담겼습니다
-          </div>
-          <div class="col-auto">
-            <a href="/store/cart" style="text-decoration: none;">장바구니로 가기</a>
-          </div>
-        </div>
-    </div>
-
+    
     <!-- offcanvas -->
     <div class="offcanvas offcanvas-bottom" tabindex="-1" id="offcanvasBottom" style="max-height: 90vh; height: auto;">
         <div class="offcanvas-header">
@@ -718,12 +358,12 @@
         <div class="offcanvas-body pb-4">
             <div class="row">
                 <div class="col" id="optionContainer">
-
+                    <!-- 옵션 셀렉박스의 위치 -->
                 </div>
             </div>
             <div class="row">
                 <div class="col" id="selectedOptionContainer">
-
+                    <!-- 선택된 옵션 정보의 위치 -->
                 </div>
             </div>
 
@@ -740,18 +380,487 @@
                     <a id="cartButton" type="button" class="btn btn-outline-dark rounded-0 py-2" onclick="addToCart()">
                         장바구니
                     </a>
-                    <!-- href="/store/cart" -->
                 </div>
                 <div class="col py-3 d-grid">
                     <a id="orderButton" type="button" class="btn btn-dark rounded-0 py-2">
                         구매하기
                     </a>
-                    <!-- href="/store/ordersheet" -->
                 </div>
             </div>
         </div>
     </div>
 
+    <div id="template" class="d-none">
+
+        <!-- 옵션 셀렉박스 -->
+        <div class="row px-3 pb-2 optionSelectRow">
+            <div class="col p-0">
+                <select class="form-select rounded-0 optionSelectBox" onchange="setSelectedOption(this)">
+                    <option disabled selected class="optionName">색상 선택</option>
+                </select>
+            </div>
+        </div>
+
+        <!-- 옵션값 -->
+        <option class="optionValue">옵션</option>
+
+        <!-- 선택상품 정보 -->
+        <div class="row px-3 py-2 selectedOptionRow">
+            <div class="col bg-body-tertiary py-3">
+                <div class="row ps-3 pb-2">
+                    <div class="col p-0 selectedOptionValueCol">
+                        <!-- 선택된 옵션 정보 출력 위지 -->
+                        <!-- 선택된 옵션 아이디 출력 위치 -->
+                    </div>
+                    <div class="col-auto">
+                        <button type="button" class="border-0 p-0 bg-transparent deleteOptionButton" onclick="deleteOption(this)">
+                            <span class="material-symbols-outlined f09">
+                                close
+                            </span>
+                        </button>
+                    </div>
+                </div>
+                <div class="row ps-3 optionQuantityRow align-items-center">
+                    <div class="col-auto border">
+                        <div class="row align-items-center bg-white">
+                            <button type="button" class="col p-1 border-0 bg-white decreaseButton d-flex align-items-center" onclick="decreaseOptionQuantity(this)">
+                                <span class="material-symbols-outlined fw-semibold f09 p-1">
+                                    remove
+                                </span>
+                            </button>
+                            <div class="col-auto p-0">
+                                <input type="text" class="bg-white f09 p-1 border-start border-0 rounded-0 border-end text-center inputQuantity" readonly value="1" style="width: 3em;">
+                            </div>
+                            <button type="button" class="col p-1 border-0 bg-white increaseButton d-flex align-items-center" onclick="increaseOptionQuantity(this)">
+                                <span class="material-symbols-outlined fw-semibold f09 p-1">
+                                    add
+                                </span>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="col text-end">
+                        <span class="fw-bold optionPrice">28,000</span>원
+                        <input type="hidden" class="inputOptionPrice">
+                        <input type="hidden" class="inputOptionStockQuantity">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 선택된 옵션 하나의 정보(출력용) -->
+        <span class="selectedOptionValue">black</span>
+        
+        <!-- 진짜 다 만드네 -->
+        <input type="hidden" class="selectedOptionValueId">
+    </div>
+
+    <!-- toast -->
+    <div id="toast" class="toast align-items-center text-bg-dark border-0 fade position-fixed" style="bottom: 95px; left: 50%; transform: translate(-50%, -50%); z-index: 2000;" role="alert" aria-live="assertive" aria-atomic="true">
+        <div class="toast-body row align-items-center">
+          <div class="col pe-0">
+            장바구니에 상품이 담겼습니다
+          </div>
+          <div class="col-auto">
+            <a href="/store/cart" class="text-primary" style="text-decoration: none;">장바구니로 가기</a>
+          </div>
+        </div>
+    </div>
+
+    <div id="alreadySelectedOptionToast" class="toast align-items-center text-bg-dark bg-opacity-75 border-0 fade position-fixed" style="bottom: 95px; left: 50%; transform: translate(-50%, -50%); z-index: 2000;" role="alert" aria-live="assertive" aria-atomic="true">
+        <div class="toast-body row align-items-center text-center">
+            <div class="col pe-0">
+                이미 선택한 옵션입니다.
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const urlParams = new URL(window.location.href).searchParams;
+        const product_id = urlParams.get("id");
+
+        let myId = null;
+
+        document.addEventListener('DOMContentLoaded', function() {
+            document.getElementById('backButton').addEventListener('click', function() {
+                history.back();
+            });
+            setOptionData();
+            setSessionId();
+        });
+
+        // function reloadProductWish(){
+
+        // }
+
+        function setSessionId(){
+            const url = "/api/user/getSessionUserId";
+            fetch(url)
+            .then(response => response.json())
+            .then((response) => {
+                myId = response.data.userId;
+            })
+        }
+
+        function productLike(){
+            const productWish = {
+                user_id: myId,
+                product_id: product_id
+            }
+
+            const url = `/api/store/productLike`
+            fetch(url, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(productWish)
+            })
+            .then(response => response.json())
+            .then((response) => {
+                // window.location.href = "/store/addressBook";
+            })
+        }
+
+        function setOptionData(){
+            const url = `/api/store/getOptionDataList?product_id=${product_id}`
+            fetch(url)
+            .then(response => response.json())
+            .then(response => {
+
+                const optionDataList = response.data.optionDataList;
+
+                //옵션이 없을 때
+                if(optionDataList.length == 0){
+                    const optionQuantityRow = document.querySelector("#template .optionQuantityRow").cloneNode(true);
+
+                    const salePrice = document.getElementById("salePrice").innerText
+                    
+                    optionQuantityRow.querySelector(".optionPrice").innerText = salePrice
+                    optionQuantityRow.querySelector(".inputOptionPrice").value = salePrice.replace(/,/g, '');
+
+                    const getQuantityUrl = `/api/store/getStockQuantityByProudctId?id=${product_id}`
+                    fetch(getQuantityUrl)
+                    .then(response => response.json())
+                    .then(response => {
+                        optionQuantityRow.querySelector(".inputOptionStockQuantity").value = response.data.stock_quantity;
+
+                        document.getElementById("selectedOptionContainer").appendChild(optionQuantityRow)      
+                    })
+
+                    return;
+                }
+
+                //옵션이 있을 때
+                const optionContainer = document.getElementById("optionContainer");
+                optionContainer.innerHTML="";
+
+                let index = 0;//몇번째 옵션인가
+                for(optionData of optionDataList){
+                    const optionSelectRow = document.querySelector("#template .optionSelectRow").cloneNode(true);
+
+                    const optionSelectBox = optionSelectRow.querySelector(".optionSelectBox");
+                    optionSelectBox.setAttribute("data-index", index);//몇번째 옵션인가
+
+                    optionSelectBox.querySelector(".optionName").innerText = optionData.productOptionNameDto.name;
+
+                    for(productOptionValueDto of optionData.productOptionValueDtoList){
+                        const optionValue = document.querySelector("#template .optionValue").cloneNode(true)
+                        optionValue.innerText = productOptionValueDto.name;
+                        optionValue.value = productOptionValueDto.id;
+
+                        optionSelectBox.appendChild(optionValue);
+                    }
+
+                    //첫번째 옵션명부터 선택 가능
+                    if(index == 0){
+                        optionSelectBox.disabled = false;
+                    } else {
+                        optionSelectBox.disabled = true;
+                    }
+
+                    //마지막 옵션명임을 알리는 아이디 설정
+                    if(index == optionDataList.length-1){
+                        optionSelectBox.setAttribute("id", "lastSelectOption");
+                    }
+
+                    optionContainer.appendChild(optionSelectRow);
+
+                    index++;
+                }
+                
+                //옵션이 하나일 때
+                if(optionDataList.length == 1){
+                    const url = `/api/store/getAdditionalInfo?product_id=${product_id}&currentIndex=0&value_ids=`
+                    fetch(url)
+                    .then(response => response.json())
+                    .then((response) => {
+                        const additionalInfoDataList = response.data.additionalInfoDataList;
+                        for(additionalInfoData of additionalInfoDataList){
+                            const lastSelectOption = document.getElementById("lastSelectOption");
+                            const optionValues = lastSelectOption.querySelectorAll(".optionValue");
+
+                            for(optionValue of optionValues){
+                                //품절처리
+                                if(additionalInfoData.productOptionValueDto.id == optionValue.value && additionalInfoData.stock_quantity==0){
+                                    optionValue.disabled = true;
+                                    if(additionalInfoData.additionalInfoDto.additional_price!=0){
+                                        optionValue.innerText=`${additionalInfoData.productOptionValueDto.name}(+${additionalInfoData.additionalInfoDto.additional_price})(품절)`
+                                    }else if(additionalInfoData.productOptionValueDto.id == optionValue.value && additionalInfoData.additionalInfoDto.additional_price==0){
+                                        optionValue.innerText=`${additionalInfoData.productOptionValueDto.name}(품절)`
+                                    }
+                                }else if(additionalInfoData.productOptionValueDto.id == optionValue.value && additionalInfoData.stock_quantity!=0){
+                                    optionValue.disabled = false;
+                                    //추가정보를 가져 온 옵션값Dto의 id가 마지막 셀렉박스의 옵션값의 id와 일치하고, 추가금 정보가 0원이 아닐 때
+                                    //추가금 정보를 출력
+                                    if(additionalInfoData.additionalInfoDto.additional_price!=0){
+                                        optionValue.innerText=`${additionalInfoData.productOptionValueDto.name}(+${additionalInfoData.additionalInfoDto.additional_price})`
+                                    }
+                                }
+                            }
+
+                            lastSelectOption.disabled = false;
+
+                        }
+                    })
+                }
+            })
+        }
+
+
+
+        function setSelectedOption(currentOptionSelectBox){
+            const currentIndex = parseInt(currentOptionSelectBox.dataset.index, 10);//현재 선택한 옵션이 몇번째 옵션인가
+            const optionSelectBoxes = document.querySelectorAll("#optionContainer .optionSelectBox");
+
+            // 선택할 옵션이 두개 이상 남은 경우 다음 옵션 활성화 후 return
+            if (currentIndex < optionSelectBoxes.length - 2) { 
+                for(optionSelectBox of optionSelectBoxes){
+                    const selectbox_index = parseInt(optionSelectBox.dataset.index, 10)
+                    if(selectbox_index==currentIndex+1){
+                        optionSelectBox.disabled = false;
+                        return;
+                    }
+                }
+                return;
+            }
+
+            // 마지막 옵션일 경우
+            if(currentIndex == optionSelectBoxes.length-1){
+
+                const selectedOptionContainer = document.getElementById("selectedOptionContainer");
+                const selectedOptionRow = document.querySelector("#template .selectedOptionRow").cloneNode(true)
+
+                const selectedValues = Array.from(optionSelectBoxes)
+                    .filter(optionSelectBox => {
+                        const selectedOption = optionSelectBox.options[optionSelectBox.selectedIndex];
+                        return selectedOption && !selectedOption.disabled;
+                    })
+                    .map(optionSelectBox => optionSelectBox.options[optionSelectBox.selectedIndex].value);
+
+                const value_ids = selectedValues.join(",");//선택된 옵션값의 id들
+
+                //이미 선택된 옵션인가?
+                const selectedOptionRows = document.querySelectorAll("#selectedOptionContainer .selectedOptionRow")
+                for(row of selectedOptionRows){
+                    const selectedOptionValueIds = row.querySelectorAll(".selectedOptionValueId");
+                    const ids = Array.from(selectedOptionValueIds).map(selectedOptionValueId => selectedOptionValueId.value);
+                    const valueIds = ids.join(",");
+
+                    if (valueIds == value_ids) {
+                        const alreadySelectedOptionToast = bootstrap.Toast.getOrCreateInstance(document.getElementById("alreadySelectedOptionToast"))
+                        alreadySelectedOptionToast.show();
+                        setTimeout(() => {
+                            alreadySelectedOptionToast.hide();
+                        }, 3000);
+                        setOptionData();
+                        return;
+                    }
+                }
+
+                const optionPrice = selectedOptionRow.querySelector(".optionPrice")
+                const inputOptionPrice = selectedOptionRow.querySelector(".inputOptionPrice");
+                const inputOptionStockQuantity = selectedOptionRow.querySelector(".inputOptionStockQuantity");
+
+                const url = `/api/store/getAdditionalInfoData?value_ids=${value_ids}`
+                fetch(url)
+                .then(response => response.json())
+                .then((response) => {
+                    const additionalInfoData = response.data.additionalInfoData;
+                    const additional_price = additionalInfoData.additionalInfoDto.additional_price;//추가금
+                    const salePrice = document.getElementById("salePrice").innerText.replace(/,/g, '');//판매가
+
+                    optionPrice.innerText = formatNumberToPrice(parseInt(additional_price, 10)+parseInt(salePrice, 10))//아마 이게 출력용
+                    inputOptionPrice.value = parseInt(additional_price, 10)+parseInt(salePrice, 10)//이건 그냥 계산 빨리하려고 넣은 것 같은데 replace왜 안 썼는지 모를..
+                    inputOptionStockQuantity.value = additionalInfoData.stock_quantity;
+                })
+
+                for(optionSelectBox of optionSelectBoxes){
+                    const selectedOptionValue = document.querySelector("#template .selectedOptionValue").cloneNode(true)
+                    const selectedOptionValueId = document.querySelector("#template .selectedOptionValueId").cloneNode(true)
+
+                    const selectedOption = optionSelectBox.options[optionSelectBox.selectedIndex];//각 selectBox마다 선택된 옵션값
+                    selectedOptionValue.innerText = selectedOption.innerText;//선택된 옵션값의 내용
+                    selectedOptionValueId.value = selectedOption.value;//선택된 옵션값의 value(id)
+
+                    const selectedOptionValueCol = selectedOptionRow.querySelector(".selectedOptionValueCol");
+                    
+                    selectedOptionValueCol.appendChild(selectedOptionValue);
+                    selectedOptionValueCol.appendChild(selectedOptionValueId);
+                }
+
+                selectedOptionContainer.appendChild(selectedOptionRow);
+                
+                setOptionData();
+
+                return;
+            }
+
+            // 마지막 옵션만 남았을 경우
+            const selectedValues = Array.from(optionSelectBoxes)
+                .filter(optionSelectBox => {
+                    const selectedOption = optionSelectBox.options[optionSelectBox.selectedIndex];
+                    return selectedOption && !selectedOption.disabled;
+                })
+                .map(optionSelectBox => optionSelectBox.options[optionSelectBox.selectedIndex].value);
+
+            const value_ids = selectedValues.join(",");//선택된 옵션값 아이디들
+
+            const url = `/api/store/getAdditionalInfo?product_id=${product_id}&currentIndex=${currentIndex}&value_ids=${value_ids}`
+            fetch(url)
+            .then(response => response.json())
+            .then((response) => {
+                const additionalInfoDataList = response.data.additionalInfoDataList;
+                for(additionalInfoData of additionalInfoDataList){
+                    const lastSelectOption = document.getElementById("lastSelectOption");
+                    const optionValues = lastSelectOption.querySelectorAll(".optionValue");//마지막 셀렉박스의 옵션들
+
+                    for(optionValue of optionValues){
+
+                        //품절처리
+                        if(additionalInfoData.productOptionValueDto.id == optionValue.value && additionalInfoData.stock_quantity==0){
+                            optionValue.disabled = true;
+                            if(additionalInfoData.additionalInfoDto.additional_price!=0){
+                                optionValue.innerText=`${additionalInfoData.productOptionValueDto.name}(+${additionalInfoData.additionalInfoDto.additional_price})(품절)`
+                            }else if(additionalInfoData.productOptionValueDto.id == optionValue.value && additionalInfoData.additionalInfoDto.additional_price==0){
+                                optionValue.innerText=`${additionalInfoData.productOptionValueDto.name}(품절)`
+                            }
+                        }else if(additionalInfoData.productOptionValueDto.id == optionValue.value && additionalInfoData.stock_quantity!=0){
+                            optionValue.disabled = false;
+                            //추가정보를 가져 온 옵션값Dto의 id가 마지막 셀렉박스의 옵션값의 id와 일치하고, 추가금 정보가 0원이 아닐 때
+                            //추가금 정보를 출력
+                            if(additionalInfoData.additionalInfoDto.additional_price!=0){
+                                optionValue.innerText=`${additionalInfoData.productOptionValueDto.name}(+${additionalInfoData.additionalInfoDto.additional_price})`
+                            }
+                        }
+                    }
+
+                    lastSelectOption.disabled = false;
+                }
+            })
+
+        }
+
+        function decreaseOptionQuantity(decreaseButton){
+            const optionQuantityRow = decreaseButton.closest(".optionQuantityRow")
+            const inputQuantity = optionQuantityRow.querySelector(".inputQuantity");
+            const optionPrice = optionQuantityRow.querySelector(".optionPrice");
+            const inputOptionPrice = optionQuantityRow.querySelector(".inputOptionPrice");
+
+            if(inputQuantity.value == 1){
+                return;
+            }else{
+                inputQuantity.value = parseInt(inputQuantity.value, 10) - 1
+            }
+
+            optionPrice.innerText = formatNumberToPrice(parseInt(inputOptionPrice.value, 10) * parseInt(inputQuantity.value, 10))
+        }
+
+        function increaseOptionQuantity(increaseButton){
+            const optionQuantityRow = increaseButton.closest(".optionQuantityRow")
+            const inputQuantity = optionQuantityRow.querySelector(".inputQuantity");
+            const optionPrice = optionQuantityRow.querySelector(".optionPrice");
+            const inputOptionPrice = optionQuantityRow.querySelector(".inputOptionPrice");
+            const inputOptionStockQuantity = optionQuantityRow.querySelector(".inputOptionStockQuantity");
+
+            const newInputQuantity = parseInt(inputQuantity.value, 10) + 1
+
+            if(newInputQuantity>inputOptionStockQuantity.value){
+                alert("해당 옵션 상품의 재고가 부족합니다.")
+                return;
+            }
+
+            inputQuantity.value = newInputQuantity
+            optionPrice.innerText = formatNumberToPrice(parseInt(inputOptionPrice.value, 10) * parseInt(inputQuantity.value, 10))
+            //그 머더라 막아야지 수량
+        }
+
+        function deleteOption(deleteOptionButton){
+            const selectedOptionRow = deleteOptionButton.closest(".selectedOptionRow")
+            selectedOptionRow.parentNode.removeChild(selectedOptionRow);
+        }
+
+
+        //addToCart
+        async function addToCart(){
+            if(myId==null){
+                if(confirm("로그인 후 이용 가능합니다. 로그인 페이지로 이동하시겠습니까?")){
+                    location.href="/user/login";
+                }
+                return;
+            }
+
+            const selectedOptionRows = document.querySelectorAll('#selectedOptionContainer .selectedOptionRow');
+
+            const optionQuantityRow = document.querySelector('#selectedOptionContainer .optionQuantityRow');
+            if(optionQuantityRow==null){
+                alert("상품 옵션을 선택해주세요");
+                return;
+            }
+
+            //옵션이 없는 상품일 때
+            if(selectedOptionRows.length==0){
+                const quantity = optionQuantityRow.querySelector('.inputQuantity').value;
+                const price = optionQuantityRow.querySelector('.inputOptionPrice').value;
+
+                const url = `/api/store/addToCart?quantity=${quantity}&product_id=${product_id}&value_ids=0&user_id=${myId}`;
+                await fetch(url);
+
+                const offcanvasBottom = bootstrap.Offcanvas.getOrCreateInstance("#offcanvasBottom")
+                offcanvasBottom.hide();
+
+                const toast = bootstrap.Toast.getOrCreateInstance(document.getElementById("toast"));
+                toast.show();
+                setTimeout(() => {
+                    toast.hide();
+                }, 3000);
+                return;
+            }
+
+            for (const selectedOptionRow of selectedOptionRows) {
+                const quantity = selectedOptionRow.querySelector('.inputQuantity').value;
+                const price = selectedOptionRow.querySelector('.inputOptionPrice').value;
+                
+                const selectedOptionValueIds = selectedOptionRow.querySelectorAll('.selectedOptionValueId');
+
+                const valueIds = Array.from(selectedOptionValueIds).map(option => parseInt(option.value, 10));
+
+                const value_ids = valueIds.join(",");
+
+                const url = `/api/store/addToCart?quantity=${quantity}&product_id=${product_id}&value_ids=${value_ids}&user_id=${myId}`;
+                await fetch(url);
+            }
+
+            const offcanvasBottom = bootstrap.Offcanvas.getOrCreateInstance("#offcanvasBottom")
+            offcanvasBottom.hide();
+
+            const toast = bootstrap.Toast.getOrCreateInstance(document.getElementById("toast"));
+            toast.show();
+            setTimeout(() => {
+                toast.hide();
+            }, 3000);
+            
+        }
+    </script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 </body>
 </html>

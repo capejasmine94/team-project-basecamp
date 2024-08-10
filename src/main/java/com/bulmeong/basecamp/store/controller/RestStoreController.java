@@ -497,4 +497,39 @@ public class RestStoreController {
 
         return restResponseDto;
     }
+
+    @RequestMapping("getOrderProductDataForRefund")
+    public RestResponseDto getOrderProductDataForRefund(@RequestParam("id") int id){
+        RestResponseDto restResponseDto = new RestResponseDto();
+
+        restResponseDto.add("orderProductData", storeService.getOrderProductDataForRefund(id));
+
+        return restResponseDto;
+    }
+
+    @RequestMapping("requestRefund")
+    public RestResponseDto requestRefund(){
+        RestResponseDto restResponseDto = new RestResponseDto();
+
+        return restResponseDto;
+    }
+
+    @RequestMapping("deleteCartProduct")
+    public RestResponseDto deleteCartProduct(@RequestParam("id") int id){
+        RestResponseDto restResponseDto = new RestResponseDto();
+
+        storeService.deleteCartProductData(id);
+
+        return restResponseDto;
+
+    }
+
+    @RequestMapping("productLike")
+    public RestResponseDto productLike(@RequestParam("id") int id){
+        RestResponseDto restResponseDto = new RestResponseDto();
+
+        
+
+        return restResponseDto;
+    }
 }

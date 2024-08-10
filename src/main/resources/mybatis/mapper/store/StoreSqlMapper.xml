@@ -235,11 +235,25 @@
         where proudct_id = #{proudct_id}
     </select>
 
-    <select id="selectProductWishCountByUserId" resultType="int">
+    <select id="selectProductWishCountByProductWishDto" resultType="int">
         select count(*) from product_wish
         where user_id = #{user_id}
         and product_id = #{product_id}
     </select>
+
+    <insert id="insertProductWish">
+        insert into product_wish(
+            user_id, product_id
+        )values(
+            #{user_id}, #{product_id}
+        )
+    </insert>
+
+    <delete id="deleteProductWish">
+        delete from product_wish
+        where user_id = #{user_id}
+        and product_id = #{product_id}
+    </delete>
 
     <select id="selectOptionNameListByProductId" resultType="com.bulmeong.basecamp.store.dto.ProductOptionNameDto">
         select * from product_option_name
@@ -536,6 +550,11 @@
         where id = #{id}
     </delete>
 
+    <delete id="deleteCartProductOptionValueByCartProductId">
+        delete from cart_product_option_value
+        where cart_product_id = #{cart_product_id}
+    </delete>
+
     <select id="selectStoreOrderDtoById" resultType="com.bulmeong.basecamp.store.dto.StoreOrderDto">
         select * from store_order
         where id = #{id}
@@ -549,6 +568,20 @@
         </if>
         <if test="filterOption=='주문완료'">
             and status in ('주문완료', '상품준비중')
+        </if>
+    </select>
+
+    <select id="selectOrderProductListForMyOrderListPage" resultType="com.bulmeong.basecamp.store.dto.OrderProductDto">
+        select * from order_product
+        where order_id = #{order_id}
+        <if test="filterOption!=null and filterOption!='전체' and filterOption!='주문완료' and filterOption!='상품준비중' and filterOption!='구매확정'">
+            and status = #{filterOption}
+        </if>
+        <if test="filterOption=='주문완료'">
+            and status in ('주문완료', '상품준비중')
+        </if>
+        <if test="filterOption=='구매확정'">
+            and status in ('구매확정', '리뷰작성완료')
         </if>
     </select>
 
@@ -691,6 +724,7 @@
             where sp.store_id = #{store_id}
             ) t1 on t1.id = sp.id
         where sp.store_id = #{store_id}
+        group by sp.id
     </select>
 
     <update id="updateOrderProductStatusToConfirm">
@@ -786,5 +820,17 @@
             #{review_id}, #{content}
         )
     </insert>
+
+    <select id="selectOrderProductDataForRefund" resultType="java.util.HashMap">
+        select so.delivery_address, so.receiver_name , so.phone, s.name as store_name, op.* from order_product op
+        inner join store_order so on op.order_id = so.id 
+        inner join store_product sp on sp.id = op.product_id 
+        inner join store s on s.id = sp.store_id 
+        where op.id = #{order_product_id}
+    </select>
+
+    <select id="selectRefundReasonList" resultType="com.bulmeong.basecamp.store.dto.ProductRefundReasonDto">
+        select * from refund_reason
+    </select>
 
 </mapper>

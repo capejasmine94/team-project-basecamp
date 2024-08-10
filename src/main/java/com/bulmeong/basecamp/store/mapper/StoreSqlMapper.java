@@ -15,8 +15,10 @@ import com.bulmeong.basecamp.store.dto.OrderProductDto;
 import com.bulmeong.basecamp.store.dto.OrderProductOptionValueDto;
 import com.bulmeong.basecamp.store.dto.ProductOptionNameDto;
 import com.bulmeong.basecamp.store.dto.ProductOptionValueDto;
+import com.bulmeong.basecamp.store.dto.ProductRefundReasonDto;
 import com.bulmeong.basecamp.store.dto.ProductReviewDto;
 import com.bulmeong.basecamp.store.dto.ProductSubcategoryDto;
+import com.bulmeong.basecamp.store.dto.ProductWishDto;
 import com.bulmeong.basecamp.store.dto.StoreBankAccountDto;
 import com.bulmeong.basecamp.store.dto.StoreDeliveryInfoDto;
 import com.bulmeong.basecamp.store.dto.StoreDto;
@@ -71,7 +73,9 @@ public interface StoreSqlMapper {
     public StoreDeliveryInfoDto selectDeliveryInfoDtoByStoreId(int store_id);
     public int selectProductWishCount(int product_id);
 
-    public int selectProductWishCountByUserId(int user_id, int product_id);
+    public int selectProductWishCountByProductWishDto(ProductWishDto productWishDto);
+    public void insertProductWish(ProductWishDto productWishDto);
+    public void deleteProductWish(ProductWishDto productWishDto);
 
     public List<ProductOptionNameDto> selectOptionNameListByProductId(int product_id);
     public List<ProductOptionValueDto> selectOptionValueListByOptionId(int option_id);
@@ -128,10 +132,12 @@ public interface StoreSqlMapper {
 
     public void deleteCartProduct(int id);
     public void deleteCartProductOptionValue(int id);
+    public void deleteCartProductOptionValueByCartProductId(int cart_product_id);
 
     public StoreOrderDto selectStoreOrderDtoById(int id);
 
     public List<OrderProductDto> selectOrderProductListByOrderId(@Param("order_id") int order_id, @Param("filterOption") String filterOption);
+    public List<OrderProductDto> selectOrderProductListForMyOrderListPage(@Param("order_id") int order_id, @Param("filterOption") String filterOption);
 
     public List<OrderProductDto> selectOrderProductListByStoreId(int store_id);
 
@@ -181,4 +187,9 @@ public interface StoreSqlMapper {
 
     public StoreSellerReplyDto selectStoreSellerReplyByReviewId(int review_id);
     public void insertSellerReply(StoreSellerReplyDto storeSellerReplyDto);
+
+    public Map<String, Object> selectOrderProductDataForRefund(int order_product_id);
+
+    public List<ProductRefundReasonDto> selectRefundReasonList();
+
 }

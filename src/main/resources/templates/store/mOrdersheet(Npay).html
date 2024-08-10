@@ -8,6 +8,9 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
     <script src="https://kit.fontawesome.com/7b271bba58.js" crossorigin="anonymous"></script>
     <script src="/public/js/store/store.js"></script>
+
+    <script src="/public/js/lockLikeMobile.js"></script>
+
     <link rel="stylesheet" href="/public/css/font.css">
 
     <style>
@@ -224,18 +227,20 @@
 <body class="bg-body-secondary">
 
     <!-- top-nav -->
-    <div class="fixed-top px-4 row border-bottom bg-white shadow-sm" style="z-index: 2000;">
-        <div class="col">
-            <div class="row py-3">
-                <div class="col text-start fw-bold f12">
-                    주문/결제
-                </div>
-                <div class="col-auto pe-0">
-                    <button id="backButton" class="border-0 bg-transparent d-flex align-items-center">
-                        <span class="material-symbols-outlined">
-                            close
-                        </span>
-                    </button>
+    <div class="container">
+        <div class="fixed-top px-4 row border-bottom bg-white shadow-sm" style="z-index: 2000;">
+            <div class="col">
+                <div class="row py-3">
+                    <div class="col text-start fw-bold f12">
+                        주문/결제
+                    </div>
+                    <div class="col-auto pe-0">
+                        <button id="backButton" class="border-0 bg-transparent d-flex align-items-center">
+                            <span class="material-symbols-outlined">
+                                close
+                            </span>
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>
@@ -280,11 +285,27 @@
                         </div>
                     </div>
                 </div>
-                <!-- <div class="row pb-4" th:unless="${userDeliveryInfoDto!=null}">
-                    <div class="col py-3 rounded-3 bg-white border">
-                        
+                <div class="row pb-4" th:unless="${userDeliveryInfoDto!=null}">
+                    <div class="col py-3 f09 text-center rounded-3 bg-white border">
+                        <div class="row">
+                            <div class="col">
+                                등록된 배송지가 없습니다.
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                배송지를 등록해주세요.
+                            </div>
+                        </div>
+                        <div class="row pt-2">
+                            <div class="col">
+                                <button class="btn btn-sm f09 border">
+                                    배송지 등록
+                                </button>
+                            </div>
+                        </div>
                     </div>
-                </div> -->
+                </div>
 
                 <div class="row py-2 fw-semibold f12">
                     <div class="col p-0">
@@ -538,18 +559,20 @@
 
     </div>
 
-    <div class="row px-3 bg-white fixed-bottom border-top pt-2 pb-4">
-        <div class="col">
-            <div class="row pt-2">
-                <div class="col d-grid">
-                    <a onclick="submitPayment()" type="button" class="btn btn-dark py-2 fw-bold">
-                        <span class="paymentAmount">31,000</span>원 결제하기
-                    </a>
+    <div class="container">
+        <div class="row px-3 bg-white fixed-bottom border-top pt-2 pb-4">
+            <div class="col">
+                <div class="row pt-2">
+                    <div class="col d-grid">
+                        <a onclick="submitPayment()" type="button" class="btn btn-dark py-2 fw-bold">
+                            <span class="paymentAmount">31,000</span>원 결제하기
+                        </a>
+                    </div>
                 </div>
-            </div>
-            <div class="row pt-2 text-center">
-                <div class="col" style="font-size: 0.75em;">
-                    약관 및 주문 내용을 확인하였으며, 정보 제공 등에 동의합니다.
+                <div class="row pt-2 text-center">
+                    <div class="col" style="font-size: 0.75em;">
+                        약관 및 주문 내용을 확인하였으며, 정보 제공 등에 동의합니다.
+                    </div>
                 </div>
             </div>
         </div>

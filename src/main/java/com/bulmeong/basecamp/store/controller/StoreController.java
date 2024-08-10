@@ -45,8 +45,7 @@ public class StoreController {
         Map<String, Object> productData = storeService.getProductDataByProductId(id);
         model.addAttribute("productData", productData);
 
-        // return "store/mProductDetails";
-        return "store/newProductDetails";
+        return "store/mProductDetails";
     }
 
     @RequestMapping("cart")
@@ -121,7 +120,10 @@ public class StoreController {
     }
 
     @RequestMapping("orderRefund")
-    public String orderRefund(){
+    public String orderRefund(@RequestParam("id") int id, Model model){
+
+        model.addAttribute("orderProductData", storeService.getOrderProductDataForRefund(id));
+        model.addAttribute("refundReasonList", storeService.getRefundReasonList());
 
         return "store/mOrderRefund";
     }
@@ -142,7 +144,7 @@ public class StoreController {
     }
 
     @RequestMapping("deliveryForm")
-    public String deliveryForm(){
+    public String deliveryForm(@RequestParam("prevPage") String prevPage){
 
         return "store/mDeliveryForm";
     }
@@ -169,6 +171,12 @@ public class StoreController {
         model.addAttribute("orderStatusCountData", storeService.getOrderStatusCountData(userDto.getId()));
 
         return "store/mMyReview";
+    }
+
+    @RequestMapping("refundRequestComplete")
+    public String refundRequestComplete(){
+
+        return "store/mRefundRequestComplete";
     }
 
     // @RequestMapping("tempLogin")

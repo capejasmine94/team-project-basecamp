@@ -8,6 +8,8 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
     <link rel="stylesheet" href="/public/css/font.css">
 
+    <script src="/public/js/lockLikeMobile.js"></script>
+
     <script src="https://kit.fontawesome.com/7b271bba58.js" crossorigin="anonymous"></script>
 
     <style>
@@ -89,20 +91,22 @@
 <body class="bg-body-tertiary">
 
     <!-- top-nav -->
-    <div class="fixed-top px-4 row border-bottom bg-white py-3 align-items-center">
-        <a id="backButton" class="col-auto ps-0 d-flex align-items-center">
-            <span class="material-symbols-outlined fw-light">
-                arrow_back_ios
-            </span>
-        </a>
-        <div class="col ps-0 f12 text-center fw-semibold">
-            <span>배송지 관리</span>
+    <div class="container">
+        <div class="fixed-top px-4 row border-bottom bg-white py-3 align-items-center">
+            <a id="backButton" class="col-auto ps-0 d-flex align-items-center">
+                <span class="material-symbols-outlined fw-light">
+                    arrow_back_ios
+                </span>
+            </a>
+            <div class="col ps-0 f12 text-center fw-semibold">
+                <span>배송지 관리</span>
+            </div>
+            <a href="/store/cart" class="col-auto pe-0 d-flex align-items-center text-black">
+                <span class="material-symbols-outlined fw-light">
+                    shopping_bag
+                </span>
+            </a>
         </div>
-        <a href="/store/cart" class="col-auto pe-0 d-flex align-items-center text-black">
-            <span class="material-symbols-outlined fw-light">
-                shopping_bag
-            </span>
-        </a>
     </div>
 
     <div class="container" style="padding-top: 60.792px;">
@@ -111,7 +115,7 @@
             <div class="col">
                 <div class="row px-3 py-4 text-center">
                     <div class="col p-0 d-grid">
-                        <a href="/store/deliveryForm" class="btn py-3 btn-outline-dark rounded-0 fw-semibold">
+                        <a href="/store/deliveryForm?prevPage=addressBook" class="btn py-3 btn-outline-dark rounded-0 fw-semibold">
                             신규 배송지 등록하기
                         </a>
                     </div>
