@@ -22,7 +22,6 @@ import com.bulmeong.basecamp.club.service.ClubService;
 import com.bulmeong.basecamp.common.dto.RestResponseDto;
 import com.bulmeong.basecamp.user.dto.UserDto;
 
-import ch.qos.logback.core.model.Model;
 import jakarta.servlet.http.HttpSession;
 
 @RestController
@@ -177,6 +176,18 @@ public class RestClubController {
         restResponseDto.add("clubMemberData", clubMemberData);
         return restResponseDto;
     }
+
+    @GetMapping("upcomingMeeting")
+    public RestResponseDto getUpcommingMeetingData(@RequestParam("meeting_date") String meetind_date){
+        RestResponseDto restResponseDto = new RestResponseDto();
+        List<Map<String,Object>> upcomingMeetingList = clubService.getUpcomingMeetingData(meetind_date);
+
+        restResponseDto.add("upcomingMeetingList", upcomingMeetingList);
+        
+        
+        return restResponseDto;
+    }
+
     
 
     public RestResponseDto template(){

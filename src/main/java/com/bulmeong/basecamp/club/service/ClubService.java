@@ -556,6 +556,7 @@ public class ClubService {
            
            List<ClubPostDto> clubPostDtoList = clubSqlMapper.selectAllPosts();
             for(ClubPostDto clubPostDto : clubPostDtoList){
+                Map<String, Object> mapForHotPosts = new HashMap<>();
                 int postPk = clubPostDto.getId();
                 List<ClubPostImageDto> clubPostImageList = clubSqlMapper.selectPostImageList(postPk);
                 String postCategory = clubSqlMapper.selectPostCategoryName(clubPostDto.getCategory_id());
@@ -564,7 +565,6 @@ public class ClubService {
                 ClubDto clubDto = clubSqlMapper.selectClubDtoById(clubPostDto.getClub_id());
                 String clubCategory = clubSqlMapper.selectClubCategoryName(clubDto.getCategory_id());
 
-                Map<String, Object> mapForHotPosts = new HashMap<>();
                 mapForHotPosts.put("clubPostDto", clubPostDto);
                 mapForHotPosts.put("clubPostImageList", clubPostImageList);
                 mapForHotPosts.put("postCategory", postCategory);
@@ -577,6 +577,31 @@ public class ClubService {
             }
             
                 return hotPostsList;
+        }
+
+        // 다가오는 정모 일정
+        public List<Map<String, Object>> getUpcomingMeetingData(String meeting_data){
+           List<ClubMeetingDto> upcomingMeetingDataList = clubSqlMapper.selectUpcomingMeetigDataList(meeting_data);
+           List<Map<String, Object>> upcomingMeetingList = new ArrayList<>();
+
+        for(ClubMeetingDto upcomingMeetingDto : upcomingMeetingDataList){
+            Map<String, Object> upcomingMeetingMap = new HashMap<>();
+            int meetingPk = upcomingMeetingDto.getId();
+            int meetingMemberCount = clubSqlMapper.selectMeetingMemberCount(meetingPk);
+            ClubDto clubDto = clubSqlMapper.selectClubDtoById(upcomingMeetingDto.getClub_id());
+            ClubRegionCategoryDto clubRegionCategoryDto = clubSqlMapper.selectRegionCategoryDtoById(clubDto.getCategory_id());
+
+            upcomingMeetingMap.put("upcomingMeetingDto", upcomingMeetingDto);
+            upcomingMeetingMap.put("meetingMemberCount", meetingMemberCount);
+            upcomingMeetingMap.put("clubDto", clubDto);
+            upcomingMeetingMap.put("clubRegionCategoryDto", clubRegionCategoryDto);
+
+            upcomingMeetingList.add(upcomingMeetingMap);
+
+           }
+          
+           return upcomingMeetingList;
+
         }
 
 

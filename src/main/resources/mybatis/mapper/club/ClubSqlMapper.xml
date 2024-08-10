@@ -200,11 +200,7 @@
         where post_id = #{post_id}
     </select>
 
-    <!-- 하나의 소모임 DTO 가져오기 by id -->
-    <select id="selectClubDtoById" resultType="com.bulmeong.basecamp.club.dto.ClubDto">
-        select * from bc_club
-        where id = #{id}
-    </select>
+
 
     <!-- 하나의 소모임 카테고리 가져오기 -->
     <select id="findClubCategoryNameById" resultType="String">
@@ -213,11 +209,7 @@
     </select>
     
 
-    <!-- 지역카테고리 DTO 가져오기 by id-->
-    <select id="selectRegionCategoryDtoById" resultType="com.bulmeong.basecamp.club.dto.ClubRegionCategoryDto">
-        select * from bc_club_region_category
-        where id=#{id}
-    </select>
+
 
 
 
@@ -580,4 +572,41 @@
         select category_name from bc_club_category
         where id = #{id}
     </select>
+
+
+
+
+    <!-- 다가오는 정기모임 -->
+    <!-- 특정일자의 정기모임 -->
+    <select id="selectUpcomingMeetigDataList" resultType="com.bulmeong.basecamp.club.dto.ClubMeetingDto">
+        select * from bc_club_meeting
+        where meeting_date = #{meeting_date}
+    </select>
+
+    <!-- 정모 참석자수 -->
+    <select id="selectMeetingMemberCount" resultType="int">
+        select count(*) from bc_club_meeting_member
+        where meeting_id = #{meeting_id}
+    </select>
+
+    <!-- 하나의 소모임 DTO 가져오기 by id -->
+    <select id="selectClubDtoById" resultType="com.bulmeong.basecamp.club.dto.ClubDto">
+        select * from bc_club
+        where id = #{id}
+    </select>
+
+    <!-- 지역카테고리 DTO 가져오기 by id-->
+    <select id="selectRegionCategoryDtoById" resultType="com.bulmeong.basecamp.club.dto.ClubRegionCategoryDto">
+        select * from bc_club_region_category
+        where id=#{id}
+    </select>
+
+
+
+
+
+
+
+
+
 </mapper>

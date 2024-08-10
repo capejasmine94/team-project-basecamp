@@ -107,6 +107,12 @@ public interface ClubSqlMapper {
     public int countTotalMeetingMember(int id);
     public String findClubCategoryNameById(int id);
 
+    // 날짜별 정모 리스트
+    public List<ClubMeetingDto> selectUpcomingMeetigDataList(String meeting_date);
+
+    // 정모 참여 명수
+    public int selectMeetingMemberCount(int meeting_id);
+
     // 정모 개수 집계
     public int countTotalMeeting(int id);
 

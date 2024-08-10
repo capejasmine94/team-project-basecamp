@@ -8,15 +8,14 @@
         <link href="/public/css/common.css" rel="stylesheet">
         <link rel="stylesheet" href="/public/css/common.css">
         <link rel="stylesheet" href="/public/css/basecamp.css">
+        
 
-        <!-- 메인페이지 css 복사 시작 -->
         <style>
         .fixed-image-size {
             width: 100%;
             height: 100%;
             object-fit: cover;
         }
-        /* 복사 끝 */
 
         .snap-overflow > div {
             scroll-snap-align: start;
@@ -58,36 +57,77 @@
         text-decoration: underline;
         }
 
-        
+        .date-circle {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    transition: background-color 0.3s, color 0.3s;
+    cursor: pointer;
+    color: #999999; /* 기본적으로 회색 텍스트 */
+}
 
+.date-circle.selected {
+    background-color: black;
+    color: white; /* 선택된 상태에서 텍스트 색상 변경 */
+}
 
+.date-circle .meeting-day {
+    font-size: 0.8em;
+    font-weight: 300;
+    line-height: 1; 
+    /* 줄 간격을 줄여서 요소 간격을 좁힘 */
+}
 
+.date-circle .meeting-date {
+    font-size: 0.9em;
+    font-weight: 600;
+    /* line-height: 1;  */
+    /* 줄 간격을 줄여서 요소 간격을 좁힘 */
+}
+
+.date-container {
+    display: flex;
+    justify-content: space-between;
+    max-width: 400px;
+    margin: 0 auto;
+}
+
+.date-container .col {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
 
         
         </style>
 
         
     </head>
-    <body class="bg-body-tertiary">
-      
-        <div class="fixed-top px-4 row border-bottom py-3 shadow-sm bg-white">
-            <a href="/" class="col-auto ps-0 fw-bold align-items-center f12 text-black">
-                Community
-            </a>
-            <div class="col"></div>
-            <div class="col-auto pe-0 text-end pt-1 d-flex align-items-center">
-                <span class="material-symbols-outlined">
-                    search
-                </span>
-            </div>
-            <a href="/store/cart" class="col-auto pe-0 d-flex align-items-center text-black">
-                <span class="material-symbols-outlined">
-                    shopping_bag
-                </span>
-            </a>
-        </div>
+    <body>
   
-        <div class="container" style="padding-top: 60.792px;">
+        <div class="container bg-body-tertiary" style="padding-top: 60.792px;">
+
+            <div class="fixed-top px-4 row border-bottom py-3 shadow-sm bg-white">
+                <a href="/" class="col-auto ps-0 fw-bold align-items-center f12 text-black">
+                    Community
+                </a>
+                <div class="col"></div>
+                <div class="col-auto pe-0 text-end pt-1 d-flex align-items-center">
+                    <span class="material-symbols-outlined">
+                        search
+                    </span>
+                </div>
+                <a href="/store/cart" class="col-auto pe-0 d-flex align-items-center text-black">
+                    <span class="material-symbols-outlined">
+                        shopping_bag
+                    </span>
+                </a>
+            </div>
+
 
             <!-- 전체 박스 -->
                 <div class="row">
@@ -283,15 +323,15 @@
                         </div>
 
                         <!-- 새로운 모임 박스 -->
-                        <div class="row bg-white px-3 pt-3 pb-3 mb-3">
+                        <div class="row bg-white px-0 pt-3 pb-3 mb-3 overflow-x-hidden">
                             <div class="col px-0">
 
-                                <div class="row  py-2">
+                                <div class="row px-3  py-2">
                                     <div class="col">
                                         <span class="text-success fw-semi-bold" th:text="${userDto.nickname}">닉네임</span> 님, 이런 소모임은 어떠세요?
                                     </div>
                                 </div>
-                                <div class="row pt-2 pb-0 pb-0">
+                                <div class="row pt-2 px-3 pb-0">
                                     <div class="col text-secondary" style="font-size: 0.9em;">
                                         <a href="/club/newClubs"><span class="text-secondary">신규 소모임 더보기 <i class="bi bi-chevron-right"></i></span></a>
                                     </div>
@@ -299,10 +339,10 @@
                             
                                 <!-- 새로운 모임 오버플로우-->
                             
-                                <div class="row ms-1 me-1 mb-2 mt-0 pt-0">
-                                    <div class="col scroll-list-box overflow-x-auto best-items-scroll">
+                                <div class="row mb-2 mt-0 pt-0">
+                                    <div class="col ps-3 scroll-list-box overflow-x-auto best-items-scroll">
                                     
-                                        <div class="row py-2 flex-nowrap">
+                                        <div class="row px-4 py-2 flex-nowrap">
                                             <div class="col-7" th:each="clubDto : ${clubDtoList}">
 
                                                 <div class="row border me-1 rounded-top border-bottom-0" style="height: 8em; overflow: hidden">
@@ -340,40 +380,104 @@
                             </div>
                         </div>
 
+                        <div class="row bg-white">
+                            <div class="col">
+
+                                <div class="row py-3">
+                                    <div class="col fw-semi-bold">
+                                        다가오는 정기모임
+                                    </div>
+                                    <div class="col-auto text-secondary text-end" style="font-size: 0.8em;">
+                                        더보기
+                                    </div>
+                                </div>
+
+                                <div class="date-container">
+                                    <div class="date-circle">
+                                        <div class="meeting-day"></div>
+                                        <div class="meeting-date"></div>
+                                    </div>
+                                    <div class="date-circle">
+                                        <div class="meeting-day"></div>
+                                        <div class="meeting-date"></div>
+                                    </div>
+                                    <div class="date-circle">
+                                        <div class="meeting-day"></div>
+                                        <div class="meeting-date"></div>
+                                    </div>
+                                    <div class="date-circle">
+                                        <div class="meeting-day"></div>
+                                        <div class="meeting-date"></div>
+                                    </div>
+                                    <div class="date-circle">
+                                        <div class="meeting-day"></div>
+                                        <div class="meeting-date"></div>
+                                    </div>
+                                    <div class="date-circle">
+                                        <div class="meeting-day"></div>
+                                        <div class="meeting-date"></div>
+                                    </div>
+                                    <div class="date-circle">
+                                        <div class="meeting-day"></div>
+                                        <div class="meeting-date"></div>
+                                    </div>
+                                </div>
+                                <div class="row pt-3 overflow-x-auto flex-nowrap" id="upcoming-meeting-wrapper-box">
+                                    
+
+                                    
+                                </div>
+
+                            </div>
+                        </div>
+
                          
                         
 
                     <!-- 인기 게시글 오버플로우 -->
-                        <div class="row bg-white px-3 pb-4 mb-3 " >
-                            <div class="col">
+                        <div class="row bg-white px-0 pb-4 mb-3 overflow-x-hidden" >
+                            <div class="col px-0">
 
-                                <div class="row pt-4 pb-2">
+                                <div class="row pt-4 pb-2 ps-4">
                                     <div class="col ps-0">
-                                       <span>인기 게시글</span>
+                                       <span>오늘의 인기글</span>
                                     </div>
                                 </div>
 
                                    
-                                <div class="row ms-1 me-1 mb-2 mt-0 pt-0">
+                                <div class="row mb-2 mt-0 pt-0">
                                     <div class="col scroll-list-box overflow-x-auto best-items-scroll">
                                     
-                                        <div class="row py-2 flex-nowrap">
-                                            <div class="col-11" th:each="hotPostData : ${hotPostDataList}">
+                                        <div class="row py-2 ps-4 flex-nowrap">
+                                            <div class="col-10" th:each="hotPostData, iterStat : ${hotPostDataList}" th:if="${iterStat.index &lt; 10}">
 
-                                                <div class="row p-3 border rounded shadow-sm me-1" style="overflow: hidden; height: 100%;">
+                                                <div class="row p-3 border rounded-3 shadow-sm me-1" style="overflow: hidden; height: 100%;">
                                                     <div class="col px-0 pb-0 mb-0">
 
                                                         <div class="row py-2">
-                                                            <div class="col-9">
-                                                                <span th:text="${hotPostData.clubPostDto.title}"></span>
+                                                            <div class="d-flex align-items-center w-100">
+                                                                <div class="flex-grow-1 text-truncate" style="font-size: 0.9em; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
+                                                                    <span th:text="${hotPostData.clubPostDto.title}"></span>
+                                                                </div>
+                                                                <div class="d-flex align-items-center text-secondary ms-2" style="font-size: 0.8em; white-space: nowrap;">
+                                                                    <span class="material-symbols-outlined thin-icon" style="margin-right: 4px;">
+                                                                        visibility
+                                                                    </span>
+                                                                    <span th:text="${hotPostData.clubPostDto.read_count}"></span>
+                                                                </div>
                                                             </div>
-                                                            <div class="col align-items-center d-flex text-secondary" style="font-size: 0.8em;">
+                                                        </div>
+                                                        <!-- <div class="row py-2">
+                                                            <div class="col-auto text-truncate" style="font-size: 0.9em; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
+                                                                <span class="text-truncate" th:text="${hotPostData.clubPostDto.title}"></span>
+                                                            </div>
+                                                            <div class="col-auto ms-auto text-secondary align-items-center d-flex" style="font-size: 0.8em; white-space: nowrap;">
                                                                 <span class="material-symbols-outlined thin-icon">
                                                                     visibility
                                                                     </span>
                                                                 <span th:text="${hotPostData.clubPostDto.read_count}"></span>
                                                             </div>
-                                                        </div>
+                                                        </div> -->
                                                         <div class="row pt-2 text-secondary" style="font-size: 0.8em;">
                                                             <div class="col align-items-center d-flex">
                                                                 <span class="material-symbols-outlined thin-icon">
@@ -391,35 +495,35 @@
                                                             </div>
                                                         </div>
                                                         <div class="row py-2">
-                                                            <div class="col pe-0" th:attr="data-image=${hotPostData.clubPostImageList.size()}">
+                                                            <div class="col pe-0">
                                                                 <div class="row" th:if="${hotPostData.clubPostImageList.size() == 1}">
                                                                     <div class="col ps-3 pe-4">
-                                                                        <img th:src="|/images/${hotPostData.clubPostImageList[0].post_img_location}|" class="img-fluid" style="height: 8em; width: 100%;">
+                                                                        <img th:src="|/images/${hotPostData.clubPostImageList[0].post_img_location}|" class="img-fluid" style="height: 8em; width: 100%; object-fit: cover; object-position: center;">
                                                                     </div>
                                                                 </div>
 
                                                                 <div class="row" th:if="${hotPostData.clubPostImageList.size() == 2}">
-                                                                    <div class="col pe-1">
-                                                                        <img th:src="|/images/${hotPostData.clubPostImageList[0].post_img_location}|" class="img-fluid" style="height: 8em;">
+                                                                    <div class="col pe-0">
+                                                                        <img th:src="|/images/${hotPostData.clubPostImageList[0].post_img_location}|" class="img-fluid" style="height: 8em; object-fit: cover; object-position: center; padding-right: 0.125em;">
                                                                     </div>
-                                                                    <div class="col ps-1 pe-4">
-                                                                        <img th:src="|/images/${hotPostData.clubPostImageList[1].post_img_location}|" class="img-fluid" style="height: 8em;">
+                                                                    <div class="col ps-0 pe-4">
+                                                                        <img th:src="|/images/${hotPostData.clubPostImageList[1].post_img_location}|" class="img-fluid" style="height: 8em; object-fit: cover; object-position: center; padding-left: 0.125em;">
                                                                     </div>
                                                                 </div>
 
                                                                 <div class="row" th:if="${hotPostData.clubPostImageList.size() > 2}">
                                                                     <div class="col-7 pe-1">
-                                                                        <img th:src="|/images/${hotPostData.clubPostImageList[0].post_img_location}|" class="img-fluid" style="width: 100%; height: 8em;">
+                                                                        <img th:src="|/images/${hotPostData.clubPostImageList[0].post_img_location}|" class="img-fluid" style="width: 100%; height: 8em; object-fit: cover; object-position: center;">
                                                                     </div>
                                                                     <div class="col ps-0 pe-4">
                                                                         <div class="row">
                                                                             <div class="col">
-                                                                                <img th:src="|/images/${hotPostData.clubPostImageList[1].post_img_location}|" class="img-fluid" style="width: 100%; height: 3.88em;">
+                                                                                <img th:src="|/images/${hotPostData.clubPostImageList[1].post_img_location}|" class="img-fluid" style="width: 100%; height: 3.88em; object-fit: cover; object-position: center;">
                                                                             </div>
                                                                         </div>
                                                                         <div class="row mt-1">
                                                                             <div class="col">
-                                                                                <img th:src="|/images/${hotPostData.clubPostImageList[2].post_img_location}|" class="img-fluid" style="width: 100%; height: 3.88em;">
+                                                                                <img th:src="|/images/${hotPostData.clubPostImageList[2].post_img_location}|" class="img-fluid" style="width: 100%; height: 3.88em; object-fit: cover; object-position: center;">
                                                                             </div>
                                                                         </div>
                                                                     </div>
@@ -430,7 +534,7 @@
                                                         
                                                         </div>
                                                         <div class="row pb-2">
-                                                            <div class="col text-truncate">
+                                                            <div class="col ellipsis-line-two">
                                                                 <span style="font-size: 0.8em;" th:text="${hotPostData.clubPostDto.content}"></span>
                                                             </div>
                                                         </div>
@@ -445,26 +549,6 @@
                                     </div>
                                 </div>
                                 
-
-                                <!-- <div class="row border rounded-top border-bottom-0" style="height: 6em; overflow: hidden">
-                                    <div class="col px-0 pb-0 mb-0">
-                                        <img src="/public/img/clubImage/fake.jpeg" class="img-fluid rounded-top" style="width: 100%; height: 100%;" >
-                                    </div>
-                                </div>
-                                <div class="row border shadow-sm rounded-bottom border-top-0 justify-content-center" style="height: 6em;">
-                                    <div class="col">
-                                        <div class="row pt-3 mt-1">
-                                            <div class="col text-center fw-semi-bold" style="font-size: 0.9em;">
-                                                <span>ENGLISH CAMP FOR SUMMER VACATION</span>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col ellipsis-line-two text-secondary text-center" style="font-size: 0.8em;">
-                                                <span>Slow and Steady Wins the Race! Read and Enjoy English Books every single day!</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div> -->
 
                             </div>
                         </div>
@@ -735,8 +819,61 @@
 </div>
 
 
+<!-- 다가오는 정기모임 템플릿 -->
+ <div class="row d-none">
+    <div class="col-5">
+
+        <div class="row">
+            <div class="col">
+                <img src="/public/img/clubImage/carousel1.png" class="img-fluid rounded">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+               
+                <div class="row">
+                    <div class="col fw-semi-bold" style="font-size: 0.8em;">
+                        08/13 (화) 보드게임
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col text-secondary" style="font-size: 0.7em;">
+                        서울강남구 . 이름
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col" style="font-size: 0.8em;">
+                       <span class="text-success">4명 참가중</span>
+                       <span class="text-secondary"> (4/4)</span>
+                    </div>
+                </div>
+    
+            </div>
+        </div>
+    
+    </div>
+ </div>
+<!-- 다가오는 정기모임 템플릿 끝 -->
+
+
+<div class="container fixed-bottom mb-5 pb-4 pe-2">
+    <div class="row justify-content-end mb-4">
+        <a href="" class="col-auto bg-light ps-2 py-2 shadow rounded-pill text-decoration-none">
+            <div class="row text-dark">
+                <div class="col-auto pe-0 align-self-center d-flex">
+                    <span class="material-symbols-outlined fs-3">add</span>
+                </div>
+                <div class="col ps-0 fs-7 fw-medium d-flex align-self-center text-center" style="letter-spacing: -0.5px;">
+                    일정 만들기
+                </div>
+            </div>
+        </a>
+    </div>
+</div>
          
    
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script> 
+        <script src="/public/js/lockLikeMobile.js"></script>
+        <script src="/public/js/club/clubMain.js"></script>   
     </body>
 </html>
