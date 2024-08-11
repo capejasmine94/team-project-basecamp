@@ -30,7 +30,9 @@ function getUserData(){
     .then(response => {
         console.log(response.data.clubMemberData);
 
-        const profileImage = document.getElementById('profile-image')
+        const profileImage = document.getElementById('profile-image');
+        console.log(profileImage);
+        
         if (response.data.clubMemberData.userDto.profile_image === 'default') {
             profileImage.src = '/public/img/clubImage/profile.jpg';
         } else {
@@ -39,6 +41,8 @@ function getUserData(){
 
         const nickname = document.getElementById('nickname')
         nickname.innerText = response.data.clubMemberData.userDto.nickname;
+        console.log(nickname);
+        
 
         const account = document.getElementById('account')
         account.innerText = response.data.clubMemberData.userDto.account;
@@ -51,6 +55,16 @@ function getUserData(){
         
         const roleId = document.getElementById('role-id')
         roleId.value = response.data.clubMemberData.clubMemberDto.role_id;
+
+        const toastTrigger = document.getElementById('role-update')
+        const toastLiveExample = document.getElementById('liveToast')
+
+        if (toastTrigger) {
+        const toastBootstrap = bootstrap.Toast.getOrCreateInstance(toastLiveExample)
+        toastTrigger.addEventListener('click', () => {
+        toastBootstrap.show()
+  })
+}
     })
 }
 

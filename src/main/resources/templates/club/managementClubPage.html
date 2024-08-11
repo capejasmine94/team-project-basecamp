@@ -37,7 +37,7 @@
                              <div class="row pb-1 text-secondary">
                                 <div class="col">
                                     <span>since </span>
-                                    <span th:text="${clubDetail.clubDto.created_at}"></span>
+                                    <span th:text="${#dates.format(clubDetail.clubDto.created_at, 'yyyy. MM. dd')}"></span>
                                 </div>
                              </div>
                              <div class="row text-secondary">
