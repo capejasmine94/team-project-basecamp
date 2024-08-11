@@ -184,6 +184,7 @@ public class RestClubController {
 
         restResponseDto.add("upcomingMeetingList", upcomingMeetingList);
         
+        System.out.println(meetind_date);
         
         return restResponseDto;
     }

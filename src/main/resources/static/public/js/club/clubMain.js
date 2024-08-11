@@ -19,8 +19,9 @@ function getWeek() {
 
             // dateElements에 날짜와 관련된 data-date 속성 설정
             const fullDate = new Date();
+
             fullDate.setDate(fullDate.getDate() + index);
-            const formattedDate = fullDate.toISOString().split('T')[0]; // YYYY-MM-DD 형식
+            const formattedDate = formatDateDetail(fullDate);
 
             dateElements[index].setAttribute('data-date', formattedDate);
 
@@ -72,13 +73,92 @@ function getWeekDates() {
 
 // 다가오는 미팅 목록을 가져오는 함수
 function getUpcomingMeetingList(selectedDate) {
-    fetch(`/api/club/upcomingMeeting?meeting_date=${selectedDate}`)
+    fetch(`/api/club/upcomingMeeting?meeting_date=${selectedDate}`, {
+        method: 'GET'
+    })
         .then(response => response.json())
         .then(response => {
             console.log(response); // API로부터 받은 데이터를 처리
-            // 여기에 데이터를 DOM에 추가하는 코드를 작성합니다.
+            const upcomingMeetingWrapperBox = document.getElementById('upcoming-meeting-wrapper-box')
+            upcomingMeetingWrapperBox.innerHTML = '';
+
+            for(const upcomingMeetingData of response.data.upcomingMeetingList){
+                const upcomingMeetingTemplate = document.getElementById('upcoming-meeting-template');
+                const upcomingMeetingWrapper = upcomingMeetingTemplate.querySelector('.upcoming-meeting-wrapper');
+
+                const newUpcomingMeetingWrapper = upcomingMeetingWrapper.cloneNode(true);
+
+                const upcomingMeetingImage = newUpcomingMeetingWrapper.querySelector('.upcoming-meeting-image');
+                upcomingMeetingImage.src = `/images/${upcomingMeetingData.upcomingMeetingDto.main_image}`;
+
+                const upcomingMeetingDate = newUpcomingMeetingWrapper.querySelector('.upcoming-meeting-date');
+
+                // meetingDateString 변수 선언
+                const meetingDateString = upcomingMeetingData.upcomingMeetingDto.meeting_date;
+
+                // Date 객체로 변환 (로컬 시간대 고려)
+                const meetingDate = new Date(meetingDateString);
+
+                // 날짜 형식을 8/11 형태로 변환
+                const month = meetingDate.getMonth() + 1; // 월은 0부터 시작하므로 +1
+                const day = meetingDate.getDate(); // 날짜를 가져옴
+
+                // 요일을 숫자로 가져옴 (0: 일요일, 1: 월요일, ..., 6: 토요일)
+                const dayOfWeekNumber = meetingDate.getDay();
+
+                // 숫자를 요일 이름으로 변환하기 위한 배열
+                const daysOfWeek = ['일', '월', '화', '수', '목', '금', '토'];
+
+                // 요일 이름 가져오기
+                const dayOfWeek = daysOfWeek[dayOfWeekNumber];
+
+                // 형식: 8/11 (목)
+                const formattedDate = `${month}/${day} (${dayOfWeek})`;
+
+                upcomingMeetingDate.innerText = formattedDate;
+
+
+                const upcomingMeetingName = newUpcomingMeetingWrapper.querySelector('.upcoming-meeting-name');
+                upcomingMeetingName.innerText = upcomingMeetingData.upcomingMeetingDto.name;
+
+                const upcomingMeetingLocation = newUpcomingMeetingWrapper.querySelector('.upcoming-meeting-location');
+                upcomingMeetingLocation.innerText = upcomingMeetingData.upcomingMeetingDto.location;
+
+                const upcomingMeetingClub = newUpcomingMeetingWrapper.querySelector('.upcoming-meeting-club');
+                upcomingMeetingClub.innerText = upcomingMeetingData.clubDto.name;
+
+                const upcomingMeetingMemberCounts = newUpcomingMeetingWrapper.querySelectorAll('.upcoming-member-count');
+                for(const upcomingMeetingMemberCount  of upcomingMeetingMemberCounts) {
+                    upcomingMeetingMemberCount.innerText = upcomingMeetingData.meetingMemberCount;
+                }
+               
+
+                const upcomingMeetingCapacity = newUpcomingMeetingWrapper.querySelector('.upcoming-capacity');
+                upcomingMeetingCapacity.innerText = upcomingMeetingData.upcomingMeetingDto.capacity;
+
+                upcomingMeetingWrapperBox.appendChild(newUpcomingMeetingWrapper);
+            }
+               
         })
-        .catch(error => {
-            console.error('Error fetching upcoming meetings:', error);
-        });
+        
 }
+
+function formatDateDetail(inputDate) {
+    const date = new Date(inputDate);
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, '0'); // 월은 0부터 시작하므로 +1
+    const day = String(date.getDate()).padStart(2, '0'); // 일은 그대로 가져옴
+
+    return `${year}-${month}-${day}`;
+}
+
+
+function formatDate(inputDate) {
+    const date = new Date(inputDate);
+    const month = String(date.getMonth() + 1).padStart(2, '0'); // 월은 0부터 시작하므로 +1
+    const day = String(date.getDate()).padStart(2, '0'); // 일은 그대로 가져옴
+
+    return `${month}/${day}`;
+}
+
+
