@@ -353,8 +353,22 @@
 
             <div class="tab-pane fade" id="review-tab-pane" role="tabpanel" aria-labelledby="review-tab" tabindex="0">
                 <div class="row py-1">
-                    <div class="col" th:if="isAlreadyOrdered">
-                        
+                    <div class="col" th:if="${isAlreadyOrdered}">
+                        <div class="row mt-2 border-bottom pb-2" th:unless="${isAlreadyReviewed}">
+                            <div class="col">
+                                <div class="row">
+                                    <div class="col new-fs-8 text-secondary">리뷰를 작성하실 수 있습니다!</div>
+                                </div>
+                                <div class="row my-2">
+                                    <div class="col">
+                                        <textarea class="form-control" name="write_review" id="write_review" row="3"></textarea>
+                                    </div>
+                                    <div class="col-3">
+                                        <button class="btn btn-primary">리뷰 작성</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <div class="row mt-3">
@@ -539,7 +553,6 @@
     function reservation() {
         location.href ='/camp/reservation?area_id=' + curArea.dto.id;
     }
-    selectCamp();
 </script>
 </body>
 </html>

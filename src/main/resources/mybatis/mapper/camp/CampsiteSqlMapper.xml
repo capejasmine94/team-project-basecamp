@@ -333,6 +333,14 @@
                 process = '대기'
             where id = #{id}
         </update>
+
+        <!-- 날짜 확인하여 예약 수정 -->
+        <update id="updateOrder">
+            UPDATE bc_campsite_order
+            SET 
+                progress = '완료'
+            where id = #{order_id}
+        </update>
         
         <!-- 포인트 추가 -->
         <insert id="registerPoint">
@@ -471,11 +479,38 @@
                 c.id = #{campsite_id};
          </select>
 
+        <!-- 모든 예약 리스트 -->
+         <select id="getOrderList" resultType="com.bulmeong.basecamp.camp.dto.CampsiteOrderDto">
+            select * from bc_campsite_order;
+         </select>
+
         <select id="getOrderByUserId" resultType="com.bulmeong.basecamp.camp.dto.CampsiteOrderDto">
             SELECT odr.* from bc_campsite_order odr
             inner join bc_campsite_order_userinfo uinfo
             on odr.id = uinfo.order_id
             where user_id = #{user_id}
+        </select>
+
+        <!-- 이미 예약해본 캠핑장인지 -->
+        <select id="isAlreadyOrdered" resultType="boolean">
+            SELECT COUNT(*) > 0
+            FROM bc_campsite_order_userinfo uinfo
+            JOIN bc_campsite_order odr ON uinfo.order_id = odr.id
+            JOIN bc_campsite_area_point p ON odr.point_id = p.id
+            JOIN bc_campsite_area a ON p.area_id = a.id
+            WHERE uinfo.user_id = #{user_id}
+              AND odr.progress = '완료'
+              AND a.campsite_id = #{campsite_id}
+        </select>
+
+        <select id="isAlreadyReviewed" resultType="boolean">
+            SELECT COUNT(*) > 0
+            FROM bc_campsite_review review
+            JOIN bc_campsite_order odr ON review.order_id = odr.id
+            JOIN bc_campsite_area_point p ON odr.point_id = p.id
+            JOIN bc_campsite_area a ON p.area_id = a.id
+            WHERE review.user_id = #{user_id}
+            AND a.campsite_id = #{campsite_id}
         </select>
 
         <!-- 차량번호 가져오기 -->

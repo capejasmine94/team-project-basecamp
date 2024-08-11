@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
 
+import com.bulmeong.basecamp.camp.dto.CampsiteOrderDto;
+import com.bulmeong.basecamp.camp.service.CampsiteService;
 import com.bulmeong.basecamp.common.util.Utils;
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -30,7 +32,7 @@ public class CampsiteInterceptor implements HandlerInterceptor {
         //마무리
         return true;
     }
-
+   
     private void setPage() {
         String pageDetail = utils.getPageDetail();
         utils.setModel("page", pageInfo(pageDetail));

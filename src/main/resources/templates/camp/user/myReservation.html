@@ -126,6 +126,7 @@
         <div id="emptyReservation" class="row mt-3 justify-content-center new-fs-9 fw-semibold text-secondary">
             <div class="col-auto">예약 내역이 존재하지 않습니다.</div>
         </div>
+        <div class="row mt-5"></div>
     </div>
 </div>
 
@@ -284,6 +285,12 @@
                                             <span class="fw-semibold">예약일</span>
                                         </div>
                                         <div class="col ms-3">${formatDate(order.dto.start_date)} ~  ${formatDate(order.dto.end_date)}</div>
+                                    </div>
+                                     <div class="row mt-3">
+                                        <div class="col-3 text-end">
+                                            <span class="fw-semibold">현황</span>
+                                        </div>
+                                        <div class="col ms-3">${order.dto.progress}</div>
                                     </div>
                                 </div>
                             </div>

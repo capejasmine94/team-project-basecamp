@@ -85,4 +85,7 @@ public interface CampsiteSqlMapper {
     public CampsiteAreaDto getAreaByPointId(@Param("point_id") int point_id);
     public List<CampsiteOrderDto> getOrderByCampsiteId(@Param("campsite_id") int campsite_id);
     public boolean isAlreadyOrdered(@Param("campsite_id") int campsite_id, @Param("user_id")int user_id);
+    public boolean isAlreadyReviewed(@Param("campsite_id") int campsite_id, @Param("user_id")int user_id);
+    public List<CampsiteOrderDto> getOrderList();
+    public void updateOrder(@Param("order_id")int order_id);
 }

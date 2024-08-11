@@ -1,5 +1,8 @@
 package com.bulmeong.basecamp.camp.controller;
 
+import java.util.Date;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,6 +22,7 @@ public class CampsiteUserController {
 
     @RequestMapping("/main")
     public String mainPage() {
+        setOrder();
         utils.setSession("redirectAfterLogin",utils.currentUrl());
         utils.setSession("campsiteList", service.campsiteList());
         utils.setSession("category", service.categories());
@@ -38,7 +42,9 @@ public class CampsiteUserController {
         utils.setSession("redirectAfterLogin",utils.currentUrl());
         utils.setSession("campsiteUser", service.campsiteInfoForUser(campsite_id));
         utils.setModel("isAlreadyOrdered", service.isAlreadyOrdered(campsite_id));
-        System.out.println(service.campsiteInfoForUser(campsite_id));
+        utils.setModel("isAlreadyReviewed", service.isAlreadyReviewed(campsite_id));
+        System.out.println("Ordered : " + service.isAlreadyOrdered(campsite_id));
+        System.out.println("Reviewed : " + service.isAlreadyOrdered(campsite_id));
         return "camp/user/showCampsite";
     }
 
@@ -85,5 +91,19 @@ public class CampsiteUserController {
     @RequestMapping("/reservationComplete")
     public String reservationComplete() {
         return "camp/user/reservationComplete";
+    }
+
+
+    private void setOrder() {
+        Date now = new Date();
+        List<CampsiteOrderDto> list = service.getOrderList();
+        for(CampsiteOrderDto order : list) {
+            if(order.getProgress().equals("예약 대기 중"))
+            {
+                if(order.getStart_date().getTime() <= now.getTime()){
+                    service.updateOrder(order.getId());
+                }
+            }
+        }
     }
 }

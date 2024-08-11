@@ -7,6 +7,7 @@ import lombok.Data;
 @Data
 public class CampsiteReview {
     private int id;
+    private int user_id;
     private int order_id;
     private String content;
     private Date created_at;

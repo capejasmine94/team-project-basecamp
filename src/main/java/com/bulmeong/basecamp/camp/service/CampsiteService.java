@@ -40,6 +40,7 @@ public class CampsiteService {
 
     private CampsiteDto sessionCampsiteDto() {
         Map<String,Object> info = utils.getSession("campsite");
+        if(info == null) return null;
         return (CampsiteDto)info.get("dto");
     }
 
@@ -495,9 +496,17 @@ public class CampsiteService {
     }
     
     public boolean isAlreadyOrdered(int campsite_id) {
-        if(sessionCampsiteDto() == null)
+        UserDto user = utils.getSession("sessionUserInfo");
+        if(user == null) {
             return false;
-        return campsiteSqlMapper.isAlreadyOrdered(campsite_id,sessionCampsiteDto().getId());
+        }
+        return campsiteSqlMapper.isAlreadyOrdered(campsite_id, user.getId());
+    }
+    public boolean isAlreadyReviewed(int campsite_id) {
+        UserDto user = utils.getSession("sessionUserInfo");
+        if(user == null)
+            return false;
+        return campsiteSqlMapper.isAlreadyReviewed(campsite_id, user.getId());
     }
 
     // 포인트 번호로 포인트 리스트
@@ -528,6 +537,14 @@ public class CampsiteService {
             carNumberDto.setCar_number(carNumber);
             campsiteSqlMapper.registerCarNumber(carNumberDto);
         }
+    }
+
+    public List<CampsiteOrderDto> getOrderList() {
+        return campsiteSqlMapper.getOrderList();
+    }
+
+    public void updateOrder(int order_id) {
+        campsiteSqlMapper.updateOrder(order_id);
     }
     //-------------------------------------------------------------------------------------------------------------------
 
