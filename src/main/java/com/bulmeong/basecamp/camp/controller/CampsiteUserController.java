@@ -37,6 +37,7 @@ public class CampsiteUserController {
     public String campsitePage(@RequestParam("campsite_id") int campsite_id) {
         utils.setSession("redirectAfterLogin",utils.currentUrl());
         utils.setSession("campsiteUser", service.campsiteInfoForUser(campsite_id));
+        utils.setModel("isAlreadyOrdered", service.isAlreadyOrdered(campsite_id));
         System.out.println(service.campsiteInfoForUser(campsite_id));
         return "camp/user/showCampsite";
     }

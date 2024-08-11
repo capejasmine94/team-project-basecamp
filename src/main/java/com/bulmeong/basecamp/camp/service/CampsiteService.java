@@ -494,6 +494,12 @@ public class CampsiteService {
         return result;
     }
     
+    public boolean isAlreadyOrdered(int campsite_id) {
+        if(sessionCampsiteDto() == null)
+            return false;
+        return campsiteSqlMapper.isAlreadyOrdered(campsite_id,sessionCampsiteDto().getId());
+    }
+
     // 포인트 번호로 포인트 리스트
     public List<CampsiteAreaPointDto> pointByPointId(int point_id) {
         return campsiteSqlMapper.pointByPointId(point_id);

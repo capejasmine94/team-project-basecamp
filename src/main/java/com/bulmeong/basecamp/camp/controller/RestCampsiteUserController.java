@@ -80,7 +80,11 @@ public class RestCampsiteUserController {
     public RestResponseDto selectOrderByUser() {
         RestResponseDto result = new RestResponseDto();
         UserDto user = sessionUserDto();
+        System.out.print("USER : ");
+        System.out.println(user);
         result.add("orderByUser", user == null ? null : service.getOrderByUserId(user.getId()));
+        System.out.print("orderByUser : ");
+        System.out.println(result.getData().get("orderByUser"));
         return result;
     }
 

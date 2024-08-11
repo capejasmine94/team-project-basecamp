@@ -118,6 +118,11 @@
                </div>
             </div>
         </div>
+        <div class="row">
+            <div class="col" id="reservationList">
+
+            </div>
+        </div>
         <div id="emptyReservation" class="row mt-3 justify-content-center new-fs-9 fw-semibold text-secondary">
             <div class="col-auto">예약 내역이 존재하지 않습니다.</div>
         </div>
@@ -132,6 +137,8 @@
         const code = document.getElementById('reservation_code').value;
         const emptyReservation = document.getElementById('emptyReservation');
         const reservation = document.getElementById('reservation');
+        
+        document.getElementById('reservationList').classList.add('d-none');
 
         const car_tab = document.getElementById('car_tab');
         const camp_name = document.getElementById('camp_name');
@@ -202,10 +209,107 @@
     }
 
     function initReservationListByUser() {
-        
+        const reservList = document.getElementById('reservationList');
+        reservList.innerHTML = '';
+        let url ='/api/camp/selectOrderByUser';
+        fetch(url)
+        .then(response => response.json())
+        .then((response) => { 
+            if(response.data.orderByUser != null) {
+                const dataList = response.data.orderByUser;
+                console.log(dataList);
+                if(dataList.length > 0) {
+                    const emptyReservation = document.getElementById('emptyReservation');
+                    emptyReservation.classList.add('d-none');
+                }
+                for(const order of dataList) {
+                    const template = document.createElement('div');
+                    template.classList.add('row','mt-3');
+                    template.innerHTML = 
+                    `<div class="col mx-3 border p-2 py-4">
+                        <div class="row ms-1">
+                            <div class="col">
+                                <div class="row">
+                                    <div class="col-3 text-end">
+                                        <span class="fw-semibold">캠핑장</span>
+                                    </div>
+                                    <div class="col"> 
+                                        <span class="ms-3">${order.camp.camp_name}</span>
+                                    </div>
+                                </div>
+                                <div class="row mt-1">
+                                    <div class="col-3 text-end">
+                                        <span class="fw-semibold">구역</span>
+                                    </div>
+                                    <div class="col">
+                                        <span class="ms-3">${order.area.name}</span>
+                                        <span class="text-secondary ms-2">(</span>
+                                        <span class="text-secondary">${order.point.name}</span>
+                                        <span class="text-secondary">)</span>
+                                    </div>
+                                </div>
+                                <div class="row mt-3">
+                                    <div class="col-3 text-end">
+                                        <span class="fw-semibold">이름</span>
+                                    </div>
+                                    <div class="col">
+                                        <span class="ms-3">${order.dto.customer_name}</span>
+                                    </div>
+                                </div>
+                                <div class="row mt-1">
+                                    <div class="col-3 text-end">
+                                        <span class="fw-semibold">연락처</span>
+                                    </div>
+                                    <div class="col">
+                                        <span class="ms-3">${order.dto.customer_phone}</span>
+                                    </div>
+                                </div>
+                                <div class="row mt-2 flex-column car_tab">
+                                    <div class="col-3 text-end">
+                                        <span class="fw-semibold">차량</span>
+                                    </div>
+                                    <div class="col car_list">
+                                    </div>
+                                </div>
+                                    
+                                <div class="row mt-4">
+                                    <div class="col-3 text-end">
+                                        <span class="fw-semibold">가격</span>
+                                    </div>
+                                    <div class="col">
+                                        <span class="ms-3 moneyInput">${order.dto.total_prise}</span>
+                                    </div>
+                                    <div class="row mt-3">
+                                        <div class="col-3 text-end">
+                                            <span class="fw-semibold">예약일</span>
+                                        </div>
+                                        <div class="col ms-3">${formatDate(order.dto.start_date)} ~  ${formatDate(order.dto.end_date)}</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                     </div>`;
+                    const car_list = template.querySelector('.car_list');
+                    const car_tab = template.querySelector('.car_tab');
+                    if(order.carNumbers.length > 0) {
+                        for(const car of order.carNumbers){
+                            const carTab = document.createElement('div');
+                            carTab.classList.add("row", "mt-1", "ms-4");
+                            carTab.innerHTML = `<div class="col new-fs-9">${car.car_number}</div>`;
+                            car_list.appendChild(carTab);
+                        }
+                        car_tab.classList.remove('d-none');
+                    }
+                    else
+                        car_tab.classList.add('d-none');
+                    reservList.appendChild(template);
+                }
+                reservList.classList.remove('d-none');
+            }
+        });
     }
 
-
+    initReservationListByUser();
 </script>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
