@@ -67,7 +67,7 @@ public class StoreController {
         UserDeliveryInfoDto userDeliveryInfoDto = storeService.selectDefaultAddressByUserId(user_id);
         model.addAttribute("userDeliveryInfoDto", userDeliveryInfoDto);        
 
-        return "store/mOrdersheet(Npay)";
+        return "store/mOrdersheet(new)";
     }
 
     @RequestMapping("orderComplete")

@@ -130,9 +130,9 @@
                         <div class="row" th:each="orderProductData : ${orderData.orderProductDataList}">
                             <div class="col">
                                 <div class="row py-3">
-                                    <div class="col-auto pe-0 seller_profile">
+                                    <a th:href="@{/store/productDetails(id=${orderProductData.orderProductDto.product_id})}" class="col-auto pe-0 seller_profile">
                                         <img class="border" th:src="|/images/${orderProductData.orderProductDto.product_main_image}|">
-                                    </div>
+                                    </a>
                                     <div class="col">
                                         <div class="row pb-2">
                                             <div class="col fw-bold">
@@ -165,7 +165,7 @@
                                                 주문금액 (상세)
                                             </div>
                                             <div class="col-auto pe-0 text-end fw-bold">
-                                                <span th:text="|${#numbers.formatDecimal(orderProductData.orderProductDto.order_price, 1, 'COMMA', 0, 'POINT')}원|">13,500원</span>
+                                                <span th:text="|${#numbers.formatDecimal(orderProductData.orderProductDto.order_price+orderProductData.orderProductDto.used_point, 1, 'COMMA', 0, 'POINT')}원|">13,500원</span>
                                             </div>
                                             <div class="col-auto ps-0">
                                                 <span class="material-symbols-outlined fw-light">
@@ -180,15 +180,15 @@
                                                         상품 금액
                                                     </div>
                                                     <div class="col text-end">
-                                                        <span th:text="|${#numbers.formatDecimal(orderProductData.orderProductDto.product_price*orderProductData.orderProductDto.quantity, 1, 'COMMA', 0, 'POINT')}원|">45,000원</span>
+                                                        <span th:text="|${#numbers.formatDecimal((orderProductData.orderProductDto.product_price+orderProductData.additional_price)*orderProductData.orderProductDto.quantity, 1, 'COMMA', 0, 'POINT')}원|">45,000원</span>
                                                     </div>
                                                 </div>
-                                                <div class="row f08 pb-1" th:if="${orderProductData.orderProductDto.product_price*orderProductData.orderProductDto.quantity-orderProductData.orderProductDto.order_price!=0}">
+                                                <div class="row f08 pb-1" th:if="${orderProductData.orderProductDto.discount_percentage!=0}">
                                                     <div class="col text-body-tertiary">
                                                         상품 할인
                                                     </div>
                                                     <div class="col text-end text-primary">
-                                                        <span th:text="|${#numbers.formatDecimal(orderProductData.orderProductDto.product_price*orderProductData.orderProductDto.quantity-orderProductData.orderProductDto.order_price, 1, 'COMMA', 0, 'POINT')}원|">-31,500원</span>
+                                                        <span th:text="|-${#numbers.formatDecimal((orderProductData.orderProductDto.product_price+orderProductData.additional_price)*orderProductData.orderProductDto.quantity-(orderProductData.orderProductDto.order_price+orderProductData.orderProductDto.used_point), 1, 'COMMA', 0, 'POINT')}원|">-31,500원</span>
                                                     </div>
                                                 </div>
                                                 <div class="row f08" th:if="${orderProductData.orderProductDto.used_point!=0}">
@@ -329,7 +329,7 @@
                 </div>
 
                 <!-- 할인정보 -->
-                <div class="row bg-white px-3 border-top">
+                <div class="row bg-white px-3 border-top" th:if="${orderData.discountPriceSum+orderData.storeOrderDto.used_point!=0}">
                     <div class="col p-0">
                         
                         <div class="row py-4">
@@ -367,14 +367,14 @@
                     </div>
                 </div>
                 <!-- 할인정보 -->
-                <div class="row px-3 fw-bold f08 bg-white mb-3 border-bottom">
+                <div class="row px-3 fw-bold f08 bg-white mb-3 border-bottom" th:if="${orderData.discountPriceSum+orderData.storeOrderDto.used_point!=0}">
                     <div class="col p-0 py-3 border-top">
                         <div class="row">
                             <div class="col">
                                 할인 합계
                             </div>
                             <div class="col-auto text-end pe-0" style="color: orangered;">
-                                -28% SAVE
+                                -<span th:text="${(orderData.discountPriceSum+orderData.storeOrderDto.used_point)*100/orderData.productPriceSum}">28</span>% SAVE
                             </div>
                             <div class="col-auto text-end text-primary">
                                 -<span th:text="${#numbers.formatDecimal(orderData.discountPriceSum+orderData.storeOrderDto.used_point, 1, 'COMMA', 0, 'POINT')}">-11,189원</span>
@@ -408,7 +408,7 @@
                                         <span th:text="${#numbers.formatDecimal(orderData.productPriceSum, 1, 'COMMA', 0, 'POINT')}">124,000원</span>
                                     </div>
                                 </div>
-                                <div class="row pb-2">
+                                <div class="row">
                                     <div class="col text-body-tertiary">
                                         배송비 합계
                                     </div>
@@ -416,12 +416,12 @@
                                         배송비 무료
                                     </div>
                                 </div>
-                                <div class="row">
+                                <div class="row pt-2" th:if="${orderData.discountPriceSum+orderData.storeOrderDto.used_point!=0}">
                                     <div class="col text-body-tertiary">
                                         할인 합계
                                     </div>
                                     <div class="col-auto text-end pe-0 fw-bold" style="color: orangered;">
-                                        -28% SAVE
+                                        -<span th:text="${(orderData.discountPriceSum+orderData.storeOrderDto.used_point)*100/orderData.productPriceSum}">28</span>% SAVE
                                     </div>
                                     <div class="col-auto text-end text-primary fw-bold">
                                         -<span th:text="${#numbers.formatDecimal(orderData.discountPriceSum+orderData.storeOrderDto.used_point, 1, 'COMMA', 0, 'POINT')}">-11,189원</span>

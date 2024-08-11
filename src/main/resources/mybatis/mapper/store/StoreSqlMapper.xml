@@ -689,6 +689,12 @@
         and is_default_address = 1
     </select>
 
+    <select id="selectDefaultAddressCountByUserId" resultType="int">
+        select count(*) from bc_user_delivery_info
+        where user_id = #{user_id}
+        and is_default_address = 1
+    </select>
+
     <delete id="deleteUserDeliveryInfoById">
         delete from bc_user_delivery_info
         where id = #{id}

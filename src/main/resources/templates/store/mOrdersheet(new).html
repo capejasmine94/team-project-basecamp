@@ -12,6 +12,7 @@
     <script src="/public/js/lockLikeMobile.js"></script>
 
     <link rel="stylesheet" href="/public/css/font.css">
+    <link rel="stylesheet" href="/public/css/basecamp.css">
 
     <style>
         .fill-on {
@@ -234,9 +235,9 @@
 <body class="bg-body-secondary">
 
     <!-- top-nav -->
-    <div class="container">
-        <div class="fixed-top px-4 row border-bottom bg-white shadow-sm" style="z-index: 2000;">
-            <div class="col">
+    <div class="container fixed-top">
+        <div class="px-3 row bg-white" style="z-index: 2000;">
+            <div class="col p-0">
                 <div class="row py-3 align-items-center">
                     <div class="col text-start f12">
                         주문/결제
@@ -255,41 +256,38 @@
 
     <div class="container" style="margin-top: 60.792px;">
 
-        <div class="row px-3 bg-body-tertiary">
+        <div class="row bg-body-tertiary">
             <div class="col">
 
-                <div class="row pb-2 pt-3 fw-semibold">
-                    <div class="col p-0">
-                        배송지
-                    </div>
-                </div>
-
-                <div class="row pb-4" th:if="${userDeliveryInfoDto!=null}">
-                    <div class="col py-3 rounded-3 bg-white border">
-                        <div class="row">
+                <div class="row my-2" th:if="${userDeliveryInfoDto!=null}">
+                    <div class="col py-3 bg-white">
+                        <div class="row pb-3 fw-semibold align-items-center">
                             <div class="col">
-                                <div class="row pb-1 align-items-center">
-                                    <div class="col fw-semibold f09">
-                                        <span id="receiver_name" th:text="${userDeliveryInfoDto.receiver_name}">김첨지</span>
-                                    </div>
-                                </div>
-                                <div class="row pb-1 text-secondary f08">
-                                    <div class="col">
-                                        <span id="phone" th:text="${userDeliveryInfoDto.phone}">010-1234-5678</span>
-                                    </div>
-                                </div>
-                                <div class="row pb-1 f09">
-                                    <div class="col">
-                                        <span id="delivery_address" th:text="${userDeliveryInfoDto.delivery_address}">서울특별시 강남구 테헤란로 7길 7 (무슨 빌딩) 6층 (12345)</span>
-                                    </div>
-                                </div>
+                                배송지
                             </div>
                             <div class="col-auto">
-                                <a onclick="changeAddress()" type="button" class="btn btn-sm bg-white border">
+                                <a onclick="changeAddress()" type="button" class="lightFont f09">
                                     변경
                                 </a>
                             </div>
                         </div>
+
+                        <div class="row pb-1 align-items-center">
+                            <div class="col fw-semibold f09">
+                                <span id="receiver_name" th:text="${userDeliveryInfoDto.receiver_name}">김첨지</span>
+                            </div>
+                        </div>
+                        <div class="row pb-1 text-secondary f08">
+                            <div class="col">
+                                <span id="phone" th:text="${userDeliveryInfoDto.phone}">010-1234-5678</span>
+                            </div>
+                        </div>
+                        <div class="row f09">
+                            <div class="col">
+                                <span id="delivery_address" th:text="${userDeliveryInfoDto.delivery_address}">서울특별시 강남구 테헤란로 7길 7 (무슨 빌딩) 6층 (12345)</span>
+                            </div>
+                        </div>
+
                     </div>
                 </div>
                 <div class="row pb-4" th:unless="${userDeliveryInfoDto!=null}">
@@ -314,73 +312,79 @@
                     </div>
                 </div>
 
-                <div class="row py-2 fw-semibold">
-                    <div class="col p-0">
+                <div class="row py-3 fw-semibold bg-white">
+                    <div class="col">
                         주문 상품
                     </div>
                 </div>
-
-                <div class="row pb-2" th:each="pendingOrderProductInfoData : ${pendingOrderProductInfoDataList}">
-                    <div class="col py-3 rounded-3 bg-white border">
-
-                        <div class="row">
-                            <div class="col fw-semibold text-dark f09">
-                                <span th:text="${pendingOrderProductInfoData.store_name}">모이세농원</span>
-                            </div>
-                        </div>
-                        <div class="row pt-3 align-items-center" th:each="e : ${pendingOrderProductInfoData.productOrderProductDataList}">
-                            <div class="col-3 pe-0 product-col">
-                                <img class="border" th:src="|/images/${e.main_image}|">
-                            </div>
-                            <div class="col">
-                                <div class="row pb-1">
-                                    <div class="col f09">
-                                        <span th:text="${e.name}">진짜 맛있는 납작복숭아</span>
+                <div class="row" th:each="pendingOrderProductInfoData : ${pendingOrderProductInfoDataList}">
+                    <div class="col bg-white ">
+                        <div class="row pb-3" style="padding-left: 0.75em; padding-right: 0.75em;">
+                            <div class="col border rounded-1">
+                                <div class="row py-2">
+                                    <div class="col fw-bold text-dark f08">
+                                        <span th:text="${pendingOrderProductInfoData.store_name}">모이세농원</span>
                                     </div>
                                 </div>
-                                <div class="row pb-1 text-body-tertiary f09 align-items-center">
-                                    <div th:if="${e.valueNameList}!=null" class="col-auto pe-0 d-flex align-items-center">
-                                        <span class="badge text-bg-white border text-body-secondary fw-normal">
-                                            옵션
-                                        </span>
+                                <div class="row  border-top py-2 align-items-center" th:each="e : ${pendingOrderProductInfoData.productOrderProductDataList}">
+                                    <div class="col-3 pe-0 product-col">
+                                        <img class="border" th:src="|/images/${e.main_image}|">
                                     </div>
-                                    <div class="col-auto ps-2 pe-0 f08">
-                                        <span th:if="${e.valueNameList}!=null" th:each="name, iterStat : ${e.valueNameList}">
-                                            <span th:text="${name}">색상: 검정 / 사이즈: M / 또 무슨 옵션: 짜라잔</span>
-                                            <span th:if="${!iterStat.last}">/</span>
-                                        </span>
-                                        <span th:if="${e.valueNameList}!=null">|</span>
-                                        <span class="px-1" th:text="|${e.quantity}개|"></span>
-                                        <span th:if="${e.additional_price!=0}" th:text="|(+${#numbers.formatDecimal(e.quantity*e.additional_price, 1, 'COMMA', 0, 'POINT')}원)|">3,000</span>
-                                    </div>
-                                </div>
-                                <div class="row f09 align-items-center">
                                     <div class="col">
-                                        <span class="fw-semibold salePrice" th:text="|${#numbers.formatDecimal((e.salePrice+e.additional_price)*e.quantity, 1, 'COMMA', 0, 'POINT')}원|">
-                                            28,000원
-                                        </span>
-                                        <span class="text-body-tertiary price f09" style="text-decoration: line-through;" th:if="${e.percentage!=0}" th:text="${#numbers.formatDecimal((e.price+e.additional_price)*e.quantity, 1, 'COMMA', 0, 'POINT')}">
-                                            40,000
-                                        </span>
-                                        <span class="text-body-tertiary price d-none f09" style="text-decoration: line-through;" th:unless="${e.percentage!=0}" th:text="${#numbers.formatDecimal((e.price+e.additional_price)*e.quantity, 1, 'COMMA', 0, 'POINT')}">
-                                            40,000
-                                        </span>
+                                        <div class="row pb-1">
+                                            <div class="col f09">
+                                                <span th:text="${e.name}">진짜 맛있는 납작복숭아</span>
+                                            </div>
+                                        </div>
+                                        <div class="row pb-1 text-body-tertiary f09 align-items-center">
+                                            <!-- <div th:if="${e.valueNameList}!=null" class="col-auto pe-0 d-flex align-items-center">
+                                                <span class="badge text-bg-white border text-body-secondary fw-normal">
+                                                    옵션
+                                                </span>
+                                            </div> -->
+                                            <div class="col-auto pe-0 f08">
+                                                <span th:if="${e.valueNameList}!=null" th:each="name, iterStat : ${e.valueNameList}">
+                                                    <span th:text="${name}">색상: 검정 / 사이즈: M / 또 무슨 옵션: 짜라잔</span>
+                                                    <span th:if="${!iterStat.last}">/</span>
+                                                </span>
+                                                <span th:if="${e.valueNameList}!=null">|</span>
+                                                <span class="px-1" th:text="|${e.quantity}개|"></span>
+                                                <span th:if="${e.additional_price!=0}" th:text="|(+${#numbers.formatDecimal(e.quantity*e.additional_price, 1, 'COMMA', 0, 'POINT')}원)|">3,000</span>
+                                            </div>
+                                        </div>
+                                        <div class="row f09 align-items-center">
+                                            <div class="col">
+                                                <span class="fw-semibold salePrice" th:text="|${#numbers.formatDecimal((e.salePrice+e.additional_price)*e.quantity, 1, 'COMMA', 0, 'POINT')}원|">
+                                                    28,000원
+                                                </span>
+                                                <span class="text-body-tertiary price f09" style="text-decoration: line-through;" th:if="${e.percentage!=0}" th:text="${#numbers.formatDecimal((e.price+e.additional_price)*e.quantity, 1, 'COMMA', 0, 'POINT')}">
+                                                    40,000
+                                                </span>
+                                                <span class="text-body-tertiary price d-none f09" style="text-decoration: line-through;" th:unless="${e.percentage!=0}" th:text="${#numbers.formatDecimal((e.price+e.additional_price)*e.quantity, 1, 'COMMA', 0, 'POINT')}">
+                                                    40,000
+                                                </span>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-
                     </div>
                 </div>
+                <div class="row bg-white px-3">
+                    <ul class="col text-body-tertiary f08" style="font-size: 0.75em;">
+                       <li>판매자 배송 상품을 여러 개 구매한 경우, 구매한 상품은 함께 배송될 수 있으며 늦은 발송일에 맞춰 발송될 수 있습니다.</li> 
+                    </ul>
+                </div>
 
-                <div class="row pb-4">
-                    <div class="col pt-3 rounded-3 bg-white border">
+                <div class="row mt-2">
+                    <div class="col pt-3 bg-white">
 
                         <div class="row pb-2 f09 align-items-center">
                             <div class="col text-dark-emphasis">
                                 상품금액
                             </div>
-                            <div class="col text-end" id="price">
+                            <div class="col text-end fw-semibold" id="price">
                                 40,000원
                             </div>
                         </div>
@@ -408,7 +412,7 @@
                             <div class="col f09">
                                 총 주문금액
                             </div>
-                            <div class="col text-end orderPrice" style="color: orangered;">
+                            <div class="col text-end orderPrice lightFont">
                                 28,000원
                             </div>
                         </div>
@@ -416,36 +420,20 @@
                     </div>
                 </div>
 
-                <div class="row py-2 fw-semibold">
-                    <div class="col p-0">
-                        포인트 사용
+                <div class="row py-3 mt-2 bg-white fw-semibold">
+                    <div class="col">
+                        포인트
                     </div>
                 </div>
 
-                <!-- <div class="row" th:each="orderProduct : ${orderProductList}">
-                    <div class="col">
-                        <span>될까?</span>
-                        <span th:text="${orderProduct.orderProduct.quantity}"></span>
-                    </div>
-                </div> -->
+                <div class="row f09 bg-white">
+                    <div class="col pb-3">
 
-                <div class="row pb-4 f09">
-                    <div class="col py-3 rounded-3 bg-white border">
-
-                        <div class="row pb-2 text-dark-emphasis fw-semibold">
-                            <div class="col">
-                                보유
-                            </div>
-                            <div class="col text-end">
-                                <span id="userPoint" th:text="${#numbers.formatDecimal(session.sessionUserInfo.mileage, 1, 'COMMA', 0, 'POINT')}">4,000</span>원
-                            </div>
-                        </div>
-
-                        <div class="row" style="padding-left: 12px;padding-right: 12px;">
-                            <div class="col border rounded-2">
+                        <div class="row" style="padding-left: 12px; padding-right: 12px;">
+                            <div class="col border">
                                 <div class="row align-items-center f09">
                                     <div class="col-auto">
-                                        <span class="text-body-tertiary">사용</span>
+                                        <span class="text-body-tertiary"></span>
                                     </div>
                                     <div class="col d-grid pe-0">
                                         <input type="text" class="border-0 text-end py-2 fw-semibold w-100" id="inputPoint" value="0" oninput="validateInput(this)" onblur="inputPoint(this)">
@@ -456,21 +444,30 @@
                                 </div>
                             </div>
                             <div class="col-auto pe-0">
-                                <input type="button" onclick="useAllPoint()" value="전액사용" class="btn border bg-white py-2 f09 fw-semibold">
+                                <input type="button" onclick="useAllPoint()" value="전액사용" class="btn border rounded-0 bg-white py-2 f09 fw-semibold">
+                            </div>
+                        </div>
+
+                        <div class="row pt-2 f09 align-items-center">
+                            <div class="col-auto pe-0">
+                                사용 가능 포인트
+                            </div>
+                            <div class="col lightFont fw-semibold">
+                                <span id="userPoint" th:text="${#numbers.formatDecimal(session.sessionUserInfo.mileage, 1, 'COMMA', 0, 'POINT')}">4,000</span>원
                             </div>
                         </div>
 
                     </div>
                 </div>
 
-                <div class="row py-2 fw-semibold">
-                    <div class="col p-0">
+                <div class="row py-3 mt-2 bg-white fw-semibold">
+                    <div class="col">
                         결제 수단
                     </div>
                 </div>
 
-                <div class="row pb-4 f09">
-                    <div class="col py-3 rounded-3 bg-white border">
+                <div class="row f09">
+                    <div class="col pb-3 bg-white">
 
                         <div class="row">
                             <div class="col-auto pe-0">
@@ -479,7 +476,7 @@
                             <div class="col-auto pe-0 d-flex align-items-center">
                                 <img src="/public/img/storeImage/payment_icon_yellow_medium.png" style="height: 20px;">
                             </div>
-                            <div class="col fw-semibold">
+                            <div class="col">
                                 카카오페이
                             </div>
                         </div>
@@ -487,17 +484,17 @@
                     </div>
                 </div>
 
-                <div class="row py-2 fw-semibold align-items-center">
-                    <div class="col p-0">
+                <div class="row py-3 mt-2 bg-white fw-semibold align-items-center">
+                    <div class="col">
                         결제 상세
                     </div>
-                    <div class="col-auto p-0 orderPrice" style="color: orangered;">
+                    <div class="col-auto orderPrice f09 lightFont">
                         52,000원
                     </div>
                 </div>
 
-                <div class="row pb-4 f09">
-                    <div class="col py-3 rounded-3 bg-white border">
+                <div class="row f09">
+                    <div class="col pb-3 bg-white">
 
                         <div class="row pb-2 d-none" id="usePointRow">
                             <div class="col text-dark-emphasis">
@@ -520,21 +517,21 @@
                     </div>
                 </div>
 
-                <div class="row py-2 fw-semibold align-items-center">
-                    <div class="col p-0">
+                <div class="row py-3 mt-2 bg-white fw-semibold align-items-center">
+                    <div class="col">
                         적립 예정 포인트
                     </div>
-                    <div class="col-auto p-0" style="color: orangered;">
+                    <div class="col-auto f09 lightFont">
                         최대 <span id="expectedPoint">500</span>원
                     </div>
                 </div>
 
-                <div class="row pb-4 f09">
-                    <div class="col py-3 rounded-3 bg-white border">
+                <div class="row f09">
+                    <div class="col pb-3 bg-white">
 
                         <div class="row pb-2">
-                            <div class="col text-dark-emphasis">
-                                구매적립
+                            <div class="col">
+                                구매확정 포인트
                             </div>
                             <div class="col text-end">
                                 <span id="purchasePoint"></span>원
@@ -542,8 +539,8 @@
                         </div>
 
                         <div class="row">
-                            <div class="col text-dark-emphasis">
-                                리뷰적립
+                            <div class="col">
+                                리뷰작성 포인트
                             </div>
                             <div class="col text-end">
                                 최대 500원
@@ -556,7 +553,7 @@
             </div>
         </div>
 
-        <div class="row px-3 bg-body-tertiary" style="padding-bottom: 107.333px;">
+        <div class="row border-top px-3 bg-white" style="padding-bottom: 107px;">
             <div class="col px-0 py-3">
                 <span class="f08 text-body-tertiary">
                     개별 판매자가 등록한 상품에 대한 광고, 상품주문, 배송, 환불의 의무와 책임은 각 판매자에게 있으며, 개별 판매자의 상품에 대하여 BASECAMP는 통신판매중개자로서 통신판매의 당사자가 아닙니다.
@@ -566,13 +563,13 @@
 
     </div>
 
-    <div class="container">
-        <div class="row px-3 bg-white fixed-bottom border-top pt-2 pb-4">
-            <div class="col">
-                <div class="row pt-2">
+    <div class="container fixed-bottom">
+        <div class="row px-3 bg-white border-top pt-2 pb-4">
+            <div class="col p-0">
+                <div class="row">
                     <div class="col d-grid">
-                        <a onclick="submitPayment()" type="button" class="btn btn-dark py-2 fw-semibold">
-                            <span class="paymentAmount">31,000</span>원 결제하기
+                        <a onclick="submitPayment()" type="button" class="btn lightBg text-white py-2 f08 rounded-0">
+                            <span class="paymentAmount fw-bold">31,000</span><span class="fw-semibold">원 결제하기</span>
                         </a>
                     </div>
                 </div>

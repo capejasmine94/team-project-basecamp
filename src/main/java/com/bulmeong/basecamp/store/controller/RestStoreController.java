@@ -17,6 +17,7 @@ import com.bulmeong.basecamp.store.dto.CartProductDto;
 import com.bulmeong.basecamp.store.dto.OrderDeliveryInfoDto;
 import com.bulmeong.basecamp.store.dto.ProductOptionNameDto;
 import com.bulmeong.basecamp.store.dto.ProductReviewDto;
+import com.bulmeong.basecamp.store.dto.ProductWishDto;
 import com.bulmeong.basecamp.store.dto.StoreDto;
 import com.bulmeong.basecamp.store.dto.StoreOrderDto;
 import com.bulmeong.basecamp.store.dto.StoreProductDto;
@@ -296,7 +297,6 @@ public class RestStoreController {
         int order_id = storeService.orderProcess(user_id, storeOrderDto);
         
         int[] pendingOrderCartProductIds = (int[])session.getAttribute("pendingOrderCartProductIds");
-
         if(pendingOrderCartProductIds!=null){
             storeService.deleteCartProductDataList(pendingOrderCartProductIds);
         }
@@ -525,10 +525,31 @@ public class RestStoreController {
     }
 
     @RequestMapping("productLike")
-    public RestResponseDto productLike(@RequestParam("id") int id){
+    public RestResponseDto productLike(@RequestBody ProductWishDto productWishDto){
         RestResponseDto restResponseDto = new RestResponseDto();
 
+        storeService.productWish(productWishDto);
+
+        return restResponseDto;
+    }
+
+    @RequestMapping("getStoreOrderDataListByOrderId")
+    public RestResponseDto getStoreOrderDataListByOrderId(@RequestParam("id") int id){
+        RestResponseDto restResponseDto = new RestResponseDto();
+
+        restResponseDto.add("storeOrderDataList", storeService.getStoreOrderDataListByOrderId(id));
+
+        return restResponseDto;
+    }
+
+    @RequestMapping("hasDefaultAddress")
+    public RestResponseDto hasDefaultAddress(HttpSession session){
+        RestResponseDto restResponseDto = new RestResponseDto();
+
+        UserDto userDto = (UserDto)session.getAttribute("sessionUserInfo");
+        int user_id = userDto.getId();
         
+        restResponseDto.add("hasDefaultAddress", storeService.hasDefaultAddress(user_id));
 
         return restResponseDto;
     }

@@ -98,17 +98,6 @@
         }
 
     </style>
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            document.getElementById('backButton').addEventListener('click', function() {
-                history.back();
-            });
-        });
-
-        function backButton(){
-            history.back();
-        }
-    </script>
 </head>
 <body>
 
@@ -243,9 +232,41 @@
     </div>
 
     <script>
-        let is_default_address = 0;
+        const urlParams = new URL(window.location.href).searchParams;
+        const prevPage = urlParams.get("prevPage");
 
-        check_circle.addEventListener("click", change)
+        let is_default_address = 0;
+        let has_default_address = false;
+
+        let myId = null;
+
+        function backButton(){
+            history.back();
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            document.getElementById('backButton').addEventListener('click', function() {
+                history.back();
+            });
+            hasDefaultAddress();
+        });
+
+        function hasDefaultAddress(){
+            fetch("/api/store/hasDefaultAddress")
+            .then(response => response.json())
+            .then((response) => {
+                has_default_address = response.data.hasDefaultAddress;
+
+                if(!has_default_address){
+                    const check_circle = document.getElementById("check_circle")
+                    check_circle.classList.add("fill-on")
+                    check_circle.classList.remove("text-opacity-25")
+                    is_default_address = 1;
+                }else{
+                    check_circle.addEventListener("click", change)
+                }
+            })
+        }
     
         function change(){
             const check_circle = document.getElementById("check_circle")

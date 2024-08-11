@@ -829,6 +829,10 @@ public class StoreService {
         storeSqlMapper.deleteUserDeliveryInfoById(id);
     }
 
+    public boolean hasDefaultAddress(int user_id){
+        return storeSqlMapper.selectDefaultAddressCountByUserId(user_id)>0;
+    }
+
     public UserDeliveryInfoDto selectDefaultAddressByUserId(int user_id){
         return storeSqlMapper.selectDefaultAddressByUserId(user_id);
     }
@@ -908,8 +912,6 @@ public class StoreService {
 
             orderProductData.put("orderProductDto", orderProductDto);
             orderProductData.put("storeDto", storeDto);
-
-            orderProductDataList.add(orderProductData);
             
             int[] value_ids = storeSqlMapper.selectOrderProductOptionValueIds(order_product_id);
 
@@ -925,19 +927,24 @@ public class StoreService {
                 AdditionalInfoDto additionalInfoDto = storeSqlMapper.selectAdditionalInfoById(additional_info_id);
 
                 int additional_price = additionalInfoDto.getAdditional_price();
+                orderProductData.put("additional_price", additional_price);
+
                 int product_price = (orderProductDto.getProduct_price()+additional_price)*orderProductDto.getQuantity();
                 product_price_sum += product_price;
 
             }else{
                 orderProductData.put("valueNameList", null);
                 int additional_price = 0;
+                orderProductData.put("additional_price", additional_price);
                 int product_price = (orderProductDto.getProduct_price()+additional_price)*orderProductDto.getQuantity();
                 product_price_sum += product_price;
             }
 
+            orderProductDataList.add(orderProductData);
+
         }
 
-        int discount_price_sum = product_price_sum - storeOrderDto.getPayment_amount();
+        int discount_price_sum = product_price_sum - (storeOrderDto.getPayment_amount()+storeOrderDto.getUsed_point());
 
         map.put("orderProductDataList", orderProductDataList);
         map.put("storeOrderDto", storeOrderDto);

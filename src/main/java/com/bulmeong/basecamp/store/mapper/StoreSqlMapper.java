@@ -156,6 +156,7 @@ public interface StoreSqlMapper {
     public void deleteUserDeliveryInfoById(int id);
 
     public UserDeliveryInfoDto selectDefaultAddressByUserId(int user_id);
+    public int selectDefaultAddressCountByUserId(int user_id);
 
     public List<StoreOrderDto> selectStoreOrderDtoListByUserId(int user_id);
 
