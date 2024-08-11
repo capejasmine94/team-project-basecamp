@@ -32,10 +32,13 @@
                     <a th:href="@{./instaMainPage(user_id=${session.sessionUserInfo.id})}" style="color: black;"><i class="bi bi-x-lg"></i></a>
                 </div>
                 <div class="col">
-                    <form class="row pe-2" action="./instaSearchResultPage" method="get">                        
+                    <form class="row pe-2" action="./instaSearchProcess" method="get">                        
                         <div class="col ps-1 search-container">
                             <i class="bi bi-search"></i>         
-                            <input id="searchInput" value="" name="searchWord" type="text" class="form-control form-control-sm" placeholder="내용 or #해시태그 입력">
+                            <input name="searchWord" type="text" class="form-control form-control-sm" placeholder="내용 or #해시태그 입력">
+                            
+                            <!-- 현재 주소창에 있는 user_id를 model에 담아서 instaSearchProcess 파라미터로 전송 -->
+                            <input type="hidden" name="user_id" th:value="${user_id}">
                         </div>
                         <div class="col-auto p-0 search-icon" style="font-size: 0.85em;">
                             <button class="btn btn-sm" style="color: black;">검색</button>

@@ -384,11 +384,81 @@
             group by article_id
         ) biai_min on biai.id = biai_min.min_id
         where bit2.id = #{tag_id}
+        order by biai.article_id desc
     </select>
 
     <select id="selectTagByTagId" resultType="com.bulmeong.basecamp.insta.dto.InstaTagDto">
         select * from bc_insta_tag
         where id = #{id}
+    </select>
+
+
+    <!-- 일반 검색 -->
+    <!-- 해시태그에 저장 되어있는 text가 아니라면 일반 검색 content로 insert 됨 -->
+    <insert id="insertSearchContent">
+        insert into bc_insta_search(
+            user_id,
+            tag_id,
+            content
+        )values(
+            #{user_id},
+            null,
+            #{content}
+        )
+    </insert>
+
+    <select id="selectArticleImgByLikeSearchContentAndLikeArticleContent" resultType="com.bulmeong.basecamp.insta.dto.InstaArticleImgDto">
+        select biai.* from 
+            (select bia.* from bc_insta_search bis
+            inner join bc_insta_article bia 
+            on bia.content like concat('%', #{content}, '%')
+            where bis.content like concat('%', #{content}, '%')
+            group by bia.id	
+        ) as search_article_result
+        inner join bc_insta_article_img biai
+        on biai.article_id = search_article_result.id
+        group by search_article_result.id
+        order by id desc
+    </select>
+
+    <select id="selectResultContentText" resultType="java.lang.String">
+        select DISTINCT content from bc_insta_search
+        where content = #{content}
+        and user_id = #{user_id}
+    </select>
+
+    <!-- 해시태그(입력) 검색 -->
+    <!-- 검색에 해시태그 입력시 tag테이블에 저장 되어있는 text인지 확인 -->
+    <select id="selectTagDtoByTagText" resultType="com.bulmeong.basecamp.insta.dto.InstaTagDto">
+        select * from bc_insta_tag where text = #{text}
+    </select>
+
+    <insert id="insertSearchTagId">
+        insert into bc_insta_search(
+            user_id,
+            tag_id,
+            content
+        )values(
+            #{user_id},
+            #{tag_id},
+            null
+        )
+    </insert>
+
+    <!-- 태그Dto에 정확히 insert되어있는것만 출력함 _ like 구분 x -->
+    <select id="selectArticleImgBySearchTagText" resultType="com.bulmeong.basecamp.insta.dto.InstaArticleImgDto">
+        select biai.* from bc_insta_article_tag biat
+        inner join
+            (select distinct bit2.id from bc_insta_search bis 
+                inner join bc_insta_tag bit2
+                on bit2.id = bis.tag_id
+                where bit2.text = #{text}
+            ) as filter_tag_id
+        on biat.tag_id = filter_tag_id.id
+        inner join bc_insta_article_img biai
+        on biai.article_id = biat.article_id
+        group by biai.article_id
+        order by biai.article_id desc
     </select>
 
 </mapper>

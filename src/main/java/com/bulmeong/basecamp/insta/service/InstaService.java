@@ -376,6 +376,49 @@ public class InstaService {
         return instaTagDto;
     }
 
+    // 검색
+    // 일반 검색(content 사용)
+    // public void insertSearch(String content, int user_id){
+    //     instaSqlMapper.insertSearchContent(content, user_id);
+    // }
+
+    public List<InstaArticleImgDto> selectArticleImgFromSearchContent(String content){
+        List<InstaArticleImgDto> instaArticleImgDtoListBySearchContent = instaSqlMapper.selectArticleImgByLikeSearchContentAndLikeArticleContent(content);
+
+        return instaArticleImgDtoListBySearchContent;
+    }
+
+    public String selectResultContent(String content, int user_id){
+        String selectResultContent = instaSqlMapper.selectResultContentText(content, user_id);
+
+        return selectResultContent;
+    }
+
+    // 해시태그 검색(tag_id 사용)
+    public void insertSearchContentOrTag(String searchWord, int user_id){
+
+        // 태그가 있는지 확인
+        InstaTagDto instaTagDto = instaSqlMapper.selectTagDtoByTagText(searchWord);
+
+        if(instaTagDto != null){ // 태그가 존재하는 경우
+            instaSqlMapper.insertSearchTagId(instaTagDto.getId(), user_id);
+        }else{ // 태그가 없는 경우
+            instaSqlMapper.insertSearchContent(searchWord, user_id);
+        }
+    }
+
+    public List<InstaArticleImgDto> selectArticleImgBySearchTagText(String content){
+        List<InstaArticleImgDto> instaArticleImgDtoListByTagText = instaSqlMapper.selectArticleImgBySearchTagText(content);
+
+        return instaArticleImgDtoListByTagText;
+    }
+
+    public InstaTagDto selectTagDto(String text){
+        InstaTagDto instaTagDto = instaSqlMapper.selectTagDtoByTagText(text);
+
+        return instaTagDto;
+    }
+
 }
 
 

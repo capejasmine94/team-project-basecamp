@@ -8,6 +8,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.net.URLEncoder;
+import java.net.URLDecoder;
+import java.nio.charset.StandardCharsets;
+
 import com.bulmeong.basecamp.common.dto.ImageDto;
 import com.bulmeong.basecamp.common.util.ImageUtil;
 import com.bulmeong.basecamp.common.util.Utils;
@@ -289,15 +293,74 @@ public class InstaController {
 
     // 검색 페이지
     @RequestMapping("instaSearchPage")
-    public String instaSearchPage(){
+    public String instaSearchPage(Model model, @RequestParam("user_id") int id) { // user_id = 로그인 한 인스타 유저 id
+
+        // 이렇게 하는거 맞냐..
+        // instaSearchProcess로 파라미터 넘겨주기위해 model에 담았음
+        model.addAttribute("user_id", id);
 
         return "insta/instaSearchPage";
     }
 
+    // 검색 프로세스
+    @RequestMapping("instaSearchProcess")
+    public String instaSearchProcess(Model model, @RequestParam("searchWord") String searchWord , @RequestParam("user_id") int user_id) { // user_id = 로그인 한 인스타 유저 id
+        // 일반검색
+        instaService.insertSearchContentOrTag(searchWord, user_id);
 
-    // 검색 결과 페이지
+        // URL 인코딩을 사용하여 한글 처리
+        String encodedContent = URLEncoder.encode(searchWord, StandardCharsets.UTF_8);
+        
+
+        return "redirect:./instaSearchResultPage?searchWord=" + encodedContent + "&user_id=" + user_id;
+    }
+
+    // 검색 결과 페이지 _ 일반 검색과 해시태그 검색 두가지로 분기
     @RequestMapping("instaSearchResultPage")
-    public String instaSearchResultPage(Model model, @RequestParam("tag_id") int tag_id){
+    public String instaSearchResultPage(HttpSession session, Model model, @RequestParam("searchWord") String content){
+        // URL 디코딩
+        content = URLDecoder.decode(content, StandardCharsets.UTF_8);
+
+        // 디버깅을 위한 로그 출력
+        System.out.println("Decoded content: " + content);
+
+        UserDto userDto = (UserDto) session.getAttribute("sessionUserInfo");
+        InstaUserInfoDto instaUserInfoDto = instaService.userInfoByUserId(userDto.getId());
+
+        // 태그 검색인지 일반 검색인지 확인
+        if(content.startsWith("#")){
+            System.out.println("It's a hashtag search!");
+            
+            InstaTagDto instaTagDto = instaService.selectTagDto(content);
+            model.addAttribute("instaTagDto", instaTagDto);
+
+            List<InstaArticleImgDto> instaArticleImgDtoListByTagText = instaService.selectArticleImgBySearchTagText(content);
+            model.addAttribute("instaArticleImgDtoListByTagText", instaArticleImgDtoListByTagText);
+
+            return "insta/instaTagSearchResultPage";
+        }else{
+            System.out.println("It's a normal search!");
+
+            String selectResultContent = instaService.selectResultContent(content, instaUserInfoDto.getId());
+            model.addAttribute("selectResultContent", selectResultContent);
+            
+
+            // 일반 검색 결과
+            List<InstaArticleImgDto> instaArticleImgDtoListBySearchContent = instaService.selectArticleImgFromSearchContent(content);
+            model.addAttribute("instaArticleImgDtoListBySearchContent", instaArticleImgDtoListBySearchContent);
+
+            // 일반 검색 결과 페이지로 리턴
+            return "insta/instaSearchResultPage";
+        }
+
+    }
+
+
+    // 해시태그 클릭시 결과 페이지
+    @RequestMapping("instaSearchHashTagClickResultPage")
+    public String instaSearchHashTagClickResultPage(Model model, @RequestParam("tag_id") int tag_id){
+
+        // 검색이 아니고 태그 클릭 시 나오는 페이지
         List<InstaArticleImgDto> instaArticleImgDtoList = instaService.selectArticleFirstImg(tag_id);
 
         // 어떤 태그 검색했는지 태그 아이디 받아서 text 뽑는 쿼리
@@ -306,7 +369,7 @@ public class InstaController {
 
         model.addAttribute("instaArticleImgDtoList", instaArticleImgDtoList);
 
-        return "insta/instaSearchResultPage";
+        return "insta/instaSearchHashTagClickResultPage";
     }
 
 

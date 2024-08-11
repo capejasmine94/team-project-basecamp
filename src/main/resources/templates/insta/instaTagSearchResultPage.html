@@ -15,7 +15,7 @@
     <link rel="stylesheet" href="/public/css/basecamp.css">
     <link rel="stylesheet" href="/public/css/insta/instaStyle.css">
     <link rel="stylesheet" href="/public/css/common.css">
-    <title>instaSearchResultPage</title>
+    <title>instaTagSearchResultPage</title>
 
     <script src="/public/js/util.js"></script>
 
@@ -35,7 +35,7 @@
                     <div class="col ps-1 search-container">
                         <i class="bi bi-search"></i>         
                         <!-- <input   type="text" class="form-control form-control-sm" placeholder="검색"> -->
-                        <input id="searchInput" th:value="${selectResultContent}" type="text" name="searchWord" class="form-control form-control-sm">
+                        <input id="searchInput" th:value="${instaTagDto.text}" type="text" name="searchWord" class="form-control form-control-sm">
                     </div>  
                 </div>
             </div>
@@ -44,7 +44,7 @@
 
         <!-- 내 게시물 List -->
         <div class="row mt-5" style="padding-top: 1.2%;">
-            <a class="col-4 px-0 pb d-flex" th:href="@{./instaMainPage(user_id=${session.sessionUserInfo.id})}" th:each="instaArticleImgDto, iterStat : ${instaArticleImgDtoListBySearchContent}">
+            <a class="col-4 px-0 pb d-flex" th:href="@{./instaMainPage(user_id=${session.sessionUserInfo.id})}" th:each="instaArticleImgDto, iterStat : ${instaArticleImgDtoListByTagText}">
                 <div th:class="${iterStat.index % 3 == 1} ? 'middle' : ''">
                     <img th:src="|/images/${instaArticleImgDto.img_link}|" class="img-fluid" style="object-fit: cover; object-position: center; aspect-ratio: 1/1; height: 33.3333333333333vw;">
                 </div>

@@ -86,6 +86,17 @@ public interface InstaSqlMapper {
     // 태그 클릭시 나오는 페이지
     public List<InstaArticleImgDto> selectArticleFirstImgByTagId(int tag_id);
     public InstaTagDto selectTagByTagId(int id); // id = tag_id
+
+    // 검색(일반검색 or 해시태그 검색)
+    // 일반검색
+    public void insertSearchContent(@Param("content") String content, @Param("user_id") int user_id);
+    public List<InstaArticleImgDto> selectArticleImgByLikeSearchContentAndLikeArticleContent(@Param("content") String content);
+    public String selectResultContentText(@Param("content") String content, @Param("user_id") int user_id);
+
+    // 해시태그 검색
+    public InstaTagDto selectTagDtoByTagText(@Param("text") String text);
+    public void insertSearchTagId(@Param("tag_id") int tag_id, @Param("user_id") int user_id);
+    public List<InstaArticleImgDto> selectArticleImgBySearchTagText(@Param("text") String text);
 }
 
 

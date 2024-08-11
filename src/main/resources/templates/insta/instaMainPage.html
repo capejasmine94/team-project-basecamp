@@ -43,7 +43,7 @@
 
 </head>
 <body>
-<div class="container">
+<div class="container" style="padding-bottom: 30px;">
     <!-- 상단바 -->
     <div class="row mb-5 pb-2">
         <div class="col">
@@ -55,7 +55,7 @@
                 </div>
                 <div class="col ps-1 search-container">
                     <i class="bi bi-search"></i>         
-                    <input id="searchInput" value="" name="searchWord" type="text" class="form-control form-control-sm" placeholder="검색">
+                    <input id="searchInput" name="searchWord" type="text" class="form-control form-control-sm" placeholder="검색">
                 </div>    
             </div>
         </div>
@@ -425,8 +425,9 @@
                     <span th:utext="${instaArticleList.instaArticleDto.content}">good day✨</span>   
                 </div>
             </div>
+            <!-- 해시태그 -->
             <div class="row" style="padding-left: 3.5%;">
-                <a th:href="@{./instaSearchResultPage(tag_id=${hashtag.id})}" class="col-auto fontBasic instaButtonColor ps-0 pe-0" th:each="hashtag : ${instaArticleList.hashtags}">
+                <a th:href="@{./instaSearchHashTagClickResultPage(tag_id=${hashtag.id}, user_id=${instaUserInfoDto.id})}" class="col-auto fontBasic instaButtonColor ps-0 pe-0" th:each="hashtag : ${instaArticleList.hashtags}">
                     <span th:utext="${hashtag.text}" class="hashtag">해시태그</span>
                 </a>
             </div>
@@ -793,7 +794,13 @@
 
                     <!-- 답글 보기/숨기기 버튼 추가 -->
                     <div class="replyToggle col-12 fontNine mt-3" style="padding-left: 18%; color: rgb(162, 162, 162); cursor: pointer; display: none;" onclick="toggleReplies(replyWrapper, this)">
-                        <span>--------- 답글 <span class="replyCount"></span>개 보기</span>
+                        <span>
+                            <!-- <span class="material-symbols-outlined fw-light">
+                            horizontal_rule
+                            </span>  -->
+                            ㅡ 
+                            답글 <span class="replyCount"></span>개 보기
+                        </span>
                     </div>
 
                     <!-- 대댓글 리스트 -->
@@ -1467,7 +1474,7 @@
                     const replyWrapper = commentWrapper.querySelector(".replyWrapper");
                     if(replyToggle && replyWrapper){
                         replyWrapper.style.display = 'block';
-                        replyToggle.querySelector('span').textContent = '--------- 답글 숨기기';
+                        replyToggle.querySelector('span').textContent = 'ㅡ 답글 숨기기';
                     }
                 }
             }, 300); // reloadCommentList 함수가 끝난 후 실행되도록 약간의 지연을 추가
@@ -1485,9 +1492,9 @@
         // 가시성에 따라 토글 버튼 텍스트 업데이트
         if (isVisible) {
             const replyCount = replyWrapper.querySelectorAll('.replyTemplete').length;
-            replyToggle.querySelector('span').textContent = `--------- 답글 ${replyCount}개 보기`;
+            replyToggle.querySelector('span').textContent = `ㅡ 답글 ${replyCount}개 보기`;
         } else {
-            replyToggle.querySelector('span').textContent = '--------- 답글 숨기기';
+            replyToggle.querySelector('span').textContent = 'ㅡ 답글 숨기기';
         }
     }
 
@@ -1505,10 +1512,17 @@
     }
 
 
-    // 검색창 포커스
-    document.getElementById("searchInput").addEventListener("focus", function(){
-        window.location.href = "./instaSearchPage";
+    // 검색창 포커스 이벤트 리스너
+    document.getElementById("searchInput").addEventListener("focus", function() {
+
+        // 전역 변수인 myInstaId에서 값을 가져와서 사용
+        const userId = myInstaId;
+
+        window.location.href = `./instaSearchPage?user_id=${userId}`;
+
     });
+
+
 
 
     window.addEventListener("DOMContentLoaded", () => {
