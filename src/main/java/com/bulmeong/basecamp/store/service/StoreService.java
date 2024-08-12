@@ -543,6 +543,17 @@ public class StoreService {
         }
     }
 
+    public int getPendingOrderId(int user_id){
+        List<StoreOrderDto> storeOrderDtoList = storeSqlMapper.selectPendingOrderDtoListByUserId(user_id);
+
+        int order_id = 0;
+        for(StoreOrderDto storeOrderDto : storeOrderDtoList){
+            order_id = storeOrderDto.getId();
+        }
+
+        return order_id;
+    }
+
     public int orderProcess(int user_id, StoreOrderDto storeOrder){
         String delivery_address = storeOrder.getDelivery_address();
         String phone = storeOrder.getPhone();

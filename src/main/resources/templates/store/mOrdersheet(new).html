@@ -168,6 +168,45 @@
             setRewardPoint();
         }
 
+        // function submitPayment(){
+
+        //     const used_point = document.getElementById("inputPoint").value;
+        //     const deliveryAddress = document.getElementById("delivery_address")
+
+        //     if(deliveryAddress==null){
+        //         alert("배송지를 등록해 주세요.")
+        //         return;
+        //     }      
+
+        //     const deliveryAddressText = deliveryAddress.innerText;
+        //     const phone = document.getElementById("phone").innerText;
+        //     const receiver_name = document.getElementById("receiver_name").innerText;
+        //     const paymentAmount = document.querySelector(".paymentAmount").innerText.replace(/,/g,"");
+
+        //     const storeOrder = {
+        //         receiver_name: receiver_name,
+        //         phone: phone,
+        //         used_point: used_point,
+        //         delivery_address: deliveryAddressText,
+        //         payment_amount: paymentAmount
+        //     }
+
+        //     const url = `/api/store/orderProcess`
+        //     fetch(url, {
+        //         method: 'POST',
+        //         headers: {
+        //             'Content-Type': 'application/json'
+        //         },
+        //         body: JSON.stringify(storeOrder)
+        //     })
+        //     .then(response => response.json())
+        //     .then(response => {
+        //         const order_id = response.data.order_id;
+
+        //         location.href=`/store/orderComplete?id=${order_id}`
+        //     })
+        // }
+
         function submitPayment(){
 
             const used_point = document.getElementById("inputPoint").value;
@@ -178,12 +217,15 @@
                 return;
             }      
 
+            const order_id = document.getElementById("orderId").value;
             const deliveryAddressText = deliveryAddress.innerText;
             const phone = document.getElementById("phone").innerText;
             const receiver_name = document.getElementById("receiver_name").innerText;
             const paymentAmount = document.querySelector(".paymentAmount").innerText.replace(/,/g,"");
 
             const storeOrder = {
+                id: order_id,
+                user_id: myId,
                 receiver_name: receiver_name,
                 phone: phone,
                 used_point: used_point,
@@ -191,7 +233,7 @@
                 payment_amount: paymentAmount
             }
 
-            const url = `/api/store/orderProcess`
+            const url = "/order/pay/ready"
             fetch(url, {
                 method: 'POST',
                 headers: {
@@ -201,9 +243,7 @@
             })
             .then(response => response.json())
             .then(response => {
-                const order_id = response.data.order_id;
-
-                location.href=`/store/orderComplete?id=${order_id}`
+                location.href = response.next_redirect_pc_url;
             })
         }
 
@@ -563,6 +603,7 @@
 
     </div>
 
+    <input type="hidden" id="orderId" th:value="${order_id}">
     <div class="container fixed-bottom">
         <div class="row px-3 bg-white border-top pt-2 pb-4">
             <div class="col p-0">
