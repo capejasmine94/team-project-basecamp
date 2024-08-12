@@ -1,3 +1,4 @@
+
 // 가장 큰 문제 사항: 크기와 마진을 조절 가능하게 할 시에 fixed top, fixed bottom이 조절 가능 할 것인가
 // 현실적: 그냥 그대로 fixed top, fixed bottom 최상단 하단에 놓고... 크기 조절 -> 문제점: body 사이즈 변화에 대응해야 하나?
 
@@ -18,11 +19,11 @@ const llmSettingValues = {
 
 // 왼쪽 요약 페이지 세팅값(em)
 const llmLeftSummarySettingValues = {
-    left: 3,                                    // auto 옵션 만들어야 되나
+    left: 1,                                    // auto 옵션 만들어야 되나
     top: 3,
     backgroundColor: "#FFF",
-    width: 15,
-    height: 40,
+    width: 26,
+    height: 19,
 };
 
 // 오른쪽 요약 페이지 세팅값(em)
@@ -41,7 +42,39 @@ const leftSummaryHtml = `
 </div>
 <div class="row">
 <div class="col">레이아웃 테스트</div>
+<div class="row w-100 justify-content-center p-0">
+    <div class="col-auto ms-4 p-0">
+        <canvas id="unity-canvas" width="410" height="253" tabindex="-1"></canvas>
+    </div>
 </div>
+</div>
+<script src="/unity/Build/build.loader.js"></script>
+<script>
+  if (/iPhone|iPad|iPod|Android/i.test(navigator.userAgent)) {
+    // Mobile device style: fill the whole browser client area with the game canvas:
+    var meta = document.createElement('meta');
+    meta.name = 'viewport';
+    meta.content = 'width=device-width, height=device-height, initial-scale=1.0, user-scalable=no, shrink-to-fit=yes';
+    document.getElementsByTagName('head')[0].appendChild(meta);
+
+    var canvas = document.querySelector("#unity-canvas");
+    canvas.style.width = "100%";
+    canvas.style.height = "100%";
+    canvas.style.position = "fixed";
+
+    document.body.style.textAlign = "left";
+  }
+
+  createUnityInstance(document.querySelector("#unity-canvas"), {
+    dataUrl: "/unity/Build/build.data",
+    frameworkUrl: "/unity/Build/build.framework.js",
+    codeUrl: "/unity/Build/build.wasm",
+    streamingAssetsUrl: "StreamingAssets",
+    companyName: "DefaultCompany",
+    productName: "basecamp",
+    productVersion: "1.0",
+  });
+</script>
 `;
 
 const rightSummaryHtml = `
@@ -194,3 +227,28 @@ function isVerticalOffcanvas(element){
     return false;
 }
 
+window.addEventListener("DOMContentLoaded", () => {
+    // Unity WebGL 로더 스크립트 동적 로드
+    const script = document.createElement('script');
+    script.src = "/unity/Build/build.loader.js";
+    script.onload = () => {
+        // Unity WebGL 인스턴스 생성
+        createUnityInstance(document.querySelector("#unity-canvas"), {
+            dataUrl: "/unity/Build/build.data",
+            frameworkUrl: "/unity/Build/build.framework.js",
+            codeUrl: "/unity/Build/build.wasm",
+            streamingAssetsUrl: "StreamingAssets",
+            companyName: "YourCompany",
+            productName: "YourProduct",
+            productVersion: "1.0",
+        }).then((unityInstance) => {
+            console.log("Unity WebGL 실행 성공");
+        }).catch((message) => {
+            console.error("Unity WebGL 실행 실패:", message);
+        });
+    };
+    script.onerror = () => {
+        console.error("Unity WebGL 로더 스크립트를 불러오는데 실패했습니다.");
+    };
+    document.body.appendChild(script);
+});

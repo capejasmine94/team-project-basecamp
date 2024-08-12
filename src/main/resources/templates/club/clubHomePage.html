@@ -68,6 +68,8 @@
             .navbar-custom .btn, .navbar-custom .material-icons {
                 transition: color 0.3s;
             }
+
+            
         </style>
 
     </head>
@@ -91,7 +93,7 @@
                            
                             <div class="col">
                                 <div class="row">
-                                    <div class="col fs-5 fw-bold" th:text="${map.clubDto.name}">
+                                    <div class="col fs-5 fw-semibold" th:text="${map.clubDto.name}">
                                         CLUB NAME
                                     </div>
                                 </div>
@@ -100,7 +102,7 @@
                                         <span class="text-secondary" th:text="'모임장 ' + ${map.userDto.nickname}">모임장</span>
                                     </div>
                                 </div> -->
-                                <div class="row text-secondary">
+                                <div class="row">
                                     <div class="col-auto pe-0">
                                         멤버 <span th:text="${totalClubMember}"></span>
                                     </div>
@@ -397,9 +399,9 @@
                                 </div>
                             </div>
                             <div class="row pb-1 pt-1">
-                                <div class="col fw-semibold">
+                                <div class="col" style="font-size: 0.9em;">
                                     <span class="meetingName"></span>
-                                    <span class="d-day text-danger"></span>
+                                    <span class="d-day text-danger fw-semibold"></span>
                                     <!-- <span th:text="${meetingData.clubMeetingDto.name}"></span> -->
                                 </div>
                             </div>

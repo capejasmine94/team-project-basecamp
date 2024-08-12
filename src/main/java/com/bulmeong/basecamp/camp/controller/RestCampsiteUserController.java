@@ -1,13 +1,17 @@
 package com.bulmeong.basecamp.camp.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.bulmeong.basecamp.camp.dto.CampsiteOrderDto;
 import com.bulmeong.basecamp.camp.service.CampsiteService;
 import com.bulmeong.basecamp.campingcar.dto.RestResponseDto;
 import com.bulmeong.basecamp.common.util.Utils;
+import com.bulmeong.basecamp.seller.dto.ReadyResponse;
+import com.bulmeong.basecamp.seller.service.KakaoPayService;
 import com.bulmeong.basecamp.user.dto.UserDto;
 
 @RestController
@@ -15,6 +19,8 @@ import com.bulmeong.basecamp.user.dto.UserDto;
 public class RestCampsiteUserController {
     @Autowired
     private CampsiteService service;
+    @Autowired
+    private KakaoPayService kakaoPayService;
     @Autowired
     private Utils utils;
 
@@ -99,6 +105,36 @@ public class RestCampsiteUserController {
     public RestResponseDto searchCampsite(@RequestParam("searchWord") String searchWord, @RequestParam("category") String[] category) {
         RestResponseDto result = new RestResponseDto();
         result.add("campsiteList", service.searchCampsite(searchWord,category));
+        return result;
+    }
+
+    @PostMapping("payReady")
+    public RestResponseDto payReady(CampsiteOrderDto campsiteOrderDto,
+        @RequestParam(defaultValue = "",name="car_number") String[] car_number,
+        @RequestParam(defaultValue = "0", name= "useMileage") int useMileage,
+        @RequestParam("number") int number
+    ) {
+        System.out.print("Received Order: ");
+        System.out.println(campsiteOrderDto);
+
+        System.out.print("Received car_number: ");
+        System.out.println(car_number);
+
+        System.out.print("Received useMileage: ");
+        System.out.println(useMileage);
+
+        System.out.print("Received number: ");
+        System.out.println(number);
+        
+        ReadyResponse readyResponse = kakaoPayService.readyPayment(campsiteOrderDto);
+        utils.setSession("orderDto", campsiteOrderDto);
+        utils.setSession("carNumbers", car_number);
+        utils.setSession("useMileage", useMileage);
+        utils.setSession("number", number);
+        utils.setSession("tid", readyResponse.getTid());
+
+        RestResponseDto result = new RestResponseDto();
+        result.add("readyResponse", readyResponse);
         return result;
     }
 }
