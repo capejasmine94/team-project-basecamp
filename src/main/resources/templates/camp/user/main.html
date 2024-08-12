@@ -8,9 +8,7 @@
     <link rel="stylesheet" href="/public/css/basecamp.css">
     <script src="/public/js/util.js"></script>
     <script src="/public/js/camp/user.js"></script>
-    <script>
-        initSession();
-    </script>    
+    <script src="/public/js/lockLikeMobile.js"></script>
     <style>
         .topNaviBasecamp{
             background-color: white;
@@ -35,7 +33,7 @@
                                 <button class="btn btn-outline-success rounded-5 new-fs-8">날짜선택</button>
                             </div>
                             <div class="col-auto ps-0">
-                                <button class="btn btn-outline-success rounded-5 new-fs-8">검색어</button>
+                                <button class="btn btn-outline-success rounded-5 new-fs-8" type="button" data-bs-toggle="modal" data-bs-target="#search">캠핑장명</button>
                             </div>
                             <div class="col-auto ps-0">
                                 <button class="btn btn-outline-success rounded-5 new-fs-8">정렬</button>
@@ -57,64 +55,84 @@
                 </div>
             </div>
         </div>
-        <div class="row mt-5 pt-5">
-            <div class="col new-mt-45 pt-4 pb-4">
+        <div class="row mt-5 pt-5 flex-column">
+            <div id="campsiteList" class="col new-mt-45 pt-4 pb-4">
                 <!-- 캠핑장 리스트 -->
-                <div class="campsiteTemplate row mx-1 py-4 border-bottom" th:each="campsite:${session.campsiteList}">
-                    <a th:href="@{/camp/campsite(campsite_id=${campsite.dto.id})}">
-                        <div class="col">
-                            <div class="row">
-                                <div class="col">
-                                    <!-- 수정 필요 -->
-                                    <img class="img-fluid px-0 rounded-3" th:src="'/images/'+${campsite.mainImages[0].location}" alt="캠핑장 사진" style="width: 100%; height: 20em;">
-                                </div>
-                            </div>
-                        <div class="row justify-content-between align-items-center">
-                                <div class="col-8 ms-1">
-                                    <div class="row mt-2">
-                                        <span class="col fs-4 fw-semibold ellipsis" th:text="${campsite.dto.camp_name}">캠핑장 이름</span> 
-                                    </div>
-                                </div>
-                                <div class="col-auto">
-                                    <div class="row mt-2 justify-content-end">
-                                        <div class="col-auto p-0">
-                                            <i class="bi bi-heart"></i>
-                                        </div>
-                                        <div class="col-auto p-0 mx-3 text-start">
-                                            0   
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row ps-1 mt-1">
-                                <div class="col-12 new-fs-9 fw-semibold ellipsis text-secondary" th:text="${campsite.dto.address} +' '+ ${campsite.dto.detail_address}">
-                                    캠핑장 주소
-                                </div>
-                            </div>
-                            <div class="row ps-1 mt-1 align-items-end">
-                                <div class="col pe-0 badgeList">
-                                    <span class="badge text-bg-secondary me-1" th:each="showCategory: ${campsite.showCategory}" th:text="${showCategory.name}">카테고리</span>
-                                </div>
-                                <div class="col-auto fw-semibold text-end fs-5 text-primary">
-                                    <span class="moneyInput" th:text="${campsite.minPrise}">1,000,000</span> <span class="ms-2">원</span>
-                                </div>
-                            </div>
-                        </div>
-                    </a>
-                </div>
+               
             </div>
+            <div id="emptyCampList" class="col new-fs-9 text-center text-secondary d-none">검색 조건에 맞는 캠핑장이 없습니다</div>
         </div>
+       
         <div class="row mt-3">
         </div>
     </div>
 </div>
 
+<!-- 검색창 -->
+<div class="modal fade" id="search" tabindex="-1" aria-labelledby="searchLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="searchLabel">검색</h1>
+        </div>
+        <div class="modal-body">
+            <div class="row justify-content-center">
+                <div class="col">
+                    <input class="form-control rounded-5" type="text" id="searchWord">
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" onclick="initSearchWord()">초기화</button>
+          <button type="button" class="btn btn-primary" onclick="setSearchWord()">검색</button>
+        </div>
+      </div>
+    </div>
+  </div>
 
 <!-- 네비가 추가됨 -->
 <div th:replace="camp/campNavi::popupCategory"></div>
 <div th:replace="camp/campNavi::popupSelectDay"></div>
 <script>
-    addColonMoneyInput();
+    let curSearchWord = document.getElementById('searchWord').value;
+    let curCategory = [];
+
+    initSession();
+
+    function initSearchWord() {
+        const searchWord = document.getElementById('searchWord');
+        searchWord.value = '';
+        curSearchWord = '';
+        getCampsiteList(curSearchWord,curCategory);
+        bootstrap.Modal.getOrCreateInstance('#search').hide();
+    }
+
+    function setSearchWord() {
+        const searchWord = document.getElementById('searchWord').value;
+        curSearchWord = searchWord;
+        getCampsiteList(curSearchWord,curCategory);
+        bootstrap.Modal.getOrCreateInstance('#search').hide();
+    }
+
+    function setCategory() {
+        const categoryList = document.querySelectorAll('input[name="selectCategory"]:checked');
+        let list = [];
+        for(const category of categoryList) {
+            list.push(category.id);
+        }
+        curCategory = list;
+        getCampsiteList(curSearchWord,curCategory);
+        bootstrap.Modal.getOrCreateInstance('#popupCategory').hide();
+    }
+    function initCategory() {
+        const categoryList = document.querySelectorAll('input[name="selectCategory"]:checked');
+        for(const category of categoryList) {
+            category.checked = false;
+        }
+        curCategory = [];
+        getCampsiteList(curSearchWord,curCategory);
+        bootstrap.Modal.getOrCreateInstance('#popupCategory').hide();
+    }
 </script>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>

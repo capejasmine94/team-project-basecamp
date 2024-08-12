@@ -61,11 +61,13 @@ public class StoreController {
         int user_id = userDto.getId();
 
         List<Map<String, Object>> pendingOrderProductInfoDataList = storeService.getPendingOrderDataList(user_id);
-
         model.addAttribute("pendingOrderProductInfoDataList", pendingOrderProductInfoDataList);
 
         UserDeliveryInfoDto userDeliveryInfoDto = storeService.selectDefaultAddressByUserId(user_id);
-        model.addAttribute("userDeliveryInfoDto", userDeliveryInfoDto);        
+        model.addAttribute("userDeliveryInfoDto", userDeliveryInfoDto);
+
+        int order_id = storeService.getPendingOrderId(user_id);
+        model.addAttribute("order_id", order_id);
 
         return "store/mOrdersheet(new)";
     }

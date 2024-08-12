@@ -553,6 +553,28 @@
         <delete id="deleteArea">
             DELETE from bc_campsite_area where id = #{area_id}
         </delete>
+
+        <!-- 캠핑장 검색으로 -->
+        <select id="searchCampsite"  resultType="com.bulmeong.basecamp.camp.dto.CampsiteDto">
+            SELECT * FROM bc_campsite
+            WHERE 1 = 1
+            <!-- 검색어가 있는 경우 -->
+            <if test="searchWord != null and searchWord != ''">
+                AND (camp_name LIKE CONCAT('%', #{searchWord}, '%')
+                     OR address LIKE CONCAT('%', #{searchWord}, '%')
+                     OR description LIKE CONCAT('%', #{searchWord}, '%'))
+            </if>
+            <!-- 카테고리가 있는 경우 -->
+            <if test="category != null and category.length > 0">
+                AND id IN (
+                    SELECT campsite_id FROM bc_campsite_select_category
+                    WHERE category_id IN 
+                    <foreach item="cat" index="index" collection="category" open="(" separator="," close=")">
+                        #{cat}
+                    </foreach>
+                )
+            </if>
+        </select>
     <!-- ======================================================================== -->
 
 

@@ -12,10 +12,11 @@
     <script src="/public/js/calendar.js"></script>
     <script src="/public/js/util.js"></script>
     <script src="/public/js/camp/user.js"></script>
+    <script src="/public/js/lockLikeMobile.js"></script>
 
-    <script>
+    <!-- <script>
         initSession();
-    </script>
+    </script> -->
 
     <style>
         .material-symbols-outlined {
@@ -132,7 +133,7 @@
                 </div>
             </div>
             <!-- 나머지 헤더 섹션 -->
-            <div class="row sticky-custom pt-3 px-0">
+            <div class="row sticky-custom pt-3 px-0 justify-content-center">
                 <div class="col bg-white border-top">
                     <div class="row mx-1">
                         <div class="col">
@@ -179,7 +180,7 @@
                     <div class="col">
                         <span class="fw-semibold fs-5">날짜 선택</span>
                     </div> 
-                    <div id="calendar_selectDay" class="col ms-3 ps-1"></div>
+                    <div id="calendar_selectDay" class="col"></div>
                 </div>
 
                 <!-- 구역 리스트 -->
@@ -189,7 +190,7 @@
                     </div>
                     <div class="col mt-4">
                         <div class="row my-2 pb-5">
-                            <div class="col mt-4 ms-4 siteList">
+                            <div class="col mt-4 siteList">
                                 <div th:id="'siteTemplate_' + ${area.dto.id}" class="row border-bottom pb-3 justify-content-center" th:onclick="'select(' + ${area.dto.id} + ')'" th:each="area : ${session.campsiteUser.area}">
                                     <div class="col-11">
                                         <div class="row">
@@ -226,11 +227,13 @@
             <div class="row" style="margin-bottom: 4em;"></div> 
         </div>
     </div>
-    <div class="row fixed-bottom border-top bg-white py-2 justify-content-center" style="margin-bottom: 5em;">
-        <div class="col d-grid px-0 mx-5">
-            <button class="btn btn-primary" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasSelectOption" aria-controls="offcanvasSelectOption" >다음</button>
-        </div>
-    </div> 
+    <div class="container">
+        <div class="row fixed-bottom border-top bg-white py-2 justify-content-center" style="margin-bottom: 5em;">
+            <div class="col d-grid px-0 mx-5">
+                <button class="btn btn-primary" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasSelectOption" aria-controls="offcanvasSelectOption" >다음</button>
+            </div>
+        </div> 
+    </div>
 
     <!-- 네비가 추가됨 -->
     <div class="offcanvas offcanvas-bottom" tabindex="-1" id="offcanvasSelectOption" aria-labelledby="offcanvasSelectOptionLabel">
@@ -239,51 +242,50 @@
         <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
         </div>
         <div class="offcanvas-body small">
-        <!-- 인원 / 차량 설정 -->
-        <div class="row mb-2 ms-1 new-fs-9 text-secondary">기본 인원에서 추가되는 인원/차량을 작성합니다.<br>최대 인원보다 많은 경우에만 작성해주세요.</div>
-        <div class="row my-3">
-            <div class="col">
-                <div class="row align-items-center">
-                    <div class="col-3 text-end">
-                        <span>성인</span>
+            <!-- 인원 / 차량 설정 -->
+            <div class="row mb-2 ms-1 new-fs-9 text-secondary">기본 인원에서 추가되는 인원/차량을 작성합니다.<br>최대 인원보다 많은 경우에만 작성해주세요.</div>
+            <div class="row my-2">
+                <div class="col">
+                    <div class="row align-items-center">
+                        <div class="col-3 text-end">
+                            <span>성인</span>
+                        </div>
+                        <input type="hidden" name="adult" id="adult" value="0">
+                        <div class="col-auto"><button class="btn btn-outline-secondary px-2" type="button" onclick="addValue('adult',-1)">◀</button></div>
+                        <div class="col-2 text-center"><span class="fs-5" id="value_adult">0</span></div>
+                        <div class="col-auto"><button class="btn btn-outline-secondary px-2" type="button" onclick="addValue('adult',1)">▶</button></div>
                     </div>
-                    <input type="hidden" name="adult" id="adult" value="0">
-                    <div class="col-auto"><button class="btn btn-outline-secondary px-2" type="button" onclick="addValue('adult',-1)">◀</button></div>
-                    <div class="col-2 text-center"><span class="fs-5" id="value_adult">0</span></div>
-                    <div class="col-auto"><button class="btn btn-outline-secondary px-2" type="button" onclick="addValue('adult',1)">▶</button></div>
-                </div>
-                <div class="row align-items-center mt-2 text-end">
-                    <div class="col-3">
-                        <span>미성년자</span>
+                    <div class="row align-items-center mt-2 text-end">
+                        <div class="col-3">
+                            <span>미성년자</span>
+                        </div>
+                        <input type="hidden" name="kid" id="kid" value="0">
+                        <div class="col-auto"><button class="btn btn-outline-secondary px-2" type="button" onclick="addValue('kid',-1)">◀</button></div>
+                        <div class="col-2 text-center"><span class="fs-5" id="value_kid">0</span></div>
+                        <div class="col-auto"><button class="btn btn-outline-secondary px-2" type="button" onclick="addValue('kid',1)">▶</button></div>
                     </div>
-                    <input type="hidden" name="kid" id="kid" value="0">
-                    <div class="col-auto"><button class="btn btn-outline-secondary px-2" type="button" onclick="addValue('kid',-1)">◀</button></div>
-                    <div class="col-2 text-center"><span class="fs-5" id="value_kid">0</span></div>
-                    <div class="col-auto"><button class="btn btn-outline-secondary px-2" type="button" onclick="addValue('kid',1)">▶</button></div>
-                </div>
-                <div class="row align-items-center mt-2 text-end">
-                    <div class="col-3">
-                        <span>차량</span>
+                    <div class="row align-items-center mt-2 text-end">
+                        <div class="col-3">
+                            <span>차량</span>
+                        </div>
+                        <input type="hidden" name="car" id="car" value="0">
+                        <div class="col-auto"><button class="btn btn-outline-secondary px-2" type="button" onclick="addValue('car',-1)">◀</button></div>
+                        <div class="col-2 text-center"><span class="fs-5" id="value_car">0</span></div>
+                        <div class="col-auto"><button class="btn btn-outline-secondary px-2" type="button" onclick="addValue('car',1)">▶</button></div>
                     </div>
-                    <input type="hidden" name="car" id="car" value="0">
-                    <div class="col-auto"><button class="btn btn-outline-secondary px-2" type="button" onclick="addValue('car',-1)">◀</button></div>
-                    <div class="col-2 text-center"><span class="fs-5" id="value_car">0</span></div>
-                    <div class="col-auto"><button class="btn btn-outline-secondary px-2" type="button" onclick="addValue('car',1)">▶</button></div>
                 </div>
             </div>
-        </div>
-
-        <div class="row justify-content-center">
-                <div class="col d-grid mt-3">
+            <div class="row justify-content-center">
+                <div class="col d-grid mt-3 mb-4 pb-5">
                     <button id="payButton" class="btn btn-primary" type="button" onclick="checkBeforePay()" disabled>결제하기</button>
                 </div>
-        </div>
+            </div>
         </div>
     </div>
 </form>
 
 <!-- 사이트 모달 -->
-<div class="modal fade container-fluid" id="popupSite" tabindex="-1" aria-labelledby="popupSite-title" data-keyboard="true" data-backdrop="static" aria-hidden="true">
+<div class="modal fade container-fluid" id="popupSite" tabindex="-1" aria-labelledby="popupSite-title" data-keyboard="true" data-backdrop="static" aria-hidden="true" style="height: 93%;">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -371,6 +373,7 @@
             </div>
             <div class="modal-footer">
                 <button id="popupSite-no" type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+                <div class="row my-5"></div>
             </div>
         </div>
     </div>

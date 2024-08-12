@@ -534,6 +534,15 @@
         )
     </insert>
 
+    <!-- <insert id="insertPoint Log">
+        insert into bc_user_mileage_log(
+            user_id, mileage_log, change_amount
+        )values(
+            #{user_id}, '구매확정 적립', #{change_amount}
+        )
+    </insert> -->
+
+
     <update id="updateUserMileage">
         update bc_user
         set mileage = mileage-#{used_point}

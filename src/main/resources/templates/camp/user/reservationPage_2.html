@@ -11,9 +11,10 @@
     
     <script src="/public/js/util.js"></script>
     <script src="/public/js/camp/user.js"></script>
-    <script>
+    <script src="/public/js/lockLikeMobile.js"></script>
+    <!-- <script>
         initUser();
-    </script>
+    </script> -->
     <style>
         .material-symbols-outlined {
           font-variation-settings:
@@ -121,7 +122,7 @@
                 <div class="col bg-white border-top">
                     <div class="row">
                         <div class="col">
-                            <div class="row mt-2 align-items-center">
+                            <div class="row mt-3 align-items-center">
                                 <div class="col ellipsis">
                                     <span class="fs-4 fw-semibold" th:text="${session.campsiteUser.dto.camp_name}"></span>
                             </div>
@@ -356,7 +357,7 @@
                 <div class="row" th:if="${session.sessionUserInfo != null}">
                     <div class="col mt-5">
                         <div class="row">
-                            <div class="col"><span class="fw-semibold">내 마일리지</span> <span class="ms-2">100pt</span></div>
+                            <div class="col"><span class="fw-semibold">내 마일리지</span> <span class="ms-2" th:text="${session.sessionUserInfo.mileage}"></span></div>
                         </div>
                         <div class="row mt-2">
                             <div class="col">
@@ -468,6 +469,7 @@
     let saleInfo;
     let selectedCamp;
 
+    initUser();
     function selectPoint(number, point_id, realPointID) {
         //실제 포인트 고유번호 input에 추가    
         document.getElementById('point_id').value = realPointID;
@@ -607,8 +609,9 @@
         document.getElementById('numberInput').value = selectedNumber;
         document.getElementById('totalPriseInput').value = refreshTotalPrise();
         document.getElementById('saleRateInput').value = 0;
-
-
+        if(selectPay.value == '1') {
+            finalReservationProcess.action = "/camp/pay/completed";
+        }
         finalReservationProcess.submit();
     }
 
@@ -623,9 +626,12 @@
             checkLogin();
             return;
         }
+        const user = currentUser();
         let number = e.target.value;
-        if(number > 100) //마일리지 일정 이상
-            number = 100;
+        if(number > user.mileage) { //마일리지 일정 이상
+            number = user.mileage;
+            inputMileage.value = user.mileage;
+        }
         const mileage = document.getElementById('useMileage');
         number = number <= 0 ? 0 : number;
         mileage.innerText = number;
