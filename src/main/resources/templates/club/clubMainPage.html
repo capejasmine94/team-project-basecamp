@@ -347,7 +347,7 @@
 
                                 <div class="row py-2 align-items-end d-flex px-3">
                                     <div class="col">
-                                        <span class="lightFont fw-semibold" th:text="${userDto.nickname}">닉네임</span> 님, 이런 소모임은 어떠세요?
+                                        <span class="lightFont fw-medium" th:text="${userDto.nickname}">닉네임</span> 님, 이런 소모임은 어떠세요?
                                     </div>
                                     <div class="col-auto text-end text-secondary" style="font-size: 0.8em;">
                                         <a href="/club/newClubs"><span class="text-secondary">더보기</span></a>
@@ -376,7 +376,7 @@
                                                                 <span th:text="${clubDto.name}">소모임명</span>
                                                             </div> -->
 
-                                                            <div class="col fw-semibold text-truncate" style="font-size: 0.9em;">
+                                                            <div class="col fw-medium text-truncate" style="font-size: 0.9em;">
                                                                 <span th:text="${clubDto.name}">소모임명</span>
                                                             </div>
                                                         </div>
@@ -479,7 +479,7 @@
 
                                                         <div class="row py-2">
                                                             <div class="d-flex align-items-center w-100">
-                                                                <div class="flex-grow-1 text-truncate fw-semibold" style="font-size: 0.9em; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
+                                                                <div class="flex-grow-1 text-truncate fw-medium" style="font-size: 0.9em; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
                                                                     <span th:text="${hotPostData.clubPostDto.title}"></span>
                                                                 </div>
                                                                 <div class="d-flex align-items-center text-secondary ms-2" style="font-size: 0.8em; white-space: nowrap;">
@@ -593,7 +593,7 @@
                                     </div>
                                     <div class="col">
                                         <div class="row">
-                                            <div class="col fw-semibold" style="font-size: 0.9em;">
+                                            <div class="col fw-medium" style="font-size: 0.9em;">
                                                 <a th:href="@{/club/home(id=${bookmarkedClubData.bookmarkedClubDto.id})}">
                                                     <span th:text="${bookmarkedClubData.bookmarkedClubDto.name}"></span>
                                                 </a>
@@ -621,7 +621,7 @@
                         </div>
 
                         <!-- 내 모임 오버플로우 -->
-                        <div class="row pb-2 bg-white">
+                        <div class="row pb-2 pt-3 mt-2 bg-white">
                             <div class="col">
                                 내가 참여한 모임
                             </div>
@@ -650,7 +650,7 @@
                                         </div>
                                         <div class="row">
                                             <div class="col text-secondary" style="font-size: 0.8em;">
-                                                지역| 멤버 17 | 카테고리
+                                                지역 &#183; 멤버 17 &#183; 카테고리
                                             </div>
                                         </div>
                                     </div>
@@ -810,7 +810,7 @@
                     <div class="col">
                     
                         <div class="row">
-                            <div class="col fw-semibold text-truncate" style="font-size: 0.8em;">
+                            <div class="col fw-medium text-truncate" style="font-size: 0.8em;">
                             
                                 <span class="upcoming-meeting-name"></span>
                             </div>
@@ -823,7 +823,7 @@
                         </div>
                         <div class="row">
                             <div class="col" style="font-size: 0.8em;">
-                            <span class="lightFont fw-semibold upcoming-member-count"></span><span class="lightFont">명 참석중</span>
+                            <span class="lightFont fw-medium upcoming-member-count"></span><span class="lightFont">명 참석중</span>
                             
                                 <span class="text-secondary">
                                     (<span class="upcoming-member-count"></span>/<span class="upcoming-capacity"></span>)

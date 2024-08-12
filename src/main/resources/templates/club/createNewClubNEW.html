@@ -42,30 +42,13 @@
             margin-bottom: 0.625rem; /* 10px -> 0.625rem */
             font-size: 1rem; /* 16px -> 1rem */
         }
-
-        .btn-outline-success {
-            --bs-btn-color: #00B8FF;
-            --bs-btn-border-color: #00B8FF;
-            --bs-btn-hover-color: #fff;
-            --bs-btn-hover-bg: #00B8FF;
-            --bs-btn-hover-border-color: #00B8FF;
-            --bs-btn-focus-shadow-rgb: 25, 135, 84;
-            --bs-btn-active-color: #fff;
-            --bs-btn-active-bg: #00B8FF;
-            --bs-btn-active-border-color: #00B8FF;
-            --bs-btn-active-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
-            --bs-btn-disabled-color: #00B8FF;
-            --bs-btn-disabled-bg: transparent;
-            --bs-btn-disabled-border-color: #00B8FF;
-            --bs-gradient: none;
-        }
         </style>
     </head>
     <body>
       
-        <div class="container bg-body-tertiary">
+        <div class="container px-3 bg-body-tertiary">
 
-            <div class="row px-3 pt-5 py-3 bg-white">
+            <div class="row pt-5 py-3 bg-white">
                 <div class="col fs-5">
                     <span class="fw-semibold lightFont" th:text="${session.sessionUserInfo.nickname}"></span> 님, <br>어떤 소모임을 만드실 건가요?</span>
                 </div>
@@ -77,12 +60,14 @@
 
                     <div class="col">
                          <!-- 정모 개설 -->
-                        <div class="row px-3 bg-white">
+                        <div class="row mt-2 bg-white">
                             <div class="col">
                                 <div class="row py-3">
+                                    <div class="row">
                                         <div class="col">
                                             Step <span class="lightFont">1</span><span>/2</span>
                                         </div>
+                                    </div>
                                     <div class="row pb-3">
                                         <div class="col">
                                             소모임을 소개해주세요.
@@ -110,55 +95,40 @@
                                     </div>
                                 </div>
 
-                                <!-- 지역 카테고리 -->
-
-                                <div class="row pt-4 pb-1">
-                                    <div class="col fw-semibold" style="font-size: 0.8em;">
-                                        소모임의 활동 지역을 선택해주세요.
-                                    </div>
+                                       <!-- 카테고리 -->
+                             <div class="row pt-5">
+                                <div class="col-6">
+                                    <select name="region_id" class="form-select form-control">
+                                        <option selected>
+                                            지역
+                                        </option>
+                                        <option th:each="regionCategoryDto : ${regionCategoryDtoList}"
+                                                th:value="${regionCategoryDto.id}"
+                                                th:text="${regionCategoryDto.region_name}">
+                                        </option>
+                                    </select>
                                 </div>
-                                <div class="row">
-                                    <div class="col">
-                                        <select name="region_id" class="form-select form-control">
-                                            <option selected>
-                                                지역
-                                            </option>
-                                            <option th:each="regionCategoryDto : ${regionCategoryDtoList}"
-                                                    th:value="${regionCategoryDto.id}"
-                                                    th:text="${regionCategoryDto.region_name}">
-                                            </option>
-                                        </select>
-                                    </div>
+                                <div class="col">
+                                    <select name="category_id" class="form-select form-control">
+                                        <option selected>
+                                            관심사
+                                        </option>
+                                        <option th:each="clubCategoryDto : ${clubCategoryDtoList}"
+                                                th:value="${clubCategoryDto.id}"
+                                                th:text="${clubCategoryDto.category_name}">
+                                        </option>
+                                    </select>
                                 </div>
 
-                                <!-- 관심사 카테고리 -->
+                            </div>
+
 
                                 <div class="row pt-2">
-                                    <div class="col fw-semibold" style="font-size: 0.8em;">
-                                        소모임의 관심사를 선택해주세요.
-                                    </div>
-                                </div>
-                                <div class="row pt-1 pb-3">
-                                    <div class="col">
-                                        <select name="region_id" class="form-select form-control">
-                                            <option selected>
-                                                관심사
-                                            </option>
-                                            <option th:each="clubCategoryDto : ${clubCategoryDtoList}"
-                                                    th:value="${clubCategoryDto.id}"
-                                                    th:text="${clubCategoryDto.category_name}">
-                                            </option>
-                                        </select>
-                                    </div>
-                                </div>
-
-
-                                <div class="row pt-3 pb-1">
                                     <div class="col">
                                         <span class="fw-semibold" style="font-size: 0.8em;">소모임명</span>
                                     </div>
                                 </div>
-                                <div class="row">
+                                <div class="row pt-1">
                                     <div class="col">
                                         <input class="form-control" name="name" type="text" placeholder="소모임 이름을 입력해 주세요.">
                                     </div> 
@@ -169,7 +139,7 @@
                                         <span class="fw-semibold" style="font-size: 0.8em;">소모임 소개</span>
                                     </div>
                                 </div>
-                                <div class="row pb-5">
+                                <div class="row pt-1 py-4">
                                     <div class="col">
                                         <textarea class="form-control" name="description" id="description" type="text" placeholder="소모임 소개글을 입력해 주세요."></textarea>
                                     </div>
@@ -179,31 +149,25 @@
                         </div>
 
     
-                        <div class="row px-3 mt-3 bg-white">
+                        <div class="row mt-3 bg-white">
                             <div class="col">
                                 <div class="row py-3">
+                                    <div class="row">
                                         <div class="col">
                                             Step <span class="lightFont">2</span><span>/</span>2
-                                     
+                                        </div>
+                                    </div>
                                     <div class="row pb-3">
                                         <div class="col">
                                             멤버를 어떻게 모집할까요?
                                          </div>
                                     </div>
-                                    <div class="row px-2">
-                                        <div class="col">
-                                            <div class="row align-items-center d-flex border py-2 rounded bg-body-tertiary text-secondary" style="font-size: 0.8em;">
-                                                <div class="col align-items-center d-flex">
-                                                    <span class="material-symbols-outlined thin-icon pe-2">error</span>
-                                                    과도한 개인 정보 요구(전화번호, 카카오톡 아이디 등) 및 타 플랫폼으로 유도하는 경우 가이드 위반으로 경고 및 제재를 받게돼요.
-                                                </div>
-                                            </div>
+                                    <div class="row border rounded bg-body-tertiary text-secondary" style="font-size: 0.8em;">
+                                        <div class="col align-items-center d-flex">
+                                            <span class="material-symbols-outlined thin-icon">error</span>
+                                            과도한 개인 정보 요구(전화번호, 카카오톡 아이디 등) 및 타 플랫폼으로 유도하는 경우 가이드 위반으로 경고 및 제재를 받게돼요.
                                         </div>
                                     </div>
-
-
-                                 
-                                </div>
                                 </div>
 <!--                         
                                 <div class="row">
@@ -223,13 +187,12 @@
                                     </div>
                                 </div> -->
 
-                                <div class="row pt-3">
+                                <div class="row pt-2">
                                     <div class="col">
                                         <span class="fw-semibold" style="font-size: 0.8em;">최대 모집 인원</span>
                                     </div>
                                 </div>
-                                
-                                <div class="row py-2">
+                                <div class="row pt-1">
                                     <div class="col counter-container">
                                         <div class="counter-button" onclick="decrement()">&#8722;</div>
                                         <div class="counter-value lightFont" id="counter">10명</div>
@@ -238,73 +201,58 @@
                                         <input type="hidden" name="capacity" id="hiddenCapacity" value="10">
                                     </div>
                                 </div>
-
-                                <div class="row px-2">
-                                    <div class="col">
-                                        <div class="row py-2 border rounded bg-body-tertiary text-secondary" style="font-size: 0.8em;">
-                                            <div class="col align-items-center d-flex">
-                                                <span class="material-symbols-outlined thin-icon pe-2">error</span>
-                                                최대 모집 인원에는 소모임장이 포함돼요.
-                                            </div>
-                                        </div>
+                                <div class="row border rounded bg-body-tertiary text-secondary" style="font-size: 0.8em;">
+                                    <div class="col align-items-center d-flex">
+                                        <span class="material-symbols-outlined thin-icon">error</span>
+                                        최대 모집 인원에는 소모임장이 포함돼요.
                                     </div>
                                 </div>
 
-                                <div class="row pt-4">
+                                <div class="row">
                                     <div class="col">
                                         <span class="fw-semibold" style="font-size: 0.8em;">연령</span>
                                     </div>
                                 </div>
                                <!-- 출생연도 범위 설정 -->
-                                <div class="row pt-1 pb-2">                        
+                                <div class="row py-3">                        
                                     <div class="col d-grid">
                                         <select id="start_year" class="form-control" name="start_year">
-                                            <option value="0" class="text-center">제한없음</option>
-                                            <option class="text-center" th:each="year : ${#numbers.sequence(1941, 2024)}"
+                                            <option value="0">제한없음</option>
+                                            <option th:each="year : ${#numbers.sequence(1941, 2024)}"
                                                     th:value="${year}" th:text="${year}"></option>
                                         </select>
                                     </div>
-                                    <div class="col-auto align-self-center">
+                                    <div class="col-auto">
                                         ~
                                     </div>
                                     <div class="col d-grid">
                                         <select id="end_year" class="form-control" name="end_year">
-                                            <option value="5000" class="text-center">제한없음</option>
-                                            <option class="text-center" th:each="year : ${#numbers.sequence(1941, 2024)}"
+                                            <option value="5000">제한없음</option>
+                                            <option th:each="year : ${#numbers.sequence(1941, 2024)}"
                                                     th:value="${year}" th:text="${year}"></option>
                                         </select>
                                     </div>
                                 </div>
-
-                                <div class="row px-2">
-                                    <div class="col">
-
-                                        <div class="row py-2 border rounded bg-body-tertiary text-secondary" style="font-size: 0.8em;">
-                                            <div class="col align-items-center d-flex">
-                                                <span class="material-symbols-outlined thin-icon pe-2">error</span>
-                                                소모임장이 원하는 연령의 멤버를 안내하는 내용이에요.
-                                                출생연도 범위를 설정하지 않으면 연령과 관계없이 모임을 신청할 수 있어요.
-                                            </div>
-                                        </div>
-
+                                <div class="row border rounded bg-body-tertiary text-secondary" style="font-size: 0.8em;">
+                                    <div class="col align-items-center d-flex">
+                                        <span class="material-symbols-outlined thin-icon">error</span>
+                                        소모임장이 원하는 연령의 멤버를 안내하는 내용이에요.
+                                        출생연도 범위를 설정하지 않으면 연령과 관계없이 모임을 신청할 수 있어요.
                                     </div>
                                 </div>
 
-
-                               
-
-                                <div class="row pt-4 py-1">
+                                <div class="row">
                                     <div class="col">
                                         <span class="fw-semibold" style="font-size: 0.8em;">성별</span>
                                     </div>
                                 </div>
                                       <!-- 성별제한 -->
-                                <div class="row pb-2 justify-content-center">
+                                <div class="row justify-content-center">
                             
                                 
                                     <div class="col-4 d-grid">
                                         <input type="radio" class="btn-check" value="all" name="gender" id="option1" autocomplete="off">
-                                        <label class="btn btn-outline-success" for="option1" selected>성별무관</label>
+                                        <label class="btn btn-outline-success" for="option1">성별무관</label>
                                     </div>
 
                                     <div class="col-4 d-grid">
@@ -318,20 +266,17 @@
                                     </div>
                                 </div>
 
-                                <div class="row px-2">
-                                    <div class="col">
-                                        <div class="row border py-2 rounded bg-body-tertiary text-secondary" style="font-size: 0.8em;">
-                                            <div class="col align-items-center d-flex">
-                                                <span class="material-symbols-outlined thin-icon pe-2">error</span>
-                                                소모임장이 원하는 성별의 멤버를 안내하는 내용이에요.
-                                                성별무관 옵션은 성별과 관계없이 누구나 모임에 신청이 가능해요.
-                                            </div>
-                                        </div>
+                                <div class="row border rounded bg-body-tertiary text-secondary" style="font-size: 0.8em;">
+                                    <div class="col align-items-center d-flex">
+                                        <span class="material-symbols-outlined thin-icon">error</span>
+                                        소모임장이 원하는 성별의 멤버를 안내하는 내용이에요.
+                                        성별무관 옵션은 성별과 관계없이 누구나 모임에 신청이 가능해요.
                                     </div>
                                 </div>
 
+                           
 
-                                <div class="row pt-5">
+                                <div class="row pt-3">
                                     <div class="col">
                                         <button class="form-control btn lightBg text-white">개설하기</button>  
                                     </div>
