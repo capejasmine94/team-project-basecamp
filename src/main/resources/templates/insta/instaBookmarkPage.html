@@ -11,6 +11,7 @@
 
         <link rel="stylesheet" href="/public/css/insta/instaStyle.css">
         <link rel="stylesheet" href="/public/css/common.css">
+        <link rel="stylesheet" href="/public/css/basecamp.css">
         <title>insta_bookmarkPage</title>
 
         <script src="/public/js/util.js"></script>
@@ -22,7 +23,7 @@
     <body>
         <div class="container">
             <!-- 상단바 -->
-            <div class="row mb-5 border-bottom fixed-top" style="background-color: white;">
+            <div class="row border-bottom fixed-top" style="background-color: white;">
                 <div class="col-2">
                     <a th:href="@{./instaMainPage(user_id=${session.sessionUserInfo.id})}" style="color: black;"><i class="bi bi-x-lg"></i></a>
                 </div>
@@ -38,7 +39,8 @@
 
             <div class="row mt-5 pt-4 fontNine">
                 <div class="col-auto">
-                    <img th:src="|/images/${instaUserInfoDto.insta_profile_img}|" class="img-fluid rounded-circle userImage">
+                    <img src="/public/img/instaImage/story.jpg" class="img-fluid rounded-circle userImg">
+                    <img th:src="|/images/${instaUserInfoDto.insta_profile_img}|" class="img-fluid rounded-circle userImage" style="position: relative;">
                 </div>
                 <div class="col align-self-center">
                     <div class="row text-center fw-bold">
@@ -74,7 +76,7 @@
 
             <div class="row mt-3 fontNine">
                 <div class="col">
-                    <a class="badge d-grid" href="./userEditProfile" style="height: 30px; background-color: #262626; text-decoration: none;">
+                    <a class="badge d-grid darkBg" href="./userEditProfile" style="height: 30px; text-decoration: none;">
                         <span class="align-self-center" style="font-size: 1.2em;">프로필 편집</span>
                     </a>
                 </div>
@@ -92,9 +94,9 @@
 
             <!-- 북마크 List -->
             <div class="row">
-                <a class="col-4 px-0 pb d-flex justify-content-center" th:href="@{./instaMainPage(user_id=${session.sessionUserInfo.id})}" th:each="instaArticleImgDto, iterStat : ${instaBookmarkArticleImgDtoList}">
+                <a class="col-4 px-0 d-flex justify-content-center" th:href="@{./instaMainPage(user_id=${session.sessionUserInfo.id})}" th:each="instaArticleImgDto, iterStat : ${instaBookmarkArticleImgDtoList}">
                     <div th:class="${iterStat.index % 3 == 1} ? 'middle' : ''">
-                        <img th:src="|/images/${instaArticleImgDto.img_link}|" class="img-fluid" style="aspect-ratio: 1/1; height: 33.3333333333333vw;">
+                        <img th:src="|/images/${instaArticleImgDto.img_link}|" class="img-fluid" style="object-fit: cover; object-position: center; aspect-ratio: 1/1; height: 33.3333333333333vw;">
                     </div>
                 </a>
             </div>

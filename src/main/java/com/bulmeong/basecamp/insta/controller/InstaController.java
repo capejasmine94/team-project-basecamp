@@ -329,7 +329,6 @@ public class InstaController {
 
         // 태그 검색인지 일반 검색인지 확인
         if(content.startsWith("#")){
-            System.out.println("It's a hashtag search!");
             
             InstaTagDto instaTagDto = instaService.selectTagDto(content);
             model.addAttribute("instaTagDto", instaTagDto);
@@ -339,7 +338,6 @@ public class InstaController {
 
             return "insta/instaTagSearchResultPage";
         }else{
-            System.out.println("It's a normal search!");
 
             String selectResultContent = instaService.selectResultContent(content, instaUserInfoDto.getId());
             model.addAttribute("selectResultContent", selectResultContent);

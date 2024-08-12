@@ -11,6 +11,7 @@
 
         <link rel="stylesheet" href="/public/css/insta/instaStyle.css">
         <link rel="stylesheet" href="/public/css/common.css">
+        <link rel="stylesheet" href="/public/css/basecamp.css">
         <title>insta_userPage</title>
 
         <script src="/public/js/util.js"></script>
@@ -206,7 +207,8 @@
 
             <div class="row mt-5 pt-4 fontNine">
                 <div class="col-auto">
-                    <img th:src="|/images/${instaUserInfoDto.insta_profile_img}|" class="img-fluid rounded-circle userImage">
+                    <img src="/public/img/instaImage/story.jpg" class="img-fluid rounded-circle userImg">
+                    <img th:src="|/images/${instaUserInfoDto.insta_profile_img}|" class="img-fluid rounded-circle userImage" style="position: relative;">
                 </div>
                 <div class="col align-self-center">
                     <div class="row text-center fw-bold">
@@ -241,10 +243,10 @@
             </div>
 
             <div class="row mt-3 mb-3 fontNine" style="padding-right: 3.5%;padding-left: 3.5%;">
-                <div id="follow" class="col badge d-grid d-none" style="height: 30px; background-color: #0095f6; text-decoration: none;">
+                <div id="follow" class="col badge d-grid d-none lightBg" style="height: 30px; text-decoration: none;">
                     <span onclick="follow()" class="align-self-center" style="font-size: 1.2em;">팔로우</span>
                 </div>
-                <div id="unFollow" class="col badge d-grid d-none" style="height: 30px; background-color: #262626; text-decoration: none;">
+                <div id="unFollow" class="col badge d-grid d-none darkBg" style="height: 30px; text-decoration: none;">
                     <span onclick="unFollow()" class="align-self-center" style="font-size: 1.2em;">팔로잉</span>
                 </div>
             </div>
@@ -253,7 +255,7 @@
             <div class="row">
                 <a class="col-4 px-0 pb d-flex justify-content-center" th:href="@{./instaMainPage(user_id=${session.sessionUserInfo.id})}" th:each="instaArticleImgDto, iterStat : ${instaArticleImgDtoList}">
                     <div th:class="${iterStat.index % 3 == 1} ? 'middle' : ''">
-                        <img th:src="|/images/${instaArticleImgDto.img_link}|" class="img-fluid" style="aspect-ratio: 1/1; height: 33.3333333333333vw;">
+                        <img th:src="|/images/${instaArticleImgDto.img_link}|" class="img-fluid" style="object-fit: cover; object-position: center; aspect-ratio: 1/1; height: 33.3333333333333vw;">
                     </div>
                 </a>
             </div>

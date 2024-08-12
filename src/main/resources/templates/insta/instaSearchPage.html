@@ -35,7 +35,7 @@
                     <form class="row pe-2" action="./instaSearchProcess" method="get">                        
                         <div class="col ps-1 search-container">
                             <i class="bi bi-search"></i>         
-                            <input name="searchWord" type="text" class="form-control form-control-sm" placeholder="내용 or #해시태그 입력">
+                            <input name="searchWord" type="text" class="form-control form-control-sm" placeholder="내용, #해시태그 등" style="font-size: 0.85em;">
                             
                             <!-- 현재 주소창에 있는 user_id를 model에 담아서 instaSearchProcess 파라미터로 전송 -->
                             <input type="hidden" name="user_id" th:value="${user_id}">
@@ -57,7 +57,7 @@
                 </a>
             </div>
 
-            <div class="row overflow-x-auto flex-nowrap insta-list-scroll pt-2">
+            <div class="row overflow-x-auto flex-nowrap insta-list-scroll pt-3">
                 <!-- 하나의 검색어 -->
                 <!-- 지금 레이아웃깨짐 row안에서 스크롤이 움직여야 됨 -->
 
@@ -128,18 +128,18 @@
             </div> -->
 
             <!-- 인기 검색 -->
-            <div class="row pt-3">
+            <div class="row pt-4">
                 <div class="col">
                     <div class="row pt-3">
                         <div class="col-auto fontNine fw-semibold">
                             <span>인기 검색</span>
                         </div>
                         <div class="col fontSeven text-end d-flex align-items-center justify-content-end">
-                            <span>08.10 01:00 기준</span>
+                            <span class="text-secondary">08.27 13:00 기준</span>
                         </div>
                     </div>
 
-                    <div class="row pt-1 ps-1">
+                    <div class="row pt-3 ps-1">
                         <div class="col">
                             <div class="row">
                                 <a href="./instaSearchResultPage" class="col">
@@ -148,7 +148,7 @@
                                             <span class="fontBasic fw-semibold">1</span>
                                         </div>
                                         <div class="col-auto ps-1">
-                                            <span class="fontBasic">그라더스</span>
+                                            <span class="fontBasic">스코겐렌턴</span>
                                         </div>
                                     </div>
                                 </a>
@@ -160,7 +160,7 @@
                                             <span class="fontBasic fw-semibold">2</span>
                                         </div>
                                         <div class="col-auto ps-1">
-                                            <span class="fontBasic">후드</span>
+                                            <span class="fontBasic">헬리녹스</span>
                                             <span class="lightFont fontSeven">new</span>
                                         </div>
                                     </div>
@@ -173,7 +173,7 @@
                                             <span class="fontBasic fw-semibold">3</span>
                                         </div>
                                         <div class="col-auto ps-1">
-                                            <span class="fontBasic">kith</span>
+                                            <span class="fontBasic">스노우피크</span>
                                         </div>
                                     </div>
                                 </a>
@@ -185,8 +185,7 @@
                                             <span class="fontBasic fw-semibold">4</span>
                                         </div>
                                         <div class="col-auto ps-1">
-                                            <span class="fontBasic">팔라스</span>
-                                            <span class="lightFont fontSeven">new</span>
+                                            <span class="fontBasic">텐트마크디자인서커스</span>
                                         </div>
                                     </div>
                                 </a>
@@ -198,7 +197,7 @@
                                             <span class="fontBasic fw-semibold">5</span>
                                         </div>
                                         <div class="col-auto ps-1">
-                                            <span class="fontBasic">롱슬리브</span>
+                                            <span class="fontBasic">힐레베르그</span>
                                         </div>
                                     </div>
                                 </a>
@@ -213,7 +212,7 @@
                                             <span class="fontBasic fw-semibold">6</span>
                                         </div>
                                         <div class="col-auto ps-1">
-                                            <span class="fontBasic">패딩</span>
+                                            <span class="fontBasic">노르디스크</span>
                                         </div>
                                     </div>
                                 </a>
@@ -225,7 +224,7 @@
                                             <span class="fontBasic fw-semibold">7</span>
                                         </div>
                                         <div class="col-auto ps-1">
-                                            <span class="fontBasic">오니츠카</span>
+                                            <span class="fontBasic">골제로</span>
                                             <span class="lightFont fontSeven">new</span>
                                         </div>
                                     </div>
@@ -238,7 +237,7 @@
                                             <span class="fontBasic fw-semibold">8</span>
                                         </div>
                                         <div class="col-auto ps-1">
-                                            <span class="fontBasic">노스페이스</span>
+                                            <span class="fontBasic">알락3</span>
                                         </div>
                                     </div>
                                 </a>
@@ -250,7 +249,8 @@
                                             <span class="fontBasic fw-semibold">9</span>
                                         </div>
                                         <div class="col-auto ps-1">
-                                            <span class="fontBasic">어그</span>
+                                            <span class="fontBasic">레이사6</span>
+                                            <span class="lightFont fontSeven">new</span>
                                         </div>
                                     </div>
                                 </a>
@@ -262,7 +262,7 @@
                                             <span class="fontBasic fw-semibold">10</span>
                                         </div>
                                         <div class="col-auto ps-1">
-                                            <span class="fontBasic">칼하트</span>
+                                            <span class="fontBasic">스코겐시그니처렌턴</span>
                                         </div>
                                     </div>
                                 </a>
@@ -275,7 +275,7 @@
             </div>
 
             <!-- 인기 #해시태그 -->
-            <div class="row pt-3">
+            <div class="row pt-4">
                 <div class="col">
                     <div class="row pt-3">
                         <div class="col fontNine">
@@ -284,7 +284,7 @@
                         </div>
                     </div>
 
-                    <div class="row pt-1 ps-1">
+                    <div class="row pt-3 ps-1">
                         <div class="col">
                             <div class="row">
                                 <a href="./instaSearchResultPage" class="col">
@@ -293,7 +293,7 @@
                                             <span class="fontBasic fw-semibold">1</span>
                                         </div>
                                         <div class="col-auto ps-1">
-                                            <span class="fontBasic">#스노우피크</span>
+                                            <span class="fontBasic">#베이스캠프</span>
                                         </div>
                                     </div>
                                 </a>
@@ -305,7 +305,7 @@
                                             <span class="fontBasic fw-semibold">2</span>
                                         </div>
                                         <div class="col-auto ps-1">
-                                            <span class="fontBasic">#헬리녹스</span>
+                                            <span class="fontBasic">#백패킹</span>
                                         </div>
                                     </div>
                                 </a>
@@ -317,7 +317,7 @@
                                             <span class="fontBasic fw-semibold">3</span>
                                         </div>
                                         <div class="col-auto ps-1">
-                                            <span class="fontBasic">#레이사6</span>
+                                            <span class="fontBasic">#우중캠핑</span>
                                         </div>
                                     </div>
                                 </a>
@@ -329,7 +329,7 @@
                                             <span class="fontBasic fw-semibold">4</span>
                                         </div>
                                         <div class="col-auto ps-1">
-                                            <span class="fontBasic">#알락3</span>
+                                            <span class="fontBasic">#폭염</span>
                                         </div>
                                     </div>
                                 </a>
@@ -341,7 +341,7 @@
                                             <span class="fontBasic fw-semibold">5</span>
                                         </div>
                                         <div class="col-auto ps-1">
-                                            <span class="fontBasic">#골제로</span>
+                                            <span class="fontBasic">#에어텐트</span>
                                         </div>
                                     </div>
                                 </a>
@@ -356,7 +356,7 @@
                                             <span class="fontBasic fw-semibold">6</span>
                                         </div>
                                         <div class="col-auto ps-1">
-                                            <span class="fontBasic">#노르디스크</span>
+                                            <span class="fontBasic">#계곡</span>
                                         </div>
                                     </div>
                                 </a>
@@ -368,7 +368,7 @@
                                             <span class="fontBasic fw-semibold">7</span>
                                         </div>
                                         <div class="col-auto ps-1">
-                                            <span class="fontBasic">#힐레베르그</span>
+                                            <span class="fontBasic">#어반사이드</span>
                                         </div>
                                     </div>
                                 </a>
@@ -380,7 +380,7 @@
                                             <span class="fontBasic fw-semibold">8</span>
                                         </div>
                                         <div class="col-auto ps-1">
-                                            <span class="fontBasic">#캠핑808</span>
+                                            <span class="fontBasic">#차박</span>
                                         </div>
                                     </div>
                                 </a>
@@ -392,7 +392,7 @@
                                             <span class="fontBasic fw-semibold">9</span>
                                         </div>
                                         <div class="col-auto ps-1">
-                                            <span class="fontBasic">#노을진 캠핑장</span>
+                                            <span class="fontBasic">#글램핑</span>
                                         </div>
                                     </div>
                                 </a>
@@ -404,7 +404,7 @@
                                             <span class="fontBasic fw-semibold">10</span>
                                         </div>
                                         <div class="col-auto ps-1">
-                                            <span class="fontBasic">#나인힐스</span>
+                                            <span class="fontBasic">#카라반</span>
                                         </div>
                                     </div>
                                 </a>

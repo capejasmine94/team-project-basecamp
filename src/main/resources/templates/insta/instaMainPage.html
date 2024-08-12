@@ -67,17 +67,13 @@
         <!-- 스크롤 바 없애는 거 scrollbar-width: none; _ overflow있는 곳에 넣어주기 -->
         <div class="col overflow-x-auto" style="scrollbar-width: none;">
             <div class="row flex-nowrap"> <!-- flex-nowrap !!!대박!!! 반복문 길이에 자동으로 가로축 맞춰줌!!! -->
-                <a class="col-auto link-dark link-offset-2 link-underline link-underline-opacity-0 " th:href="@{./instaMyPage(user_id=${instaUserInfoDto.id})}">
+                <a class="col-auto link-dark link-offset-2 link-underline link-underline-opacity-0" th:href="@{./instaMyPage(user_id=${instaUserInfoDto.id})}">
                     <div class="row">
-                        <!-- <div class="col">
-                            <img class="rounded" th:src="|/bowWow_image/${e.productDto.product_main_img_link}|" style="height: 7em; width: 100%;" >
-                        </div> -->
-
                         <div class="col">
                             <div class="row">
-                                <div class="col">
-                                    <!-- <img th:src="|/basecampImage/${instaUserInfoDto.insta_profile_img}|" class="img-fluid rounded-circle storyImage"> -->
-                                    <img th:src="|/images/${instaUserInfoDto.insta_profile_img}|" class="img-fluid rounded-circle storyImage">
+                                <div class="col" style="display: inline-block; position: relative; height: 70px;">
+                                    <img src="/public/img/instaImage/story.jpg" class="img-fluid rounded-circle storyImg">
+                                    <img th:src="|/images/${instaUserInfoDto.insta_profile_img}|" class="img-fluid rounded-circle storyImage" style="position: relative;">
                                 </div>
                             </div>
                             <div class="row">
@@ -94,8 +90,9 @@
                     <div class="row">
                         <div class="col">
                             <div class="row">
-                                <div class="col">
-                                    <img th:src="|/images/${instaStory.insta_profile_img}|" class="img-fluid rounded-circle storyImage" alt="Profile Image">
+                                <div class="col" style="position: relative;">
+                                    <img src="/public/img/instaImage/story.jpg" class="img-fluid rounded-circle storyImg">
+                                    <img th:src="|/images/${instaStory.insta_profile_img}|" class="img-fluid rounded-circle storyImage" style="position: relative;" alt="Profile Image">
                                 </div>
                             </div>
                             <div class="row">
@@ -106,7 +103,6 @@
                         </div>
                     </div>
                 </a>
-
             </div>
         </div>
     </div>
@@ -120,7 +116,8 @@
                             th:href="${session.sessionUserInfo.id == instaArticleList.instaUserInfoDto.user_id} ?
                                         @{./instaMyPage(user_id=${instaArticleList.instaUserInfoDto.id})} : @{./instaUserPage(user_id=${instaArticleList.instaUserInfoDto.id})}">
                     <!-- <img th:src="|/basecampImage/${instaArticleList.instaArticleDto.insta_profile_img}|" class="img-fluid rounded-circle commentImage"> -->
-                    <img th:src="|/images/${instaArticleList.instaUserInfoDto.insta_profile_img}|" class="img-fluid rounded-circle profileImage">
+                    <img src="/public/img/instaImage/story.jpg" class="img-fluid rounded-circle profileImg">
+                    <img th:src="|/images/${instaArticleList.instaUserInfoDto.insta_profile_img}|" class="img-fluid rounded-circle profileImage" style="position: relative;">
                 </a>
                 <!-- 글 작성한 사람 닉네임 -->
                 <a class="col-auto ps-0 pt-1 link-dark link-offset-2 link-underline link-underline-opacity-0"
@@ -427,7 +424,7 @@
             </div>
             <!-- 해시태그 -->
             <div class="row" style="padding-left: 3.5%;">
-                <a th:href="@{./instaSearchHashTagClickResultPage(tag_id=${hashtag.id}, user_id=${instaUserInfoDto.id})}" class="col-auto fontBasic instaButtonColor ps-0 pe-0" th:each="hashtag : ${instaArticleList.hashtags}">
+                <a th:href="@{./instaSearchHashTagClickResultPage(tag_id=${hashtag.id}, user_id=${instaUserInfoDto.id})}" class="col-auto fontBasic ps-0 pe-0 lightFont" th:each="hashtag : ${instaArticleList.hashtags}">
                     <span th:utext="${hashtag.text}" class="hashtag">해시태그</span>
                 </a>
             </div>
@@ -701,7 +698,7 @@
                         </div>
                         <div class="col-auto p-0">
                             <!-- <input onclick="registerComment()" type="button" class="btn btn-primary" value="등록"> -->
-                            <button id="registerCrButton" class="send-icon btn rounded-5 px-3 py-1" type="submit" style="color: white; background-color: #0095f6;">
+                            <button id="registerCrButton" class="send-icon btn rounded-5 px-3 py-1 lightBg" type="submit" style="color: white;">
                                 <i class="fa-solid fa-arrow-up send-icon i" style="padding-right: 20%;"></i>
                             </button> <!-- registerCommentButton -->
                         </div>
@@ -717,9 +714,10 @@
         <!-- 하나의 댓글 -->
         <div class="commentWrapper row mt-1">
             <div class="col mt-3">
-                <div class="row pe-1 align-items-center">    
-                    <a class="col-auto pe-0 align-self-center link-dark link-offset-2 link-underline link-underline-opacity-0" href="./instaUserPage">
-                        <img class="commentProfile img-fluid rounded-circle commentWriteImage">
+                <div class="row pe-1 align-items-center">
+                    <a class="col-auto pe-0 align-self-center link-dark link-offset-2 link-underline link-underline-opacity-0" href="./instaUserPage" style="position: relative;">
+                        <img src="/public/img/instaImage/story.jpg" class="img-fluid rounded-circle commentWriteImg" style="position: relative; z-index: 1;">
+                        <img class="commentProfile img-fluid rounded-circle commentWriteImage" style="position: absolute; left: 12px; z-index: 2;">
                     </a>
                     <div class="col">
                         <div class="row align-items-center">
@@ -816,12 +814,10 @@
         <!-- 하나의 대댓글 -->
         <div class="replyTemplete row mt-3" style="padding-left: 16.5%;">
             <div class="col">
-
                 <div class="row pe-1">    
-                    <a class="col-auto pe-0 align-self-center link-dark link-offset-2 link-underline link-underline-opacity-0" href="./instaUserPage">
-                        <img class="replyProfile img-fluid rounded-circle replyWriteImage">
-                        <!-- <img src="/public/img/instaImage/userImg.jpeg" class="replyProfile img-fluid rounded-circle replyWriteImage"> -->
-                        <!-- <img th:src="|/images/${instaUserInfoDto.insta_profile_img}|" class="replyProfile img-fluid rounded-circle replyWriteImage"> -->
+                    <a class="col-auto pe-0 link-dark link-offset-2 link-underline link-underline-opacity-0" href="./instaUserPage" style="position: relative;">
+                        <img src="/public/img/instaImage/story.jpg" class="img-fluid rounded-circle replyWriteImg" style="position: relative; z-index: 1;">
+                        <img class="replyProfile img-fluid rounded-circle replyWriteImage" style="position: absolute; left: 12px; z-index: 2;">
                     </a>
                     <div class="col align-self-center">
                         <div class="row">
@@ -868,7 +864,7 @@
                         </div>
                         <div class="row">
                             <div class="col p-0 fontNine text-center">
-                                <span class="likeReplyCount">4</span>
+                                <span class="likeReplyCount">0</span>
                             </div>
                         </div>
                     </div>

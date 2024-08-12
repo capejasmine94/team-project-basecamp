@@ -58,11 +58,29 @@
     object-fit: cover; /* 이미지가 요소를 채우도록 조정 */
     aspect-ratio: 1/1;
 }
+.profileImg {
+    width: 39px;  /* 원하는 너비 */
+    height: 39px; /* 원하는 높이 */
+    aspect-ratio: 1/1;
+    /* 원하는 위치를 설정할 수 있습니다 */
+    position: absolute; 
+    transform: translate(-2.1px, -2.1px); /* X, Y 좌표로 이동 */
+}
 .storyImage {
-    width: 60px;  /* 원하는 너비 */
-    height: 60px; /* 원하는 높이 */
+    width: 59px;  /* 원하는 너비 */
+    height: 59px; /* 원하는 높이 */
     object-fit: cover; /* 이미지가 요소를 채우도록 조정 */
     aspect-ratio: 1/1;
+    transform: translate(0px, 2.5px); /* X, Y 좌표로 이동 */
+}
+.storyImg {
+    width: 65px;  /* 원하는 너비 */
+    height: 65px; /* 원하는 높이 */
+    object-fit: cover; /* 이미지가 요소를 채우도록 조정 */
+    aspect-ratio: 1/1;
+    /* 원하는 위치를 설정할 수 있습니다 */
+    position: absolute;
+    transform: translate(-2.8px, -0.5px); /* X, Y 좌표로 이동 */
 }
 /* instaBookmarkPage */
 .userImage {
@@ -70,6 +88,14 @@
     height: 80px; /* 원하는 높이 */
     object-fit: cover; /* 이미지가 요소를 채우도록 조정 */
     aspect-ratio: 1/1;
+}
+.userImg {
+    width: 86.5px;  /* 원하는 너비 */
+    height: 86.5px; /* 원하는 높이 */
+    aspect-ratio: 1/1;
+    /* 원하는 위치를 설정할 수 있습니다 */
+    position: absolute; 
+    transform: translate(-3.5px, -3.5px); /* X, Y 좌표로 이동 */
 }
 /* instaConfirmPage */
 #profileImage {
@@ -84,13 +110,28 @@
     object-fit: cover; /* 이미지가 요소를 채우도록 조정 */
     aspect-ratio: 1/1;
 }
+.commentWriteImg {
+    width: 50px;  /* 원하는 너비 */
+    height: 50px; /* 원하는 높이 */
+    aspect-ratio: 1/1;
+    /* 원하는 위치를 설정할 수 있습니다 */
+    position: absolute; 
+    transform: translate(-2.55px, -2.7px); /* X, Y 좌표로 이동 */
+}
 .replyWriteImage {
-    width: 25px;  /* 원하는 너비 */
-    height: 25%; /* 원하는 높이 */
+    width: 26.5px;  /* 원하는 너비 */
+    height: 70%; /* 원하는 높이 */
     object-fit: cover; /* 이미지가 요소를 채우도록 조정 */
     aspect-ratio: 1/1;
 }
-
+.replyWriteImg {
+    width: 30px;  /* 원하는 너비 */
+    height: 30px; /* 원하는 높이 */
+    aspect-ratio: 1/1;
+    /* 원하는 위치를 설정할 수 있습니다 */
+    position: absolute; 
+    transform: translate(-2px, -1.5px); /* X, Y 좌표로 이동 */
+}
 .instaButtonColor {
     color: #0095f6;
 }
