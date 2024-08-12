@@ -1,20 +1,27 @@
 package com.bulmeong.basecamp.seller.service;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import com.bulmeong.basecamp.camp.dto.CampsiteOrderDto;
+import com.bulmeong.basecamp.camp.mapper.CampsiteSqlMapper;
 import com.bulmeong.basecamp.seller.dto.ApproveResponse;
 import com.bulmeong.basecamp.seller.dto.ReadyResponse;
 import com.bulmeong.basecamp.store.dto.StoreOrderDto;
+import com.bulmeong.basecamp.user.dto.UserDto;
 
 import java.util.HashMap;
 import java.util.Map;
 
 @Service
 public class KakaoPayService {
+
+    @Autowired
+    private CampsiteSqlMapper campsiteMapper;
 
     public ReadyResponse readyPayment(StoreOrderDto storeOrderDto){
 
@@ -33,6 +40,34 @@ public class KakaoPayService {
         requestBody.put("approval_url", "http://localhost:8888/order/pay/completed");
         requestBody.put("fail_url", "http://localhost:8888/store");
         requestBody.put("cancel_url", "http://localhost:8888/store");
+
+        HttpEntity<Map<String, Object>> requestEntity = new HttpEntity<>(requestBody, headers);
+
+        RestTemplate restTemplate = new RestTemplate();
+        String url = "https://open-api.kakaopay.com/online/v1/payment/ready";
+
+        ResponseEntity<ReadyResponse> responseEntity = restTemplate.postForEntity(url, requestEntity, ReadyResponse.class);
+        System.out.println("결제준비 응답 객체: " + responseEntity.getBody());
+
+        return responseEntity.getBody();
+    }
+
+    public ReadyResponse readyPayment(CampsiteOrderDto orderDto){
+        HttpHeaders headers = new HttpHeaders();
+        headers.set("Authorization","SECRET_KEY DEV730F951F604BE30F5361EEAF5AA85EB506E1F");
+        headers.set("Content-Type", "application/json");
+
+        Map<String, Object> requestBody = new HashMap<>();
+        requestBody.put("cid", "TC0ONETIME");
+        requestBody.put("partner_order_id", orderDto.getId());
+        requestBody.put("partner_user_id", orderDto.getCustomer_name());
+        requestBody.put("item_name", campsiteMapper.getAreaByPointId(orderDto.getPoint_id()).getName());
+        requestBody.put("quantity", "1");
+        requestBody.put("total_amount", "1");
+        requestBody.put("tax_free_amount", "1");
+        requestBody.put("approval_url", "http://localhost:8888/camp/pay/completed");
+        requestBody.put("fail_url", "http://localhost:8888/camp");
+        requestBody.put("cancel_url", "http://localhost:8888/camp");
 
         HttpEntity<Map<String, Object>> requestEntity = new HttpEntity<>(requestBody, headers);
 

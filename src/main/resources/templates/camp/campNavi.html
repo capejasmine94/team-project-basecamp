@@ -188,7 +188,10 @@
             <span id="backKey" class="fw-bold" onclick="back()">◀</span>
         </div>
         <div class="col fs-3 text-end">
-            <span class="fw-bold">?</span>
+            <a href="/user/login" class="fw-bold" th:if="${session.sessionUserInfo == null}"><i class="bi bi-person-circle" ></i></a>
+            <a href="/user/myPage" class="fw-bold" th:unless="${session.sessionUserInfo == null}">
+                <img th:src="'/images/' + ${session.sessionUserInfo.profile_image}" alt="" style="width: 1.5em; height: 1.5em;">
+            </a>
         </div>
     </div>
 </div>
@@ -281,7 +284,7 @@
 </div>
 
 <!--예약 하단네비 -->
-<div th:fragment="bottomNaviBasecamp" class="container-fluid g-0 border-top bg-white fixed-bottom pb-3">
+<div th:fragment="bottomNaviBasecamp" class="container-fluid g-0 border-top bg-white fixed-bottom pb-3" style="z-index: 5000;">
     <div class="row mx-1 py-2 text-center">
         
         <!--HOME-->

@@ -1,5 +1,6 @@
 let campsiteList;
 let curArea;
+let userInfo;
 
 function initSession() {
     const url ='/api/camp/initSession';
@@ -114,6 +115,9 @@ function initUser() {
     });
 }
 
+function currentUser() {
+    return userInfo;
+}
 function currentArea() {
     return curArea;
 }
@@ -155,7 +159,8 @@ function refreshSelectedArea(area) {
         }
         const mainImageTemplate = document.createElement('img');
         mainImageTemplate.classList.add("img-fluid",'p-0');
-        mainImageTemplate.style.height='12em';
+        mainImageTemplate.style.height='15em';
+        mainImageTemplate.style.width='100%';
         mainImageTemplate.setAttribute('src',`/images/${mainImage.location}`);
         container.appendChild(mainImageTemplate);
         area_mainImages.appendChild(container);

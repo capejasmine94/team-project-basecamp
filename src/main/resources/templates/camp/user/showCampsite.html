@@ -13,6 +13,7 @@
     <script src="/public/js/calendar.js"></script>
     <script src="/public/js/util.js"></script>
     <script src="/public/js/camp/user.js"></script>
+    <script src="/public/js/lockLikeMobile.js"></script>
 
     <!-- <script>
         initSession();
@@ -266,7 +267,7 @@
                     </div>
                 <div class="row mt-2 border-bottom border-5 pb-5">
                         <div class="col-2 pe-1 text-center mt-3">
-                        <div class="list-group" id="list-tab" role="tablist">
+                        <div class="list-group" id="list-tab" role="tablist" style="font-size: 1.1em;">
                             <a class="list-group-item list-group-item-action rounded-0 active" id="list-notice-list" data-bs-toggle="list" href="#list-notice" role="tab" aria-controls="list-notice">예약 안내</a>
                             <a class="list-group-item list-group-item-action" id="list-facility-list" data-bs-toggle="list" href="#list-facility" role="tab" aria-controls="list-facility">시설 안내</a>
                             <a class="list-group-item list-group-item-action rounded-0" id="list-refund-list" data-bs-toggle="list" href="#list-refund" role="tab" aria-controls="list-refund">환불 정책</a>
@@ -407,14 +408,16 @@
         <div class="row" style="margin-bottom: 7em;"></div> 
     </div>
 </div>
-<div class="row fixed-bottom border-top bg-white py-2 justify-content-center" style="margin-bottom: 5em;">
-    <div class="col d-grid px-0 mx-5">
-        <a class="btn btn-primary" href="/camp/reservation">예약하기</a>
-    </div>
-</div> 
+<div class="container">
+    <div class="row fixed-bottom border-top bg-white py-2 justify-content-center" style="margin-bottom: 5em;">
+        <div class="col d-grid px-0 mx-5">
+            <a class="btn btn-primary" href="/camp/reservation">예약하기</a>
+        </div>
+    </div> 
+</div>
 
 <!-- 사이트 모달 -->
-<div class="modal fade container-fluid" id="popupSite" tabindex="-1" aria-labelledby="popupSite-title" data-keyboard="true" data-backdrop="static" aria-hidden="true">
+<div class="modal fade container-fluid" id="popupSite" tabindex="-1" aria-labelledby="popupSite-title" data-keyboard="true" data-backdrop="static" aria-hidden="true" style="height: 93%;">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -520,7 +523,7 @@
             </div>
             <div id="popupMap-content" class="modal-body col">
                 <div class="row">
-                    <div id="map" style="width: 20em; height: 14em; padding: 0; margin-left: .75em;"></div>
+                    <div id="map" style="width: 26em; height: 16em; padding: 0; margin-left: .75em;"></div>
                 </div>
                 <div class="row mt-2">
                     <div class="col">
@@ -529,7 +532,7 @@
                     </div>
                 </div>
             </div>
-            <div class="modal-footer">
+            <div class="modal-footer mb-5">
                 <button id="popupMap-no" type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
             </div>
         </div>
@@ -560,5 +563,6 @@
     openOriginalInNewWindow();
 
 </script>
+
 </body>
 </html>
