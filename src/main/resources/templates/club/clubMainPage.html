@@ -103,29 +103,29 @@
         }
 
         .img-container {
-    position: relative;
-}
+            position: relative;
+        }
 
-.overlay {
-    position: absolute;
-    bottom: 0;
-    width: 100%;
-    height: 19%; /* 반투명 영역 높이 */
-    background: rgba(0, 0, 0, 0.5); /* 반투명 검은색 배경 */
-    border-bottom-left-radius: 0.25rem; /* 이미지의 둥근 모서리와 맞춤 */
-    border-bottom-right-radius: 0.25rem; /* 이미지의 둥근 모서리와 맞춤 */
-}
+        .overlay {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            height: 19%; /* 반투명 영역 높이 */
+            background: rgba(0, 0, 0, 0.5); /* 반투명 검은색 배경 */
+            border-bottom-left-radius: 0.25rem; /* 이미지의 둥근 모서리와 맞춤 */
+            border-bottom-right-radius: 0.25rem; /* 이미지의 둥근 모서리와 맞춤 */
+        }
 
-.text-overlay {
-    position: absolute;
-    bottom: 0;
-    width: 100%;
-    text-align: center;
-    color: white;
-    font-size: 0.8em;
-    padding: 0.05em 0; /* 텍스트에 패딩 추가 */
-    font-weight: 300;
-}
+        .text-overlay {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            text-align: center;
+            color: white;
+            font-size: 0.8em;
+            padding: 0.05em 0; /* 텍스트에 패딩 추가 */
+            font-weight: 300;
+        }
         
         </style>
 
@@ -183,11 +183,6 @@
                                 </div>
                             </div>
                         </div>
-
-                        </div>
-                        </div>
-                        <div class="row">
-                            <div class="col">
 
                          <!-- 소모임 카테고리 -->
                         <div class="row bg-white mb-2 px-2 text-center pt-4">
@@ -347,12 +342,12 @@
                         </div>
 
                         <!-- 새로운 모임 박스 -->
-                        <div class="row bg-white px-0 pt-3 pb-3 mb-2 overflow-x-hidden">
+                        <div class="row bg-white pt-3 pb-3 mb-2 overflow-x-hidden">
                             <div class="col px-0">
 
-                                <div class="row px-3 py-2 align-items-end d-flex">
+                                <div class="row py-2 align-items-end d-flex px-3">
                                     <div class="col">
-                                        <span class="text-success fw-semi-bold" th:text="${userDto.nickname}">닉네임</span> 님, 이런 소모임은 어떠세요?
+                                        <span class="lightFont fw-semibold" th:text="${userDto.nickname}">닉네임</span> 님, 이런 소모임은 어떠세요?
                                     </div>
                                     <div class="col-auto text-end text-secondary" style="font-size: 0.8em;">
                                         <a href="/club/newClubs"><span class="text-secondary">더보기</span></a>
@@ -362,35 +357,42 @@
                             
                                 <!-- 새로운 모임 오버플로우-->
                             
-                                <div class="row mb-2 mt-0 pt-0">
-                                    <div class="col ps-3 scroll-list-box overflow-x-auto best-items-scroll">
+                                <div class="row mb-2 mt-0 pt-0 scroll-list-box px-3 overflow-x-auto best-items-scroll">
+                                    <div class="col ps-4 ">
                                     
-                                        <div class="row px-4 py-2 flex-nowrap">
+                                        <div class="row py-2 flex-nowrap">
                                             <div class="col-7" th:each="clubDto : ${clubDtoList}">
 
                                                 <div class="row border me-1 rounded-top border-bottom-0" style="height: 8em; overflow: hidden">
-                                                    <div class="col px-0 pb-0 mb-0">
+                                                    <div class="col px-0 pb-0 mx-0">
                                                         <img th:src="|/images/${clubDto.main_image}|" style="width: 100%; object-fit: cover;" class="card-img-top img-fluid rounded-top fixed-image-size" alt="...">
                                                     </div>
                                                 </div>
                                          
-                                                <div class="row border me-1 shadow-sm rounded-bottom border-top-0" style="height: 8em;">
+                                                <div class="row border me-1 shadow-sm rounded-bottom border-top-0" style="height: 9em;">
                                                     <div class="col">
                                                         <div class="row pt-3">
-                                                            <div class="col text-center fw-semi-bold text-truncate" style="font-size: 0.9em;">
+                                                            <!-- <div class="col text-center fw-semi-bold text-truncate" style="font-size: 0.9em;">
+                                                                <span th:text="${clubDto.name}">소모임명</span>
+                                                            </div> -->
+
+                                                            <div class="col fw-semibold text-truncate" style="font-size: 0.9em;">
                                                                 <span th:text="${clubDto.name}">소모임명</span>
                                                             </div>
                                                         </div>
-                                                        <div class="row">
-                                                            <div class="col ellipsis-line-two text-secondary text-center" style="font-size: 0.8em;">
+                                                        <div class="row py-2">
+                                                            <div class="col ellipsis-line-two text-secondary" style="font-size: 0.8em;">
                                                                 <span th:text="${clubDto.description}">소모임 설명</span>
                                                             </div>
                                                         </div>
-                                                        <div class="row mt-1 pt-1 justify-content-center">
-                                                            <a th:href="@{/club/home(id=${clubDto.id})}" class="btn btn-outline-secondary col-auto py-1 d-grid">
-                                                                둘러보기
-                                                            </a>
+                                                        <div class="row pt-2">
+                                                            <div class="col">
+                                                                <a th:href="@{/club/home(id=${clubDto.id})}" class="btn btn-outline-secondary col-auto py-1 d-grid" style="font-size: 0.8em;">
+                                                                    둘러보기
+                                                                </a>
+                                                            </div>
                                                         </div>
+                                                       
                                                     </div>
                                                 </div>
 
@@ -403,22 +405,17 @@
                             </div>
                         </div>
 
-                        <div class="row bg-white">
+                        <div class="row bg-white pb-4 mb-2">
                             <div class="col">
 
-                                <div class="row pt-4 pb-0">
-                                    <div class="col fw-semi-bold">
-                                        다가오는 정기모임 함께해요!
+                                <div class="row px-3 pt-3 pb-2">
+                                    <div class="col ps-0 fw-semi-bold">
+                                        다가오는 정기모임, 잊지 마세요!
                                     </div>
-                                    <div class="col-auto text-end text-secondary align-items-end d-flex" style="font-size: 0.8em;">
-                                        <a><span class="text-secondary ps-0">더보기</span></a>
+                                    <div class="col-auto text-end text-secondary align-items-end d-flex pe-0" style="font-size: 0.8em;">
+                                        <a><span class="text-secondary">더보기</span></a>
                                     </div>
                                     
-                                </div>
-                                <div class="row pt-0 pb-3">
-                                    <div class="row pt-1 pb-0">
-                                        
-                                    </div>
                                 </div>
 
                                 <div class="date-container">
@@ -451,10 +448,7 @@
                                         <div class="meeting-date"></div>
                                     </div>
                                 </div>
-                                <div class="row pt-3 overflow-x-auto flex-nowrap best-items-scroll" id="upcoming-meeting-wrapper-box">
-                                    
-
-                                    
+                                <div class="row pt-3 px-2 overflow-x-auto flex-nowrap best-items-scroll" id="upcoming-meeting-wrapper-box">
                                 </div>
 
                             </div>
@@ -463,13 +457,13 @@
                          
                         
 
-                    <!-- 인기 게시글 오버플로우 -->
-                        <div class="row bg-white px-0 pb-4 mb-3 overflow-x-hidden" >
-                            <div class="col px-0">
+                        <!-- 인기 게시글 오버플로우 -->
+                        <div class="row bg-white pb-4 mb-2 overflow-x-hidden best-items-scroll" >
+                            <div class="col">
 
-                                <div class="row pt-4 pb-2 ps-4">
+                                <div class="row px-3 pt-3 pb-2">
                                     <div class="col ps-0">
-                                       <span>오늘의 인기글</span>
+                                       <span>오늘의 인기글, 지금 바로 확인해보세요.</span>
                                     </div>
                                 </div>
 
@@ -477,7 +471,7 @@
                                 <div class="row mb-2 mt-0 pt-0">
                                     <div class="col scroll-list-box overflow-x-auto best-items-scroll">
                                     
-                                        <div class="row py-2 ps-4 flex-nowrap">
+                                        <div class="row py-2 ps-3 flex-nowrap">
                                             <div class="col-10" th:each="hotPostData, iterStat : ${hotPostDataList}" th:if="${iterStat.index &lt; 10}">
 
                                                 <div class="row p-3 border rounded-3 shadow-sm me-1" style="overflow: hidden; height: 100%;">
@@ -519,7 +513,7 @@
                                                             <div class="col align-items-center d-flex">
                                                                 <span class="material-symbols-outlined thin-icon">
                                                                     person
-                                                                </span>
+                                                                    </span>
                                                                 <span th:text="${hotPostData.userDto.nickname}"></span>
                                                             </div>
                                                         </div>
@@ -556,11 +550,8 @@
                                                                             </div>
                                                                         </div>
                                                                     </div>
-                                                                </div>
-
-                                                                
+                                                                </div>                                                                
                                                             </div>
-                                                        
                                                         </div>
                                                         <div class="row pb-2">
                                                             <div class="col ellipsis-line-two">
@@ -578,341 +569,290 @@
                                     </div>
                                 </div>
                                 
-
                             </div>
                         </div>
 
-                        <!-- 검색 -->
-                        <div class="row bg-white px-3 pb-3">
-                            <div class="col">
+                        <!-- 즐겨찾기 전체박스 -->
+                        <div class="row bg-white">
+                            <div class="col pb-3">
 
-                                <div class="row pt-3">
-                                    <div class="col-auto d-grid pe-0">
-                                        <select name="region_id" class="form-select form-control">
-                                            <option selected>지역</option>
-                                            <option th:each="regionCategoryDto:${regionCategoryDtoList}"
-                                                    th:value="${regionCategoryDto.id}"
-                                                    th:text="${regionCategoryDto.region_name}">
-                                                </option>
-                                            </option>
-                                        </select>
-                                    </div> 
+                                <div class="row px-3 py-3">
+                                    <div class="col ps-0">
+                                        내가 즐겨찾기한 모임
+                                    </div>
+                                    <div class="col pe-0 text-end text-secondary" style="font-size: 0.8em;">
+                                        더보기
+                                    </div>
+                                </div>
+
+                                <div class="row px-3 pb-3 align-items-center d-flex" th:each="bookmarkedClubData : ${bookmarkedClubDataList}">
+                                    <div class="col-2 px-0">
+                                        <a th:href="@{/club/home(id=${bookmarkedClubData.bookmarkedClubDto.id})}">
+                                            <img th:src="|/images/${bookmarkedClubData.bookmarkedClubDto.main_image}|" class="img-fluid rounded-circle"  style="aspect-ratio: 1/1; object-fit: cover;">
+                                        </a>
+                                    </div>
                                     <div class="col">
-                                        <div class="row d-grid">
-                                            <div class="col input-group">
-                                            <input type="text" th:value="${param.searchWord}" name="searchWord" class="form-control" placeholder="검색어를 입력하세요.">
-                                                <button class="btn bg-body-tertiary border col-auto">
-                                                    <i class="bi bi-search"></i>
-                                                </button>
+                                        <div class="row">
+                                            <div class="col fw-semibold" style="font-size: 0.9em;">
+                                                <a th:href="@{/club/home(id=${bookmarkedClubData.bookmarkedClubDto.id})}">
+                                                    <span th:text="${bookmarkedClubData.bookmarkedClubDto.name}"></span>
+                                                </a>
                                             </div>
                                         </div>
-                                    </div>
-                                </div>
-                             
-                            </div>
-                        </div>
-
-                        <!-- 즐겨찾기 -->
-                        <div class="row bg-white pt-3 pb-1 px-3">
-                            <div class="col px-0 fw-semi-bold" style="font-size: 0.9em;">
-                                <a href="/club/bookmarkClubs"><span>즐겨찾기 <i class="bi bi-chevron-right"></i></span></a>
-                            </div>
-                        </div>
-
-                        <div class="row px-3 bg-white">
-                            <div class="col ps-0">
-                        
-                                <div class="row overflow-x-auto flex-nowrap snap-overflow best-items-scroll">
-                                    <div class="col-11" th:each="bookmarkedClubData : ${bookmarkedClubDataList}">
-                        
-                                        <div class="row align-items-center">
-                                                <div class="col-7">
-                                                    <a th:href="@{/club/home(id=${bookmarkedClubData.bookmarkedClubDto.id})}">
-                                                        <img th:src="|/images/${bookmarkedClubData.bookmarkedClubDto.main_image}|" class="img-fluid border rounded" style="height: 6em; width: 100%; object-fit: cover;">
-                                                    </a>
-                                                </div>
-                                            
-                                            <div class="col text-truncate ps-0">
-                                                <div class="row">
-                                                    <div class="col">
-                                                        <a th:href="@{/club/home(id=${bookmarkedClubData.bookmarkedClubDto.id})}">
-                                                            <span th:text="${bookmarkedClubData.bookmarkedClubDto.name}"></span>
-                                                        </a>
-                                                    </div>
-                                                </div>
-                                                <div class="row">
-                                                    <div class="col">
-                                                        <a th:href="@{/club/home(id=${bookmarkedClubData.bookmarkedClubDto.id})}">
-                                                            <span th:text="${bookmarkedClubData.bookmarkedClubDto.description}"></span>
-                                                        </a>
-                                                    </div>
-                                                </div>
-                                                <div class="row">
-                                                    <div class="col">
-                                                        멤버 17 | 카테고리
-                                                    </div>
-                                                </div>
+                                        <div class="row">
+                                            <div class="col ellipsis-line-two" style="font-size: 0.9em;">
+                                                <a th:href="@{/club/home(id=${bookmarkedClubData.bookmarkedClubDto.id})}">
+                                                    <span th:text="${bookmarkedClubData.bookmarkedClubDto.description}"></span>
+                                                </a>
                                             </div>
-                        
                                         </div>
-                        
-                                    </div>
-                                </div>
-                        
-                            </div>
-                        </div>
-
-                         <!-- 내 모임 수정필요 -->
-                         <div class="row bg-white pt-3 pb-1 px-3">
-                            <div class="col px-0 fw-semi-bold" style="font-size: 0.9em;">
-                                <a href="/club/myClubs"><span>내 모임 <i class="bi bi-chevron-right"></i></span></a>
-                            </div>
-                        </div>
-
-                        <div class="row bg-white px-3">
-                            <div class="col ps-0">
-                        
-                                <div class="row overflow-x-auto flex-nowrap snap-overflow best-items-scroll">
-                                    <div class="col-11" th:each="joinClubDto : ${joinClubDtoList}">
-                        
-                                        <div class="row align-items-center">
-                                                <div class="col-7">
-                                                    <a th:href="@{/club/home(id=${joinClubDto.id})}">
-                                                        <img th:src="|/images/${joinClubDto.main_image}|" class="img-fluid border rounded" style="height: 6em; width: 15em; object-fit: cover;">
-                                                    </a>
-                                                </div>
-                                            
-                                            <div class="col text-truncate ps-0">
-                                                <div class="row">
-                                                    <div class="col">
-                                                        <a th:href="@{/club/home(id=${joinClubDto.id})}">
-                                                            <span th:text="${joinClubDto.name}">소모임 이름</span>
-                                                        </a>
-                                                    </div>
-                                                </div>
-                                                <div class="row">
-                                                    <div class="col">
-                                                        <a th:href="@{/club/home(id=${joinClubDto.id})}">
-                                                            <span th:text="${joinClubDto.description}"></span>
-                                                        </a>
-                                                    </div>
-                                                </div>
-                                                <div class="row">
-                                                    <div class="col">
-                                                        멤버 17 | 카테고리
-                                                    </div>
-                                                </div>
+                                        <div class="row">
+                                            <div class="col text-secondary" style="font-size: 0.8em;">
+                                                <span>강남구 &#183;</span>
+                                                <span> 멤버 19 &#183;</span>
+                                                <span> 카테고리</span>
                                             </div>
-                        
                                         </div>
-                        
+
                                     </div>
                                 </div>
-                        
+                    
                             </div>
                         </div>
 
-
-                        <div class="row pt-4 pb-5">
+                        <!-- 내 모임 오버플로우 -->
+                        <div class="row pb-2 bg-white">
                             <div class="col">
-                                <a href="/club/createNewClub" class="btn form-control btn-dark">소모임 개설하기</a>
+                                내가 참여한 모임
+                            </div>
+                            <div class="col text-end">
+                                더보기
                             </div>
                         </div>
 
+                        <div class="row bg-white pb-5 overflow-x-auto flex-nowrap snap-overflow best-items-scroll">
+                            <div class="col-11" th:each="joinClubDto : ${joinClubDtoList}">
+                                
+                                <div class="row">
+                                    <a th:href="@{/club/home(id=${joinClubDto.id})}" class="col-5 pe-0">
+                                        <img th:src="|/images/${joinClubDto.main_image}|" class="img-fluid border rounded" style="height: 5em; width: 8em; object-fit: cover;">
+                                    </a>
+                                    <div class="col ps-2">
+                                        <div class="row">
+                                            <a th:href="@{/club/home(id=${joinClubDto.id})}" class="col fw-medium" style="font-size: 0.9em;">
+                                                <span th:text="${joinClubDto.name}">소모임 이름</span>
+                                            </a>
+                                        </div>
+                                        <div class="row">
+                                            <a th:href="@{/club/home(id=${joinClubDto.id})}" class="col ellipsis-line-two" style="font-size: 0.8em;">
+                                                <span th:text="${joinClubDto.description}"></span>
+                                            </a>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col text-secondary" style="font-size: 0.8em;">
+                                                지역| 멤버 17 | 카테고리
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                        
 
-                      
+                        <div class="row bg-white pt-5 mt-2">
+                            <div class="col">
+                                하단 공백 박스
+                            </div>
+                        </div>
                     </div>
-                </div>
-        </div>
+                </div> 
 
-        <!--커뮤니티 하단네비 -->
-<div th:fragment="bottomNaviBasecamp" class="container-fluid g-0 border-top bg-white fixed-bottom pb-3">
-    <div class="row mx-1 py-2 text-center">
         
-        <!--HOME-->
-        <a href="/" class="col icon-and-text">
-            <span class="material-symbols-outlined fw-light" style="font-size: 1.8em; color: darkgray;">
-                home
-            </span>
-            <span class="text-navi pt-1" style="font-size: 0.7em; color: darkgray">홈</span>
-        </a>        
-
-        <!--구매-->
-        <div class="col icon-and-text dropdown dropup">
-            <span data-bs-toggle="dropdown" class="material-symbols-outlined fw-light" style="font-size: 1.7em; color: darkgray;">
-                storefront
-            </span>
-            <span class="text-navi pt-1" style="font-size: 0.7em; color: darkgray;">구매</span>
-            <ul class="dropdown-menu custom-dropdown-menu">
-                <!-- 변초연 -->
-                <a class="dropdown-item col" href="/store">
-                    <div class="row w-100">
-                        <div class="col-auto d-flex">
-                            <span class="material-symbols-outlined pe-1 ps-1 fw-light">
-                                shopping_bag
-                            </span>
-                            <span style="font-size: 0.9em;">스토어</span>
-                        </div>
-                    </div>
-                </a>
-                <!-- 심규진 -->
-                <a class="dropdown-item col" href="/secondhandProduct/mainPage">
-                    <div class="row w-100">
-                        <div class="col-auto d-flex">
-                            <span class="material-symbols-outlined pe-1 ps-1 fw-light">
-                                eco
-                            </span>
-                            <span style="font-size: 0.9em;">중고</span>
-                        </div>
-                    </div>
-                </a>
-            </ul>
-        </div>
-
-        <!--예약-->
-        <div class="col icon-and-text dropdown dropup">
-            <span data-bs-toggle="dropdown" class="material-symbols-outlined fw-light" style="font-size: 1.7em; color: darkgray;">
-                event_available
-            </span>
-            <span class="text-navi pt-1" style="font-size: 0.7em; color: darkgray;">예약</span>
-            <ul class="dropdown-menu row custom-dropdown-menu">
-                <!-- 조준희 -->
-                <a class="dropdown-item col" href="/camp/main">
-                    <div class="row w-100">
-                        <div class="col-auto d-flex">
-                            <span class="material-symbols-outlined pe-1 ps-1 fw-light">
-                                camping
-                            </span>
-                            <span style="font-size: 0.9em;">캠핑장</span>
-                        </div>
-                    </div>
-                </a>
-                <!-- 양은자 -->
-                <a class="dropdown-item col" href="/campingcar/main">
-                    <div class="row w-100">
-                        <div class="col-auto d-flex">
-                            <span class="material-symbols-outlined pe-1 ps-1 fw-light">
-                                airport_shuttle
-                            </span>
-                            <span style="font-size: 0.9em;">캠핑카</span>
-                        </div>
-                    </div>
-                </a>
-            </ul>
-        </div>
-
-        <!--커뮤-->
-        <div class="col icon-and-text dropdown dropup">
-            <span data-bs-toggle="dropdown" class="material-symbols-outlined fw-light" style="font-size: 1.7em;">
-                forum
-            </span>
-            <span class="text-navi pt-1 fw-bold" style="font-size: 0.7em;">커뮤니티</span>
-            <ul class="dropdown-menu custom-dropdown-menu">
-                <!-- 이시은 -->
-                <a class="dropdown-item col" href="/club/main">
-                    <div class="row w-100">
-                        <div class="col-auto d-flex">
-                            <span class="material-symbols-outlined pe-1 ps-1 fw-light">
-                                group
-                            </span>
-                            <span style="font-size: 0.9em;">소모임</span>
-                        </div>
-                    </div>
-                </a>
-                <!-- 남현지 -->
-                <a class="dropdown-item col" href="/insta/instaMainPage">
-                    <span>
-                        <img src="/public/img/instaImage/campstagram.png" class="img-fluid">
+        
+                <!--커뮤니티 하단네비 -->
+        <div th:fragment="bottomNaviBasecamp" class="container-fluid g-0 border-top bg-white fixed-bottom pb-3">
+            <div class="row mx-1 py-2 text-center">
+                
+                <!--HOME-->
+                <a href="/" class="col icon-and-text">
+                    <span class="material-symbols-outlined fw-light" style="font-size: 1.8em; color: darkgray;">
+                        home
                     </span>
+                    <span class="text-navi pt-1" style="font-size: 0.7em; color: darkgray">홈</span>
+                </a>        
+
+                <!--구매-->
+                <div class="col icon-and-text dropdown dropup">
+                    <span data-bs-toggle="dropdown" class="material-symbols-outlined fw-light" style="font-size: 1.7em; color: darkgray;">
+                        storefront
+                    </span>
+                    <span class="text-navi pt-1" style="font-size: 0.7em; color: darkgray;">구매</span>
+                    <ul class="dropdown-menu custom-dropdown-menu">
+                        <!-- 변초연 -->
+                        <a class="dropdown-item col" href="/store">
+                            <div class="row w-100">
+                                <div class="col-auto d-flex">
+                                    <span class="material-symbols-outlined pe-1 ps-1 fw-light">
+                                        shopping_bag
+                                    </span>
+                                    <span style="font-size: 0.9em;">스토어</span>
+                                </div>
+                            </div>
+                        </a>
+                        <!-- 심규진 -->
+                        <a class="dropdown-item col" href="/secondhandProduct/mainPage">
+                            <div class="row w-100">
+                                <div class="col-auto d-flex">
+                                    <span class="material-symbols-outlined pe-1 ps-1 fw-light">
+                                        eco
+                                    </span>
+                                    <span style="font-size: 0.9em;">중고</span>
+                                </div>
+                            </div>
+                        </a>
+                    </ul>
+                </div>
+
+                <!--예약-->
+                <div class="col icon-and-text dropdown dropup">
+                    <span data-bs-toggle="dropdown" class="material-symbols-outlined fw-light" style="font-size: 1.7em; color: darkgray;">
+                        event_available
+                    </span>
+                    <span class="text-navi pt-1" style="font-size: 0.7em; color: darkgray;">예약</span>
+                    <ul class="dropdown-menu row custom-dropdown-menu">
+                        <!-- 조준희 -->
+                        <a class="dropdown-item col" href="/camp/main">
+                            <div class="row w-100">
+                                <div class="col-auto d-flex">
+                                    <span class="material-symbols-outlined pe-1 ps-1 fw-light">
+                                        camping
+                                    </span>
+                                    <span style="font-size: 0.9em;">캠핑장</span>
+                                </div>
+                            </div>
+                        </a>
+                        <!-- 양은자 -->
+                        <a class="dropdown-item col" href="/campingcar/main">
+                            <div class="row w-100">
+                                <div class="col-auto d-flex">
+                                    <span class="material-symbols-outlined pe-1 ps-1 fw-light">
+                                        airport_shuttle
+                                    </span>
+                                    <span style="font-size: 0.9em;">캠핑카</span>
+                                </div>
+                            </div>
+                        </a>
+                    </ul>
+                </div>
+
+                <!--커뮤-->
+                <div class="col icon-and-text dropdown dropup">
+                    <span data-bs-toggle="dropdown" class="material-symbols-outlined fw-light" style="font-size: 1.7em;">
+                        forum
+                    </span>
+                    <span class="text-navi pt-1 fw-bold" style="font-size: 0.7em;">커뮤니티</span>
+                    <ul class="dropdown-menu custom-dropdown-menu">
+                        <!-- 이시은 -->
+                        <a class="dropdown-item col" href="/club/main">
+                            <div class="row w-100">
+                                <div class="col-auto d-flex">
+                                    <span class="material-symbols-outlined pe-1 ps-1 fw-light">
+                                        group
+                                    </span>
+                                    <span style="font-size: 0.9em;">소모임</span>
+                                </div>
+                            </div>
+                        </a>
+                        <!-- 남현지 -->
+                        <a class="dropdown-item col" href="/insta/instaMainPage">
+                            <span>
+                                <img src="/public/img/instaImage/campstagram.png" class="img-fluid">
+                            </span>
+                        </a>
+                    </ul>
+                </div>
+                
+                <!--내정보-->
+                <a class="col icon-and-text" href="/user/login" th:if="${session.sessionUserInfo == null}">
+                    <span class="material-symbols-outlined pe-1 ps-1 fw-light"style="font-size: 1.7em; color: darkgray;">
+                        person
+                    </span>
+                    <span class="text-navi pt-1" style="font-size: 0.7em; color: darkgray;">마이</span>
                 </a>
-            </ul>
-        </div>
-        
-        <!--내정보-->
-        <a class="col icon-and-text" href="/user/login" th:if="${session.sessionUserInfo == null}">
-            <span class="material-symbols-outlined pe-1 ps-1 fw-light"style="font-size: 1.7em; color: darkgray;">
-                person
-            </span>
-            <span class="text-navi pt-1" style="font-size: 0.7em; color: darkgray;">마이</span>
-        </a>
-        <a class="col icon-and-text" href="/user/myPage" th:unless="${session.sessionUserInfo == null}">
-            <span class="material-symbols-outlined pe-1 ps-1 fw-light"style="font-size: 1.7em; color: darkgray;">
-                person
-            </span>
-            <span class="text-navi pt-1" style="font-size: 0.7em; color: darkgray;">마이</span>
-        </a>
-    </div>
-</div>
-
-
-<!-- 다가오는 정기모임 템플릿 -->
- <div class="row d-none" id="upcoming-meeting-template">
-    <div class="col-5 upcoming-meeting-wrapper">
-
-        <!-- <div class="row">
-            <div class="col px-0 ps-2">
-                <img src="/public/img/clubImage/carousel1.png" class="img-fluid rounded upcoming-meeting-image" style="height: 6em; width: 100%; object-fit: cover;">
-            </div>
-        </div> -->
-        <div class="row position-relative">
-            <div class="col px-0 ps-2">
-                <div class="img-container position-relative">
-                    <img src="/public/img/clubImage/carousel1.png" class="img-fluid rounded upcoming-meeting-image" style="height: 6em; width: 100%; object-fit: cover;">
-                    <div class="overlay"></div>
-                    <div class="text-overlay upcoming-meeting-date"></div>
-                </div>
+                <a class="col icon-and-text" href="/user/myPage" th:unless="${session.sessionUserInfo == null}">
+                    <span class="material-symbols-outlined pe-1 ps-1 fw-light"style="font-size: 1.7em; color: darkgray;">
+                        person
+                    </span>
+                    <span class="text-navi pt-1" style="font-size: 0.7em; color: darkgray;">마이</span>
+                </a>
             </div>
         </div>
-        <div class="row">
-            <div class="col">
-               
-                <div class="row">
-                    <div class="col fw-semibold text-truncate" style="font-size: 0.8em;">
-                       
-                        <span class="upcoming-meeting-name"></span>
+
+
+        <!-- 다가오는 정기모임 템플릿 -->
+        <div class="row d-none" id="upcoming-meeting-template">
+            <div class="col-5 upcoming-meeting-wrapper">
+
+                <!-- <div class="row">
+                    <div class="col px-0 ps-2">
+                        <img src="/public/img/clubImage/carousel1.png" class="img-fluid rounded upcoming-meeting-image" style="height: 6em; width: 100%; object-fit: cover;">
+                    </div>
+                </div> -->
+                <div class="row position-relative">
+                    <div class="col px-0 ps-2">
+                        <div class="img-container position-relative">
+                            <img src="/public/img/clubImage/carousel1.png" class="img-fluid rounded upcoming-meeting-image" style="height: 6em; width: 100%; object-fit: cover;">
+                            <div class="overlay"></div>
+                            <div class="text-overlay upcoming-meeting-date"></div>
+                        </div>
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col text-secondary text-truncate" style="font-size: 0.8em;">
-                        <span class="upcoming-meeting-location"></span>
-                        <span class="upcoming-meeting-club"></span>
+                    <div class="col">
+                    
+                        <div class="row">
+                            <div class="col fw-semibold text-truncate" style="font-size: 0.8em;">
+                            
+                                <span class="upcoming-meeting-name"></span>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col text-secondary text-truncate" style="font-size: 0.8em;">
+                                <span class="upcoming-meeting-location"></span><span> &#183; </span>
+                                <span class="upcoming-meeting-club"></span>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col" style="font-size: 0.8em;">
+                            <span class="lightFont fw-semibold upcoming-member-count"></span><span class="lightFont">명 참석중</span>
+                            
+                                <span class="text-secondary">
+                                    (<span class="upcoming-member-count"></span>/<span class="upcoming-capacity"></span>)
+                                </span>
+                            </div>
+                        </div>
+            
                     </div>
                 </div>
-                <div class="row">
-                    <div class="col" style="font-size: 0.8em;">
-                       <span class="text-primary fw-semibold upcoming-member-count"></span><span class="text-primary">명 참석중</span>
-                      
-                        <span class="text-secondary">
-                            (<span class="upcoming-member-count"></span>/<span class="upcoming-capacity"></span>)
-                        </span>
-                    </div>
-                </div>
-    
+            
             </div>
         </div>
-    
-    </div>
- </div>
-<!-- 다가오는 정기모임 템플릿 끝 -->
+        <!-- 다가오는 정기모임 템플릿 끝 -->
 
 
-<div class="container fixed-bottom mb-5 pb-4 pe-2">
-    <div class="row justify-content-end mb-4 pe-3">
-        <a href="" class="col-auto bg-light ps-2 py-2 shadow rounded-pill text-decoration-none">
-            <div class="row text-dark">
-                <div class="col-auto pe-0 align-self-center d-flex">
-                    <span class="material-symbols-outlined fs-3">add</span>
-                </div>
-                <div class="col ps-0 fs-7 fw-medium d-flex align-self-center text-center" style="letter-spacing: -0.5px;">
-                    일정 만들기
-                </div>
+        <div class="container fixed-bottom mb-5 pb-4 pe-2">
+            <div class="row justify-content-end mb-4 pe-3">
+                <a th:if="${session.sessionUserInfo != null}" href="/club/createNewClub" class="col-auto bg-light ps-2 py-2 shadow rounded-pill text-decoration-none">
+                    <div class="row text-dark">
+                        <div class="col-auto pe-0 align-self-center d-flex">
+                            <span class="material-symbols-outlined fs-3">add</span>
+                        </div>
+                        <div class="col ps-0 fs-7 fw-medium d-flex align-self-center text-center" style="letter-spacing: -0.5px;">
+                            소모임 개설
+                        </div>
+                    </div>
+                </a>
             </div>
-        </a>
-    </div>
-</div>
+        </div>
          
    
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script> 

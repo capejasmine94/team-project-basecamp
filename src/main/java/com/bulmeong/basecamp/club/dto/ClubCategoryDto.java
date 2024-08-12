@@ -6,4 +6,5 @@ import lombok.Data;
 public class ClubCategoryDto {
     private int id;
     private String category_name;
+    private String category_icon;
 }
