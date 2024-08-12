@@ -59,9 +59,11 @@ public class KakaoPayService {
 
         Map<String, Object> requestBody = new HashMap<>();
         requestBody.put("cid", "TC0ONETIME");
-        requestBody.put("partner_order_id", orderDto.getId());
+        requestBody.put("partner_order_id", "캠핑장예약");
         requestBody.put("partner_user_id", orderDto.getCustomer_name());
-        requestBody.put("item_name", campsiteMapper.getAreaByPointId(orderDto.getPoint_id()).getName());
+        System.out.println("뭐가 문젠데");
+        System.out.println(campsiteMapper.pointById(orderDto.getPoint_id()));
+        requestBody.put("item_name", campsiteMapper.pointById(orderDto.getPoint_id()).getName());
         requestBody.put("quantity", "1");
         requestBody.put("total_amount", "1");
         requestBody.put("tax_free_amount", "1");

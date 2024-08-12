@@ -64,6 +64,10 @@ public class CampsiteSellerController {
     public String manageAsset() {
         return "camp/seller/asset";
     }
+    @RequestMapping("/statistics")
+    public String manageStatistics() {
+        return "camp/seller/statistics";
+    }
 
     @RequestMapping("/registerUser")
     public String registerUser() {

@@ -17,6 +17,7 @@ import com.bulmeong.basecamp.camp.dto.CampsiteDto;
 import com.bulmeong.basecamp.camp.dto.CampsiteImageDto;
 import com.bulmeong.basecamp.camp.dto.CampsiteOrderDto;
 import com.bulmeong.basecamp.camp.dto.CampsiteOrderUserInfoDto;
+import com.bulmeong.basecamp.camp.dto.CampsiteReviewDto;
 import com.bulmeong.basecamp.camp.dto.CampsiteSelectCategoryDto;
 
 @Mapper
@@ -89,4 +90,6 @@ public interface CampsiteSqlMapper {
     public List<CampsiteOrderDto> getOrderList();
     public void updateOrder(@Param("order_id")int order_id);
     public List<CampsiteDto> searchCampsite(@Param("searchWord") String searchWord, @Param("category") String[] category);
+    public void registerReview(CampsiteReviewDto campsiteReviewDto);
+    public List<Map<String,Object>> getReivewByCampsiteId(@Param("campsite_id") int campsite_id);
 }

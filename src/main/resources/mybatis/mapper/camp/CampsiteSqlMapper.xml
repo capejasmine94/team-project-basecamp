@@ -425,6 +425,20 @@
             )
         </insert> 
 
+        <!-- 리뷰 제작 -->
+        <insert id="registerReview">
+            insert into bc_campsite_review (
+                campsite_id,
+                user_id,
+                content
+            )
+            values(
+                #{campsite_id},
+                #{user_id},
+                #{content}
+            )
+        </insert>
+
         <!-- 예약 (회원) 등록 -->
         <insert id="registerOrderUserInfo">
             INSERT into bc_campsite_order_userinfo (
@@ -505,12 +519,9 @@
 
         <select id="isAlreadyReviewed" resultType="boolean">
             SELECT COUNT(*) > 0
-            FROM bc_campsite_review review
-            JOIN bc_campsite_order odr ON review.order_id = odr.id
-            JOIN bc_campsite_area_point p ON odr.point_id = p.id
-            JOIN bc_campsite_area a ON p.area_id = a.id
-            WHERE review.user_id = #{user_id}
-            AND a.campsite_id = #{campsite_id}
+            FROM bc_campsite_review
+            WHERE user_id = #{user_id}
+            AND campsite_id = #{campsite_id}
         </select>
 
         <!-- 차량번호 가져오기 -->
@@ -574,6 +585,13 @@
                     </foreach>
                 )
             </if>
+        </select>
+
+        <select id="getReivewByCampsiteId" resultType="map">
+            select bcr.*,us.nickname,us.profile_image ,cp.camp_name from bc_campsite_review bcr 
+            inner join bc_user us on bcr.user_id = us.id 
+            inner join bc_campsite cp on bcr.campsite_id = cp.id 
+            WHERE bcr.campsite_id = #{campsite_id}
         </select>
     <!-- ======================================================================== -->
 

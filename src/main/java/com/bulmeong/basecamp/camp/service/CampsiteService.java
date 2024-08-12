@@ -24,6 +24,7 @@ import com.bulmeong.basecamp.camp.dto.CampsiteDto;
 import com.bulmeong.basecamp.camp.dto.CampsiteImageDto;
 import com.bulmeong.basecamp.camp.dto.CampsiteOrderDto;
 import com.bulmeong.basecamp.camp.dto.CampsiteOrderUserInfoDto;
+import com.bulmeong.basecamp.camp.dto.CampsiteReviewDto;
 import com.bulmeong.basecamp.camp.dto.CampsiteSelectCategoryDto;
 import com.bulmeong.basecamp.camp.mapper.CampsiteSqlMapper;
 import com.bulmeong.basecamp.common.dto.ImageDto;
@@ -432,6 +433,7 @@ public class CampsiteService {
         result.put("mainImages", campsiteSqlMapper.campMainImage(campsite_id));
 
         //리뷰
+        result.put("review", campsiteSqlMapper.getReivewByCampsiteId(campsite_id));
 
         // 마무리
         return result;
@@ -541,6 +543,11 @@ public class CampsiteService {
             carNumberDto.setCar_number(carNumber);
             campsiteSqlMapper.registerCarNumber(carNumberDto);
         }
+    }
+
+    // 리뷰 작성
+    public void registerReview(CampsiteReviewDto campsiteReviewDto) {
+        campsiteSqlMapper.registerReview(campsiteReviewDto);
     }
 
     // 모든 예약 리스트
