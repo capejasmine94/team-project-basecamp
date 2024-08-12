@@ -1,4 +1,4 @@
-package com.bulmeong.basecamp.seller.controller;
+package com.bulmeong.basecamp.store.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -19,7 +19,7 @@ import jakarta.servlet.http.HttpSession;
 
 @Controller
 @RequestMapping("/order")
-public class OrderController {
+public class StoreOrderController {
     
     @Autowired
     private KakaoPayService kakaoPayService;
