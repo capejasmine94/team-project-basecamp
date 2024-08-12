@@ -71,7 +71,7 @@
     height: 59px; /* 원하는 높이 */
     object-fit: cover; /* 이미지가 요소를 채우도록 조정 */
     aspect-ratio: 1/1;
-    transform: translate(0px, 2.5px); /* X, Y 좌표로 이동 */
+    transform: translate(0.4px, 3px); /* X, Y 좌표로 이동 */
 }
 .storyImg {
     width: 65px;  /* 원하는 너비 */
@@ -80,7 +80,7 @@
     aspect-ratio: 1/1;
     /* 원하는 위치를 설정할 수 있습니다 */
     position: absolute;
-    transform: translate(-2.8px, -0.5px); /* X, Y 좌표로 이동 */
+    transform: translate(-2.8px, 0px); /* X, Y 좌표로 이동 */
 }
 /* instaBookmarkPage */
 .userImage {

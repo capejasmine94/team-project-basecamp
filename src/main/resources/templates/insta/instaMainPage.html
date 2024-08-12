@@ -489,8 +489,8 @@
     <div class="write-button-container">
         <!-- style="aspect-ratio: 1/1;" -> 익스펙토 주문 : 정방향을 만들어준다 -->
         <form action="./instaWritePage" method="get">
-            <button class="btn bg-white rounded-circle border-2 border-black px-2 py-1" type="submit">
-                <i class="fa-solid fa-plus"></i>
+            <button class="btn rounded-circle d-flex align-items-center darkBg" type="submit" style="aspect-ratio: 1/1;">
+                <i class="fa-solid fa-plus text-white" style="font-size: 1.5em;"></i>
                 <input type="hidden" name="user_id" th:value="${instaUserInfoDto.id}">
             </button>
         </form>

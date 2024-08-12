@@ -407,6 +407,10 @@ public class InstaService {
         }
     }
 
+    public void insertSearchTagId(int tag_id, int user_id){
+        instaSqlMapper.insertSearchTagId(tag_id, user_id);
+    }
+
     public List<InstaArticleImgDto> selectArticleImgBySearchTagText(String content){
         List<InstaArticleImgDto> instaArticleImgDtoListByTagText = instaSqlMapper.selectArticleImgBySearchTagText(content);
 
@@ -417,6 +421,28 @@ public class InstaService {
         InstaTagDto instaTagDto = instaSqlMapper.selectTagDtoByTagText(text);
 
         return instaTagDto;
+    }
+
+    // 최근 검색 _ resultType 해쉬맵 사용
+    public List<Map<String, Object>> recentSearch(int user_id){
+        List<Map<String, Object>> recentSearchList = instaSqlMapper.recentSearchByUserId(user_id);
+
+        return recentSearchList;
+    }
+
+    // content로 일반 검색 삭제
+    public void recentSearchDeleteContent(String content, int user_id){
+        instaSqlMapper.recentSearchDeleteByContentAndUserId(content, user_id);
+    }
+
+    // 태그 id로 태그 검색 삭제
+    public void recentSearchDeleteTag(int tag_id, int user_id){
+        instaSqlMapper.recentSearchDeleteByTagIdAndUserId(tag_id, user_id);
+    }
+
+    // 검색 기록 전체 삭제
+    public void recentSearchAllDelete(int user_id){
+        instaSqlMapper.recentSearchAllDeleteByUserId(user_id);
     }
 
 }

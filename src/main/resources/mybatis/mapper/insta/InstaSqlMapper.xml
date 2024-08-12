@@ -461,6 +461,38 @@
         order by biai.article_id desc
     </select>
 
+    <!-- 최근 검색 -->
+    <select id="recentSearchByUserId" resultType="java.util.HashMap">
+        select distinct bis.tag_id,
+                        bis.content,
+                        bit2.text
+        from bc_insta_search bis
+        left outer join bc_insta_tag bit2 on bit2.id = bis.tag_id
+        where user_id = #{user_id}
+        order by bis.id desc
+        limit 10
+    </select>
+
+    <!-- 일반 content 삭제 -->
+    <delete id="recentSearchDeleteByContentAndUserId">
+        delete from bc_insta_search
+        where content = #{content}
+        and user_id = #{user_id}
+    </delete>
+
+    <!-- 해시태그 삭제 -->
+    <delete id="recentSearchDeleteByTagIdAndUserId">
+        delete from bc_insta_search
+        where tag_id = #{tag_id}
+        and user_id = #{user_id}
+    </delete>
+
+    <!-- 검색 기록 전체 삭제 -->
+    <delete id="recentSearchAllDeleteByUserId">
+        delete from bc_insta_search
+        where user_id = #{user_id}
+    </delete>
+
 </mapper>
 
 

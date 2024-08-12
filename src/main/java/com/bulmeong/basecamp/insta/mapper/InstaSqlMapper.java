@@ -97,12 +97,15 @@ public interface InstaSqlMapper {
     public InstaTagDto selectTagDtoByTagText(@Param("text") String text);
     public void insertSearchTagId(@Param("tag_id") int tag_id, @Param("user_id") int user_id);
     public List<InstaArticleImgDto> selectArticleImgBySearchTagText(@Param("text") String text);
+
+    // 최근 검색
+    public List<Map<String, Object>> recentSearchByUserId(@Param("user_id") int user_id);
+
+    // 최근 검색 삭제
+    public void recentSearchDeleteByContentAndUserId(@Param("content") String content, @Param("user_id") int user_id); // content로 일반 검색 삭제
+    public void recentSearchDeleteByTagIdAndUserId(@Param("tag_id") int tag_id, @Param("user_id") int user_id); // 태그 id로 태그 검색 삭제
+    public void recentSearchAllDeleteByUserId(@Param("user_id") int user_id); // 검색 기록 전체 삭제
 }
-
-
-
-
-
 
 
 

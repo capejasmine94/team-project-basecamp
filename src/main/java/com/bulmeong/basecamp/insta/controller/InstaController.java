@@ -89,28 +89,41 @@ public class InstaController {
 
     // 인스타 메인페이지
     @RequestMapping("instaMainPage")
-    public String instaMainPage(Model model, @RequestParam("user_id") int s_user_id){
-        InstaUserInfoDto instaUserInfoDto = instaService.userInfoByUserId(s_user_id);
-        model.addAttribute("instaUserInfoDto", instaUserInfoDto);
+    public String instaMainPage(Model model, HttpSession session){
 
-        // System.out.println(instaUserInfoDto.getInsta_profile_img());
+        UserDto userDto = (UserDto)session.getAttribute("sessionUserInfo");
 
+        if(userDto != null){ // 로그인 된 상태
 
-        // session.setAttribute("instaUserInfoDto", instaUserInfoDto);
-        // System.out.println("instaUserInfoDto" + instaUserInfoDto);
+            int s_user_id = userDto.getId();
 
-        InstaArticleLikeDto instaArticleLikeDto = new InstaArticleLikeDto();
-        instaArticleLikeDto.setUser_id(instaUserInfoDto.getId());
+            InstaUserInfoDto instaUserInfoDto = instaService.userInfoByUserId(s_user_id);
 
-        // System.out.println(instaArticleListAll);
-        List<Map<String, Object>> instaArticleListAll = instaService.selectInstaArticleList(instaUserInfoDto.getId());
-        model.addAttribute("instaArticleListAll", instaArticleListAll);
+            if(instaUserInfoDto != null){ // 인스타에 프로필 등록 된 유저
+                model.addAttribute("instaUserInfoDto", instaUserInfoDto);
 
-        // 인스스 _ 로그인 유저가 팔로우 한 유저 출력
-        List<InstaUserInfoDto> instaStoryList = instaService.likeInstaStoryButIsNotSoSad(instaUserInfoDto.getId());
-        model.addAttribute("instaStoryList", instaStoryList);
+                InstaArticleLikeDto instaArticleLikeDto = new InstaArticleLikeDto();
+                instaArticleLikeDto.setUser_id(instaUserInfoDto.getId());
 
-        return "insta/instaMainPage";
+                // System.out.println(instaArticleListAll);
+                List<Map<String, Object>> instaArticleListAll = instaService.selectInstaArticleList(instaUserInfoDto.getId());
+                model.addAttribute("instaArticleListAll", instaArticleListAll);
+
+                // 인스스 _ 로그인 유저가 팔로우 한 유저 출력
+                List<InstaUserInfoDto> instaStoryList = instaService.likeInstaStoryButIsNotSoSad(instaUserInfoDto.getId());
+                model.addAttribute("instaStoryList", instaStoryList);
+
+                return "insta/instaMainPage";
+            }else{ // 인스타에 프로필 등록 안 된 유저
+
+                return "redirect:./instaConfirmPage";
+            }
+            
+        }else{ // 로그인 안 된 상태
+
+            return "redirect:/user/login";
+        }
+        
     }
 
     // 좋아요
@@ -295,6 +308,9 @@ public class InstaController {
     @RequestMapping("instaSearchPage")
     public String instaSearchPage(Model model, @RequestParam("user_id") int id) { // user_id = 로그인 한 인스타 유저 id
 
+        List<Map<String, Object>> recentSearchList = instaService.recentSearch(id);
+        model.addAttribute("recentSearchList", recentSearchList);
+
         // 이렇게 하는거 맞냐..
         // instaSearchProcess로 파라미터 넘겨주기위해 model에 담았음
         model.addAttribute("user_id", id);
@@ -331,12 +347,22 @@ public class InstaController {
         if(content.startsWith("#")){
             
             InstaTagDto instaTagDto = instaService.selectTagDto(content);
-            model.addAttribute("instaTagDto", instaTagDto);
+            
 
-            List<InstaArticleImgDto> instaArticleImgDtoListByTagText = instaService.selectArticleImgBySearchTagText(content);
-            model.addAttribute("instaArticleImgDtoListByTagText", instaArticleImgDtoListByTagText);
+            if(instaTagDto != null){
+                model.addAttribute("instaTagDto", instaTagDto);
 
-            return "insta/instaTagSearchResultPage";
+                List<InstaArticleImgDto> instaArticleImgDtoListByTagText = instaService.selectArticleImgBySearchTagText(content);
+
+                model.addAttribute("instaArticleImgDtoListByTagText", instaArticleImgDtoListByTagText);
+
+                return "insta/instaTagSearchResultPage";
+
+            }else{ // 검색 결과 없음
+
+                return "insta/instaSearchResultNullPage";
+            }
+            
         }else{
 
             String selectResultContent = instaService.selectResultContent(content, instaUserInfoDto.getId());
@@ -345,10 +371,21 @@ public class InstaController {
 
             // 일반 검색 결과
             List<InstaArticleImgDto> instaArticleImgDtoListBySearchContent = instaService.selectArticleImgFromSearchContent(content);
-            model.addAttribute("instaArticleImgDtoListBySearchContent", instaArticleImgDtoListBySearchContent);
 
-            // 일반 검색 결과 페이지로 리턴
-            return "insta/instaSearchResultPage";
+            /* 메서드에서 null을 반환하는게 아니라 빈 리스트를 반환해서 instaArticleImgDtoListBySearchContent != null 이라고 입력하는게 의미가 없음
+               isEmpty()로 입력해 줘야 원하는 결과를 출력 할 수 있음 */
+            if(instaArticleImgDtoListBySearchContent.isEmpty()){ // 검색 결과 없음
+
+                return "insta/instaSearchResultNullPage";
+
+            }else{
+
+                model.addAttribute("instaArticleImgDtoListBySearchContent", instaArticleImgDtoListBySearchContent);
+
+                // 일반 검색 결과 페이지로 리턴
+                return "insta/instaSearchResultPage"; 
+            }
+
         }
 
     }
@@ -356,7 +393,11 @@ public class InstaController {
 
     // 해시태그 클릭시 결과 페이지
     @RequestMapping("instaSearchHashTagClickResultPage")
-    public String instaSearchHashTagClickResultPage(Model model, @RequestParam("tag_id") int tag_id){
+    public String instaSearchHashTagClickResultPage(Model model, @RequestParam("tag_id") int tag_id, HttpSession session){
+        UserDto userDto = (UserDto) session.getAttribute("sessionUserInfo");
+        InstaUserInfoDto instaUserInfoDto = instaService.userInfoByUserId(userDto.getId());
+
+        instaService.insertSearchTagId(tag_id, instaUserInfoDto.getId());
 
         // 검색이 아니고 태그 클릭 시 나오는 페이지
         List<InstaArticleImgDto> instaArticleImgDtoList = instaService.selectArticleFirstImg(tag_id);
@@ -370,6 +411,35 @@ public class InstaController {
         return "insta/instaSearchHashTagClickResultPage";
     }
 
+    // content로 일반 검색 삭제
+    @RequestMapping("recentSearchDeleteContentProcess")
+    public String recentSearchDeleteContentProcess(@RequestParam("content") String content, @RequestParam("user_id") int user_id){ // user_id = 세션 아이디
+        InstaUserInfoDto instaUserInfoDto = instaService.userInfoByUserId(user_id);
+
+        instaService.recentSearchDeleteContent(content, instaUserInfoDto.getId());
+
+        return "redirect:./instaSearchPage?user_id=" + instaUserInfoDto.getId();
+    }
+
+    // 태그 id로 태그 검색 삭제
+    @RequestMapping("recentSearchDeleteTagProcess")
+    public String recentSearchDeleteTagProcess(@RequestParam("tag_id") int tag_id, @RequestParam("user_id") int user_id){ // user_id = 세션 아이디
+        InstaUserInfoDto instaUserInfoDto = instaService.userInfoByUserId(user_id);
+
+        instaService.recentSearchDeleteTag(tag_id, instaUserInfoDto.getId());
+
+        return "redirect:./instaSearchPage?user_id=" + instaUserInfoDto.getId();
+    }
+
+    // 검색 기록 전체 삭제
+    @RequestMapping("recentSearchAllDeleteProcess")
+    public String recentSearchAllDeleteProcess(@RequestParam("user_id") int user_id){ // user_id = 세션 아이디
+        InstaUserInfoDto instaUserInfoDto = instaService.userInfoByUserId(user_id);
+
+        instaService.recentSearchAllDelete(instaUserInfoDto.getId());
+
+        return "redirect:./instaSearchPage?user_id=" + instaUserInfoDto.getId();
+    }
 
 }
 
