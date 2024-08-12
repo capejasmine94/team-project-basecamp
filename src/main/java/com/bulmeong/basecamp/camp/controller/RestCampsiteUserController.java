@@ -94,4 +94,11 @@ public class RestCampsiteUserController {
         result.add("orderByCode", service.getOrderByCode(reservCode));
         return result;
     }
+
+    @RequestMapping("searchCampsite")
+    public RestResponseDto searchCampsite(@RequestParam("searchWord") String searchWord, @RequestParam("category") String[] category) {
+        RestResponseDto result = new RestResponseDto();
+        result.add("campsiteList", service.searchCampsite(searchWord,category));
+        return result;
+    }
 }

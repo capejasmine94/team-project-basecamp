@@ -88,4 +88,5 @@ public interface CampsiteSqlMapper {
     public boolean isAlreadyReviewed(@Param("campsite_id") int campsite_id, @Param("user_id")int user_id);
     public List<CampsiteOrderDto> getOrderList();
     public void updateOrder(@Param("order_id")int order_id);
+    public List<CampsiteDto> searchCampsite(@Param("searchWord") String searchWord, @Param("category") String[] category);
 }

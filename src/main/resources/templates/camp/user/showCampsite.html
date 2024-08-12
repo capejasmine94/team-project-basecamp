@@ -14,9 +14,9 @@
     <script src="/public/js/util.js"></script>
     <script src="/public/js/camp/user.js"></script>
 
-    <script>
+    <!-- <script>
         initSession();
-    </script>
+    </script> -->
 
     <style>
         .material-symbols-outlined {
@@ -122,8 +122,11 @@
                             <div class="col ellipsis">
                                 <span class="fs-4 fw-semibold" th:text="${session.campsiteUser.dto.camp_name}">캠핑장 이름 솰라솰라솰라솰라솰라솰라솰라솰라</span>
                             </div>
+                            <div class="col-auto p-0">
+                                <i class="bi bi-star fs-5"></i>
+                            </div>
                             <div class="col-auto">
-                                <i class="bi bi-map" data-bs-toggle="modal" data-bs-target="#popupMap"></i>
+                                <i class="bi bi-map fs-5" data-bs-toggle="modal" data-bs-target="#popupMap"></i>
                             </div>
                         </div>
                         <div class="row mt-1 align-items-center">
@@ -144,14 +147,14 @@
                                         <span class="new-fs-9" th:text="${session.campsiteUser.dto.address} +' '+ ${session.campsiteUser.dto.detail_address}">주소</span>     
                                     </div>
                                 </div>
-                                <div class="row fs-5 justify-content-end">
+                                <!-- <div class="row fs-5 justify-content-end">
                                     <div class="col-auto p-0">
-                                        <i class="bi bi-heart"></i>
+                                        <i class="bi bi-star fs-5"></i>
                                     </div>
                                     <div class="col-auto p-0 mx-2 text-start">
                                         0
                                     </div>
-                                </div>
+                                </div> -->
                             </div>
                           
                         </div>
@@ -286,7 +289,7 @@
                         <span class="fw-semibold fs-5">배치도</span>
                     </div> 
                     <div class="col mt-4">
-                        <img class="img-fluid rounded-3" th:src="'/images/' + ${session.campsiteUser.dto.map_image}" alt="배치도" style="width: 100%; height: 16em;">
+                        <img class="img-fluid rounded-3 originImage" th:src="'/images/' + ${session.campsiteUser.dto.map_image}" alt="배치도" style="width: 100%; height: 16em;">
                     </div>
                 </div>
 
@@ -471,7 +474,7 @@
                         <span class="fw-semibold fs-5">구역 위치</span>
                     </div> 
                     <div class="col mt-4">
-                        <img id="area_mapImage" class="img-fluid rounded-3" src="/public/img/clubImage/mountain.jpg" alt="">
+                        <img id="area_mapImage" class="img-fluid rounded-3 originImage" src="/public/img/clubImage/mountain.jpg" alt="">
                     </div>
                 </div>
                 <!-- 추가 요금 -->
@@ -519,7 +522,7 @@
                 <div class="row">
                     <div id="map" style="width: 20em; height: 14em; padding: 0; margin-left: .75em;"></div>
                 </div>
-                <div class="row">
+                <div class="row mt-2">
                     <div class="col">
                         <span class="fw-semibold">주소</span>
                         <div class="text-secondary" th:text="${session.campsiteUser.dto.address} + ' ' + ${session.campsiteUser.dto.detail_address}"></div>
@@ -547,12 +550,15 @@
        const curCampsite = selectCamp();
        const map = curCampsite.dto.address;
        showMap(map);
-    });
-    addColonMoneyInput();
-
+    });    
+    
     function reservation() {
         location.href ='/camp/reservation?area_id=' + curArea.dto.id;
     }
+
+    addColonMoneyInput();
+    openOriginalInNewWindow();
+
 </script>
 </body>
 </html>

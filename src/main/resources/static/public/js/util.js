@@ -209,4 +209,11 @@ function editableText(name) {
     text.classList.remove('d-none');
   }
 }
-
+function openOriginalInNewWindow() {
+  const originImage = document.querySelectorAll('.originImage');
+  for(const origin of originImage) {
+    origin.onclick = function() {
+      window.open(origin.getAttribute('src'), '_blank');
+    };
+  }
+}

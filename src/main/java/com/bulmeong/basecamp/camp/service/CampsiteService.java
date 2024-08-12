@@ -467,6 +467,7 @@ public class CampsiteService {
         return result;
     }
 
+    // 고유번호로 예약 찾기
     public Map<String, Object> getOrderById(int order_id) {
         Map<String, Object> result = new HashMap<>();
         CampsiteOrderDto orderDto = campsiteSqlMapper.getOrderById(order_id);
@@ -495,6 +496,7 @@ public class CampsiteService {
         return result;
     }
     
+    // 이미 예약해 본 캠프인 경우
     public boolean isAlreadyOrdered(int campsite_id) {
         UserDto user = utils.getSession("sessionUserInfo");
         if(user == null) {
@@ -502,6 +504,8 @@ public class CampsiteService {
         }
         return campsiteSqlMapper.isAlreadyOrdered(campsite_id, user.getId());
     }
+
+    // 리뷰를 작성한 캠프인 경우
     public boolean isAlreadyReviewed(int campsite_id) {
         UserDto user = utils.getSession("sessionUserInfo");
         if(user == null)
@@ -539,12 +543,23 @@ public class CampsiteService {
         }
     }
 
+    // 모든 예약 리스트
     public List<CampsiteOrderDto> getOrderList() {
         return campsiteSqlMapper.getOrderList();
     }
 
+    // 예약 완료로 변경
     public void updateOrder(int order_id) {
         campsiteSqlMapper.updateOrder(order_id);
+    }
+
+    public List<Map<String,Object>> searchCampsite(String searchWord, String[]category) {
+        List<CampsiteDto> camps = campsiteSqlMapper.searchCampsite(searchWord,category);
+        List<Map<String,Object>> list = new ArrayList<>();
+        for(CampsiteDto camp : camps) {
+            list.add(campsiteInfoForUser(camp.getId()));
+        }
+        return list;
     }
     //-------------------------------------------------------------------------------------------------------------------
 
