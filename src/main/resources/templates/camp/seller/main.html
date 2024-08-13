@@ -46,15 +46,15 @@
                                     <div class="col mx-4">
                                         <div class="row mt-3">
                                             <div class="col text-start">예약 대기</div>
-                                            <div class="col-auto fw-semibold">0</div>
+                                            <div class="col-auto fw-semibold">12</div>
                                         </div>
                                         <div class="row mt-2">
                                             <div class="col text-start">최근 예약 됨 (3일)</div>
-                                            <div class="col-auto fw-semibold">0</div>
+                                            <div class="col-auto fw-semibold">5</div>
                                         </div>
                                         <div class="row mt-2 mb-3">
                                             <div class="col text-start">최근 취소된 예약</div>
-                                            <div class="col-auto fw-semibold">0</div>
+                                            <div class="col-auto fw-semibold">2</div>
                                         </div>
                                     </div>
                                 </div>
@@ -68,11 +68,11 @@
                                     <div class="col mx-4">
                                         <div class="row mt-3">
                                             <div class="col text-start">오늘 비어있는 포인트</div>
-                                            <div class="col-auto fw-semibold">0</div>
+                                            <div class="col-auto fw-semibold">35</div>
                                         </div>
                                         <div class="row mt-2 mb-2">
                                             <div class="col text-start">오늘 사용중인 포인트</div>
-                                            <div class="col-auto fw-semibold">0</div>
+                                            <div class="col-auto fw-semibold">4</div>
                                         </div>
                                         <div class="row mt-2 mb-3">
                                             <div class="col text-start">이용 불가 포인트</div>
@@ -100,9 +100,15 @@
                                         <div class="row">
                                             <div id="refundList" class="col">
                                                 <div class="row py-1 border-bottom new-fs-9 justify-content-between">
-                                                    <div class="col text-start ms-3">2024.04.25</div>
+                                                    <div class="col text-start ms-3">2024.08.11</div>
                                                     <div class="col text-center">120,000</div>
-                                                    <div class="col text-end me-3">천상의 공간</div>
+                                                    <div class="col text-end me-3">A(한가족)</div>
+                                                </div>
+
+                                                <div class="row py-1 border-bottom new-fs-9 justify-content-between">
+                                                    <div class="col text-start ms-3">2024.08.14</div>
+                                                    <div class="col text-center">48,000</div>
+                                                    <div class="col text-end me-3">C(온누리)</div>
                                                 </div>
                                             </div>
                                         </div>
@@ -118,11 +124,11 @@
                                     <div class="col mx-4">
                                         <div class="row mt-3">
                                             <div class="col text-start">정산 예정</div>
-                                            <div class="col-auto fw-semibold">0</div>
+                                            <div class="col-auto fw-semibold">3</div>
                                         </div>
                                         <div class="row mt-2 mb-2">
                                             <div class="col text-start">정산 완료</div>
-                                            <div class="col-auto fw-semibold">0</div>
+                                            <div class="col-auto fw-semibold">4</div>
                                         </div>
                                     </div>
                                 </div>
@@ -146,34 +152,20 @@
                                 </div>
                                 <div class="row border-bottom">
                                     <div class="col">
-                                        <div class="row border-top">
+                                        <div class="row border-top" th:each="review : ${session.campsite.statistics.reivewByCampsiteId5Index}">
                                             <div class="col">
                                                 <div class="row py-1 fw-semibold new-fs-8 justify-content-between">
-                                                    <div class="col text-start ms-1">김불편</div>
-                                                    <div class="col text-end me-1"><span>천상의 공간</span> <span class="text-secondary">/ P2</span></div>
-                                                </div>
+                                                    <div class="col text-start ms-1" th:text="${review.nickname}">김불편</div>
+                                                 </div>
                                                 <div class="row mt-2">
-                                                    <div class="col text-start ms-1 new-fs-8">12만원이라는 큰 돈을 주고 가기에는 너무 별로다</div>
+                                                    <div class="col text-start ms-1 new-fs-8" th:text="${review.content}">12만원이라는 큰 돈을 주고 가기에는 너무 별로다</div>
                                                 </div>
                                                 <div class="row mt-1 pb-2">
-                                                    <div class="col text-end text-secondary ms-1 new-fs-7">12일 전 작성</div>
+                                                    <div class="col text-end text-secondary ms-1 new-fs-7" th:text="${#dates.format(review.created_at, 'YYYY-MM-dd')}">12일 전 작성</div>
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="row border-top">
-                                            <div class="col">
-                                                <div class="row py-1 fw-semibold new-fs-8 justify-content-between">
-                                                    <div class="col text-start ms-1">박철철</div>
-                                                    <div class="col text-end me-1"><span>천상의 공간</span> <span class="text-secondary">/ P6</span></div>
-                                                </div>
-                                                <div class="row mt-2">
-                                                    <div class="col text-start ms-1 new-fs-8">음식이 너무 친절하고 사장님이 맛있어요~</div>
-                                                </div>
-                                                <div class="row mt-1 pb-2">
-                                                    <div class="col text-end text-secondary ms-1 new-fs-7">16일 전 작성</div>
-                                                </div>
-                                            </div>
-                                        </div>
+                                       
                                     </div>
                                 </div>
                             </div>
@@ -193,8 +185,8 @@
                     const salesData = {
                         labels: ['Day 1', 'Day 2', 'Day 3', 'Day 4', 'Day 5', 'Day 6', 'Day 7'],
                         datasets: [{
-                            label: 'Sales (in USD)',
-                            data: [150, 200, 250, 300, 350, 400, 450],
+                            label: '판매 (만원)',
+                            data: [15, 20, 27, 48, 35, 42, 57],
                             backgroundColor: 'rgba(54, 162, 235, 0.2)',
                             borderColor: 'rgba(54, 162, 235, 1)',
                             borderWidth: 1

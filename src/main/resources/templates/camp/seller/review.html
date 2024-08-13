@@ -70,13 +70,13 @@
                                                     <div class="col">
                                                         <div class="row mt-1 py-2 text-center border-top border-bottom align-items-center">
                                                             <div class="col">박작성</div>
-                                                            <div class="col ellipsis-line-one">베어그릴스의 야생의 시간 (P1)</div>
+                                                            <div class="col ellipsis-line-one">은하수 (P3)</div>
                                                             <div class="col">2024.04.14 ~ 2024.04.18</div>
                                                             <div class="col-4 ellipsis-line-one">하지만 난 베어그릴스가 아닌걸...</div>
                                                             <div class="col-1">2024.04.18</div>
                                                             <div class="col-1">
                                                                 <span><i class="bi bi-flag text-danger"></i></span>
-                                                                <span><i class="bi bi-envelope-open text-primary ms-3"></i></span>
+                                                                <span><i class="bi bi-envelope-open text-primary ms-3" type="button" data-bs-toggle="modal" data-bs-target="#reviewSeller"></i></span>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -94,6 +94,38 @@
 
           </div>
         </div>
+
+        <!-- Modal -->
+        <div class="modal fade" id="reviewSeller" tabindex="-1" aria-labelledby="reviewSellerLabel" aria-hidden="true">
+            <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                <h1 class="modal-title fs-5" id="reviewSellerLabel">리뷰 댓글 작성</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col fw-semibold">박작성</div>
+                    </div>
+                    <div class="row mt-1 new-fs-8 text-secondary">
+                        <div class="col-4">은하수 (P3)</div>
+                        <div class="col-auto">2024.04.14 ~ 2024.04.18</div>
+                    </div>
+                    <div class="row mt-2">
+                        <div class="col">하지만 난 베어그릴스가 아닌걸...</div>
+                    </div>
+                    <div class="row mx-2 mt-3">
+                        <textarea class="col form-control" name="content" rows="3"></textarea>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
+                <button type="button" class="btn btn-primary">작성</button>
+                </div>
+            </div>
+            </div>
+        </div>
+
         <div th:replace="~{common/navi::popup}"></div>
         <script>
                 document.addEventListener('DOMContentLoaded', (event) => {

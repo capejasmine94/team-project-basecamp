@@ -178,6 +178,15 @@ public class CampsiteService {
     //===================================================================================================================
     // 판매자 구역
     //===================================================================================================================
+    // 통계 (판매자)
+    private Map<String,Object> campsiteStatistics(int campsite_id) {
+        Map<String, Object> result = new HashMap<>();
+        result.put("orderByWaitProgress", campsiteSqlMapper.getCountOrderByWaitProgress(campsite_id));
+        result.put("orderBy3Day", campsiteSqlMapper.getCountOrderBy3Day(campsite_id));
+        result.put("orderByCanceled", campsiteSqlMapper.getOrderByCanceled(campsite_id));
+        result.put("reivewByCampsiteId5Index", campsiteSqlMapper.getReivewByCampsiteId5Index(campsite_id));
+        return result;
+    }
     //고유 번호로 캠핑장 모든 정보
     public Map<String,Object> campsiteInfo(int campsite_id) {
         // 초기값
@@ -217,7 +226,12 @@ public class CampsiteService {
 
         //예약
         result.put("reservation", getOrderByCampsiteId(campsite_id));
+
         //리뷰
+        result.put("review", campsiteSqlMapper.getReivewByCampsiteId(campsite_id));
+
+        //통계
+        result.put(("statistics"), campsiteStatistics(campsite_id));
 
         // 마무리
         return result;
