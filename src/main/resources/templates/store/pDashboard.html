@@ -1,27 +1,32 @@
 <!DOCTYPE html>
-<html lang="kr">
+<html lang="ko">
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">    
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
-        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
         <script src="https://kit.fontawesome.com/7b271bba58.js" crossorigin="anonymous"></script>
         <link rel="stylesheet" href="/public/css/font.css">
+        <link rel="stylesheet" href="/public/css/basecamp.css">
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+        <title>Basecamp - Store Center</title>
         
         <style>
+            .fill-on {
+                font-variation-settings: 'FILL' 1;
+            }
             .seller_profile img{
                 aspect-ratio: 1/1;
-                width: 100px;
+                width: 80px;
                 object-fit: cover;
                 object-position: center;
             }
-            .scrollable {
+            /* .scrollable {
                 height: 100vh;
-                /* height: calc(100vh - 58px); */
                 overflow-y: auto;
                 position: fixed;
-            }
+            } */
             .category{
                 transition: background-color 0.3s;
             }
@@ -31,6 +36,7 @@
             .subcategory {
                 background-color: #FAFAFA;
                 transition: background-color 0.3s;
+                font-size: 0.9em;
             }
             .subcategory:hover{
                 color: #067DFD;
@@ -50,11 +56,32 @@
             .store-center{
                 background-color: #222222;
             }
+            .f05{
+            font-size: 0.5em;
+            }
+            .f07{
+                font-size: 0.7em;
+            }
             .f08{
                 font-size: 0.8em;
             }
             .f09{
                 font-size: 0.9em;
+            }
+            .f12{
+                font-size: 1.2em;
+            }
+            .f15{
+                font-size: 1.5em;
+            }
+            .f17{
+                font-size: 1.7em;
+            }
+            .f20{
+                font-size: 2em;
+            }
+            .f40{
+                font-size: 4em;
             }
             .top-nav{
                 height: 58px;
@@ -62,9 +89,26 @@
             .left{
                 width: 15em;
             }
-            .right{
+            /* .right{
                 padding-left: 15em;
+            } */
+            .searchInput::placeholder{
+                font-size: 0.9em;
             }
+            .searchInput:focus{
+                outline: none;
+            }
+            .left select{
+                font-size: 0.9em;
+            }
+            .left select:focus{
+                outline: none;
+            }
+
+            .king{
+                left: 75%;
+            }
+
             /* 임의의 영역 생성 */
             .scrollBar { 
             width: 15em;
@@ -78,31 +122,43 @@
 
             .scrollBar::-webkit-scrollbar-thumb {
                 height: 30%; /* 스크롤바의 길이 */
-                background: #ffffff29; /* 스크롤바의 색상 */
+                background: #00000049; /* 스크롤바의 색상 */
                 
                 /* border-radius: 10px; */
             }
 
-            .scrollBar::-webkit-scrollbar-track {
-                background: rgba(33, 122, 244, .1);  /*스크롤바 뒷 배경 색상*/
-            }
+            /*스크롤바 뒷 배경 색상*/
+            /* .scrollBar::-webkit-scrollbar-track {
+                background: rgba(33, 122, 244, .1);
+            } */
         </style>
     </head>
     <body style="background-color: #F5F5F5;">
 
         <!-- top-navi -->
-        <div class="container-fluid">
-            <div id="topNaviSeller" class="row fixed-top align-items-center py-2 px-3 store-center">
-                <div class="col fs-3 text-white">
-                    <span class="fw-bold">BaseCamp</span> Store Center
+        <div class="container-fluid fixed-top">
+            <div id="topNaviSeller" class="row align-items-bottomline py-3 px-3 store-center">
+                <div class="col d-flex align-items-center text-white">
+                    <img src="/public/img/common/로고흰버전.png" style="width: 20%;">
+                    <span style="color: #9E9E9E;">&nbsp;&nbsp;Store Center</span>
                 </div>
-                <div class="col fs-5 text-end">
-                    <span class="fw-bold text-white" th:if="${session.sessionStoreInfo!=null}" th:text="${session.sessionStoreInfo.account_id}">
+                <div class="col pe-2 text-end">
+                    <span class="f08 text-white" th:if="${session.sessionStoreInfo!=null}" th:text="|${session.sessionStoreInfo.account_id}님|">
                         Sacabambaspis
                     </span>
                 </div>
-                <form action="/storeCenter/logoutProcess" class="col-auto">
-                    <button class="btn btn-outline-light btn-sm fw-bold">로그아웃</button>
+                <div class="col-auto px-2 d-flex align-items-center text-white position-relative">
+                    <div class="col d-flex align-items-center position-relative ps-0">
+                        <span class="material-symbols-outlined fw-light">
+                            notifications
+                        </span>
+                        <span class="badge d-flex align-items-center text-bg-danger rounded-circle position-absolute king translate-middle" style="padding: 0.2em;">
+                            <span class="f07">N</span>
+                        </span>
+                    </div>
+                </div>
+                <form action="/storeCenter/logoutProcess" class="col-auto ps-0">
+                    <button class="btn btn-sm text-white f08 fw-semibold">로그아웃</button>
                 </form>
             </div>
         </div>
@@ -112,40 +168,76 @@
         <div class="container-fluid">
             <div class="row">
                 <!-- left -->
-                <div class="col border-end scrollable scrollBar left" id="leftAccordion" style="padding-top: 58px; background-color: #FAFAFA;">
+                <div class="col-2 border-end scrollable scrollBar left" id="leftAccordion" style="padding-top: 60.58px; background-color: #FAFAFA;">
                     
-                    <div class="row py-4">
+                    <div class="row py-4 border-bottom">
                         <div class="col">
+
                             <div class="row">
                                 <div class="col seller_profile text-center">
-                                    <img src="/public/img/storeImage/userImg.jpeg" class="rounded-circle">
+                                    <img src="/public/img/common/default_profile.png" class="rounded-circle">
                                 </div>
                             </div>
-                            <div class="row text-center pt-2 fw-bold">
+                            <div class="row text-center pt-2 fw-semibold">
                                 <div class="col">
                                     <span th:if="${session.sessionStoreInfo!=null}" th:text="${session.sessionStoreInfo.name}">사카밤바스피스</span>
                                 </div>
                             </div>
+                            <div class="row pt-1 text-center">
+                                <div class="col f08 text-body-tertiary">
+                                    통합 매니저
+                                </div>
+                            </div>
+                            <div class="row pt-3 px-3">
+                                <div class="col px-2 d-grid rounded-2 border bg-white">
+                                    <select class="f09 py-2 border-0 bg-transparent" id="">
+                                        <option value="">수취인명</option>
+                                        <option value="">구매자명</option>
+                                        <option value="">구매자아이디</option>
+                                        <option value="">주문번호</option>
+                                        <option value="">상품번호</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="row pt-2 px-3">
+                                <div class="col border rounded-2 bg-white">
+                                    <div class="row">
+                                        <div class="col p-0">
+                                            <input type="text" class="border-0 px-2 py-2 bg-transparent searchInput w-100" placeholder="입력 후 검색하세요">
+                                        </div>
+                                        <div class="col-auto px-2 d-flex align-items-center">
+                                            <span class="material-symbols-outlined f12">
+                                                search
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
                         </div>
                     </div>
 
-                    <div class="row category">
-                        <div class="col pe-0 d-grid">
-                            <a href="/storeCenter/dashboard" type="button" class="py-3 fw-bold text-primary">
+                    <div class="row category px-3">
+                        <div class="col p-0 d-grid border-bottom">
+                            <a href="/storeCenter/dashboard" type="button" class="py-3 fw-semibold text-primary">
                                 Dashboard
                             </a>
                         </div>
                     </div>
-                    <div class="row category toggle-icon" data-bs-toggle="collapse" data-bs-target="#first-collapse">
-                        <div class="col pe-0 d-grid fs-5">
-                            <button type="button" class="py-3 accordion-button collapsed fw-bold">
-                                상품관리
-                            </button>
-                        </div>
-                        <div class="col-auto ps-0 d-grid fs-5">
-                            <button type="button" class="py-3 accordion-button collapsed">
-                                <i class="bi bi-chevron-down"></i>
-                            </button>
+                    <div class="row category toggle-icon px-3" data-bs-toggle="collapse" data-bs-target="#first-collapse">
+                        <div class="col border-bottom p-0">
+                            <div class="row">
+                                <div class="col pe-0 d-grid fs-5">
+                                    <button type="button" class="py-3 accordion-button collapsed fw-semibold">
+                                        상품관리
+                                    </button>
+                                </div>
+                                <div class="col-auto ps-0 d-grid fs-5">
+                                    <button type="button" class="py-3 accordion-button collapsed">
+                                        <i class="bi bi-chevron-down"></i>
+                                    </button>
+                                </div>
+                            </div>
                         </div>
                     </div>
                     <div class="row accordion-collapse collapse p-0" id="first-collapse" data-bs-parent="#leftAccordion">
@@ -162,16 +254,20 @@
                         </div>
                     </div>
 
-                    <div class="row category toggle-icon" data-bs-toggle="collapse" data-bs-target="#second-collapse">
-                        <div class="col pe-0 d-grid fs-5">
-                            <button type="button" class="py-3 accordion-button collapsed fw-bold">
-                                판매관리
-                            </button>
-                        </div>
-                        <div class="col-auto ps-0 d-grid fs-5">
-                            <button type="button" class="py-3 accordion-button collapsed">
-                                <i class="bi bi-chevron-down"></i>
-                            </button>
+                    <div class="row category toggle-icon px-3" data-bs-toggle="collapse" data-bs-target="#second-collapse">
+                        <div class="col border-bottom p-0">
+                            <div class="row">
+                                <div class="col pe-0 d-grid fs-5">
+                                    <button type="button" class="py-3 accordion-button collapsed fw-semibold">
+                                        판매관리
+                                    </button>
+                                </div>
+                                <div class="col-auto ps-0 d-grid fs-5">
+                                    <button type="button" class="py-3 accordion-button collapsed">
+                                        <i class="bi bi-chevron-down"></i>
+                                    </button>
+                                </div>
+                            </div>
                         </div>
                     </div>
                     <div class="row accordion-collapse collapse p-0" id="second-collapse" data-bs-parent="#leftAccordion">
@@ -191,16 +287,20 @@
                         </div>
                     </div>
 
-                    <div class="row category toggle-icon" data-bs-toggle="collapse" data-bs-target="#third-collapse">
-                        <div class="col pe-0 d-grid fs-5">
-                            <button type="button" class="py-3 accordion-button collapsed fw-bold">
-                                문의/리뷰 관리
-                            </button>
-                        </div>
-                        <div class="col-auto ps-0 d-grid fs-5">
-                            <button type="button" class="py-3 accordion-button collapsed">
-                                <i class="bi bi-chevron-down"></i>
-                            </button>
+                    <div class="row category toggle-icon px-3" data-bs-toggle="collapse" data-bs-target="#third-collapse">
+                        <div class="col border-bottom p-0">
+                            <div class="row">
+                                <div class="col pe-0 d-grid fs-5">
+                                    <button type="button" class="py-3 accordion-button collapsed fw-semibold">
+                                        문의/리뷰 관리
+                                    </button>
+                                </div>
+                                <div class="col-auto ps-0 d-grid fs-5">
+                                    <button type="button" class="py-3 accordion-button collapsed">
+                                        <i class="bi bi-chevron-down"></i>
+                                    </button>
+                                </div>
+                            </div>
                         </div>
                     </div>
                     <div class="row accordion-collapse collapse p-0" id="third-collapse" data-bs-parent="#leftAccordion">
@@ -214,50 +314,53 @@
                         </div>
                     </div>
 
-                    <div class="row category">
-                        <div class="col pe-0 d-grid">
-                            <a href="/storeCenter/balanceAccountsList" type="button" class="py-3 fw-bold">
+                    <div class="row category px-3">
+                        <div class="col p-0 d-grid border-bottom">
+                            <a href="/storeCenter/balanceAccountsList" type="button" class="py-3 fw-semibold">
                                 정산관리
                             </a>
                         </div>
                     </div>
 
-                    <div class="row category">
-                        <div class="col pe-0 d-grid">
-                            <a href="/storeCenter/statistics" type="button" class="py-3 fw-bold">
+                    <div class="row category px-3">
+                        <div class="col p-0 d-grid border-bottom">
+                            <a href="/storeCenter/statistics" type="button" class="py-3 fw-semibold">
                                 통계
                             </a>
                         </div>
                     </div>
 
-                    <div class="row category">
-                        <div class="col pe-0 d-grid">
-                            <a href="/storeCenter/storeInfo" type="button" class="py-3 fw-bold">
+                    <div class="row category px-3">
+                        <div class="col p-0 d-grid border-bottom">
+                            <a href="/storeCenter/storeInfo" type="button" class="py-3 fw-semibold">
                                 스토어관리
                             </a>
                         </div>
                     </div>
                     
-                    <div class="row category">
-                        <div class="col pe-0 d-grid">
-                            <a href="/storeCenter/sellerInfo" type="button" class="py-3 fw-bold">
+                    <div class="row category px-3">
+                        <div class="col p-0 d-grid border-bottom">
+                            <a href="/storeCenter/sellerInfo" type="button" class="py-3 fw-semibold">
                                 판매자정보
                             </a>
                         </div>
                     </div>
 
-                    <div class="row py-4">
-                        <div class="col">
+                    <div class="row py-4 px-3">
+                        <div class="col p-0">
                             <div class="row py-3">
                                 <div class="col">
-                                    <div class="row f08 text-tertiary">
+                                    <div class="row f08 text-body-secondary">
                                         <div class="col">
                                             금융 서비스 바로가기
                                         </div>
                                     </div>
                                     <div class="row pt-2">
-                                        <div class="col">
-                                            선정산 서비스 <i class="fa-solid fa-arrow-up-right-from-square"></i>
+                                        <div class="col d-flex align-items-center">
+                                            <span class="f09">선정산 서비스</span>
+                                            <span class="material-symbols-outlined fw-light f12">
+                                                open_in_new
+                                            </span>
                                         </div>
                                     </div>
                                 </div>
@@ -265,14 +368,17 @@
 
                             <div class="row py-3">
                                 <div class="col">
-                                    <div class="row f08 text-tertiary">
+                                    <div class="row f08 text-body-secondary">
                                         <div class="col">
                                             판매 지원 프로그램
                                         </div>
                                     </div>
                                     <div class="row pt-2">
-                                        <div class="col">
-                                            파트너센터 <i class="fa-solid fa-arrow-up-right-from-square"></i>
+                                        <div class="col d-flex align-items-center">
+                                            <span class="f09">파트너센터</span>
+                                            <span class="material-symbols-outlined fw-light f12">
+                                                open_in_new
+                                            </span>
                                         </div>
                                     </div>
                                 </div>
@@ -280,24 +386,33 @@
 
                             <div class="row py-3">
                                 <div class="col">
-                                    <div class="row f08 text-tertiary">
+                                    <div class="row f08 text-body-secondary">
                                         <div class="col">
                                             판매 지원 프로그램
                                         </div>
                                     </div>
                                     <div class="row pt-2">
-                                        <div class="col">
-                                            판매 가이드 <i class="fa-solid fa-arrow-up-right-from-square"></i>
+                                        <div class="col d-flex align-items-center">
+                                            <span class="f09">판매 가이드</span>
+                                            <span class="material-symbols-outlined fw-light f12">
+                                                open_in_new
+                                            </span>
                                         </div>
                                     </div>
                                     <div class="row pt-2">
-                                        <div class="col">
-                                            온라인 교육 <i class="fa-solid fa-arrow-up-right-from-square"></i>
+                                        <div class="col d-flex align-items-center">
+                                            <span class="f09">온라인 교육</span>
+                                            <span class="material-symbols-outlined fw-light f12">
+                                                open_in_new
+                                            </span>
                                         </div>
                                     </div>
                                     <div class="row pt-2">
-                                        <div class="col">
-                                            해외직구/판매 안내 <i class="fa-solid fa-arrow-up-right-from-square"></i>
+                                        <div class="col d-flex align-items-center">
+                                            <span class="f09">해외직구/판매 안내</span>
+                                            <span class="material-symbols-outlined fw-light f12">
+                                                open_in_new
+                                            </span>
                                         </div>
                                     </div>
                                 </div>
@@ -305,23 +420,25 @@
                         </div>
                     </div>
                     
-                    <div class="row pb-5">
+                    <div class="row pb-5 px-3">
                         <div class="col">
                             <div class="row">
-                                <div class="col">
+                                <div class="col p-0 pb-2 f09 border-bottom border-dark fw-semibold">
                                     도움이 필요하신가요?
                                 </div>
                             </div>
                             <div class="row pt-3">
-                                <div class="col d-grid">
-                                    <button class="btn btn-outline-light py-2">
-                                        <i class="fa-solid fa-headset"></i> 고객센터 바로가기
+                                <div class="col d-grid p-0">
+                                    <button class="btn bg-white border py-2 d-flex align-items-center justify-content-center">
+                                        <span class="material-symbols-outlined f12 fw-light">
+                                            headset_mic
+                                        </span> <span class="f09">고객센터 바로가기</span>
                                     </button>
                                 </div>
                             </div>
-                            <div class="row pt-3">
-                                <div class="col d-grid">
-                                    <button class="btn btn-outline-light py-2">
+                            <div class="row pt-2">
+                                <div class="col d-grid p-0">
+                                    <button class="btn bg-white border py-2 f09">
                                         카테고리 담당자 찾기
                                     </button>
                                 </div>
@@ -331,7 +448,841 @@
                 </div>
                 
                 <!-- right -->
-                <div class="col right" style="padding-top: 58px;">
+                <div class="col right" style="padding-top: 60.58px;">
+
+                    <!-- 
+                    <div class="row px-3 py-3">
+                        <div class="col-4">
+                            <div class="row px-2">
+                                <div class="col py-3 bg-white border">
+                                    <div class="row align-items-center">
+                                        <div class="col-auto pe-0">
+                                            <span class="material-symbols-outlined bg-dark-subtle f20 p-2 rounded-circle text-white fw-light">
+                                                orders
+                                            </span>
+                                        </div>
+                                        <div class="col">
+                                            <div class="row text-body-tertiary f08">
+                                                <div class="col">
+                                                    결제 건수
+                                                </div>
+                                            </div>
+                                            <div class="row f15 fw-semibold">
+                                                <div class="col">
+                                                    73
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <div class="row px-2">
+                                <div class="col py-3 bg-white border">
+                                    <div class="row align-items-center">
+                                        <div class="col-auto pe-0">
+                                            <span class="material-symbols-outlined bg-dark-subtle f20 p-2 rounded-circle text-white fw-light">
+                                                person
+                                            </span>
+                                        </div>
+                                        <div class="col">
+                                            <div class="row text-body-tertiary f08">
+                                                <div class="col">
+                                                    결제자 수
+                                                </div>
+                                            </div>
+                                            <div class="row f15 fw-semibold">
+                                                <div class="col">
+                                                    45
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <div class="row px-2">
+                                <div class="col py-3 bg-white border">
+                                    <div class="row align-items-center">
+                                        <div class="col-auto pe-0">
+                                            <span class="material-symbols-outlined bg-dark-subtle f20 p-2 rounded-circle text-white fw-light">
+                                                attach_money
+                                            </span>
+                                        </div>
+                                        <div class="col">
+                                            <div class="row text-body-tertiary f08">
+                                                <div class="col">
+                                                    결제 금액
+                                                </div>
+                                            </div>
+                                            <div class="row f15 fw-semibold">
+                                                <div class="col">
+                                                    785,160
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                     -->
+
+                    <div class="row px-3 py-3">
+                        
+                        <div class="col-6">
+                            <div class="row pe-2">
+                                <div class="col bg-white border">
+                                    <div class="row px-3 py-3 fw-semibold border-bottom">
+                                        <div class="col p-0">
+                                            주문/배송
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col border-end">
+                                            <div class="row py-3 px-3">
+                                                <!-- <div class="col-auto p-0">
+                                                    <span class="material-symbols-outlined p-1 bg-dark-subtle f20 text-white fw-light">
+                                                        featured_seasonal_and_gifts
+                                                    </span>
+                                                </div> -->
+                                                <div class="col p-0">
+                                                    <div class="row pb-2 align-items-center">
+                                                        <div class="col">
+                                                            결제대기
+                                                        </div>
+                                                        <div class="col text-end">
+                                                            <span class="f12 fw-semibold darkFont">0</span> <span class="f09">건</span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row pb-2">
+                                                        <div class="col">
+                                                            신규주문
+                                                        </div>
+                                                        <div class="col text-end">
+                                                            <span class="f12 fw-semibold darkFont">0</span> <span class="f09">건</span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row pb-2">
+                                                        <div class="col">
+                                                            오늘출발
+                                                        </div>
+                                                        <div class="col text-end">
+                                                            <span class="f12 fw-semibold darkFont">0</span> <span class="f09">건</span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row pb-2">
+                                                        <div class="col">
+                                                            예약구매
+                                                        </div>
+                                                        <div class="col text-end">
+                                                            <span class="f12 fw-semibold darkFont">0</span> <span class="f09">건</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col">
+                                            <div class="row py-3 px-3">
+                                                <!-- <div class="col-auto p-0">
+                                                    <span class="material-symbols-outlined p-1 bg-dark-subtle f20 text-white fw-light">
+                                                        local_shipping
+                                                    </span>
+                                                </div> -->
+                                                <div class="col p-0">
+                                                    <div class="row pb-2 align-items-center">
+                                                        <div class="col">
+                                                            배송준비
+                                                        </div>
+                                                        <div class="col text-end">
+                                                            <span class="f12 fw-semibold darkFont">0</span> <span class="f09">건</span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row pb-2">
+                                                        <div class="col">
+                                                            배송중
+                                                        </div>
+                                                        <div class="col text-end">
+                                                            <span class="f12 fw-semibold darkFont">0</span> <span class="f09">건</span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row pb-2">
+                                                        <div class="col">
+                                                            배송완료
+                                                        </div>
+                                                        <div class="col text-end">
+                                                            <span class="f12 fw-semibold darkFont">0</span> <span class="f09">건</span>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-6">
+                            <div class="row ps-2">
+                                <div class="col bg-white border">
+                                    <div class="row px-3 py-3 fw-semibold border-bottom">
+                                        <div class="col p-0">
+                                            클레임/정산
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col border-end">
+                                            <div class="row py-3 px-3">
+                                                <!-- <div class="col-auto p-0">
+                                                    <span class="material-symbols-outlined p-1 bg-dark-subtle f20 text-white fw-light">
+                                                        undo
+                                                    </span>
+                                                </div> -->
+                                                <div class="col p-0">
+                                                    <div class="row pb-2 align-items-center">
+                                                        <div class="col">
+                                                            취소요청
+                                                        </div>
+                                                        <div class="col text-end">
+                                                            <span class="f12 fw-semibold darkFont">0</span> <span class="f09">건</span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row pb-2">
+                                                        <div class="col">
+                                                            반품요청
+                                                        </div>
+                                                        <div class="col text-end">
+                                                            <span class="f12 fw-semibold darkFont">0</span> <span class="f09">건</span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row pb-2">
+                                                        <div class="col">
+                                                            교환요청
+                                                        </div>
+                                                        <div class="col text-end">
+                                                            <span class="f12 fw-semibold darkFont">0</span> <span class="f09">건</span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row pb-2">
+                                                        <div class="col">
+                                                            미수령신고
+                                                        </div>
+                                                        <div class="col text-end">
+                                                            <span class="f12 fw-semibold darkFont">0</span> <span class="f09">건</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col">
+                                            <div class="row py-3 px-3">
+                                                <!-- <div class="col-auto p-0">
+                                                    <span class="material-symbols-outlined p-1 bg-dark-subtle f20 text-white fw-light">
+                                                        account_balance
+                                                    </span>
+                                                </div> -->
+                                                <div class="col p-0">
+                                                    <div class="row pb-2 align-items-center">
+                                                        <div class="col">
+                                                            정산예정
+                                                        </div>
+                                                        <div class="col text-end">
+                                                            <span class="f12 fw-semibold darkFont">0</span> <span class="f09">건</span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row pb-2">
+                                                        <div class="col">
+                                                            정산완료
+                                                        </div>
+                                                        <div class="col text-end">
+                                                            <span class="f12 fw-semibold darkFont">0</span> <span class="f09">건</span>
+                                                        </div>
+                                                    </div>
+        
+                                                </div>
+                                            </div>
+                                            <div class="row pb-2 px-3">
+                                                <div class="col p-0 d-grid">
+                                                    <button class="bg-white border py-2 f09">정산내역 보기</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="row px-3 pb-3">
+                        <div class="col">
+                            <div class="row">
+                                <div class="col bg-white border">
+                                    <div class="row px-3 py-3 fw-semibold border-bottom">
+                                        <div class="col p-0">
+                                            빠른 처리가 필요한 주문
+                                        </div>
+                                    </div>
+                                    <div class="row py-4 px-3">
+                                        <div class="col-3 p-0 border-end">
+                                            <div class="row f09 pb-3">
+                                                <div class="col">
+                                                    새로운 주문이 있어요!
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-auto pe-0">
+                                                    <span class="material-symbols-outlined rounded-circle bg-dark-subtle text-white p-2 fw-light f20">
+                                                        data_check
+                                                    </span>
+                                                </div>
+                                                <div class="col">
+                                                    <div class="row">
+                                                        <div class="col f09">
+                                                            오늘의 신규주문
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col">
+                                                            <span class="f12 fw-semibold">0</span>건
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-6 pe-0 border-end">
+                                            <div class="row f09 pb-3">
+                                                <div class="col">
+                                                    오늘이 <span class="text-danger">발송마감일</span>이에요!
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-auto pe-0">
+                                                    <span class="material-symbols-outlined rounded-circle bg-dark-subtle text-white p-2 fw-light f20">
+                                                        data_alert
+                                                    </span>
+                                                </div>
+                                                <div class="col">
+                                                    <div class="row">
+                                                        <div class="col f09">
+                                                            주문확인 필요
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col">
+                                                            <span class="f12 fw-semibold text-danger">0</span>건
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-auto pe-0">
+                                                    <span class="material-symbols-outlined rounded-circle bg-dark-subtle text-white p-2 fw-light f20">
+                                                        deployed_code_alert
+                                                    </span>
+                                                </div>
+                                                <div class="col">
+                                                    <div class="row">
+                                                        <div class="col f09">
+                                                            발송처리 필요
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col">
+                                                            <span class="f12 fw-semibold text-danger">0</span>건
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-3">
+                                            <div class="row pb-3">
+                                                <div class="col f09">
+                                                    <span class="text-danger">발송마감일</span>이 지났어요!
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-auto pe-0">
+                                                    <span class="material-symbols-outlined rounded-circle bg-dark-subtle text-white p-2 fw-light f20">
+                                                        deployed_code_history
+                                                    </span>
+                                                </div>
+                                                <div class="col">
+                                                    <div class="row">
+                                                        <div class="col f09">
+                                                            발송 지연
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col">
+                                                            <span class="f12 fw-semibold text-danger">0</span>건
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row px-3 pb-3">
+                        <div class="col-6">
+                            <div class="row pe-2">
+                                <div class="col bg-white border">
+                                    <div class="row px-3 py-3 fw-semibold border-bottom">
+                                        <div class="col p-0">
+                                            스토어 매출 통계
+                                        </div>
+                                    </div>
+                                    <div class="row px-3">
+                                        <div class="col">
+                                            <div class="row py-3">
+                                                <div class="col"></div>
+                                                <div class="col-6 border">
+                                                    <div class="row text-center">
+                                                        <div class="col py-2 f09 border-end darkBg text-white">
+                                                            결제건수
+                                                        </div>
+                                                        <div class="col py-2 f09 border-end">
+                                                            결제자수
+                                                        </div>
+                                                        <div class="col py-2 f09">
+                                                            결제금액
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col"></div>
+                                            </div>
+                                            <div class="row pb-3">
+                                                <canvas id="salesStatistics" width="500" height="200"></canvas>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="row ps-2">
+                                <div class="col-6">
+                                    <div class="row pe-2">
+                                        <div class="col bg-white border">
+                                            <div class="row px-3 py-3 fw-semibold border-bottom">
+                                                <div class="col p-0">
+                                                    미답변 문의
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col">
+                                                    <div class="row">
+                                                        <div class="col py-3 text-center border-end">
+                                                            <div class="row">
+                                                                <div class="col">
+                                                                    <span class="material-symbols-outlined f20 fw-light">
+                                                                        package_2
+                                                                    </span>
+                                                                </div>
+                                                            </div>
+                                                            <div class="row">
+                                                                <div class="col f08">
+                                                                    상품문의
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col py-3 border-end text-center border-bottom bg-body-tertiary text-body-tertiary">
+                                                            <div class="row">
+                                                                <div class="col">
+                                                                    <span class="material-symbols-outlined f20 fw-light">
+                                                                        notifications
+                                                                    </span>
+                                                                </div>
+                                                            </div>
+                                                            <div class="row">
+                                                                <div class="col f08">
+                                                                    상품문의
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col py-3 text-center border-bottom bg-body-tertiary text-body-tertiary">
+                                                            <div class="row">
+                                                                <div class="col">
+                                                                    <span class="material-symbols-outlined f20 fw-light">
+                                                                        sms
+                                                                    </span>
+                                                                </div>
+                                                            </div>
+                                                            <div class="row">
+                                                                <div class="col f08">
+                                                                    판매자톡
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                
+                                                    </div>
+                                                    <div class="row align-items-center text-body-tertiary" style="height: 12.1125em;">
+                                                        <div class="col">
+                                                            <div class="row text-center">
+                                                                <div class="col">
+                                                                    <span class="material-symbols-outlined f20 fill-on">
+                                                                        error
+                                                                    </span>
+                                                                </div>
+                                                            </div>
+                                                            <div class="row text-center">
+                                                                <div class="col f09">
+                                                                    미답변 상품 문의가 없습니다.
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row py-3">
+                                                        <div class="col d-grid">
+                                                            <button class="border bg-white f09 py-2">
+                                                                문의 관리
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+        
+                                <div class="col-6">
+                                    <div class="row ps-2">
+                                        <div class="col bg-white border">
+                                            <div class="row px-3 py-3 fw-semibold border-bottom">
+                                                <div class="col p-0">
+                                                    공지사항
+                                                </div>
+                                            </div>
+                                            <div class="row px-3 py-4" style="height: 22.120625em;">
+                                                <div class="col p-0">
+                                                    <div class="row align-items-center">
+                                                        <div class="col pe-0 d-flex align-items-center">
+                                                            <span class="text-danger px-1 f08 border border-danger">
+                                                                중요
+                                                            </span>
+                                                            <span class="ps-2 f09 text-body-secondary">
+                                                                [일반] 2024년 8/14 '택배 없는 날'...
+                                                            </span>
+                                                        </div>
+                                                        <div class="col-auto f09 text-body-secondary">
+                                                            08.07
+                                                        </div>
+                                                    </div>
+                                                    <div class="row pt-2 align-items-center">
+                                                        <div class="col pe-0 d-flex align-items-center">
+                                                            <span class="text-danger px-1 f08 border border-danger">
+                                                                중요
+                                                            </span>
+                                                            <span class="ps-2 f09 text-body-secondary">
+                                                                [일반] [안내] 2024년 하반기 중...
+                                                            </span>
+                                                        </div>
+                                                        <div class="col-auto f09 text-body-secondary">
+                                                            08.01
+                                                        </div>
+                                                    </div>
+                                                    <div class="row pt-2 align-items-center">
+                                                        <div class="col pe-0 d-flex align-items-center">
+                                                            <span class="text-body-secondary px-1 f08 border border-secondary">
+                                                                일반
+                                                            </span>
+                                                            <span class="ps-2 f09 text-body-secondary">
+                                                                모바일 상품상세 리뷰 상단 노출...
+                                                            </span>
+                                                        </div>
+                                                        <div class="col-auto f09 text-body-secondary">
+                                                            08.09
+                                                        </div>
+                                                    </div>
+                                                    <div class="row pt-2 align-items-center">
+                                                        <div class="col pe-0 d-flex align-items-center">
+                                                            <span class="text-body-secondary px-1 f08 border border-secondary">
+                                                                일반
+                                                            </span>
+                                                            <span class="ps-2 f09 text-body-secondary">
+                                                                전자금융거래법 개정에 따른 판...
+                                                            </span>
+                                                        </div>
+                                                        <div class="col-auto f09 text-body-secondary">
+                                                            08.09
+                                                        </div>
+                                                    </div>
+                                                    <div class="row pt-2 align-items-center">
+                                                        <div class="col pe-0 d-flex align-items-center">
+                                                            <span class="text-body-secondary px-1 f08 border border-secondary">
+                                                                일반
+                                                            </span>
+                                                            <span class="ps-2 f09 text-body-secondary">
+                                                                베이스캠프 판매 이용약관 개정...
+                                                            </span>
+                                                        </div>
+                                                        <div class="col-auto f09 text-body-secondary">
+                                                            08.09
+                                                        </div>
+                                                    </div>
+                                                    <div class="row pt-2 align-items-center">
+                                                        <div class="col pe-0 d-flex align-items-center">
+                                                            <span class="text-body-secondary px-1 f08 border border-secondary">
+                                                                일반
+                                                            </span>
+                                                            <span class="ps-2 f09 text-body-secondary">
+                                                                [안내] 24년 하반기 중소상공인 대...
+                                                            </span>
+                                                        </div>
+                                                        <div class="col-auto f09 text-body-secondary">
+                                                            08.08
+                                                        </div>
+                                                    </div>
+                                                    
+                                                    <div class="row pt-2 align-items-center">
+                                                        <div class="col pe-0 d-flex align-items-center">
+                                                            <span class="text-body-secondary px-1 f08 border border-secondary">
+                                                                일반
+                                                            </span>
+                                                            <span class="ps-2 f09 text-body-secondary">
+                                                                [안내] '택배없는 날' 판매관리 패...
+                                                            </span>
+                                                        </div>
+                                                        <div class="col-auto f09 text-body-secondary">
+                                                            08.07
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row px-3 pb-3">
+                        
+                        <div class="col-6">
+                            <div class="row pe-2">
+                                <div class="col bg-white border">
+                                    <div class="row px-3 py-3 border-bottom">
+                                        <div class="col p-0">
+                                            <span class="fw-semibold">상품</span>
+                                        </div>
+                                    </div>
+                                    <div class="row px-3 py-3">
+                                        <div class="col ps-0 border-end">
+                                            <div class="row px-3">
+                                                <div class="col px-0 py-2 border-bottom">
+                                                    <div class="row">
+                                                        <div class="col">
+                                                            판매중
+                                                        </div>
+                                                        <div class="col text-end">
+                                                            <span class="fw-semibold f12">0</span>
+                                                            <span>건</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row px-3">
+                                                <div class="col px-0 py-2 border-bottom">
+                                                    <div class="row">
+                                                        <div class="col">
+                                                            노출제한
+                                                        </div>
+                                                        <div class="col text-end">
+                                                            <span class="fw-semibold f12">0</span>
+                                                            <span>건</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                        <div class="col" style="height: 9.35em;">
+                                            
+                                            <div class="row px-3">
+                                                <div class="col px-0 py-2 border-bottom">
+                                                    <div class="row">
+                                                        <div class="col">
+                                                            재고 10개 이하
+                                                        </div>
+                                                        <div class="col text-end">
+                                                            <span class="fw-semibold f12 text-danger">0</span>
+                                                            <span>건</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row px-3">
+                                                <div class="col px-0 py-2 border-bottom">
+                                                    <div class="row">
+                                                        <div class="col">
+                                                            판매종료 7일
+                                                        </div>
+                                                        <div class="col text-end">
+                                                            <span class="fw-semibold f12 text-danger">0</span>
+                                                            <span>건</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row px-3">
+                                                <div class="col px-0 py-2">
+                                                    <div class="row">
+                                                        <div class="col">
+                                                            품절
+                                                        </div>
+                                                        <div class="col text-end">
+                                                            <span class="fw-semibold f12 text-danger">0</span>
+                                                            <span>건</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-6">
+                            <div class="row ps-2">
+                                <div class="col bg-white border">
+                                    <div class="row px-3 py-3 border-bottom">
+                                        <div class="col p-0">
+                                            <span class="fw-semibold">리뷰</span> <span class="text-body-tertiary f08">최근 일주일 기준</span>
+                                        </div>
+                                    </div>
+                                    <div class="row px-3 py-3 align-items-center">
+                                        <div class="col ps-0 border-end">
+                                            <div class="row px-3">
+                                                <div class="col px-0 py-2 border-bottom">
+                                                    <div class="row">
+                                                        <div class="col fw-semibold" style="color: #0F0C2E;">
+                                                            신규 리뷰
+                                                        </div>
+                                                        <div class="col text-end">
+                                                            <span class="fw-bold f12">0</span>건
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row px-3">
+                                                <div class="col px-0 py-2 border-bottom">
+                                                    <div class="row text-body-tertiary">
+                                                        <div class="col">
+                                                            신규 사진 리뷰
+                                                        </div>
+                                                        <div class="col text-end">
+                                                            <span class="fw-semibold f12">0</span>건
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="row px-3">
+                                                <div class="col px-0 py-2">
+                                                    <div class="row text-body-tertiary">
+                                                        <div class="col">
+                                                            별점 낮은 리뷰
+                                                        </div>
+                                                        <div class="col text-end">
+                                                            <span class="fw-semibold f12">0</span>건
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col">
+                                            <div class="row text-center">
+                                                <div class="col f09 fw-semibold">
+                                                    리뷰 평점 비율
+                                                </div>
+                                            </div>
+                                            <div class="row px-3 py-3">
+                                                <canvas id="reviewChart" width="200" height="40"></canvas>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col d-grid">
+                                                    <button class="border bg-white f09 py-2">
+                                                        전체 리뷰 보기
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row pt-4 pb-5 border-top fw-light">
+                        <div class="col">
+                            <div class="row justify-content-center f08">
+                                <div class="col-auto border-end">
+                                    이용약관
+                                </div>
+                                <div class="col-auto border-end">
+                                    전자금융거래 이용약관
+                                </div>
+                                <div class="col-auto fw-semibold border-end">
+                                    개인정보 처리방침
+                                </div>
+                                <div class="col-auto border-end">
+                                    청소년 보호정책
+                                </div>
+                                <div class="col-auto border-end">
+                                    책임의 한계와 법적고지
+                                </div>
+                                <div class="col-auto border-end">
+                                    안전거래 가이드
+                                </div>
+                                <div class="col-auto">
+                                    고객센터
+                                </div>
+                            </div>
+                            <div class="row text-body-tertiary pt-3 f08">
+                                <div class="col text-center">
+                                    BASECAMP(주)는 통신판매중개자이며, 통신판매의 당사자가 아닙니다. 상품, 상품정보, 거래에 관한 의무와 책임은 판매자에게 있습니다.<br>
+                                    또한 판매자와 구매자간의 직거래에 대하여 당사는 관여하지 않기 때문에 거래에 대해서는 책임을 지지 않습니다.
+                                </div>
+                            </div>
+                            <div class="row justify-content-center pt-3 f08">
+                                <div class="col-auto border-end">
+                                    사업자등록번호 : 202-40-81412
+                                </div>
+                                <div class="col-auto border-end">
+                                    통신판매업신고번호 : 제2006-강남-10630호
+                                </div>
+                                <div class="col-auto border-end">
+                                    대표이사 : 김첨지
+                                </div>
+                                <div class="col-auto">
+                                    <span class="bg-white border px-2">사업자정보확인</span>
+                                </div>
+                            </div>
+                            <div class="row justify-content-center pt-2 f08">
+                                <div class="col-auto">
+                                    주소 : 서울특별시 강남구 테헤란로 7길 7, BASECAMP 1784, 13561
+                                </div>
+                            </div>
+                            <div class="row text-center pt-3">
+                                <div class="col text-secondary">
+                                    <span class="fw-bold f08">BaseCamp</span> <span class="f07">copyright ⓒ BaseCamp Corp. All rights reserved.</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -378,23 +1329,164 @@
             }
             onResize();
 
-            window.addEventListener("resize",function(){onResize();});
-
-            // function openCollapse(){
-            //     const a = new bootstrap.Collapse('#first-collapse', {
-            //         toggle: false
-            //     })
-            //     document.getElementById("productRegister").classList.add("text-primary");
-            //     a.show();
-            // }
-
-            // window.addEventListener("DOMContentLoaded", ()=> {
-            //     openCollapse();
-            // })
+            window.addEventListener("resize",function(){onResize()});
 
             window.addEventListener("DOMContentLoaded", () => {
                 setSessionId();
             })
+
+
+            
+            const DATA_COUNT = 30;
+            const NUMBER_CFG = {count: DATA_COUNT, min: 0, max: 100};
+
+            // 랜덤 숫자 생성 함수
+            function generateRandomNumbers({count, min, max}) {
+                const numbers = [];
+                for (let i = 0; i < count; i++) {
+                    numbers.push(Math.floor(Math.random() * (max - min + 1)) + min);
+                }
+                return numbers;
+            }
+
+            // 최근 30일 날짜를 계산하여 labels 배열에 추가
+            const labels = [];
+            for (let i = 29; i >= 0; i--) {
+                const date = new Date();
+                date.setDate(date.getDate() - i);
+                const month = date.getMonth() + 1; // 월은 0부터 시작하므로 +1 필요
+                const day = date.getDate();
+                labels.push(`${month}.${day}`);
+            }
+
+            // 랜덤 데이터를 생성
+            const data = generateRandomNumbers(NUMBER_CFG);
+
+            // Chart.js 차트 생성
+            new Chart(
+                document.getElementById('salesStatistics'),
+                {
+                    type: 'line',
+                    data: {
+                        labels: labels,
+                        datasets: [
+                            {
+                                label: 'Dataset 1',
+                                data: data,
+                                borderColor: 'rgba(112, 159, 191, 1)',
+                                backgroundColor: 'rgba(112, 159, 191, 0.5)',
+                                cubicInterpolationMode: 'monotone',
+                                tension: 0.4,
+                                pointStyle: 'circle',
+                                pointRadius: 5
+                            }
+                        ]
+                    },
+                    options: {
+                    responsive: true,
+                    scales: {
+                        x: {
+                            grid: {
+                                display: false  // X축 세로 그리드 라인 숨기기
+                            }
+                        },
+                        y: {
+                            beginAtZero: true,
+                            ticks: {
+                                stepSize: 5  // Y축에 5단위로 숫자 표시
+                            }
+                        }
+                    },
+                    plugins: {
+                        legend: {
+                            display: false
+                        },
+                        title: {
+                            display: false
+                        }
+                    }
+                }
+                }
+            );
+
+
+            const ctx = document.getElementById('reviewChart').getContext('2d');
+            const reviewChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: ['5점', '4점', '3점', '2점', '1점'], // x축 레이블
+                    datasets: [
+                        {
+                            label: '5점',
+                            data: [40], // 각 데이터 항목에 대한 값 설정
+                            backgroundColor: '#0F0C2E',
+                            borderWidth: 0,
+                            barThickness: 15
+                        },
+                        {
+                            label: '4점',
+                            data: [25],
+                            backgroundColor: '#3D7177',
+                            borderWidth: 0,
+                            barThickness: 15
+                        },
+                        {
+                            label: '3점',
+                            data: [20],
+                            backgroundColor: '#709FBF',
+                            borderWidth: 0,
+                            barThickness: 15
+                        },
+                        {
+                            label: '2점',
+                            data: [10],
+                            backgroundColor: '#A4D5F6',
+                            borderWidth: 0,
+                            barThickness: 15
+                        },
+                        {
+                            label: '1점',
+                            data: [5],
+                            backgroundColor: '#E2EFF7',
+                            borderWidth: 0,
+                            barThickness: 15
+                        }
+                    ]
+                },
+                options: {
+                    indexAxis: 'y',
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        x: {
+                            stacked: true,
+                            display: false
+                        },
+                        y: {
+                            stacked: true,
+                            display: false,
+                            ticks: {
+                                display: false
+                            },
+                        }
+                    },
+                    plugins: {
+                        legend: {
+                            display: true,
+                            position: 'bottom',
+                            labels: {
+                                boxWidth: 10,
+                                padding: 10
+                            }
+                        },
+                        tooltip: {
+                            enabled: false
+                        }
+                    }
+                }
+            });
+
+
         </script>
     </body>
 </html>
