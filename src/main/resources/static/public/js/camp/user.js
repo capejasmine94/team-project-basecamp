@@ -66,8 +66,8 @@ function refreshCampsite() {
                 <div class="row ps-1 mt-1 flex-column">
                     <div class="col pe-0 badgeList">
                     </div>
-                    <div class="col-auto fw-semibold mt-4 text-end fs-5 text-primary">
-                        <span class="moneyInput">${campsite.minPrise}</span> <span class="ms-2">원</span>
+                    <div class="col-auto fw-semibold mt-4 text-end fs-4">
+                        <span class="moneyInput text-primary">${campsite.minPrise}</span> <span class="fs-5">원</span>
                     </div>
                 </div>
             </div>

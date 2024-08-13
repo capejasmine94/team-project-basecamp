@@ -617,7 +617,16 @@
         })
         .then(response => response.json())
         .then(response => {
-            location.href = response.data.readyResponse.next_redirect_pc_url;
+            function isMobile() {
+                return /Mobi|Android/i.test(navigator.userAgent);
+            }
+
+            if (isMobile()) {
+                location.href = response.data.readyResponse.next_redirect_app_url;
+            } else {
+                location.href = response.data.readyResponse.next_redirect_pc_url;
+            }
+           
         })
         .catch(error => console.error('Error:', error));
     } else {

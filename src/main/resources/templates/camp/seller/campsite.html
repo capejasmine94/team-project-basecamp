@@ -95,7 +95,7 @@
                                                     <span>캠핑장 소개</span>
                                                 </div>
                                                 <div class="col-4 fw-semibold">
-                                                    <div id="text_description" th:text="${session.campsite.dto.description}"></div>
+                                                    <div id="text_description" th:utext="${session.campsite.dto.description}"></div>
                                                     <textarea class="form-control d-none" name="description" id="editable_description" cols="30" rows="5" th:text="${session.campsite.dto.description}"></textarea>
                                                 </div>
                                                 <div class="col-auto">
@@ -226,7 +226,7 @@
                                         </div>
                                         <div class="row mt-3">
                                             <div class="col-8 mx-3">
-                                                <textarea class="form-control" rows="5" name="notice" th:text="${session.campsite.dto.notice}"></textarea>
+                                                <textarea class="form-control" rows="5" name="notice" th:text="${session.campsite.dto.noticeToText()}"></textarea>
                                             </div>
                                         </div>
 
@@ -235,7 +235,7 @@
                                         </div>
                                         <div class="row mt-3">
                                             <div class="col-8 mx-3">
-                                                <textarea class="form-control" rows="5" name="facility_notice" th:text="${session.campsite.dto.facility_notice}"></textarea>
+                                                <textarea class="form-control" rows="5" name="facility_notice" th:text="${session.campsite.dto.facility_noticeToText()}"></textarea>
                                             </div>
                                         </div>
 
@@ -244,7 +244,7 @@
                                         </div>
                                         <div class="row mt-3 mb-3">
                                             <div class="col-8 mx-3">
-                                                <textarea class="form-control" rows="5" name="refund_notice" th:text="${session.campsite.dto.refund_notice}"></textarea>
+                                                <textarea class="form-control" rows="5" name="refund_notice" th:text="${session.campsite.dto.refund_noticeToText()}"></textarea>
                                             </div>
                                         </div>
                                     </div>

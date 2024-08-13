@@ -54,4 +54,17 @@ public class CampsiteDto {
     private Date opentime;
     private Date created_at;
     private String is_authenticated;
+
+    public String descriptionToText() {
+        return description.replaceAll("(?i)<br\\s*/?>", "\n");
+    }
+    public String noticeToText() {
+        return notice.replaceAll("(?i)<br\\s*/?>", "\n");
+    }
+    public String facility_noticeToText() {
+        return facility_notice.replaceAll("(?i)<br\\s*/?>", "\n");
+    }
+    public String refund_noticeToText() {
+        return refund_notice.replaceAll("(?i)<br\\s*/?>", "\n");
+    }
 }
