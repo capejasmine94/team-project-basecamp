@@ -588,7 +588,7 @@
         </select>
 
         <select id="getReivewByCampsiteId" resultType="map">
-            select bcr.*,us.nickname,us.profile_image ,cp.camp_name from bc_campsite_review bcr 
+            select bcr.*,us.nickname, us.profile_image, cp.camp_name from bc_campsite_review bcr 
             inner join bc_user us on bcr.user_id = us.id 
             inner join bc_campsite cp on bcr.campsite_id = cp.id 
             WHERE bcr.campsite_id = #{campsite_id}
