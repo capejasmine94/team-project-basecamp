@@ -11,42 +11,13 @@
 
         <link rel="stylesheet" href="/public/css/insta/instaStyle.css">
         <link rel="stylesheet" href="/public/css/common.css">
+        <link rel="stylesheet" href="/public/css/basecamp.css">
         <title>insta_userDetailPage</title>
 
         <script src="/public/js/util.js"></script>
 
         <style>
-            /* 고정 */
-            .fontBasic {
-                font-size: 0.8em;
-            }
-            .fontNine {
-                font-size: 0.9em;
-            }
-            /* 상단바 높이 */
-            .fixed-top {
-                text-align: center;
-                justify-content: space-around; /* 가로 중앙 정렬 */
-                align-items: center; /* 세로 중앙 정렬 */
-                height: 50px; /* 원하는 높이로 설정 */
-            }
-            .fixed-bottom {
-                text-align: center;
-                justify-content: space-around; /* 가로 중앙 정렬 */
-                align-items: center; /* 세로 중앙 정렬 */
-                height: 70px; /* 원하는 높이로 설정 */
-            }
 
-            /* 이미지 크기 */
-            .userImage {
-                width: 80px;  /* 원하는 너비 */
-                height: 80px; /* 원하는 높이 */
-                object-fit: cover; /* 이미지가 요소를 채우도록 조정 */
-            }
-
-            .instaButtonColor {
-                color: #0095f6;
-            }
 
         </style>
     </head>
@@ -57,145 +28,694 @@
                 <div class="col-2">
                     <a th:href="@{./instaMainPage(user_id=${session.sessionUserInfo.id})}" style="color: black;"><i class="bi bi-x-lg"></i></a>
                 </div>
-                <div class="col-8 pe-1">
+                <div class="col-8 pe-1 fontNine">
                     <span>설정 및 활동</span>
                 </div>
                 <div class="col-2"></div>
             </div>
 
-            <div class="row mt-5 pt-3">
-                <div class="col fontBasic">
-                    <span class="fw-bold" style="color: rgba(188, 188, 188, 0.685);">내 활동</span>
+            <!-- 검색 -->
+            <div class="row mt-5">
+                <div class="col pt-2 search-container">
+                    <i class="bi bi-search ps-2"></i>         
+                    <input name="searchWord" type="text" class="form-control form-control-sm" placeholder="검색" style="font-size: 0.8em;">
                 </div>
             </div>
 
-            <a class="row mt-1 fontNine" href="recentPost" style="text-decoration: none; color: black;">
-                <div class="col">
-                    <i class="bi bi-clock-history fs-5"></i>
-                    <span>최근 본 게시물</span>
+            <!-- 내 계정 -->
+            <div class="row pt-3">
+                <div class="col-auto fontSeven">
+                    <span style="color: rgb(136, 136, 136);">내 계정</span>
                 </div>
-                <div class="col-auto align-self-center">
-                    <i class="bi bi-chevron-compact-right fs-4"></i>
+                <div class="col text-end fontSeven fw-semibold" style="color: rgb(136, 136, 136);">
+                    <i class="fa-brands fa-meta"></i>
+                    Meta
+                </div>
+            </div>
+            <a class="row mt-3 fontSf d-flex align-items-center" href="recentPost" style="text-decoration: none; color: black;">
+                <div class="col-auto pe-0">
+                    <span class="material-symbols-outlined fs-5 fw-light">
+                        account_circle
+                    </span>
+                </div>
+                <div class="col-auto ps-1">
+                    <div class="row">
+                        <div class="col">
+                            <span>계정 센터</span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col" style="font-size: 0.75em; color: rgb(136, 136, 136);">
+                            <span>비밀번호, 보안, 개인정보, 광고 기본 설정</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col text-end">
+                    <span class="material-symbols-outlined fs-6" style="font-weight: 200;">
+                        arrow_forward_ios
+                    </span>
+                </div>
+            </a>
+            <div class="row mt-2">
+                <div class="col" style="font-size: 0.55em; padding-left: 9.5%;">
+                    <span>
+                        Meta 테크놀로지 전반에서 연결된 환경 및 계정 설정을 관리해보세요.
+                        <span class="lightFont">
+                            더 알아보기
+                        </span>
+                    </span>
+                </div>
+            </div>
+
+            <!-- border -->
+            <div class="row mt-2" style="border-bottom: 5px solid; border-color: rgba(227, 227, 227, 0.567);"></div>
+
+            <!-- 내 Instagram 사용 방식 -->
+            <div class="row pt-3">
+                <div class="col fontSeven">
+                    <span style="color: rgb(136, 136, 136);">내 Campstagram 사용 방식</span>
+                </div>
+            </div>
+
+            <a class="row mt-3 fontSf" href="..." style="text-decoration: none; color: black;">
+                <div class="col d-flex align-items-center" style=" padding-left: 3%">
+                    <span class="material-symbols-outlined fs-5 fw-light pe-1">
+                        history
+                    </span>
+                    <span>보관</span>
+                </div>
+                <div class="col-auto">
+                    <span class="material-symbols-outlined fs-6" style="font-weight: 200;">
+                        arrow_forward_ios
+                    </span>
+                </div>
+            </a>
+            <a class="row mt-3 fontSf" href="..." style="text-decoration: none; color: black;">
+                <div class="col d-flex align-items-center" style=" padding-left: 3%">
+                    <span class="material-symbols-outlined fs-5 fw-light pe-1">
+                        avg_pace
+                    </span>
+                    <span>내 활동</span>
+                </div>
+                <div class="col-auto">
+                    <span class="material-symbols-outlined fs-6" style="font-weight: 200;">
+                        arrow_forward_ios
+                    </span>
+                </div>
+            </a>
+            <a class="row mt-3 fontSf" href="..." style="text-decoration: none; color: black;">
+                <div class="col d-flex align-items-center" style=" padding-left: 3%">
+                    <span class="material-symbols-outlined fs-5 fw-light pe-1">
+                        bookmark
+                    </span>
+                    <span>저장됨</span>
+                </div>
+                <div class="col-auto">
+                    <span class="material-symbols-outlined fs-6" style="font-weight: 200;">
+                        arrow_forward_ios
+                    </span>
+                </div>
+            </a>
+            <a class="row mt-3 fontSf" href="..." style="text-decoration: none; color: black;">
+                <div class="col d-flex align-items-center" style=" padding-left: 3%">
+                    <span class="material-symbols-outlined fs-5 fw-light pe-1">
+                        notifications
+                        </span>
+                    <span>알림</span>
+                </div>
+                <div class="col-auto">
+                    <span class="material-symbols-outlined fs-6" style="font-weight: 200;">
+                        arrow_forward_ios
+                    </span>
+                </div>
+            </a>
+            <a class="row mt-3 fontSf" href="..." style="text-decoration: none; color: black;">
+                <div class="col d-flex align-items-center" style=" padding-left: 3%">
+                    <span class="material-symbols-outlined  fs-5 fw-light pe-1">
+                        schedule
+                    </span>
+                    <span>이용 시간</span>
+                </div>
+                <div class="col-auto">
+                    <span class="material-symbols-outlined fs-6" style="font-weight: 200;">
+                        arrow_forward_ios
+                    </span>
                 </div>
             </a>
 
-            <a class="row mt-3 fontNine" href="./likePost" style="text-decoration: none; color: black;">
-                <div class="col">
-                    <i class="bi bi-postcard-heart fs-5"></i>
-                    <span>좋아요한 게시물</span>
+            <!-- border -->
+            <div class="row mt-2" style="border-bottom: 5px solid; border-color: rgba(227, 227, 227, 0.567);"></div>
+
+            <!-- 내 콘텐츠를 볼 수 있는 사람 -->
+            <div class="row pt-3">
+                <div class="col fontSeven">
+                    <span style="color: rgb(136, 136, 136);">내 콘텐츠를 볼 수 있는 사람</span>
                 </div>
-                <div class="col-auto align-self-center">
-                    <i class="bi bi-chevron-compact-right fs-4"></i>
+            </div>
+
+            <a class="row mt-3 fontSf" href="..." style="text-decoration: none; color: black;">
+                <div class="col d-flex align-items-center" style=" padding-left: 3%">
+                    <span class="material-symbols-outlined fs-5 fw-light pe-1">
+                        lock
+                    </span>
+                    <span>계정 공개 범위</span>
+                </div>
+                <div class="col-auto text-end p-0 fontNine" style="color: rgb(136, 136, 136);">
+                    <span>비공개</span>
+                </div>
+                <div class="col-auto ps-1">
+                    <span class="material-symbols-outlined fs-6" style="font-weight: 200;">
+                        arrow_forward_ios
+                    </span>
+                </div>
+            </a>
+            <a class="row mt-3 fontSf" href="..." style="text-decoration: none; color: black;">
+                <div class="col d-flex align-items-center" style=" padding-left: 3%">
+                    <span class="material-symbols-outlined fs-5 fw-light pe-1">
+                        family_star
+                        </span>
+                    <span>친한 친구</span>
+                </div>
+                <div class="col-auto text-end p-0 fontNine" style="color: rgb(136, 136, 136);">
+                    <span>24</span>
+                </div>
+                <div class="col-auto ps-1">
+                    <span class="material-symbols-outlined fs-6" style="font-weight: 200;">
+                        arrow_forward_ios
+                    </span>
+                </div>
+            </a>
+            <a class="row mt-3 fontSf" href="..." style="text-decoration: none; color: black;">
+                <div class="col d-flex align-items-center" style=" padding-left: 3%">
+                    <span class="material-symbols-outlined fs-5 fw-light pe-1">
+                        block
+                    </span>
+                    <span>차단된 계정</span>
+                </div>
+                <div class="col-auto text-end p-0 fontNine" style="color: rgb(136, 136, 136);">
+                    <span>13</span>
+                </div>
+                <div class="col-auto ps-1">
+                    <span class="material-symbols-outlined fs-6" style="font-weight: 200;">
+                        arrow_forward_ios
+                    </span>
+                </div>
+            </a>
+            <a class="row mt-3 fontSf" href="..." style="text-decoration: none; color: black;">
+                <div class="col d-flex align-items-center" style=" padding-left: 3%">
+                    <span class="material-symbols-outlined fs-5 fw-light pe-1">
+                        wifi_tethering_off
+                    </span> 
+                    <span>스토리 및 라이브 방송 숨기기</span>
+                </div>
+                <div class="col-auto">
+                    <span class="material-symbols-outlined fs-6" style="font-weight: 200;">
+                        arrow_forward_ios
+                    </span>
                 </div>
             </a>
 
-            <a class="row mt-3 fontNine" href="./writeComment" style="text-decoration: none; color: black;">
-                <div class="col">
-                    <i class="bi bi-chat-text fs-5"></i>
-                    <span>내가 쓴 댓글</span>
+            <!-- border -->
+            <div class="row mt-2" style="border-bottom: 5px solid; border-color: rgba(227, 227, 227, 0.567);"></div>
+
+            <!-- 다른 사람이 나와 소통할 수 있는 방법 -->
+            <div class="row pt-3">
+                <div class="col fontSeven">
+                    <span style="color: rgb(136, 136, 136);">다른 사람이 나와 소통할 수 있는 방법</span>
                 </div>
-                <div class="col-auto align-self-center">
-                    <i class="bi bi-chevron-compact-right fs-4"></i>
+            </div>
+
+            <a class="row mt-3 fontSf" href="..." style="text-decoration: none; color: black;">
+                <div class="col d-flex align-items-center" style=" padding-left: 3%">
+                    <span class="material-symbols-outlined fs-5 fw-light pe-1">
+                        quickreply
+                    </span>
+                    <span>메시지 및 스토리 답장</span>
+                </div>
+                <div class="col-auto">
+                    <span class="material-symbols-outlined fs-6" style="font-weight: 200;">
+                        arrow_forward_ios
+                    </span>
+                </div>
+            </a>
+            <a class="row mt-3 fontSf" href="..." style="text-decoration: none; color: black;">
+                <div class="col d-flex align-items-center" style=" padding-left: 3%">
+                    <!-- <span class="material-symbols-outlined fs-5 fw-light pe-1">
+                        tag
+                    </span> -->
+                    <span class="material-symbols-outlined fs-5 fw-light pe-1">
+                        alternate_email
+                        </span>
+                    <span>태그 및 언급</span>
+                </div>
+                <div class="col-auto">
+                    <span class="material-symbols-outlined fs-6" style="font-weight: 200;">
+                        arrow_forward_ios
+                    </span>
+                </div>
+            </a>
+            <a class="row mt-3 fontSf" href="..." style="text-decoration: none; color: black;">
+                <div class="col d-flex align-items-center" style=" padding-left: 3%">
+                    <span class="material-symbols-outlined fs-5 fw-light pe-1">
+                        Sms
+                    </span>
+                    <span>댓글</span>
+                </div>
+                <div class="col-auto">
+                    <span class="material-symbols-outlined fs-6" style="font-weight: 200;">
+                        arrow_forward_ios
+                    </span>
+                </div>
+            </a>
+            <a class="row mt-3 fontSf" href="..." style="text-decoration: none; color: black;">
+                <div class="col d-flex align-items-center" style=" padding-left: 3%">
+                    <span class="material-symbols-outlined fs-5 fw-light pe-1">
+                        autorenew
+                    </span> 
+                    <span>공유</span>
+                </div>
+                <div class="col-auto">
+                    <span class="material-symbols-outlined fs-6" style="font-weight: 200;">
+                        arrow_forward_ios
+                    </span>
+                </div>
+            </a>
+            <a class="row mt-3 fontSf" href="..." style="text-decoration: none; color: black;">
+                <div class="col d-flex align-items-center" style=" padding-left: 3%">
+                    <span class="material-symbols-outlined fs-5 fw-light pe-1">
+                        person_off
+                    </span>
+                    <span>제한 된 계정</span>
+                </div>
+                <div class="col-auto text-end p-0 fontNine" style="color: rgb(136, 136, 136);">
+                    <span>4</span>
+                </div>
+                <div class="col-auto ps-1">
+                    <span class="material-symbols-outlined fs-6" style="font-weight: 200;">
+                        arrow_forward_ios
+                    </span>
+                </div>
+            </a>
+            <a class="row mt-3 fontSf" href="..." style="text-decoration: none; color: black;">
+                <div class="col d-flex align-items-center" style=" padding-left: 3%">
+                    <span class="material-symbols-outlined fs-5 fw-light pe-1">
+                        fmd_bad
+                    </span>
+                    <span>교류 일시 제한</span>
+                </div>
+                <div class="col-auto">
+                    <span class="material-symbols-outlined fs-6" style="font-weight: 200;">
+                        arrow_forward_ios
+                    </span>
+                </div>
+            </a>
+            <a class="row mt-3 fontSf" href="..." style="text-decoration: none; color: black;">
+                <div class="col d-flex align-items-center" style=" padding-left: 3%">
+                    <span class="material-symbols-outlined fs-5 fw-light pe-1">
+                        spellcheck
+                    </span>
+                    <span>숨겨진 단어</span>
+                </div>
+                <div class="col-auto">
+                    <span class="material-symbols-outlined fs-6" style="font-weight: 200;">
+                        arrow_forward_ios
+                    </span>
+                </div>
+            </a>
+            <a class="row mt-3 fontSf" href="..." style="text-decoration: none; color: black;">
+                <div class="col d-flex align-items-center" style=" padding-left: 3%">
+                    <span class="material-symbols-outlined fs-5 fw-light pe-1">
+                        person_add
+                    </span> 
+                    <span>친구 팔로워 및 초대</span>
+                </div>
+                <div class="col-auto">
+                    <span class="material-symbols-outlined fs-6" style="font-weight: 200;">
+                        arrow_forward_ios
+                    </span>
                 </div>
             </a>
 
-            <a class="row mt-3 fontNine" href="./likeComment" style="text-decoration: none; color: black;">
-                <div class="col">
-                    <i class="bi bi-chat-heart fs-5"></i>
-                    <span>좋아요한 댓글</span>
+            <!-- border -->
+            <div class="row mt-2" style="border-bottom: 5px solid; border-color: rgba(227, 227, 227, 0.567);"></div>
+
+            <!-- 내가 볼 수 있는 내용 -->
+            <div class="row pt-3">
+                <div class="col fontSeven">
+                    <span style="color: rgb(136, 136, 136);">내가 볼 수 있는 내용</span>
                 </div>
-                <div class="col-auto align-self-center">
-                    <i class="bi bi-chevron-compact-right fs-4"></i>
+            </div>
+
+            <a class="row mt-3 fontSf" href="..." style="text-decoration: none; color: black;">
+                <div class="col d-flex align-items-center" style=" padding-left: 3%">
+                    <span class="material-symbols-outlined fs-5 fw-light pe-1">
+                        kid_star
+                    </span>
+                    <span>즐겨찾기</span>
+                </div>
+                <div class="col-auto text-end p-0 fontNine" style="color: rgb(136, 136, 136);">
+                    <span>89</span>
+                </div>
+                <div class="col-auto ps-1">
+                    <span class="material-symbols-outlined fs-6" style="font-weight: 200;">
+                        arrow_forward_ios
+                    </span>
+                </div>
+            </a>
+            <a class="row mt-3 fontSf" href="..." style="text-decoration: none; color: black;">
+                <div class="col d-flex align-items-center" style=" padding-left: 3%">
+                    <span class="material-symbols-outlined fs-5 fw-light pe-1">
+                        notifications_off
+                    </span>
+                    <span>업데이트를 보지 않도록 설정한 계정</span>
+                </div>
+                <div class="col-auto text-end p-0 fontNine" style="color: rgb(136, 136, 136);">
+                    <span>0</span>
+                </div>
+                <div class="col-auto ps-1">
+                    <span class="material-symbols-outlined fs-6" style="font-weight: 200;">
+                        arrow_forward_ios
+                    </span>
+                </div>
+            </a>
+            <a class="row mt-3 fontSf" href="..." style="text-decoration: none; color: black;">
+                <div class="col d-flex align-items-center" style=" padding-left: 3%">
+                    <span class="material-symbols-outlined fs-5 fw-light pe-1">
+                        video_library
+                    </span>
+                    <span>추천 콘텐츠</span>
+                </div>
+                <div class="col-auto">
+                    <span class="material-symbols-outlined fs-6" style="font-weight: 200;">
+                        arrow_forward_ios
+                    </span>
+                </div>
+            </a>
+            <a class="row mt-3 fontSf" href="..." style="text-decoration: none; color: black;">
+                <div class="col d-flex align-items-center" style=" padding-left: 3%">
+                    <span class="material-symbols-outlined fs-5 fw-light pe-1">
+                        heart_plus
+                    </span> 
+                    <span>좋아요 수 및 공유 수</span>
+                </div>
+                <div class="col-auto">
+                    <span class="material-symbols-outlined fs-6" style="font-weight: 200;">
+                        arrow_forward_ios
+                    </span>
                 </div>
             </a>
 
-            <div class="row mt-3" style="border-bottom: 5px solid; border-color: rgba(227, 227, 227, 0.567);"></div>
+            <!-- border -->
+            <div class="row mt-2" style="border-bottom: 5px solid; border-color: rgba(227, 227, 227, 0.567);"></div>
+
+            <!-- 내 앱 및 미디어 -->
+            <div class="row pt-3">
+                <div class="col fontSeven">
+                    <span style="color: rgb(136, 136, 136);">내 앱 및 미디어</span>
+                </div>
+            </div>
+
+            <a class="row mt-3 fontSf" href="..." style="text-decoration: none; color: black;">
+                <div class="col d-flex align-items-center" style=" padding-left: 3%">
+                    <span class="material-symbols-outlined fs-5 fw-light pe-1">
+                        vertical_align_bottom
+                    </span>
+                    <span>보관 및 다운로드</span>
+                </div>
+                <div class="col-auto">
+                    <span class="material-symbols-outlined fs-6" style="font-weight: 200;">
+                        arrow_forward_ios
+                    </span>
+                </div>
+            </a>
+            <a class="row mt-3 fontSf" href="..." style="text-decoration: none; color: black;">
+                <div class="col d-flex align-items-center" style=" padding-left: 3%">
+                    <span class="material-symbols-outlined fs-5 fw-light pe-1">
+                        guardian
+                    </span>
+                    <span>접근성 및 번역</span>
+                </div>
+                <div class="col-auto">
+                    <span class="material-symbols-outlined fs-6" style="font-weight: 200;">
+                        arrow_forward_ios
+                    </span>
+                </div>
+            </a>
+            <a class="row mt-3 fontSf" href="..." style="text-decoration: none; color: black;">
+                <div class="col d-flex align-items-center" style=" padding-left: 3%">
+                    <!-- <span class="material-symbols-outlined fs-5 fw-light pe-1">
+                        g_translate
+                    </span> -->
+                    <span class="material-symbols-outlined fs-5 fw-light pe-1">
+                        translate
+                    </span>
+                    <span>언어</span>
+                </div>
+                <div class="col-auto">
+                    <span class="material-symbols-outlined fs-6" style="font-weight: 200;">
+                        arrow_forward_ios
+                    </span>
+                </div>
+            </a>
+            <a class="row mt-3 fontSf" href="..." style="text-decoration: none; color: black;">
+                <div class="col d-flex align-items-center" style=" padding-left: 3%">
+                    <span class="material-symbols-outlined fs-5 fw-light pe-1">
+                        spatial_audio_off
+                    </span>
+                    <span>미디어 품질</span>
+                </div>
+                <div class="col-auto">
+                    <span class="material-symbols-outlined fs-6" style="font-weight: 200;">
+                        arrow_forward_ios
+                    </span>
+                </div>
+            </a>
+            <a class="row mt-3 fontSf" href="..." style="text-decoration: none; color: black;">
+                <div class="col d-flex align-items-center" style=" padding-left: 3%">
+                    <span class="material-symbols-outlined fs-5 fw-light pe-1">
+                        devices
+                    </span> 
+                    <span>앱 웹사이트 권한</span>
+                </div>
+                <div class="col-auto">
+                    <span class="material-symbols-outlined fs-6" style="font-weight: 200;">
+                        arrow_forward_ios
+                    </span>
+                </div>
+            </a>
+
+            <!-- border -->
+            <div class="row mt-2" style="border-bottom: 5px solid; border-color: rgba(227, 227, 227, 0.567);"></div>
+
+            <!-- 가족 -->
+            <div class="row pt-3">
+                <div class="col fontSeven">
+                    <span style="color: rgb(136, 136, 136);">가족</span>
+                </div>
+            </div>
+
+            <a class="row mt-3 fontSf" href="..." style="text-decoration: none; color: black;">
+                <div class="col d-flex align-items-center" style=" padding-left: 3%">
+                    <span class="material-symbols-outlined fs-5 fw-light pe-1">
+                        group
+                    </span>
+                    <span>관리 감독</span>
+                </div>
+                <div class="col-auto">
+                    <span class="material-symbols-outlined fs-6" style="font-weight: 200;">
+                        arrow_forward_ios
+                    </span>
+                </div>
+            </a>
+
+            <!-- border -->
+            <div class="row mt-2" style="border-bottom: 5px solid; border-color: rgba(227, 227, 227, 0.567);"></div>
+
+            <!-- 프로페셔널 -->
+            <div class="row pt-3">
+                <div class="col fontSeven">
+                    <span style="color: rgb(136, 136, 136);">프로페셔널</span>
+                </div>
+            </div>
+
+            <a class="row mt-3 fontSf" href="..." style="text-decoration: none; color: black;">
+                <div class="col d-flex align-items-center" style=" padding-left: 3%">
+                    <span class="material-symbols-outlined fs-5 fw-light pe-1">
+                        insert_chart
+                    </span>
+                    <span>계정 유형 및 도구</span>
+                </div>
+                <div class="col-auto">
+                    <span class="material-symbols-outlined fs-6" style="font-weight: 200;">
+                        arrow_forward_ios
+                    </span>
+                </div>
+            </a>
+            <a class="row mt-3 fontSf" href="..." style="text-decoration: none; color: black;">
+                <div class="col d-flex align-items-center" style=" padding-left: 3%">
+                    <span class="material-symbols-outlined fs-5 fw-light pe-1">
+                        verified
+                    </span>
+                    <span>프로필 인증 표시</span>
+                </div>
+                <div class="col-auto">
+                    <span class="material-symbols-outlined fs-6" style="font-weight: 200;">
+                        arrow_forward_ios
+                    </span>
+                </div>
+            </a>
+
+            <!-- border -->
+            <div class="row mt-2" style="border-bottom: 5px solid; border-color: rgba(227, 227, 227, 0.567);"></div>
+
+            <!-- 내 주문 및 기부 캠페인 -->
+            <div class="row pt-3">
+                <div class="col fontSeven">
+                    <span style="color: rgb(136, 136, 136);">내 주문 및 기부 캠페인</span>
+                </div>
+            </div>
+
+            <a class="row mt-3 fontSf" href="..." style="text-decoration: none; color: black;">
+                <div class="col d-flex align-items-center" style=" padding-left: 3%">
+                    <span class="material-symbols-outlined fs-5 fw-light pe-1">
+                        inventory_2
+                    </span>
+                    <span>주문 및 결제</span>
+                </div>
+                <div class="col-auto">
+                    <span class="material-symbols-outlined fs-6" style="font-weight: 200;">
+                        arrow_forward_ios
+                    </span>
+                </div>
+            </a>
+
+            <!-- border -->
+            <div class="row mt-2" style="border-bottom: 5px solid; border-color: rgba(227, 227, 227, 0.567);"></div>
+
+            <!-- 더 많은 정보 및 지원 -->
+            <div class="row pt-3">
+                <div class="col fontSeven">
+                    <span style="color: rgb(136, 136, 136);">더 많은 정보 및 지원</span>
+                </div>
+            </div>
+
+            <a class="row mt-3 fontSf" href="..." style="text-decoration: none; color: black;">
+                <div class="col d-flex align-items-center" style=" padding-left: 3%">
+                    <span class="material-symbols-outlined fs-5 fw-light pe-1">
+                        help
+                    </span>
+                    <span>도움말</span>
+                </div>
+                <div class="col-auto">
+                    <span class="material-symbols-outlined fs-6" style="font-weight: 200;">
+                        arrow_forward_ios
+                    </span>
+                </div>
+            </a>
+            <a class="row mt-3 fontSf" href="..." style="text-decoration: none; color: black;">
+                <div class="col d-flex align-items-center" style=" padding-left: 3%">
+                    <span class="material-symbols-outlined fs-5 fw-light pe-1">
+                        local_police
+                    </span>
+                    <span>개인정보 보호 센터</span>
+                </div>
+                <div class="col-auto">
+                    <span class="material-symbols-outlined fs-6" style="font-weight: 200;">
+                        arrow_forward_ios
+                    </span>
+                </div>
+            </a>
+            <a class="row mt-3 fontSf" href="..." style="text-decoration: none; color: black;">
+                <div class="col d-flex align-items-center" style=" padding-left: 3%">
+                    <span class="material-symbols-outlined fs-5 fw-light pe-1">
+                        person
+                    </span>
+                    <span>계정 상태</span>
+                </div>
+                <div class="col-auto">
+                    <span class="material-symbols-outlined fs-6" style="font-weight: 200;">
+                        arrow_forward_ios
+                    </span>
+                </div>
+            </a>
+            <a class="row mt-3 fontSf" href="..." style="text-decoration: none; color: black;">
+                <div class="col d-flex align-items-center" style=" padding-left: 3%">
+                    <span class="material-symbols-outlined fs-5 fw-light pe-1">
+                        info
+                    </span>
+                    <span>정보</span>
+                </div>
+                <div class="col-auto">
+                    <span class="material-symbols-outlined fs-6" style="font-weight: 200;">
+                        arrow_forward_ios
+                    </span>
+                </div>
+            </a>
+
+            <!-- border -->
+            <div class="row mt-2" style="border-bottom: 5px solid; border-color: rgba(227, 227, 227, 0.567);"></div>
 
             <div class="row mt-3">
-                <div class="col fontBasic">
-                    <span class="fw-bold" style="color: rgba(188, 188, 188, 0.685);">제한 목록</span>
+                <div class="col fontSeven">
+                    <span style="color: rgb(136, 136, 136);">Meta의 다른 앱</span>
                 </div>
             </div>
 
-            <a class="row mt-2 fontNine" href="./blockUser" style="text-decoration: none; color: black;">
+            <a class="row mt-3 fontSf" href="https://www.whatsapp.com/" style="text-decoration: none; color: black;">
                 <div class="col">
-                    <i class="bi bi-ban fs-5"></i>
-                    <span>차단 된 계정</span>
+                    <i class="bi bi-whatsapp fs-6"></i>
+                    <span style="padding-left: 1%">WhatsApp</span>
                 </div>
                 <div class="col-auto align-self-center">
-                    <i class="bi bi-chevron-compact-right fs-4"></i>
+                    <span class="material-symbols-outlined fs-6" style="font-weight: 200;">
+                        arrow_forward_ios
+                    </span>
                 </div>
             </a>
-            <a class="row mt-3 fontNine" href="./User" style="text-decoration: none; color: black;">
+            <a class="row mt-3 fontSf" href="https://www.threads.net/?hl=ko" style="text-decoration: none; color: black;">
                 <div class="col">
-                    <i class="bi bi-exclamation-circle fs-4 text-danger"></i>
-                    <span class="text-danger">신고한 계정</span>
+                    <i class="bi bi-threads fs-6"></i>
+                    <span style="padding-left: 1%">Threads</span>
                 </div>
                 <div class="col-auto align-self-center">
-                    <i class="bi bi-chevron-compact-right fs-4"></i>
+                    <span class="material-symbols-outlined fs-6" style="font-weight: 200;">
+                        arrow_forward_ios
+                    </span>
+                </div>
+            </a>
+            <a class="row mt-3 fontSf" href="https://www.facebook.com/?locale=ko_KR" style="text-decoration: none; color: black;">
+                <div class="col">
+                    <i class="bi bi-facebook fs-6"></i>
+                    <span style="padding-left: 1%">FaceBook</span>
+                </div>
+                <div class="col-auto align-self-center">
+                    <span class="material-symbols-outlined fs-6" style="font-weight: 200;">
+                        arrow_forward_ios
+                    </span>
                 </div>
             </a>
 
-            <div class="row mt-3" style="border-bottom: 5px solid; border-color: rgba(227, 227, 227, 0.567);"></div>
+            <!-- border -->
+            <div class="row mt-2" style="border-bottom: 5px solid; border-color: rgba(227, 227, 227, 0.567);"></div>
 
             <div class="row mt-3">
-                <div class="col fontBasic">
-                    <span class="fw-bold" style="color: rgba(188, 188, 188, 0.685);">Meta의 다른 앱</span>
+                <div class="col fontSeven">
+                    <span style="color: rgb(136, 136, 136);">로그인</span>
                 </div>
             </div>
 
-            <a class="row mt-3 fontNine" href="https://www.whatsapp.com/" style="text-decoration: none; color: black;">
-                <div class="col">
-                    <i class="bi bi-whatsapp fs-4"></i>
-                    <span>WhatsApp</span>
-                </div>
-                <div class="col-auto align-self-center">
-                    <i class="bi bi-chevron-compact-right fs-4"></i>
-                </div>
-            </a>
-            <a class="row mt-3 fontNine" href="https://www.threads.net/?hl=ko" style="text-decoration: none; color: black;">
-                <div class="col">
-                    <i class="bi bi-threads fs-3"></i>
-                    <span>Threads</span>
-                </div>
-                <div class="col-auto align-self-center">
-                    <i class="bi bi-chevron-compact-right fs-4"></i>
-                </div>
-            </a>
-            <a class="row mt-3 fontNine" href="https://www.facebook.com/?locale=ko_KR" style="text-decoration: none; color: black;">
-                <div class="col">
-                    <i class="bi bi-facebook fs-4"></i>
-                    <span>FaceBook</span>
-                </div>
-                <div class="col-auto align-self-center">
-                    <i class="bi bi-chevron-compact-right fs-4"></i>
+            <a class="row" href="./instaLoginPage" style="text-decoration: none; color: black;">
+                <div class="col fontBasic pt-3 lightFont">
+                    <span>계정추가</span>
                 </div>
             </a>
 
-            <div class="row mt-3" style="border-bottom: 5px solid; border-color: rgba(227, 227, 227, 0.567);"></div>
-
-            <div class="row mt-3">
-                <div class="col fontBasic">
-                    <span class="fw-bold" style="color: rgba(188, 188, 188, 0.685);">로그인</span>
-                </div>
-            </div>
-
-            <a class="row mt-2 mb-5 fontNine" href="./instaLoginPage" style="text-decoration: none; color: black;">
-                <div class="col text-danger fw-bold">
+            <a class="row mb-3" href="./instaLoginPage" style="text-decoration: none; color: black;">
+                <div class="col fontBasic pt-3 text-danger">
                     <span>로그아웃</span>
                 </div>
             </a>
 
-            <!-- 글쓰기 버튼 -->
-            <!-- style="aspect-ratio: 1/1;" -> 익스펙토 주문 : 정방향을 만들어준다 -->
-            <!-- <div class="write-button-container">
-                <form action="./instaWritePage" method="get">
-                    <button class="btn bg-white rounded-2 border border-2 border-black px-2 py-1" type="submit">
-                        <i class="fa-solid fa-plus"></i>
-                        <input type="hidden" name="user_id" th:value="${session.sessionUserInfo.id}">
-                    </button>
-                </form>
-            </div> -->
         </div>
 
 
