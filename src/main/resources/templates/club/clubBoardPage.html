@@ -14,7 +14,7 @@
                 bottom: 20px;
                 right: 20px;
                 z-index: 1000; /* 필요에 따라 값 조정 */
-                background-color: #007bff;
+                background-color: #00B8FF;
                 color: white;
                 width: 60px;
                 height: 60px;
@@ -29,91 +29,120 @@
             .fixed-button i {
                 font-size: 24px;
             }
+
+            :root {
+                --nav-underline-border-width: 1px; /* 밑줄의 두께 */
+                --nav-link-active-color: #000000; /* 선택된 탭 텍스트 색상 및 밑줄 색상 */
+                --nav-inactive-border-color: #e0e0e0; /* 비활성화된 탭 밑줄 색상 (밝은 회색) */
+            }
+
+            .nav-underline {
+                display: flex;
+                justify-content: space-around;
+                position: relative;
+                border-bottom: var(--nav-underline-border-width) solid var(--nav-inactive-border-color); /* 회색 실선 */
+            }
+
+            .nav-item {
+                flex: 1;
+            }
+
+            .nav-link {
+                padding-bottom: 0.5rem; /* 탭과 밑줄 사이의 간격 */
+                color: #000000; /* 기본 탭 텍스트 색상 */
+                text-decoration: none;
+                position: relative;
+                display: inline-block;
+                width: 100%;
+                text-align: center; /* 텍스트 가운데 정렬 */
+            }
+
+            .nav-link.active {
+                color: var(--nav-link-active-color); /* 선택된 탭 색상 */
+            }
+
+            .nav-link.active::after {
+                content: '';
+                position: absolute;
+                bottom: -1px; /* 밑줄을 실선과 같은 위치에 표시 */
+                left: 0;
+                right: 0;
+                height: var(--nav-underline-border-width); /* 실선 두께 유지 */
+                background-color: var(--nav-link-active-color); /* 진한 밑줄 색상 */
+            }
+
+            /* 비활성화된 탭의 얇은 회색 밑줄 */
+            .nav-link::after {
+                content: '';
+                position: absolute;
+                bottom: -1px;
+                left: 0;
+                right: 0;
+                height: var(--nav-underline-border-width); /* 실선 두께 유지 */
+                background-color: var(--nav-inactive-border-color); /* 얇은 회색 밑줄 색상 */
+                z-index: 1; /* 활성화된 탭의 진한 밑줄 아래에 위치 */
+            }
+
+ 
         </style>
     </head>
     <body>
       
-  
-        <div class="container new-bg-gray">
+        <div class="container" style="padding-top: 60.792px;">
 
-            <!-- 전체 박스 -->
-                <div class="row px-4 pb-5 mb-5">
-                    <div class="col">
+            <div class="fixed-top px-4 row border-bottom py-3 shadow-sm bg-white">
+              
+                <div class="col text-center fw-medium">소모임 이름</div>
+                
+            </div>
+            
 
-                        <div class="row py-4">
-                            <div class="col-auto">
-                                <span class=""><i class="bi bi-chevron-left"></i></span>
-                            </div>
-                            <div class="col text-center fw-bold">
-                                CLUB BOARD
+            <!-- 전체 박스 1 -->
+                <div class="row">
+                    <div class="col px-0 overflow-x-hidden">
 
+                         <!-- 네비바 -->
+                        <div class="col bg-white text-center nav">
+                            <div class="col nav-item">
+                                <a class="nav-link" th:href="@{/club/home(id=${id})}">홈</a>
                             </div>
-                            <div class="col-auto">
-                                <span class="text-end"><i class="bi bi-three-dots"></i></span>
+                            <div class="col nav-item">
+                                <a class="nav-link active" aria-current="page" th:href="@{/club/board(id=${id})}">게시판</a>
                             </div>
-                        </div>
-                        
-
-                        <div class="row pt-3 pb-1 border-bottom border-3">
-                            <div class="col text-center">
-                                <a th:href="@{/club/home(id=${id})}" style="text-decoration:none; color:black;"><span>홈</span></a>
-                            </div>
-                            <div class="col text-center fw-bold">
-                                <a th:href="@{/club/board(id=${id})}" style="text-decoration:none; color:black;"><span>게시판</span></a>
-                            </div>
-                            <div class="col text-center">
-                                <a th:href="@{/club/album(id=${id})}" style="text-decoration:none; color:black;"><span>사진첩</span></a>
+                            <div class="col nav-item">
+                                <a class="nav-link" th:href="@{/club/album(id=${id})}">사진첩</a>
                             </div>
                         </div>
 
-                            <!-- 공지사항 글 고정?  -->
-                            <div class="row py-1 border-0 border-bottom">
-                                <div class="col" style="font-size: 0.8em;">
-                                    [필독] (공지사항 고정하기 할 수 있을까..?)
-                                </div>
-                            </div>
-                        
-                        
-                        <!-- 카테고리 나열 누르면 카테고리 해당되는 글만 보여주기 -->
-                        <div class="row pt-1 pb-2">
-                            <div class="col" style="font-size: 0.8em;">
-                                전체 공지 모임후기 가입인사.... 카테고리
-                            </div>
-                        </div>
-
+                        <!-- 전체 박스 2 -->
                         <div class="row">
                             <div class="col">
-                                    <div class="row">
-                                        <div class="col px-0 input-group">
-                                        <input type="text" th:value="${param.searchWord}" name="searchWord" class="form-control bg-body-tertiary" placeholder="검색어를 입력하세요.">
-                                            <button class="btn bg-body-tertiary border col-auto">
-                                                <i class="bi bi-search"></i>
-                                            </button>
-                                        </div>
-                                    </div>
-                            </div>
-                        </div>
-                        
 
-                        <!-- <div class="row pt-3 text-center">
-                            <div class="col">
-                                <a th:href="@{/club/writePost(id=${id})}" class="btn form-control btn-outline-dark">글 작성하기</a>
-                            </div>
-                        </div> -->
+                                <!-- 검색바 위치 고민중-->
+                                <div class="row px-3 pt-4 pb-3 bg-white">
+                                    <div class="col input-group">
+                                    <input type="text" th:value="${param.searchWord}" name="searchWord" class="form-control bg-body-tertiary" placeholder="검색어를 입력하세요.">
+                                        <button class="btn bg-body-tertiary border col-auto">
+                                            <i class="bi bi-search"></i>
+                                        </button>
+                                    </div>
+                                </div>
+
 
                         <!-- 여기서부터 게시글 목록 출력 -->
                         <!-- 프로필 박스 -->
-                        <div class="row border-3 border-top mt-3" th:each="postDetail : ${postDetailList}">
+                        <div class="row" th:each="postDetail : ${postDetailList}">
                             <div class="col">
                                 
-                                <div class="row pt-3">
+                                <!-- 프로필 사진 좀 더 큰 레이아웃 -->
+                                <!-- <div class="row px-3 bg-white pt-3">
                                     <div class="col">
-                                        <div class="row pb-3">
-                                            <div class="col-2 pe-0">
+                                        <div class="row pb-2">
+                                            <div class="col-2">
                                                 <img th:if="${postDetail.userDto.profile_image == 'default'}" src="/public/img/clubImage/profile.jpg" class="img-fluid rounded-circle"  style="aspect-ratio: 1/1;">
                                                 <img th:unless="${postDetail.userDto.profile_image == 'default'}" th:src="|/images/${postDetail.userDto.profile_image}|" class="img-fluid rounded-circle"  style="aspect-ratio: 1/1;">
                                             </div>
-                                            <div class="col align-self-center" style="font-size: 0.9em;">
+                                            <div class="col ps-0 align-self-center" style="font-size: 0.9em;">
                                                 <div class="row">
                                                     <div class="col">
                                                         <span th:text="${postDetail.userDto.nickname}"></span>
@@ -127,27 +156,37 @@
                                             </div>
                                         </div>
                                     </div>
+                                </div> -->
+
+                                <!-- 프로필 사진 작게 전체적으로 바뀐 레이아웃 -->
+                                <div class="row pb-2 px-3 bg-white pt-3">
+                                    <div class="col-1 pe-0 align-self-center d-flex">
+                                        <img th:if="${postDetail.userDto.profile_image == 'default'}" src="/public/img/clubImage/profile.jpg" class="img-fluid rounded-circle"  style="aspect-ratio: 1/1;">
+                                        <img th:unless="${postDetail.userDto.profile_image == 'default'}" th:src="|/images/${postDetail.userDto.profile_image}|" class="img-fluid rounded-circle"  style="aspect-ratio: 1/1;">
+                                    </div>
+                                    
+                                    <div class="col-auto ps-1 align-self-center d-flex" style="font-size: 0.9em;">
+                                        <span th:text="${postDetail.userDto.nickname}"></span>
+                                    </div>
+                                        
+                                    <div class="col text-secondary text-end align-self-center" style="font-size: 0.9em;">
+                                        <span th:text="${#dates.format(postDetail.clubPostDto.created_at, 'yyyy.MM.dd')}"></span>
+                                    </div>
                                 </div>
 
                                 <!-- 글 박스 -->
                                 <div class="row">
                                     <div class="col">
 
-                                        <div class="row">
-                                            <div class="col pb-2 fw-semi-bold">
+                                        <div class="row bg-white py-2 px-3 border-bottom">
+                                            <div class="col text-truncate pb-1" style="font-size: 0.9em;">
                                                 <a th:href="@{/club/readPost(id=${postDetail.clubPostDto.id})}" style="text-decoration: none; color: black;">
-                                                    <span class="ellipsis-line-two" th:text="${postDetail.clubPostDto.title}"></span>
+                                                    <span th:text="${postDetail.clubPostDto.title}"></span>
                                                 </a>
                                             </div>
                                         </div>
-                                        <!-- <div class="row border-2 border-bottom pb-3 text-truncate" style="font-size: 0.8em;">
-                                            <div class="col">
-                                                <a th:href="@{/club/readPost(id=${postDetail.clubPostDto.id})}" style="text-decoration: none; color: black;">
-                                                    <span th:text="${postDetail.clubPostDto.content}"></span>
-                                                </a>
-                                            </div>
-                                        </div> -->
-                                        <div class="row py-2" style="font-size: 0.8em;">
+                                   
+                                        <div class="row bg-white px-3 mb-2 py-2" style="font-size: 0.7em;">
                                             <div class="col-auto">
                                                 <i class="bi bi-bookmark"></i><span> 스크랩 <span class="text-primary fw-bold" th:text="${postDetail.totalPostLike}"></span></span>
                                                 &nbsp;&nbsp;
@@ -160,19 +199,155 @@
                                     </div>
                                 </div>
                                 
-
                             </div>
                         </div>
-
-                
+                                    
+                            </div>
+                        </div>
                     </div>
                 </div>
 
+                 <!--커뮤니티 하단네비 -->
+        <div th:fragment="bottomNaviBasecamp" class="container-fluid g-0 border-top bg-white fixed-bottom pb-3">
+            <div class="row mx-1 py-2 text-center">
+                
+                <!--HOME-->
+                <a href="/" class="col icon-and-text">
+                    <span class="material-symbols-outlined fw-light" style="font-size: 1.8em; color: darkgray;">
+                        home
+                    </span>
+                    <span class="text-navi pt-1" style="font-size: 0.7em; color: darkgray">홈</span>
+                </a>        
 
-                <a th:if="${session.sessionUserInfo != null}" th:href="@{/club/writePost(id=${id})}" class="fixed-button">
-                    <!-- <i class="bi bi-plus-circle-fill"></i> -->
-                    <i class="bi bi-pencil"></i>
+                <!--구매-->
+                <div class="col icon-and-text dropdown dropup">
+                    <span data-bs-toggle="dropdown" class="material-symbols-outlined fw-light" style="font-size: 1.7em; color: darkgray;">
+                        storefront
+                    </span>
+                    <span class="text-navi pt-1" style="font-size: 0.7em; color: darkgray;">구매</span>
+                    <ul class="dropdown-menu custom-dropdown-menu">
+                        <!-- 변초연 -->
+                        <a class="dropdown-item col" href="/store">
+                            <div class="row w-100">
+                                <div class="col-auto d-flex">
+                                    <span class="material-symbols-outlined pe-1 ps-1 fw-light">
+                                        shopping_bag
+                                    </span>
+                                    <span style="font-size: 0.9em;">스토어</span>
+                                </div>
+                            </div>
+                        </a>
+                        <!-- 심규진 -->
+                        <a class="dropdown-item col" href="/secondhandProduct/mainPage">
+                            <div class="row w-100">
+                                <div class="col-auto d-flex">
+                                    <span class="material-symbols-outlined pe-1 ps-1 fw-light">
+                                        eco
+                                    </span>
+                                    <span style="font-size: 0.9em;">중고</span>
+                                </div>
+                            </div>
+                        </a>
+                    </ul>
+                </div>
+
+                <!--예약-->
+                <div class="col icon-and-text dropdown dropup">
+                    <span data-bs-toggle="dropdown" class="material-symbols-outlined fw-light" style="font-size: 1.7em; color: darkgray;">
+                        event_available
+                    </span>
+                    <span class="text-navi pt-1" style="font-size: 0.7em; color: darkgray;">예약</span>
+                    <ul class="dropdown-menu row custom-dropdown-menu">
+                        <!-- 조준희 -->
+                        <a class="dropdown-item col" href="/camp/main">
+                            <div class="row w-100">
+                                <div class="col-auto d-flex">
+                                    <span class="material-symbols-outlined pe-1 ps-1 fw-light">
+                                        camping
+                                    </span>
+                                    <span style="font-size: 0.9em;">캠핑장</span>
+                                </div>
+                            </div>
+                        </a>
+                        <!-- 양은자 -->
+                        <a class="dropdown-item col" href="/campingcar/main">
+                            <div class="row w-100">
+                                <div class="col-auto d-flex">
+                                    <span class="material-symbols-outlined pe-1 ps-1 fw-light">
+                                        airport_shuttle
+                                    </span>
+                                    <span style="font-size: 0.9em;">캠핑카</span>
+                                </div>
+                            </div>
+                        </a>
+                    </ul>
+                </div>
+
+                <!--커뮤-->
+                <div class="col icon-and-text dropdown dropup">
+                    <span data-bs-toggle="dropdown" class="material-symbols-outlined fw-light" style="font-size: 1.7em;">
+                        forum
+                    </span>
+                    <span class="text-navi pt-1 fw-bold" style="font-size: 0.7em;">커뮤니티</span>
+                    <ul class="dropdown-menu custom-dropdown-menu">
+                        <!-- 이시은 -->
+                        <a class="dropdown-item col" href="/club/main">
+                            <div class="row w-100">
+                                <div class="col-auto d-flex">
+                                    <span class="material-symbols-outlined pe-1 ps-1 fw-light">
+                                        group
+                                    </span>
+                                    <span style="font-size: 0.9em;">소모임</span>
+                                </div>
+                            </div>
+                        </a>
+                        <!-- 남현지 -->
+                        <a class="dropdown-item col" href="/insta/instaMainPage">
+                            <span>
+                                <img src="/public/img/instaImage/campstagram.png" class="img-fluid">
+                            </span>
+                        </a>
+                    </ul>
+                </div>
+                
+                <!--내정보-->
+                <a class="col icon-and-text" href="/user/login" th:if="${session.sessionUserInfo == null}">
+                    <span class="material-symbols-outlined pe-1 ps-1 fw-light"style="font-size: 1.7em; color: darkgray;">
+                        person
+                    </span>
+                    <span class="text-navi pt-1" style="font-size: 0.7em; color: darkgray;">마이</span>
                 </a>
+                <a class="col icon-and-text" href="/user/myPage" th:unless="${session.sessionUserInfo == null}">
+                    <span class="material-symbols-outlined pe-1 ps-1 fw-light"style="font-size: 1.7em; color: darkgray;">
+                        person
+                    </span>
+                    <span class="text-navi pt-1" style="font-size: 0.7em; color: darkgray;">마이</span>
+                </a>
+            </div>
+        </div>
+
+
+                <!-- <a th:if="${session.sessionUserInfo != null}" th:href="@{/club/writePost(id=${id})}" class="fixed-button">
+                 <i class="bi bi-plus-circle-fill"></i>
+                    <i class="bi bi-pencil"></i>
+                </a> -->
+
+                 <!-- 게시글 작성하기 -->
+                 <div class="container fixed-bottom mb-5 pb-4 pe-2">
+                    <div class="row justify-content-end mb-4 pe-3">
+                        <a th:if="${session.sessionUserInfo != null}" th:href="@{/club/writePost(id=${id})}" class="col-auto bg-light ps-2 py-2 shadow rounded-pill text-decoration-none">
+                            <div class="row text-dark">
+                                <div class="col-auto pe-0 align-self-center d-flex">
+                                    <span class="material-symbols-outlined fs-3">add</span>
+                                </div>
+                                <div class="col ps-0 fs-7 fw-medium d-flex align-self-center text-center" style="letter-spacing: -0.5px;">
+                                    글 작성
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+
         </div>
 
 

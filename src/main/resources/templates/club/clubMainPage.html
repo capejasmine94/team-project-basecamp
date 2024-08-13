@@ -658,17 +658,65 @@
                             </div>
                         </div>
 
-                        <div class="row bg-white pt-5 mt-2">
+                        <div class="row bg-white pt-5">
                             <div class="col">
-                                하단 공백 박스
+                                
                             </div>
                         </div>
                     </div>
                 </div> 
 
-        
-        
-                <!--커뮤니티 하단네비 -->
+
+        <!-- 다가오는 정기모임 템플릿 -->
+        <div class="row d-none" id="upcoming-meeting-template">
+            <div class="col-5 upcoming-meeting-wrapper">
+
+                <!-- <div class="row">
+                    <div class="col px-0 ps-2">
+                        <img src="/public/img/clubImage/carousel1.png" class="img-fluid rounded upcoming-meeting-image" style="height: 6em; width: 100%; object-fit: cover;">
+                    </div>
+                </div> -->
+                <div class="row position-relative">
+                    <div class="col px-0 ps-2">
+                        <div class="img-container position-relative">
+                            <img src="/public/img/clubImage/carousel1.png" class="img-fluid rounded upcoming-meeting-image" style="height: 6em; width: 100%; object-fit: cover;">
+                            <div class="overlay"></div>
+                            <div class="text-overlay upcoming-meeting-date"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                    
+                        <div class="row">
+                            <div class="col fw-medium text-truncate" style="font-size: 0.8em;">
+                            
+                                <span class="upcoming-meeting-name"></span>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col text-secondary text-truncate" style="font-size: 0.8em;">
+                                <span class="upcoming-meeting-location"></span><span> &#183; </span>
+                                <span class="upcoming-meeting-club"></span>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col" style="font-size: 0.8em;">
+                            <span class="lightFont fw-medium upcoming-member-count"></span><span class="lightFont">명 참석중</span>
+                            
+                                <span class="text-secondary">
+                                    (<span class="upcoming-member-count"></span>/<span class="upcoming-capacity"></span>)
+                                </span>
+                            </div>
+                        </div>
+            
+                    </div>
+                </div>
+            
+            </div>
+        </div>
+        <!-- 다가오는 정기모임 템플릿 끝 -->
+             <!--커뮤니티 하단네비 -->
         <div th:fragment="bottomNaviBasecamp" class="container-fluid g-0 border-top bg-white fixed-bottom pb-3">
             <div class="row mx-1 py-2 text-center">
                 
@@ -786,58 +834,7 @@
                 </a>
             </div>
         </div>
-
-
-        <!-- 다가오는 정기모임 템플릿 -->
-        <div class="row d-none" id="upcoming-meeting-template">
-            <div class="col-5 upcoming-meeting-wrapper">
-
-                <!-- <div class="row">
-                    <div class="col px-0 ps-2">
-                        <img src="/public/img/clubImage/carousel1.png" class="img-fluid rounded upcoming-meeting-image" style="height: 6em; width: 100%; object-fit: cover;">
-                    </div>
-                </div> -->
-                <div class="row position-relative">
-                    <div class="col px-0 ps-2">
-                        <div class="img-container position-relative">
-                            <img src="/public/img/clubImage/carousel1.png" class="img-fluid rounded upcoming-meeting-image" style="height: 6em; width: 100%; object-fit: cover;">
-                            <div class="overlay"></div>
-                            <div class="text-overlay upcoming-meeting-date"></div>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col">
-                    
-                        <div class="row">
-                            <div class="col fw-medium text-truncate" style="font-size: 0.8em;">
-                            
-                                <span class="upcoming-meeting-name"></span>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col text-secondary text-truncate" style="font-size: 0.8em;">
-                                <span class="upcoming-meeting-location"></span><span> &#183; </span>
-                                <span class="upcoming-meeting-club"></span>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col" style="font-size: 0.8em;">
-                            <span class="lightFont fw-medium upcoming-member-count"></span><span class="lightFont">명 참석중</span>
-                            
-                                <span class="text-secondary">
-                                    (<span class="upcoming-member-count"></span>/<span class="upcoming-capacity"></span>)
-                                </span>
-                            </div>
-                        </div>
-            
-                    </div>
-                </div>
-            
-            </div>
-        </div>
-        <!-- 다가오는 정기모임 템플릿 끝 -->
-
+         
 
         <div class="container fixed-bottom mb-5 pb-4 pe-2">
             <div class="row justify-content-end mb-4 pe-3">
