@@ -69,6 +69,10 @@
                 transition: color 0.3s;
             }
 
+            .best-items-scroll::-webkit-scrollbar {
+            display: none;
+        }
+
             
         </style>
 
@@ -84,12 +88,12 @@
         </div>
 
   
-        <div class="container new-bg-gray px-0 overflow-x-hidden">
+        <div class="container bg-body-tertiary px-0 overflow-x-hidden">
             <!-- 전체 박스 -->
-                <div class="row px-4 pb-5 mb-5">
+                <div class="row pb-5 mb-5">
                     <div class="col">
 
-                        <div class="row align-items-center pt-3">
+                        <div class="row bg-white align-items-center px-3 pt-3">
                            
                             <div class="col">
                                 <div class="row">
@@ -143,7 +147,7 @@
                             </div>
                         </div>
 
-                        <div class="row border-bottom border-2 pb-4">
+                        <div class="row bg-white pb-3 mb-1 px-3">
                             <div class="col">
 
                                 <div class="row pt-3">
@@ -151,7 +155,7 @@
                                         모임 소개
                                     </div>
                                 </div>
-                                <div class="row pt-2" style="font-size: 0.9em;">
+                                <div class="row pt-2 mb-2" style="font-size: 0.9em;">
                                     <div class="col" th:text="${map.clubDto.description}">
                                         소모임 소개
                                     </div>
@@ -160,7 +164,7 @@
                             </div>
                         </div>
 
-                        <div class="row">
+                        <div class="row bg-white px-3 pb-3 mb-1">
                             <div class="col">
 
                                 <div class="row pt-3">
@@ -200,18 +204,18 @@
 
 
 
-                        <div class="row border-bottom border-4 pt-2 pb-3">
+                        <!-- <div class="row border-bottom border-4 pt-2 pb-3">
                             <div class="col"></div>
-                        </div>
+                        </div> -->
 
-                        <div class="row pt-4 pb-2">
-                            <div class="col fw-bold ps-0">
+                        <div class="row bg-white px-3 pt-4 pb-2">
+                            <div class="col fw-bold">
                                 <span>정기모임</span>
                             </div>
                         </div>
 
                         <!-- 정기모임 박스 -->
-                        <div class="row flex-nowrap overflow-x-auto" id="meeting-wrapper-box">
+                        <div class="row pb-4 mb-2 px-3 bg-white flex-nowrap overflow-x-auto best-items-scroll" id="meeting-wrapper-box">
                             
                         </div>
 
@@ -222,11 +226,11 @@
                         </div> -->
 
                         <!--소모임 홈화면 모임멤버 목록 파트 -->
-                        <div class="row">
+                        <div class="row px-3 bg-white">
                             <div class="col">
 
                                 <div class="row pt-3 pb-1">
-                                    <div class="col ps-0" style="font-size: 0.8em;">
+                                    <div class="col" style="font-size: 0.8em;">
                                         <span>모임멤버</span>
                                         <span class="fw-semibold" style="color: crimson;" th:text="${map.totalClubMember}"></span>
                                         <span th:text="' / ' +${map.clubDto.capacity}"></span>
@@ -235,15 +239,15 @@
 
                                     <!-- <span>모임멤버 </span><div class="col-auto ps-0" style="font-size: 0.9em; color:crimson;" ></div>
                                 </div> -->
-                                    <div class="col pe-0 text-end" style="font-size: 0.8em;">
+                                    <div class="col text-end" style="font-size: 0.8em;">
                                         <i class="bi bi-person-gear"></i> 멤버관리
                                     </div>
                             </div>
         
-                                <div class="row">
+                                <div class="row bg-white">
                                     <div class="col">
                                             <div class="row">
-                                                <div class="col px-0 input-group">
+                                                <div class="col input-group">
                                                 <input type="text" th:value="${param.searchWord}" name="searchWord" class="form-control bg-body-tertiary" placeholder="검색어를 입력하세요.">
                                                     <button class="btn bg-body-tertiary border col-auto">
                                                         <i class="bi bi-search"></i>
@@ -254,21 +258,21 @@
                                 </div>
         
                                 <div class="row pt-4">
-                                    <div class="col ps-0" style="font-size: 0.8em;">
+                                    <div class="col" style="font-size: 0.8em;">
                                         최근 가입 <span><i class="bi bi-arrow-clockwise"></i></span>
                                     </div>
                                 </div>
                                
                                 <div class="row pt-2 pb-3" th:each="clubMemberData : ${clubMemberDataList}">
-                                    <div class="col-1 px-0">
+                                    <div class="col-2">
                                         <img th:if="${clubMemberData.userDto.profile_image == 'default'}" src="/public/img/clubImage/profile.jpg" class="img-fluid rounded-circle"  style="aspect-ratio: 1/1;">
                                         <img th:unless="${clubMemberData.userDto.profile_image == 'default'}" th:src="|/images/${clubMemberData.userDto.profile_image}|" class="img-fluid rounded-circle"  style="aspect-ratio: 1/1;">
                                     </div>
                                     <div class="col align-self-center">
                                         <div class="row">
-                                            <div class="col pe-0 align-self-center" th:text="${clubMemberData.userDto.nickname}">
+                                            <div class="col-auto px-0 align-self-center" th:text="${clubMemberData.userDto.nickname}">
                                             </div>
-                                            <div class="col ps-0 align-self-center text-secondary" style="font-size: 0.8em;" th:text="${#dates.format(clubMemberData.clubMemberDto.joined_at, 'yyyy.MM.dd')}"></div>
+                                            <div class="col text-secondary align-self-center" style="font-size: 0.8em;" th:text="${#dates.format(clubMemberData.clubMemberDto.joined_at, 'yyyy.MM.dd')}"></div>
                                             <div class="col text-end">
                                                 <i class="bi bi-send"></i>
                                             </div>
@@ -279,7 +283,7 @@
                             </div>
                         </div>
 
-                        <div class="row border-top py-3 mt-3">
+                        <div class="row bg-white px-3 py-3 mt-2">
                             <div class="col">
                                 
                                 <div class="row">
@@ -294,7 +298,7 @@
                             </div>
                         </div>
 
-                        <div class="row border-top pt-3">
+                        <div class="row bg-white px-3 py-3">
                             <div class="col">
                                 
                                 <div class="row">
@@ -386,27 +390,25 @@
 
             <!-- 정기모임 템플릿 -->
             <div class="row d-none" id="meeting-template">
-                <div class="col-11 me-2 meeting-wrapper pt-2 pb-3 border rounded shadow-sm">
+                <div class="col-11 meeting-wrapper">
+                    <div class="row ps-3">
+                        <div class="col border rounded shadow-sm pt-2 pb-3">
 
-                   
                     <div class="row">
                         <div class="col">
-                            <div class="row">
-                                <div class="col" style="font-size: 0.8em;">
-                                    <span class="meetingDate"></span>
-                                     <!-- <span th:text="${#dates.format(meetingData.clubMeetingDto.meeting_date,'MM/dd')}"> </span> -->
-                                    <!-- <span class="text-danger d-day"> D-4</span> -->
-                                </div>
-                            </div>
                             <div class="row pb-1 pt-1">
                                 <div class="col" style="font-size: 0.9em;">
+                                    <span class="d-day text-danger fw-medium"></span>
+                                </div>
+                            </div>
+                            
+                            <div class="row pb-1 pt-1">
+                                <div class="col ellipsis-line-one" style="font-size: 0.9em;">
                                     <span class="meetingName"></span>
-                                    <span class="d-day text-danger fw-semibold"></span>
-                                    <!-- <span th:text="${meetingData.clubMeetingDto.name}"></span> -->
                                 </div>
                             </div>
                             <div class="row pb-2 mb-2">
-                                <div class="col text-secondary" style="font-size: 0.8em;">
+                                <div class="col ellipsis-line-two text-secondary" style="font-size: 0.8em;">
                                     <span class="meetingDescription"></span>
                                     <!-- <span th:text="${meetingData.clubMeetingDto.description}"></span> -->
                                 </div>
@@ -427,10 +429,10 @@
                     <div class="row">
                         <div class="col">
                             <div class="row">
-                                <div class="col-4 pe-0">  
-                                    <img class="rounded-2 meetingImage" style="width: 100%; height: 100%;">
+                                <div class="col-5 pe-0">  
+                                    <img class="rounded-2 meetingImage" style="width: 7em; height: 5em; object-fit: cover;">
                                 </div>
-                                <div class="col" style="font-size: 0.8em;">
+                                <div class="col ps-1" style="font-size: 0.8em;">
                                     <div class="row">
                                         <div class="col">
                                             <span class="text-secondary">일시</span>
@@ -463,6 +465,11 @@
                             </div>
                         </div>
                     </div>
+                        </div>
+                    </div>
+
+
+  
 
                 </div>
             </div>
@@ -483,5 +490,6 @@
    
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
         <script src="/public/js/club/clubHome.js"></script>
+        <script src="/public/js/lockLikeMobile.js"></script>
     </body>
 </html>

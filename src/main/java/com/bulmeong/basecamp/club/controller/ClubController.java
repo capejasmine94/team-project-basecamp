@@ -298,11 +298,11 @@ public class ClubController {
         List<ClubDto> clubDtoList = clubService.findClubDtoList();
         model.addAttribute("clubDtoList", clubDtoList);
 
-        return "club/newClubListPage";
+        return "club/newClubsListPage";
     }
 
 
-    @RequestMapping("bookmarkClubs")
+    @RequestMapping("bookmarkedClubs")
     public String localClubs(HttpSession session, Model model){
         UserDto userDto = (UserDto)session.getAttribute("sessionUserInfo");
         List<Map<String, Object>> bookmarkedClubDataList = clubService.getBookmarkedClubDtoList(userDto.getId());
@@ -337,7 +337,7 @@ public class ClubController {
         model.addAttribute("userDto", userDto);
         
 
-        return "club/myClubListPage";
+        return "club/myClubsListPage";
     }
 
     @RequestMapping("bookmarkProcess")
