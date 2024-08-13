@@ -99,6 +99,12 @@ public class CampsiteService {
             campsiteSqlMapper.addSelectCampCategory(dto);
         }
 
+        //설명류 글자들 변환
+        campsiteDto.setDescription(utils.SpaceWordForHtml(campsiteDto.getDescription()));
+        campsiteDto.setNotice(utils.SpaceWordForHtml(campsiteDto.getNotice()));
+        campsiteDto.setRefund_notice(utils.SpaceWordForHtml(campsiteDto.getRefund_notice()));
+        campsiteDto.setFacility_notice(utils.SpaceWordForHtml(campsiteDto.getFacility_notice()));
+
         // 판매자 정보 업데이트
         campsiteSqlMapper.registerCamp(campsiteDto);
         
@@ -301,6 +307,12 @@ public class CampsiteService {
             dto.setCategory_id(category_id);
             campsiteSqlMapper.addSelectCampCategory(dto);
         }
+
+        //설명류 글자들 변환
+        campsiteDto.setDescription(utils.SpaceWordForHtml(campsiteDto.getDescription()));
+        campsiteDto.setNotice(utils.SpaceWordForHtml(campsiteDto.getNotice()));
+        campsiteDto.setRefund_notice(utils.SpaceWordForHtml(campsiteDto.getRefund_notice()));
+        campsiteDto.setFacility_notice(utils.SpaceWordForHtml(campsiteDto.getFacility_notice()));
 
         // 판매자 정보 업데이트
         campsiteSqlMapper.updateCamp(campsiteDto);

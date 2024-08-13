@@ -139,4 +139,9 @@ public class Utils {
              return "URL에 메인 키워드가 없습니다.";
          }
     }
+
+    public String SpaceWordForHtml(String originalText){
+        originalText = originalText.replace("\n", "<br>");
+        return originalText;
+    }
 }
