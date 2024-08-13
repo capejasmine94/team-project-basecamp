@@ -37,9 +37,9 @@ public class KakaoPayService {
         requestBody.put("quantity", "1");
         requestBody.put("total_amount", storeOrderDto.getPayment_amount());
         requestBody.put("tax_free_amount", "0");
-        requestBody.put("approval_url", "http://localhost:8888/order/pay/completed");
-        requestBody.put("fail_url", "http://localhost:8888/store");
-        requestBody.put("cancel_url", "http://localhost:8888/store");
+        requestBody.put("approval_url", "https://basecamp.null-pointer-exception.com/order/pay/completed");
+        requestBody.put("fail_url", "https://basecamp.null-pointer-exception.com/store");
+        requestBody.put("cancel_url", "https://basecamp.null-pointer-exception.com/store");
 
         HttpEntity<Map<String, Object>> requestEntity = new HttpEntity<>(requestBody, headers);
 

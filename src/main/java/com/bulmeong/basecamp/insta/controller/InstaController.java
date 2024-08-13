@@ -2,6 +2,7 @@ package com.bulmeong.basecamp.insta.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 // import org.springframework.boot.autoconfigure.ssl.SslProperties.Bundles.Watch.File;
+import org.thymeleaf.util.StringUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -194,6 +195,12 @@ public class InstaController {
         InstaUserInfoDto instaUserInfoDto = instaService.selectUserInfo(id);
         model.addAttribute("instaUserInfoDto", instaUserInfoDto);
 
+        // html escape _ 개행
+        String escapedIntro = StringUtils.escapeXml(instaUserInfoDto.getIntro());
+        escapedIntro = escapedIntro.replaceAll("\n", "<br>");
+        instaUserInfoDto.setIntro(escapedIntro);
+
+
         int articleCount = instaService.selectArticleCountByUserId(id);
         model.addAttribute("articleCount", articleCount);
 
@@ -216,6 +223,12 @@ public class InstaController {
     public String instaBookmarkPage(Model model, @RequestParam("user_id") int id){
         InstaUserInfoDto instaUserInfoDto = instaService.selectUserInfo(id);
         model.addAttribute("instaUserInfoDto", instaUserInfoDto);
+
+        // html escape _ 개행
+        String escapedIntro = StringUtils.escapeXml(instaUserInfoDto.getIntro());
+        escapedIntro = escapedIntro.replaceAll("\n", "<br>");
+        instaUserInfoDto.setIntro(escapedIntro);
+
 
         int articleCount = instaService.selectArticleCountByUserId(id);
         model.addAttribute("articleCount", articleCount);
@@ -256,6 +269,13 @@ public class InstaController {
     @RequestMapping("instaUserPage")
     public String instaUserPage(Model model, @RequestParam("user_id") int id){ // id = userInfoDto id
         InstaUserInfoDto instaUserInfoDto = instaService.selectUserInfo(id);
+
+        // html escape _ 개행
+        String escapedIntro = StringUtils.escapeXml(instaUserInfoDto.getIntro());
+        escapedIntro = escapedIntro.replaceAll("\n", "<br>");
+        instaUserInfoDto.setIntro(escapedIntro);
+
+        
 
         int articleCount = instaService.selectArticleCountByUserId(id);
         model.addAttribute("articleCount", articleCount);

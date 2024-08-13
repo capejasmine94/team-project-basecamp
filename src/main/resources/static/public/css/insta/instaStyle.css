@@ -5,12 +5,16 @@
 .fontSeven {
     font-size: 0.7em;
 }
+.fontSf {
+    font-size: 0.75em;
+}
 .fontBasic {
     font-size: 0.8em;
 }
 .fontNine {
     font-size: 0.9em;
 }
+
 
 /* a태그 데코 none */
 /* class _ link-dark link-underline-opacity-0 */
