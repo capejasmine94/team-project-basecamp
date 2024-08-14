@@ -82,7 +82,34 @@
                 background-color: var(--nav-inactive-border-color); /* 얇은 회색 밑줄 색상 */
                 z-index: 1; /* 활성화된 탭의 진한 밑줄 아래에 위치 */
             }
+            
 
+                body {
+                display: flex;
+                justify-content: center;
+                /* align-items: center; */
+                height: 100vh;
+                margin: 0;
+            }
+
+            .centered-circle {
+                width: 37px;
+                height: 37px;
+                background-color: #ffffff;
+                border: 1px solid #dee2e6;
+                border-radius: 50%;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                color: #000000;
+                font-size: 14px;
+                font-weight: normal;
+            }
+
+            .thicker-light-border {
+                border-bottom: 7px solid #dee2e6;
+            }
+        
  
         </style>
     </head>
@@ -157,9 +184,38 @@
                                         </div>
                                     </div>
                                 </div> -->
+                                <a th:href="@{/club/readPost(id=${postDetail.clubPostDto.id})}" style="text-decoration: none; color: black;">
+                                    <div class="row border-bottom py-3 px-3">
+                                        <!-- <div class="col-2">
+                                            이미지
+                                        </div> -->
+                                        <div class="col">
+                                            <div class="row">
+                                                <div class="col pe-2 ellipsis-line-two" style="font-size: 0.9em;">
+                                                   <span class="lightFont" th:text=" '[' +${postDetail.clubPostCategoryDto.category_name}+']'">[카테고리]</span>
+                                                
+                                                    <span th:text="${postDetail.clubPostDto.title}"></span>
+                                                </div>
+                                            </div>
+                                            <div class="row pt-2">
+                                                <div class="col text-secondary" style="font-size: 0.8em;">
+                                                    <span th:text="${postDetail.userDto.nickname}"></span><span> &#183; </span>
+                                                    <span th:text="${#dates.format(postDetail.clubPostDto.created_at, 'yyyy.MM.dd')}"></span><span> &#183; </span>
+                                                    <span th:text="'조회' + ${postDetail.clubPostDto.read_count}">조회 531</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-auto ps-0 d-flex justify-content-end align-items-center">
+                                            <div class="centered-circle">
+                                                <span th:text="${postDetail.totalComment}">1</span> 
+                                            </div>
+                                        </div>   
+                                    </div>
+                                </a>
+
 
                                 <!-- 프로필 사진 작게 전체적으로 바뀐 레이아웃 -->
-                                <div class="row pb-2 px-3 bg-white pt-3">
+                                <!-- <div class="row pb-2 px-3 bg-white pt-3">
                                     <div class="col-1 pe-0 align-self-center d-flex">
                                         <img th:if="${postDetail.userDto.profile_image == 'default'}" src="/public/img/clubImage/profile.jpg" class="img-fluid rounded-circle"  style="aspect-ratio: 1/1;">
                                         <img th:unless="${postDetail.userDto.profile_image == 'default'}" th:src="|/images/${postDetail.userDto.profile_image}|" class="img-fluid rounded-circle"  style="aspect-ratio: 1/1;">
@@ -172,14 +228,14 @@
                                     <div class="col text-secondary text-end align-self-center" style="font-size: 0.9em;">
                                         <span th:text="${#dates.format(postDetail.clubPostDto.created_at, 'yyyy.MM.dd')}"></span>
                                     </div>
-                                </div>
+                                </div> -->
 
                                 <!-- 글 박스 -->
-                                <div class="row">
+                                <!-- <div class="row">
                                     <div class="col">
 
                                         <div class="row bg-white py-2 px-3 border-bottom">
-                                            <div class="col text-truncate pb-1" style="font-size: 0.9em;">
+                                            <div class="col text-truncate pb-1 fw-medium">
                                                 <a th:href="@{/club/readPost(id=${postDetail.clubPostDto.id})}" style="text-decoration: none; color: black;">
                                                     <span th:text="${postDetail.clubPostDto.title}"></span>
                                                 </a>
@@ -197,7 +253,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                </div>
+                                </div> -->
                                 
                             </div>
                         </div>
