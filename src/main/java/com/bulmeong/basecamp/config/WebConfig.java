@@ -10,6 +10,7 @@ import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import com.bulmeong.basecamp.camp.interceptor.CampsiteInterceptor;
+import com.bulmeong.basecamp.store.interceptor.StoreCenterInterceptor;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletRequestWrapper;
@@ -18,6 +19,8 @@ import jakarta.servlet.http.HttpServletRequestWrapper;
 public class WebConfig implements WebMvcConfigurer {
     @Autowired
     private CampsiteInterceptor campsiteInterceptor;
+    @Autowired
+    private StoreCenterInterceptor storeCenterInterceptor;
     @Autowired
     private SessionInterceptor sessionInterceptor;
 
@@ -41,15 +44,20 @@ public class WebConfig implements WebMvcConfigurer {
         return new HttpServletRequestWrapper((HttpServletRequest) RequestContextHolder.getRequestAttributes().resolveReference(RequestAttributes.REFERENCE_REQUEST));
     }
 
-     @Override
+    @Override
     public void addInterceptors(InterceptorRegistry registry) {
         // 특정 컨트롤러 경로에 대해 인터셉터를 등록합니다.
         registry.addInterceptor(campsiteInterceptor).addPathPatterns("/campsiteCenter/**")
         .excludePathPatterns("/campsiteCenter/registerUser","/campsiteCenter/registerUserProcess");
+        
+        //storeCenterInterceptor
+        registry.addInterceptor(storeCenterInterceptor).addPathPatterns("/storeCenter/**")
+        .excludePathPatterns("/storeCenter/storeRegister", "/storeCenter/storeRegisterProcess");
 
-         // 공용네비 .addPathPatterns 본인 시작경로 추가
-         registry.addInterceptor(sessionInterceptor)
-                 .addPathPatterns("/user/myPage", "/secondhandProduct/**", "/store/cart", "/store/ordersheet", "/insta/**");
+        // 공용네비 .addPathPatterns 본인 시작경로 추가
+        registry.addInterceptor(sessionInterceptor)
+                .addPathPatterns("/user/myPage", "/secondhandProduct/**", "/store/**", "/insta/**")
+                .excludePathPatterns("/store/category", "/store/productDetails", "/store");
     }
 
 }
