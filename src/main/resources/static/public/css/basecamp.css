@@ -59,3 +59,13 @@ a {
     height: 100%;
     border-radius: 50%;
 }
+
+/* 메인페이지 오프캠버스 */
+.king{
+    top: -40%;
+    left: 75%;
+}
+.order-list-scroll {
+    max-height: 500px; /* 원하는 높이 설정 */
+    overflow-y: auto;
+}
