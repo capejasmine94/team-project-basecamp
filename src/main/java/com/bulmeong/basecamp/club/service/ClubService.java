@@ -132,6 +132,8 @@ public class ClubService {
         return postCategoryDtoList;
     }
 
+ 
+
     // 모든 소모임 목록 뽑기
     public List<ClubDto> findClubDtoList(){
 
@@ -177,6 +179,12 @@ public class ClubService {
         return bookmarkedClubDataList;
     }
 
+       //  카테고리 이름 가져오기
+    //    public String findPostCategoryName(int id){
+    //     String categoryName = clubSqlMapper.selectPostCategoryName(id);
+
+    //      return categoryName;
+    // }
 
     // 각 소모임 게시글 목록 뽑기 (by club_id)
     public  List<Map<String, Object>> getClubPostDtoList(int club_id){

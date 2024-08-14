@@ -54,8 +54,7 @@
             height: 200px; /* 원하는 높이로 설정 */
             object-fit: cover; /* 이미지 비율을 유지하면서 크기에 맞게 자르기 */
             }
-
-            .navbar-custom {
+            /* .navbar-custom {
             transition: background-color 0.3s, color 0.3s;
             }
             .navbar-transparent {
@@ -68,35 +67,120 @@
             }
             .navbar-custom .btn, .navbar-custom .material-icons {
                 transition: color 0.3s;
-            }
+            } */
 
             .best-items-scroll::-webkit-scrollbar {
-            display: none;
-        }
+                display: none;
+            }
 
-            
+            :root {
+                --nav-underline-border-width: 1px; /* 밑줄의 두께 */
+                --nav-link-active-color: #000000; /* 선택된 탭 텍스트 색상 및 밑줄 색상 */
+                --nav-inactive-border-color: #e0e0e0; /* 비활성화된 탭 밑줄 색상 (밝은 회색) */
+            }
+
+            .nav-underline {
+                display: flex;
+                justify-content: space-around;
+                position: relative;
+                border-bottom: var(--nav-underline-border-width) solid var(--nav-inactive-border-color); /* 회색 실선 */
+            }
+
+            .nav-item {
+                flex: 1;
+            }
+
+            .nav-link {
+                padding-bottom: 0.5rem; /* 탭과 밑줄 사이의 간격 */
+                color: #000000; /* 기본 탭 텍스트 색상 */
+                text-decoration: none;
+                position: relative;
+                display: inline-block;
+                width: 100%;
+                text-align: center; /* 텍스트 가운데 정렬 */
+            }
+
+            .nav-link.active {
+                color: var(--nav-link-active-color); /* 선택된 탭 색상 */
+            }
+
+            .nav-link.active::after {
+                content: '';
+                position: absolute;
+                bottom: -1px; /* 밑줄을 실선과 같은 위치에 표시 */
+                left: 0;
+                right: 0;
+                height: var(--nav-underline-border-width); /* 실선 두께 유지 */
+                background-color: var(--nav-link-active-color); /* 진한 밑줄 색상 */
+            }
+
+            /* 비활성화된 탭의 얇은 회색 밑줄 */
+            .nav-link::after {
+                content: '';
+                position: absolute;
+                bottom: -1px;
+                left: 0;
+                right: 0;
+                height: var(--nav-underline-border-width); /* 실선 두께 유지 */
+                background-color: var(--nav-inactive-border-color); /* 얇은 회색 밑줄 색상 */
+                z-index: 1; /* 활성화된 탭의 진한 밑줄 아래에 위치 */
+            }
+    
         </style>
 
     </head>
     <body>
       
-        <div class="container-fluid">
+        <!-- <div class="container-fluid">
             <div class="row">
                 <div class="col px-0">
                     <img th:src="|/images/${map.clubDto.main_image}|"style="width: 100%; height: 13em; object-fit: cover;" class="top-image">
                 </div>
             </div>
-        </div>
+        </div> -->
+        
 
   
-        <div class="container bg-body-tertiary px-0 overflow-x-hidden">
-            <!-- 전체 박스 -->
-                <div class="row pb-5 mb-5">
-                    <div class="col">
+        <div class="container" style="padding-top: 60.792px;">
+
+            <div class="fixed-top px-4 row border-bottom py-3 shadow-sm bg-white">
+              
+                <div class="col text-center fw-medium">소모임 이름</div>
+                
+            </div>
+            
+
+            <!-- 전체 박스 1 -->
+                <div class="row">
+                    <div class="col px-0 overflow-x-hidden">
+
+                    <div class="row">
+                         <!-- 네비바 -->
+                        <div class="col bg-white text-center nav">
+                            <div class="col nav-item">
+                                <a class="nav-link active" aria-current="page" th:href="@{/club/home(id=${id})}">홈</a>
+                            </div>
+                            <div class="col nav-item">
+                                <a class="nav-link" th:href="@{/club/board(id=${id})}">게시판</a>
+                            </div>
+                            <div class="col nav-item">
+                                <a class="nav-link" th:href="@{/club/album(id=${id})}">사진첩</a>
+                            </div>
+                        </div>
+                    </div>
+
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col px-0">
+                            <img th:src="|/images/${map.clubDto.main_image}|"style="width: 100%; height: 13em; object-fit: cover;" class="top-image">
+                        </div>
+                    </div>
+                </div>
+                        
 
                         <div class="row bg-white align-items-center px-3 pt-3">
-                           
                             <div class="col">
+                                
                                 <div class="row">
                                     <div class="col fs-5 fw-semibold" th:text="${map.clubDto.name}">
                                         소모임 이름
@@ -146,6 +230,7 @@
                                     </div>                                  
                                 </div>
                             </div>
+
                         </div>
 
                         <div class="row bg-white pb-3 mb-1 px-3">
@@ -299,7 +384,7 @@
                             </div>
                         </div>
 
-                        <div class="row bg-white px-3 py-3">
+                        <div class="row bg-white px-3 py-3 pb-5 mb-5">
                             <div class="col">
                                 
                                 <div class="row">
@@ -339,7 +424,7 @@
             </div>
 
             <!-- 상단 네비바 -->
-
+<!-- 
             <div class="container fixed-top py-2 navbar-custom navbar-transparent">
                 <div class="row">
                     <div class="col-auto navbar-brand fs-3" onclick="history.back()">
@@ -349,7 +434,8 @@
                         <span> <i class="bi bi-gear"></i></span>
                     </a>
                 </div>
-            </div>
+            </div> -->
+            
 
             <div class="container fixed-bottom py-4" id="registerBtn" th:if="${session.sessionUserInfo != null && isMemberInClub == 0}">
                 <div class="row pt-2 pb-3 text-center" th:if="${totalClubMember &lt; confirmCapacity}">
@@ -363,6 +449,8 @@
                     </div>
                 </div>
             </div>
+
+            
 
                 <!--커뮤니티 하단네비 -->
         <div th:fragment="bottomNaviBasecamp" class="container-fluid g-0 border-top bg-white fixed-bottom pb-3">
@@ -528,83 +616,79 @@
                     <div class="row ps-3">
                         <div class="col border rounded shadow-sm pt-2 pb-3">
 
-                    <div class="row">
-                        <div class="col">
-                            <div class="row pb-1 pt-1">
-                                <div class="col" style="font-size: 0.9em;">
-                                    <span class="d-day text-danger fw-medium"></span>
+                            <div class="row">
+                                <div class="col">
+                                    <div class="row pb-1 pt-1">
+                                        <div class="col" style="font-size: 0.9em;">
+                                            <span class="d-day text-danger fw-medium"></span>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="row pb-1 pt-1">
+                                        <div class="col ellipsis-line-one" style="font-size: 0.9em;">
+                                            <span class="meetingName"></span>
+                                        </div>
+                                    </div>
+                                    <div class="row pb-2 mb-2">
+                                        <div class="col ellipsis-line-two text-secondary" style="font-size: 0.8em;">
+                                            <span class="meetingDescription"></span>
+                                            <!-- <span th:text="${meetingData.clubMeetingDto.description}"></span> -->
+                                        </div>
+                                    </div>
                                 </div>
-                            </div>
-                            
-                            <div class="row pb-1 pt-1">
-                                <div class="col ellipsis-line-one" style="font-size: 0.9em;">
-                                    <span class="meetingName"></span>
-                                </div>
-                            </div>
-                            <div class="row pb-2 mb-2">
-                                <div class="col ellipsis-line-two text-secondary" style="font-size: 0.8em;">
-                                    <span class="meetingDescription"></span>
-                                    <!-- <span th:text="${meetingData.clubMeetingDto.description}"></span> -->
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-auto text-end align-items-center d-flex">
-                            <div class="col-auto align-self-center">
-                                <div class="row">
-                                    <div class="col">
-                                        <button type="button" class="btn btn-outline-secondary join-meeting-btn">참석</button>
+                                <div class="col-auto text-end align-items-center d-flex">
+                                    <div class="col-auto align-self-center">
+                                        <div class="row">
+                                            <div class="col">
+                                                <button type="button" class="btn btn-outline-secondary join-meeting-btn">참석</button>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                    </div>
                  
 
-                    <div class="row">
-                        <div class="col">
                             <div class="row">
-                                <div class="col-5 pe-0">  
-                                    <img class="rounded-2 meetingImage" style="width: 7em; height: 5em; object-fit: cover;">
+                                <div class="col">
+                                    <div class="row">
+                                        <div class="col-5 pe-0">  
+                                            <img class="rounded-2 meetingImage" style="width: 7em; height: 5em; object-fit: cover;">
+                                        </div>
+                                        <div class="col ps-1" style="font-size: 0.8em;">
+                                            <div class="row">
+                                                <div class="col">
+                                                    <span class="text-secondary">일시</span>
+                                                    <span class="meetingDetailDate"></span>
+                                                    
+                                                    <!-- <span th:text="${#dates.format(meetingData.clubMeetingDto.meeting_date, 'yyyy.MM.dd')}"></span> -->
+                                                </div>   
+                                            </div>
+                                            <div class="row">
+                                                <div class="col">
+                                                    <span class="text-secondary">위치</span>
+                                                    <span class="meetingLocation"></span>
+                                                </div>   
+                                            </div>
+                                            <div class="row">
+                                                <div class="col">
+                                                    <span class="text-secondary">비용</span>
+                                                    <span class="meetingFee"></span>
+                                                </div>   
+                                            </div>
+                                            <div class="row">
+                                                <div class="col">
+                                                    <span class="text-secondary">참석</span> 
+                                                    <span class="text-danger totalJoinMember"></span> / <span class="capacity"></span>
+                                                    <span class="text-secondary remainCapacity"></span>
+                                                </div>   
+                                            </div>
+                                        </div>
+                                    
+                                    </div>
                                 </div>
-                                <div class="col ps-1" style="font-size: 0.8em;">
-                                    <div class="row">
-                                        <div class="col">
-                                            <span class="text-secondary">일시</span>
-                                            <span class="meetingDetailDate"></span>
-                                            
-                                            <!-- <span th:text="${#dates.format(meetingData.clubMeetingDto.meeting_date, 'yyyy.MM.dd')}"></span> -->
-                                        </div>   
-                                    </div>
-                                    <div class="row">
-                                        <div class="col">
-                                            <span class="text-secondary">위치</span>
-                                            <span class="meetingLocation"></span>
-                                        </div>   
-                                    </div>
-                                    <div class="row">
-                                        <div class="col">
-                                            <span class="text-secondary">비용</span>
-                                            <span class="meetingFee"></span>
-                                        </div>   
-                                    </div>
-                                    <div class="row">
-                                        <div class="col">
-                                            <span class="text-secondary">참석</span> 
-                                            <span class="text-danger totalJoinMember"></span> / <span class="capacity"></span>
-                                            <span class="text-secondary remainCapacity"></span>
-                                        </div>   
-                                    </div>
-                                </div>
-                              
                             </div>
                         </div>
                     </div>
-                        </div>
-                    </div>
-
-
-  
-
                 </div>
             </div>
 
