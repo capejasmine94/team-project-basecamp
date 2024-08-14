@@ -40,9 +40,12 @@
             overflow-x: auto;
             white-space: nowrap;
         }
+        .scroll-horizontal::-webkit-scrollbar {
+            display: none;
+        }
         .scroll-horizontal .facility {
             display: inline-block;
-            width: 5em; /* 필요에 따라 너비를 조정하세요 */
+            width: 4.75em; /* 필요에 따라 너비를 조정하세요 */
             text-align: center;
             margin-right: 10px; /* 아이템 간 간격 조정 */
         }
@@ -50,20 +53,26 @@
          /* 평상시 탭 스타일 */
          .nav-tabs .nav-link {
             color: #666;
+            outline: none;
             border-radius: 0;
+            border: 0;
             width: 100%;
         }
 
         /* 평상시 탭 호버 스타일 */
         .nav-tabs .nav-link:hover {
-            background-color: #e9ecef;
+            background-color: #fff;
             color: #333;
+            outline: none;
+            border-radius: 0;
+            border: 0;
         }
 
         /* 눌러졌을 때 탭 스타일 */
         .nav-tabs .nav-link.active {
-            background-color: #666;
-            color: white;
+            background-color: #fff;
+            border-bottom: 2px solid black;
+            font-weight: bold;
         }
 
         /* 평상시 리스트 아이템 스타일 */
@@ -98,7 +107,7 @@
 <div class="main">
     <div class="container-fluid">
         <!-- 상단 이미지 섹션 -->
-        <div class="row new-mt-45 pt-3 px-0">
+        <div class="row px-0" style="margin-top: 2.661em;">
             <div class="col bg-white border-top">
                 <div class="row">
                     <div class="col">
@@ -115,40 +124,43 @@
             </div>
         </div>
         <!-- 나머지 헤더 섹션 -->
-        <div class="row sticky-custom pt-3 px-0">
+        <div class="row sticky-custom px-0">
             <div class="col bg-white border-top">
-                <div class="row mx-1">
-                    <div class="col">
-                        <div class="row mt-2 align-items-center">
-                            <div class="col ellipsis">
-                                <span class="fs-4 fw-semibold" th:text="${session.campsiteUser.dto.camp_name}">캠핑장 이름 솰라솰라솰라솰라솰라솰라솰라솰라</span>
-                            </div>
-                            <div class="col-auto p-0">
-                                <i class="bi bi-star fs-5"></i>
-                            </div>
-                            <div class="col-auto">
-                                <!--  data-bs-toggle="modal" data-bs-target="#popupMap" -->
-                                <i class="bi bi-map fs-5" onclick="displayMap()"></i>
+                <div class="row px-3">
+                    <div class="col p-0">
+                        <div class="row mt-2 new-fs-9">
+                            <div class="col-auto text-end">
+                                <span class="new-fs-8 text-secondary pe-1" >마일리지 사용가능 &#183; 반려동물 동반 &#183; 빈자리 알림</span>
                             </div>
                         </div>
-                        <div class="row mt-1 align-items-center">
+                        <div class="row mt-1 align-iteps-center justify-content-between">
+                            <div class="col ellipsis">
+                                <span class="fs-5 fw-semibold" th:text="${session.campsiteUser.dto.camp_name}">캠핑장 이름 솰라솰라솰라솰라솰라솰라솰라솰라</span>
+                            </div>
+                            <div class="col-auto">
+                                <i class="bi bi-bookmark fs-5"></i>
+                            </div>
+                        </div>
+                        <div class="row mt-1 align-iteps-center">
                             <div class="col text-secondary">
-                                <div class="row">
+                                <div class="row new-fs-8">
                                     <div class="col-1 text-end">
                                         <i class="bi bi-phone"></i>
                                     </div>
-                                    <div class="col-auto ellipsis ms-2">
+                                    <div class="col-auto ps-0 ">
                                         <span th:text="${session.campsiteUser.dto.camp_phone}">연락처</span>
                                     </div>
                                 </div>
-                                <div class="row mt-1 new-fs-9">
-                                    <div class="col-auto text-end">
+                                <div class="row mt-1 new-fs-8">
+                                    <div class="col-1 text-end">
                                         <i class="bi bi-signpost-2"></i>                               
                                     </div>
-                                    <div class="col ms-0">
-                                        <span class="new-fs-9" th:text="${session.campsiteUser.dto.address} +' '+ ${session.campsiteUser.dto.detail_address}">주소</span>     
+                                    <div class="col ps-0">
+                                        <span class="new-fs-8" th:text="${session.campsiteUser.dto.address} +' '+ ${session.campsiteUser.dto.detail_address}">주소</span>     
+                                        <span class="ps-2 new-fs-8 lightFont" onclick="displayMap()">지도보기<i class="bi bi-chevron-right"></i></span>
                                     </div>
                                 </div>
+
                                 <!-- <div class="row fs-5 justify-content-end">
                                     <div class="col-auto p-0">
                                         <i class="bi bi-star fs-5"></i>
@@ -161,12 +173,12 @@
                           
                         </div>
                         <div class="row mt-3 mb-3 justify-content-between">
+                            <div class="col-auto pe-2">
+                                <span class="fs-5 fw-semibold lightFont moneyInput" th:text="${session.campsiteUser.minPrise}"></span>
+                                <span class="fw-semibold"> 원</span>
+                            </div>
                             <div class="col-auto">
 
-                            </div>
-                            <div class="col-auto pe-2">
-                                <span class="fs-4 fw-semibold text-primary moneyInput" th:text="${session.campsiteUser.minPrise}"></span>
-                                <span class="fs-5 fw-semibold"> 원</span>
                             </div>
                         </div>
                         <!-- <div class="row mt-2 border-top py-2 pb-5">
@@ -174,12 +186,8 @@
                                 <span class="badge text-bg-secondary me-1" th:each="showCategory: ${session.campsiteUser.showCategory}" th:text="${showCategory.name}">카테고리</span>
                             </div>
                         </div> -->
-                        <div class="row mt-2 border-top py-2 pb-5">
-                            <div class="col badgeList">
-                                <span class="badge text-bg-secondary p-2 new-fs-9 me-1" >마일리지 사용가능</span>
-                                <span class="badge text-bg-secondary p-2 new-fs-9 me-1" >반려동물 동반</span>
-                                <span class="badge text-bg-secondary p-2 new-fs-9 me-1" >빈자리 알림</span>
-                            </div>
+                        <div class="row py-2">
+                            <!-- <div class="col badgeList"></div> -->
                         </div>
                     </div>
                 </div>
@@ -208,7 +216,7 @@
                         <div class="col">
                             <span class="fw-semibold fs-5">기본 정보</span>
                         </div> 
-                        <div class="col mt-4">
+                        <div class="col mt-4 new-fs-9">
                             <span class="text-secondary" th:utext="${session.campsiteUser.dto.description}">설명이 들어가는 곳</span>
                         </div>
                 </div>
@@ -219,49 +227,49 @@
                         </div> 
                         <div class="col mt-4 new-fs-9">
                             <div class="row">
-                                <div class="col-3 pe-0 text-end">
+                                <div class="col-4 pe-0 text-start">
                                     <span class="text-secondary fw-semibold">빈자리 알림</span>
                                 </div>
-                                <div class="col-auto">
-                                    <span class="text-secondary ms-2">X</span>
+                                <div class="col-auto ps-0">
+                                    <span class="text-secondary ps-2">X</span>
                                 </div>
                             </div>
 
                             <div class="row mt-2">
-                                <div class="col-3 pe-0 text-end">
+                                <div class="col-4 pe-0 text-start">
                                     <span class="text-secondary fw-semibold">마일리지 사용</span>
                                 </div>
-                                <div class="col-auto">
-                                    <span class="text-secondary ms-2">X</span>
+                                <div class="col-auto ps-0">
+                                    <span class="text-secondary ps-2">X</span>
                                 </div>
                             </div>
 
                             <div class="row mt-2">
-                                <div class="col-3 pe-0 text-end">
+                                <div class="col-4 pe-0 text-start">
                                     <span class="text-secondary fw-semibold">자리 양도가능</span>
                                 </div>
-                                <div class="col-auto">
-                                    <span class="text-secondary ms-2">X</span>
+                                <div class="col-auto ps-0">
+                                    <span class="text-secondary ps-2">X</span>
                                 </div>
                             </div>
 
                             <div class="row mt-2 text-secondary">
-                                <div class="col-3 pe-0 text-end">
+                                <div class="col-4 pe-0 text-start">
                                     <span class="fw-semibold">매너 타임</span>
                                 </div>
-                                <div class="col-auto">
-                                    <span class="ms-2">시작</span><span class="ms-1" th:text="${#dates.format(session.campsiteUser.dto.manner_start, 'HH:mm')}"></span>
-                                    <span class="ms-3">종료</span><span class="ms-1" th:text="${#dates.format(session.campsiteUser.dto.manner_end, 'HH:mm')}"></span>
+                                <div class="col-auto ps-0">
+                                    <span class="ps-2">시작</span><span class="ps-1" th:text="${#dates.format(session.campsiteUser.dto.manner_start, 'HH:mm')}"></span>
+                                    <span class="ps-3">종료</span><span class="ps-1" th:text="${#dates.format(session.campsiteUser.dto.manner_end, 'HH:mm')}"></span>
                                 </div>
                             </div>
 
                             <div class="row mt-2 text-secondary">
-                                <div class="col-3 pe-0 text-end">
+                                <div class="col-4 pe-0 text-start">
                                     <span class="fw-semibold">입실/퇴실</span>
                                 </div>
-                                <div class="col-auto">
-                                    <span class="ms-2">입실</span><span class="ms-1" th:text="${#dates.format(session.campsiteUser.dto.check_in, 'HH:mm')}"></span>
-                                    <span class="ms-3">퇴실</span><span class="ms-1" th:text="${#dates.format(session.campsiteUser.dto.check_out, 'HH:mm')}"></span>
+                                <div class="col-auto ps-0">
+                                    <span class="ps-2">입실</span><span class="ps-1" th:text="${#dates.format(session.campsiteUser.dto.check_in, 'HH:mm')}"></span>
+                                    <span class="ps-3">퇴실</span><span class="ps-1" th:text="${#dates.format(session.campsiteUser.dto.check_out, 'HH:mm')}"></span>
                                 </div>
                             </div>
                         </div>
@@ -303,25 +311,25 @@
                 </div>
 
                 <!-- 시설 정보 -->
-                <div class="row flex-column mt-3 border-bottom border-5 pb-5">
+                <div class="row flex-column mt-3 border-bottom border-5">
                     <div class="col">
                         <span class="fw-semibold fs-5">시설</span>
                     </div> 
-                    <div class="col mt-4 new-fs-9 scroll-horizontal">
-                        <div class="facility py-2 me-3" th:each="category : ${session.campsiteUser.campCategory}">
-                            <img class="img-fluid" th:src="${category.image}" alt="" style="height: 3em; width: 3em;">
+                    <div class="col mt-4 pb-3 new-fs-9 scroll-horizontal">
+                        <div class="facility py-2 pe-2" th:each="category : ${session.campsiteUser.campCategory}">
+                            <img class="img-fluid" th:src="${category.image}" alt="" style="height: 2.5em; width: 2.5em;">
                             <div class="col-auto" th:text="${category.name}"></div>
                         </div>
                     </div>
                 </div>
 
                 <!-- 구역 리스트 -->
-                <div class="row mt-3 flex-column border-bottom border-5 pb-5">
+                <div class="row mt-3  flex-column border-bottom border-5 pb-5">
                     <div class="col">
                         <span class="fw-semibold fs-5">구역</span>
                     </div>
                     <div class="col mt-4">
-                        <div class="row ms-1">
+                        <div class="row">
                             <div class="col-auto pe-0">
                                 <button class="btn btn-outline-secondary rounded-5" data-bs-toggle="modal" data-bs-target="#popupSelectDay">날짜선택</button>
                             </div>
@@ -331,8 +339,8 @@
                         </div>
                         <div class="row my-2 pb-5">
                             <div class="col mt-4" id="areaLists">
-                                <div th:id="'siteTemplate_' + ${area.dto.id}" class="row border-bottom pb-3 justify-content-center" data-bs-toggle="modal" data-bs-target="#popupSite" th:onclick="'selectArea(' + ${area.dto.id} + ')'" th:each="area : ${session.campsiteUser.area}">
-                                    <div class="col-11">
+                                <div th:id="'siteTemplate_' + ${area.dto.id}" class="row border-bottom py-3 justify-content-center" data-bs-toggle="modal" data-bs-target="#popupSite" th:onclick="'selectArea(' + ${area.dto.id} + ')'" th:each="area : ${session.campsiteUser.area}">
+                                    <div class="col">
                                         <div class="row">
                                             <div class="col" th:unless="${area.mainImages.isEmpty()}">
                                                 <img class="img-fluid rounded-3" th:src="${'/images/' + area.mainImages[0].location}" alt="메인 이미지">
@@ -344,14 +352,14 @@
                                             </div>
                                         </div>
                                         <div class="row">
-                                            <div class="col fw-semibold text-primary text-end">
-                                                <span class="moneyInput" th:text="${area.dto.prise}">금액</span>
-                                                <span class="ms-1">원</span>
+                                            <div class="col fw-semibold text-end">
+                                                <span class="moneyInput lightFont" th:text="${area.dto.prise}">금액</span>
+                                                <span>원</span>
                                             </div>
                                         </div>
                                         <div class="row siteCategoryList">
                                             <div class="col pe-0 badgeList">
-                                                <span class="badge text-bg-secondary me-1" th:each="selectCategory : ${area.category}" th:text="${selectCategory.name}">카테고리</span>
+                                                <span class="badge rounded-pill border text-bg-light text-body-tertiary me-1" th:each="selectCategory : ${area.category}" th:text="${selectCategory.name}">카테고리</span>
                                             </div>
                                         </div>
                                     </div>
@@ -382,7 +390,7 @@
                                             <textarea class="form-control" name="content" id="write_review" row="3"></textarea>
                                         </div>
                                         <div class="col-3">
-                                            <button class="btn btn-primary">리뷰 작성</button>
+                                            <button class="btn btn-bc-dark">리뷰 작성</button>
                                         </div>
                                     </form>
                                 </div>
@@ -396,7 +404,7 @@
                             <div class="col text-secondary new-fs-9">리뷰가 존재하지 않습니다.</div></div>
                         <div class="row border-bottom py-2 pb-4" th:each="review : ${session.campsiteUser.review}">
                             <div class="col">
-                                <div class="row align-items-center">
+                                <div class="row align-iteps-center">
                                     <div class="col-auto">
                                        <img class="img-fluid rounded-circle border" th:src="${review.profile_image}" alt="" style="width: 2em; height: 2em;">
                                     </div>
@@ -423,16 +431,16 @@
     </div>
 </div>
 <div class="container">
-    <div class="row fixed-bottom border-top bg-white py-2 justify-content-center" style="margin-bottom: 5em;">
-        <div class="col d-grid px-0 mx-5">
-            <a class="btn btn-primary" href="/camp/reservation">예약하기</a>
+    <div class="row fixed-bottom border-top bg-white py-2 px-3 justify-content-center" style="margin-bottom: 5.162em;">
+        <div class="col d-grid">
+            <a class="btn btn-bc-dark rounded-0 py-2" href="/camp/reservation">예약하기</a>
         </div>
     </div> 
 </div>
 
 <!-- 사이트 모달 -->
-<div class="modal fade container-fluid" id="popupSite" tabindex="-1" aria-labelledby="popupSite-title" data-keyboard="true" data-backdrop="static" aria-hidden="true" style="height: 93%;">
-    <div class="modal-dialog">
+<div class="modal fade container-fluid" id="popupSite" tabindex="-1" aria-labelledby="popupSite-title" data-keyboard="true" data-backdrop="static" aria-hidden="true" style="height: 87.5%;">
+    <div class="modal-dialog modal-dialog-scrollable">
         <div class="modal-content">
             <div class="modal-header">
                 <h1 class="modal-title fs-5" id="popupSite-title">사이트 이름</h1>
@@ -459,30 +467,30 @@
                     <div class="col new-fs-95" id="area_description">설명</div>
                 </div>
                 <div class="row mt-5 text-end text-secondary new-fs-9">
-                    <div class="col-3 p-0 ms-3 text-start"><span>기본 정원</span></div>
+                    <div class="col-3 p-0 ps-3 text-start"><span>기본 정원</span></div>
                     <div class="col-3 p-0 text-start"><span id="area_people"></span></div>
                 </div>
                 <!-- <div class="row mt-5 text-end text-secondary new-fs-9">
                     <div class="col-2 p-0"><span>성인</span></div>
-                    <div class="col p-0 text-start"><span class="ms-2" id="area_adult">1명</span></div>
+                    <div class="col p-0 text-start"><span class="ps-2" id="area_adult">1명</span></div>
                 </div>
                 <div class="row text-end text-secondary new-fs-9">
                     <div class="col-2 p-0"><span>미성년</span></div>
-                    <div class="col p-0 text-start"><span class="ms-2" id="area_kid">1명</span></div>
+                    <div class="col p-0 text-start"><span class="ps-2" id="area_kid">1명</span></div>
                 </div> -->
                 <div class="row text-end text-secondary new-fs-9">
-                    <div class="col-3 p-0 ms-3 text-start"><span>차량</span></div>
+                    <div class="col-3 p-0 ps-3 text-start"><span>차량</span></div>
                     <div class="col-3 p-0 text-start"><span id="area_car">1 대</span></div>
                 </div>
-                <div class="row mt-3 text-end fw-semibold text-primary">
+                <div class="row mt-3 text-end fw-semibold lightFont">
                     <div class="col">
                         <span id="area_prise" class="moneyInput">가격</span>
-                        <span class="ms-2">원</span>
+                        <span class="ps-2">원</span>
                     </div>
                 </div>
                 <div class="row mt-2 border-bottom pb-3">
                     <div class="col pe-0" id="area_categoryList">
-                        <span class="badge text-bg-secondary me-1">카테고리</span>
+                        <span class="badge rounded-pill border text-bg-light text-body-tertiary me-1">카테고리</span>
                     </div>
                 </div>
                  <!-- 배치도 -->
@@ -499,18 +507,18 @@
                     <div class="col">
                         <span class="fw-semibold fs-5">추가 요금</span>
                     </div> 
-                    <div class="col mt-2 ms-2">
+                    <div class="col mt-2 ps-2">
                         <div class="row text-end text-secondary new-fs-9">
                             <div class="col-5 fw-semibold p-0"><span>성인 추가요금 (인당)</span></div>
-                            <div class="col p-0 text-start"><span class="ms-2 moneyInput" id="area_add_adult">5000</span><span class="ms-2">원</span></div>
+                            <div class="col p-0 text-start"><span class="ps-2 moneyInput" id="area_add_adult">5000</span><span class="ps-2">원</span></div>
                         </div>
                         <div class="row text-end text-secondary new-fs-9">
                             <div class="col-5 fw-semibold p-0"><span>미성년 추가요금 (인당)</span></div>
-                            <div class="col p-0 text-start"><span class="ms-2 moneyInput" id="area_add_kid">5000</span><span class="ms-2">원</span></div>
+                            <div class="col p-0 text-start"><span class="ps-2 moneyInput" id="area_add_kid">5000</span><span class="ps-2">원</span></div>
                         </div>
                         <div class="row text-end text-secondary new-fs-9">
                             <div class="col-5 fw-semibold p-0"><span>차량 추가요금</span></div>
-                            <div class="col p-0 text-start"><span class="ms-2 moneyInput" id="area_add_car">5000</span><span class="ms-2">원</span></div>
+                            <div class="col p-0 text-start"><span class="ps-2 moneyInput" id="area_add_car">5000</span><span class="ps-2">원</span></div>
                         </div>
                     </div>
                     <div class="col mt-4 new-fs-75">
@@ -519,8 +527,8 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button id="popupSite-reservation" type="button" class="btn btn-primary" onclick="reservation()">예약하기</button>
-                <button id="popupSite-no" type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+                <div class="col d-grid"> <button id="popupSite-reservation" type="button" class="btn btn-bc-dark rounded-0" onclick="reservation()">예약하기</button></div>
+                <div class="col d-grid"> <button id="popupSite-no" type="button" class="btn btn-bc-outline-dark rounded-0" data-bs-dismiss="modal">닫기</button></div>
             </div>
         </div>
     </div>
@@ -536,8 +544,8 @@
                 <h1 class="modal-title fs-5" id="popupMap-title">캠핑장 위치</h1>
             </div>
             <div id="popupMap-content" class="modal-body col">
-                <div class="row">
-                    <div id="map" style="width: 26em; height: 16em; padding: 0; margin-left: .75em;"></div>
+                <div class="row px-2">
+                    <div id="map" class="col" style="height: 16em;"></div>
                 </div>
                 <div class="row mt-2">
                     <div class="col">
@@ -546,8 +554,10 @@
                     </div>
                 </div>
             </div>
-            <div class="modal-footer mb-5">
-                <button id="popupMap-no" type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+            <div class="modal-footer">
+                <div class="col d-grid">
+                    <button id="popupMap-no" type="button" class="rounded-0 btn btn-bc-dark" data-bs-dismiss="modal">닫기</button>
+                </div>
             </div>
         </div>
     </div>

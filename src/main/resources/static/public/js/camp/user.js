@@ -49,7 +49,7 @@ function refreshCampsite() {
                     </div>
                     <div class="col-auto">
                         <div class="row mt-2 justify-content-end">
-                            <div class="col-auto p-0">
+                            <div class="col-auto p-0 pe-2">
                                 <i class="bi bi-star fs-5"></i>
                             </div>
                             <!-- <div class="col-auto p-0 mx-2 text-start">
@@ -64,23 +64,23 @@ function refreshCampsite() {
                     </div>
                 </div>
                 <div class="row ps-1 mt-1 flex-column">
-                    <div class="col pe-0 badgeList">
-                    </div>
+                    <!-- <div class="col pe-0 badgeList">
+                    </div> -->
                     <div class="col-auto fw-semibold mt-4 text-end fs-4">
-                        <span class="moneyInput text-primary">${campsite.minPrise}</span> <span class="fs-5">원</span>
+                        <span class="moneyInput lightFont">${campsite.minPrise}</span> <span class="fs-5">원</span>
                     </div>
                 </div>
             </div>
         </a>
         `;
-        for(let showCategory of campsite.showCategory) {
-            const badgeList = template.querySelector('.badgeList');
+        // for(let showCategory of campsite.showCategory) {
+        //     const badgeList = template.querySelector('.badgeList');
 
-            const badge = document.createElement('span');
-            badge.classList.add('badge','text-bg-secondary','me-1');
-            badge.innerText = showCategory.name;
-            badgeList.appendChild(badge);
-        }
+        //     const badge = document.createElement('span');
+        //     badge.classList.add('badge','text-bg-secondary','me-1');
+        //     badge.innerText = showCategory.name;
+        //     badgeList.appendChild(badge);
+        // }
         campList.appendChild(template);
     }
     if(document.getElementById('campsiteList').innerHTML==''){
@@ -195,7 +195,7 @@ function refreshSelectedArea(area) {
     area_categoryList.innerHTML = '';
     for(const category of area.category) {
         const template = document.createElement('span');
-        template.classList.add('badge','text-bg-secondary','me-1');
+        template.classList.add('badge', 'rounded-pill', 'border', 'text-bg-light', 'text-body-tertiary', 'me-1');
         template.innerText = category.name;
         area_categoryList.appendChild(template);
     }

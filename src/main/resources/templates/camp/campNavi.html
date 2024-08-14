@@ -173,7 +173,7 @@
                 <div class="row justify-content-between">
                     <div id="title" th:text="${page.title}" class="col-auto fs-3 fw-bold ms-2">마이 페이지</div>
                     <div class="col-auto me-3" th:if="${page.buttonActivated == 'T'}">
-                        <button id="saveStateButton" type="button" class="btn btn-primary px-3 me-2">저장</button>
+                        <button id="saveStateButton" type="button" class="btn btn-bc-dark rounded-0 px-3 me-2">저장</button>
                     </div>
                 </div>
             </div>
@@ -182,22 +182,23 @@
 </div>
 
 <!--basecamp 상단 네비-->
-<div th:fragment="topNaviBasecamp" class="container-fluid g-0 border fixed-top bg-white">
-    <div class="row mx-2 py-2">
-        <div class="col fs4 mt-1 ps-1">
-            <span id="backKey" class="fw-bold" onclick="back()">◀</span>
+<div th:fragment="topNaviBasecamp" class="container-fluid g-0 px-3 border fixed-top bg-white">
+    <div class="row justify-content-between py-2">
+        <div class="col d-flex align-items-center">
+            <span id="backKey" onclick="back()" class="material-symbols-outlined fw-light">
+                arrow_back
+            </span>
         </div>
-        <div class="col fs-3 text-end">
-            <a href="/user/login" class="fw-bold" th:if="${session.sessionUserInfo == null}"><i class="bi bi-person-circle" ></i></a>
-            <a href="/user/myPage" class="fw-bold" th:unless="${session.sessionUserInfo == null}">
-                <img th:src="'/images/' + ${session.sessionUserInfo.profile_image}" alt="" style="width: 1.5em; height: 1.5em;">
-            </a>
-        </div>
+        <a class="col-auto d-flex align-items-center text-end" href="/camp/myReservation">
+            <span class="material-symbols-outlined fw-light fs-2">
+                calendar_clock
+            </span>
+        </a>
     </div>
 </div>
 
-<div th:fragment="topNaviMain" class="container-fluid g-0 border fixed-top bg-white">
-    <div class="row mx-2 py-2">
+<div th:fragment="topNaviMain" class="container-fluid border fixed-top bg-white">
+    <div class="row py-2">
         <div class="col fs-3">
             <span class="fw-bold">BaseCamp</span>
         </div>
@@ -206,6 +207,35 @@
             <a href="/user/myPage" class="fw-bold" th:unless="${session.sessionUserInfo == null}">
                 <img th:src="'/images/' + ${session.sessionUserInfo.profile_image}" alt="" style="width: 1.5em; height: 1.5em;">
             </a>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col bg-white border-top py-3">
+            <div class="row">
+                <div class="col">
+                    <div class="row d-flex justify-content-center">
+                        <div class="col-auto ps-0 pe-1">
+                            <button class="btn btn-bc-outline-dark rounded-5 new-fs-8">지역선택</button>
+                        </div>
+                        <div class="col-auto ps-0 pe-1">
+                            <button class="btn btn-bc-outline-dark rounded-5 new-fs-8">날짜선택</button>
+                        </div>
+                        <div class="col-auto ps-0 pe-1">
+                            <button class="btn btn btn-bc-outline-dark rounded-5 new-fs-8" type="button" data-bs-toggle="modal" data-bs-target="#search">캠핑장명</button>
+                        </div>
+                        <div class="col-auto ps-0 pe-1">
+                            <button class="btn btn btn-bc-outline-dark rounded-5 new-fs-8">정렬</button>
+                        </div>
+                        <div class="col-auto ps-0 pe-1">
+                            <button class="btn btn btn-bc-outline-dark rounded-5 new-fs-8">즐겨찾기</button>
+                        </div>
+                        <div class="col-auto ps-0 pe-1">
+                            <button class="btn btn btn-bc-outline-dark rounded-5 new-fs-8" data-bs-toggle="modal" data-bs-target="#popupCategory">카테고리</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+           
         </div>
     </div>
 </div>
@@ -220,7 +250,8 @@
                 <div id="calendar_selectDay"></div>
             </div>
             <div class="modal-footer">
-                <button id="popupSelectDay-no" type="button" class="btn btn-primary" data-bs-dismiss="modal">선택</button>
+                <div class="col d-grid"> <button id="popupSelectDay-no" type="button" class="btn btn-bc-dark rounded-0" data-bs-dismiss="modal">선택</button></div>
+               
             </div>
         </div>
     </div>
@@ -251,8 +282,12 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button id="popupCategory-clear" type="button" class="btn btn-secondary" onclick="initCategory()">초기화</button>
-                <button id="popupCategory-no" type="button" class="btn btn-primary" data-bs-dismiss="modal" onclick="setCategory()">선택</button>
+                <div class="col d-grid"> 
+                    <button id="popupCategory-clear" type="button" class="btn btn-bc-outline-dark rounded-0" onclick="initCategory()">초기화</button> 
+                </div>
+                <div class="col d-grid"> 
+                    <button id="popupCategory-no" type="button" class="btn btn-bc-dark rounded-0" data-bs-dismiss="modal" onclick="setCategory()">선택</button>
+                </div>
             </div>
         </div>
     </div>
@@ -276,8 +311,8 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button id="popupAreaCategory-clear" type="button" class="btn btn-secondary">초기화</button>
-                <button id="popupAreaCategory-no" type="button" class="btn btn-primary" data-bs-dismiss="modal">선택</button>
+               <div class="col d-grid"> <button id="popupAreaCategory-clear" type="button" class="btn btn-bc-outline-dark rounded-0">초기화</button></div>
+               <div class="col d-grid"> <button id="popupAreaCategory-no" type="button" class="btn btn-bc-dark rounded-0" data-bs-dismiss="modal">선택</button></div>
             </div>
         </div>
     </div>
