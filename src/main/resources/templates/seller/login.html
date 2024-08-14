@@ -100,27 +100,54 @@
                 
                 document.getElementById('sellerType').value = button.value;
             }
-            
-            function formSubmit(){
-                const inputId = document.getElementById("inputId");
-                const inputPw = document.getElementById("inputPw");
-                const sellerType = document.getElementById("sellerType");
 
-                const url = `/api/seller/getSellerDtoByAccountInfo?account_id=${inputId.value}&account_pw=${inputPw.value}&seller_type=${sellerType.value}`
-                fetch(url)
-                .then(response => response.json())
-                .then((response) => {
+            document.addEventListener("DOMContentLoaded", () => {
+                const loginForm = document.getElementById("loginForm");
 
-                    const loginFail = document.getElementById("loginFail");
+                loginForm.addEventListener("submit", (event) => {
+                    event.preventDefault();
 
-                    if(response.data.sellerDto==null){
-                        loginFail.innerText = "로그인에 실패했습니다. 아이디(ID)와 비밀번호를 확인하고 다시 시도해 주세요.";
-                    }else{
-                        const loginForm = document.getElementById("loginForm");
-                        loginForm.submit();
-                    }
+                    const inputId = document.getElementById("inputId");
+                    const inputPw = document.getElementById("inputPw");
+                    const sellerType = document.getElementById("sellerType");
+
+                    const url = `/api/seller/getSellerDtoByAccountInfo?account_id=${inputId.value}&account_pw=${inputPw.value}&seller_type=${sellerType.value}`
+                    fetch(url)
+                    .then(response => response.json())
+                    .then((response) => {
+
+                        const loginFail = document.getElementById("loginFail");
+
+                        if(response.data.sellerDto==null){
+                            loginFail.innerText = "로그인에 실패했습니다. 아이디(ID)와 비밀번호를 확인하고 다시 시도해 주세요.";
+                        }else{
+                            const loginForm = document.getElementById("loginForm");
+                            loginForm.submit();
+                        }
+                    })
                 })
-            }
+            })
+            
+            // function formSubmit(){
+            //     const inputId = document.getElementById("inputId");
+            //     const inputPw = document.getElementById("inputPw");
+            //     const sellerType = document.getElementById("sellerType");
+
+            //     const url = `/api/seller/getSellerDtoByAccountInfo?account_id=${inputId.value}&account_pw=${inputPw.value}&seller_type=${sellerType.value}`
+            //     fetch(url)
+            //     .then(response => response.json())
+            //     .then((response) => {
+
+            //         const loginFail = document.getElementById("loginFail");
+
+            //         if(response.data.sellerDto==null){
+            //             loginFail.innerText = "로그인에 실패했습니다. 아이디(ID)와 비밀번호를 확인하고 다시 시도해 주세요.";
+            //         }else{
+            //             const loginForm = document.getElementById("loginForm");
+            //             loginForm.submit();
+            //         }
+            //     })
+            // }
         </script>
     </head>
     <body>
@@ -173,7 +200,9 @@
                     <div class="row pt-4">
                         <div class="col px-0"></div>
                         <div class="col d-grid px-0">
-                            <input onclick="formSubmit()" type="button" value="로그인" class="btn btn-primary py-2 fs-5">
+                            <button class="btn btn-primary py-2 fs-5">
+                                로그인    
+                            </button>
                         </div>
                         <div class="col px-0"></div>
                     </div>
