@@ -36,8 +36,10 @@ const llmRightSummarySettingValues = {
 
 
 const leftSummaryHtml = `
-<div class="row">
-<div class="col fw-bold">왼쪽 제목... 블라블라...</div>
+<div class="row justify-content-center">
+<div class="col-auto fw-bold">
+    <img class="img-fluid" src="/public/img/common/배캠.png" style="width:80%; height : 4em;">
+</div>
 </div>
 <div class="row">
 <div class="col">레이아웃 테스트</div>

@@ -21,41 +21,7 @@
 <div th:replace="camp/campNavi::bottomNaviBasecamp"></div>
 <div class="main">
     <div class="container-fluid">
-        <div class="row fixed-top new-mt-45 pt-3">
-            <div class="col bg-white border-top pt-3 ms-3">
-                <div class="row">
-                    <div class="col">
-                        <div class="row d-flex justify-content-start">
-                            <div class="col-auto">
-                                <button class="btn btn-outline-success rounded-5 new-fs-8">지역선택</button>
-                            </div>
-                            <div class="col-auto ps-0">
-                                <button class="btn btn-outline-success rounded-5 new-fs-8">날짜선택</button>
-                            </div>
-                            <div class="col-auto ps-0">
-                                <button class="btn btn-outline-success rounded-5 new-fs-8" type="button" data-bs-toggle="modal" data-bs-target="#search">캠핑장명</button>
-                            </div>
-                            <div class="col-auto ps-0">
-                                <button class="btn btn-outline-success rounded-5 new-fs-8">정렬</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="row mt-2 pb-3 border-bottom">
-                    <div class="col">
-                        <div class="row d-flex justify-content-start">
-                            <div class="col-auto">
-                                <button class="btn btn-outline-success rounded-5 new-fs-8">즐겨찾기</button>
-                            </div>
-                            <div class="col-auto ps-0">
-                                <button class="btn btn-outline-success rounded-5 new-fs-8" data-bs-toggle="modal" data-bs-target="#popupCategory">카테고리</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="row mt-5 pt-5 flex-column">
+        <div class="row mt-5 pt-3 flex-column">
             <div id="campsiteList" class="col new-mt-45 pt-4 pb-4">
                 <!-- 캠핑장 리스트 -->
                
@@ -73,7 +39,7 @@
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <h1 class="modal-title fs-5" id="searchLabel">검색</h1>
+          <h1 class="modal-title col text-center fs-5 fw-semibold" id="searchLabel">캠핑장 이름을 입력해주세요</h1>
         </div>
         <div class="modal-body">
             <div class="row justify-content-center">
@@ -83,8 +49,16 @@
             </div>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" onclick="initSearchWord()">초기화</button>
-          <button type="button" class="btn btn-primary" onclick="setSearchWord()">검색</button>
+
+                <div class="col d-grid">
+                    <button type="button" class="btn btn-bc-outline-dark rounded-0" onclick="initSearchWord()">초기화</button>
+                </div>
+                <div class="col d-grid">
+                    <button type="button" class="btn btn-bc-dark  rounded-0" onclick="setSearchWord()">검색</button>
+                </div>
+
+         
+         
         </div>
       </div>
     </div>

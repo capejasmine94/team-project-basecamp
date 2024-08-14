@@ -12,6 +12,8 @@ function popup(title,content,yes,no,action,noAction) {
    bootstrap.Modal.getOrCreateInstance('#popup',{backdrop: 'true', keyboard: true})  
    let text = node.querySelector("#popup-title");
    text.innerText = title;
+   text = node.querySelector('#closeButton');
+   text.classList.remove('d-none');
    text = node.querySelector("#popup-content");
    text.innerText = content;
    text = node.querySelector("#popup-no");
@@ -56,6 +58,8 @@ function popupForce(title,content,accept,action) {
    bootstrap.Modal.getOrCreateInstance('#popup',{backdrop: 'static', keyboard: false})  
    let text = node.querySelector("#popup-title");
    text.innerText = title;
+   text = node.querySelector('#closeButton');
+   text.classList.add('d-none');
    text = node.querySelector("#popup-content");
    text.innerText = content;
    text = node.querySelector("#popup-no");

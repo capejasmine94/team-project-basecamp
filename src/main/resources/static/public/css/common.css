@@ -28,142 +28,68 @@
     font-variation-settings: 'FILL' 1;
 }
 
-/* 부트스트랩 기본 메인 컬러 */
-.btn-primary {
-    background-color: var(--bs-primary);
-    border-color: var(--bs-primary);
-}
-.btn-primary:hover, .btn-primary:focus, .btn-primary:active, .btn-primary.active, .open > .dropdown-toggle.btn-primary {
-    background-color: #007BFF; /* 원하는 색상으로 변경 */
-    border-color: #007BFF; /* 원하는 색상으로 변경 */
-}
-.bg-primary {
-    background-color: var(--bs-primary) !important;
-}
-.text-primary {
-    color: var(--bs-primary) !important;
-}
-.border-primary {
-    border-color: var(--bs-primary) !important;
+.btn-bc-dark {
+    --bs-btn-color: #fff;
+    --bs-btn-bg: #28323C;;
+    --bs-btn-border-color: #28323C;;
+
+    --bs-btn-hover-color: #fff;
+    --bs-btn-hover-bg: #303c47;
+    --bs-btn-hover-border-color: #303c47;
+
+    --bs-btn-focus-shadow-rgb: 49, 132, 253;
+
+    --bs-btn-active-color: #fff;
+    --bs-btn-active-bg: #1c232c;
+    --bs-btn-active-border-color: #1c232c;
+    --bs-btn-active-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
+
+    --bs-btn-disabled-color: #fff;
+    --bs-btn-disabled-bg: #0d6efd;
+    --bs-btn-disabled-border-color: #0d6efd;
 }
 
-/* 컬러칩 1 */
-.btn-primary1 {
-    background-color: var(--bs-primary1);
-    border-color: var(--bs-primary1);
-}
-.btn-primary1:hover, .btn-primary1:focus, .btn-primary1:active, .btn-primary1.active, .open > .dropdown-toggle.btn-primary1 {
-    background-color: #02733E; /* 원하는 색상으로 변경 */
-    border-color: #02733E; /* 원하는 색상으로 변경 */
-}
-.btn-primary1:disabled {
-    background-color: #02733E;
-    border-color: #02733E;
-}
-.bg-primary1 {
-    background-color: var(--bs-primary1) !important;
-}
-.text-primary1 {
-    color: var(--bs-primary1) !important;
-}
-.border-primary1 {
-    border-color: var(--bs-primary1) !important;
-}
-.border.border-primary1 {
-    border-color: var(--bs-primary1) !important;
+.btn-bc-outline-dark {
+    --bs-btn-color: #28323C;
+    --bs-btn-bg: #fff;
+    --bs-btn-border-color: #28323C;;
+
+    --bs-btn-hover-color: #fff;
+    --bs-btn-hover-bg: #303c47;
+    --bs-btn-hover-border-color: #303c47;
+
+    --bs-btn-focus-shadow-rgb: 49, 132, 253;
+
+    --bs-btn-active-color: #fff;
+    --bs-btn-active-bg: #1c232c;
+    --bs-btn-active-border-color: #1c232c;
+    --bs-btn-active-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
+
+    --bs-btn-disabled-color: #fff;
+    --bs-btn-disabled-bg: #0d6efd;
+    --bs-btn-disabled-border-color: #0d6efd;
 }
 
-/* 컬러칩 2 */
-.btn-primary2 {
-    background-color: var(--bs-primary2);
-    border-color: var(--bs-primary2);
-}
-.btn-primary2:hover, .btn-primary2:focus, .btn-primary2:active, .btn-primary2.active, .open > .dropdown-toggle.btn-primary2 {
-    background-color: #0C5935; /* 원하는 색상으로 변경 */
-    border-color: #0C5935; /* 원하는 색상으로 변경 */
-}
-.bg-primary2 {
-    background-color: var(--bs-primary2) !important;
-}
-.text-primary2 {
-    color: var(--bs-primary2) !important;
-}
-.border-primary2 {
-    border-color: var(--bs-primary2) !important;
-}
-.border.border-primary2 {
-    border-color: var(--bs-primary2) !important;
-}
+.btn-bc-light {
+    --bs-btn-color: #fff;
+    --bs-btn-bg: #00B8FF;;
+    --bs-btn-border-color: #00B8FF;;
 
-/* 컬러칩 3 */
-.btn-primary3 {
-    background-color: var(--bs-primary3);
-    border-color: var(--bs-primary3);
-}
-.btn-primary3:hover, .btn-primary3:focus, .btn-primary3:active, .btn-primary3.active, .open > .dropdown-toggle.btn-primary3 {
-    background-color: #55443A; /* 원하는 색상으로 변경 */
-    border-color: #55443A; /* 원하는 색상으로 변경 */
-}
-.bg-primary3 {
-    background-color: var(--bs-primary3) !important;
-}
-.text-primary3 {
-    color: var(--bs-primary3) !important;
-}
-.border-primary3 {
-    border-color: var(--bs-primary3) !important;
-}
-.border.border-primary3 {
-    border-color: var(--bs-primary3) !important;
-}
+    --bs-btn-hover-color: #fff;
+    --bs-btn-hover-bg: #66B1FF;
+    --bs-btn-hover-border-color: #66B1FF;
 
-/* 컬러칩 4 */
-.btn-primary4 {
-    background-color: var(--bs-primary4);
-    border-color: var(--bs-primary4);
-}
-.btn-primary4:hover, .btn-primary4:focus, .btn-primary4:active, .btn-primary4.active, .open > .dropdown-toggle.btn-primary4 {
-    background-color: #F6F5EF; /* 원하는 색상으로 변경 */
-    border-color: #F6F5EF; /* 원하는 색상으로 변경 */
-}
-.bg-primary4 {
-    background-color: var(--bs-primary4) !important;
-}
-.text-primary4 {
-    color: var(--bs-primary4) !important;
-}
-.border-primary4 {
-    border-color: var(--bs-primary4) !important;
-}
-.border.border-primary4 {
-    border-color: var(--bs-primary4) !important;
-}
+    --bs-btn-focus-shadow-rgb: 49, 132, 253;
 
-/* 컬러칩 5 */
-.btn-primary5 {
-    background-color: var(--bs-primary5);
-    border-color: var(--bs-primary5);
-}
-.btn-primary5:hover, .btn-primary5:focus, .btn-primary5:active, .btn-primary5.active, .open > .dropdown-toggle.btn-primary5 {
-    background-color: #2D2926; /* 원하는 색상으로 변경 */
-    border-color: #2D2926; /* 원하는 색상으로 변경 */
-}
-.bg-primary5 {
-    background-color: var(--bs-primary5) !important;
-}
-.text-primary5 {
-    color: var(--bs-primary5) !important;
-}
-.border-primary5 {
-    border-color: var(--bs-primary5) !important;
-}
-.border.border-primary5 {
-    border-color: var(--bs-primary5) !important;
-}
+    --bs-btn-active-color: #fff;
+    --bs-btn-active-bg: #3A8EE6;
+    --bs-btn-active-border-color: #3A8EE6;
+    --bs-btn-active-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
 
-
-
-
+    --bs-btn-disabled-color: #fff;
+    --bs-btn-disabled-bg: #0d6efd;
+    --bs-btn-disabled-border-color: #0d6efd;
+}
 
 /* 폰트 */
 .font-roboto { font-family: 'Roboto', sans-serif }

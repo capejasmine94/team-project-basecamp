@@ -38,14 +38,15 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h1 class="modal-title fs-5" id="popup-title">Modal title</h1>
+                <button type="button" id="closeButton" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div id="popup-content" class="modal-body">
                 ...
             </div>
             <div class="modal-footer">
-                <button id="popup-no" type="button" class="btn btn-secondary">Close</button>
-                <button id="popup-button" type="button" class="btn btn-primary">Save changes</button>
-                <button id="popup-three" type="button" class="btn btn-success">Close</button>
+                <div class="col-auto d-grid"><button id="popup-no" type="button" class="btn btn-bc-outline-dark rounded-0">Close</button></div>
+                <div class="col-auto d-grid"><button id="popup-button" type="button" class="btn btn-bc-dark rounded-0">Save changes</button></div>
+                <div class="col-auto d-grid"><button id="popup-three" type="button" class="btn btn-bc-light rounded-0">Close</button></div>
             </div>
         </div>
     </div>
