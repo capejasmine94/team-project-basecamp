@@ -8,6 +8,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.bulmeong.basecamp.store.dto.ProductWishDto;
 import com.bulmeong.basecamp.store.dto.StoreOrderDto;
 import com.bulmeong.basecamp.store.dto.UserDeliveryInfoDto;
 import com.bulmeong.basecamp.store.service.StoreService;
@@ -40,11 +41,22 @@ public class StoreController {
     }
 
     @RequestMapping("productDetails")
-    public String productDetails(@RequestParam("id") int id, Model model){
+    public String productDetails(@RequestParam("id") int id, Model model, HttpSession session){
 
         Map<String, Object> productData = storeService.getProductDataByProductId(id);
         model.addAttribute("productData", productData);
 
+        UserDto userDto = (UserDto)session.getAttribute("sessionUserInfo");
+        if(userDto == null){
+            model.addAttribute("isWishlisted", false);
+        }else{
+            ProductWishDto productWishDto = new ProductWishDto();
+            productWishDto.setProduct_id(id);
+            productWishDto.setUser_id(userDto.getId());
+            
+            model.addAttribute("isWishlisted", storeService.isWishlisted(productWishDto));
+        }
+        
         return "store/mProductDetails";
     }
 
@@ -176,9 +188,19 @@ public class StoreController {
     }
 
     @RequestMapping("refundRequestComplete")
-    public String refundRequestComplete(){
+    public String refundRequestComplete(@RequestParam("id") int id, Model model, HttpSession session){
+        
+        UserDto userDto = (UserDto)session.getAttribute("sessionUserInfo");
 
-        return "store/mRefundRequestComplete";
+        Map<String, Object> refundData = storeService.getRefundProductDataForCompletePage(id);
+
+        if(userDto == null || userDto.getId()!= (int)refundData.get("user_id")){
+            return "redirect:/store";
+        }else{
+            model.addAttribute("refundData", refundData);
+            return "store/mRefundRequestComplete";
+        }
+
     }
 
     // @RequestMapping("tempLogin")

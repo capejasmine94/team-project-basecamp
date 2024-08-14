@@ -121,7 +121,7 @@
                         환불 금액
                     </div>
                     <div class="col fw-semibold">
-                        13,500원
+                        <span th:text="${#numbers.formatDecimal(refundData.order_price, 1, 'COMMA', 0, 'POINT')}">13,500</span>원
                     </div>
                 </div>
 
@@ -141,31 +141,34 @@
                             <div class="col p-0 py-3 border-bottom">
                                 <div class="row align-items-center">
                                     <div class="col-auto pe-0 seller_profile">
-                                        <img class="border">
+                                        <img class="border" th:src="|/images/${refundData.product_main_image}|">
                                     </div>
                                     <div class="col">
                                         <div class="row pb-1">
                                             <div class="col f08">
-                                                <span>GamjaStore</span>
+                                                <span th:text="${refundData.store_name}">호호가게</span>
                                             </div>
                                         </div>
                                         <div class="row pb-1">
                                             <div class="col f09 fw-semibold">
-                                                <span>진짜 맛있는 납작복숭아</span>
+                                                <span th:text="${refundData.product_name}">진짜 맛있는 납작복숭아</span>
                                             </div>
                                         </div>
                                         <div class="row pb-1 text-body-secondary f08 align-items-center">
                                             <div class="col-auto">
-                                                <span>검정 / M / 짜라잔</span>
+                                                <span th:if="${refundData.valueNameList}" th:each="name, iterStat : ${refundData.valueNameList}">
+                                                    <span th:text="${name}">Black / M</span>
+                                                    <span th:if="${!iterStat.last}">/</span>
+                                                </span>
                                             </div>
                                             <div class="col-auto p-0">|</div>
                                             <div class="col">
-                                                <span>5</span>개
+                                                <span th:text="${refundData.quantity}">5</span>개
                                             </div>
                                         </div>
                                         <div class="row toggle-icon" data-bs-toggle="collapse">
                                             <div class="col-auto pe-0 text-end fw-semibold">
-                                                <span>13,500</span>원
+                                                <span th:text="${#numbers.formatDecimal(refundData.order_price, 1, 'COMMA', 0, 'POINT')}">13,500</span>원
                                             </div>
                                         </div>
                                     </div>
@@ -185,7 +188,7 @@
                                 회수지 정보
                             </div>
                             <div class="col">
-                                김첨지
+                                <span th:text="${refundData.receiver_name}">김첨지</span>
                             </div>
                             <div class="col justify-content-end d-flex align-items-center justify-content-end">
                                 <span class="showButton material-symbols-outlined fw-light">
@@ -198,23 +201,23 @@
                             <div class="col-4"></div>
                             <div class="col">
                                 <div class="row text-body-tertiary f08">
-                                    <div class="col" id="phone">010-1234-5678</div>
+                                    <div class="col" id="phone" th:text="${refundData.phone}">010-1234-5678</div>
                                 </div>
                                 <div class="row f08 pt-1">
-                                    <div class="col" id="return_address">서울시 어쩌구 무슨동 123-456</div>
+                                    <div class="col" id="return_address" th:text="${refundData.return_address}">서울시 어쩌구 무슨동 123-456</div>
                                 </div>
                             </div>
                         </div>
 
                         <div class="row pt-4">
                             <div class="col d-grid pe-0">
-                                <a href="" type="button" class="btn bg-white border rounded-1 py-3 f08 fw-semibold">
+                                <a href="" type="button" class="btn bg-white border rounded-0 py-3 f08 fw-semibold">
                                     환불 상세 보기
                                 </a>
                             </div>
                             <div class="col d-grid">
-                                <a href="" type="button" class="btn btn-dark rounded-1 py-3 f08 fw-semibold">
-                                    홈으로 이동
+                                <a href="/store" type="button" class="btn btn-dark rounded-0 py-3 f08 fw-semibold">
+                                    쇼핑 홈
                                 </a>
                             </div>
                         </div>

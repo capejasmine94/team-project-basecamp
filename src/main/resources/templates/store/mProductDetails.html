@@ -329,15 +329,18 @@
         <div class="row px-3 bg-white fixed-bottom pt-2 pb-4 border-top align-items-center">
             <div class="col-auto pe-0 text-center">
                 <div class="row">
-                    <div class="col d-flex align-items-center" onclick="productLike()">
-                        <span class="material-symbols-outlined f15 fw-light">
+                    <div class="col d-flex align-items-center" onclick="productWish()">
+                        <span th:if="${isWishlisted}" id="heart" class="material-symbols-outlined fill-on lightFont f15 fw-light">
+                            favorite
+                        </span>
+                        <span th:unless="${isWishlisted}" id="heart" class="material-symbols-outlined f15 fw-light">
                             favorite
                         </span>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col f05 fw-bold">
-                        1,203
+                        <span id="productWishCount" th:text="${productData.productWishCount}">1,203</span>
                     </div>
                 </div>
             </div>
@@ -501,13 +504,21 @@
             })
         }
 
-        function productLike(){
+        function productWish(){
+
+            if(myId==null){
+                if(confirm("로그인이 필요한 서비스 입니다. 로그인 페이지로 이동하시겠습니까?")){
+                    location.href="/user/login";
+                }
+                return;
+            }
+
             const productWish = {
                 user_id: myId,
                 product_id: product_id
             }
 
-            const url = `/api/store/productLike`
+            const url = `/api/store/productWish`
             fetch(url, {
                 method: 'POST',
                 headers: {
@@ -517,7 +528,19 @@
             })
             .then(response => response.json())
             .then((response) => {
-                // window.location.href = "/store/addressBook";
+                const heart = document.getElementById("heart")
+                const productWishCount = document.getElementById("productWishCount")
+
+                const productWishData = response.data.productWishData;
+                if(productWishData.isWishlisted){
+                    heart.classList.add("fill-on")
+                    heart.classList.add("lightFont")
+                }else{
+                    heart.classList.remove("fill-on")
+                    heart.classList.remove("lightFont")
+                }
+
+                productWishCount.innerText = productWishData.productWishCount;
             })
         }
 

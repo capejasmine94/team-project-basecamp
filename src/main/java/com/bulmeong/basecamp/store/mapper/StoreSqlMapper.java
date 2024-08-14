@@ -15,6 +15,7 @@ import com.bulmeong.basecamp.store.dto.OrderProductDto;
 import com.bulmeong.basecamp.store.dto.OrderProductOptionValueDto;
 import com.bulmeong.basecamp.store.dto.ProductOptionNameDto;
 import com.bulmeong.basecamp.store.dto.ProductOptionValueDto;
+import com.bulmeong.basecamp.store.dto.ProductRefundDto;
 import com.bulmeong.basecamp.store.dto.ProductRefundReasonDto;
 import com.bulmeong.basecamp.store.dto.ProductReviewDto;
 import com.bulmeong.basecamp.store.dto.ProductSubcategoryDto;
@@ -193,4 +194,9 @@ public interface StoreSqlMapper {
 
     public List<ProductRefundReasonDto> selectRefundReasonList();
 
+    public void updateOrderProductStatusToRefundComplete(int id);
+
+    public void insertProductRefund(ProductRefundDto productRefundDto);
+
+    public Map<String, Object> selectRefundProductDataForCompletePage(int id);
 }

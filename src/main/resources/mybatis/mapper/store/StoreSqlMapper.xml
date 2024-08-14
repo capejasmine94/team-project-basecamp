@@ -232,7 +232,7 @@
 
     <select id="selectProductWishCount" resultType="int">
         select count(*) from product_wish
-        where proudct_id = #{proudct_id}
+        where product_id = #{product_id}
     </select>
 
     <select id="selectProductWishCountByProductWishDto" resultType="int">
@@ -846,6 +846,41 @@
 
     <select id="selectRefundReasonList" resultType="com.bulmeong.basecamp.store.dto.ProductRefundReasonDto">
         select * from refund_reason
+    </select>
+
+    <update id="updateOrderProductStatusToRefundComplete">
+        update order_product
+        set status = '환불완료'
+        where id = #{id}
+    </update>
+
+    <insert id="insertProductRefund">
+        <selectKey resultType="int" keyProperty="id" order="AFTER">
+            select max(id) from product_refund
+        </selectKey>
+        insert into product_refund(
+            reason_refund_id, order_product_id, receiver_name, phone, return_address
+        )values(
+            #{reason_refund_id}, #{order_product_id}, #{receiver_name}, #{phone}, #{return_address}
+        )
+    </insert>
+
+    <select id="selectRefundProductDataForCompletePage" resultType="java.util.HashMap">
+        select 
+            pr.*, 
+            s.name as store_name, 
+            op.quantity,
+            op.order_price,
+            op.product_name,
+            op.product_main_image,
+            op.id as order_product_id,
+            so.user_id
+        from product_refund pr
+        inner join order_product op on op.id = pr.order_product_id 
+        inner join store_product sp on op.product_id = sp.id 
+        inner join store s on s.id = sp.store_id 
+        inner join store_order so on so.id = op.order_id 
+        where pr.id = #{id}
     </select>
 
 </mapper>

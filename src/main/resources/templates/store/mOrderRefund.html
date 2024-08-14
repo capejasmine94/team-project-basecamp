@@ -365,7 +365,7 @@
 
                 <div class="row px-2 bg-white pt-3 pb-5 border-top fixed-bottom">
                     <div class="col d-grid">
-                        <a href="/store/refundRequestComplete" type="button" class="btn btn-dark rounded-0 f09 py-2"><!-- onclick="requestRefund()" -->
+                        <a onclick="requestRefund()" type="button" class="btn btn-dark rounded-0 f09 py-2"><!-- onclick="requestRefund()" -->
                             환불 요청
                         </a>
                     </div>
@@ -441,7 +441,7 @@
             })
             .then(response => response.json())
             .then((response) => {
-                window.location.href = "/store/refundRequestComplete";
+                window.location.href = `/store/refundRequestComplete?id=${response.data.productRefundId}`;
             })
 
         }

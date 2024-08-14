@@ -16,6 +16,7 @@ import com.bulmeong.basecamp.store.dto.AdditionalInfoDto;
 import com.bulmeong.basecamp.store.dto.CartProductDto;
 import com.bulmeong.basecamp.store.dto.OrderDeliveryInfoDto;
 import com.bulmeong.basecamp.store.dto.ProductOptionNameDto;
+import com.bulmeong.basecamp.store.dto.ProductRefundDto;
 import com.bulmeong.basecamp.store.dto.ProductReviewDto;
 import com.bulmeong.basecamp.store.dto.ProductWishDto;
 import com.bulmeong.basecamp.store.dto.StoreDto;
@@ -508,8 +509,11 @@ public class RestStoreController {
     }
 
     @RequestMapping("requestRefund")
-    public RestResponseDto requestRefund(){
+    public RestResponseDto requestRefund(@RequestBody ProductRefundDto productRefundDto){
         RestResponseDto restResponseDto = new RestResponseDto();
+
+        int productRefundId = storeService.orderProductRefund(productRefundDto);
+        restResponseDto.add("productRefundId", productRefundId);
 
         return restResponseDto;
     }
@@ -524,11 +528,11 @@ public class RestStoreController {
 
     }
 
-    @RequestMapping("productLike")
-    public RestResponseDto productLike(@RequestBody ProductWishDto productWishDto){
+    @RequestMapping("productWish")
+    public RestResponseDto productWish(@RequestBody ProductWishDto productWishDto){
         RestResponseDto restResponseDto = new RestResponseDto();
 
-        storeService.productWish(productWishDto);
+        restResponseDto.add("productWishData", storeService.productWish(productWishDto));
 
         return restResponseDto;
     }

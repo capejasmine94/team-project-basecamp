@@ -14,6 +14,7 @@ import com.bulmeong.basecamp.store.dto.OrderProductDto;
 import com.bulmeong.basecamp.store.dto.OrderProductOptionValueDto;
 import com.bulmeong.basecamp.store.dto.ProductOptionNameDto;
 import com.bulmeong.basecamp.store.dto.ProductOptionValueDto;
+import com.bulmeong.basecamp.store.dto.ProductRefundDto;
 import com.bulmeong.basecamp.store.dto.ProductRefundReasonDto;
 import com.bulmeong.basecamp.store.dto.ProductReviewDto;
 import com.bulmeong.basecamp.store.dto.ProductSubcategoryDto;
@@ -206,6 +207,7 @@ public class StoreService {
         Map<String, Object> map = new HashMap<>();
 
         StoreProductDto storeProductDto = storeSqlMapper.selectProductDtoByID(id);
+        int productWishCount = storeSqlMapper.selectProductWishCount(id);
 
         int store_id = storeProductDto.getStore_id();
         StoreDto storeDto = storeSqlMapper.selectStoreDtoById(store_id);
@@ -228,6 +230,7 @@ public class StoreService {
         map.put("storeProductDto", storeProductDto);
         map.put("storeDto", storeDto);
         map.put("storeDeliveryInfoDto", storeDeliveryInfoDto);
+        map.put("productWishCount", productWishCount);
 
         return map;
 
@@ -1108,14 +1111,55 @@ public class StoreService {
         storeSqlMapper.deleteCartProductOptionValueByCartProductId(cart_product_id);
     }
 
-    public void productWish(ProductWishDto productWishDto){
+    public Map<String, Object> productWish(ProductWishDto productWishDto){
+        Map<String, Object> map = new HashMap<>();
+
         int productWishCount = storeSqlMapper.selectProductWishCountByProductWishDto(productWishDto);
 
         if(productWishCount==0){
             storeSqlMapper.insertProductWish(productWishDto);
+            map.put("isWishlisted", true);
+            map.put("productWishCount", storeSqlMapper.selectProductWishCount(productWishDto.getProduct_id()));
+            return map;
         }else{
             storeSqlMapper.deleteProductWish(productWishDto);
+            map.put("isWishlisted", false);
+            map.put("productWishCount", storeSqlMapper.selectProductWishCount(productWishDto.getProduct_id()));
+            return map;
         }
         
+    }
+
+    public boolean isWishlisted(ProductWishDto productWishDto){
+        return storeSqlMapper.selectProductWishCountByProductWishDto(productWishDto) > 0;
+    }
+
+    public int getProductWishCount(int product_id){
+        return storeSqlMapper.selectProductWishCount(product_id);
+    }
+
+    public int orderProductRefund(ProductRefundDto productRefundDto){
+        storeSqlMapper.updateOrderProductStatusToRefundComplete(productRefundDto.getOrder_product_id());
+        storeSqlMapper.insertProductRefund(productRefundDto);
+
+        return productRefundDto.getId();
+    }
+
+    public Map<String, Object> getRefundProductDataForCompletePage(int product_refund_id){
+        Map<String, Object> map = storeSqlMapper.selectRefundProductDataForCompletePage(product_refund_id);
+        int order_product_id = (int)map.get("order_product_id");
+        int[] value_ids = storeSqlMapper.selectOrderProductOptionValueIds(order_product_id);
+        if(value_ids.length!=0){
+            List<String> valueNameList = new ArrayList<>();
+            for(int value_id : value_ids){
+                String value_name = storeSqlMapper.selectOptionValueNameById(value_id);
+                valueNameList.add(value_name);
+            }
+            map.put("valueNameList", valueNameList);
+        }else{
+            map.put("valueNameList", null);
+        }
+        
+        return map;
     }
 }
