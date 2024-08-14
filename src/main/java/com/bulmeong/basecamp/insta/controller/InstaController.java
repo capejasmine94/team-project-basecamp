@@ -1,7 +1,7 @@
 package com.bulmeong.basecamp.insta.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-// import org.springframework.boot.autoconfigure.ssl.SslProperties.Bundles.Watch.File;
+
 import org.thymeleaf.util.StringUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -357,9 +357,6 @@ public class InstaController {
         // URL 디코딩
         content = URLDecoder.decode(content, StandardCharsets.UTF_8);
 
-        // 디버깅을 위한 로그 출력
-        System.out.println("Decoded content: " + content);
-
         UserDto userDto = (UserDto) session.getAttribute("sessionUserInfo");
         InstaUserInfoDto instaUserInfoDto = instaService.userInfoByUserId(userDto.getId());
 
@@ -459,6 +456,14 @@ public class InstaController {
         instaService.recentSearchAllDelete(instaUserInfoDto.getId());
 
         return "redirect:./instaSearchPage?user_id=" + instaUserInfoDto.getId();
+    }
+
+    // 인사이트 _ 통계
+    @RequestMapping("instaStatsPage")
+    public String instaStatsPage(@RequestParam("user_id") int s_user_id){ // user_id = 세션 아이디
+        InstaUserInfoDto instaUserInfoDto = instaService.userInfoByUserId(s_user_id);
+
+        return "insta/instaStatsPage?user_id=" + instaUserInfoDto.getId();
     }
 
 }

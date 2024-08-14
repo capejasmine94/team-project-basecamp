@@ -12,12 +12,20 @@
         <link rel="stylesheet" href="/public/css/insta/instaStyle.css">
         <link rel="stylesheet" href="/public/css/common.css">
         <link rel="stylesheet" href="/public/css/basecamp.css">
+        
+        <!-- 이걸로 레이아웃 확인하셈 -->
+        <script src="/public/js/lockLikeMobile.js"></script>
+
         <title>insta_bookmarkPage</title>
 
         <script src="/public/js/util.js"></script>
 
         <style>
-
+            /* 마이페이지, 유저페이지, 북마크페이지 */
+            .middle-image {
+                width: 100%; /* 너비를 조정 */
+                height: 100%; /* 높이는 자동으로 조정 */
+            }
         </style>
     </head>
     <body>
@@ -38,7 +46,7 @@
             </div>
 
             <div class="row mt-5 pt-4 fontNine">
-                <div class="col-auto">
+                <div class="col-auto" style="position: relative;">
                     <img src="/public/img/instaImage/story.jpg" class="img-fluid rounded-circle userImg">
                     <img th:src="|/images/${instaUserInfoDto.insta_profile_img}|" class="img-fluid rounded-circle userImage" style="position: relative;">
                 </div>
@@ -94,9 +102,10 @@
 
             <!-- 북마크 List -->
             <div class="row">
-                <a class="col-4 px-0 d-flex justify-content-center" th:href="@{./instaMainPage(user_id=${session.sessionUserInfo.id})}" th:each="instaArticleImgDto, iterStat : ${instaBookmarkArticleImgDtoList}">
+                <a class="col-4 px-0 d-flex" style="padding-bottom: 0.5%;" th:href="@{./instaMainPage(user_id=${session.sessionUserInfo.id})}" th:each="instaArticleImgDto, iterStat : ${instaBookmarkArticleImgDtoList}">
                     <div th:class="${iterStat.index % 3 == 1} ? 'middle' : ''">
-                        <img th:src="|/images/${instaArticleImgDto.img_link}|" class="img-fluid" style="object-fit: cover; object-position: center; aspect-ratio: 1/1; height: 33.3333333333333vw;">
+                        <img th:src="|/images/${instaArticleImgDto.img_link}|" class="img-fluid" style="object-fit: cover; object-position: center; aspect-ratio: 1/1;"
+                             th:classappend="${iterStat.index % 3 == 1} ? 'middle-image' : ''">
                     </div>
                 </a>
             </div>

@@ -12,7 +12,11 @@
         <link rel="stylesheet" href="/public/css/insta/instaStyle.css">
         <link rel="stylesheet" href="/public/css/common.css">
         <link rel="stylesheet" href="/public/css/basecamp.css">
-        <title>insta_userDetailPage</title>
+
+        <!-- 이걸로 레이아웃 확인하셈 -->
+        <script src="/public/js/lockLikeMobile.js"></script>
+        
+        <title>instaUserDetailPage</title>
 
         <script src="/public/js/util.js"></script>
 
@@ -52,7 +56,7 @@
                     Meta
                 </div>
             </div>
-            <a class="row mt-3 fontSf d-flex align-items-center" href="recentPost" style="text-decoration: none; color: black;">
+            <a class="row mt-3 fontSf d-flex align-items-center" href="..." style="text-decoration: none; color: black;">
                 <div class="col-auto pe-0">
                     <span class="material-symbols-outlined fs-5 fw-light">
                         account_circle
@@ -77,15 +81,31 @@
                 </div>
             </a>
             <div class="row mt-2">
-                <div class="col" style="font-size: 0.55em; padding-left: 9.5%;">
+                <div class="col-auto">
+                </div>
+                <div class="col" style="font-size: 0.55em;">
                     <span>
                         Meta 테크놀로지 전반에서 연결된 환경 및 계정 설정을 관리해보세요.
-                        <span class="lightFont">
+                        <a href="..." class="lightFont">
                             더 알아보기
-                        </span>
+                        </a>
                     </span>
                 </div>
             </div>
+            <!-- 인사이트 _ 통계 -->
+            <a class="row mt-3 fontSf" th:href="@{./instaStatsPage(user_id=${session.sessionUserInfo.id})}" style="text-decoration: none; color: black;">
+                <div class="col d-flex align-items-center" style=" padding-left: 3%">
+                    <span class="material-symbols-outlined fs-5 fw-light pe-1">
+                        monitoring
+                    </span>
+                    <span>계정 인사이트</span>
+                </div>
+                <div class="col-auto">
+                    <span class="material-symbols-outlined fs-6" style="font-weight: 200;">
+                        arrow_forward_ios
+                    </span>
+                </div>
+            </a>
 
             <!-- border -->
             <div class="row mt-2" style="border-bottom: 5px solid; border-color: rgba(227, 227, 227, 0.567);"></div>
@@ -384,8 +404,11 @@
             </a>
             <a class="row mt-3 fontSf" href="..." style="text-decoration: none; color: black;">
                 <div class="col d-flex align-items-center" style=" padding-left: 3%">
-                    <span class="material-symbols-outlined fs-5 fw-light pe-1">
+                    <!-- <span class="material-symbols-outlined fs-5 fw-light pe-1">
                         notifications_off
+                    </span> -->
+                    <span class="material-symbols-outlined fs-5 fw-light pe-1">
+                        app_blocking
                     </span>
                     <span>업데이트를 보지 않도록 설정한 계정</span>
                 </div>
@@ -704,13 +727,13 @@
                 </div>
             </div>
 
-            <a class="row" href="./instaLoginPage" style="text-decoration: none; color: black;">
+            <a class="row" href="..." style="text-decoration: none; color: black;">
                 <div class="col fontBasic pt-3 lightFont">
                     <span>계정추가</span>
                 </div>
             </a>
 
-            <a class="row mb-3" href="./instaLoginPage" style="text-decoration: none; color: black;">
+            <a class="row mb-3" href="/user/login" style="text-decoration: none; color: black;">
                 <div class="col fontBasic pt-3 text-danger">
                     <span>로그아웃</span>
                 </div>
@@ -724,12 +747,6 @@
         <script src="https://kit.fontawesome.com/7b271bba58.js" crossorigin="anonymous"></script>
     </body>
 </html>
-
-
-
-
-
-
 
 
 
