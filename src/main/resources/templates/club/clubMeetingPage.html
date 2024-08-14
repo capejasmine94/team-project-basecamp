@@ -114,70 +114,36 @@
     <body>
       
   
-        <div class="container" style="padding-top: 75.22px;">
+        <div class="container" style="padding-top: 60.792px;">
 
-            <div class="fixed-top px-0 row pt-3 bg-white">
-                <div class="col">
+            <div class="fixed-top px-4 row border-bottom py-3 shadow-sm bg-white">
+              
+                <div class="col text-center fw-medium">소모임 이름</div>
+                
+            </div>
+            
 
-                    <div class="row">
-                        <div class="col text-center fw-medium" style="font-size: 0.9em;">소모임 이름</div>
-                    </div>
-                    <div class="row px-0">
-                           <!-- 네비바 -->
-                           <div class="col bg-white text-center nav">
+            <!-- 전체 박스 1 -->
+                <div class="row">
+                    <div class="col px-0 overflow-x-hidden">
+
+                         <!-- 네비바 -->
+                        <div class="col bg-white text-center nav">
                             <div class="col nav-item">
-                                <a class="nav-link "  th:href="@{/club/home(id=${id})}" style="font-size: 0.9em;">홈</a>
+                                <a class="nav-link" th:href="@{/club/home(id=${id})}">홈</a>
                             </div>
                             <div class="col nav-item">
-                                <a class="nav-link" th:href="@{/club/home(id=${id})}" style="font-size: 0.9em;">정모</a>
+                                <!-- <a class="nav-link active" aria-current="page" th:href="@{/club/meeting(id=${id})}">정모</a> -->
                             </div>
                             <div class="col nav-item">
-                                <a class="nav-link" th:href="@{/club/board(id=${id})}" style="font-size: 0.9em;">게시판</a>
+                                <a class="nav-link"  th:href="@{/club/board(id=${id})}">게시판</a>
                             </div>
                             <div class="col nav-item">
-                                <a class="nav-link active fw-medium" aria-current="page" th:href="@{/club/album(id=${id})}" style="font-size: 0.9em;">사진첩</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                        <!-- 전체 박스 2 -->
-                        <div class="row px-3">
-                            <div class="col">
-                                <div class="row pt-2">
-                                    <div class="col">
-        
-                                        <div class="row">
-                                            <div class="col-4 px-0 pb d-flex justify-content-center" th:each="postImageDto : ${postImageDtoList}">
-                                                 <div>
-                                                
-                                                    <a th:href="@{/club/readPost(id=${postImageDto.post_id})}">
-                                                        <img
-                                                        th:src="|/images/${postImageDto.post_img_location}|"
-                                                        class="img-fluid middle"
-                                                        style="aspect-ratio: 1/1; height: 33.3333333333333vw;">
-                                                    </a>
-        
-                                                </div>
-                                            
-                                            </div>
-                                        </div>
-        
-                                        <!-- <div class="row">
-                                            <a class="col-4 px-0 pb d-flex justify-content-center" th:href="@{./instaMainPage(user_id=${session.sessionUserInfo.id})}" th:each="instaArticleImgDto, iterStat : ${instaBookmarkArticleImgDtoList}">
-                                                <div th:class="${iterStat.index % 3 == 1} ? 'middle' : ''">
-                                                    <img th:src="|/images/${instaArticleImgDto.img_link}|" class="img-fluid" style="aspect-ratio: 1/1; height: 33.3333333333333vw;">
-                                                </div>
-                                            </a>
-                                        </div>
-                                         -->
-        
-                                    </div>
-                                </div>
-
+                                <a class="nav-link" th:href="@{/club/album(id=${id})}">사진첩</a>
                             </div>
                         </div>
 
+                      
 
 
 
