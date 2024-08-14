@@ -26,8 +26,9 @@ public class CustomErrorController implements ErrorController {
 
         if (statusCode == 404) {
             return "404";  // templates/404.html
+        }else{
+            return "error";  // templates/error.html
         }
-        return "error";  // templates/error.html
     }
 
 }
