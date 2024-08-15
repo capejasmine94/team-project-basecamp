@@ -42,11 +42,14 @@
             <form class="col" action="./confirmProcess" method="post" enctype="multipart/form-data">
                 <div class="row fixed-top bg-white border-bottom fixed-top">
                     <div class="col text-start">
-                        <button type="button" class="btn text-start">
-                            <a href="./instaLoginPage" class="fs-5 link-dark link-offset-2 link-underline link-underline-opacity-0"><i class="bi bi-chevron-left"></i></a>
+                        <!-- 뒤로가기 -->
+                        <button onclick="goBack()" type="button" class="btn" style="line-height: 1px;">
+                            <span class="material-symbols-outlined" style="font-weight: 200;">
+                                arrow_back
+                            </span>
                         </button>
                     </div>
-                    <div class="col text-center align-self-center fw-bold">
+                    <div class="col text-center align-self-center">
                         <span>campstagram</span>
                     </div>
                     <div class="col text-end"></div>
@@ -125,6 +128,15 @@
             };
             reader.readAsDataURL(event.target.files[0]);
         });
+
+        // 뒤로가기
+        function goBack() {
+            window.history.back();
+        }
     </script>
 </body>
 </html>
+
+
+
+
