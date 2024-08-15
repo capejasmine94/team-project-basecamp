@@ -18,10 +18,10 @@ const llmSettingValues = {
 
 // 왼쪽 요약 페이지 세팅값(em)
 const llmLeftSummarySettingValues = {
-    left: 3,                                    // auto 옵션 만들어야 되나
+    left: 1,                                    // auto 옵션 만들어야 되나
     top: 3,
     backgroundColor: "#FFF",
-    width: 15,
+    width: 23,
     height: 40,
 };
 
@@ -36,13 +36,22 @@ const llmRightSummarySettingValues = {
 
 
 const leftSummaryHtml = `
-<div class="row justify-content-center">
-<div class="col-auto fw-bold">
-    <img class="img-fluid" src="/public/img/common/배캠.png" style="width:80%; height : 4em;">
-</div>
-</div>
-<div class="row">
-<div class="col">레이아웃 테스트</div>
+<div class="container">
+    <div class="row justify-content-center">
+        <img class="col-auto mt-5 pt-5 img-fluid" src="/public/img/common/배캠.png" style="width:80%; height:80%">
+    </div>
+    <div class="row mt-4">
+         <div class="col text-center">Basecamp는 <br> 모바일 환경에 최적화 되어있습니다.</div>
+    </div>
+    <div class="row justify-content-center my-3">
+        <img class="col-auto img-fluid" src="/public/img/common/qrCode.png" style="width: 50%; height: 50%">
+    </div>
+     <div class="row">
+        <div class="col text-center">모바일 환경으로 로그인하기</div>
+    </div>
+    <div class="row mt-5">
+        <a href="/seller/login" class="col text-center lightFont fw-semibold">판매자 페이지</a>
+    </div>
 </div>
 `;
 

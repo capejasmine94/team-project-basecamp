@@ -23,70 +23,94 @@
 <div th:replace="camp/campNavi::topNaviBasecamp"></div>
 <div th:replace="camp/campNavi::bottomNaviBasecamp"></div>
 <div class="main">
-    <div class="container-fluid">
-       <div class="row mt-5 fs-5 pt-5">
+    <div class="container-fluid" >
+       <div class="row fs-5 py-4" style="margin-top: 2.536em;">
             <div class="col fw-semibold text-center">
                 <span>예약이 완료되었습니다!</span>
             </div>
        </div>
-       <div class="row mt-3">
-            <div class="col mx-2 border p-2">
-                <div class="row ms-1">
+       <div class="row px-3">
+            <div class="col border px-3 py-4">
+                <div class="row">
                     <div class="col">
                         <div class="row">
-                            <div class="col-3 text-end">
-                                <span class="fw-semibold">캠핑장</span>
+                            <div class="col fw-semibold">
+                                예약자 정보
                             </div>
-                            <div class="col"> <span class="ms-3" th:text="${session.order.camp.camp_name}"></span></div>
                         </div>
-                        <div class="row mt-1">
-                            <div class="col-3 text-end">
-                                <span class="fw-semibold">구역</span>
+                        <div class="row mt-2 new-fs-85">
+                            <div class="col-3 text-start">
+                                <span class="fw-semibold">이름</span>
+                            </div>
+                            <div class="col"><span th:text="${session.order.dto.customer_name}"></span></div>
+                        </div>
+                        <div class="row mt-1 new-fs-85">
+                            <div class="col-3 text-start">
+                                <span class="fw-semibold">연락처</span>
+                            </div>
+                            <div class="col"><span th:text="${session.order.dto.customer_phone}"></span></div>
+                        </div>
+                        <div class="row mt-1 new-fs-85" th:if="${session.order.carNumbers.size() > 0}">
+                            <div class="col-3 text-start">
+                                <span class="fw-semibold">차량</span>
                             </div>
                             <div class="col">
-                                <span class="ms-3" th:text="${session.order.area.name}"></span>
-                                <span class="text-secondary ms-2">(</span>
+                                <div class="row mt-1 new-fs-85" th:each="car : ${session.order.carNumbers}">
+                                    <div class="col new-fs-85"><span th:text="${car.car_number}"></span></div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="row mt-4">
+                            <div class="col fw-semibold">
+                                예약신청 정보
+                            </div>
+                        </div>
+                        <div class="row mt-2 new-fs-85">
+                            <div class="col-3 text-start">  
+                                <span class="fw-semibold">캠핑장</span>
+                            </div>
+                            <div class="col"> <span th:text="${session.order.camp.camp_name}"></span></div>
+                        </div>
+                        <div class="row mt-1 new-fs-85">
+                            <div class="col-3 text-start">
+                                <span class="fw-semibold">구역</span>
+                            </div>
+                            <div class="col">    
+                                <span th:text="${session.order.area.name}"></span>
+                                <span class="text-secondary ps-2">(</span>
                                 <span class="text-secondary" th:text="${session.order.point.name}"></span>
-                                <span class="ms-1 text-secondary" th:text="${session.pointNumber}"></span>
+                                <span class="ps-1 text-secondary" th:text="${session.pointNumber}"></span>
                                 <span class="text-secondary">)</span>
                             </div>
                         </div>
-                        <div class="row mt-3">
-                            <div class="col-3 text-end">
-                                <span class="fw-semibold">이름</span>
-                            </div>
-                            <div class="col"><span class="ms-3" th:text="${session.order.dto.customer_name}"></span></div>
-                        </div>
-                        <div class="row mt-1">
-                            <div class="col-3 text-end">
-                                <span class="fw-semibold">연락처</span>
-                            </div>
-                            <div class="col"><span class="ms-3" th:text="${session.order.dto.customer_phone}"></span></div>
-                        </div>
-                        <div class="row mt-2" th:if="${session.order.carNumbers.size() > 0}">
-                            <div class="col-3 text-end">
-                                <span class="fw-semibold">차량</span>
-                            </div>
-                        </div>
-                        <div class="row mt-1 ms-4" th:each="car : ${session.order.carNumbers}">
-                            <div class="col new-fs-9"><span th:text="${car.car_number}"></span></div>
-                        </div>
-                        <div class="row mt-4">
-                            <div class="col-3 text-end">
-                                <span class="fw-semibold">가격</span>
-                            </div>
-                            <div class="col"><span class="ms-3 moneyInput" th:text="${session.order.dto.total_prise}"></span></div>
-                        </div>
-                        <div class="row mt-3">
-                            <div class="col-3 text-end">
+                        <div class="row mt-1 new-fs-85">
+                            <div class="col-3 text-start">
                                 <span class="fw-semibold">예약일</span>
                             </div>
-                            <div class="col ms-3"><span th:text="${#dates.format(session.order.dto.start_date, 'YYYY-MM-dd')}"></span> ~ <span th:text="${#dates.format(session.order.dto.end_date, 'YYYY-MM-dd')}"></span></div>
+                            <div class="col"><span th:text="${#dates.format(session.order.dto.start_date, 'YYYY-MM-dd')}"></span> ~ <span th:text="${#dates.format(session.order.dto.end_date, 'YYYY-MM-dd')}"></span></div>
+                        </div>
+                       
+
+
+                        <div class="row mt-4 px-3">
+                            <div class="col p-0 py-3 border-top">
+                                <div class="row">
+                                    <div class="col-auto text-start">
+                                        <span class="fw-semibold">총 이용금액</span>
+                                    </div>
+                                    <div class="col text-end">
+                                        <span class="moneyInput lightFont fw-semibold" th:text="${session.order.dto.total_prise}"></span>
+                                    </div>
+                                </div>
+                            </div>
+                          
                         </div>
                         
                     </div>
                 </div>
-                <div class="row my-4 fs-5 justify-content-center">
+                <div class="row mt-4 fs-5 justify-content-center">
                     <div class="col-auto p-3 py-2 text-center border">
                         <span class="fw-semibold me-3">예약번호</span>
                         <span th:text="${session.order.dto.reservation_code}"></span>
@@ -113,11 +137,11 @@
                             <div class="col fs-4">
                                 <span>CommunityGroup</span>
                             </div>
-                            <div class="col d-flex align-items-end justify-content-end">
+                            <div class="col d-flex align-iteps-end justify-content-end">
                                 <a href="/club/newClubs"><span class="text-secondary">더보기<i class="bi bi-chevron-right"></i></span></a>
                             </div>
                         </div>
-                        <div class="row ms-1 me-1">
+                        <div class="row ps-1 me-1">
                             <div class="col scroll-list-box overflow-x-auto">
                                 <div class="row">
                                     <div class="col-auto">

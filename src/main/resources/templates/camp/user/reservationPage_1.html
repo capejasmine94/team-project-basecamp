@@ -90,12 +90,12 @@
         }
 
         .row.selectedArea{
-            border: 5px solid;
-            border-bottom-width: 5px !important;
+            border: 2px solid;
+            border-bottom-width: 2px !important;
             border-bottom-color: #00B8FF !important;
-            border-radius: 1em;
+            border-color: #00B8FF !important;
             padding-top: 0.5em;
-            color: #00B8FF;
+            color: #000000;
         }
 
         .offcanvas-bottom {
@@ -188,31 +188,34 @@
                     <div class="col">
                         <span class="fw-semibold fs-5">구역 선택</span>
                     </div>
-                    <div class="col mt-4">
+                    <div class="col">
                         <div class="row my-2 pb-5">
                             <div class="col mt-4 siteList">
-                                <div th:id="'siteTemplate_' + ${area.dto.id}" class="row border-bottom pb-3 justify-content-center" th:onclick="'select(' + ${area.dto.id} + ')'" th:each="area : ${session.campsiteUser.area}">
-                                    <div class="col-11">
-                                        <div class="row">
-                                            <div class="col" th:unless="${area.mainImages.isEmpty()}">
-                                                <img class="img-fluid rounded-3" th:src="${'/images/' + area.mainImages[0].location}" alt="메인 이미지">
-                                            </div>
-                                        </div>
-                                        <div class="row mt-2 justify-content-between">
-                                            <div class="col fw-semibold text-start fs-5">
+                                <div th:id="'siteTemplate_' + ${area.dto.id}" class="row border-bottom py-3 justify-content-center" th:onclick="'select(' + ${area.dto.id} + ')'" th:each="area : ${session.campsiteUser.area}">
+                                    <div class="col-auto" th:unless="${area.mainImages.isEmpty()}">
+                                        <img class="img-fluid rounded-3" th:src="${'/images/' + area.mainImages[0].location}" alt="메인 이미지" style="aspect-ratio: 1/1.318; width: 6em; object-fit: cover; object-position: center;">
+                                    </div>
+                                    <div class="col">
+                                        <div class="row align-items-center">
+                                            <div class="col-auto pe-0 fw-semibold text-start fs-5">
                                                 <span th:text="${area.dto.name}">구역 이름</span>
                                             </div>
-                                            <div class="col-auto">
+                                            <div class="col">
                                                 <i class="bi bi-question-circle" data-bs-toggle="modal" data-bs-target="#popupSite" th:onclick="'showArea(' + ${area.dto.id} + ')'"></i>
                                             </div>
                                         </div>
                                         <div class="row">
-                                            <div class="col fw-semibold lightFont text-end">
-                                                <span class="moneyInput" th:text="${area.dto.prise}">금액</span>
-                                                <span class="ms-1">원</span>
+                                            <div class="col text-secondary text-start new-fs-9">
+                                                <span th:text="${area.dto.description}">구역 이름</span>
                                             </div>
                                         </div>
-                                        <div class="row siteCategoryList">
+                                        <div class="row mt-2">
+                                            <div class="col fw-semibold fs-5 text-start">
+                                                <span class="moneyInput lightFont" th:text="${area.dto.prise}">금액</span>
+                                                <span>원</span>
+                                            </div>
+                                        </div>
+                                        <div class="row mt-2 siteCategoryList">
                                             <div class="col pe-0 badgeList">
                                                 <span class="badge rounded-pill border text-bg-light text-body-tertiary me-1" th:each="selectCategory : ${area.category}" th:text="${selectCategory.name}">카테고리</span>
                                             </div>
@@ -289,95 +292,92 @@
     <div class="modal-dialog modal-dialog-scrollable">
         <div class="modal-content">
             <div class="modal-header">
-                <h1 class="modal-title fs-5" id="popupSite-title">사이트 이름</h1>
+                <h1 class="modal-title fs-5" >구역 상세 보기</h1>
             </div>
-            <div id="popupSite-content" class="modal-body col">
-                <div class="row">
-                    <div class="col">
-                        <div class="carousel slide row p-0" data-bs-ride="carousel">
-                            <div class="carousel-inner p-0" id="area_mainImages">
-                                <!-- 이미지 탬플릿 -->
-                                
+            <div id="popupSite-content" class="modal-body">
+                <div class="col p-0">
+                    <div class="row">
+                        <div class="col p-0">
+                            <div class="carousel slide" data-bs-ride="carousel">
+                                <div class="carousel-inner" id="area_mainImages">
+                                    <!-- 이미지 탬플릿 -->
+                                    
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-                <!-- 기본 정보 -->
-                <div class="row mt-1 flex-column">
-                    <div class="col fw-semibold" id="area_name">이름</div>
-                </div>
-                <div class="row mt-2">
-                    <div class="col text-secondary new-fs-85" id="area_size">크기</div>
-                </div>
-                <div class="row new-mt-45">
-                    <div class="col new-fs-95" id="area_description">설명</div>
-                </div>
-                <div class="row mt-5 text-end text-secondary new-fs-9">
-                    <div class="col-3 p-0 ps-3 text-start"><span>기본 정원</span></div>
-                    <div class="col-3 p-0 text-start"><span id="area_people"></span></div>
-                </div>
-                <!-- <div class="row mt-5 text-end text-secondary new-fs-9">
-                    <div class="col-2 p-0"><span>성인</span></div>
-                    <div class="col p-0 text-start"><span class="ps-2" id="area_adult">1명</span></div>
-                </div>
-                <div class="row text-end text-secondary new-fs-9">
-                    <div class="col-2 p-0"><span>미성년</span></div>
-                    <div class="col p-0 text-start"><span class="ps-2" id="area_kid">1명</span></div>
-                </div> -->
-                <div class="row text-end text-secondary new-fs-9">
-                    <div class="col-3 p-0 ps-3 text-start"><span>차량</span></div>
-                    <div class="col-3 p-0 text-start"><span id="area_car">1 대</span></div>
-                </div>
-                <div class="row mt-3 text-end fw-semibold lightFont">
-                    <div class="col">
-                        <span id="area_prise" class="moneyInput">가격</span>
-                        <span class="ps-2">원</span>
-                    </div>
-                </div>
-                <div class="row mt-2 border-bottom pb-3">
-                    <div class="col pe-0" id="area_categoryList">
-                        <span class="badge rounded-pill border text-bg-light text-body-tertiary me-1">카테고리</span>
-                    </div>
-                </div>
-                 <!-- 배치도 -->
-                <div class="row mt-3 flex-column border-bottom border-5 pb-5">
-                    <div class="col">
-                        <span class="fw-semibold fs-5">구역 위치</span>
-                    </div> 
-                    <div class="col mt-4">
-                        <img id="area_mapImage" class="img-fluid rounded-3 originImage" src="/public/img/clubImage/mountain.jpg" alt="">
-                    </div>
-                </div>
-                <!-- 추가 요금 -->
-                <div class="row mt-3 flex-column pb-3">
-                    <div class="col">
-                        <span class="fw-semibold fs-5">추가 요금</span>
-                    </div> 
-                    <div class="col mt-2 ps-2">
-                        <div class="row text-end text-secondary new-fs-9">
-                            <div class="col-5 fw-semibold p-0"><span>성인 추가요금 (인당)</span></div>
-                            <div class="col p-0 text-start"><span class="ps-2 moneyInput" id="area_add_adult">5000</span><span class="ps-2">원</span></div>
-                        </div>
-                        <div class="row text-end text-secondary new-fs-9">
-                            <div class="col-5 fw-semibold p-0"><span>미성년 추가요금 (인당)</span></div>
-                            <div class="col p-0 text-start"><span class="ps-2 moneyInput" id="area_add_kid">5000</span><span class="ps-2">원</span></div>
-                        </div>
-                        <div class="row text-end text-secondary new-fs-9">
-                            <div class="col-5 fw-semibold p-0"><span>차량 추가요금</span></div>
-                            <div class="col p-0 text-start"><span class="ps-2 moneyInput" id="area_add_car">5000</span><span class="ps-2">원</span></div>
+                    <!-- 기본 정보 -->
+                    <div class="row mt-2">
+                        <div class="col pe-0" id="area_categoryList">
+                            <span class="badge rounded-pill border new-fs-75 text-bg-light text-body-tertiary me-1">카테고리</span>
                         </div>
                     </div>
-                    <div class="col mt-4 new-fs-75">
-                        <span>추가요금은 기본 인원(차량)수보다 초과한 경우, 초과한 수만큼 부과됩니다.</span>
+                    <div class="row mt-2 fs-5">
+                        <div class="col fw-semibold" id="area_name">이름</div>
+                    </div>
+                    <div class="row new-fs-75 text-body-tertiary">
+                        <div class="col">규격: <span id="area_size">크기</span></div>
+                    </div>
+                    <div class="row my-2">
+                        <div class="col-auto fw-semibold fs-5">
+                            <span id="area_prise" class="moneyInput lightFont">가격</span>
+                            <span>원</span>
+                        </div>
+                    </div>
+                    <div class="row mt-3 text-end text-secondary new-fs-9 border-bottom border-5 pb-3">
+                        <div class="col-1 text-start"><i class="bi bi-people-fill"></i></div>
+                        <div class="col-auto text-start"><span id="area_people"></span></div>
+                        <div class="col-auto p-0">&#183;</div>
+                        <div class="col-1 text-start"><i class="bi bi-car-front-fill"></i></div>
+                        <div class="col-auto text-start"><span id="area_car">1 대</span></div>
+                    </div>
+
+                     <!-- 배치도 -->
+                    <div class="row mt-3 flex-column border-bottom border-5 pb-5">
+                        <div class="col">
+                            <span class="fw-semibold">구역 안내</span>
+                        </div> 
+                        <div class="col mt-2">
+                            <img id="area_mapImage" class="img-fluid rounded-3 originImage" src="/public/img/clubImage/mountain.jpg" alt="">
+                        </div>
+                        <div class="col new-fs-95" id="area_description">설명</div>
+                    </div>
+
+                    <!-- 추가 요금 -->
+                    <div class="row mt-3 flex-column pb-3">
+                        <div class="col">
+                            <span class="fw-semibold">추가 요금</span>
+                        </div> 
+                        <div class="col mt-2 ps-2">
+                            <div class="row text-secondary new-fs-9">
+                                <div class="col-6 fw-semibold "><span>성인 추가요금 (인당)</span></div>
+                                <div class="col p-0 text-start"><span class="moneyInput" id="area_add_adult">5000</span><span class="ps-2">원</span></div>
+                            </div>
+                            <div class="row text-secondary new-fs-9">
+                                <div class="col-6 fw-semibold "><span>미성년 추가요금 (인당)</span></div>
+                                <div class="col p-0 text-start"><span class="moneyInput" id="area_add_kid">5000</span><span class="ps-2">원</span></div>
+                            </div>
+                            <div class="row text-secondary new-fs-9">
+                                <div class="col-6 fw-semibold "><span>차량 추가요금</span></div>
+                                <div class="col p-0 text-start"><span class="moneyInput" id="area_add_car">5000</span><span class="ps-2">원</span></div>
+                            </div>
+                        </div>
+                        <div class="col mt-4 new-fs-75">
+                            <span>추가요금은 기본 인원(차량)수보다 초과한 경우, 초과한 수만큼 부과됩니다.</span>
+                        </div>
                     </div>
                 </div>
+               
+
+              
             </div>
             <div class="modal-footer">
-               <div class="col d-grid"> <button id="popupSite-no" type="button" class="btn btn-bc-outline-dark rounded-0" data-bs-dismiss="modal">닫기</button></div>
+                <div class="col d-grid"> <button id="popupSite-no" type="button" class="btn btn-bc-outline-dark rounded-0" data-bs-dismiss="modal">닫기</button></div>
             </div>
         </div>
     </div>
 </div>
+
 
 
 <div th:replace="camp/campNavi::popupCategory"></div>

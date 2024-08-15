@@ -34,39 +34,34 @@ function refreshCampsite() {
         const template = document.createElement('div');
         template.classList.add('row','mx-1','py-4','border-bottom');
         template.innerHTML = `
-        <a href="/camp/campsite?campsite_id=${campsite.dto.id}">
+        <a href="/camp/campsite?campsite_id=${campsite.dto.id}" class="p-0">
             <div class="col">
                 <div class="row">
                     <div class="col">
-                        <img class="img-fluid px-0 rounded-3" src="/images/${campsite.mainImages[0].location}" alt="캠핑장 사진" style="width: 100%; height: 20em;">
+                        <img class="img-fluid px-0 rounded-3" src="/images/${campsite.mainImages[0].location}" alt="캠핑장 사진" style="width: 100%; height: 16em;">
                     </div>
                 </div>
             <div class="row justify-content-between align-items-center">
-                    <div class="col-8 ms-1">
+                    <div class="col-8">
                         <div class="row mt-2">
                             <span class="col fs-4 fw-semibold ellipsis">${campsite.dto.camp_name}</span> 
                         </div>
                     </div>
                     <div class="col-auto">
                         <div class="row mt-2 justify-content-end">
-                            <div class="col-auto p-0 pe-2">
+                            <div class="col-auto">
                                 <i class="bi bi-star fs-5"></i>
                             </div>
-                            <!-- <div class="col-auto p-0 mx-2 text-start">
-                                0
-                            </div> -->
                         </div>
                     </div>
                 </div>
-                <div class="row ps-1 mt-1">
+                <div class="row mt-1">
                     <div class="col-12 new-fs-9 fw-semibold ellipsis text-secondary">
                         ${campsite.dto.address} ${campsite.dto.detail_address}
                     </div>
                 </div>
-                <div class="row ps-1 mt-1 flex-column">
-                    <!-- <div class="col pe-0 badgeList">
-                    </div> -->
-                    <div class="col-auto fw-semibold mt-4 text-end fs-4">
+                <div class="row mt-2 flex-column">
+                    <div class="col-auto fw-semibold text-start fs-4">
                         <span class="moneyInput lightFont">${campsite.minPrise}</span> <span class="fs-5">원</span>
                     </div>
                 </div>
@@ -166,9 +161,9 @@ function refreshSelectedArea(area) {
         area_mainImages.appendChild(container);
     }
     const area_name = document.getElementById('area_name');
-    const popupSite = document.getElementById('popupSite-title');
+    // const popupSite = document.getElementById('popupSite-title');
     area_name.innerText = area.dto.name;
-    popupSite.innerText = area.dto.name;
+    // popupSite.innerText = area.dto.name;
 
     const area_size = document.getElementById('area_size');
     area_size.innerText = area.dto.size_x + "(m) x " + area.dto.size_y + "(m)";
@@ -195,7 +190,7 @@ function refreshSelectedArea(area) {
     area_categoryList.innerHTML = '';
     for(const category of area.category) {
         const template = document.createElement('span');
-        template.classList.add('badge', 'rounded-pill', 'border', 'text-bg-light', 'text-body-tertiary', 'me-1');
+        template.classList.add('badge', 'rounded-pill','new-fs-75', 'border', 'text-bg-light', 'text-body-tertiary', 'me-1');
         template.innerText = category.name;
         area_categoryList.appendChild(template);
     }
