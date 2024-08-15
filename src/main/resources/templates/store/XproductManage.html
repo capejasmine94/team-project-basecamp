@@ -689,7 +689,15 @@
 
                         newStoreProductRow.querySelector(".productStockQuantity").innerText = `${quantity-purchase_quantity}`;
 
-                        newStoreProductRow.querySelector(".productStatus").innerText = storeProductData.status;
+                        const productStatus = newStoreProductRow.querySelector(".productStatus");
+
+                        if(quantity-purchase_quantity>0){
+                            productStatus.innerText = "판매중";
+                        }else{
+                            productStatus.innerText = "품절";
+                            productStatus.classList.add("text-danger");
+                        }
+
                         newStoreProductRow.querySelector(".productPrice").innerText = formatNumberToPrice(storeProductData.price);
 
                         const price = storeProductData.price;

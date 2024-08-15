@@ -10,6 +10,8 @@
         <script src="/public/js/uploader.js"></script>
         <link rel="stylesheet" href="/public/css/font.css">
 
+        <title>Basecamp - Store Center</title>
+
         <style>
             .fill-on {
                 font-variation-settings: 'FILL' 1;
@@ -23,6 +25,25 @@
                 object-fit: cover;
                 object-position: center;
             }
+            .product-image img {
+                aspect-ratio: 1/1;
+                width: 100px;
+                object-fit: cover;
+                object-position: center;
+            }
+
+            .image-buttons {
+                width: 100px;
+                display: flex;
+                justify-content: space-around;
+            }
+
+            .image-buttons span {
+                cursor: pointer;
+                font-size: 18px;
+                color: #000;
+            }
+
             .scrollable {
                 height: 100vh;
                 /* height: calc(100vh - 58px); */
@@ -428,7 +449,7 @@
                                 <div class="col d-grid">
                                     <div class="row">
                                         <div class="col input-group">
-                                            <input onkeyup="checkProductNameLength()" id="inputName" name="name" type="text" class="form-control bg-body-tertiary" placeholder="100자 이내로 작성">
+                                            <input oninput="checkProductNameLength()" id="inputName" name="name" type="text" class="form-control bg-body-tertiary" placeholder="100자 이내로 작성">
                                             <span class="input-group-text bg-body-tertiary" id="nameCount">0/100</span>
                                         </div>
                                     </div>
@@ -461,7 +482,7 @@
                                         <div class="col-3 position-ralative">
                                             <div class="row">
                                                 <div class="col input-group">
-                                                    <input name="price" onkeyup="checkPrice()" onblur="checkPrice()" oninput="validateInput(this)" id="inputPrice" type="number" min="0" class="form-control bg-body-tertiary">
+                                                    <input name="price" onkeyup="checkPrice()" onblur="checkPrice()" oninput="validateInput(this)" id="inputPrice" type="text" min="0" class="form-control bg-body-tertiary">
                                                     <span class="input-group-text bg-body-tertiary">원</span>
                                                 </div>
                                             </div>
@@ -497,7 +518,7 @@
                                                 <div class="col-3 d-grid">
                                                     <div class="row">
                                                         <div class="col input-group">
-                                                            <input type="number" name="percentage" value="0" min="0" class="form-control" id="inputDiscountRate" onkeyup="checkPrice()" oninput="validateDiscountRate(this)">
+                                                            <input type="text" name="percentage" value="0" min="0" class="form-control" id="inputDiscountRate" onkeyup="checkPrice()" oninput="validateDiscountRate(this)">
                                                             <span class="input-group-text bg-white">%</span>
                                                         </div>
                                                     </div>
@@ -617,10 +638,10 @@
                                                     <div class="row px-3 pb-3 align-items-center optionInputRow">
                                                         <div class="col-2"></div>
                                                         <div class="col-2 pe-0">
-                                                            <input type="text" class="form-control inputOptionName" placeholder="예시:컬러">
+                                                            <input type="text" class="form-control inputOptionName" placeholder="예시:컬러" oninput="activeOptionAddButton()">
                                                         </div>
                                                         <div class="col-5">
-                                                            <input type="text" class="form-control inputOptionValue" placeholder="예시:빨강,노랑(,로 구분)">
+                                                            <input type="text" class="form-control inputOptionValue" placeholder="예시:빨강,노랑(,로 구분)"oninput="activeOptionAddButton()">
                                                         </div>
                                                         <div class="col-auto ps-0 addOptionRowButton">
                                                             <input type="button" class="btn btn-secondary pb-2" value="+" onclick="addOptionRow()">
@@ -631,7 +652,7 @@
                                             <div class="row px-3 pb-3">
                                                 <div class="col-2"></div>
                                                 <div class="col">
-                                                    <a type="button" id="optionAddButton" class="btn bg-white border py-2 f09" onclick="addToOptionList()">
+                                                    <a type="button" id="optionAddButton" class="btn bg-white border py-2 f09 disabled" onclick="addToOptionList()">
                                                         옵션 목록으로 적용 <i class="fa-solid fa-arrow-down"></i>
                                                     </a>
                                                 </div>
@@ -748,32 +769,79 @@
                                 </div>
                             </div>
                             <div class="row py-3 px-3 align-items-center border-bottom">
-                                <div class="col-2">
-                                    대표 이미지
-                                </div>
-                                <div class="col-auto imageAddButton" id="mainImageInputCol">
-                                    <input id="mainImageInput" type="file" name="uploadMainImage" accept="image/*" class="d-none">
-                                    <span onclick="document.getElementById('mainImageInput').click()" class=" justify-content-center d-flex">
-                                        <i class="bi bi-plus"></i>
-                                    </span>
-                                </div>
-                                <div class="col seller_profile d-none" id="previewCol">
-                                    <img id="mainImagePreview">
+                                <div class="col">
+                                    <div class="row">
+                                        <div class="col-2">
+                                            대표 이미지
+                                        </div>
+                                        <div class="col-auto imageAddButton" id="mainImageInputCol">
+                                            <input id="mainImageInput" type="file" name="uploadMainImage" accept="image/*" class="d-none">
+                                            <span onclick="document.getElementById('mainImageInput').click()" class="justify-content-center d-flex">
+                                                <i class="bi bi-plus"></i>
+                                            </span>
+                                        </div>
+                                        <div class="col product-image position-relative d-none" id="previewCol">
+                                            <img id="mainImagePreview">
+                                            <div class="image-buttons bg-dark bg-opacity-50 py-1 d-flex justify-content-around position-absolute bottom-0">
+                                                <span class="zoom-icon">
+                                                    <i class="bi bi-search text-white"></i>
+                                                </span>
+                                                <span class="edit-icon" onclick="editImage()">
+                                                    <i class="bi bi-pencil text-white"></i>
+                                                </span>
+                                                <span class="delete-icon" onclick="deleteImage()">
+                                                    <i class="bi bi-x text-white"></i>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row f08 pt-2 text-body-tertiary">
+                                        <div class="col-2"></div>
+                                        <div class="col">
+                                            권장 크기: 1000 X 1000(윈도 대상 750 X 1000), 300 X 300 이상
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                             <div class="row py-3 px-3 align-items-center">
-                                <div class="col-2">
-                                    상세 이미지
-                                </div>
-                                <div class="col imageAddButton">
-                                    <input id="detailImages" type="file" accept="image/*" multiple class="d-none">
-                                    <span onclick="document.getElementById('detailImages').click()" class=" justify-content-center d-flex">
-                                        <i class="bi bi-plus"></i>
-                                    </span>
+                                <div class="col">
+                                    <div class="row">
+                                        <div class="col-2">
+                                            상세 이미지
+                                        </div>
+                                        <div class="col-auto imageAddButton">
+                                            <input id="detailImages" type="file" name="uploadDetailImages" accept="image/*" multiple class="d-none" onchange="previewDetailImages(event)">
+                                            <span onclick="document.getElementById('detailImages').click()" class="justify-content-center d-flex">
+                                                <i class="bi bi-plus"></i>
+                                            </span>
+                                        </div>
+                                        <div class="col-auto px-0 d-none" id="detailCol">
+                                            <div class="row detaiImagePreviewContainer">
+                                                
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row f08 pt-2 text-body-tertiary">
+                                        <div class="col-2"></div>
+                                        <div class="col">
+                                            <div class="row">
+                                                <div class="col">
+                                                    권장 크기: 1000 X 1000(윈도 대상 750 X 1000),
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col">
+                                                    jpg,jpeg,gif,png,bmp 형식의 정지 이미지만 등록됩니다.(움직이는 이미지의 경우 첫 번째 컷이 등록)
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
+
                         </div>
                     </div>
+                    
 
                     <div class="row px-4 pb-4">
                         <div class="col border bg-white rounded-2">
@@ -973,7 +1041,7 @@
                     </div>
                 </div>
 
-                <input type="number" value="0" onblur="isInputTypeNumberEmpty(this)" class="optionPriceInput border-0 col rounded-0 d-grid align-items-center justify-content-center d-flex border-end">
+                <input type="number" value="0" onblur="validateOptionPriceInput(this)" class="optionPriceInput border-0 col rounded-0 d-grid align-items-center justify-content-center d-flex border-end">
                 <input type="number" value="0" onblur="isInputTypeNumberEmpty(this)" class="optionQuantityInput border-0 col rounded-0 d-grid align-items-center justify-content-center d-flex border-end" onkeyup="inputOptionQuantity()">
 
                 <div class="col align-items-center justify-content-center d-flex border-end">
@@ -987,6 +1055,22 @@
             <!-- 옵션 값 -->
             <div class="col optionValueCol py-2 align-items-center justify-content-center d-flex border-end">
                 무언가
+            </div>
+
+            <!-- 상세이미지 미리보기 -->
+            <div class="col pe-0 product-image position-relative detailImagePreviewCol">
+                <img class="detailImagePreview">
+                <div class="image-buttons bg-dark bg-opacity-50 py-1 d-flex justify-content-around position-absolute bottom-0">
+                    <span class="zoom-icon">
+                        <i class="bi bi-search text-white"></i>
+                    </span>
+                    <span class="edit-icon">
+                        <i class="bi bi-pencil text-white"></i>
+                    </span>
+                    <span class="delete-icon">
+                        <i class="bi bi-x text-white"></i>
+                    </span>
+                </div>
             </div>
 
         </div>
@@ -1032,6 +1116,64 @@
                     }
                 });
             });
+
+            function editImage() {
+                document.getElementById('mainImageInput').click();
+            }
+
+            function deleteImage() {
+                const previewCol = document.getElementById('previewCol');
+                const mainImageInput = document.getElementById('mainImageInput');
+                const mainImagePreview = document.getElementById('mainImagePreview');
+
+                mainImageInput.value = "";
+                mainImagePreview.src = "";
+                previewCol.classList.add('d-none');
+
+                const mainImageInputCol = document.getElementById('mainImageInputCol');
+                mainImageInputCol.classList.remove('d-none')                
+            }
+
+            function previewDetailImages(event) {
+                const files = event.target.files;
+                const container = document.querySelector('.detaiImagePreviewContainer');
+
+                container.innerHTML = '';
+
+                for (let i = 0; i < files.length; i++) {
+                    const file = files[i];
+                    const reader = new FileReader();
+
+                    reader.onload = function(e) {
+                        const detailImagePreviewCol = document.querySelector("#template .detailImagePreviewCol").cloneNode(true);
+
+                        const detailImagePreview = detailImagePreviewCol.querySelector('.detailImagePreview');
+                        detailImagePreview.src = e.target.result;
+
+                        const deleteIcon = detailImagePreviewCol.querySelector('.delete-icon');
+                        deleteIcon.onclick = function() {
+                            container.removeChild(detailImagePreviewCol);
+                        };
+
+                        container.appendChild(detailImagePreviewCol);
+                    }
+
+                    reader.readAsDataURL(file);
+                }
+
+                document.getElementById("detailCol").classList.remove("d-none")
+            }
+
+
+            function validateOptionPriceInput(input){
+                if(input.value==''){
+                    input.value=0;
+                }
+                if(input.value%10!=0){
+                    alert("10원 단위로 입력해 주세요.")
+                    input.value=0;
+                }
+            }
 
             function isInputTypeNumberEmpty(input){
                 if(input.value==''){
@@ -1159,6 +1301,28 @@
                 }
             }
 
+            function activeOptionAddButton(){
+                const inputOptionNames = document.querySelectorAll("#optionBox .inputOptionName");
+                const inputOptionValues = document.querySelectorAll("#optionBox .inputOptionValue");
+
+                const optionAddButton = document.getElementById("optionAddButton");
+
+                for(inputOptionName of inputOptionNames){
+                    if(inputOptionName.value==''){
+                        optionAddButton.classList.add("disabled");
+                        return;
+                    }
+                }
+
+                for(inputOptionValue of inputOptionValues){
+                    if(inputOptionValue.value==''){
+                        optionAddButton.classList.add("disabled");
+                        return;
+                    }
+                }
+
+                optionAddButton.classList.remove("disabled");
+            }
 
             function addToOptionList(){
                 const optionNameRow = document.getElementById("optionNameRow");
@@ -1178,9 +1342,9 @@
                 const values = [];
 
                 inputOptionValues.forEach(input => {
-                    const splitValues = input.value.split(',');
+                    const splitValues = input.value.split(',').map(value => value.trim());
                     values.push(splitValues);
-                })
+                });
 
                 const combinations = [];
                 function createCombinations(prefix, index) {
@@ -1282,11 +1446,11 @@
                 const currentLength = inputName.value.length;
                 
                 if (currentLength > 100) {
-                    inputName.value = inputName.value.substring(0, 100);
+                    inputName.value = inputName.value.slice(0, 100);
                     currentLength = 100;
                 }
-                
-                nameCount.textContent = currentLength + "/100";
+
+                nameCount.innerText = currentLength + "/100";
             }
 
             function validateDiscountRate(input) {
@@ -1297,6 +1461,10 @@
 
             function validateInput(input){
                 input.value = input.value.replace(/[^0-9]/g, '');
+            }
+
+            function formatNumberToPrice(number) {
+                return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
             }
 
             function checkPrice(){
@@ -1317,10 +1485,10 @@
                 const inputDiscountRate = document.getElementById("inputDiscountRate");
 
                 const discountedPrice = inputPrice.value - (inputPrice.value * inputDiscountRate.value / 100);
-                finalSalePrice.innerText = Math.round(discountedPrice);//최종판매가
+                finalSalePrice.innerText = formatNumberToPrice(Math.round(discountedPrice));//최종판매가
 
                 const discountAmount = document.getElementById("discountAmount");
-                const innerText = inputPrice.value - Math.round(discountedPrice);
+                const innerText = formatNumberToPrice(inputPrice.value - Math.round(discountedPrice));
                 discountAmount.innerText = `(${innerText}원 할인)`
             }
 

@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.bulmeong.basecamp.common.dto.ImageDto;
 import com.bulmeong.basecamp.common.dto.RestResponseDto;
 import com.bulmeong.basecamp.common.util.ImageUtil;
 import com.bulmeong.basecamp.store.dto.AdditionalInfoDto;
@@ -83,6 +84,7 @@ public class RestStoreController {
     public RestResponseDto registerProduct(
         StoreProductDto storeProductDto,
         @RequestParam("uploadMainImage") MultipartFile uploadMainImage, 
+        @RequestParam("uploadDetailImages") MultipartFile[] uploadDetailImages,
         @RequestParam("percentage") double percentage,
         HttpSession session
     ){
@@ -93,7 +95,9 @@ public class RestStoreController {
         storeProductDto.setMain_image(ImageUtil.saveImageAndReturnLocation(uploadMainImage));
         storeProductDto.setStore_id(storeDto.getId());
 
-        int product_id = storeService.registerProductAndReturnId(storeProductDto,percentage);
+        List<ImageDto> imageDtoList = ImageUtil.saveImageAndReturnDtoList(uploadDetailImages);
+
+        int product_id = storeService.registerProductAndReturnId(storeProductDto,percentage,imageDtoList);
 
         restResponseDto.add("product_id", product_id);
 

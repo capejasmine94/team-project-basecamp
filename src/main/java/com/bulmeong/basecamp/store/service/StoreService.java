@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.*;
 
+import com.bulmeong.basecamp.common.dto.ImageDto;
 import com.bulmeong.basecamp.store.dto.AdditionalInfoDto;
 import com.bulmeong.basecamp.store.dto.CartProductDto;
 import com.bulmeong.basecamp.store.dto.CartProductOptionValueDto;
@@ -12,6 +13,7 @@ import com.bulmeong.basecamp.store.dto.OptionValueAdditionalInfoDto;
 import com.bulmeong.basecamp.store.dto.OrderDeliveryInfoDto;
 import com.bulmeong.basecamp.store.dto.OrderProductDto;
 import com.bulmeong.basecamp.store.dto.OrderProductOptionValueDto;
+import com.bulmeong.basecamp.store.dto.ProductImageDto;
 import com.bulmeong.basecamp.store.dto.ProductOptionNameDto;
 import com.bulmeong.basecamp.store.dto.ProductOptionValueDto;
 import com.bulmeong.basecamp.store.dto.ProductRefundDto;
@@ -74,7 +76,7 @@ public class StoreService {
         return storeSqlMapper.selectProductSubcategoryByCategoryId(category_id);
     }
 
-    public int registerProductAndReturnId(StoreProductDto storeProductDto, double percentage){
+    public int registerProductAndReturnId(StoreProductDto storeProductDto, double percentage, List<ImageDto> imageDtoList){
         if(percentage!=0){
             StoreProductDiscountDto storeProductDiscountDto = new StoreProductDiscountDto();
             storeProductDiscountDto.setPercentage(percentage/100);
@@ -83,6 +85,13 @@ public class StoreService {
             storeProductDto.setDiscount_id(storeProductDiscountDto.getId());
         }
         storeSqlMapper.insertProduct(storeProductDto);
+
+        for(ImageDto imageDto : imageDtoList){
+            ProductImageDto productImageDto = new ProductImageDto();
+            productImageDto.setLocation(imageDto.getLocation());
+            productImageDto.setProduct_id(storeProductDto.getId());
+            storeSqlMapper.insertProductImage(productImageDto);
+        }
 
         return storeProductDto.getId();
     }

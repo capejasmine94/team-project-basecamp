@@ -13,6 +13,7 @@ import com.bulmeong.basecamp.store.dto.OptionValueAdditionalInfoDto;
 import com.bulmeong.basecamp.store.dto.OrderDeliveryInfoDto;
 import com.bulmeong.basecamp.store.dto.OrderProductDto;
 import com.bulmeong.basecamp.store.dto.OrderProductOptionValueDto;
+import com.bulmeong.basecamp.store.dto.ProductImageDto;
 import com.bulmeong.basecamp.store.dto.ProductOptionNameDto;
 import com.bulmeong.basecamp.store.dto.ProductOptionValueDto;
 import com.bulmeong.basecamp.store.dto.ProductRefundDto;
@@ -199,4 +200,6 @@ public interface StoreSqlMapper {
     public void insertProductRefund(ProductRefundDto productRefundDto);
 
     public Map<String, Object> selectRefundProductDataForCompletePage(int id);
+
+    public void insertProductImage(ProductImageDto productImageDto);
 }
