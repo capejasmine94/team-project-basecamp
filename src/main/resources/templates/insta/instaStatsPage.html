@@ -18,8 +18,8 @@
 
         <!-- 이걸로 레이아웃 확인하셈 -->
         <script src="/public/js/lockLikeMobile.js"></script>
-        
-        <title></title>
+
+        <title>instaStatsPage</title>
 
         <script src="/public/js/util.js"></script>
 
@@ -34,25 +34,17 @@
                 <div class="col-2">
                     <a th:href="@{./instaMainPage(user_id=${session.sessionUserInfo.id})}" style="color: black;"><i class="bi bi-x-lg"></i></a>
                 </div>
-                <div class="col-10 pe-5 ps-0">
-                    <span>페이지 이름</span>
+                <div class="col-10 pe-5 ps-0 fontNine">
+                    <span>계정 인사이트</span>
                 </div>
             </div>
 
             <div class="row">
-                <div class="col"></div>
+                <div class="col">
+                    <span>통계 레츠기 커모</span>
+                </div>
             </div>
 
-            <!-- 글쓰기 버튼 -->
-            <!-- style="aspect-ratio: 1/1;" -> 익스펙토 주문 : 정방향을 만들어준다 -->
-            <!-- <div class="write-button-container">
-                <form action="./instaWritePage" method="get">
-                    <button class="btn bg-white rounded-2 border border-2 border-black px-2 py-1" type="submit">
-                        <i class="fa-solid fa-plus"></i>
-                        <input type="hidden" name="user_id" th:value="${session.sessionUserInfo.id}">
-                    </button>
-                </form>
-            </div> -->
         </div>
 
 
@@ -61,12 +53,6 @@
         <script src="https://kit.fontawesome.com/7b271bba58.js" crossorigin="anonymous"></script>
     </body>
 </html>
-
-
-
-
-
-
 
 
 

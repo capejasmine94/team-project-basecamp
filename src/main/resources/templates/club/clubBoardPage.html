@@ -31,7 +31,7 @@
             }
 
             :root {
-                --nav-underline-border-width: 1px; /* 밑줄의 두께 */
+                --nav-underline-border-width: 2px; /* 밑줄의 두께 */
                 --nav-link-active-color: #000000; /* 선택된 탭 텍스트 색상 및 밑줄 색상 */
                 --nav-inactive-border-color: #e0e0e0; /* 비활성화된 탭 밑줄 색상 (밝은 회색) */
             }
@@ -72,16 +72,7 @@
             }
 
             /* 비활성화된 탭의 얇은 회색 밑줄 */
-            .nav-link::after {
-                content: '';
-                position: absolute;
-                bottom: -1px;
-                left: 0;
-                right: 0;
-                height: var(--nav-underline-border-width); /* 실선 두께 유지 */
-                background-color: var(--nav-inactive-border-color); /* 얇은 회색 밑줄 색상 */
-                z-index: 1; /* 활성화된 탭의 진한 밑줄 아래에 위치 */
-            }
+
             
 
                 body {
@@ -114,156 +105,165 @@
         </style>
     </head>
     <body>
-      
-        <div class="container" style="padding-top: 60.792px;">
-
-            <div class="fixed-top px-4 row border-bottom py-3 shadow-sm bg-white">
-              
-                <div class="col text-center fw-medium">소모임 이름</div>
-                
+        <div class="container-fluid fixed-top">
+            <div class="row pt-3">
+                <div class="col text-center fw-medium" style="font-size: 0.9em;">소모임 이름</div>
             </div>
-            
-
-            <!-- 전체 박스 1 -->
-                <div class="row">
-                    <div class="col px-0 overflow-x-hidden">
-
-                         <!-- 네비바 -->
-                        <div class="col bg-white text-center nav">
-                            <div class="col nav-item">
-                                <a class="nav-link" th:href="@{/club/home(id=${id})}">홈</a>
-                            </div>
-                            <div class="col nav-item">
-                                <a class="nav-link active" aria-current="page" th:href="@{/club/board(id=${id})}">게시판</a>
-                            </div>
-                            <div class="col nav-item">
-                                <a class="nav-link" th:href="@{/club/album(id=${id})}">사진첩</a>
-                            </div>
+            <div class="row px-0">
+                <div class="col">
+                    <!-- 네비바 -->
+                    <div class="row bg-white text-center nav border-bottom">
+                        <div class="col p-0 nav-item">
+                            <a class="nav-link"  th:href="@{/club/home(id=${id})}" style="font-size: 0.9em;">홈</a>
                         </div>
-
-                        <!-- 전체 박스 2 -->
-                        <div class="row">
-                            <div class="col">
-
-                                <!-- 검색바 위치 고민중-->
-                                <div class="row px-3 pt-4 pb-3 bg-white">
-                                    <div class="col input-group">
-                                    <input type="text" th:value="${param.searchWord}" name="searchWord" class="form-control bg-body-tertiary" placeholder="검색어를 입력하세요.">
-                                        <button class="btn bg-body-tertiary border col-auto">
-                                            <i class="bi bi-search"></i>
-                                        </button>
-                                    </div>
-                                </div>
-
-
-                        <!-- 여기서부터 게시글 목록 출력 -->
-                        <!-- 프로필 박스 -->
-                        <div class="row" th:each="postDetail : ${postDetailList}">
-                            <div class="col">
-                                
-                                <!-- 프로필 사진 좀 더 큰 레이아웃 -->
-                                <!-- <div class="row px-3 bg-white pt-3">
-                                    <div class="col">
-                                        <div class="row pb-2">
-                                            <div class="col-2">
-                                                <img th:if="${postDetail.userDto.profile_image == 'default'}" src="/public/img/clubImage/profile.jpg" class="img-fluid rounded-circle"  style="aspect-ratio: 1/1;">
-                                                <img th:unless="${postDetail.userDto.profile_image == 'default'}" th:src="|/images/${postDetail.userDto.profile_image}|" class="img-fluid rounded-circle"  style="aspect-ratio: 1/1;">
-                                            </div>
-                                            <div class="col ps-0 align-self-center" style="font-size: 0.9em;">
-                                                <div class="row">
-                                                    <div class="col">
-                                                        <span th:text="${postDetail.userDto.nickname}"></span>
-                                                    </div>
-                                                </div>
-                                                <div class="row">
-                                                    <div class="col text-secondary" style="font-size: 0.8em;">
-                                                        <span th:text="${#dates.format(postDetail.clubPostDto.created_at, 'yyyy.MM.dd')}"></span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div> -->
-                                <a th:href="@{/club/readPost(id=${postDetail.clubPostDto.id})}" style="text-decoration: none; color: black;">
-                                    <div class="row border-bottom py-3 px-3">
-                                        <!-- <div class="col-2">
-                                            이미지
-                                        </div> -->
-                                        <div class="col">
-                                            <div class="row">
-                                                <div class="col pe-2 ellipsis-line-two" style="font-size: 0.9em;">
-                                                   <span class="lightFont" th:text=" '[' +${postDetail.clubPostCategoryDto.category_name}+']'">[카테고리]</span>
-                                                
-                                                    <span th:text="${postDetail.clubPostDto.title}"></span>
-                                                </div>
-                                            </div>
-                                            <div class="row pt-2">
-                                                <div class="col text-secondary" style="font-size: 0.8em;">
-                                                    <span th:text="${postDetail.userDto.nickname}"></span><span> &#183; </span>
-                                                    <span th:text="${#dates.format(postDetail.clubPostDto.created_at, 'yyyy.MM.dd')}"></span><span> &#183; </span>
-                                                    <span th:text="'조회' + ${postDetail.clubPostDto.read_count}">조회 531</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-auto ps-0 d-flex justify-content-end align-items-center">
-                                            <div class="centered-circle">
-                                                <span th:text="${postDetail.totalComment}">1</span> 
-                                            </div>
-                                        </div>   
-                                    </div>
-                                </a>
-
-
-                                <!-- 프로필 사진 작게 전체적으로 바뀐 레이아웃 -->
-                                <!-- <div class="row pb-2 px-3 bg-white pt-3">
-                                    <div class="col-1 pe-0 align-self-center d-flex">
-                                        <img th:if="${postDetail.userDto.profile_image == 'default'}" src="/public/img/clubImage/profile.jpg" class="img-fluid rounded-circle"  style="aspect-ratio: 1/1;">
-                                        <img th:unless="${postDetail.userDto.profile_image == 'default'}" th:src="|/images/${postDetail.userDto.profile_image}|" class="img-fluid rounded-circle"  style="aspect-ratio: 1/1;">
-                                    </div>
-                                    
-                                    <div class="col-auto ps-1 align-self-center d-flex" style="font-size: 0.9em;">
-                                        <span th:text="${postDetail.userDto.nickname}"></span>
-                                    </div>
-                                        
-                                    <div class="col text-secondary text-end align-self-center" style="font-size: 0.9em;">
-                                        <span th:text="${#dates.format(postDetail.clubPostDto.created_at, 'yyyy.MM.dd')}"></span>
-                                    </div>
-                                </div> -->
-
-                                <!-- 글 박스 -->
-                                <!-- <div class="row">
-                                    <div class="col">
-
-                                        <div class="row bg-white py-2 px-3 border-bottom">
-                                            <div class="col text-truncate pb-1 fw-medium">
-                                                <a th:href="@{/club/readPost(id=${postDetail.clubPostDto.id})}" style="text-decoration: none; color: black;">
-                                                    <span th:text="${postDetail.clubPostDto.title}"></span>
-                                                </a>
-                                            </div>
-                                        </div>
-                                   
-                                        <div class="row bg-white px-3 mb-2 py-2" style="font-size: 0.7em;">
-                                            <div class="col-auto">
-                                                <i class="bi bi-bookmark"></i><span> 스크랩 <span class="text-primary fw-bold" th:text="${postDetail.totalPostLike}"></span></span>
-                                                &nbsp;&nbsp;
-                                                <i class="bi bi-chat"></i><span> 댓글 <span class="text-primary fw-bold" th:text="${postDetail.totalComment}"></span></span>
-                                            </div>
-                                            <div class="col text-end">
-                                                <span th:text="${postDetail.clubPostCategoryDto.category_name}"></span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div> -->
-                                
-                            </div>
+                        <div class="col p-0 nav-item">
+                            <a class="nav-link" th:href="@{/club/home(id=${id})}" style="font-size: 0.9em;">정모</a>
                         </div>
-                                    
-                            </div>
+                        <div class="col p-0 nav-item">
+                            <a class="nav-link active fw-medium" aria-current="page" th:href="@{/club/board(id=${id})}" style="font-size: 0.9em;">게시판</a>
+                        </div>
+                        <div class="col p-0 nav-item">
+                            <a class="nav-link" th:href="@{/club/album(id=${id})}" style="font-size: 0.9em;">사진첩</a>
                         </div>
                     </div>
                 </div>
+            </div>
+        </div>
 
-                 <!--커뮤니티 하단네비 -->
+        <div class="container" style="padding-top: 75.22px;">
+
+            <div class="px-0 row pt-3 bg-white">
+                <div class="col">
+                    <!-- 전체 박스 2 -->
+                    <div class="row">
+                        <div class="col">
+
+                            <!-- 검색바 위치 고민중-->
+                            <div class="row px-3 pt-4 pb-3 bg-white">
+                                <div class="col input-group">
+                                    <input type="text" th:value="${param.searchWord}" name="searchWord" class="form-control bg-body-tertiary" placeholder="검색어를 입력하세요.">
+                                    <button class="btn bg-body-tertiary border col-auto">
+                                        <i class="bi bi-search"></i>
+                                    </button>
+                                </div>
+                            </div>
+
+
+                            <!-- 여기서부터 게시글 목록 출력 -->
+                            <!-- 프로필 박스 -->
+                            <div class="row" th:each="postDetail : ${postDetailList}">
+                                <div class="col">
+                                    
+                                    <!-- 프로필 사진 좀 더 큰 레이아웃 -->
+                                    <!-- <div class="row px-3 bg-white pt-3">
+                                        <div class="col">
+                                            <div class="row pb-2">
+                                                <div class="col-2">
+                                                    <img th:if="${postDetail.userDto.profile_image == 'default'}" src="/public/img/clubImage/profile.jpg" class="img-fluid rounded-circle"  style="aspect-ratio: 1/1;">
+                                                    <img th:unless="${postDetail.userDto.profile_image == 'default'}" th:src="|/images/${postDetail.userDto.profile_image}|" class="img-fluid rounded-circle"  style="aspect-ratio: 1/1;">
+                                                </div>
+                                                <div class="col ps-0 align-self-center" style="font-size: 0.9em;">
+                                                    <div class="row">
+                                                        <div class="col">
+                                                            <span th:text="${postDetail.userDto.nickname}"></span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col text-secondary" style="font-size: 0.8em;">
+                                                            <span th:text="${#dates.format(postDetail.clubPostDto.created_at, 'yyyy.MM.dd')}"></span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div> -->
+                                    <a th:href="@{/club/readPost(id=${postDetail.clubPostDto.id})}" style="text-decoration: none; color: black;">
+                                        <div class="row border-bottom py-3 px-3">
+                                            <!-- <div class="col-2">
+                                                이미지
+                                            </div> -->
+                                            <div class="col">
+                                                <div class="row">
+                                                    <div class="col pe-2 ellipsis-line-two" style="font-size: 0.9em;">
+                                                    <span class="lightFont" th:text=" '[' +${postDetail.clubPostCategoryDto.category_name}+']'">[카테고리]</span>
+                                                    
+                                                        <span th:text="${postDetail.clubPostDto.title}" style="font-weight: 300;"></span>
+                                                    </div>
+                                                </div>
+                                                <div class="row pt-2">
+                                                    <div class="col text-secondary" style="font-size: 0.8em;">
+                                                        <span th:text="${postDetail.userDto.nickname}"></span><span> &#183; </span>
+                                                        <span th:text="${#dates.format(postDetail.clubPostDto.created_at, 'yyyy.MM.dd')}"></span><span> &#183; </span>
+                                                        <span th:text="'조회' + ${postDetail.clubPostDto.read_count}">조회 531</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-auto ps-0 d-flex justify-content-end align-items-center">
+                                                <div class="centered-circle">
+                                                    <span th:text="${postDetail.totalComment}">1</span> 
+                                                </div>
+                                            </div>   
+                                        </div>
+                                    </a>
+
+
+                                    <!-- 프로필 사진 작게 전체적으로 바뀐 레이아웃 -->
+                                    <!-- <div class="row pb-2 px-3 bg-white pt-3">
+                                        <div class="col-1 pe-0 align-self-center d-flex">
+                                            <img th:if="${postDetail.userDto.profile_image == 'default'}" src="/public/img/clubImage/profile.jpg" class="img-fluid rounded-circle"  style="aspect-ratio: 1/1;">
+                                            <img th:unless="${postDetail.userDto.profile_image == 'default'}" th:src="|/images/${postDetail.userDto.profile_image}|" class="img-fluid rounded-circle"  style="aspect-ratio: 1/1;">
+                                        </div>
+                                        
+                                        <div class="col-auto ps-1 align-self-center d-flex" style="font-size: 0.9em;">
+                                            <span th:text="${postDetail.userDto.nickname}"></span>
+                                        </div>
+                                            
+                                        <div class="col text-secondary text-end align-self-center" style="font-size: 0.9em;">
+                                            <span th:text="${#dates.format(postDetail.clubPostDto.created_at, 'yyyy.MM.dd')}"></span>
+                                        </div>
+                                    </div> -->
+
+                                    <!-- 글 박스 -->
+                                    <!-- <div class="row">
+                                        <div class="col">
+
+                                            <div class="row bg-white py-2 px-3 border-bottom">
+                                                <div class="col text-truncate pb-1 fw-medium">
+                                                    <a th:href="@{/club/readPost(id=${postDetail.clubPostDto.id})}" style="text-decoration: none; color: black;">
+                                                        <span th:text="${postDetail.clubPostDto.title}"></span>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                    
+                                            <div class="row bg-white px-3 mb-2 py-2" style="font-size: 0.7em;">
+                                                <div class="col-auto">
+                                                    <i class="bi bi-bookmark"></i><span> 스크랩 <span class="text-primary fw-bold" th:text="${postDetail.totalPostLike}"></span></span>
+                                                    &nbsp;&nbsp;
+                                                    <i class="bi bi-chat"></i><span> 댓글 <span class="text-primary fw-bold" th:text="${postDetail.totalComment}"></span></span>
+                                                </div>
+                                                <div class="col text-end">
+                                                    <span th:text="${postDetail.clubPostCategoryDto.category_name}"></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div> -->
+                                    
+                                </div>
+                            </div>
+                                
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- <a th:if="${session.sessionUserInfo != null}" th:href="@{/club/writePost(id=${id})}" class="fixed-button">
+                <i class="bi bi-plus-circle-fill"></i>
+                <i class="bi bi-pencil"></i>
+            </a> -->
+
+        </div>
+
+        <!--커뮤니티 하단네비 -->
         <div th:fragment="bottomNaviBasecamp" class="container-fluid g-0 border-top bg-white fixed-bottom pb-3">
             <div class="row mx-1 py-2 text-center">
                 
@@ -382,33 +382,23 @@
             </div>
         </div>
 
-
-                <!-- <a th:if="${session.sessionUserInfo != null}" th:href="@{/club/writePost(id=${id})}" class="fixed-button">
-                 <i class="bi bi-plus-circle-fill"></i>
-                    <i class="bi bi-pencil"></i>
-                </a> -->
-
-                 <!-- 게시글 작성하기 -->
-                 <div class="container fixed-bottom mb-5 pb-4 pe-2">
-                    <div class="row justify-content-end mb-4 pe-3">
-                        <a th:if="${session.sessionUserInfo != null}" th:href="@{/club/writePost(id=${id})}" class="col-auto bg-light ps-2 py-2 shadow rounded-pill text-decoration-none">
-                            <div class="row text-dark">
-                                <div class="col-auto pe-0 align-self-center d-flex">
-                                    <span class="material-symbols-outlined fs-3">add</span>
-                                </div>
-                                <div class="col ps-0 fs-7 fw-medium d-flex align-self-center text-center" style="letter-spacing: -0.5px;">
-                                    글 작성
-                                </div>
-                            </div>
-                        </a>
+        <!-- 게시글 작성하기 -->
+        <div class="container fixed-bottom mb-5 pb-4 pe-2">
+            <div class="row justify-content-end mb-4 pe-3">
+                <a th:if="${session.sessionUserInfo != null}" th:href="@{/club/writePost(id=${id})}" class="col-auto bg-light ps-2 py-2 shadow rounded-pill text-decoration-none">
+                    <div class="row text-dark">
+                        <div class="col-auto pe-0 align-self-center d-flex">
+                            <span class="material-symbols-outlined fs-3">add</span>
+                        </div>
+                        <div class="col ps-0 fs-7 fw-medium d-flex align-self-center text-center" style="letter-spacing: -0.5px;">
+                            글 작성
+                        </div>
                     </div>
-                </div>
-
+                </a>
+            </div>
         </div>
-
-
          
-   
+        <script src="/public/js/lockLikeMobile.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     </body>
 </html>
