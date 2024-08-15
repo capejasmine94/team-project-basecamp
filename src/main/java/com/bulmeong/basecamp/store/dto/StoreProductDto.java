@@ -14,6 +14,7 @@ public class StoreProductDto {
     private String main_image;
     private int price;
     private int quantity;
+    private String status;
     private Date created_at;
     private Date updated_at;
 }

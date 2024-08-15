@@ -125,7 +125,8 @@
             description,
             main_image,
             price,
-            quantity
+            quantity,
+            status
         )values(
             #{store_id},
             #{subcategory_id},
@@ -134,7 +135,8 @@
             #{description},
             #{main_image},
             #{price},
-            #{quantity}
+            #{quantity},
+            '판매가능'
         )
     </insert>
 
@@ -882,5 +884,13 @@
         inner join store_order so on so.id = op.order_id 
         where pr.id = #{id}
     </select>
+
+    <insert id="insertProductImage">
+        insert into product_image(
+            product_id, location
+        )values(
+            #{product_id}, #{location}
+        )
+    </insert>
 
 </mapper>
