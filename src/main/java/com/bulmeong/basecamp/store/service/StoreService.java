@@ -236,10 +236,13 @@ public class StoreService {
             map.put("salePrice", storeProductDto.getPrice());
         }
 
+        List<ProductImageDto> productImageDtoList = storeSqlMapper.selectProductImageDtoListByProductId(id);
+
         map.put("storeProductDto", storeProductDto);
         map.put("storeDto", storeDto);
         map.put("storeDeliveryInfoDto", storeDeliveryInfoDto);
         map.put("productWishCount", productWishCount);
+        map.put("productImageDtoList", productImageDtoList);
 
         return map;
 

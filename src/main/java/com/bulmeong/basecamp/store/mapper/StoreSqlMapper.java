@@ -202,4 +202,5 @@ public interface StoreSqlMapper {
     public Map<String, Object> selectRefundProductDataForCompletePage(int id);
 
     public void insertProductImage(ProductImageDto productImageDto);
+    public List<ProductImageDto> selectProductImageDtoListByProductId(int product_id);
 }

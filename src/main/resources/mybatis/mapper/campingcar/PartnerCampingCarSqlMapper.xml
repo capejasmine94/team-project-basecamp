@@ -161,4 +161,36 @@
         where bc.rental_company_id = #{rental_company_id}
     </select>
 
+    <!-- 판매자의 예약신청 내역 -->
+    <select id="findbookReservationAll" resultType="Map">
+    select 	br.id,
+            bu.nickname As rentUserNickname,
+            bctc.name AS carTypeName,
+            bc.product_name,
+            br.start_date AS reservationStart_date,
+            br.end_date AS reservationEnd_date,
+            bdlc.name AS driver_license_name,
+            bdac.name AS driver_age_condition_name,
+            bdec.name AS driver_experience_condition_nam,
+            br.progress, 
+            br.created_at AS reservationCreated_at 
+    from bc_reservation br 
+    inner join bc_rent_user bru on br.rent_user_id = bru.id
+    inner join bc_user bu on bru.user_id = bu.id
+    inner join bc_campingcar bc on br.product_id = bc.id 
+    inner join bc_car_type_categories bctc on bc.category_id = bctc.id
+    inner join bc_driver_license_condition bdlc on bru.driver_license_id = bdlc.id 
+    inner join bc_driver_age_condition bdac on bru.driver_age_id = bdac.id 
+    inner join bc_driver_experience_condition bdec on bru.driver_experience_id = bdec.id 
+    inner join bc_rental_company_info brci on bc.rental_company_id = brci.id
+    where bc.rental_company_id = #{id}
+    order by br.id DESC
+    </select>
+
+    <update id="reserationApproved">
+    update bc_reservation  
+    set progress = '예약승인'
+    where id=#{id}
+    </update>
+
 </mapper>

@@ -33,31 +33,31 @@
     <!-- 상세페이지_캠핑카 기본 정보 조회-->
     <select id="findCampingCarById" resultType="Map">
         select         
-            bc.id, 
-            bc.rental_company_id,
-            brci.comp_name, 
-            brci.comp_profile_image,
-            brci.representative_name, 
-            brci.comp_email,
-            bctc.name AS car_type_name, 
-            bc.product_name, 
-            bc.main_img, 
-            bc.short_description,
-            bc.detailed_description,
-            bc.avaid_time,
-            bc.return_dateTime,
-            bc.rental_fee_weekdays, 
-            bc.rental_fee_weekend,
-            bc.garage_address, 
-            bc.overnight_stay,
-            bc.seating_capacity, 
-            bc.sleeping_capacity, 
-            bdlc.name AS driver_license_name,  
-            bdac.name AS driver_age_condition_name, 
-            bdec.name AS driver_experience_condition_name,
-            bc.cancellation_policy,
-            bc.pet_friendly, 
-            bc.is_opened
+                bc.id, 
+                bc.rental_company_id,
+                brci.comp_name, 
+                brci.comp_profile_image,
+                brci.representative_name, 
+                brci.comp_email,
+                bctc.name AS car_type_name, 
+                bc.product_name, 
+                bc.main_img, 
+                bc.short_description,
+                bc.detailed_description,
+                bc.avaid_time,
+                bc.return_dateTime,
+                bc.rental_fee_weekdays, 
+                bc.rental_fee_weekend,
+                bc.garage_address, 
+                bc.overnight_stay,
+                bc.seating_capacity, 
+                bc.sleeping_capacity, 
+                bdlc.name AS driver_license_name,  
+                bdac.name AS driver_age_condition_name, 
+                bdec.name AS driver_experience_condition_name,
+                bc.cancellation_policy,
+                bc.pet_friendly, 
+                bc.is_opened
             from bc_campingcar bc 
             INNER join bc_rental_company_info brci on bc.rental_company_id = brci.id
             INNER join bc_location_category blc on brci.location_category_id = blc.id
@@ -128,10 +128,36 @@
             #{driver_front_view}
         )
     </insert>
-    <!-- 내 예약관리 --> 
-    <select id="findReservationByRentUserAndCar" resultType="Map">
-        select * from bc_reservation br
-        inner join bc_campingcar bc on br.product_id = bc.id
-        where br.rent_user_id = #{rent_user_id} and br. product_id = #{product_id}
+    <!-- 최종 예약 정보 확인  --> 
+    <select id="findReservationByRentUserIdAndProduct_Id" resultType="Map">
+        select 
+            br.id,
+            br.start_date AS reservationStart_date,
+            br.end_date AS reservationEnd_date,
+            br.progress AS reservationProgress,
+            br.created_at AS reservationCreated_at,
+            bu.nickname As rentUserNickname,
+            brci.comp_name,
+            bctc.name AS carTypeName,
+            bc.product_name,
+            bc.rental_fee_weekdays,
+            bc.rental_fee_weekend,
+            bc.garage_address, 
+            bc.seating_capacity,
+            bc.sleeping_capacity,
+            bdlc.name AS driver_license_name,  
+            bdac.name AS driver_age_condition_name, 
+            bdec.name AS driver_experience_condition_name
+        from bc_reservation br 
+        INNER JOIN bc_rent_user bru on br.rent_user_id = bru.id
+        INNER JOIN bc_user bu  on bru.user_id = bu.id
+        INNER JOIN bc_campingcar bc on br.product_id = bc.id
+        INNER JOIN bc_rental_company_info brci on bc.rental_company_id = brci.id
+        INNER JOIN bc_car_type_categories bctc on bc.category_id = bctc.id
+        INNER JOIN bc_driver_license_condition bdlc on bc.driver_license_id = bdlc.id
+        INNER JOIN bc_driver_age_condition bdac on bc.driver_age_id = bdac.id
+        INNER JOIN bc_driver_experience_condition bdec on bc.driver_experience_id = bdec.id
+        where br.rent_user_id =17 and br.product_id = #{product_id}
     </select>
+
 </mapper>

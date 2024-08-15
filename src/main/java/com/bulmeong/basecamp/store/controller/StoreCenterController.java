@@ -97,7 +97,7 @@ public class StoreCenterController {
         
         model.addAttribute("productCategoryDtoList", storeService.getProductCategoryAll());
 
-        return "store/XproductManage";
+        return "store/pProductManage";
     }
     
     @RequestMapping("manageReview")

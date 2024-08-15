@@ -187,6 +187,7 @@
 
     <select id="selectAllProducts" resultType="com.bulmeong.basecamp.store.dto.StoreProductDto">
         select * from store_product
+        order by id desc
     </select>
 
     <select id="selectStoreDtoById" resultType="com.bulmeong.basecamp.store.dto.StoreDto">
@@ -892,5 +893,10 @@
             #{product_id}, #{location}
         )
     </insert>
+
+    <select id="selectProductImageDtoListByProductId" resultType="com.bulmeong.basecamp.store.dto.ProductImageDto">
+        select * from product_image
+        where product_id = #{product_id}
+    </select>
 
 </mapper>

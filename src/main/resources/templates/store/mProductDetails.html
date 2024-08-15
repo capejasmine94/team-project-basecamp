@@ -75,11 +75,11 @@
 <body class="bg-body-tertiary">
 
     <!-- top-nav -->
-    <div class="container">
-        <div class="fixed-top px-4 row border-bottom bg-white">
+    <div class="container fixed-top">
+        <div class="row border-bottom bg-white">
             <div class="col">
                 <div class="row py-3">
-                    <div class="col-auto ps-0">
+                    <div class="col-auto">
                         <button id="backButton" class="border-0 bg-transparent d-flex align-items-center">
                             <span class="material-symbols-outlined fw-light">
                                 arrow_back
@@ -87,7 +87,7 @@
                         </button>
                     </div>
                     <div class="col"></div>
-                    <a href="/store/cart" class="col-auto pe-0 d-flex align-items-center text-black">
+                    <a href="/store/cart" class="col-auto d-flex align-items-center text-black">
                         <span class="material-symbols-outlined fw-light">
                             shopping_bag
                         </span>
@@ -107,8 +107,8 @@
                         <div class="carousel-item active">
                             <img th:src="|/images/${productData.storeProductDto.main_image}|" class="d-block w-100" style="aspect-ratio: 1/1; width: 100%; object-fit: cover; object-position: center;">
                         </div>
-                        <div class="carousel-item">
-                            <img src="/public/img/storeImage/productDetail2.jpg" class="d-block w-100" style="aspect-ratio: 1/1;">
+                        <div class="carousel-item" th:each="productImageDto : ${productData.productImageDtoList}">
+                            <img th:src="|/images/${productImageDto.location}|" class="d-block w-100" style="aspect-ratio: 1/1; width: 100%; object-fit: cover; object-position: center;">
                         </div>
                     </div>
                     <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
@@ -202,9 +202,15 @@
             </div>
         </div>
 
-        <div class="row py-5"></div>
-        <div class="row py-5"></div>
-        <div class="row py-5"></div>
+        <div class="row py-4 mb-2 bg-white" th:if="${productData.productImageDtoList.size != 0}">
+            <div class="col">
+                <div class="row" th:each="productImageDto  : ${productData.productImageDtoList}">
+                    <div class="col">
+                        <img th:src="|/images/${productImageDto.location}|" style="width: 100%;">
+                    </div>
+                </div>
+            </div>
+        </div>
 
         <div class="row bg-white px-3 f09 fw-bold">
             <div class="col px-0 py-3 border-bottom d-flex align-items-center justify-content-between">
@@ -326,10 +332,13 @@
             </div>
         </div>
 
-        <div class="row px-3 bg-white fixed-bottom pt-2 pb-4 border-top align-items-center">
+    </div>
+
+    <div class="container-fluid fixed-bottom">
+        <div class="row bg-white pt-2 pb-4 border-top align-items-center">
             <div class="col-auto pe-0 text-center">
                 <div class="row">
-                    <div class="col d-flex align-items-center" onclick="productWish()">
+                    <div class="col d-flex align-items-center" onclick="productWish()" style="cursor: pointer;">
                         <span th:if="${isWishlisted}" id="heart" class="material-symbols-outlined fill-on lightFont f15 fw-light">
                             favorite
                         </span>

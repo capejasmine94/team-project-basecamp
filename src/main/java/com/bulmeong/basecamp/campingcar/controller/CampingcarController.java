@@ -24,7 +24,6 @@ import com.bulmeong.basecamp.campingcar.dto.RentalExternalInspectionDto;
 import com.bulmeong.basecamp.campingcar.dto.ReservationDto;
 import com.bulmeong.basecamp.campingcar.service.CampingcarService;
 import com.bulmeong.basecamp.campingcar.service.PartnerCampingCarService;
-import com.bulmeong.basecamp.common.util.Utils;
 import com.bulmeong.basecamp.user.dto.UserDto;
 
 import jakarta.servlet.http.HttpSession;
@@ -34,9 +33,6 @@ import jakarta.servlet.http.HttpSession;
 public class CampingcarController {
 
     @Autowired
-    private Utils utils;
-
-    @Autowired
     private CampingcarService campingcarService;
 
     @Autowired
@@ -44,7 +40,7 @@ public class CampingcarController {
 
     @RequestMapping("main")
     public String main(){
-        utils.loginUser();
+
 
         return "campingcar/main";
 
@@ -52,7 +48,7 @@ public class CampingcarController {
 
     @RequestMapping("campingCarDetailPage")
     public String campingCarDetailPage(@RequestParam("id") int id, Model model) {
-        utils.loginUser();
+
         Map<String,Object> campingcarDetails = campingcarService.getCampingCarDetailByid(id);
         model.addAttribute("campingcarDetails", campingcarDetails);
 
@@ -61,7 +57,7 @@ public class CampingcarController {
 
     @RequestMapping("dRules")
     public String dRules(@RequestParam("id") int id, Model model) {
-        utils.loginUser();
+
         Map<String,Object> campingcarDetails = campingcarService.getCampingCarDetailByid(id);
         model.addAttribute("campingcarDetails", campingcarDetails);
         return "campingcar/dRules";
@@ -69,7 +65,7 @@ public class CampingcarController {
 
     @RequestMapping("dCarInfo")
     public String dCarInfo(@RequestParam("id") int id, Model model) {
-        utils.loginUser();
+
         Map<String,Object> campingcarDetails = campingcarService.getCampingCarDetailByid(id);
         model.addAttribute("campingcarDetails", campingcarDetails);
         
@@ -80,7 +76,7 @@ public class CampingcarController {
 
     @RequestMapping("dCarOption")
     public String dCarOption(@RequestParam("id") int id, Model model) {
-        utils.loginUser();
+
         Map<String,Object> campingcarDetails = campingcarService.getCampingCarDetailByid(id);
         model.addAttribute("campingcarDetails", campingcarDetails);
 
@@ -92,7 +88,7 @@ public class CampingcarController {
 
     @RequestMapping("dRentalCondition")
     public String dRentalCondition(@RequestParam("id") int id, Model model) {
-        utils.loginUser();
+
         Map<String,Object> campingcarDetails = campingcarService.getCampingCarDetailByid(id);
         model.addAttribute("campingcarDetails", campingcarDetails);
 
@@ -101,7 +97,7 @@ public class CampingcarController {
 
     @RequestMapping("dReviews") 
     public String dReviews(@RequestParam("id") int id, Model model) {
-        utils.loginUser();
+
         Map<String,Object> campingcarDetails = campingcarService.getCampingCarDetailByid(id);
         model.addAttribute("campingcarDetails", campingcarDetails);
 
@@ -111,7 +107,7 @@ public class CampingcarController {
 
     @RequestMapping("dCancelPolicy")
     public String dCancelPolicy(@RequestParam("id") int id, Model model) {
-        utils.loginUser();
+
         Map<String,Object> campingcarDetails = campingcarService.getCampingCarDetailByid(id);
         model.addAttribute("campingcarDetails", campingcarDetails);
         return "campingcar/dCancelPolicy";
@@ -119,7 +115,7 @@ public class CampingcarController {
 
     @RequestMapping("reservationInfo")
     public String reservationInfo(@RequestParam("id") int id, Model model){
-        utils.loginUser();
+
 
         Map<String,Object> campingcarDetails = campingcarService.getCampingCarDetailByid(id);
         model.addAttribute("campingcarDetails", campingcarDetails);
@@ -131,24 +127,21 @@ public class CampingcarController {
         List<DriverAgeCondDto> driverAge = partnerCampingCarService.getDriverAgeAll(); 
         model.addAttribute("driverAge", driverAge);
 
-    // 차량등록_운전 면허증 Category List
+        // 차량등록_운전 면허증 Category List
         List<DriverLicenseDto> driverLicense = partnerCampingCarService.getDriverLicenseAll();
         model.addAttribute("driverLicense", driverLicense);
 
-    // 차량등록_운전자 경력 Category List
+        // 차량등록_운전자 경력 Category List
         List<DriverExperienceCondDto> driverExpericnece = partnerCampingCarService.getDriverExperienceAll();
         model.addAttribute("driverExpericnece", driverExpericnece);
         return "campingcar/reservationInfo";
-
-
-
-
     }
     @RequestMapping("reservationProcess")
     public String rentUserInfoProcess(HttpSession session, RentUserDto rentUser,
-                                     @RequestParam("driveImage")MultipartFile driveImage, ReservationDto reservationDto) {
+                                     @RequestParam("driveImage")MultipartFile driveImage, ReservationDto reservationDto,
+                                     Model model) {
         System.out.println("fdfdfdfd"+ reservationDto.getStart_date() + reservationDto.getEnd_date());
-        utils.loginUser();                               
+                         
 
         UserDto sessionUserInfo = (UserDto)session.getAttribute("sessionUserInfo");
         int userPk = sessionUserInfo.getId();
@@ -161,18 +154,18 @@ public class CampingcarController {
         campingcarService.registeRentUser(rentUser,reservationDto);
         System.out.println("렌트고객 가입:" + rentUser);
 
-        return "redirect:/campingcar/main";
+        Map<String,Object> reservationConfirm = campingcarService.getReservationDetails(reservationDto.getRent_user_id(), reservationDto.getProduct_id());
+        model.addAttribute("reservationConfirm", reservationConfirm);
+
+        System.out.println("11111111111");
+
+        return "campingcar/reservationConfirmation";
     }
 
-    
-    @RequestMapping("myRentalHistory")
-    public String myRentalHistory() {
 
-        return "campingcar/myRentalHistory";
-    }
-    
     @RequestMapping("carExteriorInteriorShoot")
     public String carExteriorInteriorShoot() {
+
         return "campingcar/carExteriorInteriorShoot";
     }
 
@@ -201,13 +194,12 @@ public class CampingcarController {
         rentalExternalInspectionDto.setDriver_front_view(driverFrontViewImg);
 
         campingcarService.registerRentShoot(rentalExternalInspectionDto);
-        System.out.println("rrrrrr" + rentalExternalInspectionDto);
 
-    
     model.addAttribute("message", "파일이 성공적으로 업로드되었습니다.");
     return "redirect:/campingcar/myRentalHistory";
     }
 
+    
     public String rentalShoot(MultipartFile newImage) {
         String rootPath = "C:/basecampeImage_rentuser/";
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd/");
