@@ -90,6 +90,12 @@
         select count(*) from bc_campingcar_like
         where product_id=#{id}
     </select>
+    <!-- rentuser 검증 -->
+    <select id="findRentUserByUserId" resultType="int">
+        select count(*) from bc_rent_user bru
+        INNER JOIN bc_user bu on bru.user_id = bu.id
+        where user_id =#{id}
+    </select>
     <!-- rentuser 등록-->
     <insert id="createRentUser">
         <selectKey keyProperty="id" resultType="int" order="AFTER">
@@ -158,6 +164,21 @@
         INNER JOIN bc_driver_age_condition bdac on bc.driver_age_id = bdac.id
         INNER JOIN bc_driver_experience_condition bdec on bc.driver_experience_id = bdec.id
         where br.rent_user_id =17 and br.product_id = #{product_id}
+    </select>
+
+    <select id="useageHistroyAllByRentUserId" resultType="Map">
+    select 	br.id,
+		br.progress,
+		bctc.name AS carTypeName,
+		bc.product_name,
+		br.start_date AS reservationStart_date,
+		br.end_date AS reservationEnd_date,
+		bc.garage_address,
+		br.created_at AS reservationCreated_at
+    from bc_reservation br
+    INNER JOIN bc_campingcar bc on br.product_id = bc.id
+    INNER JOIN bc_car_type_categories bctc on bc.category_id = bctc.id
+    where br.rent_user_id = #{id};
     </select>
 
 </mapper>

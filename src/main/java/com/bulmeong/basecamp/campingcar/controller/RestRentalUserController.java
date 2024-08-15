@@ -13,7 +13,6 @@ import com.bulmeong.basecamp.campingcar.dto.LocationDto;
 import com.bulmeong.basecamp.campingcar.dto.RestRentUserResponseDto;
 import com.bulmeong.basecamp.campingcar.service.CampingcarService;
 import com.bulmeong.basecamp.campingcar.service.PartnerCampingCarService;
-import com.bulmeong.basecamp.common.util.Utils;
 import com.bulmeong.basecamp.user.dto.UserDto;
 
 import jakarta.servlet.http.HttpSession;
@@ -26,14 +25,11 @@ public class RestRentalUserController {
     private PartnerCampingCarService partnerCampingCarService;
     @Autowired
     private CampingcarService campingCarService;
-    @Autowired
-    private Utils utils;
-
+;
 
 // user 확인 작업
     @RequestMapping("getSessionUserId")
     public RestRentUserResponseDto getSessionUserId(HttpSession session) {
-        utils.loginUser();
         RestRentUserResponseDto restRentUserResponseDto = new RestRentUserResponseDto();
         restRentUserResponseDto.setResult("success");
 
@@ -52,7 +48,6 @@ public class RestRentalUserController {
     // 좋아요 관련 
     @RequestMapping("like")
     public RestRentUserResponseDto like(CampingCarLikeDto campingCarLikeDto, HttpSession session) {
-        utils.loginUser();
         RestRentUserResponseDto restRentUserResponseDto = new RestRentUserResponseDto();
         restRentUserResponseDto.setResult("success");
 
@@ -67,7 +62,6 @@ public class RestRentalUserController {
      // 좋아요 1번 이상 눌렀을 경우 취소
     @RequestMapping("unLike")
     public RestRentUserResponseDto unlike(CampingCarLikeDto campingCarLikeDto, HttpSession session) {
-        utils.loginUser();
         RestRentUserResponseDto restRentUserResponseDto = new RestRentUserResponseDto();
         restRentUserResponseDto.setResult("success");
         
@@ -82,7 +76,6 @@ public class RestRentalUserController {
     // 등록된 차량 좋아요 누른 수 
     @RequestMapping("getTotalLikeCount")
     public RestRentUserResponseDto getTotalLikeCount(@RequestParam("product_id")int product_id){
-        utils.loginUser();
         RestRentUserResponseDto restRentUserResponseDto = new RestRentUserResponseDto();
         restRentUserResponseDto.setResult("success");
 
@@ -96,8 +89,6 @@ public class RestRentalUserController {
     // 회원이 등록된 차량에 좋아요를 눌른 수, count를 통해 회원이 좋아요 눌렀는지 확인
     @RequestMapping("isLiked")
     public RestRentUserResponseDto isLiked (CampingCarLikeDto campingCarLikeDto, HttpSession session) {
-        utils.loginUser();
-
         RestRentUserResponseDto restRentUserResponseDto = new RestRentUserResponseDto();
         restRentUserResponseDto.setResult("success");
 
@@ -113,8 +104,6 @@ public class RestRentalUserController {
     }
     @RequestMapping("getRegionsAll")
     public RestRentUserResponseDto getAllRegions() {
-        utils.loginUser();
-
         RestRentUserResponseDto restRentUserResponseDto = new RestRentUserResponseDto();
         restRentUserResponseDto.setResult("success");
 

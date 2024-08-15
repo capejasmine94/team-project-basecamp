@@ -136,6 +136,7 @@ public class PartnerCampingCarController {
     @RequestMapping("reservation_approved")
     public String reservation_approved(ReservationDto reservationDto) {
             partnerCampingCarService.updateReservationProgress(reservationDto);
+            System.out.println("@@@@@@@@@@@@@@2"+reservationDto);
         return "redirect:/partner/bookReservation";
     }
 

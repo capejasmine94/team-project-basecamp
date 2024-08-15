@@ -18,19 +18,11 @@
             margin: 0;
             padding: 0;
         }
-        .carousel-item {
-            width: 100%;
-            height: 100%;
-        }
-        .carousel-item img {
-            width: 100%;
-            height: 100%;
-            object-fit: contain;
-            background-color: #f0f0f0; /* 배경색 추가 (필요 시) */
-        }
         .section {
-            margin-bottom: 5px;
-            padding: 16px;
+            margin: 1.5rem 1rem; /* 1.5rem은 margin-top과 margin-bottom */ /*1rem은 margin-left와 margin-right*/
+            padding: 1rem;
+            border-radius:0.75rem;
+            box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
             background-color: #fff;
             border: 1px solid #e0e0e0;
         }
@@ -83,88 +75,32 @@
 </head>
 <body class="bg-body-tertiary">
     <div class="container">
+        <div class="row bg-white pt-2 pe-1 justify-content-end">
+            <div class="col-auto">
+                <i class="bi bi-x-lg fs-2"  onclick="window.close()"></i>
+            </div>
+        </div>  
         <div class="row">
-            <div class="col section">
-                <div class="row new-mt-45 pb-3">
+            <div class="col bg-white py-2 ps-3">
+                <div class="fs-2 fw-medium">이용내역</div>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <div class="row section" th:each="userHistoryList : ${userHistory}">
+            <div class="col">
+                <div class="row">
                     <div class="col">
+                        <span class="badge text-bg-light" th:text="${userHistoryList.progress}"></span>
+                    </div>
+                </div>
+                <!-- 렌트카 회사 정보 -->
+                <div class="row">
+                    <div class="col d-flex align-items-center justify-content-center px-3">
                         <div class="row">
-                            <div class="col new-fs-7 fw-medium">
-                                </i><span>캠핑카 유형</span><i class="bi bi-chevron-right"></i><span th:text="${campingcarDetails.campingcarDto.car_type_name}">모터홈</span>
-                            </div>
-                        </div>
-                        <div class="row pt-2">
                             <div class="col">
-                                <span class="fw-semibold" th:text="${campingcarDetails.campingcarDto.product_name}"></span>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col fst-italic text-center pt-4">
-                                <i class="fa-solid fa-quote-left" style="color: #CECECE;"></i><span class="fw-semibold fs-6 px-3 text-muted" th:text="${campingcarDetails.campingcarDto.short_description}"></span><i class="fa-solid fa-quote-right" style="color: #CECECE;"></i>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col py-4">
-                                <div class="d-flex border border-start-0 border-end-0">
-                                    <!-- 출고 가능 시간 -->
-                                    <div class="d-flex flex-column justify-content-center align-items-center p-2" style="flex: 1; border-left: none;border-right: none; border-top: none; border-bottom: none;">
-                                        <div class="text-muted" style="font-size: 0.85rem;">출고가능시간</div>
-                                        <div class="fw-normal new-fs-95" th:text="${#dates.format(campingcarDetails.campingcarDto.avaid_time, 'HH') + '시간'}"></div>
-                                    </div>
-                                    <!-- 대여 기간 -->
-                                    <div class="d-flex flex-column justify-content-center align-items-center p-2" style="flex: 1; border-top: none; border-bottom: none;">
-                                        <div class="text-muted" style="font-size: 0.85rem;">1박기준 시간</div>
-                                        <div class="badge bg-light text-muted new-fs-95" th:text="${campingcarDetails.campingcarDto.overnight_stay}">24시간</div>
-                                    </div>
-                                    <!-- 반납 가능 시간 -->
-                                    <div class="d-flex flex-column justify-content-center align-items-center p-2" style="flex: 1; border-left: none;border-right: none; border-top: none; border-bottom: none;">
-                                        <div class="text-muted" style="font-size: 0.85rem;">반납가능시간</div>
-                                        <div class="fw-normal new-fs-95" th:text="${#dates.format(campingcarDetails.campingcarDto.return_dateTime, 'HH')+ '시간'}">18:00</div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row pt-1">
-                            <div class="col">
-                                <i class="bi bi-star-fill" style="color: #FFD700;"></i><span class="fw-5 fw-bold"> 4.8</span><span class="new-fs-85" style="font-family: initial; color: #7C7B7B;" th:text="'['+ ${campingcarDetails.countReview}+ '+' + ' Review]'"> [140+ Review]</span>
-                                <div class="new-fs-65 d-flex justify-content-start align-items-start">
-                                    <span class="pe-1">현재까지</span><span class="text-danger"th:text="${campingcarDetails.countReview}+ '명'"> 50명</span><span>이 차량을 예약하였습니다</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row py-4">
-                            <div class="col d-flex flex-column d-flex justify-content-between align-items-between">
-                                <div class="row">
-                                    <div class="col">
-                                        <div class="text-muted" style="font-size: 0.85rem;">평일 가격</div>
-                                        <span class="fw-bold text-danger text-end" style="font-size: 24px;" th:text="${#numbers.formatInteger(campingcarDetails.campingcarDto.rental_fee_weekdays, 3, 'COMMA')} + '원'"></span>
-                                    </div>
-                                    <div class="col d-flex flex-column d-flex justify-content-between align-items-between">
-                                        <div class="text-muted text-end" style="font-size: 0.85rem;">주말 가격</div>
-                                        <span class="fw-bold text-danger text-end" style="font-size: 24px;" th:text="${#numbers.formatInteger(campingcarDetails.campingcarDto.rental_fee_weekend, 3, 'COMMA')} + '원'"></span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- 구분선 -->
-                        <div class="border-top pt-3"></div>
-                        <!-- 렌트카 회사 정보 -->
-                        <div class="row">
-                            <div class="col d-flex align-items-center justify-content-center px-3">
-                                <img th:src="@{/images/${campingcarDetails.campingcarDto.comp_profile_image}}" class="rounded-circle me-3" style="width: 44px; height: 44px;">
-                                <div class="flex-grow-1">
-                                    <div class="fw-bold" th:text="${campingcarDetails.campingcarDto.comp_name}"></div>
-                                    <div class="text-muted" th:text="${campingcarDetails.campingcarDto.comp_email}"></div>
-                                </div>
-                                <div class="d-flex">
-                                    <div class="d-flex justify-content-center align-items-center rounded-circle" style="width: 40px; height: 40px; background-color: #FFD700;">
-                                        <!-- 회사별 채팅 기능 -->
-                                        <i class="bi bi-chat-fill" style="color: #000000; font-size: 18px;"></i>
-                                    </div>
-                                    <div class="d-flex align-items-center justify-content-center rounded-circle border ms-2" style="width: 40px; height: 40px;">
-                                        <!-- 회사별 전화 통화 기능 -->
-                                        <i class="bi bi-telephone-fill"></i>
-                                    </div>
+                                <div th:if="${#strings.equals(userHistoryList.carTypeName, '모터홈')}" >
+                                    <img th:src="@{/public/img/campingCarImage/모터홈.jpg}" class="d-block w-100 img-fluid" alt="모터홈" style="max-width: 50px; max-height: 50px;">
                                 </div>
                             </div>
                         </div>

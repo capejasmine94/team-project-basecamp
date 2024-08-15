@@ -77,22 +77,24 @@
                                 <div class="col-1">이용내역서</div>
                             </div>
                         
-                            <div class="row py-2 border-bottom py-2 new-fs-85 text-center d-flex align-items-center" th:each="bookReservationData : ${bookReservationList}">
+                            <form method="post" class="row py-2 border-bottom new-fs-85 text-center d-flex align-items-center" th:each="bookReservationData : ${bookReservationList}">
                                 <div class="col-1" th:text="${bookReservationData.id}">60</div>
-                                <div class="col-1" th:text="${bookReservationData.nickname}">정로야</div>
+                                <div class="col-1" th:text="${bookReservationData.rentUserNickname}">정로야</div>
                                 <div class="col-1" th:text="${bookReservationData.carTypeName}">캠핑카유형</div>
                                 <div class="col-1" th:text="${bookReservationData.product_name}">호이이</div>
-                                <div class="col-2" th:text="${#dates.format(bookReservationData.start_date, 'yyyy.MM.dd a HH:mm')} + '-' + ${#dates.format(bookReservationData.end_date, 'yyyy.MM.dd a HH:mm')}">11/30 (월) 09:30 - 11/30 (월) 10:30</div>
+                                <div class="col-2" th:text="${#dates.format(bookReservationData.reservationStart_date, 'yyyy.MM.dd a HH:mm')} + '-' + ${#dates.format(bookReservationData.reservationEnd_date, 'yyyy.MM.dd a HH:mm')}"></div>
                                 <div class="col-1" th:text="${bookReservationData.driver_license_name}">1종대형</div>
                                 <div class="col-1" th:text="${bookReservationData.driver_age_condition_name}">만20세이상</div>
                                 <div class="col-1" th:text="${bookReservationData.driver_experience_condition_nam}">1년이상</div>
                                 <div class="col-1 d-grid ">
-                                    <input type="button" name="progress" value="예약승인">
-                                    <button class="btn btn-success" th:if="${bookReservationData.progress == '예약접수'}" formaction="/partner/reservation_approved">예약승인</button>
+                                    <input type="hidden" name="progress" value="예약승인">
+                                    <input type="hidden" name="id" th:value="${bookReservationData.id}">
+                                    <button class="btn btn-success btn-sm" th:if="${bookReservationData.progress == '예약접수'}" formaction="/partner/reservation_approved">예약승인</button>
+                                    <button class="btn btn-primary btn-sm" th:if="${bookReservationData.progress == '예약승인'}">승인완료</button>
                                 </div>
-                                <div class="col-1" th:text="${bookReservationData.reservationCreated_at}"></div>
+                                <div class="col-1" th:text="${#dates.format(bookReservationData.reservationCreated_at, 'yyyy.MM.dd a HH:mm')}"></div>
                                 <div class="col-1"><a href="#" class="text-primary">다운로드</a></div>
-                            </div>
+                            </form>
                         </div>
                     </div>
                 </div>

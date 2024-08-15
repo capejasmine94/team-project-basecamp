@@ -211,13 +211,13 @@
             </div>
         </div>
             <div class="container">
-                <div class="row section">
+                <div class="row section" th:if="${!isRentUser}">
                     <div class="col form-group px-1 0mx-0">
-                        <row>
+                        <div class="row">
                             <div class="col section-title">
                                 <span class="fs-5 fw-semibold">예약자 정보</span>
                             </div>
-                        </row>
+                        </div>
                         <div class="row">
                             <div class="col">
                                 <label for="driver_number" class="control-label new-fs-85 fw-semibold pb-1" style="font-size: 0.875rem;">운전자면허증 번호</label>
@@ -296,6 +296,21 @@
                                         <div class="fw-light new-fs-6 text-muted">면허증 확인 및 계약서 작성이 필요합니다.</div>
                                     </div>
                                 </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row mx-0 px-1" th:unless="${!isRentUser}">
+                    <div class="col border p-4 rounded text-center bg-white">
+                        <div class="row">
+                            <div class="col">
+                                <div class="d-flex justify-content-center align-items-center text-center">
+                                    <span class="material-symbols-outlined" style="font-size: 48px;">person_apron</span>
+                                    <span class="text-warning pe-2" style="font-size: 48px;padding-bottom: 0.55rem;">+</span>
+                                    <span class="material-symbols-outlined" style="font-size: 48px;">id_card</span>
+                                </div>
+                                <div class="fw-medium new-fs-65">캠핑카 대여시, 운전자는 운전면허증을 꼭 지참해주세요</div>
+                                <div class="fw-light new-fs-6 text-muted">면허증 확인 및 계약서 작성이 필요합니다.</div>
                             </div>
                         </div>
                     </div>

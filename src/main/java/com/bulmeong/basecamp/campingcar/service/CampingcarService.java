@@ -69,6 +69,10 @@ public class CampingcarService {
         List<BasicFacilitiesDto> basicFacilities  = campingCarSqlMapper.findBasicfacilitiesByCarId(id);
         return basicFacilities;
     }
+    // 렌트 고객 검증
+    public boolean isRentUser(int id) {
+        return campingCarSqlMapper.findRentUserByUserId(id) > 0;
+    }
 
     // 렌트 고객 등록
     public void registeRentUser(RentUserDto parms, ReservationDto reservationDto) {
@@ -89,8 +93,13 @@ public class CampingcarService {
         campingCarSqlMapper.createRentShoot(parmas);
     }
 
+    // 차량 외부 촬영
     public void registerReturnShoot(ReturnExternalInspectionDto params) {
         campingCarSqlMapper.createReturnShoot(params);
+    }
+    
+    public List<Map<String,Object>> getUseageHistroyAllByRentUserId(int id) {
+        return campingCarSqlMapper.useageHistroyAllByRentUserId(id);
     }
 
 }

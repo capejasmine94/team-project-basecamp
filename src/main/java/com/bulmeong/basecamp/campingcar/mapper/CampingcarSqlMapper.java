@@ -39,7 +39,8 @@ public interface CampingcarSqlMapper {
     public List<BasicFacilitiesDto> findBasicfacilitiesByCarId(@Param("id") int id);
     // 상세페이지_리뷰수
     public int countByProductId(int id);
-
+    //렌트 고객 검증
+    public int findRentUserByUserId(int id); 
     //렌트 고객 등록
     public void createRentUser(RentUserDto rentUserParams);
 
@@ -51,6 +52,8 @@ public interface CampingcarSqlMapper {
 
     //차량 대여 점검 
     public void createRentShoot(RentalExternalInspectionDto parmas);
-
+    // 차량 외관 촬영 
     public void createReturnShoot(ReturnExternalInspectionDto parmas);
+    // 이용내역
+    public List<Map<String,Object>> useageHistroyAllByRentUserId(int id);
 }

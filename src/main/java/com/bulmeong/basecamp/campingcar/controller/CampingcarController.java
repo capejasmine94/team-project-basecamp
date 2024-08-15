@@ -114,8 +114,16 @@ public class CampingcarController {
     }
 
     @RequestMapping("reservationInfo")
-    public String reservationInfo(@RequestParam("id") int id, Model model){
+    public String reservationInfo(@RequestParam("id") int id, HttpSession session, Model model){
 
+        UserDto sessionUserInfo =(UserDto)session.getAttribute("sessionUserInfo");
+        // 사용자가 세션에 있는지 확인 
+        if(sessionUserInfo != null) {
+            boolean isRentUser = campingcarService.isRentUser(sessionUserInfo.getId());
+            model.addAttribute("isRentUser", isRentUser);
+        } else {
+            model.addAttribute("isRentUser", false);
+        }
 
         Map<String,Object> campingcarDetails = campingcarService.getCampingCarDetailByid(id);
         model.addAttribute("campingcarDetails", campingcarDetails);
@@ -134,14 +142,13 @@ public class CampingcarController {
         // 차량등록_운전자 경력 Category List
         List<DriverExperienceCondDto> driverExpericnece = partnerCampingCarService.getDriverExperienceAll();
         model.addAttribute("driverExpericnece", driverExpericnece);
+
         return "campingcar/reservationInfo";
     }
     @RequestMapping("reservationProcess")
     public String rentUserInfoProcess(HttpSession session, RentUserDto rentUser,
                                      @RequestParam("driveImage")MultipartFile driveImage, ReservationDto reservationDto,
                                      Model model) {
-        System.out.println("fdfdfdfd"+ reservationDto.getStart_date() + reservationDto.getEnd_date());
-                         
 
         UserDto sessionUserInfo = (UserDto)session.getAttribute("sessionUserInfo");
         int userPk = sessionUserInfo.getId();
@@ -156,11 +163,22 @@ public class CampingcarController {
 
         Map<String,Object> reservationConfirm = campingcarService.getReservationDetails(reservationDto.getRent_user_id(), reservationDto.getProduct_id());
         model.addAttribute("reservationConfirm", reservationConfirm);
-
-        System.out.println("11111111111");
-
+        System.out.println("ㅎㅎㅎㅎㅎㅎㅎㅎㅎ"+reservationConfirm);
         return "campingcar/reservationConfirmation";
     }
+
+    @RequestMapping("rentUseageHistory")
+    public String rentUseageHistory(RentUserDto rentUserDto, Model model) {
+        List<Map<String,Object>> userHistory = campingcarService.getUseageHistroyAllByRentUserId(rentUserDto.getId());
+        model.addAttribute("userHistory", userHistory);
+
+        return "campingcar/rentUseageHistory";
+    }
+
+
+
+
+
 
 
     @RequestMapping("carExteriorInteriorShoot")
