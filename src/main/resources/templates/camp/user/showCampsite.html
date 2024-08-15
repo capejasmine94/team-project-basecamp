@@ -33,7 +33,7 @@
         .sticky-custom {
             position: -webkit-sticky;
             position: sticky;
-            top: 2em; /* 여기에서 높이를 조정합니다 */
+            top: 2.536em; /* 여기에서 높이를 조정합니다 */
             z-index: 1020;
         }
         .scroll-horizontal {
@@ -124,7 +124,7 @@
             </div>
         </div>
         <!-- 나머지 헤더 섹션 -->
-        <div class="row sticky-custom px-0">
+        <div class="row px-0">
             <div class="col bg-white border-top">
                 <div class="row px-3">
                     <div class="col p-0">
@@ -191,23 +191,20 @@
                         </div>
                     </div>
                 </div>
-                
-                
-
-                <div class="row nav nav-tabs" id="myTab" role="tablist">
-                    <div class="col nav-item" role="presentation">
-                      <button class="nav-link active" id="info-tab" data-bs-toggle="tab" data-bs-target="#info-tab-pane" type="button" role="tab" aria-controls="info-tab-pane" aria-selected="true">정보</button>
-                    </div>
-                    <div class="col nav-item" role="presentation">
-                      <button class="nav-link" id="site-tab" data-bs-toggle="tab" data-bs-target="#site-tab-pane" type="button" role="tab" aria-controls="site-tab-pane" aria-selected="false">구역</button>
-                    </div>
-                    <div class="col nav-item" role="presentation">
-                      <button class="nav-link" id="review-tab" data-bs-toggle="tab" data-bs-target="#review-tab-pane" type="button" role="tab" aria-controls="review-tab-pane" aria-selected="false">리뷰</button>
-                    </div>
-                </ul>
             </div>
+            
        </div>
-
+       <div class="row sticky-custom nav nav-tabs bg-white" id="myTab" role="tablist">
+            <div class="col nav-item" role="presentation">
+                <button class="nav-link active" id="info-tab" data-bs-toggle="tab" data-bs-target="#info-tab-pane" type="button" role="tab" aria-controls="info-tab-pane" aria-selected="true">정보</button>
+            </div>
+            <div class="col nav-item" role="presentation">
+                <button class="nav-link" id="site-tab" data-bs-toggle="tab" data-bs-target="#site-tab-pane" type="button" role="tab" aria-controls="site-tab-pane" aria-selected="false">구역</button>
+            </div>
+            <div class="col nav-item" role="presentation">
+                <button class="nav-link" id="review-tab" data-bs-toggle="tab" data-bs-target="#review-tab-pane" type="button" role="tab" aria-controls="review-tab-pane" aria-selected="false">리뷰</button>
+            </div>
+        </div>
 
        <div class="tab-content" id="myTabContent">
             <div class="tab-pane fade show active" id="info-tab-pane" role="tabpanel" aria-labelledby="info-tab" tabindex="0">
@@ -277,26 +274,53 @@
 
                 <!-- 시설이용 / 환불 안내 -->
                 <div class="row mt-3">
+                    <div class="col">
+                        <span class="fw-semibold fs-5">예약 안내</span>
+                    </div>
+                </div>
+                <div class="row mt-2 border-bottom border-5 pb-5">
+                <div class="col" th:utext="${session.campsiteUser.dto.notice}"></div>
+                </div>
+                <div class="row mt-3">
+                    <div class="col">
+                        <span class="fw-semibold fs-5">시설 이용 안내</span>
+                    </div>
+                </div>
+                <div class="row mt-2 border-bottom border-5 pb-5">
+                <div class="col" th:utext="${session.campsiteUser.dto.facility_notice}"></div>
+                </div>
+                <div class="row mt-3">
+                    <div class="col">
+                        <span class="fw-semibold fs-5">환불 안내</span>
+                    </div>
+                </div>
+                <div class="row mt-2 border-bottom border-5 pb-5">
+                <div class="col" th:utext="${session.campsiteUser.dto.refund_notice}"></div>
+                </div>
+                <!-- <div class="row mt-3">
                         <div class="col">
                             <span class="fw-semibold fs-5">안내 사항</span>
                         </div>
                     </div>
                 <div class="row mt-2 border-bottom border-5 pb-5">
-                        <div class="col-2 pe-1 text-center mt-3">
-                        <div class="list-group" id="list-tab" role="tablist" style="font-size: 1.1em;">
-                            <a class="list-group-item list-group-item-action rounded-0 active" id="list-notice-list" data-bs-toggle="list" href="#list-notice" role="tab" aria-controls="list-notice">예약 안내</a>
-                            <a class="list-group-item list-group-item-action" id="list-facility-list" data-bs-toggle="list" href="#list-facility" role="tab" aria-controls="list-facility">시설 안내</a>
-                            <a class="list-group-item list-group-item-action rounded-0" id="list-refund-list" data-bs-toggle="list" href="#list-refund" role="tab" aria-controls="list-refund">환불 정책</a>
+                    <div class="col pe-1 text-center mt-3">
+                        <div class="list-group row" id="list-tab" role="tablist" style="font-size: 1.1em;">
+                            <a class="col-4 list-group-item list-group-item-action rounded-0 active" id="list-notice-list" data-bs-toggle="list" href="#list-notice" role="tab" aria-controls="list-notice">예약 안내</a>
+                            <a class="col-4 list-group-item list-group-item-action" id="list-facility-list" data-bs-toggle="list" href="#list-facility" role="tab" aria-controls="list-facility">시설 안내</a>
+                            <a class="col-4 list-group-item list-group-item-action rounded-0" id="list-refund-list" data-bs-toggle="list" href="#list-refund" role="tab" aria-controls="list-refund">환불 정책</a>
                         </div>
+                        <div class="row">
+                            <div class="col">
+                                <div class="tab-content mt-3 new-fs-9" id="nav-tabContent">
+                                    <div class="tab-pane fade show active" id="list-notice" role="tabpanel" aria-labelledby="list-notice-list" th:utext="${session.campsiteUser.dto.notice}">...</div>
+                                    <div class="tab-pane fade" id="list-facility" role="tabpanel" aria-labelledby="list-facility-list"         th:utext="${session.campsiteUser.dto.facility_notice}">...</div>
+                                    <div class="tab-pane fade" id="list-refund" role="tabpanel" aria-labelledby="list-refund-list"             th:utext="${session.campsiteUser.dto.refund_notice}">...</div>
+                                </div>
+                            </div>
                         </div>
-                        <div class="col-10">
-                        <div class="tab-content mt-3 new-fs-9" id="nav-tabContent">
-                            <div class="tab-pane fade show active" id="list-notice" role="tabpanel" aria-labelledby="list-notice-list" th:utext="${session.campsiteUser.dto.notice}">...</div>
-                            <div class="tab-pane fade" id="list-facility" role="tabpanel" aria-labelledby="list-facility-list" th:utext="${session.campsiteUser.dto.facility_notice}">...</div>
-                            <div class="tab-pane fade" id="list-refund" role="tabpanel" aria-labelledby="list-refund-list" th:utext="${session.campsiteUser.dto.refund_notice}">...</div>
-                        </div>
-                        </div>
-                </div>
+                    </div>
+                </div> -->
+                
             </div>
 
             <div class="tab-pane fade" id="site-tab-pane" role="tabpanel" aria-labelledby="site-tab" tabindex="0">
@@ -343,21 +367,20 @@
                                     <div class="col">
                                         <div class="row">
                                             <div class="col" th:unless="${area.mainImages.isEmpty()}">
-                                                <img class="img-fluid rounded-3" th:src="${'/images/' + area.mainImages[0].location}" alt="메인 이미지">
+                                                <img class="img-fluid rounded-3" th:src="${'/images/' + area.mainImages[0].location}" alt="메인 이미지" style="object-fit: cover; object-position: center; width: 100%; height: 16em;">
                                             </div>
                                         </div>
-                                        <div class="row mt-2">
+                                        <div class="row mt-2 justify-content-between">
                                             <div class="col fw-semibold text-start fs-5">
                                                 <span th:text="${area.dto.name}">구역 이름</span>
+                                            </div>                                          
+                                            <div class="col-auto fw-semibold lightFont fs-5">
+                                                <span class="moneyInput" th:text="${area.dto.prise}">금액</span>
+                                                <span class="ms-1">원</span>
                                             </div>
                                         </div>
-                                        <div class="row">
-                                            <div class="col fw-semibold text-end">
-                                                <span class="moneyInput lightFont" th:text="${area.dto.prise}">금액</span>
-                                                <span>원</span>
-                                            </div>
-                                        </div>
-                                        <div class="row siteCategoryList">
+                                      
+                                        <div class="row mt-3 siteCategoryList">
                                             <div class="col pe-0 badgeList">
                                                 <span class="badge rounded-pill border text-bg-light text-body-tertiary me-1" th:each="selectCategory : ${area.category}" th:text="${selectCategory.name}">카테고리</span>
                                             </div>
@@ -382,18 +405,21 @@
                                 <div class="row">
                                     <div class="col new-fs-8 text-secondary">리뷰를 작성하실 수 있습니다!</div>
                                 </div>
+
+                                <form action="/camp/registerReviewProcess" method="post">
                                 <div class="row my-2">
-                                    <form action="/camp/registerReviewProcess" method="post">
                                         <input type="hidden" name="user_id" th:value="${session.sessionUserInfo.id}">
                                         <input type="hidden" name="campsite_id" th:value="${session.campsiteUser.dto.id}">
                                         <div class="col">
                                             <textarea class="form-control" name="content" id="write_review" row="3"></textarea>
                                         </div>
-                                        <div class="col-3">
-                                            <button class="btn btn-bc-dark">리뷰 작성</button>
-                                        </div>
-                                    </form>
                                 </div>
+                                <div class="row justify-content-end pb-2">
+                                    <div class="col-auto">
+                                        <button class="btn btn-bc-dark rounded-0">리뷰 작성</button>
+                                    </div>
+                                </div>
+                            </form>
                             </div>
                         </div>
                     </div>
@@ -430,101 +456,100 @@
         <div class="row" style="margin-bottom: 7em;"></div> 
     </div>
 </div>
-<div class="container">
-    <div class="row fixed-bottom border-top bg-white py-2 px-3 justify-content-center" style="margin-bottom: 5.162em;">
-        <div class="col d-grid">
+<div class="container fixed-bottom">
+    <div class="row  border-top bg-white py-2 px-3 justify-content-center" style="margin-bottom: 5.15em;">
+        <div class="col p-0 d-grid">
             <a class="btn btn-bc-dark rounded-0 py-2" href="/camp/reservation">예약하기</a>
         </div>
     </div> 
 </div>
+
+
+
 
 <!-- 사이트 모달 -->
 <div class="modal fade container-fluid" id="popupSite" tabindex="-1" aria-labelledby="popupSite-title" data-keyboard="true" data-backdrop="static" aria-hidden="true" style="height: 87.5%;">
     <div class="modal-dialog modal-dialog-scrollable">
         <div class="modal-content">
             <div class="modal-header">
-                <h1 class="modal-title fs-5" id="popupSite-title">사이트 이름</h1>
+                <h1 class="modal-title fs-5" >구역 상세 보기</h1>
             </div>
-            <div id="popupSite-content" class="modal-body col">
-                <div class="row">
-                    <div class="col">
-                        <div class="carousel slide row p-0" data-bs-ride="carousel">
-                            <div class="carousel-inner p-0" id="area_mainImages">
-                                <!-- 이미지 탬플릿 -->
-                                
+            <div id="popupSite-content" class="modal-body">
+                <div class="col p-0">
+                    <div class="row">
+                        <div class="col p-0">
+                            <div class="carousel slide" data-bs-ride="carousel">
+                                <div class="carousel-inner" id="area_mainImages">
+                                    <!-- 이미지 탬플릿 -->
+                                    
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-                <!-- 기본 정보 -->
-                <div class="row mt-1 flex-column">
-                    <div class="col fw-semibold" id="area_name">이름</div>
-                </div>
-                <div class="row mt-2">
-                    <div class="col text-secondary new-fs-85" id="area_size">크기</div>
-                </div>
-                <div class="row new-mt-45">
-                    <div class="col new-fs-95" id="area_description">설명</div>
-                </div>
-                <div class="row mt-5 text-end text-secondary new-fs-9">
-                    <div class="col-3 p-0 ps-3 text-start"><span>기본 정원</span></div>
-                    <div class="col-3 p-0 text-start"><span id="area_people"></span></div>
-                </div>
-                <!-- <div class="row mt-5 text-end text-secondary new-fs-9">
-                    <div class="col-2 p-0"><span>성인</span></div>
-                    <div class="col p-0 text-start"><span class="ps-2" id="area_adult">1명</span></div>
-                </div>
-                <div class="row text-end text-secondary new-fs-9">
-                    <div class="col-2 p-0"><span>미성년</span></div>
-                    <div class="col p-0 text-start"><span class="ps-2" id="area_kid">1명</span></div>
-                </div> -->
-                <div class="row text-end text-secondary new-fs-9">
-                    <div class="col-3 p-0 ps-3 text-start"><span>차량</span></div>
-                    <div class="col-3 p-0 text-start"><span id="area_car">1 대</span></div>
-                </div>
-                <div class="row mt-3 text-end fw-semibold lightFont">
-                    <div class="col">
-                        <span id="area_prise" class="moneyInput">가격</span>
-                        <span class="ps-2">원</span>
-                    </div>
-                </div>
-                <div class="row mt-2 border-bottom pb-3">
-                    <div class="col pe-0" id="area_categoryList">
-                        <span class="badge rounded-pill border text-bg-light text-body-tertiary me-1">카테고리</span>
-                    </div>
-                </div>
-                 <!-- 배치도 -->
-                <div class="row mt-3 flex-column border-bottom border-5 pb-5">
-                    <div class="col">
-                        <span class="fw-semibold fs-5">구역 위치</span>
-                    </div> 
-                    <div class="col mt-4">
-                        <img id="area_mapImage" class="img-fluid rounded-3 originImage" src="/public/img/clubImage/mountain.jpg" alt="">
-                    </div>
-                </div>
-                <!-- 추가 요금 -->
-                <div class="row mt-3 flex-column pb-3">
-                    <div class="col">
-                        <span class="fw-semibold fs-5">추가 요금</span>
-                    </div> 
-                    <div class="col mt-2 ps-2">
-                        <div class="row text-end text-secondary new-fs-9">
-                            <div class="col-5 fw-semibold p-0"><span>성인 추가요금 (인당)</span></div>
-                            <div class="col p-0 text-start"><span class="ps-2 moneyInput" id="area_add_adult">5000</span><span class="ps-2">원</span></div>
-                        </div>
-                        <div class="row text-end text-secondary new-fs-9">
-                            <div class="col-5 fw-semibold p-0"><span>미성년 추가요금 (인당)</span></div>
-                            <div class="col p-0 text-start"><span class="ps-2 moneyInput" id="area_add_kid">5000</span><span class="ps-2">원</span></div>
-                        </div>
-                        <div class="row text-end text-secondary new-fs-9">
-                            <div class="col-5 fw-semibold p-0"><span>차량 추가요금</span></div>
-                            <div class="col p-0 text-start"><span class="ps-2 moneyInput" id="area_add_car">5000</span><span class="ps-2">원</span></div>
+                    <!-- 기본 정보 -->
+                    <div class="row mt-2">
+                        <div class="col pe-0" id="area_categoryList">
+                            <span class="badge rounded-pill border new-fs-75 text-bg-light text-body-tertiary me-1">카테고리</span>
                         </div>
                     </div>
-                    <div class="col mt-4 new-fs-75">
-                        <span>추가요금은 기본 인원(차량)수보다 초과한 경우, 초과한 수만큼 부과됩니다.</span>
+                    <div class="row mt-2 fs-5">
+                        <div class="col fw-semibold" id="area_name">이름</div>
+                    </div>
+                    <div class="row new-fs-75 text-body-tertiary">
+                        <div class="col">규격: <span id="area_size">크기</span></div>
+                    </div>
+                    <div class="row my-2">
+                        <div class="col-auto fw-semibold fs-5">
+                            <span id="area_prise" class="moneyInput lightFont">가격</span>
+                            <span>원</span>
+                        </div>
+                    </div>
+                    <div class="row mt-3 text-end text-secondary new-fs-9 border-bottom border-5 pb-3">
+                        <div class="col-1 text-start"><i class="bi bi-people-fill"></i></div>
+                        <div class="col-auto text-start"><span id="area_people"></span></div>
+                        <div class="col-auto p-0">&#183;</div>
+                        <div class="col-1 text-start"><i class="bi bi-car-front-fill"></i></div>
+                        <div class="col-auto text-start"><span id="area_car">1 대</span></div>
+                    </div>
+
+                     <!-- 배치도 -->
+                    <div class="row mt-3 flex-column border-bottom border-5 pb-5">
+                        <div class="col">
+                            <span class="fw-semibold">구역 안내</span>
+                        </div> 
+                        <div class="col mt-2">
+                            <img id="area_mapImage" class="img-fluid rounded-3 originImage" src="/public/img/clubImage/mountain.jpg" alt="">
+                        </div>
+                        <div class="col new-fs-95" id="area_description">설명</div>
+                    </div>
+
+                    <!-- 추가 요금 -->
+                    <div class="row mt-3 flex-column pb-3">
+                        <div class="col">
+                            <span class="fw-semibold">추가 요금</span>
+                        </div> 
+                        <div class="col mt-2 ps-2">
+                            <div class="row text-secondary new-fs-9">
+                                <div class="col-6 fw-semibold "><span>성인 추가요금 (인당)</span></div>
+                                <div class="col p-0 text-start"><span class="moneyInput" id="area_add_adult">5000</span><span class="ps-2">원</span></div>
+                            </div>
+                            <div class="row text-secondary new-fs-9">
+                                <div class="col-6 fw-semibold "><span>미성년 추가요금 (인당)</span></div>
+                                <div class="col p-0 text-start"><span class="moneyInput" id="area_add_kid">5000</span><span class="ps-2">원</span></div>
+                            </div>
+                            <div class="row text-secondary new-fs-9">
+                                <div class="col-6 fw-semibold "><span>차량 추가요금</span></div>
+                                <div class="col p-0 text-start"><span class="moneyInput" id="area_add_car">5000</span><span class="ps-2">원</span></div>
+                            </div>
+                        </div>
+                        <div class="col mt-4 new-fs-75">
+                            <span>추가요금은 기본 인원(차량)수보다 초과한 경우, 초과한 수만큼 부과됩니다.</span>
+                        </div>
                     </div>
                 </div>
+               
+
+              
             </div>
             <div class="modal-footer">
                 <div class="col d-grid"> <button id="popupSite-reservation" type="button" class="btn btn-bc-dark rounded-0" onclick="reservation()">예약하기</button></div>
