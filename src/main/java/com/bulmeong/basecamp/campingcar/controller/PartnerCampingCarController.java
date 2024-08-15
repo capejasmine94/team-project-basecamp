@@ -1,6 +1,7 @@
 package com.bulmeong.basecamp.campingcar.controller;
 
-import java.util.List; 
+import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -17,6 +18,7 @@ import com.bulmeong.basecamp.campingcar.dto.DriverExperienceCondDto;
 import com.bulmeong.basecamp.campingcar.dto.DriverLicenseDto;
 import com.bulmeong.basecamp.campingcar.dto.LocationDto;
 import com.bulmeong.basecamp.campingcar.dto.RentalCompanyDto;
+import com.bulmeong.basecamp.campingcar.dto.ReservationDto;
 import com.bulmeong.basecamp.campingcar.service.PartnerCampingCarService;
 import com.bulmeong.basecamp.common.util.ImageUtil;
 import com.bulmeong.basecamp.common.util.Utils;
@@ -120,6 +122,21 @@ public class PartnerCampingCarController {
     public String peakSeason(){
 
         return "partner/peakSeason";
+    }
+
+    @RequestMapping("bookReservation")
+    public String bookReservation(HttpSession session, Model model) {
+        RentalCompanyDto rentalCompanyDto = (RentalCompanyDto) session.getAttribute("sessionCaravanInfo");
+
+        List<Map<String,Object>> bookReservationList = partnerCampingCarService.getBookReservationAll(rentalCompanyDto.getId());
+        model.addAttribute("bookReservationList", bookReservationList);
+        return "partner/bookReservation";
+    }
+
+    @RequestMapping("reservation_approved")
+    public String reservation_approved(ReservationDto reservationDto) {
+            partnerCampingCarService.updateReservationProgress(reservationDto);
+        return "redirect:/partner/bookReservation";
     }
 
 

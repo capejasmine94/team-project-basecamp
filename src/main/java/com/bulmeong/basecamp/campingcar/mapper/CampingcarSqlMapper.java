@@ -46,6 +46,9 @@ public interface CampingcarSqlMapper {
     // 예약하기
     public void createReservation(ReservationDto reservationDto);
 
+    // 최종 예약 정보 확인
+    public Map<String,Object> findReservationByRentUserIdAndProduct_Id(@Param("rent_user_id") int rent_user_id, @Param("product_id")int product_id);
+
     //차량 대여 점검 
     public void createRentShoot(RentalExternalInspectionDto parmas);
 

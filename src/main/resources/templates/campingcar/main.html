@@ -254,8 +254,8 @@
     
     <!-- 켐핑카 필터 -->
     <div class="container">
-        <div class="row font-roboto">
-            <div class="col px-4">
+        <div class="row px-4">
+            <div class="col">
                 <div class="row ps-1">
                     <div class="col ps-0 pt-3 text-start">
                         <div class="fs-2 fw-semibold">Camping Car 🚙</div>
@@ -266,15 +266,15 @@
                     <!-- 대여 장소 -->
                     <div class="col text-center text-light-emphasis form-group px-1">
                         <div class="row">
-                          <div class="col">
-                            <i class="fa-solid fa-location-dot"></i><span> 대여 장소</span>
-                          </div>
+                            <div class="col">
+                                <i class="fa-solid fa-location-dot"></i><span> 대여 장소</span>
+                            </div>
                         </div>
                         <div class="row">
-                          <div class="col py-2 pb-3">
+                            <div class="col py-2 pb-3">
                             <!-- id: 장소선택 버튼 문구를 사용자가 모달창에서 선택한 지역 이름을 동적으로 바꿀 수 있도록 하는 id -->
-                            <button class="btn btn-light btn-block border border-0" id="locationDisplay" onclick="showLocationModal()">장소 선택</button>
-                          </div>
+                                <button class="btn btn-light btn-block border border-0" id="locationDisplay" onclick="showLocationModal()">장소 선택</button>
+                            </div>
                         </div>
                     </div>
                     <!-- 캠핑카 유형 -->
@@ -519,9 +519,10 @@
 
 
 
-    <div th:replace="~{campingcar/campingNavi::bottomNaviBasecamp}"></div>
+
+    <!-- <div th:replace="~{campingcar/campingNavi::bottomNaviBasecamp}"></div> -->
     
-    <div th:replace="~{campingcar/campingNavi::quickNavi}"></div>
+    <div th:replace="~{campingcar/campingNavi::bottomNaviBasecamp}"></div>
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>

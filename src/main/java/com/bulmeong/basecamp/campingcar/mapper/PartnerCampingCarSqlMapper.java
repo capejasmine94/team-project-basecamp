@@ -56,5 +56,10 @@ public interface PartnerCampingCarSqlMapper {
     // 차량등록, 회사, 회사지역카테고리, 캠피앜유형, 운전자조건(면허증,경력,나이),좋아요, 성수기 가격ㄴ
     public List<Map<String,Object>> findCampingCarBySellerId(int rental_company_id);
 
+    // 판매자: 예약신청 내역 리스트
+    public List<Map<String,Object>> findbookReservationAll(int id);
+    // 판매자 : 예약상태 update
+    public void reserationApproved(int id);
+
 
 }
