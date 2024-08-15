@@ -53,11 +53,11 @@
             </div>
         </div>
         <div class="row mt-2">
-            <div class="col fs-5 fw-semibold">
+            <div class="col fs-5 fw-bold">
                 예약 확인
             </div>
         </div>
-        <div class="row d-none mt-3 pt-3 border-top" id="reservation">
+        <div class="row d-none pt-2" id="reservation">
             <div class="col">
                 <div class="row">
                     <div class="col fw-semibold">
@@ -135,10 +135,9 @@
                         </div>
                     </div>
                 </div>
-               
             </div>
-
         </div>
+
         <div class="row">
             <div class="col" id="reservationList">
 
@@ -181,7 +180,7 @@
         .then(response => response.json())
         .then((response) => { 
             const orderData = response.data.orderByCode;
-            if(orderData != null) {
+            if(response != null) {
                 camp_name.innerText = orderData.camp.camp_name;
                 area_name.innerText = orderData.area.name;
                 point_name.innerText = orderData.point.name;
@@ -190,10 +189,11 @@
                 total_prise.innerText = orderData.dto.total_prise;
                 progress.innerHTML = orderData.dto.progress;
                 orderDay.innerText = `${formatDate(orderData.dto.start_date)} ~  ${formatDate(orderData.dto.end_date)}`;
+                car_tab.innerHTML='';
                 if(orderData.carNumbers.length > 0) {
                     for(const car of orderData.carNumbers){
                         const carTab = document.createElement('div');
-                        carTab.classList.add("row", "mt-1", "ms-4");
+                        carTab.classList.add("row", "mb-1");
                         carTab.innerHTML = `<div class="col new-fs-9">${car.car_number}</div>`;
                         car_list.appendChild(carTab);
                     }
@@ -205,14 +205,17 @@
                 emptyReservation.classList.add('d-none');
             }
             else {
-                reservation.classList.add('d-none');
-                emptyReservation.classList.remove('d-none');
+              
             }
             addColonMoneyInput();
+        })
+        .catch((error) => {
+            reservation.classList.add('d-none');
+            emptyReservation.classList.remove('d-none');
         });
     }
 
-    function formatDate(dateString) {
+    function formatDate(dateString,dot) {
         // 문자열을 Date 객체로 변환
         const date = new Date(dateString);
         
@@ -230,7 +233,7 @@
         }
 
         // yyyy-mm-dd 형식으로 반환
-        return `${year}-${month}-${day}`;
+        return `${year}${dot}${month}${dot}${day}`;
     }
 
     function initReservationListByUser() {
@@ -249,83 +252,68 @@
                 }
                 for(const order of dataList) {
                     const template = document.createElement('div');
-                    template.classList.add('row','mt-3');
+                    template.classList.add('row','border-bottom','border-5','py-2');
                     template.innerHTML = 
-                    `<div class="col mx-3 border p-2 py-4">
-                        <div class="row ms-1">
+                    `<div class="col">
+                         <div class="row mt-1">
+                            <div class="col-auto fw-semibold fs-5"><span>${formatDate(order.dto.created_at,'.')}</span></div>
+                        </div>
+                        <div class="row mt-3">
+                            <div class="col-auto fw-semibold"><span>${order.dto.progress}</span></div>
+                        </div>
+                        <div class="row pt-2 align-items-top">
+                            <div class="col-auto">
+                                <img class="img-fluid rounded-1" src="/images/${order.campImage.location}" style="width:10em;">
+                            </div>
                             <div class="col">
-                                <div class="row">
-                                    <div class="col-3 text-end">
+                                <div class="row new-fs-85">
+                                    <div class="col-3 text-start">  
                                         <span class="fw-semibold">캠핑장</span>
                                     </div>
-                                    <div class="col"> 
-                                        <span class="ms-3">${order.camp.camp_name}</span>
-                                    </div>
+                                    <div class="col"> <span>${order.camp.camp_name}</span></div>
                                 </div>
-                                <div class="row mt-1">
-                                    <div class="col-3 text-end">
+                                <div class="row mt-1 new-fs-85">
+                                    <div class="col-3 text-start">
                                         <span class="fw-semibold">구역</span>
                                     </div>
-                                    <div class="col">
-                                        <span class="ms-3">${order.area.name}</span>
-                                        <span class="text-secondary ms-2">(</span>
+                                    <div class="col">    
+                                        <span>${order.area.name}</span>
+                                        <span class="text-secondary ps-2">(</span>
                                         <span class="text-secondary">${order.point.name}</span>
+                                        <!-- <span class="ps-1 text-secondary"></span> -->
                                         <span class="text-secondary">)</span>
                                     </div>
                                 </div>
-                                <div class="row mt-3">
-                                    <div class="col-3 text-end">
-                                        <span class="fw-semibold">이름</span>
+                                <div class="row mt-1 new-fs-85">
+                                    <div class="col-3 text-start">
+                                        <span class="fw-semibold">예약일</span>
                                     </div>
-                                    <div class="col">
-                                        <span class="ms-3">${order.dto.customer_name}</span>
+                                    <div class="col"><span>${formatDate(order.dto.start_date,'-')}~${formatDate(order.dto.end_date,'-')}</span></div>
+                                </div>
+                                <div class="row mt-1 new-fs-85">
+                                    <div class="col-3 text-start"> 
+                                        <span class="fw-semibold">금액</span>
+                                    </div>
+                                    <div class="col moneyInput lightFont fw-semibold">${order.dto.total_prise}
                                     </div>
                                 </div>
-                                <div class="row mt-1">
-                                    <div class="col-3 text-end">
-                                        <span class="fw-semibold">연락처</span>
-                                    </div>
-                                    <div class="col">
-                                        <span class="ms-3">${order.dto.customer_phone}</span>
-                                    </div>
-                                </div>
-                                <div class="row mt-2 flex-column car_tab">
-                                    <div class="col-3 text-end">
+                                <div class="row mt-1 new-fs-85 car_tab">
+                                    <div class="col-3 text-start">
                                         <span class="fw-semibold">차량</span>
                                     </div>
                                     <div class="col car_list">
                                     </div>
                                 </div>
-                                    
-                                <div class="row mt-4">
-                                    <div class="col-3 text-end">
-                                        <span class="fw-semibold">가격</span>
-                                    </div>
-                                    <div class="col">
-                                        <span class="ms-3 moneyInput">${order.dto.total_prise}</span>
-                                    </div>
-                                    <div class="row mt-3">
-                                        <div class="col-3 text-end">
-                                            <span class="fw-semibold">예약일</span>
-                                        </div>
-                                        <div class="col ms-3">${formatDate(order.dto.start_date)} ~  ${formatDate(order.dto.end_date)}</div>
-                                    </div>
-                                     <div class="row mt-3">
-                                        <div class="col-3 text-end">
-                                            <span class="fw-semibold">현황</span>
-                                        </div>
-                                        <div class="col ms-3">${order.dto.progress}</div>
-                                    </div>
-                                </div>
                             </div>
-                        </div>
-                     </div>`;
+                        </div> 
+                        
+                    </div>`;
                     const car_list = template.querySelector('.car_list');
                     const car_tab = template.querySelector('.car_tab');
                     if(order.carNumbers.length > 0) {
                         for(const car of order.carNumbers){
                             const carTab = document.createElement('div');
-                            carTab.classList.add("row", "mt-1", "ms-4");
+                            carTab.classList.add("row", "mb-1");
                             carTab.innerHTML = `<div class="col new-fs-9">${car.car_number}</div>`;
                             car_list.appendChild(carTab);
                         }
@@ -341,6 +329,7 @@
     }
 
     initReservationListByUser();
+    addColonMoneyInput();
 </script>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
