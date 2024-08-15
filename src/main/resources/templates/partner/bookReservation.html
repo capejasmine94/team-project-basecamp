@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Google Material Icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet">
+    <!-- partner 오른쪽  본문 css -->
+    <link href="/public/css/campingcar/right-content.css" rel="stylesheet">
+    <link href="/public/css/common.css" rel="stylesheet">
+    <!-- 이미지 js -->
+    <script src="/public/js/util.js"></script>
+</head>
+<body>
+    <div th:replace="~{partner/carNavi::topNavi}"></div>
+
+    <div class="container-fluid">
+        <div class="row">
+            <div th:replace="~{partner/carNavi::leftNavi}"></div>
+            <!-- right 템플릿 -->
+            <div class="col right bg-body-secondary" style="padding-top: 55px;">
+                <div class="row py-3 px-4 d-flex align-items-center bg-white">
+                    <div class="col-0"></div>
+                    <div class="col fs-6 fw-semibold">
+                        예약 내역
+                    </div>
+                </div>
+                <!-- 본문내용(templets) -->
+                <div class="row px-4 pt-1" th:if="${session.sessionCaravanInfo != null}">
+                    <div class="col">
+                        <!-- 탭 내용 -->
+                        <div class="card">
+                            <div class="row mb-3">
+                                <div class="col d-flex align-items-center">
+                                    <div class="row w-100">
+                                        <!-- 날짜 선택 필드 -->
+                                        <div class="col-auto py-1 ps-4 d-flex align-items-center">
+                                            <div class="input-group">
+                                                <input type="date" class="form-control text-center" style="width: auto;">
+                                                <span class="input-group-text bg-white" style="border-left: none; border-right: none;">-</span>
+                                                <input type="date" class="form-control text-center" style="width: auto;">
+                                            </div>
+                                        </div>
+                                        <!-- 셀렉트 박스 -->
+                                        <div class="col-auto py-3 ps-0">
+                                            <select class="form-select" aria-label="Default select example" style="font-size: 0.875rem;">
+                                                <option selected>전체</option>
+                                                <option value="1">옵션 1</option>
+                                                <option value="2">옵션 2</option>
+                                                <option value="3">Three</option>
+                                            </select>
+                                        </div>
+                                        <!-- 검색 창 -->
+                                        <div class="col py-3 ps-0">
+                                            <input type="text" placeholder="예약자명 혹은 차량번호를 검색" class="form-control" style="font-size: 0.875rem;">
+                                        </div>
+                                        <!-- 버튼 -->
+                                        <div class="col-auto py-3 ps-0">
+                                            <button class="btn btn-primary mr-2" style="font-size: 0.875rem;">엑셀 다운</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        
+                            <div class="row bg-body-tertiary fw-semibold border-bottom py-2 px-0 mx-0 new-fs-75 text-center d-flex align-items-center">
+                                <div class="col-1">예약번호</div>
+                                <div class="col-1">예약자</div>
+                                <div class="col-1">캠핑카 유형</div>
+                                <div class="col-1">차량모델</div>
+                                <div class="col-2">예약시각 - 종료시각</div>
+                                <div class="col-1">운전자면허증</div>
+                                <div class="col-1">운전자나이</div>
+                                <div class="col-1">운전자경력</div>
+                                <div class="col-1">예약상태</div>
+                                <div class="col-1">예약일시</div>
+                                <div class="col-1">이용내역서</div>
+                            </div>
+                        
+                            <div class="row py-2 border-bottom py-2 new-fs-85 text-center d-flex align-items-center" th:each="bookReservationData : ${bookReservationList}">
+                                <div class="col-1" th:text="${bookReservationData.id}">60</div>
+                                <div class="col-1" th:text="${bookReservationData.nickname}">정로야</div>
+                                <div class="col-1" th:text="${bookReservationData.carTypeName}">캠핑카유형</div>
+                                <div class="col-1" th:text="${bookReservationData.product_name}">호이이</div>
+                                <div class="col-2" th:text="${#dates.format(bookReservationData.start_date, 'yyyy.MM.dd a HH:mm')} + '-' + ${#dates.format(bookReservationData.end_date, 'yyyy.MM.dd a HH:mm')}">11/30 (월) 09:30 - 11/30 (월) 10:30</div>
+                                <div class="col-1" th:text="${bookReservationData.driver_license_name}">1종대형</div>
+                                <div class="col-1" th:text="${bookReservationData.driver_age_condition_name}">만20세이상</div>
+                                <div class="col-1" th:text="${bookReservationData.driver_experience_condition_nam}">1년이상</div>
+                                <div class="col-1 d-grid ">
+                                    <input type="button" name="progress" value="예약승인">
+                                    <button class="btn btn-success" th:if="${bookReservationData.progress == '예약접수'}" formaction="/partner/reservation_approved">예약승인</button>
+                                </div>
+                                <div class="col-1" th:text="${bookReservationData.reservationCreated_at}"></div>
+                                <div class="col-1"><a href="#" class="text-primary">다운로드</a></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js"></script>
+    <script src="/public/js/campingcar/partnermain.js"></script>
+    <!-- 이미지 upload 공용 js -->
+    <script src="/public/js/uploader.js"></script>
+    <script>
+    window.addEventListener("DOMContentLoaded", () => {
+    getRegisteredCampersList();
+    });
+
+    function getRegisteredCampersList() {
+        const url = "/api/campingcar/campingCarManagement";
+        fetch(url)
+        .then(response => response.json())
+        .then(response => {
+            console.log(response);
+            const registeredCampersListBox = document.getElementById("registeredCampersListBox");
+            registeredCampersListBox.innerHTML = ""; // 기존 내용을 초기화
+
+                    // 데이터 검증 및 처리
+            if (response.data.registeredCampersList.length == 0) {
+                registeredCampersListBox.innerHTML = "<tr><td colspan='10'>데이터가 없습니다.</td></tr>";
+                return;
+            }
+                const registeredCampersListTemplete = document.querySelector("#registeredCampersListTemplete");
+
+                for (const e of response.data.registeredCampersList) {
+                    const newRclWrapper = registeredCampersListTemplete.cloneNode(true);
+                    newRclWrapper.classList.remove("hidden"); // 템플릿 줄의 숨김 상태 제거
+                    newRclWrapper.style.display = ""; // display 스타일 초기화
+
+                    // 데이터 채우기
+                    newRclWrapper.querySelector(".rclNumberWrapper").innerText = e.id;
+                    newRclWrapper.querySelector(".rcl-main_img").setAttribute("src", `/images/${e.main_img}`);
+                    newRclWrapper.querySelector(".rcl-carType_cate").innerText = e.car_type_name;
+                    newRclWrapper.querySelector(".rcl-product_name").innerText = e.product_name;
+                    newRclWrapper.querySelector(".rcl-seating_capacity").innerText = `동승인원 ${e.seating_capacity}인승`;
+                    newRclWrapper.querySelector(".rcl-sleeping_capacity").innerText = `취침 인원 ${e.sleeping_capacity}인승`;
+                    newRclWrapper.querySelector(".rcl-rental_fee_weekdays").innerText = `평일 ${e.rental_fee_weekdays.toLocaleString('ko-KR')}원`;
+                    newRclWrapper.querySelector(".rcl-rental_fee_weekend").innerText = `주말 ${e.rental_fee_weekend.toLocaleString('ko-KR')}원`;
+                    
+                    // 성수기
+                    if (e.weekdays_price !== null && e.weekdays_price !== undefined) {
+                        newRclWrapper.querySelector(".rcl-weekdays_price").innerText = `평일 ${e.weekdays_price.toLocaleString('ko-KR')}원`;
+                    } else {
+                        newRclWrapper.querySelector(".rcl-weekdays_price").innerText = '가격 정보 없음';
+                    }
+                    if (e.weekend_price !== null && e.weekend_price !== undefined) {
+                        newRclWrapper.querySelector(".rcl-weekend_price").innerText = `주말 ${e.weekend_price.toLocaleString('ko-KR')}원`;
+                    } else {
+                        newRclWrapper.querySelector(".rcl-weekend_price").innerText = '가격 정보 없음';
+                    }
+                    
+                    // 준성수기
+                    if (e.semi_peak_weekdays_price !== null && e.semi_peak_weekdays_price !== undefined) {
+                        newRclWrapper.querySelector(".rcl-semi_peak_weekdays_price").innerText = `평일 ${e.semi_peak_weekdays_price.toLocaleString('ko-KR')}원`;
+                    } else {
+                        newRclWrapper.querySelector(".rcl-semi_peak_weekdays_price").innerText = '가격 정보 없음';
+                    }
+                    if (e.semi_peak_weekend_price !== null && e.semi_peak_weekend_price !== undefined) {
+                        newRclWrapper.querySelector(".rcl-semi_peak_weekend_price").innerText = `주말 ${e.semi_peak_weekend_price.toLocaleString('ko-KR')}원`;
+                    } else {
+                        newRclWrapper.querySelector(".rcl-semi_peak_weekend_price").innerText = '가격 정보 없음';
+                    }
+
+                    // 할인가
+                    if (e.saile_weekdays_price !== null && e.saile_weekdays_price !== undefined) {
+                        newRclWrapper.querySelector(".rcl-saile_weekdays_price").innerText = `평일 ${e.saile_weekdays_price.toLocaleString('ko-KR')}원`;
+                    } else {
+                        newRclWrapper.querySelector(".rcl-saile_weekdays_price").innerText = '가격 정보 없음';
+                    }
+                    if (e.saile_weekend_price !== null && e.saile_weekend_price !== undefined) {
+                        newRclWrapper.querySelector(".rcl-saile_weekend_price").innerText = `주말 ${e.saile_weekend_price.toLocaleString('ko-KR')}원`;
+                    } else {
+                        newRclWrapper.querySelector(".rcl-saile_weekend_price").innerText = '가격 정보 없음';
+                    }
+
+                    // 지정기간
+                    if (e.specifiedPeriod_weekdays !== null && e.specifiedPeriod_weekdays !== undefined) {
+                        newRclWrapper.querySelector(".rcl-specifiedPeriod_weekdays").innerText = `평일 ${e.specifiedPeriod_weekdays.toLocaleString('ko-KR')}원`;
+                    } else {
+                        newRclWrapper.querySelector(".rcl-specifiedPeriod_weekdays").innerText = '가격 정보 없음';
+                    }
+                    if (e.specifiedPeriod_weekend !== null && e.specifiedPeriod_weekend !== undefined) {
+                        newRclWrapper.querySelector(".rcl-specifiedPeriod_weekend").innerText = `주말 ${e.specifiedPeriod_weekend.toLocaleString('ko-KR')}원`;
+                    } else {
+                        newRclWrapper.querySelector(".rcl-specifiedPeriod_weekend").innerText = '가격 정보 없음';
+                    }
+
+                    // 운전 조건
+                    newRclWrapper.querySelector(".rcl-driver_liecense_condition").innerText = `운전면허 ${e.driver_license_condition_name}`;
+                    newRclWrapper.querySelector(".rcl-dirver_age_condition").innerText = `운전자나이 ${e.driver_age_condition_name}`;
+                    newRclWrapper.querySelector(".rcl-driver_experience_condition").innerText = `운전 경력 ${e.driver_experience_condition_name}`;
+
+                    registeredCampersListBox.appendChild(newRclWrapper);
+                }
+        });
+    }
+
+    </script>
+
+</body>
+</html>
