@@ -78,8 +78,13 @@ public class CampingcarService {
 
         campingCarSqlMapper.createReservation(reservationDto);
     }
+    
+     // 최종 예약 정보 확인
+    public Map<String, Object> getReservationDetails(int rentUserId, int product_id) {
+        return campingCarSqlMapper.findReservationByRentUserIdAndProduct_Id(rentUserId, product_id);
+    }
 
-    // 차량 대여 점검
+    // 차량 대여 점검 Shoot
     public void registerRentShoot(RentalExternalInspectionDto parmas) {
         campingCarSqlMapper.createRentShoot(parmas);
     }

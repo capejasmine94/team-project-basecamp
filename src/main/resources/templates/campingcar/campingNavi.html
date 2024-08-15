@@ -69,7 +69,7 @@
                 </div>
                 <div class="row">
                     <div class="col fs-6 fw-bold">
-                        예약내역
+                        <a href="/campingcar/myReservationHistory">예약내역</a>
                     </div>
                 </div>
             </div>
@@ -107,78 +107,6 @@
             </div>
         </div>
     </div> 
-</div>
-
-<!-- 전체 메뉴 -->
-<div th:fragment="allMenuNavi" class="offcanvas offcanvas-start all-menu-navi" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasRightLabel">
-    <div class="offcanvas-header position-relative p-0">
-        <img src="/public/img/allMenuBanner.jpg" alt="" class="img-fluid">
-        <button type="button" class="btn-close position-absolute top-0 end-0 z-1 m-2 p-2" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-        <div class="login-box p-3 pb-4 position-absolute start-0 bottom-0 text-white">
-            <div th:if="${session.sessionUserInfo == null}">
-                <div class="fw-semibold fs-5">로그인 해주세요.</div>
-                <a href="/user/loginPage" class="fw-medium new-fs-8 text-white">로그인 <i class="bi bi-chevron-right"></i></a>            
-            </div>
-            <div th:unless="${session.sessionUserInfo == null}">
-                <div class="">
-                    <span th:text="${session.sessionUserInfo.userDto.nickname}" class="fw-semibold fs-5"></span>
-                    <span class="">님</span>                  
-                </div>
-                <a href="/user/myPage" class="fw-medium new-fs-8 text-white">마이페이지</a>
-                <i class="bi bi-dot new-fs-7"></i>            
-                <a href="/user/logoutProcess" class="fw-medium new-fs-8 text-white">로그아웃</a>            
-            </div>
-        </div>
-    </div>
-    <div class="offcanvas-body p-0">
-        <div class="search-box p-3 pt-4 pb-2">
-            <div class="flex-grow-1 d-flex bg-primary4 rounded-2">
-                <input type="text" placeholder="검색어를 입력해주세요." class="form-word flex-grow-1 p-2 new-input-none bg-transparent new-fs-8">
-                <button type="button" class="btn-search new-btn-none px-2"><i class="bi bi-search"></i></button>
-            </div>
-        </div>
-        <div th:if="${session.sessionUserInfo == null or (session.sessionUserInfo != null and !session.sessionUserInfo.isOwner)}" class="menu-list p-3 pb-2">
-            <div class="mb-1 pb-2 fw-semibold border-bottom">카페</div>
-            <ul>
-                <li>
-                    <a href="/cafe/main" class="d-flex py-2 new-fs-9">
-                        <span>매장 목록</span><i class="bi bi-chevron-right ms-auto"></i>
-                    </a>
-                </li>
-            </ul>
-        </div>
-        <div class="menu-list p-3 pb-2">
-            <div class="mb-1 pb-2 fw-semibold border-bottom">게시판</div>
-            <ul>
-                <li>
-                    <a href="/community/mainPage" class="d-flex py-2 new-fs-9">
-                        <span>자유게시판</span><i class="bi bi-chevron-right ms-auto"></i>
-                    </a>
-                </li>
-                <li>
-                    <a href="/event/mainPage" class="d-flex py-2 new-fs-9">
-                        <span>이벤트</span><i class="bi bi-chevron-right ms-auto"></i>
-                    </a>
-                </li>
-                <li>
-                    <a href="/qna/mainPage" class="d-flex py-2 new-fs-9">
-                        <span>QnA</span><i class="bi bi-chevron-right ms-auto"></i>
-                    </a>
-                </li>
-                <li th:if="${session.sessionUserInfo == null or (session.sessionUserInfo != null and session.sessionUserInfo.isOwner)}">
-                    <a href="/rental/mainPage" class="d-flex py-2 new-fs-9">
-                        <span>장비 임대/거래</span><i class="bi bi-chevron-right ms-auto"></i>
-                    </a>
-                </li>
-                <li>
-                    <a href="/visit/listPage" class="d-flex py-2 new-fs-9">
-                        <span>카페방문</span><i class="bi bi-chevron-right ms-auto"></i>
-                    </a>
-                </li>
-            </ul>
-        </div>
-        <div class=""></div>
-    </div>
 </div>
 
 <!-- 공통 푸터 -->

@@ -18,6 +18,7 @@ import com.bulmeong.basecamp.campingcar.dto.DriverLicenseDto;
 import com.bulmeong.basecamp.campingcar.dto.LocationDto;
 import com.bulmeong.basecamp.campingcar.dto.ProductDetailImgDto;
 import com.bulmeong.basecamp.campingcar.dto.RentalCompanyDto;
+import com.bulmeong.basecamp.campingcar.dto.ReservationDto;
 import com.bulmeong.basecamp.campingcar.mapper.PartnerCampingCarSqlMapper;
 import com.bulmeong.basecamp.common.dto.ImageDto;
 import com.bulmeong.basecamp.common.util.ImageUtil;
@@ -112,5 +113,14 @@ public class PartnerCampingCarService {
 
     }
 
+    // 판매자 : 예약 신청 내역
+    public List<Map<String,Object>> getBookReservationAll(int id) {
+        return partnerCampingCarSqlMapper.findbookReservationAll(id);
+    }
+
+    // 판매자 : 예약 상태 변경
+    public void updateReservationProgress(ReservationDto reservationDto) {
+        partnerCampingCarSqlMapper.reserationApproved(reservationDto.getId());
+    }
 
 }
