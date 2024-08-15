@@ -202,12 +202,11 @@
         <div class="col fs-3">
             <span class="fw-bold">BaseCamp</span>
         </div>
-        <div class="col fs-3 text-end">
-            <a href="/user/login" class="fw-bold" th:if="${session.sessionUserInfo == null}"><i class="bi bi-person-circle" ></i></a>
-            <a href="/user/myPage" class="fw-bold" th:unless="${session.sessionUserInfo == null}">
-                <img th:src="'/images/' + ${session.sessionUserInfo.profile_image}" alt="" style="width: 1.5em; height: 1.5em;">
-            </a>
-        </div>
+        <a class="col-auto d-flex align-items-center text-end" href="/camp/myReservation">
+            <span class="material-symbols-outlined fw-light fs-2">
+                calendar_clock
+            </span>
+        </a>
     </div>
     <div class="row">
         <div class="col bg-white border-top">
@@ -239,6 +238,23 @@
         </div>
     </div>
 </div>
+
+<div th:fragment="topNaviReservation" class="container-fluid border fixed-top bg-white">
+    <div class="row py-2">
+        <div class="col fs-3">
+            <span class="fw-bold">BaseCamp</span>
+        </div>
+        <div class="col fs-3 text-end">
+            <a href="/user/login" class="fw-bold" th:if="${session.sessionUserInfo == null}"><i class="bi bi-person-circle" ></i></a>
+        </div>
+        <a class="col-auto d-flex align-items-center text-end" href="/camp/myReservation">
+            <span class="material-symbols-outlined fw-light fs-2">
+                calendar_clock
+            </span>
+        </a>
+    </div>
+</div>
+
 
 <div th:fragment="popupSelectDay" class="modal fade container-fluid" id="popupSelectDay" tabindex="-1" aria-labelledby="popupSelectDay-title" data-keyboard="true" data-backdrop="static" aria-hidden="true">
     <div class="modal-dialog">
