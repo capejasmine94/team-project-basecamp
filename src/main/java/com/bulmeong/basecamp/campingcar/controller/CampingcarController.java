@@ -186,8 +186,8 @@ public class CampingcarController {
         UserDto sessionUserInfo = (UserDto)session.getAttribute("sessionUserInfo");
         int rentUserPk = campingcarService.getExistingByRentUserId(sessionUserInfo.getId());
         
-        List<Map<String,Object>> userHistory = campingcarService.getUseageHistroyAllByRentUserId(rentUserPk);
-        model.addAttribute("userHistory", userHistory);
+        List<Map<String,Object>> rentuserHistoryData = campingcarService.getUseageHistroyAllByRentUserId(rentUserPk);
+        model.addAttribute("rentuserHistoryData", rentuserHistoryData);
 
         return "campingcar/rentUseageHistory";
     }

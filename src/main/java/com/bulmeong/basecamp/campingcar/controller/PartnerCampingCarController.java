@@ -99,7 +99,7 @@ public class PartnerCampingCarController {
         return "partner/carRegister";
     }
 
-    // 차량등록 insert 
+// 차량등록 insert 
     @RequestMapping("carRegisterProgress")
     public String carRegisterProgress(CampingcarDto campingcarDto,@RequestParam("main_image")MultipartFile main_image
                                      ,@RequestParam("detailedImg") MultipartFile[] detailedImg
@@ -117,7 +117,6 @@ public class PartnerCampingCarController {
         return "partner/carManagement";
     }
     
-
     @RequestMapping("peakSeason")
     public String peakSeason(){
 
@@ -136,7 +135,6 @@ public class PartnerCampingCarController {
     @RequestMapping("reservation_approved")
     public String reservation_approved(ReservationDto reservationDto) {
             partnerCampingCarService.updateReservationProgress(reservationDto);
-            System.out.println("@@@@@@@@@@@@@@2"+reservationDto);
         return "redirect:/partner/bookReservation";
     }
 

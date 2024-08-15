@@ -203,7 +203,7 @@ ul, li {
     -webkit-box-orient: vertical; 
     word-wrap: break-word; 
     line-height: 1.3em;
-    height: 1.3em
+    height: 1.3em;
 }
 .ellipsis-line-two { /* 텍스트 두 줄 노출 후 말줄임 */
     overflow: hidden; 

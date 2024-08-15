@@ -87,21 +87,59 @@
         </div>
     </div>
     <div class="container">
-        <div class="row section" th:each="userHistoryList : ${userHistory}">
+        <div class="row section" th:each="rentuserHistoryList : ${rentuserHistoryData}">
             <div class="col">
                 <div class="row">
                     <div class="col">
-                        <span class="badge text-bg-light" th:text="${userHistoryList.progress}"></span>
+                        <span class="badge text-bg-light" th:text="${rentuserHistoryList.progress}"></span>
                     </div>
                 </div>
                 <!-- 렌트카 회사 정보 -->
                 <div class="row">
-                    <div class="col d-flex align-items-center justify-content-center px-3">
+                    <div class="col d-flex align-items-center justify-content-between px-3">
                         <div class="row">
-                            <div class="col">
-                                <div th:if="${#strings.equals(userHistoryList.carTypeName, '모터홈')}" >
-                                    <img th:src="@{/public/img/campingCarImage/모터홈.jpg}" class="d-block w-100 img-fluid" alt="모터홈" style="max-width: 50px; max-height: 50px;">
+                            <div class="col-3">
+                                <div class="px-0" th:if="${#strings.equals(rentuserHistoryList.carTypeName, '모터홈')}">
+                                    <img th:src="@{/public/img/campingCarImage/모터홈.jpg}" class="d-block w-100  img-fluid" alt="모터홈" style="max-width: 50px; max-height: 50px;">
                                 </div>
+                                <div class="px-0" th:if="${#strings.equals(rentuserHistoryList.carTypeName, '차박형(중형)')}">
+                                    <img th:src="@{/public/img/campingCarImage/차박형(중형).png}" class="d-block w-100  img-fluid" alt="모터홈" style="max-width: 50px; max-height: 50px;">
+                                </div>
+                                <div class="px-0" th:if="${#strings.equals(rentuserHistoryList.carTypeName, '차박형(소형)')}">
+                                    <img th:src="@{/public/img/campingCarImage/차박형(소형).png}" class="d-block w-100  img-fluid" alt="모터홈" style="max-width: 50px; max-height: 50px;">
+                                </div>
+                                <div class="px-0" th:if="${#strings.equals(rentuserHistoryList.carTypeName, '카라반')}">
+                                    <img th:src="@{/public/img/campingCarImage/카라반.png}" class="d-block w-100 img-fluid" alt="모터홈" style="max-width: 50px; max-height: 50px;">
+                                </div>
+                            </div>
+                            <div class="col-9">
+                                <div th:text="${rentuserHistoryList.carTypeName}"></div>
+                                <div class="ellipsis" th:text="${rentuserHistoryList.product_name}"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row py-2">
+                    <div class="col">
+                        <span class="border border-light-subtle" style="border-bottom: 0.0625rem dotted; display: block;"></span>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col text-center">
+                        <div class="row">
+                            <div class="col-2">
+                                <span class="badge rounded-pill text-bg-dark">대여일
+                            </div>
+                            <div class="col-auto ps-3">
+                                <span th:text="${#dates.format(rentuserHistoryList.reservationStart_date, 'yyyy.MM.dd a HH:mm')}"></span>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-2">
+                                <span class="badge rounded-pill text-bg-dark">반납일</span>
+                            </div>
+                            <div class="col-auto ps-3">
+                                <div th:text="${#dates.format(rentuserHistoryList.reservationEnd_date, 'yyyy.MM.dd a HH:mm')}"></div>
                             </div>
                         </div>
                     </div>
