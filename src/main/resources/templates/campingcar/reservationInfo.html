@@ -127,7 +127,7 @@
             </div>
         </div>
     </div>
-    <form action="/campingcar/reservationProcess" method="post" enctype="multipart/form-data">
+    <form  method="post" enctype="multipart/form-data">
         <div class="container">
             <div class="row">
                 <div class="col section">
@@ -171,7 +171,6 @@
                                 </div>
                                 
                             </div>
-
                             <!-- 렌트카 회사 정보 -->
                             <div class="row">
                                 <div class="col">
@@ -210,181 +209,188 @@
                 </div>
             </div>
         </div>
-            <div class="container">
-                <div class="row section" th:if="${!isRentUser}">
-                    <div class="col form-group px-1 0mx-0">
-                        <div class="row">
-                            <div class="col section-title">
-                                <span class="fs-5 fw-semibold">예약자 정보</span>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col">
-                                <label for="driver_number" class="control-label new-fs-85 fw-semibold pb-1" style="font-size: 0.875rem;">운전자면허증 번호</label>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col pb-4">
-                                <input name="driver_license_number"  type="text" class="form-control" placeholder="운번자면허증 번호를 입력해주세요" id="driver_number">
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col">
-                                <label for="driver_license_condition" class="control-label new-fs-85 fw-semibold pb-1" style="font-size: 0.875rem;">운전자 면허 종류</label>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col pb-4">
-                                <select class="form-select" aria-label="Default select example" id="driver_license_condition" name="driver_license_id">
-                                    <option th:value="'selectPlease'" th:text="'운전자 면허증 선택'"></option>
-                                    <option th:each="driverLicenseDto : ${driverLicense}" 
-                                            th:value="${driverLicenseDto.id}" 
-                                            th:text="${driverLicenseDto.name}">
-                                </select>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col">
-                                <label for="driver_age_condition" class="control-label new-fs-85 fw-semibold pb-1" style="font-size: 0.875rem;">운전자 최소 연령</label>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col pb-4">
-                                <select class="form-select" aria-label="Default select example" id="driver_age_condition" name="driver_age_id">
-                                    <option th:value="'selectPlease'" th:text="'운전자 최소 연령 선택'"></option>
-                                    <option th:each="driverAgeCondDto : ${driverAge}" 
-                                            th:value="${driverAgeCondDto.id}" 
-                                            th:text="${driverAgeCondDto.name}">
-                                </select>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col">
-                                <label for="driver_experience_condition" class="control-label new-fs-85 fw-semibold pb-1" style="font-size: 0.875rem;">운전자 운전 경력</label>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col pb-4">
-                                <select class="form-select" aria-label="Default select example" id="driver_experience_condition" name="driver_experience_id">
-                                    <option th:value="'selectPlease'" th:text="'운전자 운전 경력 선택'"></option>
-                                    <option th:each="driverExpericneceConDto : ${driverExpericnece}" 
-                                            th:value="${driverExpericneceConDto.id}" 
-                                            th:text="${driverExpericneceConDto.name}">
-                                </select>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col">
-                                <label for="driverFile" class="form-label new-fs-85 fw-semibold pb-1" style="font-size: 0.875rem;">운전 면허증 사진</label>
-                            </div>
-                        </div>
-                        <div class="row pb-4" style="padding-left: 0.75rem; padding-right: 0.75rem;">
-                            <input class="form-control" type="file" id="driverFile" style="font-size: 0.875rem;" placeholder="운전면허증을 등록하세요" name="driveImage" accept="image/*">
-                            </div>
-                        </div>
-                        <input type="hidden" th:value="${campingcarDetails.campingcarDto.id}" name="product_id">
-                        <div class="row mx-0 px-1">
-                            <div class="col border p-4 rounded text-center bg-white">
-                                <div class="row">
-                                    <div class="col">
-                                        <div class="d-flex justify-content-center align-items-center text-center">
-                                            <span class="material-symbols-outlined" style="font-size: 48px;">person_apron</span>
-                                            <span class="text-warning pe-2" style="font-size: 48px;padding-bottom: 0.55rem;">+</span>
-                                            <span class="material-symbols-outlined" style="font-size: 48px;">id_card</span>
-                                        </div>
-                                        <div class="fw-medium new-fs-65">캠핑카 대여시, 운전자는 운전면허증을 꼭 지참해주세요</div>
-                                        <div class="fw-light new-fs-6 text-muted">면허증 확인 및 계약서 작성이 필요합니다.</div>
-                                    </div>
-                                </div>
-                            </div>
+        <input type="hidden" th:value="${campingcarDetails.campingcarDto.id}" name="product_id">
+        <div class="container">
+            <!-- 최초 고객 일 때, isRentUser가 false이면 실행 -->
+            <div class="row section" th:if="${!isRentUser}">
+                <div class="col form-group px-1 0mx-0">
+                    <div class="row">
+                        <div class="col section-title">
+                            <span class="fs-5 fw-semibold">예약자 정보</span>
                         </div>
                     </div>
-                </div>
-                <div class="row mx-0 px-1" th:unless="${!isRentUser}">
-                    <div class="col border p-4 rounded text-center bg-white">
-                        <div class="row">
-                            <div class="col">
-                                <div class="d-flex justify-content-center align-items-center text-center">
-                                    <span class="material-symbols-outlined" style="font-size: 48px;">person_apron</span>
-                                    <span class="text-warning pe-2" style="font-size: 48px;padding-bottom: 0.55rem;">+</span>
-                                    <span class="material-symbols-outlined" style="font-size: 48px;">id_card</span>
+                    <div class="row">
+                        <div class="col">
+                            <label for="driver_number" class="control-label new-fs-85 fw-semibold pb-1" style="font-size: 0.875rem;">운전자면허증 번호</label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col pb-4">
+                            <input name="driver_license_number"  type="text" class="form-control" placeholder="운번자면허증 번호를 입력해주세요" id="driver_number">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <label for="driver_license_condition" class="control-label new-fs-85 fw-semibold pb-1" style="font-size: 0.875rem;">운전자 면허 종류</label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col pb-4">
+                            <select class="form-select" aria-label="Default select example" id="driver_license_condition" name="driver_license_id">
+                                <option th:value="'selectPlease'" th:text="'운전자 면허증 선택'"></option>
+                                <option th:each="driverLicenseDto : ${driverLicense}" 
+                                        th:value="${driverLicenseDto.id}" 
+                                        th:text="${driverLicenseDto.name}">
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <label for="driver_age_condition" class="control-label new-fs-85 fw-semibold pb-1" style="font-size: 0.875rem;">운전자 최소 연령</label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col pb-4">
+                            <select class="form-select" aria-label="Default select example" id="driver_age_condition" name="driver_age_id">
+                                <option th:value="'selectPlease'" th:text="'운전자 최소 연령 선택'"></option>
+                                <option th:each="driverAgeCondDto : ${driverAge}" 
+                                        th:value="${driverAgeCondDto.id}" 
+                                        th:text="${driverAgeCondDto.name}">
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <label for="driver_experience_condition" class="control-label new-fs-85 fw-semibold pb-1" style="font-size: 0.875rem;">운전자 운전 경력</label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col pb-4">
+                            <select class="form-select" aria-label="Default select example" id="driver_experience_condition" name="driver_experience_id">
+                                <option th:value="'selectPlease'" th:text="'운전자 운전 경력 선택'"></option>
+                                <option th:each="driverExpericneceConDto : ${driverExpericnece}" 
+                                        th:value="${driverExpericneceConDto.id}" 
+                                        th:text="${driverExpericneceConDto.name}">
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <label for="driverFile" class="form-label new-fs-85 fw-semibold pb-1" style="font-size: 0.875rem;">운전 면허증 사진</label>
+                        </div>
+                    </div>
+                    <div class="row pb-4" style="padding-left: 0.75rem; padding-right: 0.75rem;">
+                        <input class="form-control" type="file" id="driverFile" style="font-size: 0.875rem;" placeholder="운전면허증을 등록하세요" name="driveImage" accept="image/*">
+                        </div>
+                    </div>
+                    
+                    <div class="row mx-0 px-1">
+                        <div class="col border p-4 rounded text-center bg-white">
+                            <div class="row">
+                                <div class="col">
+                                    <div class="d-flex justify-content-center align-items-center text-center">
+                                        <span class="material-symbols-outlined" style="font-size: 48px;">person_apron</span>
+                                        <span class="text-warning pe-2" style="font-size: 48px;padding-bottom: 0.55rem;">+</span>
+                                        <span class="material-symbols-outlined" style="font-size: 48px;">id_card</span>
+                                    </div>
+                                    <div class="fw-medium new-fs-65">캠핑카 대여시, 운전자는 운전면허증을 꼭 지참해주세요</div>
+                                    <div class="fw-light new-fs-6 text-muted">면허증 확인 및 계약서 작성이 필요합니다.</div>
                                 </div>
-                                <div class="fw-medium new-fs-65">캠핑카 대여시, 운전자는 운전면허증을 꼭 지참해주세요</div>
-                                <div class="fw-light new-fs-6 text-muted">면허증 확인 및 계약서 작성이 필요합니다.</div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="container">
-                <div class="row section">
-                    <div class="col">
-                        <div class="row">
-                            <div class="col">
-                                <div class="row">
-                                    <div class="col">
-                                        <div class="fs-5">자동차 보험</div>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col info-item">
-                                        <div class="info-item-title ps-3">대인/대물/자손 보상한도 및 자가부담금</div>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col">
-                                        <table class="table border">
-                                            <thead class="text-center fw-normal">
-                                                <tr>
-                                                <th scope="col">구분</th>
-                                                <th scope="col">보상한도</th>
-                                                <th scope="col">자기부담금</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody class="text-center">
-                                                <tr>
-                                                <td>대인1·2</td>
-                                                <td>무한</td>
-                                                <td>50만원</td>
-                                                </tr>
-                                                <tr>
-                                                <td>대물</td>
-                                                <td>최대2,000만원</td>
-                                                <td>50만원</td>
-                                                </tr>
-                                                <tr>
-                                                <td>자손</td>
-                                                <td>최대1,500만원</td>
-                                                <td>50만원</td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col">
-                                        <div class="text-muted new-fs-65">보험은 현장에서 작성하는 계약서를 기준으로 적용합니다.</div>
-                                        <div class="text-muted new-fs-65">반드시 계약서를 확인해주시기 바랍니다.</div>
-                                    </div>
-                                </div>
+            <div class="row mx-0 px-1" th:unless="${!isRentUser}">
+                <div class="col border p-4 rounded text-center bg-white">
+                    <div class="row">
+                        <div class="col">
+                            <div class="d-flex justify-content-center align-items-center text-center">
+                                <span class="material-symbols-outlined" style="font-size: 48px;">person_apron</span>
+                                <span class="text-warning pe-2" style="font-size: 48px;padding-bottom: 0.55rem;">+</span>
+                                <span class="material-symbols-outlined" style="font-size: 48px;">id_card</span>
                             </div>
-                        </div>
-                        <div class="row">
-                            <div class="col pt-3">
-                                <span class="fw-semibold text-muted new-fs-75">위 내용을 모두 확인하였으며, 예약 하기 버튼을 눌러주세요</span>
-                            </div>
+                            <div class="fw-medium new-fs-65">캠핑카 대여시, 운전자는 운전면허증을 꼭 지참해주세요</div>
+                            <div class="fw-light new-fs-6 text-muted">면허증 확인 및 계약서 작성이 필요합니다.</div>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="container">
-                <div class="row section">
-                    <div class="col d-grid">
-                        <button class="btn btn-dark btn-lg fw-bold" style="color: #C6ED6F;">예약하기</button>
+        </div>
+        <div class="container">
+            <div class="row section">
+                <div class="col">
+                    <div class="row">
+                        <div class="col">
+                            <div class="row">
+                                <div class="col">
+                                    <div class="fs-5">자동차 보험</div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col info-item">
+                                    <div class="info-item-title ps-3">대인/대물/자손 보상한도 및 자가부담금</div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col">
+                                    <table class="table border">
+                                        <thead class="text-center fw-normal">
+                                            <tr>
+                                            <th scope="col">구분</th>
+                                            <th scope="col">보상한도</th>
+                                            <th scope="col">자기부담금</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody class="text-center">
+                                            <tr>
+                                            <td>대인1·2</td>
+                                            <td>무한</td>
+                                            <td>50만원</td>
+                                            </tr>
+                                            <tr>
+                                            <td>대물</td>
+                                            <td>최대2,000만원</td>
+                                            <td>50만원</td>
+                                            </tr>
+                                            <tr>
+                                            <td>자손</td>
+                                            <td>최대1,500만원</td>
+                                            <td>50만원</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col">
+                                    <div class="text-muted new-fs-65">보험은 현장에서 작성하는 계약서를 기준으로 적용합니다.</div>
+                                    <div class="text-muted new-fs-65">반드시 계약서를 확인해주시기 바랍니다.</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col pt-3">
+                            <span class="fw-semibold text-muted new-fs-75">위 내용을 모두 확인하였으며, 예약 하기 버튼을 눌러주세요</span>
+                        </div>
                     </div>
                 </div>
             </div>
-        </form>
+        </div>
+        <div class="container">
+            <div class="row section d-flex justify-content-center">
+                <div class="col d-grid">
+                    <div th:if="${!isRentUser}">
+                        <button class="btn btn-dark btn-lg fw-bold" formaction="/campingcar/reservationProcess" style="color: #C6ED6F;">예약하기</button>
+                    </div>
+                    <div th:unless="${!isRentUser}">
+                        <button class="btn btn-dark btn-lg fw-bold" formaction="/campingcar/existingRentUserReservationProcess" style="color: #C6ED6F;">예약하기</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
        
 
 

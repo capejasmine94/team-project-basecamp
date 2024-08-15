@@ -73,8 +73,12 @@ public class CampingcarService {
     public boolean isRentUser(int id) {
         return campingCarSqlMapper.findRentUserByUserId(id) > 0;
     }
+    // 렌트 고객ID 가지고 오기
+    public int getExistingByRentUserId(int id) {
+        return campingCarSqlMapper.existingByRentUserId(id);
+    }
 
-    // 렌트 고객 등록
+    // 최초 렌트 고객 등록
     public void registeRentUser(RentUserDto parms, ReservationDto reservationDto) {
         campingCarSqlMapper.createRentUser(parms);
 
@@ -82,10 +86,14 @@ public class CampingcarService {
 
         campingCarSqlMapper.createReservation(reservationDto);
     }
+    // 기존 렌트 고객 예약 등록
+    public void existingRentUserReservation(ReservationDto reservationDto) {
+        campingCarSqlMapper.createReservation(reservationDto);
+    }
     
      // 최종 예약 정보 확인
-    public Map<String, Object> getReservationDetails(int rentUserId, int product_id) {
-        return campingCarSqlMapper.findReservationByRentUserIdAndProduct_Id(rentUserId, product_id);
+    public Map<String, Object> getReservationDetails(int rentUserId, int id) {
+        return campingCarSqlMapper.findReservationByRentUserIdAndProduct_Id(rentUserId, id);
     }
 
     // 차량 대여 점검 Shoot

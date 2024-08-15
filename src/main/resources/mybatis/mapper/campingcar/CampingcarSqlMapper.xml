@@ -90,10 +90,14 @@
         select count(*) from bc_campingcar_like
         where product_id=#{id}
     </select>
-    <!-- rentuser 검증 -->
+    <!-- rentuser 존재 여부 검증 -->
     <select id="findRentUserByUserId" resultType="int">
         select count(*) from bc_rent_user bru
-        INNER JOIN bc_user bu on bru.user_id = bu.id
+        where user_id =#{id}
+    </select>
+    <!-- 예약하기의 기존 rentuserId를 가지고 오는 쿼리 -->
+    <select id="existingByRentUserId" resultType="int">
+        select id from bc_rent_user bru
         where user_id =#{id}
     </select>
     <!-- rentuser 등록-->
@@ -108,6 +112,9 @@
         )
     </insert>
     <insert id="createReservation">
+        <selectKey keyProperty="id" resultType="int" order="AFTER">
+            select max(id) from bc_reservation
+        </selectKey>
         insert into bc_reservation(
             rent_user_id, product_id, start_date, end_date, progress, cancellation_date
         )values(
@@ -163,7 +170,7 @@
         INNER JOIN bc_driver_license_condition bdlc on bc.driver_license_id = bdlc.id
         INNER JOIN bc_driver_age_condition bdac on bc.driver_age_id = bdac.id
         INNER JOIN bc_driver_experience_condition bdec on bc.driver_experience_id = bdec.id
-        where br.rent_user_id =17 and br.product_id = #{product_id}
+        where br.rent_user_id =#{rent_user_id} and br.id = #{id}
     </select>
 
     <select id="useageHistroyAllByRentUserId" resultType="Map">

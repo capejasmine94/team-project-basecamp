@@ -159,17 +159,34 @@ public class CampingcarController {
         rentUser.setDriver_license_image(basecamp_rentUser);
 
         campingcarService.registeRentUser(rentUser,reservationDto);
-        System.out.println("렌트고객 가입:" + rentUser);
 
-        Map<String,Object> reservationConfirm = campingcarService.getReservationDetails(reservationDto.getRent_user_id(), reservationDto.getProduct_id());
+        Map<String,Object> reservationConfirm = campingcarService.getReservationDetails(reservationDto.getRent_user_id(), reservationDto.getId());
         model.addAttribute("reservationConfirm", reservationConfirm);
-        System.out.println("ㅎㅎㅎㅎㅎㅎㅎㅎㅎ"+reservationConfirm);
+
+        return "campingcar/reservationConfirmation";
+    }
+
+    @RequestMapping("existingRentUserReservationProcess")
+    public String existingRentUserReservationProcess(HttpSession session, ReservationDto reservationDto, Model model) {
+
+        UserDto sessionUserInfo = (UserDto)session.getAttribute("sessionUserInfo");
+        int rentUserPk = campingcarService.getExistingByRentUserId(sessionUserInfo.getId());
+        reservationDto.setRent_user_id(rentUserPk);
+
+        campingcarService.existingRentUserReservation(reservationDto);
+
+        Map<String,Object> reservationConfirm = campingcarService.getReservationDetails(reservationDto.getRent_user_id(), reservationDto.getId());
+        model.addAttribute("reservationConfirm", reservationConfirm);
+
         return "campingcar/reservationConfirmation";
     }
 
     @RequestMapping("rentUseageHistory")
-    public String rentUseageHistory(RentUserDto rentUserDto, Model model) {
-        List<Map<String,Object>> userHistory = campingcarService.getUseageHistroyAllByRentUserId(rentUserDto.getId());
+    public String rentUseageHistory(HttpSession session, Model model) { 
+        UserDto sessionUserInfo = (UserDto)session.getAttribute("sessionUserInfo");
+        int rentUserPk = campingcarService.getExistingByRentUserId(sessionUserInfo.getId());
+        
+        List<Map<String,Object>> userHistory = campingcarService.getUseageHistroyAllByRentUserId(rentUserPk);
         model.addAttribute("userHistory", userHistory);
 
         return "campingcar/rentUseageHistory";

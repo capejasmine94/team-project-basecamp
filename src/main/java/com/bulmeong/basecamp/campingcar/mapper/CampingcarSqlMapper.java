@@ -41,14 +41,16 @@ public interface CampingcarSqlMapper {
     public int countByProductId(int id);
     //렌트 고객 검증
     public int findRentUserByUserId(int id); 
-    //렌트 고객 등록
+    // 예약하기의 기존 렌트유저ID 가지고 오기 
+    public int existingByRentUserId(int id);
+    //최초 렌트 고객 등록
     public void createRentUser(RentUserDto rentUserParams);
 
     // 예약하기
     public void createReservation(ReservationDto reservationDto);
 
     // 최종 예약 정보 확인
-    public Map<String,Object> findReservationByRentUserIdAndProduct_Id(@Param("rent_user_id") int rent_user_id, @Param("product_id")int product_id);
+    public Map<String,Object> findReservationByRentUserIdAndProduct_Id(@Param("rent_user_id") int rent_user_id, @Param("id")int id);
 
     //차량 대여 점검 
     public void createRentShoot(RentalExternalInspectionDto parmas);
