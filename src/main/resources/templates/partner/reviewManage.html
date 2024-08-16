@@ -99,8 +99,8 @@
                                                 <div class="modal fade" th:id="'reviewModal-' + ${iter.index}" tabindex="-1" aria-labelledby="reviewModalLabel" aria-hidden="true">
                                                     <div class="modal-dialog modal-dialog-centered">
                                                         <div class="modal-content">
-                                                            <div class="modal-header">
-                                                                <h1 class="modal-title fs-5" id="reviewModalLabel">리뷰 상세보기</h1>
+                                                            <div class="modal-header bg-dark text-white">
+                                                                <div class="modal-title fs-5" id="reviewModalLabel">리뷰 상세보기</div>
                                                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                                             </div>
                                                             <div class="modal-body">
@@ -112,8 +112,13 @@
                                                                         <div class="new-fs-85">  다만, 불만 내용 등 판매활동에 불이익을 준다는 의유만으로는 처리되지 않습니다.</div>
                                                                     </div>
                                                                 </div>
-                                                                <div class="row my-3 py-2 border border-2 border-light-subtle m-0">
+                                                                <div class="row mt-5 border border-3 border-light-subtle m-0">
                                                                     <div class="col">
+                                                                        <div class="row pt-0">
+                                                                            <div class="col bg-light text-dark py-2">
+                                                                                <span th:text="'리뷰번호 : '+ ${reviewData.reviewId}"></span>
+                                                                            </div>
+                                                                        </div>
                                                                         <div class="row">
                                                                             <div class="col text-start">
                                                                                 <span class="text-warning">
@@ -122,49 +127,52 @@
                                                                                     <span th:if="${reviewData.rate >=3}">★</span>
                                                                                     <span th:if="${reviewData.rate >=4}">★</span>
                                                                                     <span th:if="${reviewData.rate >=5}">★</span>
-                                                                                    <span class="text-dark fw-medium" th:text="${reviewData.rate}+'점'"></span>
+                                                                                    <span class="text-dark fw-medium new-fs-9" th:text="${reviewData.rate}+'점'"></span>
                                                                                 </span>
                                                                             </div>
-                                                                            <div class="col text-end">
-                                                                                <span th:text="${reviewData.nickname} + ' | '"></span><span th:text="${#dates.format(reviewData.created_at, 'yyyy.MM.dd HH:mm')}"></span>
+                                                                            <div class="col text-end text-muted new-fs-8">
+                                                                                <span th:text="${reviewData.nickname} + ' | '"></span><span th:text="${#dates.format(reviewData.created_at, 'yyyy.MM.dd HH:mm:ss')}"></span>
                                                                             </div>
                                                                         </div>
                                                                         <div class="row">
-                                                                            <div class="col py-4 d-flex justify-content-start align-items-center">
+                                                                            <div class="col fs-5 py-4 d-flex justify-content-start align-items-center">
                                                                                 <span th:text="${reviewData.content}"></span>
                                                                             </div>
                                                                         </div>
                                                                         <div class="row border-top pt-2">
-                                                                            <div class="col d-flex justify-content-start align-items-center">
+                                                                            <div class="col new-fs-9 d-flex justify-content-start align-items-center">
                                                                                 <span th:text="'차량 번호 : ' + ${reviewData.product_id} + ' | '">차량번호</span><span th:text="${reviewData.product_name}">차량명</span>
                                                                             </div>
                                                                         </div>
+                                                                        <form class="row bg-body-secondary mt-4 py-3" action="/partner/reviewRelyContentProcess" method="post">
+                                                                            <div class="col">
+                                                                                <div class="row">
+                                                                                    <div class="col">
+                                                                                        <div class="new-fs-9 fw-semibold ps-1 d-flex justify-content-start align-items-center">판매자 답변</div>
+                                                                                        <textarea class="form-control" name="reply_content" id="sellerReply" rows="3" placeholder="판매자 답글을 작성하세요"></textarea> 
+                                                                                        <input type="hidden" name="id" th:value="${reviewData.reviewId}">
+                                                                                        <div class="text-end new-fs-75">최대500자</div>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="row pt-2">
+                                                                                    <div class="col">
+                                                                                        <button class="btn btn-outline-danger bi bi-exclamation-triangle"
+                                                                                        style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;">리뷰 신고</button> 
+                                                                                    </div>
+                                                                                    <div class="col text-end">
+                                                                                        <button type="submit" class="btn btn-dark"
+                                                                                        style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;">답글 저장</button>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </form>
                                                                     </div>
                                                                 </div>
-                                                                <form class="row bg-primary-subtle py-3" action="/partner/reviewRelyContentProcess" method="post">
-                                                                    <div class="col">
-                                                                        <div class="row">
-                                                                            <div class="col">
-                                                                                <div class="fs-5 ps-1 d-flex justify-content-start align-items-center">판매자 답글</div>
-                                                                                <textarea class="form-control" name="reply_content" id="sellerReply" rows="3" placeholder="판매자 답글을 작성하세요"></textarea> 
-                                                                                <input type="hidden" name="id" th:value="${reviewData.reviewId}">
-                                                                            </div>
-                                                                        </div>
-                                                                        <div class="row pt-1">
-                                                                            <div class="col">
-                                                                                <button class="btn btn-outline-danger bi bi-exclamation-triangle"
-                                                                                style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;">리뷰 신고</button> 
-                                                                            </div>
-                                                                            <div class="col text-end">
-                                                                                <button type="submit" class="btn btn-dark"
-                                                                                style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;">답글 저장</button>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                </form>
                                                             </div>
-                                                            <div class="modal-footer">
-                                                                <button type="button" class="btn btn-light" data-bs-dismiss="modal">닫기</button>
+                                                            <div class="modal-footer d-flex justify-content-center">
+                                                                <button type="button" class="text-muted bg-body text-body border border-secondary-subtle btn-sm fw-bold px-5 py-2" data-bs-dismiss="modal">
+                                                                    닫기
+                                                                </button>
                                                             </div>
                                                         </div>
                                                     </div>
