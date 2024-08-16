@@ -49,27 +49,29 @@ public class PartnerCampingCarController {
         rentalCompanyDto.setComp_profile_image(ImageUtil.saveImageAndReturnLocation(comp_profile_image));
         
         partnerCampingCarService.registerSeller(rentalCompanyDto);
+
         return "redirect:/seller/login";
     }
-// 판매자 로그인 
+    // 판매자 로그인 
     @RequestMapping("loginProcess")
     public String loginProcess() {
-        return "redirect:/seller/login";
 
+        return "redirect:/seller/login";
     }
-// 판매자 로그아웃 
+    // 판매자 로그아웃 
     @RequestMapping("logoutProcess")
     public String logoutProcess(HttpSession session) {
         session.invalidate();
         return "redirect:/seller/login";
     }
-// 판매자페이지 main
+    // 판매자페이지 main
     @RequestMapping("main")
     public String main(HttpSession session, Model model){
 
         RentalCompanyDto rentalCompanyDto = (RentalCompanyDto) session.getAttribute("sessionCaravanInfo");
         model.addAttribute("rentalCompanyDto", rentalCompanyDto);
-            return "partner/main";
+        
+        return "partner/main";
     
     }
     // admin_main에 sub_category_쓰는 방식
@@ -99,15 +101,15 @@ public class PartnerCampingCarController {
         return "partner/carRegister";
     }
 
-// 차량등록 insert 
+    // 차량등록 insert 
     @RequestMapping("carRegisterProgress")
     public String carRegisterProgress(CampingcarDto campingcarDto,@RequestParam("main_image")MultipartFile main_image
                                      ,@RequestParam("detailedImg") MultipartFile[] detailedImg
                                      ,@RequestParam(value = "basicFacilites_id") List<Integer> basicFacilites_id) {
-            campingcarDto.setMain_img(ImageUtil.saveImageAndReturnLocation(main_image));
+        campingcarDto.setMain_img(ImageUtil.saveImageAndReturnLocation(main_image));
 
-            partnerCampingCarService.registerCamping(campingcarDto,basicFacilites_id,detailedImg);
-            System.out.println("carRegister_test_controller"+ campingcarDto+basicFacilites_id+detailedImg);
+        partnerCampingCarService.registerCamping(campingcarDto,basicFacilites_id,detailedImg);
+
         return "redirect:/partner/main";
     }
     
@@ -134,13 +136,21 @@ public class PartnerCampingCarController {
 
     @RequestMapping("reservation_approved")
     public String reservation_approved(ReservationDto reservationDto) {
-            partnerCampingCarService.updateReservationProgress(reservationDto);
+    
+        partnerCampingCarService.updateReservationProgress(reservationDto);
+    
         return "redirect:/partner/bookReservation";
     }
 
     @RequestMapping("reviewManage")
-    public String reviewManga() {
+    public String reviewManga(HttpSession session, Model model) {
+        
+        RentalCompanyDto rentalCompanyDto = (RentalCompanyDto) session.getAttribute("sessionCaravanInfo");
+        int rentalPk = rentalCompanyDto.getId();
 
+        List<Map<String,Object>> reviewCompany = partnerCampingCarService.reviewManagebyRentCompanyId(rentalPk);
+        model.addAttribute("reviewCompany", reviewCompany);
+        
         return "partner/reviewManage";
     }
 

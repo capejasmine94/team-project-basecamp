@@ -122,5 +122,9 @@ public class PartnerCampingCarService {
     public void updateReservationProgress(ReservationDto reservationDto) {
         partnerCampingCarSqlMapper.reserationApproved(reservationDto.getId());
     }
+    // 판매자 : 리뷰 관리
+    public List<Map<String,Object>> reviewManagebyRentCompanyId(int id) {
+        return partnerCampingCarSqlMapper.reviewManagebyRentCompanyId(id);
+    }
 
 }

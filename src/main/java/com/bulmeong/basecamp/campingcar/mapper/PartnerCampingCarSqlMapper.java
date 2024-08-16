@@ -60,6 +60,8 @@ public interface PartnerCampingCarSqlMapper {
     public List<Map<String,Object>> findbookReservationAll(int id);
     // 판매자 : 예약상태 update
     public void reserationApproved(int id);
+    // 판매자 : 리뷰 관리
+    public List<Map<String,Object>> reviewManagebyRentCompanyId(int id);
 
 
 }

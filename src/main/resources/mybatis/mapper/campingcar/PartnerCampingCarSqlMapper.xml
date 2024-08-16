@@ -193,4 +193,29 @@
     where id=#{id}
     </update>
 
+    <!-- 판매자 : 리뷰 관리 -->
+    <select id="reviewManagebyRentCompanyId" resultType="Map">
+        select 
+                bc.id AS product_id,
+                bc.product_name,
+                bu.nickname,
+                br.start_date,
+                br.end_date,
+                brr.rate,
+                brr.content,
+                brr.created_at
+    from bc_rental_review brr
+    INNER JOIN 
+                bc_reservation br on brr.reservation_id = br.id
+    INNER JOIN 
+                bc_campingcar bc on br.product_id = bc.id
+    INNER JOIN 
+                bc_rental_company_info brci on bc.rental_company_id = brci.id 
+    INNER JOIN 
+                bc_rent_user bru on br.rent_user_id = bru.id 
+    INNER JOIN 
+                bc_user bu on bru.user_id = bu.id
+    where brci.id = #{id}
+    order by brr.id DESC
+    </select>
 </mapper>
