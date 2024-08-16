@@ -189,6 +189,18 @@ public class RestClubController {
         return restResponseDto;
     }
 
+    @GetMapping("regularMeeting")
+    public RestResponseDto getRegularMeetingData(@RequestParam("club_id")int club_id, @RequestParam("meeting_date") String meeting_date){
+        RestResponseDto restResponseDto = new RestResponseDto();
+        List<Map<String,Object>> upcomingMeetingList = clubService.getRegularMeetingData(club_id, meeting_date);
+
+        restResponseDto.add("upcomingMeetingList", upcomingMeetingList);
+        
+        System.out.println(meeting_date);
+        
+        return restResponseDto;
+    }
+
     
 
     public RestResponseDto template(){

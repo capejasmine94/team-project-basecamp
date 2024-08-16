@@ -107,7 +107,7 @@
     <body>
         <div class="container-fluid fixed-top">
             <div class="row pt-3 pb-2 bg-white">
-                <a th:href="@{/club/home(id=${id})}" class="col-2 ps-1 align-items-center d-flex ps-0"><span class="material-symbols-outlined">arrow_back</span></a>
+                <div class="col-2 ps-1 align-items-center d-flex ps-0"><span onclick="history.back()" class="material-symbols-outlined">arrow_back</span></div>
                 <div class="col text-center fw-medium" th:text="${clubDto.name}">소모임 이름</div>
                 <div class="col-2">MY</div>
             </div>
@@ -119,7 +119,7 @@
                             <a class="nav-link"  th:href="@{/club/home(id=${id})}" style="font-size: 0.9em;">홈</a>
                         </div>
                         <div class="col p-0 nav-item">
-                            <a class="nav-link" th:href="@{/club/home(id=${id})}" style="font-size: 0.9em;">정모</a>
+                            <a class="nav-link" th:href="@{/club/meeting(id=${clubDto.id})}" style="font-size: 0.9em;">정모</a>
                         </div>
                         <div class="col p-0 nav-item">
                             <a class="nav-link active fw-medium" aria-current="page" th:href="@{/club/board(id=${id})}" style="font-size: 0.9em;">게시판</a>
@@ -186,21 +186,21 @@
                                             </div> -->
                                             <div class="col">
                                                 <div class="row">
-                                                    <div class="col pe-2 ellipsis-line-two" style="font-size: 0.9em;">
+                                                    <div class="col pe-0 ellipsis-line-two" style="font-size: 0.9em;">
                                                     <span class="lightFont" th:text=" '[' +${postDetail.clubPostCategoryDto.category_name}+']'">[카테고리]</span>
                                                     
                                                         <span th:text="${postDetail.clubPostDto.title}" style="font-weight: 300;"></span>
                                                     </div>
                                                 </div>
                                                 <div class="row pt-2">
-                                                    <div class="col text-secondary" style="font-size: 0.8em;">
+                                                    <div class="col pe-0 text-secondary" style="font-size: 0.8em;">
                                                         <span th:text="${postDetail.userDto.nickname}"></span><span> &#183; </span>
                                                         <span th:text="${#dates.format(postDetail.clubPostDto.created_at, 'yyyy.MM.dd')}"></span><span> &#183; </span>
                                                         <span th:text="'조회' + ${postDetail.clubPostDto.read_count}">조회 531</span>
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="col-auto ps-0 d-flex justify-content-end align-items-center">
+                                            <div class="col-auto d-flex justify-content-end align-items-center">
                                                 <div class="centered-circle">
                                                     <span th:text="${postDetail.totalComment}">1</span> 
                                                 </div>
@@ -385,7 +385,7 @@
         </div>
 
         <!-- 게시글 작성하기 -->
-        <div class="container fixed-bottom mb-5 pb-4 pe-2">
+        <div class="container fixed-bottom mb-5 pb-4 pe-2" style="z-index: 1010;">
             <div class="row justify-content-end mb-4 pe-3">
                 <a th:if="${session.sessionUserInfo != null}" th:href="@{/club/writePost(id=${id})}" class="col-auto bg-light ps-2 py-2 shadow rounded-pill text-decoration-none">
                     <div class="row text-dark">

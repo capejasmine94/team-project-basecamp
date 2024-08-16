@@ -583,6 +583,20 @@
         where meeting_date = #{meeting_date}
     </select>
 
+    <select id="selectRegularMeetigDataList" resultType="com.bulmeong.basecamp.club.dto.ClubMeetingDto">
+        select * from bc_club_meeting
+        where meeting_date = #{meeting_date}
+        and club_id = #{club_id}
+    </select>
+
+    <!-- 특정 소모임의 미팅에 참여한 회원의 정보-->
+    <select id="selectMeetingMemberUserDto" resultType="com.bulmeong.basecamp.user.dto.UserDto">
+        select * from bc_club_meeting_member bcmm
+        inner join bc_user bu on bcmm.user_id =bu.id
+        where meeting_id = #{meeting_id}
+    </select>
+
+
     <!-- 정모 참석자수 -->
     <select id="selectMeetingMemberCount" resultType="int">
         select count(*) from bc_club_meeting_member
@@ -601,6 +615,7 @@
         where id=#{id}
     </select>
 
+ 
 
 
 

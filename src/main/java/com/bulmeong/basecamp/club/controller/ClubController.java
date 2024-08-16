@@ -343,11 +343,7 @@ public class ClubController {
         return "club/myClubsListPage";
     }
 
-    @RequestMapping("myMeetings")
-    public String myMeetingList(){
 
-        return "club/clubMeetingPage";
-    }
 
 
     @RequestMapping("bookmarkProcess")
@@ -451,6 +447,12 @@ public class ClubController {
         return "club/staffLevelPage";
     }
     
+    @RequestMapping("meeting")
+    public String meeting(@RequestParam("id") int id, Model model){
+        model.addAttribute("id", id);
+        return "club/clubMeetingPage";
+    }
+
 
    
 

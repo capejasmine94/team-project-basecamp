@@ -600,6 +600,7 @@ public class ClubService {
             Map<String, Object> upcomingMeetingMap = new HashMap<>();
             int meetingPk = upcomingMeetingDto.getId();
             int meetingMemberCount = clubSqlMapper.selectMeetingMemberCount(meetingPk);
+            
             ClubDto clubDto = clubSqlMapper.selectClubDtoById(upcomingMeetingDto.getClub_id());
             ClubRegionCategoryDto clubRegionCategoryDto = clubSqlMapper.selectRegionCategoryDtoById(clubDto.getCategory_id());
 
@@ -616,5 +617,35 @@ public class ClubService {
 
         }
 
+        public List<Map<String, Object>> getRegularMeetingData(int club_id, String meeting_date){
+            List<ClubMeetingDto> upcomingMeetingDataList = clubSqlMapper.selectRegularMeetigDataList(club_id, meeting_date);
+            List<Map<String, Object>> upcomingMeetingList = new ArrayList<>();
+ 
+         for(ClubMeetingDto upcomingMeetingDto : upcomingMeetingDataList){
+             Map<String, Object> upcomingMeetingMap = new HashMap<>();
+             int meetingPk = upcomingMeetingDto.getId();
+             int meetingMemberCount = clubSqlMapper.selectMeetingMemberCount(meetingPk);
+             List<UserDto> userDtoList = clubSqlMapper.selectMeetingMemberUserDto(meetingPk);
+             
+             ClubDto clubDto = clubSqlMapper.selectClubDtoById(upcomingMeetingDto.getClub_id());
+             ClubRegionCategoryDto clubRegionCategoryDto = clubSqlMapper.selectRegionCategoryDtoById(clubDto.getCategory_id());
+ 
+            String dDay = clubSqlMapper.calculateDdaysForMeetings(meetingPk);
+
+             upcomingMeetingMap.put("upcomingMeetingDto", upcomingMeetingDto);
+             upcomingMeetingMap.put("meetingMemberCount", meetingMemberCount);
+             upcomingMeetingMap.put("clubDto", clubDto);
+             upcomingMeetingMap.put("clubRegionCategoryDto", clubRegionCategoryDto);
+             upcomingMeetingMap.put("userDtoList",userDtoList);
+             upcomingMeetingMap.put("dDay", dDay);
+ 
+             upcomingMeetingList.add(upcomingMeetingMap);
+ 
+            }
+           
+            return upcomingMeetingList;
+ 
+         }    
+        
 
     }

@@ -107,7 +107,7 @@
     <body>
         <div class="container-fluid fixed-top">
             <div class="row pt-3 pb-2 bg-white">
-                <a th:href="@{/club/home(id=${id})}" class="col-2 ps-1 align-items-center d-flex ps-0"><span class="material-symbols-outlined">arrow_back</span></a>
+                <div class="col-2 ps-1 align-items-center d-flex ps-0"><span onclick="history.back()" class="material-symbols-outlined">arrow_back</span></div>
                 <div class="col text-center fw-medium" th:text="${clubDto.name}">소모임 이름</div>
                 <div class="col-2">MY</div>
             </div>
@@ -119,7 +119,7 @@
                             <a class="nav-link"  th:href="@{/club/home(id=${id})}" style="font-size: 0.9em;">홈</a>
                         </div>
                         <div class="col p-0 nav-item">
-                            <a class="nav-link" th:href="@{/club/home(id=${id})}" style="font-size: 0.9em;">정모</a>
+                            <a class="nav-link" th:href="@{/club/meeting(id=${id})}" style="font-size: 0.9em;">정모</a>
                         </div>
                         <div class="col p-0 nav-item">
                             <a class="nav-link"  th:href="@{/club/board(id=${id})}" style="font-size: 0.9em;">게시판</a>
@@ -291,7 +291,7 @@
         </div>
 
         <!-- 게시글 작성하기 -->
-        <div class="container fixed-bottom mb-5 pb-4 pe-2">
+        <div class="container fixed-bottom mb-5 pb-4 pe-2" style="z-index: 1010;">
             <div class="row justify-content-end mb-4 pe-3">
                 <a th:if="${session.sessionUserInfo != null}" th:href="@{/club/writePost(id=${id})}" class="col-auto bg-light ps-2 py-2 shadow rounded-pill text-decoration-none">
                     <div class="row text-dark">

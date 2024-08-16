@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" >
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+        <link rel="stylesheet" href="/public/css/common.css">
+        <link rel="stylesheet" href="/public/css/basecamp.css">
+    </head>
+    <body>
+      
+  
+        <div class="container" style="padding-top: 60.792px;">
+
+            <div class="fixed-top px-4 row border-bottom py-3 shadow-sm bg-white">
+              
+                <div class="col text-center fw-medium">신규 모임</div>
+                
+            </div>
+            
+            <!-- 전체 박스 -->
+            <div class="row pt-4 px-2">
+                <div class="col">
+
+                    <div class="row">
+                        <div class="col">
+
+                            <div class="row pb-3" th:each="clubDto : ${clubDtoList}">
+                                <div class="col">
+                                    <a class="col text-decoration-none text-black" th:href="@{/club/home(id=${clubDto.id})}">
+                                    <div class="row">
+                                        <div class="col-4 align-self-center">
+                                            <div>
+                                                <img class="rounded" th:src="|/images/${clubDto.main_image}|" alt="모임 이미지 1" style="width: 100%; height: 5em; object-fit: cover;">
+                                            </div>
+                                        </div>
+
+                                        <div class="col ps-0 align-self-center">
+                                            <div class="row">
+                                                <div class="col fw-medium" style="font-size: 0.9em;" th:text="${clubDto.name}">
+                                                    소모임명
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col ellipsis-line-two" style="font-size: 0.8em;" >
+                                                    <span th:text="${clubDto.description}"></span>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col text-secondary" style="font-size: 0.8em;">
+                                                    <span>지역</span> | 멤버 20 | 정모 <span class="text-danger">3</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    </a>
+
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+                
+        </div>
+
+
+         
+        <script src="/public/js/lockLikeMobile.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    </body>
+</html>

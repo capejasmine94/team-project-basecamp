@@ -110,6 +110,10 @@ public interface ClubSqlMapper {
     // 날짜별 정모 리스트
     public List<ClubMeetingDto> selectUpcomingMeetigDataList(String meeting_date);
 
+    // 특정 모임 내 정기모임
+    public List<ClubMeetingDto> selectRegularMeetigDataList(@Param("club_id")int club_id, @Param("meeting_date")String meeting_date);
+
+    public List<UserDto> selectMeetingMemberUserDto(int meeting_id);
     // 정모 참여 명수
     public int selectMeetingMemberCount(int meeting_id);
 
@@ -138,6 +142,8 @@ public interface ClubSqlMapper {
     public ClubVisitDto selectTodayVisit(ClubVisitDto clubVisitDto);
     // 오늘 총방문자수
     public int selectTodayVisitCount(int club_id);
+
+
 }
 
 

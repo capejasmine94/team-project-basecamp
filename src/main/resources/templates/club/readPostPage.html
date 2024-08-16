@@ -48,8 +48,9 @@
     <div class="container bg-body-tertiary">
 
         <div class="fixed-top px-4 row border-bottom py-3 bg-white">
-            <div class="col align-items-center d-flex ps-0"><span class="material-symbols-outlined">arrow_back</span></div>
+            <a class="col-2 align-items-center d-flex ps-0" th:href="@{/club/board(id=${map.clubDto.id})}"><span class="material-symbols-outlined">arrow_back</span></a>
             <div class="col text-center fw-medium" th:text="${map.clubDto.name}"></div>
+            <div class="col-2"></div>
             
         </div>
 
