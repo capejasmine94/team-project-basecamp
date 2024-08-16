@@ -22,21 +22,24 @@
     
     <!-- 탑네비 부분 -->
     <div class="container bg-body-tertiary" style="padding-top: 60.792px;">
-        
-
+    
         <div class="fixed-top px-4 row border-bottom py-3 shadow-sm bg-white">
-            <div class="col"><span class="material-symbols-outlined">arrow_back</span></div>
+            <div class="col align-items-center d-flex ps-0"><span class="material-symbols-outlined">arrow_back</span></div>
             <div class="col text-center fw-medium">마이페이지</div>
-            <div class="col text-end"><span class="material-symbols-outlined">logout</span></div>
+            <a class="col justify-content-end d-flex pe-0" href="/user/logoutProcess" th:unless="${session.sessionUserInfo == null}">
+                <span class="material-symbols-outlined">logout</span>
+            </a>
         </div>
+
+        
 
 
     <!-- 프로필 -->
-        <div class="row bg-white">
+        <div class="row">
             <div class="col">
-                <div class="row py-2">
+                <div class="row bg-white px-2 py-3">
                     <div class="col-3">
-                        <img src="/public/img/clubImage/profile.jpg" class="img-fluid rounded-circle" style="aspect-ratio: 1/1;">
+                        <img src="/public/img/common/default_profile.png" class="img-fluid rounded-circle" style="aspect-ratio: 1/1;">
                     </div>
                     <div class="col align-items-center d-flex">
                         nickname 님
@@ -48,8 +51,8 @@
                     </div>
                 </div>
             
-                <div class="row bg-white">
-                    <div class="col-6 border p-2">
+                <div class="row px-2 bg-white">
+                    <div class="col border rounded p-2 me-2">
                         <div class="row">
                             <div class="col align-items-center d-flex">
                                 <span class="material-symbols-outlined fw-light">paid</span>
@@ -58,11 +61,11 @@
                         </div>
                         <div class="row">
                             <div class="col text-end">
-                                1000P
+                                <span class="lightFont">1000</span><span>P</span>
                             </div>
                         </div>
                     </div>
-                    <div class="col-6 border border-start-0 p-2">
+                    <div class="col border rounded p-2">
                         <div class="row">
                             <div class="col align-items-center d-flex">
                                 <span class="material-symbols-outlined fw-light">confirmation_number</span>
@@ -71,111 +74,112 @@
                         </div>
                         <div class="row">
                             <div class="col text-end">
-                                5장
+                                <span class="lightFont">5</span><span>장</span>
                             </div>
                         </div>
                     </div>
                 </div>
                 
-                <!-- 아코디언? -->
                 <div class="row">
                     <div class="col">
 
-                        <div class="row py-2">
+                        <div class="row">
                             <div class="col">
                                 
-                                <div class="row border-bottom py-2">
-                                    <div class="col">
+                                <div class="row bg-white pt-4 pb-3">
+                                    <div class="col fw-medium">
                                         캠핑장 예약
                                     </div>
                                 </div>
-                                <div class="row py-1">
+                                <div class="row bg-white pb-2">
                                     <div class="col">
-                                        <div class="row py-1">
+                                        <div class="row pb-2">
                                             <div class="col">
-                                                - 옵션 1
+                                                옵션1
                                             </div>
                                         </div>
-                                        <div class="row py-1">
+                                        <div class="row pb-2">
                                             <div class="col">
-                                                - 옵션 2
+                                                옵션2
                                             </div>
                                         </div>
-                                        <div class="row py-1">
+                                        <div class="row pb-3">
                                             <div class="col">
-                                                - 옵션 3
+                                                옵션3
                                             </div>
                                         </div>
+                                 
                                     </div>
                                 </div>
 
                             </div>
                         </div>
 
-                        <div class="row py-2">
+                        <div class="row bg-white mt-2 py-1">
                             <div class="col">
                                 
-                                <div class="row border-bottom py-2">
-                                    <div class="col">
+                                <div class="row bg-white py-3">
+                                    <div class="col fw-medium">
                                         캠핑카 예약
                                     </div>
                                 </div>
-                                <div class="row py-1">
+                                <div class="row bg-white pb-2">
                                     <div class="col">
-                                        <div class="row py-1">
+                                        <div class="row pb-2">
                                             <div class="col">
-                                                - 옵션 1
+                                                옵션1
                                             </div>
                                         </div>
-                                        <div class="row py-1">
+                                        <div class="row pb-2">
                                             <div class="col">
-                                                - 옵션 2
+                                                옵션2
                                             </div>
                                         </div>
-                                        <div class="row py-1">
+                                        <div class="row pb-3">
                                             <div class="col">
-                                                - 옵션 3
+                                                옵션3
                                             </div>
                                         </div>
+                                 
                                     </div>
                                 </div>
 
                             </div>
                         </div>
 
-                        <div class="row py-2">
+                        <div class="row">
                             <div class="col">
                                 
-                                <div class="row border-bottom py-2">
-                                    <div class="col">
+                                <div class="row bg-white mt-2 py-3">
+                                    <div class="col fw-medium">
                                         쇼핑몰
                                     </div>
                                 </div>
-                                <div class="row py-1">
+                                <div class="row bg-white pb-2">
                                     <div class="col">
-                                        <div class="row py-1">
+                                        <div class="row pb-2">
                                             <div class="col">
-                                                - 주문내역
+                                                주문내역
                                             </div>
                                         </div>
-                                        <div class="row py-1">
+                                        <div class="row pb-2">
                                             <div class="col">
-                                                - 취소/반품/교환 내역
+                                                취소/반품/교환 내역
                                             </div>
                                         </div>
-                                        <div class="row py-1">
+                                        <div class="row pb-2">
                                             <div class="col">
-                                                - 리뷰 작성
+                                                리뷰 작성
                                             </div>
                                         </div>
-                                        <div class="row py-1">
+                                        <div class="row pb-2">
                                             <div class="col">
-                                                - 배송지 관리
+                                                배송지 관리
                                             </div>
                                         </div>
-                                        <div class="row py-1">
+                                        <div class="row pb-3">
                                             <div class="col">
-                                                - 위시리시트
+                                                위시리시트
                                             </div>
                                         </div>
                                     </div>
@@ -184,107 +188,70 @@
                             </div>
                         </div>
 
-                        <div class="row py-2">
+                        <div class="row bg-white mt-2">
                             <div class="col">
                                 
-                                <div class="row border-bottom py-2">
-                                    <div class="col">
+                                <div class="row bg-white py-3">
+                                    <div class="col fw-medium">
                                         중고마켓
                                     </div>
                                 </div>
-                                <div class="row py-1">
-                                    <div class="col">
-                                        <div class="row py-1">
-                                            <div class="col">
-                                                - 옵션 1
-                                            </div>
-                                        </div>
-                                        <div class="row py-1">
-                                            <div class="col">
-                                                - 옵션 2
-                                            </div>
-                                        </div>
-                                        <div class="row py-1">
-                                            <div class="col">
-                                                - 옵션 3
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
+                           
 
                             </div>
                         </div>
 
-                        <div class="row py-2">
+                        <div class="row bg-white mt-2 py-2">
                             <div class="col">
                                 
-                                <div class="row border-bottom py-2">
-                                    <div class="col">
+                                <div class="row bg-white py-3">
+                                    <div class="col fw-medium">
                                         소모임
                                     </div>
                                 </div>
-                                <div class="row py-1">
+                                <div class="row bg-white pb-2">
                                     <div class="col">
-                                        <div class="row py-1">
+                                        <div class="row pb-2">
                                             <div class="col">
-                                                - 나의 소모임
+                                                나의 소모임
                                             </div>
                                         </div>
-                                        <div class="row py-1">
+                                        <div class="row pb-2">
                                             <div class="col">
-                                                - 즐겨찾기한 소모임
+                                                즐겨찾기한 소모임
                                             </div>
                                         </div>
-                                        <div class="row py-1">
+                                        <div class="row pb-2">
                                             <div class="col">
-                                                - 나의 정기모임
+                                                나의 정기모임
                                             </div>
                                         </div>
-                                        <div class="row py-1">
+                                        <div class="row pb-2">
                                             <div class="col">
-                                                - 내가 작성한 게시글
+                                                내가 작성한 게시글
                                             </div>
                                         </div>
-                                        <div class="row py-1">
+                                        <div class="row pb-3">
                                             <div class="col">
-                                                - 내가 작성한 댓글
+                                                내가 작성한 댓글
                                             </div>
                                         </div>
+                                 
                                     </div>
                                 </div>
 
                             </div>
                         </div>
 
-                        <div class="row py-2">
+                        <div class="row bg-white mt-2 py-2">
                             <div class="col">
                                 
-                                <div class="row border-bottom py-2">
-                                    <div class="col">
+                                <div class="row py-2">
+                                    <div class="col fw-medium">
                                         캠프스타그램
                                     </div>
                                 </div>
-                                <div class="row py-1">
-                                    <div class="col">
-                                        <div class="row py-1">
-                                            <div class="col">
-                                                - 옵션 1
-                                            </div>
-                                        </div>
-                                        <div class="row py-1">
-                                            <div class="col">
-                                                - 옵션 2
-                                            </div>
-                                        </div>
-                                        <div class="row py-1">
-                                            <div class="col">
-                                                - 옵션 3
-                                            </div>
-                                        </div>
-                                       
-                                    </div>
-                                </div>
-
+                           
                             </div>
                         </div>
 

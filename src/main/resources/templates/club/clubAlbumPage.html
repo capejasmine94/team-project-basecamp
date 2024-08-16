@@ -31,7 +31,7 @@
             }
 
             :root {
-                --nav-underline-border-width: 1px; /* 밑줄의 두께 */
+                --nav-underline-border-width: 2px; /* 밑줄의 두께 */
                 --nav-link-active-color: #000000; /* 선택된 탭 텍스트 색상 및 밑줄 색상 */
                 --nav-inactive-border-color: #e0e0e0; /* 비활성화된 탭 밑줄 색상 (밝은 회색) */
             }
@@ -72,119 +72,106 @@
             }
 
             /* 비활성화된 탭의 얇은 회색 밑줄 */
-            .nav-link::after {
-                content: '';
-                position: absolute;
-                bottom: -1px;
-                left: 0;
-                right: 0;
-                height: var(--nav-underline-border-width); /* 실선 두께 유지 */
-                background-color: var(--nav-inactive-border-color); /* 얇은 회색 밑줄 색상 */
-                z-index: 1; /* 활성화된 탭의 진한 밑줄 아래에 위치 */
+
+            
+
+                body {
+                display: flex;
+                justify-content: center;
+                /* align-items: center; */
+                height: 100vh;
+                margin: 0;
             }
 
-            .square {
-                position: relative;
-                width: 100%;
-                padding-bottom: 100%; /* 1:1 aspect ratio */
+            .centered-circle {
+                width: 37px;
+                height: 37px;
+                background-color: #ffffff;
+                border: 1px solid #dee2e6;
+                border-radius: 50%;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                color: #000000;
+                font-size: 14px;
+                font-weight: normal;
             }
 
-            .square img {
-                position: absolute;
-                top: 0;
-                left: 0;
-                width: 100%;
-                height: 100%;
-                object-fit: cover; /* 이미지가 컨테이너를 채우도록 함 */
+            .thicker-light-border {
+                border-bottom: 7px solid #dee2e6;
             }
-
-            .middle {
-                padding-left: 2px;
-                padding-right: 2px; 
-            }
-
-            .pb {
-                padding-bottom: 2px;
-            }
-
-
+        
  
         </style>
     </head>
     <body>
-      
-  
-        <div class="container" style="padding-top: 75.22px;">
-
-            <div class="fixed-top px-0 row pt-3 bg-white">
+        <div class="container-fluid fixed-top">
+            <div class="row pt-3 pb-2 bg-white">
+                <a th:href="@{/club/home(id=${id})}" class="col-2 ps-1 align-items-center d-flex ps-0"><span class="material-symbols-outlined">arrow_back</span></a>
+                <div class="col text-center fw-medium" th:text="${clubDto.name}">소모임 이름</div>
+                <div class="col-2">MY</div>
+            </div>
+            <div class="row px-0">
                 <div class="col">
-
-                    <div class="row">
-                        <div class="col text-center fw-medium" style="font-size: 0.9em;">소모임 이름</div>
-                    </div>
-                    <div class="row px-0">
-                           <!-- 네비바 -->
-                           <div class="col bg-white text-center nav">
-                            <div class="col nav-item">
-                                <a class="nav-link "  th:href="@{/club/home(id=${id})}" style="font-size: 0.9em;">홈</a>
-                            </div>
-                            <div class="col nav-item">
-                                <a class="nav-link" th:href="@{/club/home(id=${id})}" style="font-size: 0.9em;">정모</a>
-                            </div>
-                            <div class="col nav-item">
-                                <a class="nav-link" th:href="@{/club/board(id=${id})}" style="font-size: 0.9em;">게시판</a>
-                            </div>
-                            <div class="col nav-item">
-                                <a class="nav-link active fw-medium" aria-current="page" th:href="@{/club/album(id=${id})}" style="font-size: 0.9em;">사진첩</a>
-                            </div>
+                    <!-- 네비바 -->
+                    <div class="row bg-white text-center nav border-bottom">
+                        <div class="col p-0 nav-item">
+                            <a class="nav-link"  th:href="@{/club/home(id=${id})}" style="font-size: 0.9em;">홈</a>
+                        </div>
+                        <div class="col p-0 nav-item">
+                            <a class="nav-link" th:href="@{/club/home(id=${id})}" style="font-size: 0.9em;">정모</a>
+                        </div>
+                        <div class="col p-0 nav-item">
+                            <a class="nav-link"  th:href="@{/club/board(id=${id})}" style="font-size: 0.9em;">게시판</a>
+                        </div>
+                        <div class="col p-0 nav-item">
+                            <a class="nav-link active fw-medium" aria-current="page" th:href="@{/club/album(id=${id})}" style="font-size: 0.9em;">사진첩</a>
                         </div>
                     </div>
                 </div>
+            </div>
+        </div>
 
-                        <!-- 전체 박스 2 -->
-                        <div class="row px-3">
+        <div class="container" style="padding-top: 75.22px;">
+            <div class="row">
+                <div class="col">
+
+                <div class="row px-3">
+                    <div class="col">
+                        <div class="row pt-2">
                             <div class="col">
-                                <div class="row pt-2">
-                                    <div class="col">
-        
-                                        <div class="row">
-                                            <div class="col-4 px-0 pb d-flex justify-content-center" th:each="postImageDto : ${postImageDtoList}">
-                                                 <div>
-                                                
-                                                    <a th:href="@{/club/readPost(id=${postImageDto.post_id})}">
-                                                        <img
-                                                        th:src="|/images/${postImageDto.post_img_location}|"
-                                                        class="img-fluid middle"
-                                                        style="aspect-ratio: 1/1; height: 33.3333333333333vw;">
-                                                    </a>
-        
-                                                </div>
-                                            
-                                            </div>
-                                        </div>
-        
-                                        <!-- <div class="row">
-                                            <a class="col-4 px-0 pb d-flex justify-content-center" th:href="@{./instaMainPage(user_id=${session.sessionUserInfo.id})}" th:each="instaArticleImgDto, iterStat : ${instaBookmarkArticleImgDtoList}">
-                                                <div th:class="${iterStat.index % 3 == 1} ? 'middle' : ''">
-                                                    <img th:src="|/images/${instaArticleImgDto.img_link}|" class="img-fluid" style="aspect-ratio: 1/1; height: 33.3333333333333vw;">
-                                                </div>
+
+                                <div class="row">
+                                    <div class="col-4 px-0 pb d-flex justify-content-center" th:each="postImageDto : ${postImageDtoList}">
+                                         <div>
+                                        
+                                            <a th:href="@{/club/readPost(id=${postImageDto.post_id})}">
+                                                <img
+                                                th:src="|/images/${postImageDto.post_img_location}|"
+                                                class="img-fluid middle"
+                                                style="aspect-ratio: 1/1; height: 10em;">
                                             </a>
+
                                         </div>
-                                         -->
-        
+                                    
                                     </div>
                                 </div>
 
+
                             </div>
                         </div>
 
-
-
-
-                
                     </div>
                 </div>
-                 <!--커뮤니티 하단네비 -->
+        
+            </div>
+        </div>
+
+        
+
+        </div>
+
+        <!--커뮤니티 하단네비 -->
         <div th:fragment="bottomNaviBasecamp" class="container-fluid g-0 border-top bg-white fixed-bottom pb-3">
             <div class="row mx-1 py-2 text-center">
                 
@@ -303,13 +290,21 @@
             </div>
         </div>
 
-                <a th:if="${session.sessionUserInfo != null}" th:href="@{/club/writePost(id=${id})}" class="fixed-button">
-                    <!-- <i class="bi bi-plus-circle-fill"></i> -->
-                    <i class="bi bi-pencil"></i>
+        <!-- 게시글 작성하기 -->
+        <div class="container fixed-bottom mb-5 pb-4 pe-2">
+            <div class="row justify-content-end mb-4 pe-3">
+                <a th:if="${session.sessionUserInfo != null}" th:href="@{/club/writePost(id=${id})}" class="col-auto bg-light ps-2 py-2 shadow rounded-pill text-decoration-none">
+                    <div class="row text-dark">
+                        <div class="col-auto pe-0 align-self-center d-flex">
+                            <span class="material-symbols-outlined fs-3">add</span>
+                        </div>
+                        <div class="col ps-0 fs-7 fw-medium d-flex align-self-center text-center" style="letter-spacing: -0.5px;">
+                            글 작성
+                        </div>
+                    </div>
                 </a>
+            </div>
         </div>
-
-
          
         <script src="/public/js/lockLikeMobile.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>

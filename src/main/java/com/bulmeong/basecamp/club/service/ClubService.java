@@ -197,6 +197,7 @@ public class ClubService {
             ClubPostCategoryDto clubPostCategoryDto = clubSqlMapper.selectPostCategoryDtoById(clubPostDto.getCategory_id());
             int totalComment = clubSqlMapper.countTotalComment(clubPostDto.getId());
             int totalPostLike = clubSqlMapper.countTotalPostLike(clubPostDto.getId());
+            ClubDto clubDto = clubSqlMapper.selectClubDtoById(club_id);
 
             Map<String, Object> postDetailMap = new HashMap<>();
             postDetailMap.put("clubPostDto", clubPostDto);
@@ -204,6 +205,7 @@ public class ClubService {
             postDetailMap.put("clubPostCategoryDto", clubPostCategoryDto);
             postDetailMap.put("totalComment", totalComment);
             postDetailMap.put("totalPostLike", totalPostLike);
+            postDetailMap.put("clubDto",clubDto);
             
 
             postDetailList.add(postDetailMap);
@@ -217,11 +219,13 @@ public class ClubService {
         ClubPostDto clubPostDto = clubSqlMapper.selectPostDtoById(id);
         UserDto userDto = clubSqlMapper.selectUserDtoById(clubPostDto.getUser_id());
         int totalComment = clubSqlMapper.countTotalComment(id);
+        ClubDto clubDto = clubSqlMapper.selectClubDtoById(clubPostDto.getClub_id());
 
         Map<String, Object> map = new HashMap<>();
         map.put("clubPostDto", clubPostDto);
         map.put("userDto", userDto);
         map.put("totalComment", totalComment);
+        map.put("clubDto", clubDto);
 
         return map ;
     }

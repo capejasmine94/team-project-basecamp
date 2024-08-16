@@ -29,6 +29,7 @@ import com.bulmeong.basecamp.club.dto.ClubPostImageDto;
 import com.bulmeong.basecamp.club.dto.ClubPostLikeDto;
 import com.bulmeong.basecamp.club.dto.ClubRegionCategoryDto;
 import com.bulmeong.basecamp.club.dto.ClubVisitDto;
+import com.bulmeong.basecamp.club.mapper.ClubSqlMapper;
 import com.bulmeong.basecamp.club.service.ClubService;
 import com.bulmeong.basecamp.common.dto.ImageDto;
 
@@ -48,13 +49,14 @@ public class ClubController {
     private Utils util;
 
     @Autowired UserService userService;
+    @Autowired ClubSqlMapper clubSqlMapper;
 
     @Autowired
     private ClubService clubService;
 
     @RequestMapping("main")
     public String clubMain(HttpSession session, Model model){
-        util.loginUser(3);
+        
 
         UserDto userDto = (UserDto)session.getAttribute("sessionUserInfo");
         model.addAttribute("userDto", userDto);
@@ -154,7 +156,6 @@ public class ClubController {
 
     @RequestMapping("createNewClub")
     public String createNewClub(Model model){
-        // util.loginUser();
 
         List<ClubRegionCategoryDto> regionCategoryDtoList = clubService.findRegionCategory();
         model.addAttribute("regionCategoryDtoList", regionCategoryDtoList);
@@ -183,7 +184,6 @@ public class ClubController {
         joinConditionDto.setEnd_year(clubJoinConditionDto.getEnd_year());
         joinConditionDto.setGender(clubJoinConditionDto.getGender());
         clubService.insertClubJoinCondition(joinConditionDto);
-        // util.loginUser();
 
         return "redirect:/club/main";
     }
@@ -191,7 +191,6 @@ public class ClubController {
     // 소모임 회원가입
     @RequestMapping("joinClub")
     public String joinClub(@RequestParam("id") int id, Model model){
-        // util.loginUser();
         model.addAttribute("id", id);
         return "club/joinClubPage";
     }
@@ -199,7 +198,6 @@ public class ClubController {
     @RequestMapping("joinClubProcess")
     public String joinClubProcess(@RequestParam("club_id") int id, Model model, HttpSession session){
         model.addAttribute("id", id);
-        // util.loginUser();
         UserDto userDto = (UserDto)session.getAttribute("sessionUserInfo");
         ClubMemberDto clubMemberDtoForRoleId3 = new ClubMemberDto();
         clubMemberDtoForRoleId3.setClub_id(id);
@@ -213,7 +211,6 @@ public class ClubController {
 
     @RequestMapping("writePost")
     public String writePost(@RequestParam("id") int id, Model model){
-        // util.loginUser();
         List<ClubPostCategoryDto> postCategoryDtoList = clubService.findPostCategory();
         model.addAttribute("id", id);
         model.addAttribute("postCategoryDtoList", postCategoryDtoList);
@@ -242,6 +239,10 @@ public class ClubController {
         List<Map<String,Object>> postDetailList = clubService.getClubPostDtoList(id);
         model.addAttribute("postDetailList", postDetailList);
 
+        ClubDto clubDto = clubSqlMapper.selectClubDtoById(id);
+        model.addAttribute("clubDto", clubDto);
+        
+
         return "club/clubBoardPage";
     }
 
@@ -250,6 +251,8 @@ public class ClubController {
         model.addAttribute("id", id);
         List<ClubPostImageDto> postImageDtoList = clubService.selectPostImageDtoByPostId(id);
         model.addAttribute("postImageDtoList", postImageDtoList);
+        ClubDto clubDto = clubSqlMapper.selectClubDtoById(id);
+        model.addAttribute("clubDto", clubDto);
 
 
         return "club/clubAlbumPage";
@@ -339,6 +342,13 @@ public class ClubController {
 
         return "club/myClubsListPage";
     }
+
+    @RequestMapping("myMeetings")
+    public String myMeetingList(){
+
+        return "club/clubMeetingPage";
+    }
+
 
     @RequestMapping("bookmarkProcess")
     public String bookmarkProcess(ClubBookmarkDto clubBookmarkDto){

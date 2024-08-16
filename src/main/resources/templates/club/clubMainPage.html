@@ -133,20 +133,19 @@
     </head>
     <body>
   
-        <div class="container bg-body-tertiary" style="padding-top: 60.792px;">
-
-            <div class="fixed-top px-4 row border-bottom py-3 shadow-sm bg-white">
-                <a href="/" class="col-auto ps-0 fw-bold align-items-center f12 text-black">
-                    Community
+        <div class="container bg-body-tertiary">
+            <div class="row border-bottom align-items-bottomline px-3 py-3 shadow-sm bg-white">
+                <a href="/" class="col-auto pe-0 fw-bold d-flex align-items-center f12 text-black">
+                    <img src="/public/img/common/배캠.png" style="width: 120px;">
                 </a>
-                <div class="col"></div>
+                <div class="col fw-semibold text-body-secondary ps-2 f09 align-self-end"></div>
                 <div class="col-auto pe-0 text-end pt-1 d-flex align-items-center">
-                    <span class="material-symbols-outlined">
+                    <span class="material-symbols-outlined fw-light">
                         search
                     </span>
                 </div>
                 <a href="/store/cart" class="col-auto pe-0 d-flex align-items-center text-black">
-                    <span class="material-symbols-outlined">
+                    <span class="material-symbols-outlined fw-light">
                         shopping_bag
                     </span>
                 </a>
@@ -161,9 +160,9 @@
                         <div class="row">
                             <div class="col p-0">
                                 <div id="carouselExample" class="carousel slide" data-bs-ride="carousel">
-                                    <div class="carousel-inner">
+                                    <div class="carousel-inner" style="width: 100%; height: 100%;">
                                         <div class="carousel-item active" data-bs-interval="3000">
-                                            <img src="/public/img/clubImage/carousel3.png" class="d-block w-100">
+                                            <img src="/public/img/clubImage/carousel1.png" class="d-block w-100">
                                         </div>
                                         <div class="carousel-item" data-bs-interval="3000">
                                             <img src="/public/img/clubImage/carousel2.png" class="d-block w-100">
@@ -362,16 +361,18 @@
                                     
                                         <div class="row py-2 flex-nowrap">
                                             <div class="col-7" th:each="clubDto : ${clubDtoList}">
-
-                                                <div class="row border me-1 rounded-top border-bottom-0" style="height: 8em; overflow: hidden">
-                                                    <div class="col px-0 pb-0 mx-0">
-                                                        <img th:src="|/images/${clubDto.main_image}|" style="width: 100%; object-fit: cover;" class="card-img-top img-fluid rounded-top fixed-image-size" alt="...">
+                                                <a th:href="@{/club/home(id=${clubDto.id})}">
+                                                    <div class="row border me-1 rounded-top border-bottom-0" style="height: 8em; overflow: hidden">
+                                                        <div class="col px-0 pb-0 mx-0">
+                                                            <img th:src="|/images/${clubDto.main_image}|" style="width: 100%; object-fit: cover;" class="card-img-top img-fluid rounded-top fixed-image-size" alt="...">
+                                                        </div>
                                                     </div>
-                                                </div>
+                                                </a>
                                          
+                                                <a th:href="@{/club/home(id=${clubDto.id})}">
                                                 <div class="row border me-1 shadow-sm rounded-bottom border-top-0" style="height: 9em;">
                                                     <div class="col">
-                                                        <div class="row pt-3">
+                                                        <div class="row pt-1">
                                                             <!-- <div class="col text-center fw-semi-bold text-truncate" style="font-size: 0.9em;">
                                                                 <span th:text="${clubDto.name}">소모임명</span>
                                                             </div> -->
@@ -395,6 +396,7 @@
                                                        
                                                     </div>
                                                 </div>
+                                            </a>
 
                                             </div>
                                         </div>

@@ -106,8 +106,10 @@
     </head>
     <body>
         <div class="container-fluid fixed-top">
-            <div class="row pt-3">
-                <div class="col text-center fw-medium" style="font-size: 0.9em;">소모임 이름</div>
+            <div class="row pt-3 pb-2 bg-white">
+                <a th:href="@{/club/home(id=${id})}" class="col-2 ps-1 align-items-center d-flex ps-0"><span class="material-symbols-outlined">arrow_back</span></a>
+                <div class="col text-center fw-medium" th:text="${clubDto.name}">소모임 이름</div>
+                <div class="col-2">MY</div>
             </div>
             <div class="row px-0">
                 <div class="col">

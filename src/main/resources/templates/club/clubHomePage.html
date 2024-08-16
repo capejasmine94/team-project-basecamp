@@ -74,7 +74,7 @@
             }
 
             :root {
-                --nav-underline-border-width: 1px; /* 밑줄의 두께 */
+                --nav-underline-border-width: 2px; /* 밑줄의 두께 */
                 --nav-link-active-color: #000000; /* 선택된 탭 텍스트 색상 및 밑줄 색상 */
                 --nav-inactive-border-color: #e0e0e0; /* 비활성화된 탭 밑줄 색상 (밝은 회색) */
             }
@@ -102,7 +102,6 @@
 
             .nav-link.active {
                 color: var(--nav-link-active-color); /* 선택된 탭 색상 */
-        
             }
 
             .nav-link.active::after {
@@ -113,18 +112,6 @@
                 right: 0;
                 height: var(--nav-underline-border-width); /* 실선 두께 유지 */
                 background-color: var(--nav-link-active-color); /* 진한 밑줄 색상 */
-            }
-
-            /* 비활성화된 탭의 얇은 회색 밑줄 */
-            .nav-link::after {
-                content: '';
-                position: absolute;
-                bottom: -1px;
-                left: 0;
-                right: 0;
-                height: var(--nav-underline-border-width); /* 실선 두께 유지 */
-                background-color: var(--nav-inactive-border-color); /* 얇은 회색 밑줄 색상 */
-                z-index: 1; /* 활성화된 탭의 진한 밑줄 아래에 위치 */
             }
     
         </style>
@@ -142,35 +129,36 @@
         
 
   
-        <div class="container" style="padding-top: 75.22px;">
-
-            <div class="fixed-top px-0 row pt-3 bg-white">
+        <div class="container-fluid fixed-top">
+            <div class="row pt-3 pb-2 bg-white">
+            <a href="/club/main" class="col-2 ps-1 align-items-center d-flex ps-0"><span class="material-symbols-outlined">arrow_back</span></a>
+            <div class="col text-center fw-medium" th:text="${map.clubDto.name}">소모임 이름</div>
+            <div class="col-2">MY</div>   
+            </div>
+            
+           
+            <div class="row px-0">
                 <div class="col">
-
-                    <div class="row">
-                        <div class="col text-center fw-medium" style="font-size: 0.9em;">소모임 이름</div>
-                    </div>
-                    <div class="row px-0">
-                           <!-- 네비바 -->
-                           <div class="col bg-white text-center nav">
-                            <div class="col nav-item">
-                                <a class="nav-link active fw-medium" aria-current="page" th:href="@{/club/home(id=${id})}" style="font-size: 0.9em;">홈</a>
-                            </div>
-                            <div class="col nav-item">
-                                <a class="nav-link" th:href="@{/club/home(id=${id})}" style="font-size: 0.9em;">정모</a>
-                            </div>
-                            <div class="col nav-item">
-                                <a class="nav-link" th:href="@{/club/board(id=${id})}" style="font-size: 0.9em;">게시판</a>
-                            </div>
-                            <div class="col nav-item">
-                                <a class="nav-link" th:href="@{/club/album(id=${id})}" style="font-size: 0.9em;">사진첩</a>
-                            </div>
+                    <!-- 네비바 -->
+                    <div class="row bg-white text-center nav border-bottom">
+                        <div class="col p-0 nav-item">
+                            <a class="nav-link active fw-medium" aria-current="page"  th:href="@{/club/home(id=${id})}" style="font-size: 0.9em;">홈</a>
+                        </div>
+                        <div class="col p-0 nav-item">
+                            <a class="nav-link" th:href="@{/club/home(id=${id})}" style="font-size: 0.9em;">정모</a>
+                        </div>
+                        <div class="col p-0 nav-item">
+                            <a class="nav-link" th:href="@{/club/board(id=${id})}" style="font-size: 0.9em;">게시판</a>
+                        </div>
+                        <div class="col p-0 nav-item">
+                            <a class="nav-link" th:href="@{/club/album(id=${id})}" style="font-size: 0.9em;">사진첩</a>
                         </div>
                     </div>
                 </div>
-           
             </div>
-            
+        </div>
+
+        <div class="container" style="padding-top: 75.22px;">
 
             <!-- 전체 박스 1 -->
                 <div class="row">
@@ -178,21 +166,21 @@
 
                  
 
-                <div class="container-fluid">
-                    <div class="row">
-                        <div class="col px-0">
-                            <img th:src="|/images/${map.clubDto.main_image}|"style="width: 100%; height: 13em; object-fit: cover;" class="top-image">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col px-0">
+                                <img th:src="|/images/${map.clubDto.main_image}|"style="width: 100%; height: 13em; object-fit: cover;" class="top-image">
+                            </div>
                         </div>
                     </div>
-                </div>
-                        
+                            
 
                         <div class="row bg-white align-items-center px-3 pt-3">
                             <div class="col">
                                 
                                 <div class="row">
                                     <div class="col fs-5 fw-semibold" th:text="${map.clubDto.name}">
-                                        소모임 이름
+                                    
                                     </div>
                                 </div>
                                 <!-- <div class="row">
@@ -246,7 +234,7 @@
                             <div class="col">
 
                                 <div class="row pt-3">
-                                    <div class="col fw-semibold">
+                                    <div class="col fw-medium">
                                         모임 소개
                                     </div>
                                 </div>
@@ -263,7 +251,7 @@
                             <div class="col">
 
                                 <div class="row pt-3">
-                                    <div class="col fw-semibold">
+                                    <div class="col fw-medium">
                                         모임 정보
                                     </div>
                                 </div>
@@ -304,7 +292,7 @@
                         </div> -->
 
                         <div class="row bg-white px-3 pt-4 pb-2">
-                            <div class="col fw-bold">
+                            <div class="col fw-medium">
                                 <span>정기모임</span>
                             </div>
                         </div>
@@ -327,7 +315,7 @@
                                 <div class="row pt-3 pb-1">
                                     <div class="col" style="font-size: 0.8em;">
                                         <span>모임멤버</span>
-                                        <span class="fw-semibold" style="color: crimson;" th:text="${map.totalClubMember}"></span>
+                                        <span class="fw-semibold lightFont" th:text="${map.totalClubMember}"></span>
                                         <span th:text="' / ' +${map.clubDto.capacity}"></span>
                                     </div>
 
@@ -360,7 +348,7 @@
                                
                                 <div class="row pt-2 pb-3" th:each="clubMemberData : ${clubMemberDataList}">
                                     <div class="col-2">
-                                        <img th:if="${clubMemberData.userDto.profile_image == 'default'}" src="/public/img/clubImage/profile.jpg" class="img-fluid rounded-circle"  style="aspect-ratio: 1/1;">
+                                        <img th:if="${clubMemberData.userDto.profile_image == 'default'}" src="/public/img/common/default_profile.png" class="img-fluid rounded-circle"  style="aspect-ratio: 1/1;">
                                         <img th:unless="${clubMemberData.userDto.profile_image == 'default'}" th:src="|/images/${clubMemberData.userDto.profile_image}|" class="img-fluid rounded-circle"  style="aspect-ratio: 1/1;">
                                     </div>
                                     <div class="col align-self-center">
@@ -660,7 +648,7 @@
                             <div class="row">
                                 <div class="col">
                                     <div class="row">
-                                        <div class="col-5 pe-0">  
+                                        <div class="col-auto">  
                                             <img class="rounded-2 meetingImage" style="width: 7em; height: 5em; object-fit: cover;">
                                         </div>
                                         <div class="col ps-1" style="font-size: 0.8em;">
