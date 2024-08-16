@@ -37,7 +37,41 @@
             color: black !important; /* 아이콘 색상 변경 */
         }
         .icon-shadow {
-            text-shadow: 2px 2px 2px rgba(0, 0, 0, 0.6); /* 어두운 그림자 */
+            text-shadow: 0px 0px 7px rgba(0, 0, 0, 0.5); /* 어두운 그림자 */
+        }
+        .red-heart {
+            color: red !important;
+        }
+        /*배경 그라데이션*/
+        .gradient-overlay {
+            position: relative;
+        }
+
+        .gradient-overlay::before,
+        .gradient-overlay::after {
+            content: "";
+            position: absolute;
+            left: 0;
+            right: 0;
+            height: 20%; /* 그라데이션 높이 설정 */
+            z-index: 1; /* 이미지 위에 오도록 설정 */
+        }
+        .gradient-overlay::before {
+            top: 0;
+            background: linear-gradient(to bottom, rgba(0, 0, 0, 0.5), transparent); /* 상단 그라데이션 */
+        }
+
+        .gradient-overlay::after {
+            bottom: 0;
+            background: linear-gradient(to top, rgba(0, 0, 0, 0.5), transparent); /* 하단 그라데이션 */
+        }
+        .postBtn-custom {
+            padding: 0.5rem 0.5rem;
+            font-size: 0.8rem;
+            border-radius: 0.3rem;
+            background-color: white;
+            border: 0.01rem solid #ccc;
+            display: inline-block;
         }
     </style>
 </head>
@@ -45,7 +79,7 @@
 <!--상단네비-->
 <div class="container g-0 py-2 fixed-top" id="topNav">
     <div class="row mx-2">
-        <a href="javascript:handleBackButton()" class="col-auto icon pe-0" style="color: white">
+        <a href="javascript:handleBackButton()" class="col-auto icon pe-0" style="background-color: transparent; color: white">
             <span class="fs-5 icon-shadow">
                 <i class="bi bi-chevron-left"></i>
             </span>
@@ -58,7 +92,7 @@
         <!-- 모달 버튼 -->
         <div class="col text-end icon" style="color: white" data-bs-toggle="modal" data-bs-target="#optionsModal"
              th:if="${session.sessionUserInfo != null and session.sessionUserInfo.id == productTotalDtoList.AllContentsDto.user_id}">
-            <span class="material-symbols-outlined">more_vert</span>
+            <span class="icon-shadow material-symbols-outlined">more_vert</span>
         </div>
     </div>
 </div>
@@ -72,7 +106,7 @@
             <th:block th:each="imageDto, stat : ${productTotalDtoList.imageDtoList}">
                 <div class="carousel-item" th:classappend="${stat.index == 0} ? ' active'">
                     <div class="row">
-                        <div class="col postDetailImage-custom">
+                        <div class="col postDetailImage-custom gradient-overlay"> <!-- 클래스 추가 -->
                             <img th:src="@{/images/{image}(image=${imageDto.image_url})}" class="d-block w-100">
                         </div>
                     </div>
@@ -86,53 +120,105 @@
         </div>
     </div>
     <!-- 게시글 판매자 -->
-    <div class="row mx-2 py-3 border-bottom" id="sellerInfo">
+    <div class="row mx-2 py-2 border-bottom" id="sellerInfo">
         <div class="col-auto pe-0 profileImage-custom">
-            <img src="/public/img/secondHandProductImage/기본이미지.png">
+            <img src="/public/img/secondHandProductImage/profile.png">
         </div>
         <div class="col">
             <div class="row-auto">
                 <div class="col">
-                    <span th:text="${productTotalDtoList.userDto.nickname}" class="font-custom2 fw-bold">닉네임~~</span>
+                    <span th:if="${productTotalDtoList.userDto != null}" th:text="${productTotalDtoList.userDto.nickname}" class="post-title-font">닉네임</span>
+                    <span th:if="${productTotalDtoList.userDto == null}" class="post-title-font">닉네임 정보 없음</span>
+        <!-- 스케줄러 빼면 위에 두개 뺄것 -->
+<!--                    <span th:text="${productTotalDtoList.userDto.nickname}" class="post-title-font">닉네임</span>-->
                 </div>
-                <div class="col" style="font-size: 0.9rem">
-                    <span>내동네~~</span>
+                <div class="col post-subtitle-font">
+                    <span th:text="${productTotalDtoList.AllContentsDto.polygon_name}">위치</span>
+                </div>
+            </div>
+        </div>
+        <div class="col">
+            <div class="d-flex align-items-start justify-content-end">
+                <div class="d-flex flex-column align-items-start">
+                    <span style="font-size: 1rem; font-weight: bold; color: #28323C;">36.5°C</span>
+                    <div class="progress" style="width: 3rem; height: 0.2rem; margin: 0;">
+                        <div class="progress-bar" role="progressbar" style="width: 35%; background-color: #28323C;"></div>
+                    </div>
+                </div>
+                <i class="bi bi-emoji-smile ms-2" style="font-size: 1.3rem; color: #28323C; position: relative; top: -2px;"></i>
+            </div>
+            <div class="row">
+                <div class="col text-end">
+                    <a href="" style="color: #868e96; font-size: 0.8rem">
+                        매너온도
+                    </a>
                 </div>
             </div>
         </div>
     </div>
+
+<!-- 거래상태 + 모달 -->
+    <!-- 거래상태 모달 -->
+    <div class="modal fade modal-bottom" id="transactionStatusModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="list-group">
+                    <button onclick="onSale()" type="button" class="list-group-item list-group-item-action text-primary">판매중</button>
+                    <button onclick="transactionComplete()" type="button" class="list-group-item list-group-item-action text-primary" data-bs-toggle="modal">
+                        거래완료
+                    </button>
+                    <button type="button" class="list-group-item list-group-item-action text-danger" data-bs-dismiss="modal">닫기</button>
+                </div>
+            </div>
+        </div>
+    </div>
+<!--    -->
+<!--    <div th:replace="secondHandProduct/commonModal::transactionStatusModal"></div>-->
+    <div class="row mt-4" style="margin-left: 1.2rem" data-bs-toggle="modal" data-bs-target="#transactionStatusModal"
+         th:if="${session.sessionUserInfo != null and session.sessionUserInfo.id == productTotalDtoList.AllContentsDto.user_id}">
+        <div class="col-3 postBtn-custom border d-flex justify-content-between material-symbols-outlined">
+            <span style="font-weight: 500;" th:text="${productTotalDtoList.AllContentsDto.status}">거래상태</span>
+            <span><i class="bi bi-chevron-down"></i></span>
+        </div>
+    </div>
     <!-- 게시글 제목 -->
-    <div class="row mx-2 mt-4">
-        <div class="col">
-            <span class="fs-3 fw-bold" th:text="${productTotalDtoList.AllContentsDto.title}">제목</span>
+    <div class="row mx-2 mt-3">
+        <div class="co">
+            <span class="post-content-font" th:text="${productTotalDtoList.AllContentsDto.title}">제목</span>
         </div>
     </div>
     <!-- 게시글 카테고리,생성일 -->
     <div class="row mx-2 mt-2">
         <div class="col font-custom3">
-            <a href="" th:text="${productTotalDtoList.AllContentsDto.category_name}" style="color: #ADB1BA">카테고리이름</a>
+            <a th:href="@{/secondhandProduct/selectCategoryDetailListPage(category_id=${productTotalDtoList.AllContentsDto.category_id})}"
+               th:text="${productTotalDtoList.AllContentsDto.category_name}" style="color: #ADB1BA">카테고리이름</a>
             <span>・</span>
-            <span th:text="${T(com.bulmeong.basecamp.common.util.TimeUtil).timeAgo(productTotalDtoList.AllContentsDto.created_at)}">생성일</span>
+            <span th:if="${productTotalDtoList.AllContentsDto.updated_at != null}"
+                  th:text="${T(com.bulmeong.basecamp.common.util.TimeUtil).timeAgo(productTotalDtoList.AllContentsDto.updated_at)}">수정일</span>
+            <span th:if="${productTotalDtoList.AllContentsDto.updated_at == null}"
+                  th:text="${T(com.bulmeong.basecamp.common.util.TimeUtil).timeAgo(productTotalDtoList.AllContentsDto.created_at)}">생성일</span>
         </div>
     </div>
     <!-- 게시글 설명 -->
     <div class="row mx-2 mt-3">
         <div class="col">
-            <span th:text="${productTotalDtoList.AllContentsDto.explanation}">설명~~~</span>
+            <span th:text="${productTotalDtoList.AllContentsDto.explanation}">설명</span>
         </div>
     </div>
     <!-- 거래희망장소-->
     <div class="row mx-2 mt-3">
-        <div class="col fw-bold">거래희망장소</div>
-        <div class="col text-end"><i class="bi bi-chevron-right"></i></div>
+        <div class="col fw-semibold">거래희망장소</div>
+        <div class="col text-end">
+            <span th:text="${productTotalDtoList.AllContentsDto.polygon_name}"></span>
+        </div>
     </div>
-    <div class="row mx-2 mt-2">
-        <div class="col postDetailMapImage-custom">
-            <img src="/public/img/secondHandProductImage/이벤트3.png">
+    <div class="row" style="border: 0.05rem solid #868e96; margin: 0.2rem 1.2rem">
+        <div class="col" style="width: 100%;height: 13rem;" id="map">
+                <!-- 지도 화면 -->
         </div>
     </div>
     <!--관심,조회수 -->
-    <div class="row mx-2 mt-4">
+    <div class="row mx-2 mt-3">
         <div class="col font-custom3">
             <span>채팅</span><span class="ms-1" th:text="${productTotalDtoList.AllContentsDto.chat_room_count}">3</span>
             <span>・</span>
@@ -145,19 +231,28 @@
     <div class="container-fluid border-top py-2 g-0 bg-light fixed-bottom">
         <div class="row mx-2">
             <div class="col-auto pt-1 border-end">
-               <span class="fs-4">
-                    <i class="bi bi-heart" onclick="like()" id="heart" style="color: #FF6F0F"></i>
+               <span style="font-size: 1.2rem">
+                    <i class="bi bi-heart" onclick="like()" id="heart" style="color: #868e96;"></i>
                 </span>
             </div>
             <div class="col pt-1">
-                <span th:text="|${#numbers.formatInteger(productTotalDtoList.AllContentsDto.price, 0, 'COMMA')}원|" class="fw-bold fs-5">금액</span>
+                <span th:text="|${#numbers.formatInteger(productTotalDtoList.AllContentsDto.price, 0, 'COMMA')}원|" style="font-size: 1.2rem; font-weight: 500">금액</span>
             </div>
-            <div class="col text-center d-grid" th:if="${session.sessionUserInfo != null and session.sessionUserInfo.id != productTotalDtoList.AllContentsDto.user_id}">
-                <input type="button" class="btn" style="background-color: #FF6F0F; color: white" value="채팅하기" onclick="startChat()">
+            <div class="col text-end" th:if="${session.sessionUserInfo != null
+                                             and session.sessionUserInfo.id != productTotalDtoList.AllContentsDto.user_id
+                                             and productTotalDtoList.AllContentsDto.status == '판매중'}">
+                <input type="button" class="btn" style="background-color: #28323C; color: white" value="채팅하기" onclick="startChat()">
             </div>
-            <div class="col text-center d-grid" th:if="${session.sessionUserInfo != null and session.sessionUserInfo.id == productTotalDtoList.AllContentsDto.user_id}">
-                <input type="button" class="btn" style="background-color: #FF6F0F; color: white" onclick="conversationChat()"
+            <div class="col text-end" th:if="${session.sessionUserInfo != null
+                                             and session.sessionUserInfo.id == productTotalDtoList.AllContentsDto.user_id
+                                             and (productTotalDtoList.AllContentsDto.status == '판매중' || productTotalDtoList.AllContentsDto.status == '거래완료')}">
+                <input type="button" class="btn" style="background-color: #28323C; color: white" onclick="conversationChat()"
                        th:value="'대화 중인 채팅방 ' + ${productTotalDtoList.AllContentsDto.chat_room_count}" >
+            </div>
+            <div class="col text-end" th:if="${session.sessionUserInfo != null
+                                             and session.sessionUserInfo.id != productTotalDtoList.AllContentsDto.user_id
+                                             and productTotalDtoList.AllContentsDto.status != '판매중'}">
+                <input type="button" class="btn" style="background-color: #28323C; color: white" value="거래완료">
             </div>
         </div>
     </div>
@@ -165,6 +260,8 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+<!-- map 키 -->
+<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=9df23aae97fe2a243134f72e80584d0a"></script>
 
 <script>
 <!-- 좋아요    -->
@@ -172,6 +269,7 @@
     const urlParams = new URL(window.location.href).searchParams;
     const productId = urlParams.get("product_id");
     const sellerUserId = urlParams.get("user_id");
+    var selectedName = urlParams.get('polygon_name') || "전체"; // 선택된 이름이 없으면 전체를 보여줌
 
     // js 로그인여부
     function setSessionUserId() {
@@ -246,11 +344,11 @@
 
                 if (response.data.byUserLike == true) {
                     heart.classList.remove("bi-heart")
-                    heart.classList.add("bi-heart-fill");
+                    heart.classList.add("bi-heart-fill", "red-heart"); // 색상 클래스 추가
 
                     heart.onclick = unLike;
                 } else {
-                    heart.classList.remove("bi-heart-fill")
+                    heart.classList.remove("bi-heart-fill", "red-heart"); // 색상 클래스 제거
                     heart.classList.add("bi-heart");
 
                     heart.onclick = like;
@@ -270,7 +368,15 @@
     }
     // 게시글 수정
     function editPost() {
-        window.location.href = "/secondhandProduct/productModificationPage?product_id=" + productId
+        // 모달 닫기
+        const modal = document.getElementById('optionsModal');
+        const bootstrapModal = bootstrap.Modal.getInstance(modal);
+        bootstrapModal.hide();
+
+        // 페이지 이동
+        setTimeout(function () {
+            window.location.href = "/secondhandProduct/productModificationPage?product_id=" + productId;
+        }, 100); // 모달 애니메이션 시간에 맞춰서 딜레이 설정
     }
     // 게시글 삭제
     function deletePost() {
@@ -282,61 +388,222 @@
             })
     }
 
+    // 거래상태 - 판매중
+    function onSale() {
+        const data = {
+            product_id: productId,
+            user_id: sellerUserId,
+            polygon_name: selectedName,
+            status: "판매중"
+        };
+        const url = "/api/secondhandProduct/updateStatus";
+        fetch(url, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(data),
+        })
+            .then(response => response.json())
+            .then(response => {
+                if (response.result === "success") {
+                    window.location.href = "/secondhandProduct/postDetailsPage?product_id=" + productId + "&user_id=" + sellerUserId + "&polygon_name=" + selectedName;
+                }
+            })
+
+    }
+    // 거래상태 - 거래완료
+    function transactionComplete() {
+        const data = {
+            product_id: productId,
+            user_id: sellerUserId,
+            polygon_name: selectedName,
+            status: "거래완료"
+        };
+        const url = "/api/secondhandProduct/updateStatus";
+        fetch(url, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(data),
+        })
+            .then(response => response.json())
+            .then(response => {
+                if (response.result === "success") {
+                    window.location.href = "/secondhandProduct/buyerSelectionPage?product_id=" + productId;
+                    // window.location.href = "/secondhandProduct/postDetailsPage?product_id=" + productId + "&user_id=" + sellerUserId + "&polygon_name=" + selectedName;
+                }
+            })
+
+    }
+
     // 모달 애니메이션
     document.addEventListener('DOMContentLoaded', function () {
         const modal = document.getElementById('optionsModal');
         const modalDialog = modal.querySelector('.modal-dialog');
+        const body = document.body;
 
+        // 모달을 열 때의 애니메이션
         modal.addEventListener('show.bs.modal', function () {
             setTimeout(function () {
                 modalDialog.style.transform = 'translateY(0)';
             }, 10);
         });
 
+        // 모달을 닫을 때의 애니메이션
         modal.addEventListener('hide.bs.modal', function () {
             modalDialog.style.transform = 'translateY(100%)';
+        });
+
+        // 페이지의 다른 부분을 클릭했을 때 모달을 닫음
+        body.addEventListener('click', function (event) {
+            const target = event.target;
+
+            // 클릭한 곳이 모달 내부나 모달을 열게 한 버튼이 아니면 모달을 닫음
+            if (modal.classList.contains('show') && !modalDialog.contains(target) && !target.closest('[data-bs-toggle="modal"]')) {
+                const bootstrapModal = bootstrap.Modal.getInstance(modal);
+                bootstrapModal.hide();
+
+                event.stopPropagation(); // 이벤트 전파 방지
+                event.preventDefault();  // 기본 동작 방지
+            }
+        });
+
+        // 모달 내부의 클릭 이벤트는 전파되지 않도록 방지
+        modalDialog.addEventListener('click', function (event) {
+            event.stopPropagation();
         });
     });
 
 
+
     window.addEventListener("DOMContentLoaded", () => {
-        setSessionUserId();
-        totalLikeCount();
+            setSessionUserId();
+            totalLikeCount();
+        });
+
+        const carousel = document.querySelector('#carouselExampleIndicators');
+        const sellerInfo = document.querySelector('#sellerInfo');
+        const topNav = document.querySelector('#topNav');
+        let startX, endX;
+
+
+        carousel.addEventListener('touchstart', function(event) {
+            startX = event.touches[0].clientX;
+        });
+
+        carousel.addEventListener('touchmove', function(event) {
+            endX = event.touches[0].clientX;
+        });
+
+        carousel.addEventListener('touchend', function(event) {
+            const threshold = 50;
+            if (startX - endX > threshold) {
+
+                $(this).carousel('next');
+            } else if (endX - startX > threshold) {
+
+                $(this).carousel('prev');
+            }
+        });
+
+        window.addEventListener('scroll', function() {
+            if (window.scrollY >= sellerInfo.offsetTop - topNav.offsetHeight) {
+                topNav.classList.add('fixed-background');
+            } else {
+                topNav.classList.remove('fixed-background');
+            }
+        });
+
+    // 지도 !
+    console.log(selectedName);
+    var areas = [];
+    var bounds = new kakao.maps.LatLngBounds(); // 경기도 폴리곤 경계를 담을 객체
+    var latSum = 0, lngSum = 0, count = 0; // 중심좌표 계산을 위한 변수
+
+    // JSON 파일을 읽어들여 경기도 영역만 필터링하여 areas 배열에 채워넣는 작업
+    $.ajaxSetup({
+        async: false
     });
 
-    const carousel = document.querySelector('#carouselExampleIndicators');
-    const sellerInfo = document.querySelector('#sellerInfo');
-    const topNav = document.querySelector('#topNav');
-    let startX, endX;
+    $.getJSON("/json/secondhandProduct/sido.json", function(geojson) {
+        var units = geojson.features;
+        $.each(units, function(index, unit) {
+            var coordinates = [];
+            var name = unit.properties.SIG_KOR_NM;
 
+            // 선택된 지역 또는 전체를 필터링
+            if (selectedName === "전체" || name === selectedName) {
+                coordinates = unit.geometry.coordinates;
+                var ob = new Object();
+                ob.name = name;
+                ob.path = [];
 
-    carousel.addEventListener('touchstart', function(event) {
-        startX = event.touches[0].clientX;
+                $.each(coordinates[0], function(index, coordinate) {
+                    var latlng = new kakao.maps.LatLng(coordinate[1], coordinate[0]);
+                    ob.path.push(latlng);
+                    bounds.extend(latlng); // 경기도 경계를 LatLngBounds에 추가
+
+                    latSum += coordinate[1];
+                    lngSum += coordinate[0];
+                    count++;
+                });
+
+                areas.push(ob);
+            }
+        });
     });
 
-    carousel.addEventListener('touchmove', function(event) {
-        endX = event.touches[0].clientX;
-    });
+    // 중심좌표 계산
+    var centerLat = latSum / count;
+    var centerLng = lngSum / count;
+    var mapLevel; // 확대 레벨을 저장할 변수
 
-    carousel.addEventListener('touchend', function(event) {
-        const threshold = 50;
-        if (startX - endX > threshold) {
+    // 전달받은 지역 이름에 따라 확대 레벨 설정
+    if (selectedName === "전체") {
+        mapLevel = 14;
+    } else if (["서울", "인천", "광주", "대전", "세종", "울산", "대구", "부산"].includes(selectedName)) {
+        mapLevel = 11;
+    } else if (["제주"].includes(selectedName)) {
+        mapLevel = 12;
+    }
+    else {
+        mapLevel = 13; // 기본 확대 레벨
+    }
 
-            $(this).carousel('next');
-        } else if (endX - startX > threshold) {
+    // 지도 띄우기
+    var mapContainer = document.getElementById('map'),
+        mapOption = {
+            center: new kakao.maps.LatLng(centerLat, centerLng), // 직접 계산한 중심 좌표로 설정
+            level: mapLevel, // 확대 레벨
+            draggable: false, // 지도를 드래그로 이동 불가능하게 설정
+            scrollwheel: false, // 마우스 휠로 확대/축소를 불가능하게 설정
+            disableDoubleClickZoom: true // 더블클릭으로 확대/축소 불가능하게 설정
+        };
 
-            $(this).carousel('prev');
-        }
-    });
+    var map = new kakao.maps.Map(mapContainer, mapOption);
 
-    window.addEventListener('scroll', function() {
-        if (window.scrollY >= sellerInfo.offsetTop - topNav.offsetHeight) {
-            topNav.classList.add('fixed-background');
-        } else {
-            topNav.classList.remove('fixed-background');
-        }
-    });
+    var customOverlay = new kakao.maps.CustomOverlay({}),
+        infowindow = new kakao.maps.InfoWindow({removable: true});
 
+    // 지도에 영역데이터를 폴리곤으로 표시
+    for (var i = 0, len = areas.length; i < len; i++) {
+        displayArea(areas[i]);
+    }
+
+    // 다각형을 생성하고 이벤트를 등록하는 함수
+    function displayArea(area) {
+        var polygon = new kakao.maps.Polygon({
+            map: map,
+            path: area.path,
+            strokeWeight: 2,
+            strokeColor: '#00B8FF',
+            strokeOpacity: 0.8,
+            fillColor: '#fff',
+            fillOpacity: 0.8
+        });
+    }
 </script>
 </body>
 </html>

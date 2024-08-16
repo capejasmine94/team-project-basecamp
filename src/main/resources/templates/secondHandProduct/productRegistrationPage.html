@@ -9,15 +9,24 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <link rel="stylesheet" href="/public/css/secondHandProductCss/style.css">
+    <style>
+        .post-input-custom {
+            border: 1px solid #ccc;
+            outline: none;
+        }
+        .post-input-custom:focus {
+            border-color: #000;
+        }
+    </style>
 </head>
 <body>
 
-<div class="container p-0 py-2 fixed-top">
+<div class="container p-0 py-2 fixed-top bg-white">
     <div class="row mx-2">
-        <a href="/secondhandProduct/mainPage" class="col link-noneAndColor fs-5">
-            <i class="fa-solid fa-x"></i>
+        <a href="javascript:history.back()" class="col link-noneAndColor" style="font-size: 1.1rem">
+            <i class="bi bi-x-lg"></i>
         </a>
-        <div class="col g-0 text-center fs-5">내 물건 팔기</div>
+        <div class="col-auto text-center" style="font-size: 1.1rem">내 물건 팔기</div>
         <div class="col"></div>
     </div>
 </div>
@@ -25,7 +34,7 @@
 <form action="/secondhandProduct/productProcess" method="post" enctype="multipart/form-data">
     <input type="hidden" name="user_id" th:value="${session.sessionUserInfo.id}">
     <input type="hidden" id="main_image" name="main_image">
-    <div class="container-fluid g-0 form-container" style="margin-top: 5rem; position: relative;">
+    <div class="container-fluid g-0 form-container" style="margin-top: 3rem; position: relative;">
         <div id="photo-container" class="mx-3" style="overflow-x: auto;">
             <div class="photo-upload text-center position-relative">
                 <label for="file-input" style="width: 100%; height: 100%;">
@@ -35,61 +44,68 @@
                 <input name="images" id="file-input" type="file" style="display: none" multiple accept="image/*">
             </div>
         </div>
-        <div class="row mx-2 mt-4">
-            <div class="col">
+        <div class="row mx-2 mt-2">
+            <div class="col" style="font-size: 0.9rem; font-weight: 500">
                 제목
             </div>
         </div>
-        <div class="row mx-2 mt-2">
+        <div class="row mx-2 mt-1">
             <div class="col d-grid">
-                <input name="title" class="py-2 ps-1" type="text" placeholder="제목">
+                <input name="title" class="post-input-custom py-2 ps-2" type="text" placeholder="제목">
             </div>
         </div>
-        <div class="row mx-2 mt-4">
-            <div class="col">
+        <div class="row mx-2 mt-3">
+            <div class="col" style="font-size: 0.9rem; font-weight: 500">
                 카테고리
             </div>
         </div>
-        <div class="row mx-2 mt-2">
+        <div class="row mx-2 mt-1">
             <div class="col">
-                <select class="form-select" aria-label="카테고리 선택" name="category_id">
+                <select class="form-select post-input-custom" aria-label="카테고리 선택" name="category_id">
                     <option selected >카테고리를 선택하세요</option>
                     <option th:each="categoryList : ${categoryDtoList}" th:value="${categoryList.category_id}" th:text="${categoryList.category_name}"></option>
                 </select>
             </div>
         </div>
-        <div class="row mx-2 mt-4">
+        <div class="row mx-2 mt-3">
+            <div class="col" style="font-size: 0.9rem; font-weight: 500">
+                판매지역
+            </div>
+        </div>
+        <div class="row mx-2 mt-1">
             <div class="col">
+                <select class="form-select post-input-custom" aria-label="판매지역 선택" name="polygon_id">
+                    <option selected >판매 지역을 선택하세요</option>
+                    <option th:each="polygonList : ${polygonDtoList}" th:value="${polygonList.polygon_id}" th:text="${polygonList.polygon_name}"></option>
+                </select>
+            </div>
+        </div>
+        <div class="row mx-2 mt-3">
+            <div class="col" style="font-size: 0.9rem; font-weight: 500">
                 <input type="hidden" name="status" value="판매중">
                 판매하기
             </div>
         </div>
-        <div class="row mx-2 mt-2">
+        <div class="row mx-2 mt-1">
             <div class="col d-grid">
-                <input name="price" class="py-2 ps-1" type="text" placeholder="가격을 입력해주세요">
+                <input name="price" class="post-input-custom py-2 ps-2" type="text" placeholder="가격을 입력해주세요">
             </div>
         </div>
-        <div class="row mx-2 mt-4">
-            <div class="col">
+        <div class="row mx-2 mt-3">
+            <div class="col" style="font-size: 0.9rem; font-weight: 500">
                 자세한 설명
             </div>
         </div>
-        <div class="row mx-2 mt-2">
-            <div class="col d-grid" style="height: 7rem">
-                <textarea name="explanation" placeholder="신뢰할수 있는 거래를 위해 자세히 적어주세요."></textarea>
+        <div class="row mx-2 mt-1">
+            <div class="col d-grid" style="height: 8rem;font-size: 0.9rem; font-weight: 500">
+                <textarea name="explanation" class="ps-2 pt-2 post-input-custom" placeholder="신뢰할수 있는 거래를 위해 자세히 적어주세요."></textarea>
             </div>
         </div>
-        <div class="row mx-2 mt-4">
-            <div class="col">
-                거래 희망 장소 / 일단보류
-            </div>
-        </div>
-
     </div>
-    <div class="container border g-0 py-2 fixed-bottom">
+    <div class="container g-0 py-2 bg-white fixed-bottom">
         <div class="row mx-2">
             <div class="col d-grid">
-                <button class="btn py-2" style="background-color: #FF6F0F; color: white">작성 완료</button>
+                <button class="btn py-2" style="background-color: #28323C; color: white">작성 완료</button>
             </div>
         </div>
     </div>

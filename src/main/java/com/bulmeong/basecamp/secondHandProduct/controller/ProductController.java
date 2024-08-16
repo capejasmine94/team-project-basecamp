@@ -4,6 +4,8 @@ import com.bulmeong.basecamp.common.dto.RestResponseDto;
 import com.bulmeong.basecamp.common.util.Utils;
 import com.bulmeong.basecamp.secondHandProduct.dto.*;
 import com.bulmeong.basecamp.secondHandProduct.service.ChatService;
+import com.bulmeong.basecamp.secondHandProduct.service.LocationService;
+import com.bulmeong.basecamp.secondHandProduct.service.PolygonService;
 import com.bulmeong.basecamp.secondHandProduct.service.ProductService;
 import com.bulmeong.basecamp.user.dto.UserDto;
 import jakarta.servlet.http.HttpSession;
@@ -25,13 +27,29 @@ public class ProductController {
     @Autowired
     private ChatService chatService;
     @Autowired
+    private PolygonService polygonService;
+    @Autowired
+    private LocationService locationService;
+    @Autowired
     private Utils utils;
 
     @GetMapping("mainPage")
-    public String mainPage(Model model) {
+    public String mainPage(Model model,
+                           HttpSession session,
+                           @RequestParam(name = "selected_area_name", required = false) String selected_area_name) {
 
-        List<AllContentsProductDto> productDtoList = productService.selectSecondhandProductList();
-        model.addAttribute("productDtoList", productDtoList);
+        UserDto sessionUserInfo = (UserDto) session.getAttribute("sessionUserInfo");
+
+        String areaName = locationService.selectMyLocation(sessionUserInfo.getId());
+        model.addAttribute("areaName", areaName);
+
+        if(areaName == null || areaName.equals("전체")) {
+            List<AllContentsProductDto> productDtoList = productService.selectSecondhandProductList();
+            model.addAttribute("productDtoList", productDtoList);
+        } else {
+            List<AllContentsProductDto> productDtoList = productService.selectSecondhandProductIsAreaList(areaName);
+            model.addAttribute("productDtoList", productDtoList);
+        }
 
         return "secondhandProduct/mainPage";
     }
@@ -46,7 +64,29 @@ public class ProductController {
         List<CategoryDto> categoryDtoList = productService.selectCategoryList();
         model.addAttribute("categoryDtoList", categoryDtoList);
 
+        List<PolygonDto> polygonDtoList = polygonService.selectPolygon();
+        model.addAttribute("polygonDtoList", polygonDtoList);
+
         return "secondhandProduct/productRegistrationPage";
+    }
+
+    @GetMapping("productModificationPage")
+    public String productModificationPage(HttpSession session, Model model,
+                                          @RequestParam("product_id") int product_id) {
+
+        UserDto sessionUserInfo = (UserDto) session.getAttribute("sessionUserInfo");
+        model.addAttribute("sessionUserInfo", sessionUserInfo);
+
+        List<CategoryDto> categoryDtoList = productService.selectCategoryList();
+        model.addAttribute("categoryDtoList", categoryDtoList);
+
+        List<PolygonDto> polygonDtoList = polygonService.selectPolygon();
+        model.addAttribute("polygonDtoList", polygonDtoList);
+
+        Map<String, Object> productTotalDtoMap = productService.selectSecondhandDetailProduct(product_id);
+        model.addAttribute("productTotalDtoMap", productTotalDtoMap);
+
+        return "secondhandProduct/productModificationPage";
     }
 
     @GetMapping("transactionListPage")
@@ -129,10 +169,12 @@ public class ProductController {
         }
 
         secondhandProductDto.setUser_id(userId);
+        secondhandProductDto.setUpdated_at(new Date());
         productService.updateProduct(secondhandProductDto, imageDtoList);
 
         return "redirect:/secondhandProduct/mainPage";
     }
+
 
     @PostMapping("productProcess")
     public String productProcess(@ModelAttribute SecondhandProductDto secondhandProductDto,
@@ -198,7 +240,9 @@ public class ProductController {
 
 
         Map<String, Object> productTotalDtoList = productService.selectSecondhandDetailProduct(product_id);
+        System.out.println(productTotalDtoList);
         model.addAttribute("productTotalDtoList", productTotalDtoList);
+
 
         productService.updateSecondhandDetailProductCount(product_id);
 
@@ -320,31 +364,92 @@ public class ProductController {
     }
 
     @GetMapping("neighborhoodCertificationPage")
-    public String neighborhoodCertificationPage() {
+    public String neighborhoodCertificationPage(HttpSession session,
+                                                Model model,
+                                                @ModelAttribute LocationDto locationDto,
+                                                @RequestParam(name = "selected_area_name") String selected_area_name) {
+
+        model.addAttribute("selected_area_name", selected_area_name);
+
+        UserDto sessionUserInfo = (UserDto) session.getAttribute("sessionUserInfo");
+        locationDto.setUser_id(sessionUserInfo.getId());
+        locationService.insertMyLocation(locationDto);
+
 
         return "secondhandProduct/neighborhoodCertificationPage";
     }
 
-    @GetMapping("productModificationPage")
-    public String productModificationPage(HttpSession session, Model model,
-                                          @RequestParam("product_id") int product_id) {
-
-        UserDto sessionUserInfo = (UserDto) session.getAttribute("sessionUserInfo");
-        model.addAttribute("sessionUserInfo", sessionUserInfo);
-
-        List<CategoryDto> categoryDtoList = productService.selectCategoryList();
-        model.addAttribute("categoryDtoList", categoryDtoList);
-
-        Map<String, Object> productTotalDtoMap = productService.selectSecondhandDetailProduct(product_id);
-        model.addAttribute("productTotalDtoMap", productTotalDtoMap);
-
-        return "secondhandProduct/productModificationPage";
-    }
 
     @GetMapping("administrativeRegionListPage")
-    public String administrativeRegionListPage() {
+    public String administrativeRegionListPage(Model model) {
+
+        List<PolygonDto> polygonDtoList = polygonService.selectPolygon();
+        model.addAttribute("polygonDtoList", polygonDtoList);
 
         return "secondhandProduct/administrativeRegionListPage";
     }
+
+    // 판매내역 페이지
+    @GetMapping("mySalesHistoryPage")
+    public String mySalesHistoryPage (HttpSession session,
+                                      Model model) {
+
+        String salesStatus = "판매중";
+        String transactionCompleteStatus = "거래완료";
+        UserDto sessionUserInfo = (UserDto) session.getAttribute("sessionUserInfo");
+
+        int totalSalesPost = productService.getTotalSales(sessionUserInfo.getId(), salesStatus);
+        model.addAttribute("totalSalesPost", totalSalesPost);
+
+        int totalTransactionCompletePost = productService.getTotalTransactionComplete(sessionUserInfo.getId(), transactionCompleteStatus);
+        model.addAttribute("totalTransactionCompletePost", totalTransactionCompletePost);
+
+        return "secondhandProduct/mySalesHistoryPage";
+    }
+    // 판매내역 - 판매중
+    @GetMapping("salesPage")
+    public String salesPage (HttpSession session,
+                             Model model) {
+
+        String status = "판매중";
+        UserDto sessionUserInfo = (UserDto) session.getAttribute("sessionUserInfo");
+
+        List<AllContentsProductDto> mySalesDtoList = productService.selectSalesProduct(sessionUserInfo.getId(), status);
+
+        model.addAttribute("mySalesDtoList", mySalesDtoList);
+
+        return "partials/secondhandProduct/salesPage :: content";
+    }
+
+    // 판매내역 - 거래완료페이지
+    @GetMapping("transactionCompletePage")
+    public String transactionCompletePage (HttpSession session,
+                                            Model model) {
+
+        String status = "거래완료";
+        UserDto sessionUserInfo = (UserDto) session.getAttribute("sessionUserInfo");
+
+        List<AllContentsProductDto> myTransactionCompleteDtoList = productService.selectTransactionCompleteProduct(sessionUserInfo.getId(), status);
+        model.addAttribute("myTransactionCompleteDtoList", myTransactionCompleteDtoList);
+
+        return "partials/secondhandProduct/transactionCompletePage :: content";
+    }
+
+    // 거래완료 -> 판매자 선택
+    @GetMapping("buyerSelectionPage")
+    public String buyerSelectionPage(Model model, HttpSession session,
+                                     @RequestParam("product_id") int product_id) {
+
+        Map<String, Object> productTotalDtoList = productService.selectSecondhandDetailProduct(product_id);
+        model.addAttribute("productTotalDtoList", productTotalDtoList);
+
+        UserDto sessionUserInfo = (UserDto) session.getAttribute("sessionUserInfo");
+        int seller_user_id = sessionUserInfo.getId();
+        List<ProductBuyerDto> productBuyerDtoList = productService.getProductBuyerList(seller_user_id);
+        model.addAttribute("productBuyerDtoList", productBuyerDtoList);
+
+        return "secondhandProduct/buyerSelectionPage";
+    }
+
 
 }

@@ -22,6 +22,20 @@
         </div>
     </div>
 </div>
+<!--&lt;!&ndash;판매중, 거래완료 선택 모달창 &ndash;&gt;-->
+<!--<div th:fragment="transactionStatusModal" class="modal fade modal-bottom" id="transactionStatusModal" tabindex="-1">-->
+<!--    <div class="modal-dialog">-->
+<!--        <div class="modal-content">-->
+<!--            <div class="list-group">-->
+<!--                <button onclick="onSale()" type="button" class="list-group-item list-group-item-action text-primary">판매중</button>-->
+<!--                <button onclick="transactionComplete()" type="button" class="list-group-item list-group-item-action text-primary" data-bs-toggle="modal">-->
+<!--                    거래완료-->
+<!--                </button>-->
+<!--                <button type="button" class="list-group-item list-group-item-action text-danger" data-bs-dismiss="modal">닫기</button>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </div>-->
+<!--</div>-->
 
 <!--삭제 모달-->
 <div th:fragment="modal" class="modal fade" id="deleteModal" tabindex="-1" style="overflow: hidden">
@@ -44,6 +58,40 @@
     </div>
 </div>
 
+<!-- salesModel 메뉴 모달 -->
+<div th:fragment="salesModal" class="modal fade modal-bottom" id="salesModel" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="list-group">
+                <button onclick="editPost()" type="button" class="list-group-item list-group-item-action">게시글 수정</button>
+                <button type="button" class="list-group-item list-group-item-action text-danger" data-bs-toggle="modal" data-bs-target="#deleteModal">삭제</button>
+                <button type="button" class="list-group-item list-group-item-action" data-bs-dismiss="modal">취소</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- salesModel 삭제 모달-->
+<div th:fragment="salesModal" class="modal fade" id="deleteSalesModel" tabindex="-1" style="overflow: hidden">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content" style="border-radius: 1rem">
+            <div class="row modal-header">
+                <div class="col modal-title" style="font-size: 1rem">
+                    <span class="ms-1">게시글을 삭제할까요?</span>
+                </div>
+            </div>
+            <div class="row modal-footer">
+                <div class="col pe-0 d-grid">
+                    <button type="button" class="btn border" data-bs-dismiss="modal">취소</button>
+                </div>
+                <div class="col ps-0 d-grid">
+                    <button onclick="deletePost()" type="button" class="btn btn-delete">삭제</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
 <!--위치 등록 대기 모달창-->
 <div th:fragment="registeringLocation" data-bs-backdrop="static" class="modal fade" id="registeringLocation" tabindex="-1" style="overflow: hidden">
     <div class="modal-dialog modal-dialog-centered">
@@ -64,7 +112,13 @@
 <script>
     function closeModal() {
         var optionsModal = new bootstrap.Modal(document.getElementById('optionsModal'));
-        optionsModal.hide();
+        var saleModal = new bootstrap.Modal(document.getElementById('saleModal'));
+        if (optionsModal){
+            optionsModal.hide();
+        }
+        if (saleModal) {
+            saleModal.hide();
+        }
     }
 </script>
 </body>

@@ -9,7 +9,9 @@ public class AllContentsProductDto {
     private int product_id;
     private int user_id;
     private int category_id;
+    private int polygon_id;
     private String category_name;
+    private String polygon_name;
     private String main_image;
     private String title;
     private int price;
@@ -19,4 +21,5 @@ public class AllContentsProductDto {
     private int chat_room_count;
     private int wish_list_count;
     private Date created_at;
+    private Date updated_at;
 }

@@ -2,13 +2,15 @@ body {
     font-family: 'Noto Sans KR', sans-serif;
 }
 /*메인 카테고리 배경*/
-.bg-custom1 {
+.main-span-custom {
     background-color: #F7F8FA;
 }
 /*메인 전체 카테고리 선택*/
-.main-span-custom {
-    border-radius: 0.5rem;
-    padding: 0.5rem 1rem;
+.main-categoryBtn {
+    border-radius: 0.8rem;
+    padding: 0.7rem 1rem;
+    font-size: 0.9rem;
+    background-color: #F7F8FA;
 }
 /*채팅 선택*/
 .chat-span-custom {
@@ -16,19 +18,43 @@ body {
     padding: 0.5rem 0.7rem;
     font-size: 0.8rem;
 }
-/* 게시글 위치,카테고리,시간,좋아요,채팅 */
-.font-custom1 {
-    font-size: 0.9rem;
-    color: #ADB1BA;
-    font-weight: bold;
-}
-
-.font-custom2 {
-    font-size: 1.1rem;
-}
 /* 상세게시글 카테고리,생성일 */
-.font-custom3 {
+.main-title-font {
+    font-size: 1rem;
+    font-weight: 500;
+    color: #1B1C1F;
+}
+.main-subtitle-font {
+    font-size: 0.875rem;
+    font-weight: 400;
+    color: #868e96;
+}
+.main-price-font {
+    font-size: 1.125rem;
+    font-weight: 700;
+    color: #000;
+}
+.main-like-font {
     font-size: 0.8rem;
+    font-weight: 400;
+    color: #868e96;
+}
+.post-title-font {
+    font-size: 1rem;
+    font-weight: 500;
+}
+.post-subtitle-font {
+    font-size: 0.875rem;
+    font-weight: 400;
+    color: #868e96;
+}
+.post-content-font {
+    font-size: 1.125rem;
+    font-weight: 700;
+    color: #000;
+}
+.font-custom3 {
+    font-size: 0.75rem;
     color: #ADB1BA;
     font-weight: bold;
 }
@@ -38,14 +64,17 @@ body {
 }
 .photo-upload span {
     position: absolute;
-    bottom: 0.3rem;
+    bottom: 0.5rem;
     left: 0;
     width: 100%;
-    font-size: 1rem;
+    font-size: 0.9rem;
     text-align: center;
 }
 .photo-upload i {
-    font-size: 2rem;
+    position: absolute;
+    top: 0.4rem;
+    left: 1.26rem;
+    font-size: 1.3rem;
 }
 .photo-box {
     width: 4rem;
@@ -114,7 +143,7 @@ body {
     text-align: center;
 }
 .form-container {
-    padding-bottom: 6rem; /* 여기에 바텀 마진을 추가합니다 */
+    padding-bottom: 5rem; /* 여기에 바텀 마진을 추가합니다 */
 }
 
 /* ---메인페이지 게시글--- */
@@ -132,9 +161,9 @@ body {
 
 /* 메인페이지 상품 이미지 크기*/
 .mainPostImg-custom {
-    width: 7rem;
-    height: 7rem;
-    border: 1px solid #F7F8FA;
+    width: 6.5rem;
+    height: 6.5rem;
+    border: 0.05rem solid #868e96;
     border-radius: 0.5rem;
 }
 /* 게시글상세 상품 이미지 크기 */
@@ -151,6 +180,7 @@ body {
     width: 3rem;
     height: 3rem;
     border-radius: 0.5rem;
+    border: 0.05rem solid #868e96;
 }
 /*프로필 이미지*/
 .profileImage-custom {
@@ -165,7 +195,7 @@ body {
 /*지도 이미지 크기?*/
 .postDetailMapImage-custom {
     width: 100%;
-    height: 7rem;
+    height: 10rem;
 }
 .postDetailMapImage-custom img {
     width: 100%;
@@ -222,10 +252,27 @@ body {
     padding-top: 0;
 }
 #deleteModal .btn-delete {
-    background-color: #ff6f0f; /* 삭제 버튼 색상 */
+    background-color: #28323C; /* 삭제 버튼 색상 */
     color: white;
 }
-/*위치 등록 모달*/
+/*위치 등록 모달 - 삭제 */
+#showModal .modal-dialog {
+    max-width: 17rem;
+    margin: 1.75rem auto; /* 가운데 정렬을 위한 마진 */
+}
+#showModal .modal-header {
+    border-bottom: none;
+    padding-bottom: 0;
+}
+#showModal .modal-footer {
+    border-top: none;
+    padding-top: 0;
+}
+#showModal .btn-delete {
+    background-color: #28323C; /* 삭제 버튼 색상 */
+    color: white;
+}
+/*위치 등록 모달* - 삭제/
 #locationModal .modal-dialog {
     width: 22rem;
     margin: 1.75rem auto; /* 가운데 정렬을 위한 마진 */
@@ -239,7 +286,7 @@ body {
     padding-top: 0;
 }
 #locationModal .btn-consent {
-    background-color: #ff6f0f; /* 삭제 버튼 색상 */
+    background-color: #28323C; /* 삭제 버튼 색상 */
     color: white;
     height: 3rem;
 }

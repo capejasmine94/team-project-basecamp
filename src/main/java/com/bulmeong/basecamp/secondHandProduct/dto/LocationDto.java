@@ -9,6 +9,5 @@ public class LocationDto {
 
     private int location_id;
     private int user_id;
-    private double my_region_x;
-    private double my_region_y;
+    private String selected_area_name;
 }

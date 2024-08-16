@@ -1,10 +1,7 @@
 package com.bulmeong.basecamp.secondHandProduct.controller;
 
 import com.bulmeong.basecamp.common.dto.RestResponseDto;
-import com.bulmeong.basecamp.secondHandProduct.dto.CategoryDto;
-import com.bulmeong.basecamp.secondHandProduct.dto.ImageDto;
-import com.bulmeong.basecamp.secondHandProduct.dto.SecondhandProductDto;
-import com.bulmeong.basecamp.secondHandProduct.dto.WishListDto;
+import com.bulmeong.basecamp.secondHandProduct.dto.*;
 import com.bulmeong.basecamp.secondHandProduct.service.ProductService;
 import com.bulmeong.basecamp.user.controller.UserRestController;
 import com.bulmeong.basecamp.user.dto.UserDto;
@@ -167,6 +164,20 @@ public class RestProductController {
 
         return restResponseDto;
     }
+
+    // 상품 거래상태 업데이트
+    @RequestMapping("updateStatus")
+    public RestResponseDto updateStatus(@RequestBody AllContentsProductDto allContentsProductDto) {
+
+        RestResponseDto restResponseDto = new RestResponseDto();
+        restResponseDto.setResult("success");
+
+        productService.updateProductStatus(allContentsProductDto);
+        System.out.println("거래 상태 변경 완료");
+
+       return restResponseDto;
+    }
+
 
 
 }
