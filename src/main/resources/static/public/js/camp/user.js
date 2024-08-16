@@ -124,6 +124,7 @@ function selectArea(id) {
     .then((response) => {
         curArea = response.data.curAreaUser;
         refreshSelectedArea(curArea);
+        addColonMoneyInput();
     });
 }
 
@@ -133,6 +134,7 @@ function showArea(id) {
     .then(response => response.json())
     .then((response) => {
         refreshSelectedArea(response.data.curAreaUser);
+        addColonMoneyInput();
     });
 }
 
@@ -209,6 +211,4 @@ function refreshSelectedArea(area) {
 
     const area_add_car = document.getElementById('area_add_car');
     area_add_car.innerText = curCampsite.dto.car_pay;
-
-    addColonMoneyInput();
 }
