@@ -7,12 +7,14 @@
     <link rel="stylesheet" href="/public/css/basecamp.css">
 
     <!-- 이걸로 레이아웃 확인하셈 -->
-    <!-- <script src="/public/js/lockLikeMobile.js"></script> -->
+    <script src="/public/js/lockLikeMobile.js"></script>
+
+    <title>BASECAMP</title>
 
     <style>
         .icon-col img{
             aspect-ratio: 1/1;
-            width: 100%;
+            width: 55px;
             object-fit: cover;
             object-position: center;
         }
@@ -41,31 +43,30 @@
             height: 100%;
             object-fit: cover;
         }
-        .scroll-list-box {
-            -ms-overflow-style: none;  /* Internet Explorer 10+ */
-            scrollbar-width: none;  /* Firefox */
-        }
-        body {
+        /* body {
             height: 100vh;
             background: linear-gradient(to bottom, #344E41 50%, white 50%);
-            margin: 0;  /* 기본 margin 제거 */
-        }
-        .mainPage {
+            margin: 0;
+        } */
+        /* 밤하늘의 펄... */
+        /* .mainPage {
             background-image: url('/public/img/common/배경.jpeg');
             background-size: cover;
             background-position: center;
             width: 100%;
             height: 100vh;
-        }
+        } */
         .fixed-background {
             /* background-color: #0F273C !important; /* 원하는 배경색으로 변경 */
             background: #091724;
-            background: linear-gradient(to left, #0D263C, #091724);
-            background: -webkit-linear-gradient(to right, #1C3F5B, #0D263C);
+            /* background: linear-gradient(to left, #0D263C, #091724); */
+            /* background: -webkit-linear-gradient(to right, #1C3F5B, #0D263C); */
         }
         .topNav {
             transition: background-color 0.1s;
+            background: linear-gradient(180deg, #060606 0%, #232323 100%);
         }
+
         .image-wrapper {
             padding: 0 0.2rem; /* 이미지 간의 간격 조정 */
         }
@@ -116,355 +117,324 @@
             z-index: 1050; /* 오프캔버스의 z-index를 더 높게 설정 */
         }
 
+        /* 상단 광고 사진 개수 */
+        .carousel-badge {
+            position: absolute;
+            bottom: 10px;
+            right: 10px;
+            background-color: rgba(0, 0, 0, 0.7);
+            color: white;
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 11px;
+        }
+
+        .rounded-border {
+            width: 60px; /* 원하는 너비와 높이로 설정 */
+            height: 60px;
+            border-radius: 50%; /* 완전한 원형으로 만들기 위해 50% 사용 */
+            border: white; /* 원하는 색상과 두께로 보더 설정 */
+            display: flex; /* 이미지 중앙 정렬을 위한 flexbox 사용 */
+            /* background-color: #00b7ff14; */
+            background-color: rgba(255, 255, 255, 0.26);
+            align-items: center;
+            justify-content: center;
+        }
+        .rounded-border img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover; /* 이미지가 보더 안에 잘 맞게 채워짐 */
+        }
+
+        .topBannerCarousel {
+            background: linear-gradient(180deg, #232323 0%, rgba(0, 0, 0, 0.00) 100%);
+        }
+
     </style>
 </head>
 <body class="mainPage">
+
 <!-- 상단 네비 -->
 <div class="container-fluid fixed-top topNav">
-    <div class="row p-1">
-        <div class="col fs-3">
-            <img src="/public/img/common/로고흰버전.png" style="width: 10rem; height: 1.5rem">
+    <div class="row align-items-center" style="height: 3.625em;">
+        <div class="col fs-3 d-flex align-items-center">
+            <img src="/public/img/common/로고흰버전.png" style="width: 40%">
             <!-- <img src="/public/img/common/배캠.png" style="width: 10rem; height: 1.5rem;"> -->
         </div>
+
+        <!-- 준희님 예약 조회 페이지로 이동 -->
+        <a href="..." class="col-auto" th:if="${session.sessionUserInfo != null}">
+            <span class="border px-2 py-1 fw-semi-bold text-white" style="border-radius: 10px; font-size: 0.75em;">
+                예약조회
+            </span>
+        </a>
+
         <!--canvas 버튼 _ 하단 네비로 위치 변경 -->
         <!-- <div class="col text-end d-flex align-items-center justify-content-end">
             <button class="btn p-0" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight">
                 <span class="text-white fs-1"><i class="bi bi-justify"></i></span>
             </button>
         </div> -->
-        <!-- canvas 시작 -->
-        <div class="row g-0 offcanvas offcanvas-end custom-offcanvas-width custom-offcanvas-background" id="offcanvasRight" tabindex="-1" style="width: 17rem;">
-            <div class="col">
-                <!-- 로그인 & 비로그인 -->
-                <div class="row offcanvas-header pt-4 pb-0" style="position: relative;">
-                    <div class="col-auto pe-1">
-                        <div class="row">
-                            <div class="col">
-                                <a href="/user/login" th:if="${session.sessionUserInfo == null}">
-                                    <span style="font-size: 1.3em;" class="fw-bold">로그인</span>
-                                    <span class="material-symbols-outlined" style="font-size: 1.1em;">
-                                        arrow_forward_ios
-                                    </span>
-                                </a>
-                                <span th:text="${session.sessionUserInfo.nickname}" th:if="${session.sessionUserInfo != null}"
-                                    style="font-size: 1.3em;" class="fw-bold">닉네임</span>
-                                <span th:if="${session.sessionUserInfo != null}"> 님</span>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- 마이페이지 -->
-                    <a href="/user/myPage" class="col ps-0" th:if="${session.sessionUserInfo != null}">
-                        <span class="material-symbols-outlined pt-2" style="font-size: 1.1em;">
-                            arrow_forward_ios
-                        </span>
-                    </a>
-
-                    <div class="col text-end position-relative ps-0" th:if="${session.sessionUserInfo != null}">
-                        <span class="fw-light" style="font-size: 1.2em;">
-                            <i class="fa-regular fa-bell"></i>
-                        </span><span><i class="bi bi-dot position-absolute king" style="color: rgb(233, 40, 40); font-size: 1.5em;"></i></span>
-                    </div>
-                </div>
-
-                <!-- 이메일 -->
-                <div class="row">
-                    <div class="col-auto" style="padding-left: 10%;">
-                        <span th:text="${session.sessionUserInfo.email}" th:if="${session.sessionUserInfo != null}" style="font-size: 0.75em; color: rgb(83, 83, 83);">
-
-                        </span>
-                    </div>
-                </div>
-
-                <!-- 포인트(마일리지) -->
-                <div class="row pt-2" th:if="${session.sessionUserInfo != null}">
-                    <div class="col-auto pe-0" style="font-size: 0.8em; padding-left: 10%;">
-                        <span style="color: rgb(168, 168, 168);">포인트</span>
-                    </div>
-                    <div class="col-auto ps-1" style="font-size: 0.8em;">
-                        <span class="fw-bold lightFont" th:text="${session.sessionUserInfo.mileage}" th:if="${session.sessionUserInfo != null}">
-                        </span>
-                    </div>
-                </div>
-
-                <div class="row mt-3">
-                    <div class="col">
-                        <!-- 임시 배너 바꾸셈 -->
-                        <img src="/public/img/common/배너저쩌고.jpg" class="img-fluid">
-                    </div>
-                </div>
-
-                <div class="row">
-                    <div class="col order-list-scroll">
-                        <!-- 내용 -->
-                        <div class="row offcanvas-body m-0 pt-0">
-                            <div class="col" style="font-size: 0.9em;">
-                                <!-- 캠핑장 -->
-                                <a href="/camp/main" class="row align-end pt-4">
-                                    <!-- <div class="col-auto pe-0">
-                                        <span class="fs-1 material-symbols-outlined">camping</span>
-                                    </div> -->
-                                    <div class="col ps-0">
-                                        <span>캠핑장</span>
-                                    </div>
-                                </a>
-                                <!-- 캠핑카 -->
-                                <a href="/campingcar/main" class="row align-end pt-4">
-                                    <!-- <div class="col-auto pe-0">
-                                        <span class="fs-1 material-symbols-outlined">car_repair</span>
-                                    </div> -->
-                                    <div class="col ps-0">
-                                        <span>캠핑카</span>
-                                    </div>
-                                </a>
-                                <!-- 상점 -->
-                                <a href="/store" class="row align-end pt-4">
-                                    <!-- <div class="col-auto pe-0">
-                                        <span class="material-symbols-outlined">storefront</span>
-                                    </div> -->
-                                    <div class="col ps-0">
-                                        <span>상점</span>
-                                    </div>
-                                </a>
-                                <!-- 중고거래 -->
-                                <a href="/secondhandProduct/mainPage" class="row align-end pt-4">
-                                    <!-- <div class="col-auto pe-0">
-                                        <span class="material-symbols-outlined">settings_accessibility</span>
-                                    </div> -->
-                                    <div class="col ps-0">
-                                        <span>중고거래</span>
-                                    </div>
-                                </a>
-                                <!-- 인스타 -->
-                                <!-- <a href="#" class="row align-end pt-4">
-                                    <div class="col ps-0">
-                                        <span>인스타그램</span>
-                                    </div>
-                                </a> -->
-                                <!-- 모임 -->
-                                <a href="/club/main" class="row align-end pt-4">
-                                    <!-- <div class="col-auto pe-0">
-                                        <span class="material-symbols-outlined">settings_accessibility</span>
-                                    </div> -->
-                                    <div class="col ps-0">
-                                        <span>소모임</span>
-                                    </div>
-                                </a>                        
-                            </div>
-                        </div>
-
-                        <!-- 캠프스타그램 -->
-                        <div class="row border-top m-0">
-                            <a href="/insta/instaMainPage" class="col-5 pt-3 pb-3" style="font-size: 0.9em;">
-                                <!-- My -->
-                                <!-- <div class="col-auto pe-0">
-                                    <span class="material-symbols-outlined">settings_accessibility</span>
-                                </div> -->
-                                <img src="/public/img/instaImage/campstagram.png" class="img-fluid">
-                            </a>
-                        </div>
-
-                        <!-- 유튜브, 트위터, 페이스북 로고 -->
-                        <div class="row border-top m-0 pt-3 pb-3" style="padding-left: 12px;">
-                            <div class="col-auto">
-                                <div class="row pe-2">
-                                    <div class="col-auto rounded-circle border border-dark d-flex align-items-center justify-content-center" style="aspect-ratio: 1/1; width: 28px;">
-                                        <i class="fa-brands fa-youtube"></i>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-auto">
-                                <div class="row pe-2">
-                                    <div class="col-auto rounded-circle border border-dark d-flex align-items-center justify-content-center" style="aspect-ratio: 1/1; width: 28px;">
-                                        <i class="fa-brands fa-x-twitter"></i>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-auto">
-                                <div class="row pe-2">
-                                    <div class="col-auto rounded-circle border border-dark d-flex align-items-center justify-content-center" style="aspect-ratio: 1/1; width: 28px;">
-                                        <i class="fa-brands fa-facebook"></i>
-                                    </div>
-                                </div>
-                            </div>
-
-                        </div>
-
-                        <div class="row m-0 pb-3 border-top border-bottom" style="font-size: 0.8em; color: rgb(168, 168, 168);">
-                            <div class="col">
-                                <div class="row pt-3">
-                                    <div class="col">
-                                        <span>고객센터</span>
-                                    </div>
-                                </div>
-                                <div class="row pt-3">
-                                    <div class="col">
-                                        <span>공지사항</span>
-                                    </div>
-                                </div>
-                                <div class="row pt-3">
-                                    <div class="col">
-                                        <span>이용약관 / 개인정보 처리방침</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-    
-                        <!-- 로그아웃 -->
-                        <div class="row pt-4 pb-5 m-0 justify-content-center">
-                            <a class="col-auto d-flex align-items-center" th:if="${session.sessionUserInfo != null}" href="/user/logoutProcess">
-                                <!-- <button th:if="${session.sessionUserInfo == null}"
-                                        type="button" class="btn-close-custom" data-bs-dismiss="offcanvas">
-                                </button> -->
-                                <span class="material-symbols-outlined" style="font-size: 1.2em; color: rgb(168, 168, 168);">
-                                    logout
-                                </span>
-                                <span style="font-size: 0.8em; color: rgb(168, 168, 168);">로그아웃</span>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-
-            </div>
-        </div>
-        <!-- canvas 끝 -->
     </div>
 </div>
-<!-- 메인 페이지 -->
-<div class="container-fluid" style="padding-top: 4rem;">
-    <!-- 시작 -->
-    <div class="row">
-        <div class="col bg-white" style="border-top-left-radius: 2rem; border-top-right-radius: 2rem;">
-            <!-- 조준희, 양은자 -->
-            <div class="row">
-                <div class="col">
-                    <!--예약하기-->
-                    <div class="row px-1 py-3">
-                        <div class="col-auto fs-4">
-                            <span>Reservation</span><span class="ms-1 text-secondary" style="font-size: 0.7rem">예약하기</span>
-                        </div>
-                    </div>
-                    <div class="row px-2">
-                        <!-- 조준희 사진링크 -->
-                        <a href="/camp/" class="col image-wrapper">
-                            <img src="/public/img/common/캠핑장최종.png" class="rounded-image">
-                        </a>
-                        <!-- 양은자 사진링크 -->
-                        <a href="/campingcar/main" class="col image-wrapper">
-                            <img src="/public/img/common/캠핑카최종.png" class="rounded-image">
-                        </a>
-                    </div>
 
+<!-- 메인 페이지 -->
+<div class="container-fluid" style="margin-top: 3.625em;">
+
+    <!-- 상단 광고 -->
+    <div class="row topBannerCarousel pt-4">
+        <div class="col">
+            <div class="row">
+                <div class="col px-4">
+                    <div id="carouselExampleInterval" class="carousel slide" data-bs-ride="carousel">
+                        <div class="carousel-inner">
+                            <div class="carousel-item active" data-bs-interval="10000">
+                                <img src="/public/img/common/mainAd/b메인사진_1.png" class="d-block w-100 rounded-3" style="aspect-ratio: 1/1; width: 100%; object-fit: cover; object-position: center;">
+                                <div class="carousel-badge">1/8</div>
+                            </div>
+                            <div class="carousel-item" data-bs-interval="2000">
+                                <img src="/public/img/common/mainAd/b메인사진_2.png" class="d-block w-100 rounded-3" style="aspect-ratio: 1/1; width: 100%; object-fit: cover; object-position: center;">
+                                <div class="carousel-badge">2/8</div>
+                            </div>
+                            <div class="carousel-item">
+                                <img src="/public/img/common/mainAd/b메인사진_3.png" class="d-block w-100 rounded-3" style="aspect-ratio: 1/1; width: 100%; object-fit: cover; object-position: center;">
+                                <div class="carousel-badge">3/8</div>
+                            </div>
+                            <div class="carousel-item">
+                                <img src="/public/img/common/mainAd/b메인사진_4.jpg" class="d-block w-100 rounded-3" style="aspect-ratio: 1/1; width: 100%; object-fit: cover; object-position: center;">
+                                <div class="carousel-badge">4/8</div>
+                            </div>
+                            <div class="carousel-item">
+                                <img src="/public/img/common/mainAd/b메인사진_5.jpg" class="d-block w-100 rounded-3" style="aspect-ratio: 1/1; width: 100%; object-fit: cover; object-position: center;">
+                                <div class="carousel-badge">5/8</div>
+                            </div>
+                            <div class="carousel-item">
+                                <img src="/public/img/common/mainAd/b메인사진_6.jpg" class="d-block w-100 rounded-3" style="aspect-ratio: 1/1; width: 100%; object-fit: cover; object-position: center;">
+                                <div class="carousel-badge">6/8</div>
+                            </div>
+                            <div class="carousel-item">
+                                <img src="/public/img/common/mainAd/b메인사진_7.jpg" class="d-block w-100 rounded-3" style="aspect-ratio: 1/1; width: 100%; object-fit: cover; object-position: center;">
+                                <div class="carousel-badge">7/8</div>
+                            </div>
+                            <div class="carousel-item">
+                                <img src="/public/img/common/mainAd/b메인사진_8.jpg" class="d-block w-100 rounded-3" style="aspect-ratio: 1/1; width: 100%; object-fit: cover; object-position: center;">
+                                <div class="carousel-badge">8/8</div>
+                            </div>
+                        </div>
+                        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleInterval" data-bs-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Previous</span>
+                        </button>
+                        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleInterval" data-bs-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Next</span>
+                        </button>
+                    </div>
                 </div>
             </div>
-            <!-- border -->
-            <div class="row mt-4 mx-1 border-bottom"></div>
+        </div>
+    </div>
+
+    <div class="row ps-3 pt-3">
+        <div class="col fw-bold">
+            <span style="font-size: 0.85em;">
+                떠날 준비가 되셨나요?
+            </span>
+        </div>
+    </div>
+
+    <!-- 조준희, 양은자 예약하기 -->
+    <div class="row pb-4">
+        <!-- 조준희 -->
+        <a href="/camp/" class="col d-flex flex-column align-items-center">
+            <div class="row rounded-border justify-content-center">
+                <div class="col">
+                    <img src="/public/img/common/b오토캠핑.png" class="" alt="...">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <span style="font-size: 0.8em;">
+                        오토캠핑
+                    </span>
+                </div>
+            </div>
+        </a>
+        <a href="/camp/" class="col d-flex flex-column align-items-center">
+            <div class="row rounded-border justify-content-center">
+                <div class="col">
+                    <img src="/public/img/common/b글램핑.png" class="" alt="...">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <span style="font-size: 0.8em;">
+                        글램핑
+                    </span>
+                </div>
+            </div>
+        </a>
+        <!-- 양은자 -->
+        <a href="/campingcar/main" class="col d-flex flex-column align-items-center">
+            <div class="row rounded-border justify-content-center">
+                <div class="col">
+                    <img src="/public/img/common/b카라반.png" class="" alt="...">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <span style="font-size: 0.8em;">
+                        캠핑카
+                    </span>
+                </div>
+            </div>
+        </a>
+        <a href="/campingcar/main" class="col d-flex flex-column align-items-center">
+            <div class="row rounded-border justify-content-center">
+                <div class="col">
+                    <img src="/public/img/common/b펜션.png" class="" alt="...">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <span style="font-size: 0.8em;">
+                        펜션
+                    </span>
+                </div>
+            </div>
+        </a>
+        <a href="/campingcar/main" class="col d-flex flex-column align-items-center">
+            <div class="row rounded-border justify-content-center">
+                <div class="col">
+                    <img src="/public/img/common/b피크닉.png" class="" alt="...">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <span style="font-size: 0.8em;">
+                        피크닉
+                    </span>
+                </div>
+            </div>
+        </a>
+    </div>
+
+    <!-- border -->
+    <div class="row mt-2" style="border-bottom: 5px solid; border-color: rgba(227, 227, 227, 0.567);"></div>
+
+    <!-- 시작 -->
+    <div class="row">
+        <div class="col">
+
             <!-- 변초연 -->
             <div class="row">
                 <div class="col">
                     <!-- 상품 구매 -->
-                    <div class="row px-1 py-3">
-                        <div class="col-auto fs-4">
-                            <span>Market</span><span class="ms-1 text-secondary" style="font-size: 0.7rem">상점</span>
+                    <div class="row ps-3 px-1 py-3">
+                        <div class="col fw-bold">
+                            <span style="font-size: 0.85em;">
+                                썸머 COOL 세일!
+                            </span>
                         </div>
                         <div class="col d-flex align-items-end justify-content-end">
-                            <a href="#"><span class="text-secondary" style="font-size: 0.7rem">더보기<i class="bi bi-chevron-right"></i></span></a>
+                            <a href="/store"><span class="text-secondary" style="font-size: 0.7rem">더보기<i class="bi bi-chevron-right"></i></span></a>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col">
-                            <div class="row px-1">
-                                <a href="/store/category?category_id=1" class="col-3 pb-2">
+                            <div class="row px-1 d-flex">
+                                <a href="/store/category?category_id=1" class="col-3 pb-4">
                                     <div class="row">
-                                        <div class="col icon-col">
+                                        <div class="col icon-col d-flex justify-content-center">
                                             <img src="/public/img/storeImage/icon001.png">
                                         </div>
                                     </div>
                                     <div class="row pt-1 text-center">
-                                        <div class="col f08 fw-bold text-body-tertiary">
+                                        <div class="col" style="font-size: 0.7em;">
                                             텐트
                                         </div>
                                     </div>
                                 </a>
-                                <a href="/store/category?category_id=2" class="col-3 pb-2">
+                                <a href="/store/category?category_id=2" class="col-3 pb-4">
                                     <div class="row">
-                                        <div class="col icon-col">
+                                        <div class="col icon-col d-flex justify-content-center">
                                             <img src="/public/img/storeImage/icon001.png">
                                         </div>
                                     </div>
                                     <div class="row pt-1 text-center">
-                                        <div class="col f08 fw-bold text-body-tertiary">
+                                        <div class="col" style="font-size: 0.7em;">
                                             타프
                                         </div>
                                     </div>
                                 </a>
-                                <a href="/store/category?category_id=3" class="col-3 pb-2">
+                                <a href="/store/category?category_id=3" class="col-3 pb-4">
                                     <div class="row">
-                                        <div class="col icon-col">
+                                        <div class="col icon-col d-flex justify-content-center">
                                             <img src="/public/img/storeImage/icon002.png">
                                         </div>
                                     </div>
                                     <div class="row pt-1 text-center">
-                                        <div class="col f08 fw-bold text-body-tertiary">
+                                        <div class="col" style="font-size: 0.7em;">
                                             캠핑가구
                                         </div>
                                     </div>
                                 </a>
-                                <a href="/store/category?category_id=4" class="col-3 pb-2">
+                                <a href="/store/category?category_id=4" class="col-3 pb-4">
                                     <div class="row">
-                                        <div class="col icon-col">
+                                        <div class="col icon-col d-flex justify-content-center">
                                             <img src="/public/img/storeImage/icon007.png">
                                         </div>
                                     </div>
                                     <div class="row pt-1 text-center">
-                                        <div class="col f08 fw-bold text-body-tertiary">
+                                        <div class="col" style="font-size: 0.7em;">
                                             취침용품
                                         </div>
                                     </div>
                                 </a>
-                                <a href="/store/category?category_id=5" class="col-3 pb-2">
+                                <a href="/store/category?category_id=5" class="col-3 pb-4">
                                     <div class="row">
-                                        <div class="col icon-col">
+                                        <div class="col icon-col d-flex justify-content-center">
                                             <img src="/public/img/storeImage/icon003.png">
                                         </div>
                                     </div>
                                     <div class="row pt-1 text-center">
-                                        <div class="col f08 fw-bold text-body-tertiary">
+                                        <div class="col" style="font-size: 0.7em;">
                                             주방용품
                                         </div>
                                     </div>
                                 </a>
-                                <a href="/store/category?category_id=6" class="col-3 pb-2">
+                                <a href="/store/category?category_id=6" class="col-3 pb-4">
                                     <div class="row">
-                                        <div class="col icon-col">
-                                            <img src="/public/img/storeImage/icon004.png">
+                                        <div class="col icon-col d-flex justify-content-center">
+                                            <img src="/public/img/storeImage/icon004.png" style="font-size: 0.7em;">
                                         </div>
                                     </div>
                                     <div class="row pt-1 text-center">
-                                        <div class="col f08 fw-bold text-body-tertiary">
+                                        <div class="col" style="font-size: 0.7em;">
                                             계절용품
                                         </div>
                                     </div>
                                 </a>
-                                <a href="/store/category?category_id=7" class="col-3 pb-2">
+                                <a href="/store/category?category_id=7" class="col-3 pb-4">
                                     <div class="row">
-                                        <div class="col icon-col">
+                                        <div class="col icon-col d-flex justify-content-center">
                                             <img src="/public/img/storeImage/icon001.png">
                                         </div>
                                     </div>
                                     <div class="row pt-1 text-center">
-                                        <div class="col f08 fw-bold text-body-tertiary">
+                                        <div class="col" style="font-size: 0.7em;">
                                             밀키트
                                         </div>
                                     </div>
                                 </a>
                                 <div class="col-3 pb-2">
                                     <div class="row">
-                                        <div class="col icon-col">
+                                        <div class="col icon-col d-flex justify-content-center">
                                             <img src="/public/img/storeImage/icon012.png">
                                         </div>
                                     </div>
                                     <div class="row pt-1 text-center">
-                                        <div class="col f08 fw-bold text-body-tertiary">
+                                        <div class="col" style="font-size: 0.7em;">
                                             베스트
                                         </div>
                                     </div>
@@ -474,27 +444,75 @@
                     </div>
                 </div>
             </div>
+
             <!-- border -->
-            <div class="row mt-3 mx-1 border-bottom"></div>
+            <div class="row mt-2" style="border-bottom: 5px solid; border-color: rgba(227, 227, 227, 0.567);"></div>
+
             <!-- 이시은 -->
             <div class="row">
                 <div class="col">
                     <!-- 모임 -->
-                    <div class="row px-1 py-3">
-                        <div class="col-auto fs-4">
-                            <span>CommunityGroup</span><span class="ms-1 text-secondary" style="font-size: 0.7rem">소모임</span>
+                    <div class="row ps-3 px-1 py-3">
+                        <div class="col fw-bold">
+                            <span style="font-size: 0.85em;">
+                                오늘의 신규 모임
+                            </span>
                         </div>
                         <div class="col d-flex align-items-end justify-content-end">
-                            <a href="#"><span class="text-secondary" style="font-size: 0.7rem">더보기<i class="bi bi-chevron-right"></i></span></a>
+                            <a href="/club/main"><span class="text-secondary" style="font-size: 0.7rem">더보기<i class="bi bi-chevron-right"></i></span></a>
                         </div>
                     </div>
+
                     <div class="row ms-1 me-1">
-                        <div class="col scroll-list-box overflow-x-auto">
-                            <div class="row">
+                        <div class="col overflow-x-auto" style="scrollbar-width: none;">
+                            <div class="row flex-nowrap">
+
+                                <!-- 하나의 모임 -->
+                                <div class="col-auto">
+                                    <div class="row me-1">
+                                        <div class="col">
+                                            <img src="/public/img/common/소모임.png" class="img-fluid rounded-2" style="object-fit: cover; object-position: center; width: 10em; height: 10em;">
+                                        </div>
+                                    </div>
+                                    <div class="row" style="width: 11.8em; height: 8em;">
+                                        <div class="col">
+                                            <div class="row mt-2">
+                                                <div class="col" style="font-size: 0.8em; font-weight: 500;">
+                                                    <span>운동/스포츠</span>
+                                                </div>
+                                            </div>
+                                            <div class="row mt-2">
+                                                <!-- 소모임 설명 한 줄 넘어가면 ...으로 대체 -->
+                                                <div class="col ellipsis" style="font-size: 0.8em;">
+                                                    <span >소모임 설명 소모임 설명 소모임 설명</span>
+                                                </div>
+                                            </div>
+                                            <!-- <div class="row mt-1 pt-1 justify-content-center">
+                                                <a class="btn btn-outline-secondary col-auto py-1 d-grid">
+                                                    둘러보기
+                                                </a>
+                                            </div> -->
+                                            <div class="row mt-3">
+                                                <div class="col-auto pe-0 d-flex align-items-center" style="font-size: 0.75em;">
+                                                    <span class="material-symbols-outlined" style="font-size: 1.2em; padding-top: 1%;">
+                                                        person
+                                                    </span>
+                                                    <!-- 회원 수 -->
+                                                    <span>13</span>
+                                                </div>
+                                                <div class="col ellipsis ps-1" style="font-size: 0.75em;">
+                                                    <span >서울특별시 관악구/광진구 </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- 하나의 모임 -->
                                 <div class="col-auto">
                                     <div class="row border me-1 rounded-top border-bottom-0" style="width: 11.8em; height: 15em; overflow: hidden">
                                         <div class="col px-0 pb-0 mb-0">
-                                            <img src="/public/img/common/캠핑장최종.png" style="width: 100%; object-fit: cover;" class="img-fluid fixed-image-size">>
+                                            <img src="/public/img/common/소모임.png" style="width: 100%; object-fit: cover;" class="img-fluid fixed-image-size">>
                                         </div>
                                     </div>
 
@@ -517,30 +535,82 @@
                                             </div>
                                         </div>
                                     </div>
-
                                 </div>
+
+                                <!-- 하나의 모임 -->
+                                <div class="col-auto">
+                                    <div class="row border me-1 rounded-top border-bottom-0" style="width: 11.8em; height: 15em; overflow: hidden">
+                                        <div class="col px-0 pb-0 mb-0">
+                                            <img src="/public/img/common/소모임.png" style="width: 100%; object-fit: cover;" class="img-fluid fixed-image-size">>
+                                        </div>
+                                    </div>
+
+                                    <div class="row border shadow-sm rounded-bottom border-top-0" style="width: 11.8em; height: 8em;">
+                                        <div class="col">
+                                            <div class="row pt-3">
+                                                <div class="col text-center fw-semi-bold text-truncate" style="font-size: 0.9em;">
+                                                    <span>소모임명</span>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col ellipsis-line-two text-secondary text-center" style="font-size: 0.8em;">
+                                                    <span >소모임 설명</span>
+                                                </div>
+                                            </div>
+                                            <div class="row mt-1 pt-1 justify-content-center">
+                                                <a class="btn btn-outline-secondary col-auto py-1 d-grid">
+                                                    둘러보기
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- 하나의 모임 -->
+                                <div class="col-auto">
+                                    <div class="row border me-1 rounded-top border-bottom-0" style="width: 11.8em; height: 15em; overflow: hidden">
+                                        <div class="col px-0 pb-0 mb-0">
+                                            <img src="/public/img/common/소모임.png" style="width: 100%; object-fit: cover;" class="img-fluid fixed-image-size">>
+                                        </div>
+                                    </div>
+
+                                    <div class="row border shadow-sm rounded-bottom border-top-0" style="width: 11.8em; height: 8em;">
+                                        <div class="col">
+                                            <div class="row pt-3">
+                                                <div class="col text-center fw-semi-bold text-truncate" style="font-size: 0.9em;">
+                                                    <span>소모임명</span>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col ellipsis-line-two text-secondary text-center" style="font-size: 0.8em;">
+                                                    <span >소모임 설명</span>
+                                                </div>
+                                            </div>
+                                            <div class="row mt-1 pt-1 justify-content-center">
+                                                <a class="btn btn-outline-secondary col-auto py-1 d-grid">
+                                                    둘러보기
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
+
             <!-- border -->
-            <div class="row mt-4 mx-1 border-bottom"></div>
+            <div class="row mt-2" style="border-bottom: 5px solid; border-color: rgba(227, 227, 227, 0.567);"></div>
+
             <!-- 남현지 -->
-            <div class="row">
+            <!-- <div class="row">
                 <div class="col">
-                    <!--인스타-->
-                    <div class="row px-1 py-3">
-                        <div class="col-auto fs-4">
-                            <span>Insta</span><span class="ms-1 text-secondary" style="font-size: 0.7rem">인스타</span>
-                        </div>
-                        <div class="col d-flex align-items-end justify-content-end">
-                            <a href="#"><span class="text-secondary" style="font-size: 0.7rem">더보기<i class="bi bi-chevron-right"></i></span></a>
-                        </div>
-                    </div>
+
                     <div class="row px-2">
                         <div class="scroll-container">
-                            <!-- ex1 -->
+
                             <div class="col-auto fs-3 scroll-item">
                                 <div class="row">
                                     <div class="col text-center">
@@ -548,13 +618,13 @@
                                     </div>
                                 </div>
                                 <div class="row mt-1">
-                                    <!-- 사진링크 -->
+
                                     <div class="col text-center" style="font-size: 0.7em">
                                         <span>아이디</span>
                                     </div>
                                 </div>
                             </div>
-                            <!-- ex2 추후 삭제 -->
+
                             <div class="col-auto fs-3 scroll-item">
                                 <div class="row">
                                     <div class="col text-center">
@@ -562,7 +632,7 @@
                                     </div>
                                 </div>
                                 <div class="row mt-1">
-                                    <!-- 사진링크 -->
+
                                     <div class="col text-center" style="font-size: 0.7em">
                                         <span>아이디</span>
                                     </div>
@@ -572,59 +642,255 @@
                     </div>
 
                 </div>
+            </div> -->
+            <div class="row">
+                <div class="col">
+                    <!-- 모임 -->
+                    <div class="row ps-3 px-1 py-3">
+                        <div class="col fw-bold">
+                            <span style="font-size: 0.85em;">
+                                오늘의 빈티지 상품 추천
+                            </span>
+                        </div>
+                        <div class="col d-flex align-items-end justify-content-end">
+                            <a href="/secondhandProduct/mainPage"><span class="text-secondary" style="font-size: 0.7rem">더보기<i class="bi bi-chevron-right"></i></span></a>
+                        </div>
+                    </div>
+
+                    <div class="row ms-1 me-1">
+                        <div class="col overflow-x-auto" style="scrollbar-width: none;">
+                            <div class="row flex-nowrap">
+
+                                <!-- 하나의 상품 -->
+                                <div class="col-auto pe-0">
+                                    <div class="row">
+                                        <div class="col">
+                                            <img src="/public/img/common/당근.jpg" class="img-fluid rounded-2" style="object-fit: cover; object-position: center; width: 10em; height: 15em;">
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
+
             <!-- border -->
-            <div class="row mt-4 mx-1 border-bottom"></div>
+            <div class="row mt-2" style="border-bottom: 5px solid; border-color: rgba(227, 227, 227, 0.567);"></div>
+
             <!-- 심규진 -->
             <div class="row">
                 <div class="col">
-                    <!-- 중고상품 -->
-                    <div class="row px-1 mt-4">
-                        <div class="col-auto fs-4">
-                            <span>SecondHandMarket</span><span class="ms-1 text-secondary" style="font-size: 0.7rem">중고상품</span>
+                    <!-- 모임 -->
+                    <div class="row ps-3 px-1 py-3">
+                        <div class="col fw-bold">
+                            <span style="font-size: 0.85em;">
+                                오늘의 빈티지 상품 추천
+                            </span>
                         </div>
                         <div class="col d-flex align-items-end justify-content-end">
-                            <a href="#"><span class="text-secondary" style="font-size: 0.7rem">더보기<i class="bi bi-chevron-right"></i></span></a>
+                            <a href="/secondhandProduct/mainPage"><span class="text-secondary" style="font-size: 0.7rem">더보기<i class="bi bi-chevron-right"></i></span></a>
                         </div>
                     </div>
-                    <div class="row pt-3 px-1">
-                        <div class="scroll-container">
-                            <!-- ex1 -->
-                            <div class="fs-3 scroll-item">
-                                <div class="row mt-1">
-                                    <!-- 사진링크 -->
-                                    <a href="#" class="col fs-3 me-1">
-                                        <img src="/public/img/common/캠핑장최종.png" style="width: 12rem; height: 10rem;">
-                                    </a>
-                                </div>
-                                <div class="row pt-1">
-                                    <div class="col" style="font-size: 0.8rem">
-                                        <span class="pe-0">텐트</span><span>・</span>
-                                        <span class="g-0">1.2km</span><span>・</span>
-                                        <span class="g-0">15,000원</span>
+
+                    <div class="row ms-1 me-1">
+                        <div class="col overflow-x-auto" style="scrollbar-width: none;">
+                            <div class="row flex-nowrap">
+
+                                <!-- 하나의 상품 -->
+                                <div class="col-auto pe-0">
+                                    <div class="row">
+                                        <div class="col">
+                                            <img src="/public/img/common/당근.jpg" class="img-fluid rounded-2" style="object-fit: cover; object-position: center; width: 10em; height: 10em;">
+                                        </div>
+                                    </div>
+                                    <div class="row" style="width: 11.8em; height: 8em;">
+                                        <div class="col">
+                                            <div class="row mt-2">
+                                                <!-- 상품명 한 줄 넘어가면 ...으로 대체 -->
+                                                <div class="col ellipsis" style="font-size: 0.8em;">
+                                                    <span >스노우피크 토르튜 라이트 텐트 스노우피크 토르튜 라이트 텐트</span>
+                                                </div>
+                                            </div>
+                                            <div class="row mt-1">
+                                                <div class="col-auto fw-bold" style="font-size: 0.9em;">
+                                                    <span>400,000</span>
+                                                    <span style="font-size: 0.75em;">원</span>
+                                                </div>
+                                            </div>
+
+                                            <!-- 별로.. -->
+                                            <!-- <div class="row mt-1 ps-2">
+                                                <div class="col-auto d-flex align-items-center px-1" style="border-radius: 5px; font-size: 0.65em; background-color: #28323c10; border: none;">
+                                                    <span class="material-symbols-outlined fw-light" style="font-size: 1.4em; color: #00B8FF;">
+                                                        flash_on
+                                                    </span>
+                                                    <span class="lightFont">무료배송</span>
+                                                </div>
+                                            </div> -->
+                                            <div class="row mt-1">
+                                                <div class="col-auto d-flex align-items-center pe-0 text-secondary">
+                                                    <span class="material-symbols-outlined" style="font-weight: 300; font-size: 0.9em;">
+                                                        favorite
+                                                    </span>
+                                                    <span style="font-size: 0.7em;">8</span>
+                                                </div>
+                                                <div class="col-auto d-flex align-items-center ps-1 text-secondary">
+                                                    <span class="material-symbols-outlined" style="font-weight: 300; font-size: 0.9em; padding-top: 2%;">
+                                                        chat_bubble
+                                                    </span>
+                                                    <span style="font-size: 0.7em;">2</span>
+                                                </div>
+                                            </div>
+                                            
+
+                                            <div class="row mt-3">
+                                                <div class="col-auto pe-0 d-flex align-items-center" style="font-size: 0.75em;">
+                                                    <span class="material-symbols-outlined text-secondary" style="font-size: 1.2em; padding-top: 1%; font-weight: 300;">
+                                                        location_on
+                                                    </span>
+                                                </div>
+                                                <!-- 위치 한 줄 넘어가면 ...으로 대체 -->
+                                                <div class="col ellipsis ps-0" style="font-size: 0.7em;">
+                                                    <span class="text-secondary">서울특별시 관악구/광진구</span>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                            <!-- ex2 추후 삭제 -->
-                            <div class="fs-3 scroll-item">
-                                <div class="row mt-1">
-                                    <!-- 사진링크 -->
-                                    <a href="#" class="col fs-3 me-1">
-                                        <img src="/public/img/common/캠핑장최종.png" style="width: 12rem; height: 10rem;">
-                                    </a>
-                                </div>
-                                <div class="row pt-1">
-                                    <div class="col" style="font-size: 0.8rem">
-                                        <span class="pe-0">타프</span><span>・</span>
-                                        <span class="g-0">0.8km</span><span>・</span>
-                                        <span class="g-0">100,000원</span>
+
+                                <!-- 하나의 상품 -->
+                                <div class="col-auto pe-0">
+                                    <div class="row">
+                                        <div class="col">
+                                            <img src="/public/img/common/당근.jpg" class="img-fluid rounded-2" style="object-fit: cover; object-position: center; width: 10em; height: 10em;">
+                                        </div>
+                                    </div>
+                                    <div class="row" style="width: 11.8em; height: 8em;">
+                                        <div class="col">
+                                            <div class="row mt-2">
+                                                <!-- 상품명 한 줄 넘어가면 ...으로 대체 -->
+                                                <div class="col ellipsis" style="font-size: 0.8em;">
+                                                    <span >스노우피크 토르튜 라이트 텐트 스노우피크 토르튜 라이트 텐트</span>
+                                                </div>
+                                            </div>
+                                            <div class="row mt-1">
+                                                <div class="col-auto fw-bold" style="font-size: 0.9em;">
+                                                    <span>400,000</span>
+                                                    <span style="font-size: 0.75em;">원</span>
+                                                </div>
+                                            </div>
+
+                                            <!-- 별로.. -->
+                                            <!-- <div class="row mt-1 ps-2">
+                                                <div class="col-auto d-flex align-items-center px-1" style="border-radius: 5px; font-size: 0.65em; background-color: #28323c10; border: none;">
+                                                    <span class="material-symbols-outlined" style="font-size: 1.4em; color: #00B8FF;">
+                                                        flash_on
+                                                    </span>
+                                                    <span class="lightFont">무료배송</span>
+                                                </div>
+                                            </div> -->
+                                            <div class="row mt-1">
+                                                <div class="col-auto d-flex align-items-center pe-0 text-secondary">
+                                                    <span class="material-symbols-outlined" style="font-weight: 300; font-size: 0.9em;">
+                                                        favorite
+                                                    </span>
+                                                    <span style="font-size: 0.7em;">8</span>
+                                                </div>
+                                                <div class="col-auto d-flex align-items-center ps-1 text-secondary">
+                                                    <span class="material-symbols-outlined" style="font-weight: 300; font-size: 0.9em; padding-top: 2%;">
+                                                        chat_bubble
+                                                    </span>
+                                                    <span style="font-size: 0.7em;">2</span>
+                                                </div>
+                                            </div>
+                                            
+
+                                            <div class="row mt-3">
+                                                <div class="col-auto pe-0 d-flex align-items-center" style="font-size: 0.75em;">
+                                                    <span class="material-symbols-outlined text-secondary" style="font-size: 1.2em; padding-top: 1%; font-weight: 300;">
+                                                        location_on
+                                                    </span>
+                                                </div>
+                                                <!-- 위치 한 줄 넘어가면 ...으로 대체 -->
+                                                <div class="col ellipsis ps-0" style="font-size: 0.7em;">
+                                                    <span class="text-secondary">서울특별시 관악구/광진구</span>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
+
+                                <!-- 하나의 상품 -->
+                                <div class="col-auto pe-0">
+                                    <div class="row">
+                                        <div class="col">
+                                            <img src="/public/img/common/당근.jpg" class="img-fluid rounded-2" style="object-fit: cover; object-position: center; width: 10em; height: 10em;">
+                                        </div>
+                                    </div>
+                                    <div class="row" style="width: 11.8em; height: 8em;">
+                                        <div class="col">
+                                            <div class="row mt-2">
+                                                <!-- 상품명 한 줄 넘어가면 ...으로 대체 -->
+                                                <div class="col ellipsis" style="font-size: 0.8em;">
+                                                    <span >스노우피크 토르튜 라이트 텐트 스노우피크 토르튜 라이트 텐트</span>
+                                                </div>
+                                            </div>
+                                            <div class="row mt-1">
+                                                <div class="col-auto fw-bold" style="font-size: 0.9em;">
+                                                    <span>400,000</span>
+                                                    <span style="font-size: 0.75em;">원</span>
+                                                </div>
+                                            </div>
+
+                                            <!-- 별로.. -->
+                                            <!-- <div class="row mt-1 ps-2">
+                                                <div class="col-auto d-flex align-items-center px-1" style="border-radius: 5px; font-size: 0.65em; background-color: #28323c10; border: none;">
+                                                    <span class="material-symbols-outlined" style="font-size: 1.4em; color: #00B8FF;">
+                                                        flash_on
+                                                    </span>
+                                                    <span class="lightFont">무료배송</span>
+                                                </div>
+                                            </div> -->
+                                            <div class="row mt-1">
+                                                <div class="col-auto d-flex align-items-center pe-0 text-secondary">
+                                                    <span class="material-symbols-outlined" style="font-weight: 300; font-size: 0.9em;">
+                                                        favorite
+                                                    </span>
+                                                    <span style="font-size: 0.7em;">8</span>
+                                                </div>
+                                                <div class="col-auto d-flex align-items-center ps-1 text-secondary">
+                                                    <span class="material-symbols-outlined" style="font-weight: 300; font-size: 0.9em; padding-top: 2%;">
+                                                        chat_bubble
+                                                    </span>
+                                                    <span style="font-size: 0.7em;">2</span>
+                                                </div>
+                                            </div>
+                                            
+
+                                            <div class="row mt-3">
+                                                <div class="col-auto pe-0 d-flex align-items-center" style="font-size: 0.75em;">
+                                                    <span class="material-symbols-outlined text-secondary" style="font-size: 1.2em; padding-top: 1%; font-weight: 300;">
+                                                        location_on
+                                                    </span>
+                                                </div>
+                                                <!-- 위치 한 줄 넘어가면 ...으로 대체 -->
+                                                <div class="col ellipsis ps-0" style="font-size: 0.7em;">
+                                                    <span class="text-secondary">서울특별시 관악구/광진구</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
+
+
             <!-- 홈페이지 설명  시작 -->
             <div class="row mt-4 py-2 bg-dark-subtle text-white text-center f09">
                 <div class="col fw-bold border-end">
@@ -702,9 +968,206 @@
                 </div>
             </div>
             <!-- 홈페이지 설명 끝 -->
+
         </div>
     </div>
 </div>
+
+<!-- 메뉴 canvas 시작 -->
+<div class="row g-0 offcanvas offcanvas-end custom-offcanvas-width custom-offcanvas-background" id="offcanvasRight" tabindex="-1" style="width: 17rem;">
+    <div class="col">
+        <!-- 로그인 & 비로그인 -->
+        <div class="row offcanvas-header pt-4 pb-0" style="position: relative;">
+            <div class="col-auto pe-1">
+                <div class="row">
+                    <div class="col">
+                        <a href="/user/login" th:if="${session.sessionUserInfo == null}">
+                            <span style="font-size: 1.3em;" class="fw-bold">로그인</span>
+                            <span class="material-symbols-outlined" style="font-size: 1.1em;">
+                                arrow_forward_ios
+                            </span>
+                        </a>
+                        <span th:text="${session.sessionUserInfo.nickname}" th:if="${session.sessionUserInfo != null}"
+                            style="font-size: 1.3em;" class="fw-bold">닉네임</span>
+                        <span th:if="${session.sessionUserInfo != null}"> 님</span>
+                    </div>
+                </div>
+            </div>
+            <!-- 마이페이지 -->
+            <a href="/user/myPage" class="col ps-0" th:if="${session.sessionUserInfo != null}">
+                <span class="material-symbols-outlined pt-2" style="font-size: 1.1em;">
+                    arrow_forward_ios
+                </span>
+            </a>
+
+            <div class="col text-end position-relative ps-0" th:if="${session.sessionUserInfo != null}">
+                <span class="fw-light" style="font-size: 1.2em;">
+                    <i class="fa-regular fa-bell"></i>
+                </span><span><i class="bi bi-dot position-absolute king" style="color: rgb(233, 40, 40); font-size: 1.5em;"></i></span>
+            </div>
+        </div>
+
+        <!-- 이메일 -->
+        <div class="row">
+            <div class="col-auto" style="padding-left: 10%;">
+                <span th:text="${session.sessionUserInfo.email}" th:if="${session.sessionUserInfo != null}" style="font-size: 0.75em; color: rgb(83, 83, 83);">
+
+                </span>
+            </div>
+        </div>
+
+        <!-- 포인트(마일리지) -->
+        <div class="row pt-2" th:if="${session.sessionUserInfo != null}">
+            <div class="col-auto pe-0" style="font-size: 0.8em; padding-left: 10%;">
+                <span style="color: rgb(168, 168, 168);">포인트</span>
+            </div>
+            <div class="col-auto ps-1" style="font-size: 0.8em;">
+                <span class="fw-bold lightFont" th:text="${session.sessionUserInfo.mileage}" th:if="${session.sessionUserInfo != null}">
+                </span>
+            </div>
+        </div>
+
+        <div class="row mt-3">
+            <div class="col">
+                <!-- 임시 배너 바꾸셈 -->
+                <img src="/public/img/common/배너저쩌고.jpg" class="img-fluid">
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col order-list-scroll">
+                <!-- 내용 -->
+                <div class="row offcanvas-body m-0 pt-0">
+                    <div class="col" style="font-size: 0.9em;">
+                        <!-- 캠핑장 -->
+                        <a href="/camp/main" class="row align-end pt-4">
+                            <!-- <div class="col-auto pe-0">
+                                <span class="fs-1 material-symbols-outlined">camping</span>
+                            </div> -->
+                            <div class="col ps-0">
+                                <span>캠핑장</span>
+                            </div>
+                        </a>
+                        <!-- 캠핑카 -->
+                        <a href="/campingcar/main" class="row align-end pt-4">
+                            <!-- <div class="col-auto pe-0">
+                                <span class="fs-1 material-symbols-outlined">car_repair</span>
+                            </div> -->
+                            <div class="col ps-0">
+                                <span>캠핑카</span>
+                            </div>
+                        </a>
+                        <!-- 상점 -->
+                        <a href="/store" class="row align-end pt-4">
+                            <!-- <div class="col-auto pe-0">
+                                <span class="material-symbols-outlined">storefront</span>
+                            </div> -->
+                            <div class="col ps-0">
+                                <span>상점</span>
+                            </div>
+                        </a>
+                        <!-- 중고거래 -->
+                        <a href="/secondhandProduct/mainPage" class="row align-end pt-4">
+                            <!-- <div class="col-auto pe-0">
+                                <span class="material-symbols-outlined">settings_accessibility</span>
+                            </div> -->
+                            <div class="col ps-0">
+                                <span>중고거래</span>
+                            </div>
+                        </a>
+                        <!-- 인스타 -->
+                        <!-- <a href="#" class="row align-end pt-4">
+                            <div class="col ps-0">
+                                <span>인스타그램</span>
+                            </div>
+                        </a> -->
+                        <!-- 모임 -->
+                        <a href="/club/main" class="row align-end pt-4">
+                            <!-- <div class="col-auto pe-0">
+                                <span class="material-symbols-outlined">settings_accessibility</span>
+                            </div> -->
+                            <div class="col ps-0">
+                                <span>소모임</span>
+                            </div>
+                        </a>                        
+                    </div>
+                </div>
+
+                <!-- 캠프스타그램 -->
+                <div class="row border-top m-0">
+                    <a href="/insta/instaMainPage" class="col-5 pt-3 pb-3" style="font-size: 0.9em;">
+                        <!-- My -->
+                        <!-- <div class="col-auto pe-0">
+                            <span class="material-symbols-outlined">settings_accessibility</span>
+                        </div> -->
+                        <img src="/public/img/instaImage/campstagram.png" class="img-fluid">
+                    </a>
+                </div>
+
+                <!-- 유튜브, 트위터, 페이스북 로고 -->
+                <div class="row border-top m-0 pt-3 pb-3" style="padding-left: 12px;">
+                    <div class="col-auto">
+                        <div class="row pe-2">
+                            <div class="col-auto rounded-circle border border-dark d-flex align-items-center justify-content-center" style="aspect-ratio: 1/1; width: 28px;">
+                                <i class="fa-brands fa-youtube"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-auto">
+                        <div class="row pe-2">
+                            <div class="col-auto rounded-circle border border-dark d-flex align-items-center justify-content-center" style="aspect-ratio: 1/1; width: 28px;">
+                                <i class="fa-brands fa-x-twitter"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-auto">
+                        <div class="row pe-2">
+                            <div class="col-auto rounded-circle border border-dark d-flex align-items-center justify-content-center" style="aspect-ratio: 1/1; width: 28px;">
+                                <i class="fa-brands fa-facebook"></i>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="row m-0 pb-3 border-top border-bottom" style="font-size: 0.8em; color: rgb(168, 168, 168);">
+                    <div class="col">
+                        <div class="row pt-3">
+                            <div class="col">
+                                <span>고객센터</span>
+                            </div>
+                        </div>
+                        <div class="row pt-3">
+                            <div class="col">
+                                <span>공지사항</span>
+                            </div>
+                        </div>
+                        <div class="row pt-3">
+                            <div class="col">
+                                <span>이용약관 / 개인정보 처리방침</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 로그아웃 -->
+                <div class="row pt-4 pb-5 m-0 justify-content-center">
+                    <a class="col-auto d-flex align-items-center" th:if="${session.sessionUserInfo != null}" href="/user/logoutProcess">
+                        <!-- <button th:if="${session.sessionUserInfo == null}"
+                                type="button" class="btn-close-custom" data-bs-dismiss="offcanvas">
+                        </button> -->
+                        <span class="material-symbols-outlined" style="font-size: 1.2em; color: rgb(168, 168, 168);">
+                            logout
+                        </span>
+                        <span style="font-size: 0.8em; color: rgb(168, 168, 168);">로그아웃</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+<!-- canvas 끝 -->
 
 <!--홈 하단네비 -->
 <div th:fragment="bottomNaviBasecamp" class="bottomNaviBasecamp container-fluid g-0 border-top bg-white fixed-bottom pb-3">
@@ -825,15 +1288,11 @@
         
         <!--canvas 버튼-->
         <div class="col">
-            <div class="row">
-                <div class="col text-end d-flex align-items-center justify-content-end">
-                    <button class="btn py-0" style="font-size: 1.7em; color: darkgray; line-height: 1px;" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight">
-                        <span class="material-symbols-outlined">
-                            menu
-                        </span>
-                    </button>
-                </div>
-            </div>
+            <button class="btn py-0" style="font-size: 1.7em; color: darkgray; line-height: 1px;" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight">
+                <span class="material-symbols-outlined">
+                    menu
+                </span>
+            </button>
             <div class="row">
                 <div class="col">
                     <span style="font-size: 0.7em; color: darkgray;">
@@ -863,6 +1322,7 @@
             topNav.classList.remove('fixed-background');
         }
     });
+
 </script>
 </body>
 </html>

@@ -24,7 +24,11 @@
     <script src="/public/js/util.js"></script>
 
     <style>
-
+        /* 마이페이지, 유저페이지, 북마크페이지, 검색*/
+        .middle-image {
+            width: 100%; /* 너비를 조정 */
+            height: 100%; /* 높이는 자동으로 조정 */
+        }
     </style>
 </head>
 <body>
@@ -48,9 +52,10 @@
 
         <!-- 내 게시물 List -->
         <div class="row mt-5" style="padding-top: 1.2%;">
-            <a class="col-4 px-0 pb d-flex" th:href="@{./instaMainPage(user_id=${session.sessionUserInfo.id})}" th:each="instaArticleImgDto, iterStat : ${instaArticleImgDtoListBySearchContent}">
+            <a class="col-4 px-0 pb d-flex" style="padding-bottom: 0.5%;" th:href="@{./instaMainPage(user_id=${session.sessionUserInfo.id})}" th:each="instaArticleImgDto, iterStat : ${instaArticleImgDtoListBySearchContent}">
                 <div th:class="${iterStat.index % 3 == 1} ? 'middle' : ''">
-                    <img th:src="|/images/${instaArticleImgDto.img_link}|" class="img-fluid" style="object-fit: cover; object-position: center; aspect-ratio: 1/1; height: 33.3333333333333vw;">
+                    <img th:src="|/images/${instaArticleImgDto.img_link}|" class="img-fluid" style="object-fit: cover; object-position: center; aspect-ratio: 1/1;"
+                         th:classappend="${iterStat.index % 3 == 1} ? 'middle-image' : ''">
                 </div>
             </a>
         </div>
