@@ -1,89 +1,175 @@
-<!DOCTYPE html>
-<html lang="ko" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="utf-8">
-    <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-    <!-- Font Awesome -->
-    <script src="https://kit.fontawesome.com/7b271bba58.js" crossorigin="anonymous"></script>
-    <!-- Google Material Icons -->
-    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet">
-    <!-- partner 오른쪽  본문 css -->
-    <link href="/public/css/campingcar/right-content.css" rel="stylesheet">
-    <link href="/public/css/common.css" rel="stylesheet">
-    <!-- 이미지 js -->
-    <script src="/public/js/util.js"></script>
-    <!-- 캘린더 js -->
-    <script src="/public/js/calendar.js"></script>
-   
-</head>
-<body>
-    <div th:replace="~{partner/carNavi::topNavi}"></div>
-    <div class="container-fluid">
-        <div class="row">
-            <div th:replace="~{partner/carNavi::leftNavi}"></div>
-            <!-- right -->
-            <div class="col right bg-body-secondary" style="padding-top: 55px;">
-                <div class="row py-3 px-4 d-flex align-items-center bg-white">
-                    <div class="col fs-6 fw-semibold">
-                        리뷰 관리
+    <!DOCTYPE html>
+    <html lang="ko" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="utf-8">
+        <!-- Bootstrap CSS -->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+        <!-- Font Awesome -->
+        <script src="https://kit.fontawesome.com/7b271bba58.js" crossorigin="anonymous"></script>
+        <!-- Google Material Icons -->
+        <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet">
+        <!-- partner 오른쪽  본문 css -->
+        <link href="/public/css/campingcar/right-content.css" rel="stylesheet">
+        <link href="/public/css/common.css" rel="stylesheet">
+        <!-- 이미지 js -->
+        <script src="/public/js/util.js"></script>
+        <!-- 캘린더 js -->
+        <script src="/public/js/calendar.js"></script>
+    
+    </head>
+    <body>
+        <div th:replace="~{partner/carNavi::topNavi}"></div>
+        <div class="container-fluid">
+            <div class="row">
+                <div th:replace="~{partner/carNavi::leftNavi}"></div>
+                <!-- right -->
+                <div class="col right bg-body-secondary" style="padding-top: 55px;">
+                    <div class="row py-3 px-4 d-flex align-items-center bg-white">
+                        <div class="col fs-6 fw-semibold">
+                            리뷰 관리
+                        </div>
                     </div>
-                </div>
-                <!-- 본문내용(templets) -->
-                <div class="row px-4 pt-3">
-                    <div class="col px-0">
-                        <div class="card">
-                            <div class="card-head py-3 px-3">
-                                <div class="fw-semibold">리뷰 목록</div>
-                                <div class="card-body">
-                                    <div class="form-group">
-                                        <div class="row pb-3">
-                                            <div class="col-auto px-1">
-                                                <div class="badge rounded-pill text-bg-primary px-3 py-2">후기 전체 242</div>
+                    <!-- 본문내용(templets) -->
+                    <div class="row px-4 pt-3">
+                        <div class="col px-0">
+                            <div class="card">
+                                <div class="card-head py-3 px-3">
+                                    <div class="fw-semibold">리뷰 목록</div>
+                                    <div class="card-body">
+                                        <div class="form-group">
+                                            <div class="row pb-3">
+                                                <div class="col-auto px-1">
+                                                    <div class="badge rounded-pill text-bg-primary px-3 py-2">후기 전체 242</div>
+                                                </div>
+                                                <div class="col-auto px-0">
+                                                    <div class="badge rounded-pill text-bg-light text-muted px-3 py-2">답변하지 않은 후기 152</div>
+                                                </div>
+                                                <div class="col-auto px-1">
+                                                    <div class="badge rounded-pill text-bg-light text-muted px-3 py-2">답변한 후기 90</div>
+                                                </div>
+                                            </div>                             
+                                            <!-- Header -->
+                                            <div class="row pt-1 fw-bold text-center border">
+                                                <div class="col-auto px-4 py-3 d-flex align-items-center justify-content-center"> 
+                                                    <input type="checkbox">
+                                                </div>
+                                                <div class="col-1 py-3 d-flex align-items-center justify-content-center">차량 번호</div>
+                                                <div class="col-1 py-3 d-flex align-items-center justify-content-center">차량명</div>
+                                                <div class="col-1 py-3 d-flex align-items-center justify-content-center">예약자명</div>
+                                                <div class="col-2 py-3 d-flex align-items-center justify-content-center">대여/반납일</div>
+                                                <div class="col-2 py-3 d-flex align-items-center justify-content-center">리뷰 평점</div>
+                                                <div class="col-1 py-3 d-flex align-items-center justify-content-center">리뷰 내용</div>
+                                                <div class="col-2 py-3 d-flex align-items-center justify-content-center">리뷰 작성일</div>
+                                                <div class="col-1 py-3 d-flex align-items-center justify-content-center">답변 완료</div>
                                             </div>
-                                            <div class="col-auto px-0">
-                                                <div class="badge rounded-pill text-bg-light text-muted px-3 py-2">답변하지 않은 후기 152</div>
-                                            </div>
-                                            <div class="col-auto px-1">
-                                                <div class="badge rounded-pill text-bg-light text-muted px-3 py-2">답변한 후기 90</div>
-                                            </div>
-                                        </div>                             
-                                        <!-- Header -->
-                                        <div class="row pt-1 fw-bold text-center border">
-                                            <div class="col-1 py-3 d-flex align-items-center justify-content-center"> 
-                                                <input type="checkbox">
-                                            </div>
-                                            <div class="col-1 py-3 d-flex align-items-center justify-content-center">차량 번호</div>
-                                            <div class="col-1 py-3 d-flex align-items-center justify-content-center">차량명</div>
-                                            <div class="col-1 py-3 d-flex align-items-center justify-content-center">예약자명</div>
-                                            <div class="col-2 py-3 d-flex align-items-center justify-content-center">대여/반납일</div>
-                                            <div class="col-2 py-3 d-flex align-items-center justify-content-center">리뷰 평점</div>
-                                            <div class="col-2 py-3 d-flex align-items-center justify-content-center">리뷰 내용</div>
-                                            <div class="col-2 py-3 d-flex align-items-center justify-content-center">리뷰 작성일</div>
-                                        </div>
 
-                                        <!-- List -->
-                                        <div class="row text-center align-items-center border new-fs-9" th:each="reviewData : ${reviewCompany}">
-                                            <div class="col-1 py-4 d-flex align-items-center justify-content-center">
-                                                <input type="checkbox">
+                                            <!-- List -->
+                                            <div class="row text-center align-items-center border new-fs-9" th:each="reviewData, iter : ${reviewCompany}">
+                                                <div class="col-auto px-4 py-4 d-flex align-items-center justify-content-center">
+                                                    <input type="checkbox">
+                                                </div>
+                                                <div class="col-1 py-3 d-flex align-items-center justify-content-center" th:text="${reviewData.product_id}">16</div>
+                                                <div class="col-1 py-3 d-flex align-items-center justify-content-center" th:text="${reviewData.product_name}">5인승</div>
+                                                <div class="col-1 py-3 d-flex align-items-center justify-content-center" th:text="${reviewData.nickname}">고구마</div>
+                                                <div class="col-2 py-3 d-flex align-items-center justify-content-center" 
+                                                th:utext="${#dates.format(reviewData.start_date, 'yyyy.MM.dd HH:mm')} + '<br/>' + ${#dates.format(reviewData.end_date, 'yyyy.MM.dd HH:mm')}">2024.08.15/2024.08.17</div>
+                                                <div class="col-2 py-3 d-flex align-items-center justify-content-center">
+                                                    <span class="text-warning">
+                                                        <span th:if="${reviewData.rate >=1}">★</span>
+                                                        <span th:if="${reviewData.rate >=2}">★</span>
+                                                        <span th:if="${reviewData.rate >=3}">★</span>
+                                                        <span th:if="${reviewData.rate >=4}">★</span>
+                                                        <span th:if="${reviewData.rate >=5}">★</span>
+                                                        <span class="text-dark fw-medium" th:text="${reviewData.rate}+'점'"></span>
+                                                    </span>
+                                                </div>
+                                                <div class="col-1 py-3 d-flex align-items-center justify-content-center">
+                                                    <a href="#" data-bs-toggle="modal" th:data-bs-target="'#reviewModal-' + ${iter.index}" class="btn btn-secondary btn-sm">내용보기</a>
+                                                </div>
+                                                <div class="col-2 py-3 d-flex align-items-center justify-content-center" th:text="${#dates.format(reviewData.created_at, 'yyyy.MM.dd HH:mm')}">2024.08.16.11:15</div>
+                                                    <!-- 답변 완료 표시 -->
+                                                <div class="col-1 py-3 d-flex align-items-center justify-content-center">
+                                                    <span th:if="${reviewData.reply_content != null and !#strings.isEmpty(reviewData.reply_content)}" class="btn btn-info btn-sm fw-medium">답변 완료</span>
+                                                    <span th:if="${reviewData.reply_content == null or #strings.isEmpty(reviewData.reply_content)}" class="btn btn-danger btn-sm fw-medium">미답변</span>
+                                                </div>
                                             </div>
-                                            <div class="col-1 py-3 d-flex align-items-center justify-content-center" th:text="${reviewData.product_id}">16</div>
-                                            <div class="col-1 py-3 d-flex align-items-center justify-content-center" th:text="${reviewData.product_name}">5인승</div>
-                                            <div class="col-1 py-3 d-flex align-items-center justify-content-center" th:text="${reviewData.nickname}">고구마</div>
-                                            <div class="col-2 py-3 d-flex align-items-center justify-content-center" th:text="${#dates.format(reviewData.start_date, 'yyyy.MM.dd HH:mm')}+ '/'+ ${#dates.format(reviewData.end_date, 'yyyy.MM.dd HH:mm')}">2024.08.15/2024.08.17</div>
-                                            <div class="col-2 py-3 d-flex align-items-center justify-content-center">
-                                                
-                                                <span class="text-warning">
-                                                    <span th:if="${reviewData.rate >=1}">★</span>
-                                                    <span th:if="${reviewData.rate >=2}">★</span>
-                                                    <span th:if="${reviewData.rate >=3}">★</span>
-                                                    <span th:if="${reviewData.rate >=4}">★</span>
-                                                    <span th:if="${reviewData.rate >=5}">★</span>
-                                                    <span class="text-dark fw-medium" th:text="${reviewData.rate}+'점'"></span>
-                                                </span>
+
+                                            <!-- 모달 -->
+                                            <div th:each="reviewData, iter : ${reviewCompany}">
+                                                <div class="modal fade" th:id="'reviewModal-' + ${iter.index}" tabindex="-1" aria-labelledby="reviewModalLabel" aria-hidden="true">
+                                                    <div class="modal-dialog modal-dialog-centered">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header">
+                                                                <h1 class="modal-title fs-5" id="reviewModalLabel">리뷰 상세보기</h1>
+                                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                            </div>
+                                                            <div class="modal-body">
+                                                                <div class="row bg-body-tertiary">
+                                                                    <div class="col text-muted text-start">
+                                                                        <div class="new-fs-85">· 차량 예약한 회원이 작성한 리뷰입니다.</div>
+                                                                        <div class="new-fs-85">· 욕설,허위사실, 도배/중복등록 등의 리뷰는 [신고하기]를 통해 삭제요청 하실 수 있습니다.</div>
+                                                                        <div class="new-fs-85">· 의미없는 내용, 욕설, 홍보성 도배글로 신고해주시면 신속히 처리됩니다.</div>
+                                                                        <div class="new-fs-85">  다만, 불만 내용 등 판매활동에 불이익을 준다는 의유만으로는 처리되지 않습니다.</div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="row my-3 py-2 border border-2 border-light-subtle m-0">
+                                                                    <div class="col">
+                                                                        <div class="row">
+                                                                            <div class="col text-start">
+                                                                                <span class="text-warning">
+                                                                                    <span th:if="${reviewData.rate >=1}">★</span>
+                                                                                    <span th:if="${reviewData.rate >=2}">★</span>
+                                                                                    <span th:if="${reviewData.rate >=3}">★</span>
+                                                                                    <span th:if="${reviewData.rate >=4}">★</span>
+                                                                                    <span th:if="${reviewData.rate >=5}">★</span>
+                                                                                    <span class="text-dark fw-medium" th:text="${reviewData.rate}+'점'"></span>
+                                                                                </span>
+                                                                            </div>
+                                                                            <div class="col text-end">
+                                                                                <span th:text="${reviewData.nickname} + ' | '"></span><span th:text="${#dates.format(reviewData.created_at, 'yyyy.MM.dd HH:mm')}"></span>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="row">
+                                                                            <div class="col py-4 d-flex justify-content-start align-items-center">
+                                                                                <span th:text="${reviewData.content}"></span>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="row border-top pt-2">
+                                                                            <div class="col d-flex justify-content-start align-items-center">
+                                                                                <span th:text="'차량 번호 : ' + ${reviewData.product_id} + ' | '">차량번호</span><span th:text="${reviewData.product_name}">차량명</span>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <form class="row bg-primary-subtle py-3" action="/partner/reviewRelyContentProcess" method="post">
+                                                                    <div class="col">
+                                                                        <div class="row">
+                                                                            <div class="col">
+                                                                                <div class="fs-5 ps-1 d-flex justify-content-start align-items-center">판매자 답글</div>
+                                                                                <textarea class="form-control" name="reply_content" id="sellerReply" rows="3" placeholder="판매자 답글을 작성하세요"></textarea> 
+                                                                                <input type="hidden" name="id" th:value="${reviewData.reviewId}">
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="row pt-1">
+                                                                            <div class="col">
+                                                                                <button class="btn btn-outline-danger bi bi-exclamation-triangle"
+                                                                                style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;">리뷰 신고</button> 
+                                                                            </div>
+                                                                            <div class="col text-end">
+                                                                                <button type="submit" class="btn btn-dark"
+                                                                                style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;">답글 저장</button>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </form>
+                                                            </div>
+                                                            <div class="modal-footer">
+                                                                <button type="button" class="btn btn-light" data-bs-dismiss="modal">닫기</button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
                                             </div>
-                                            <div class="col-2 py-3 d-flex align-items-center justify-content-center" th:text="${reviewData.content}">감사해요</div>
-                                            <div class="col-2 py-3 d-flex align-items-center justify-content-center" th:text="${#dates.format(reviewData.created_at, 'yyyy.MM.dd HH:mm')}">2024.08.16.11:15</div>
                                         </div>
                                     </div>
                                 </div>
@@ -93,12 +179,11 @@
                 </div>
             </div>
         </div>
-    </div>
- 
-    <!-- Bootstrap JS -->
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js"></script>
-    <script src="/public/js/campingcar/partnermain.js"></script>
+    
+        <!-- Bootstrap JS -->
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js"></script>
+        <script src="/public/js/campingcar/partnermain.js"></script>
 
-</body>
-</html>
+    </body>
+    </html>

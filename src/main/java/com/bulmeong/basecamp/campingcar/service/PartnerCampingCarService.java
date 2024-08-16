@@ -18,6 +18,7 @@ import com.bulmeong.basecamp.campingcar.dto.DriverLicenseDto;
 import com.bulmeong.basecamp.campingcar.dto.LocationDto;
 import com.bulmeong.basecamp.campingcar.dto.ProductDetailImgDto;
 import com.bulmeong.basecamp.campingcar.dto.RentalCompanyDto;
+import com.bulmeong.basecamp.campingcar.dto.RentalReview;
 import com.bulmeong.basecamp.campingcar.dto.ReservationDto;
 import com.bulmeong.basecamp.campingcar.mapper.PartnerCampingCarSqlMapper;
 import com.bulmeong.basecamp.common.dto.ImageDto;
@@ -125,6 +126,11 @@ public class PartnerCampingCarService {
     // 판매자 : 리뷰 관리
     public List<Map<String,Object>> reviewManagebyRentCompanyId(int id) {
         return partnerCampingCarSqlMapper.reviewManagebyRentCompanyId(id);
+    }
+    // 판매자 : 리뷰 관리의 답글 등록 
+        public void updateReviewReply(RentalReview params) {
+
+        partnerCampingCarSqlMapper.reivewReplyContentByReviewId(params);
     }
 
 }

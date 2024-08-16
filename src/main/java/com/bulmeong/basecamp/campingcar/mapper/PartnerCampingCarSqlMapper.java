@@ -13,6 +13,7 @@ import com.bulmeong.basecamp.campingcar.dto.DriverExperienceCondDto;
 import com.bulmeong.basecamp.campingcar.dto.DriverLicenseDto;
 import com.bulmeong.basecamp.campingcar.dto.LocationDto;
 import com.bulmeong.basecamp.campingcar.dto.RentalCompanyDto;
+import com.bulmeong.basecamp.campingcar.dto.RentalReview;
 
 
 @Mapper
@@ -62,6 +63,6 @@ public interface PartnerCampingCarSqlMapper {
     public void reserationApproved(int id);
     // 판매자 : 리뷰 관리
     public List<Map<String,Object>> reviewManagebyRentCompanyId(int id);
-
-
+    // 판매자 : 리뷰 관리의 답글 등록 
+    public void reivewReplyContentByReviewId(RentalReview rentalReviewDto);
 }

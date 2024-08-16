@@ -18,10 +18,12 @@ import com.bulmeong.basecamp.campingcar.dto.DriverExperienceCondDto;
 import com.bulmeong.basecamp.campingcar.dto.DriverLicenseDto;
 import com.bulmeong.basecamp.campingcar.dto.LocationDto;
 import com.bulmeong.basecamp.campingcar.dto.RentalCompanyDto;
+import com.bulmeong.basecamp.campingcar.dto.RentalReview;
 import com.bulmeong.basecamp.campingcar.dto.ReservationDto;
+import com.bulmeong.basecamp.campingcar.service.CampingcarService;
 import com.bulmeong.basecamp.campingcar.service.PartnerCampingCarService;
 import com.bulmeong.basecamp.common.util.ImageUtil;
-import com.bulmeong.basecamp.common.util.Utils;
+
 
 import jakarta.servlet.http.HttpSession;
 
@@ -29,8 +31,12 @@ import jakarta.servlet.http.HttpSession;
 @Controller
 @RequestMapping("partner")
 public class PartnerCampingCarController {
-    @Autowired Utils utils;
-    @Autowired PartnerCampingCarService partnerCampingCarService;
+
+    @Autowired 
+    PartnerCampingCarService partnerCampingCarService;
+    
+    @Autowired
+    CampingcarService campingcarService;
 
 // 판매자 회원가입 
     @RequestMapping("nfRegisterPage")
@@ -152,6 +158,14 @@ public class PartnerCampingCarController {
         model.addAttribute("reviewCompany", reviewCompany);
         
         return "partner/reviewManage";
+    }
+
+    @RequestMapping("reviewRelyContentProcess")
+    public String reviewRelyContentProcess(RentalReview params) {
+        
+        partnerCampingCarService.updateReviewReply(params);
+
+        return "redirect:/partner/reviewManage";
     }
 
 
