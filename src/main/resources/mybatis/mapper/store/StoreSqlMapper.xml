@@ -899,4 +899,10 @@
         where product_id = #{product_id}
     </select>
 
+    <select id="selectProductPurchaseQuantity" resultType="int">
+        select coalesce(sum(op.quantity), 0) from order_product op
+        inner join store_product sp on op.product_id = sp.id 
+        where sp.id = #{product_id}
+    </select>
+
 </mapper>

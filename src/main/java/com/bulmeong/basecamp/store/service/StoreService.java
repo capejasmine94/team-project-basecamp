@@ -151,6 +151,9 @@ public class StoreService {
                 map.put("percentage", 0);
             }
 
+            int purchase_quantity = storeSqlMapper.selectProductPurchaseQuantity(storeProductDto.getId());
+
+            map.put("purchase_quantity", purchase_quantity);
             map.put("storeProductDto", storeProductDto);
             map.put("storeDto", storeDto);
 
@@ -236,12 +239,14 @@ public class StoreService {
             map.put("salePrice", storeProductDto.getPrice());
         }
 
+        int purchaseQuantity = storeSqlMapper.selectProductPurchaseQuantity(id);
         List<ProductImageDto> productImageDtoList = storeSqlMapper.selectProductImageDtoListByProductId(id);
 
         map.put("storeProductDto", storeProductDto);
         map.put("storeDto", storeDto);
         map.put("storeDeliveryInfoDto", storeDeliveryInfoDto);
         map.put("productWishCount", productWishCount);
+        map.put("purchaseQuantity", purchaseQuantity);
         map.put("productImageDtoList", productImageDtoList);
 
         return map;
@@ -277,9 +282,9 @@ public class StoreService {
 
         StoreProductDto storeProductDto = storeSqlMapper.selectProductDtoByID(product_id);
         int quantity = storeProductDto.getQuantity();
-        int purchaseCount = storeSqlMapper.selectPurchaseCountByProductId(product_id);
+        int purchaseQuantity = storeSqlMapper.selectProductPurchaseQuantity(product_id);
 
-        int stock_quantity = quantity - purchaseCount;
+        int stock_quantity = quantity - purchaseQuantity;
 
         return stock_quantity;
     }

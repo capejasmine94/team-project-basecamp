@@ -203,4 +203,6 @@ public interface StoreSqlMapper {
 
     public void insertProductImage(ProductImageDto productImageDto);
     public List<ProductImageDto> selectProductImageDtoListByProductId(int product_id);
+
+    public int selectProductPurchaseQuantity(int product_id);
 }

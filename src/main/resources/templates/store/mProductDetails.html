@@ -194,10 +194,10 @@
         </div>
 
         <div class="row bg-white sticky-top text-center border-bottom fw-bold f09" style="top: 58px;">
-            <div class="col py-3 lightFont" style="border-bottom: #00B8FF solid 2px;">
+            <div class="col py-3" style="border-bottom: black solid 2px;">
                 상품정보
             </div>
-            <div class="col py-3">
+            <div class="col py-3 text-body-tertiary">
                 리뷰
             </div>
         </div>
@@ -339,7 +339,7 @@
             <div class="col-auto pe-0 text-center">
                 <div class="row">
                     <div class="col d-flex align-items-center" onclick="productWish()" style="cursor: pointer;">
-                        <span th:if="${isWishlisted}" id="heart" class="material-symbols-outlined fill-on lightFont f15 fw-light">
+                        <span th:if="${isWishlisted}" id="heart" class="material-symbols-outlined fill-on f15 fw-light text-danger">
                             favorite
                         </span>
                         <span th:unless="${isWishlisted}" id="heart" class="material-symbols-outlined f15 fw-light">
@@ -354,8 +354,11 @@
                 </div>
             </div>
             <div class="col d-grid">
-                <button type="button" class="btn lightBg text-white rounded-0 py-2" data-bs-toggle="offcanvas" data-bs-target="#offcanvasBottom">
+                <button type="button" class="btn btn-dark f09 rounded-0 py-3" data-bs-toggle="offcanvas" data-bs-target="#offcanvasBottom" th:if="${productData.storeProductDto.quantity > productData.purchaseQuantity}">
                     구매하기
+                </button>
+                <button type="button" class="border-0 bg-dark-subtle text-white disabled rounded-0 py-2" data-bs-toggle="offcanvas" data-bs-target="#offcanvasBottom" th:unless="${productData.storeProductDto.quantity > productData.purchaseQuantity}">
+                    SOLD OUT
                 </button>
             </div>
         </div>
@@ -543,10 +546,10 @@
                 const productWishData = response.data.productWishData;
                 if(productWishData.isWishlisted){
                     heart.classList.add("fill-on")
-                    heart.classList.add("lightFont")
+                    heart.classList.add("text-danger")
                 }else{
                     heart.classList.remove("fill-on")
-                    heart.classList.remove("lightFont")
+                    heart.classList.remove("text-danger")
                 }
 
                 productWishCount.innerText = productWishData.productWishCount;

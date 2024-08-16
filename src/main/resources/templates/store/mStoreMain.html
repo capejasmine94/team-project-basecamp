@@ -69,6 +69,14 @@
         .best-items-scroll::-webkit-scrollbar {
             display: none;
         }
+        .sold-out {
+            background-color: rgba(0, 0, 0, 0.6);
+            aspect-ratio: 1/1;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
     </style>
 </head>
 <body class="bg-body-tertiary">
@@ -401,9 +409,12 @@
 
             <!-- 상품 하나의 정보 -->
             <a th:href="@{/store/productDetails(id=${productData.storeProductDto.id})}" class="col-6 pb-3 pe-0 ps-3" th:each="productData : ${allProductDataList}">
-                <div class="row">
+                <div class="row position-relative">
                     <div class="col product-col">
                         <img class="border rounded-2" th:src="|/images/${productData.storeProductDto.main_image}|">
+                    </div>
+                    <div class="col position-absolute" th:if="${productData.purchase_quantity >= productData.storeProductDto.quantity}">
+                        <span class="sold-out rounded-2 fw-semibold text-white">SOLD OUT</span>
                     </div>
                 </div>
                 <div class="row pt-2 f08 fw-semibold">
