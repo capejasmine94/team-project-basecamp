@@ -14,29 +14,30 @@
     <style>
         .floating-btn {
             position: fixed;
-            bottom: 5rem;
+            /*위치*/
+            bottom: 6rem;
             right: 0.5rem;
-            background-color: #FF6F0F;
+            background-color: #28323C;
             color: white;
-            border-radius: 50%;
-            width: 3.5rem;
-            height: 3.5rem;
+            border-radius: 1.5rem;
+            width: auto;
+            height: 2.8rem;
+            padding: 0 1rem;
             display: flex;
             justify-content: center;
             align-items: center;
-            font-size: 3rem;
-            z-index: 1000;
-            cursor: pointer;
+            font-size: 1rem;
         }
         .floating-btn .plus-icon {
-            position: absolute;
-            top: 2rem;
-            left: 1.7rem;
-            transform: translate(-50%, -50%);
+            position: relative;
+            top: 0;
+            left: 0;
+            transform: none;
         }
+        /*글쓰기 모달*/
         .floating-menu {
             position: fixed;
-            bottom: 9rem;
+            bottom: 9.3rem;
             right: 0.5rem;
             display: none;
             flex-direction: column;
@@ -83,8 +84,12 @@
             font-size: 0.8rem;
         }
         .icon-and-text .text-navi {
-            margin-top: 0;
-            font-size: 0.8rem;
+            font-size: 1.1rem;
+            font-weight: 600;
+        }
+        .king{
+            top: -6%;
+            left: 83%;
         }
     </style>
 </head>
@@ -210,49 +215,92 @@
 </div>
 <div th:replace="secondHandProduct/commonModal::registeringLocation"></div>
 <!--상단네비-->
-<div class="container-fluid g-0 bg-white fixed-top border-bottom">
+<div class="container-fluid g-0 bg-white fixed-top">
     <div class="row py-2 mx-2">
-        <div class="col-auto fs-3 icon-and-text dropdown dropup">
-            <span data-bs-toggle="dropdown" class="text-navi fs-5">
-                내 동네 설정 <span class="ms-1"><i class="bi bi-chevron-down"></i></span>
+        <div class="col-auto icon-and-text dropdown dropup">
+            <!-- 초기 지역 -->
+            <span data-bs-toggle="dropdown" class="text-navi" th:if="${areaName} == null">
+                <span>전체</span>
+                <span class="ms-1" style="font-weight: 600"><i class="bi bi-chevron-down"></i></span>
             </span>
+            <!-- 지역 선택시 -->
+            <span data-bs-toggle="dropdown" class="text-navi" th:if="${areaName} != null">
+                <span th:text="${areaName}"></span>
+                <span class="ms-1" style="font-weight: 600"><i class="bi bi-chevron-down"></i></span>
+            </span>
+<!--            -->
             <ul class="dropdown-menu location-dropdown-menu">
-                <li><a class="dropdown-item mt-1" href="#">
-                    <span>나중에 추가</span>
-                </a></li>
-                <li><div class="dropdown-item mt-2">
-                    <span onclick="myLocation()">내 동네 설정</span>
-                </div></li>
+                <li>
+                    <!-- 초기 지역 -->
+                    <div class="dropdown-item mt-1" th:if="${areaName} == null">
+                        <span>전체</span>
+                    </div>
+                    <!-- 지역 선택시 -->
+                    <div class="dropdown-item mt-1" th:if="${areaName} != null">
+                        <span th:text="${areaName}"></span>
+                    </div>
+                </li>
+                <li>
+                    <div class="dropdown-item mt-2">
+                        <a href="/secondhandProduct/administrativeRegionListPage" style="color: black">
+                            <span >지역 설정</span>
+                        </a>
+                    </div>
+                </li>
             </ul>
         </div>
         <div class="col"></div>
-        <div class="col"></div>
+        <div class="col d-flex align-text-center justify-content-end">
+            <span class="me-3" style="font-size: 1.2rem;">
+                <i class="bi bi-bell"></i>
+            </span>
+            <a href="/secondhandProduct/myPage  ">
+                <span style="font-size: 1.2rem; color: black">
+                <i class="bi bi-gear"></i>
+                </span><span><i class="bi bi-dot position-absolute king" style="color: rgb(233, 40, 40); font-size: 1.5em;"></i></span>
+                </span>
+            </a>
+        </div>
     </div>
 </div>
-<div class="container-fluid g-0" style="margin-top: 4rem; padding-bottom: 5rem">
-    <div class="row mx-2">
+<div class="container-fluid g-0" style="margin-top: 3.5rem; padding-bottom: 5rem">
+    <div class="row mx-2 mb-2">
         <a href="/secondhandProduct/selectCategoryPage" class="col-auto mainPostLink-custom">
-            <span class="bg-custom1 main-span-custom"><span class="me-1"><i class="bi bi-list"></i></span>전체</span>
+            <span class="main-categoryBtn"><span class="me-1"><i class="bi bi-list"></i></span>카테고리</span>
         </a>
     </div>
-    <a th:href="@{/secondhandProduct/postDetailsPage(product_id=${productList.product_id}, user_id=${productList.user_id})}" class="row mx-2 py-3 border-bottom mainPostLink-custom" th:each="productList : ${productDtoList}">
+    <a th:href="@{/secondhandProduct/postDetailsPage(product_id=${productList.product_id}, user_id=${productList.user_id}, polygon_name=${productList.polygon_name})}"
+       class="row mx-2 pt-3 pb-2 border-bottom mainPostLink-custom" th:each="productList : ${productDtoList}">
         <div class="col-4 me-2" style="height: 7rem;">
             <img class="mainPostImg-custom" th:src="@{/images/{image}(image=${productList.main_image})}">
         </div>
-        <div class="col">
+        <div class="col ps-0">
             <div class="row-auto">
                 <div class="col">
-                    <span th:text="${productList.title}" class="font-custom2 title-line">제목~</span>
+                    <span th:text="${productList.title}" class="main-title-font title-line">제목~</span>
                 </div>
-                <div class="col font-custom1">
+                <div class="col main-subtitle-font">
                     <span th:text="${productList.category_name}">카테고리</span><span>・</span>
-                    <span>위치</span><span>・</span>
-                    <span th:text="${T(com.bulmeong.basecamp.common.util.TimeUtil).timeAgo(productList.created_at)}">생성일</span>
+                    <span th:text="${productList.polygon_name}">위치</span><span>・</span>
+                    <span th:if="${productList.updated_at != null}"
+                          th:text="${T(com.bulmeong.basecamp.common.util.TimeUtil).timeAgo(productList.updated_at)}">수정일</span>
+                    <span th:if="${productList.updated_at == null}"
+                          th:text="${T(com.bulmeong.basecamp.common.util.TimeUtil).timeAgo(productList.created_at)}">생성일</span>
                 </div>
                 <div class="col">
-                    <span th:text="|${#numbers.formatInteger(productList.price, 0, 'COMMA')}원|" class="font-custom2 fw-bold">금액</span>
+                    <div class="row">
+                        <div class="col-auto pe-0 me-1" th:if="${session.sessionUserInfo != null and productList.status == '거래완료'}">
+                            <span class="border text-center p-1" style="font-size: 0.8rem ;font-weight: 500; background-color: #28323C; color: white" th:text="${productList.status}">거래상태</span>
+                        </div>
+                        <div class="col ps-0" th:if="${session.sessionUserInfo != null and productList.status == '거래완료'}">
+                            <span th:text="|${#numbers.formatInteger(productList.price, 0, 'COMMA')}원|" class="main-price-font">금액</span>
+                        </div>
+                        <div class="col" th:if="${session.sessionUserInfo != null and productList.status != '거래완료'}">
+                            <span th:text="|${#numbers.formatInteger(productList.price, 0, 'COMMA')}원|" class="main-price-font">금액</span>
+                        </div>
+                    </div>
                 </div>
-                <div class="col pt-3 text-end font-custom1">
+                <div class="col pt-3 text-end main-like-font">
                     <span><i class="bi bi-chat"></i></span><span class="ms-1" th:text="${productList.chat_room_count}">채팅수</span>
                     <span><i class="bi bi-heart"></i></span><span class="ms-1" th:text="${productList.wish_list_count}">좋아요수</span>
                 </div>
@@ -263,7 +311,7 @@
 
 <!-- 플로팅 버튼 및 메뉴 -->
 <div class="floating-btn" id="floatingBtn">
-    <span class="plus-icon">+</span>
+    <span class="plus-icon"><i class="bi bi-plus-lg me-1"></i>글쓰기</span>
 </div>
 <div class="floating-menu" id="floatingMenu">
     <div class="menu-item" onclick="location.href='/secondhandProduct/productRegistrationPage'">
@@ -274,13 +322,11 @@
     </div>
     <div class="menu-item" onclick="location.href='/secondhandProduct/myPage'">
         <i class="bi bi-person"></i><span>내정보</span>
-
     </div>
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://kit.fontawesome.com/7b271bba58.js" crossorigin="anonymous"></script>
-<script src="/public/js/secondHandProduct/map.js"></script>
 <script>
     let myId = null;
     const urlParams = new URL(window.location.href).searchParams;
@@ -299,70 +345,101 @@
         setSessionUserId();
     });
 
-    document.getElementById('floatingBtn').addEventListener('click', function () {
+    // 플로팅 버튼을 클릭할 때의 이벤트 리스너
+    document.getElementById('floatingBtn').addEventListener('click', function (event) {
         var menu = document.getElementById('floatingMenu');
+
+        // 메뉴가 열려있으면 닫고, 열려있지 않으면 연다
         if (menu.style.display === 'none' || menu.style.display === '') {
             menu.style.display = 'flex';
         } else {
             menu.style.display = 'none';
         }
+
+        event.stopPropagation(); // 이벤트 전파 방지 (다른 클릭 이벤트로 전달되지 않게 함)
     });
+
+    // 화면의 다른 부분을 클릭할 때의 이벤트 리스너
+    window.addEventListener('click', function(event) {
+        var menu = document.getElementById('floatingMenu');
+
+        // 플로팅 메뉴가 열려 있을 때만 처리
+        if (menu.style.display === 'flex') {
+            // 클릭한 곳이 플로팅 메뉴 내부나 버튼이 아니라면 메뉴를 닫음
+            if (!menu.contains(event.target) && event.target.id !== 'floatingBtn') {
+                menu.style.display = 'none';
+                event.stopPropagation(); // 이벤트 전파 방지
+                event.preventDefault();  // 다른 페이지 이동을 막음
+            }
+        }
+    });
+
+    // 플로팅 메뉴 내부의 링크를 클릭했을 때의 이벤트 리스너
+    document.querySelectorAll('#floatingMenu a').forEach(function(link) {
+        link.addEventListener('click', function(event) {
+            var menu = document.getElementById('floatingMenu');
+
+            // 플로팅 메뉴를 닫고 페이지 이동 허용
+            menu.style.display = 'none';
+        });
+    });
+
     window.addEventListener('scroll', function() {
         if (window.scrollY === 0) {
             location.reload();
         }
     });
 
-    // 내 위치 등록중 + 모달
-    function myLocation() {
-        if (navigator.geolocation) {
-            console.log("내 위치저장 시작");
-
-            var registeringLocation = new bootstrap.Modal(document.getElementById('registeringLocation'), {
-                backdrop: 'static',
-                keyboard: false
-            });
-            registeringLocation.show();
-
-            navigator.geolocation.getCurrentPosition(function (position) {
-                var legionX = position.coords.latitude; // 위도
-                var legionY = position.coords.longitude; // 경도
-
-                console.log("위도X: " + legionX);
-                console.log("경도Y: " + legionY);
-
-                const url = "/api/location/saveLocation";
-                fetch(url, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({user_id: myId, my_region_x: legionX, my_region_y: legionY })
-                })
-                    .then(response => response.json())
-                    .then((response) => {
-                        console.log("내 위치저장 끝");
-                        setTimeout(() => {
-                            registeringLocation.hide();
-                            loadLocation();
-                        }, 500); // 0.5초 지연
-                    })
-            });
-        }
-    }
-    // 내위치 보내기
-    function loadLocation() {
-        const url = "/api/location/loadLocation"
-        fetch(url)
-            .then(response => response.json())
-                .then(response => {
-                if (response.result === "success") {
-                    const regionX  = response.data.location.my_region_x;
-                    const regionY = response.data.location.my_region_y;
-                    window.location.href = `/secondhandProduct/neighborhoodCertificationPage?my_region_x=${regionX}&my_region_y=${regionY}`;
-                }
-            });
-    }
+    // // 내 위치 등록중 + 모달
+    // function myLocation() {
+    //     if (navigator.geolocation) {
+    //         console.log("내 위치저장 시작");
+    //
+    //         var registeringLocation = new bootstrap.Modal(document.getElementById('registeringLocation'), {
+    //             backdrop: 'static',
+    //             keyboard: false
+    //         });
+    //         registeringLocation.show();
+    //
+    //         navigator.geolocation.getCurrentPosition(function (position) {
+    //             var legionX = position.coords.latitude; // 위도
+    //             var legionY = position.coords.longitude; // 경도
+    //
+    //             console.log("위도X: " + legionX);
+    //             console.log("경도Y: " + legionY);
+    //
+    //             const url = "/api/location/saveLocation";
+    //             fetch(url, {
+    //                 method: 'POST',
+    //                 headers: {
+    //                     'Content-Type': 'application/json'
+    //                 },
+    //                 body: JSON.stringify({user_id: myId, my_region_x: legionX, my_region_y: legionY })
+    //             })
+    //                 .then(response => response.json())
+    //                 .then((response) => {
+    //                     console.log("내 위치저장 끝");
+    //                     setTimeout(() => {
+    //                         registeringLocation.hide();
+    //                         loadLocation();
+    //                     }, 500); // 0.5초 지연
+    //                 })
+    //         });
+    //     }
+    // }
+    // // 내위치 보내기
+    // function loadLocation() {
+    //     const url = "/api/location/loadLocation"
+    //     fetch(url)
+    //         .then(response => response.json())
+    //             .then(response => {
+    //             if (response.result === "success") {
+    //                 const regionX  = response.data.location.my_region_x;
+    //                 const regionY = response.data.location.my_region_y;
+    //                 window.location.href = `/secondhandProduct/neighborhoodCertificationPage?my_region_x=${regionX}&my_region_y=${regionY}`;
+    //             }
+    //         });
+    // }
 </script>
 </body>
 </html>

@@ -6,11 +6,12 @@ import org.apache.ibatis.annotations.Mapper;
 @Mapper
 public interface LocationSqlMapper {
 
-    public int isLocationRegistered(int user_id);
-
     public void insertMyLocation(LocationDto locationDto);
-    public void updateMyLocation(LocationDto locationDto);
 
-    public LocationDto selectMyLocation(int user_id);
+    public int isAreaName(int user_id);
+
+    public String selectMyLocation(int user_id);
+
+    public void updateMyLocation(LocationDto locationDto);
 
 }

@@ -1,90 +1,326 @@
 <!doctype html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
+    <title>경기도 지역 폴리곤</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <link rel="stylesheet" href="/public/css/secondHandProductCss/style.css">
+    <style>
+        .area-dropdown-menu {
+            width: 7rem;
+            min-width: 0;
+            height: 15rem;
+            overflow-y: auto;
+            left: 14rem !important;
+        }
+    </style>
 </head>
 <body>
-
-<div class="container p-0 py-3 border-bottom fixed-top">
+<div id="map" style="margin-top: 2.8rem; height: 33rem"></div>
+<div class="container-fluid g-0 py-2 bg-white fixed-top">
     <div class="row mx-2">
-<!--        <a href="javascript:history.back()" class="col link-noneAndColor">-->
-<!--            <i class="bi bi-chevron-left"></i>-->
-<!--        </a>-->
-        <a href="/secondhandProduct/mainPage" class="col link-noneAndColor">
+        <a href="/secondhandProduct/administrativeRegionListPage" class="col text-start link-noneAndColor" style="font-size: 1.1rem">
             <i class="bi bi-chevron-left"></i>
         </a>
-        <div class="col text-center">동네 인증하기</div>
-        <div class="col"></div>
+        <div class="col-auto text-center" style="font-size: 1.1rem">지역 인증</div>
+        <a th:href="@{/secondhandProduct/mainPage(selected_area_name=${selected_area_name})}" class="col text-end link-noneAndColor" style="font-size: 1.1rem">
+            <i class="bi bi-x-lg"></i>
+        </a>
     </div>
 </div>
-<div class="container-fluid" id="map" style="margin-top: 3.5rem; height: 30rem">
-    <div class="row">
-        <div class="col">
-            <!-- 지도 api -->
+<div class="container-fluid g-0 fixed-bottom bg-white" style="height: 7.5rem; border-top-left-radius: 2rem; border-top-right-radius: 2rem">
+    <div class="row mx-1 mt-3">
+        <div class="col" style="font-size: 1.1rem; font-weight: 500">
+            내지역
         </div>
     </div>
-</div>
-<div class="container-fluid fixed-bottom bg-white" style="height: 10rem; border-top-left-radius: 2rem; border-top-right-radius: 2rem">
-    <div class="row mx-1 mt-4">
-        <div class="col fs-3">
-            내동네
-        </div>
-    </div>
-    <div class="row mx-1 mt-2">
-        <div class="col pe-0 d-grid" style="margin-right: 0.2rem">
-            <a href="/secondhandProduct/administrativeRegionListPage" class="border btn">
-                <span class="fs-4">+</span>
-            </a>
-        </div>
-        <div class="col ps-0 d-grid" style="margin-left: 0.2rem">
-            <a href="/secondhandProduct/administrativeRegionListPage" class="border btn">
-                <span class="fs-4">+</span>
+    <div class="row mx-2 mt-2">
+        <div class="col g-0 d-grid">
+            <a href="/secondhandProduct/administrativeRegionListPage" class="border btn d-flex justify-content-between align-items-center" style="color: white; background-color: #28323C">
+                <span style="color:#28323C"><i class="bi bi-x-lg"></i></span>
+                <span style="font-size: 1.2rem;" th:text="${selected_area_name}"></span>
+                <span><i class="bi bi-geo-alt"></i></span>
             </a>
         </div>
     </div>
+<!--    <div class="row mx-2 mt-2">-->
+<!--        <div class="col d-grid dropdown dropup">-->
+<!--            <div class="border btn" data-bs-toggle="dropdown">-->
+<!--                <span style="font-size: 1.2rem">-->
+<!--                    <i class="bi bi-plus-lg"></i>-->
+<!--                </span>-->
+<!--                                <ul class="dropdown-menu text-center area-dropdown-menu">-->
+<!--                                    <li>-->
+<!--                                        <div class="dropdown-item mt-2" th:each="polygonList : ${polygonDtoList}">-->
+<!--                                            <span th:text="${polygonList.name}">sss</span>-->
+<!--                                        </div>-->
+<!--                                    </li>-->
+<!--                                </ul>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </div>-->
 </div>
 
-<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=9df23aae97fe2a243134f72e80584d0a"></script>
-
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://kit.fontawesome.com/7b271bba58.js" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=9df23aae97fe2a243134f72e80584d0a"></script>
 <script>
-    const urlParams = new URLSearchParams(window.location.search);
-    const regionX = urlParams.get('my_region_x');
-    const regionY = urlParams.get('my_region_y');
+    // URL 파라미터에서 name 값을 가져옴
+    var urlParams = new URLSearchParams(window.location.search);
+    var selectedName = urlParams.get('selected_area_name') || "전체"; // 선택된 이름이 없으면 전체를 보여줌
+    console.log(selectedName);
 
+    // // 버튼의 텍스트를 선택된 지역 이름으로 변경
+    // var regionButton = document.getElementById('regionButton');
+    // if (selectedName && selectedName !== "전체") {
+    //     regionButton.innerHTML = '<span style="font-size: 1.2rem; background-color: #00B8FF; color: white;">' + selectedName + '</span>';
+    // } else {
+    //     regionButton.innerHTML = '<span style="font-size: 1.2rem"><i class="bi bi-plus-lg"></i></span>'; // 기본 텍스트로 설정
+    // }
 
-    // 필요한 다른 작업을 여기서 수행할 수 있습니다.
-    console.log(`위도X: ${regionX}, 경도Y: ${regionY}`);
-    var mapContainer = document.getElementById('map'), // 지도를 표시할 div
-        mapOption = {
-            center: new kakao.maps.LatLng(regionX, regionY), // 지도의 중심좌표
-            level: 3 // 지도의 확대 레벨
-        };
+    var areas = [];
+    var bounds = new kakao.maps.LatLngBounds(); // 경기도 폴리곤 경계를 담을 객체
+    var latSum = 0, lngSum = 0, count = 0; // 중심좌표 계산을 위한 변수
 
-    // 지도를 표시할 div와  지도 옵션으로  지도를 생성합니다
-    var map = new kakao.maps.Map(mapContainer, mapOption);
-
-    // 마커가 표시될 위치
-    var markerPosition  = new kakao.maps.LatLng(regionX, regionY);
-
-    // 마커를 생성
-    var marker = new kakao.maps.Marker({
-        position: markerPosition
+    // JSON 파일을 읽어들여 경기도 영역만 필터링하여 areas 배열에 채워넣는 작업
+    $.ajaxSetup({
+        async: false
     });
 
-    // 마커가 지도 위에 표시되도록 설정
-    marker.setMap(map);
+    $.getJSON("/json/secondhandProduct/sido.json", function(geojson) {
+        var units = geojson.features;
+        $.each(units, function(index, unit) {
+            var coordinates = [];
+            var name = unit.properties.SIG_KOR_NM;
 
+            // 선택된 지역 또는 전체를 필터링
+            if (selectedName === "전체" || name === selectedName) {
+                coordinates = unit.geometry.coordinates;
+                var ob = new Object();
+                ob.name = name;
+                ob.path = [];
 
+                $.each(coordinates[0], function(index, coordinate) {
+                    var latlng = new kakao.maps.LatLng(coordinate[1], coordinate[0]);
+                    ob.path.push(latlng);
+                    bounds.extend(latlng); // 경기도 경계를 LatLngBounds에 추가
+
+                    latSum += coordinate[1];
+                    lngSum += coordinate[0];
+                    count++;
+                });
+
+                areas.push(ob);
+            }
+        });
+    });
+
+    // 중심좌표 계산
+    var centerLat = latSum / count;
+    var centerLng = lngSum / count;
+    var mapLevel; // 확대 레벨을 저장할 변수
+
+    // 전달받은 지역 이름에 따라 확대 레벨 설정
+    if (selectedName === "전체") {
+        mapLevel = 13;
+    } else if (["서울", "인천", "광주", "대전", "세종", "울산", "대구"].includes(selectedName)) {
+        mapLevel = 10;
+    } else if (["제주","부산"].includes(selectedName)) {
+        mapLevel = 11;
+    }
+    else {
+        mapLevel = 12; // 기본 확대 레벨
+    }
+
+    // 지도 띄우기
+    var mapContainer = document.getElementById('map'),
+        mapOption = {
+            center: new kakao.maps.LatLng(centerLat, centerLng), // 직접 계산한 중심 좌표로 설정
+            level: mapLevel, // 확대 레벨
+            draggable: false, // 지도를 드래그로 이동 불가능하게 설정
+            scrollwheel: false, // 마우스 휠로 확대/축소를 불가능하게 설정
+            disableDoubleClickZoom: true // 더블클릭으로 확대/축소 불가능하게 설정
+        };
+
+    var map = new kakao.maps.Map(mapContainer, mapOption);
+
+    var customOverlay = new kakao.maps.CustomOverlay({}),
+        infowindow = new kakao.maps.InfoWindow({removable: true});
+
+    // 지도에 영역데이터를 폴리곤으로 표시
+    for (var i = 0, len = areas.length; i < len; i++) {
+        displayArea(areas[i]);
+    }
+
+    // 다각형 폴리곤 모습
+    function displayArea(area) {
+        var polygon = new kakao.maps.Polygon({
+            map: map,
+            path: area.path,
+            strokeWeight: 2,
+            strokeColor: '#00B8FF',
+            strokeOpacity: 0.8,
+            fillColor: '#fff',
+            fillOpacity: 0.8
+        });
+
+    }
 </script>
-
 </body>
 </html>
+
+<!--<div class="container p-0 py-2 fixed-top">-->
+<!--    <div class="row mx-2">-->
+<!--        <a href="/secondhandProduct/mainPage" class="col link-noneAndColor" style="font-size: 1.1rem">-->
+<!--            <i class="bi bi-chevron-left"></i>-->
+<!--        </a>-->
+<!--        <div class="col-auto text-center" style="font-size: 1.1rem">동네 인증하기</div>-->
+<!--        <div class="col"></div>-->
+<!--    </div>-->
+<!--</div>-->
+<!--<div class="container-fluid" id="map" style="margin-top: 3rem; height: 35rem">-->
+<!--    <div class="row">-->
+<!--        <div class="col">-->
+<!--            &lt;!&ndash; 지도 api &ndash;&gt;-->
+<!--        </div>-->
+<!--    </div>-->
+<!--</div>-->
+<!--<div class="container-fluid fixed-bottom bg-white" style="height: 8rem; border-top-left-radius: 2rem; border-top-right-radius: 2rem">-->
+<!--    <div class="row mx-1 mt-3">-->
+<!--        <div class="col" style="font-size: 1.1rem; font-weight: 500">-->
+<!--            내동네-->
+<!--        </div>-->
+<!--    </div>-->
+<!--    <div class="row mx-1 mt-2">-->
+<!--        <div class="col pe-0 d-grid" style="margin-right: 0.2rem">-->
+<!--            <a href="/secondhandProduct/administrativeRegionListPage" class="border btn">-->
+<!--                <span style="font-size: 1.2rem">-->
+<!--                    <i class="bi bi-plus-lg"></i>-->
+<!--                </span>-->
+<!--            </a>-->
+<!--        </div>-->
+<!--        <div class="col ps-0 d-grid" style="margin-left: 0.2rem">-->
+<!--            <a href="/secondhandProduct/administrativeRegionListPage" class="border btn">-->
+<!--                <span style="font-size: 1.2rem">-->
+<!--                    <i class="bi bi-plus-lg"></i>-->
+<!--                </span>-->
+<!--            </a>-->
+<!--        </div>-->
+<!--    </div>-->
+<!--</div>-->
+
+<!--<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=9df23aae97fe2a243134f72e80584d0a"></script>-->
+
+<!--<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>-->
+<!--<script src="https://kit.fontawesome.com/7b271bba58.js" crossorigin="anonymous"></script>-->
+
+
+<!--<script>-->
+<!--    -->
+<!--    // const urlParams = new URLSearchParams(window.location.search);-->
+<!--    // const regionX = parseFloat(urlParams.get('my_region_x'));-->
+<!--    // const regionY = parseFloat(urlParams.get('my_region_y'));-->
+<!--    //-->
+<!--    // // 지도를 표시할 div와 지도 옵션으로 지도를 생성합니다-->
+<!--    // var mapContainer = document.getElementById('map'),-->
+<!--    //     mapOption = {-->
+<!--    //         center: new kakao.maps.LatLng(regionY, regionX), // 지도의 중심좌표-->
+<!--    //         level: 3 // 지도의 확대 레벨-->
+<!--    //     };-->
+<!--    //-->
+<!--    // var map = new kakao.maps.Map(mapContainer, mapOption);-->
+<!--    //-->
+<!--    // // 마커가 표시될 위치-->
+<!--    // var markerPosition = new kakao.maps.LatLng(regionY, regionX);-->
+<!--    //-->
+<!--    // // 마커를 생성-->
+<!--    // var marker = new kakao.maps.Marker({-->
+<!--    //     position: markerPosition-->
+<!--    // });-->
+<!--    //-->
+<!--    // // 마커가 지도 위에 표시되도록 설정-->
+<!--    // marker.setMap(map);-->
+<!--    //-->
+<!--    // // JSON 파일 경로 (예: 서버에 업로드된 파일 경로)-->
+<!--    // const jsonFilePath = "/json/secondhandProduct/sido.json";-->
+<!--    //-->
+<!--    // // JSON 파일에서 폴리곤 데이터 가져오기-->
+<!--    // fetch(jsonFilePath)-->
+<!--    //     .then(response => response.json())-->
+<!--    //     .then(data => {-->
+<!--    //         data.features.forEach(feature => {-->
+<!--    //             const coordinates = feature.geometry.coordinates[0].map(coord => new kakao.maps.LatLng(coord[1], coord[0]));-->
+<!--    //-->
+<!--    //             const polygon = new kakao.maps.Polygon({-->
+<!--    //                 path: coordinates,-->
+<!--    //                 strokeWeight: 2,-->
+<!--    //                 strokeColor: '#004c80',-->
+<!--    //                 strokeOpacity: 0.8,-->
+<!--    //                 fillColor: '#fff',-->
+<!--    //                 fillOpacity: 0.7-->
+<!--    //             });-->
+<!--    //-->
+<!--    //             // 사용자의 위치가 이 폴리곤 안에 있는지 확인-->
+<!--    //             if (isPointInPolygon(markerPosition, polygon)) {-->
+<!--    //                 polygon.setMap(map);  // 폴리곤이 지도에 보이도록 설정-->
+<!--    //-->
+<!--    //                 // 폴리곤 이벤트 추가 (예: 마우스 오버 시 폴리곤 색상 변경)-->
+<!--    //                 kakao.maps.event.addListener(polygon, 'mouseover', function () {-->
+<!--    //                     polygon.setOptions({ fillColor: '#09f' });-->
+<!--    //                 });-->
+<!--    //-->
+<!--    //                 kakao.maps.event.addListener(polygon, 'mouseout', function () {-->
+<!--    //                     polygon.setOptions({ fillColor: '#fff' });-->
+<!--    //                 });-->
+<!--    //             }-->
+<!--    //         });-->
+<!--    //     })-->
+<!--    //     .catch(error => console.error('Error loading JSON:', error));-->
+<!--    //-->
+<!--    // // 폴리곤 안에 포인트가 포함되는지 확인하는 함수-->
+<!--    // function isPointInPolygon(point, polygon) {-->
+<!--    //     var path = polygon.getPath(); // 폴리곤의 경로를 가져옵니다-->
+<!--    //     var polygonBounds = new kakao.maps.LatLngBounds();-->
+<!--    //-->
+<!--    //     path.forEach(function(latlng) {-->
+<!--    //         polygonBounds.extend(latlng);-->
+<!--    //     });-->
+<!--    //-->
+<!--    //     return polygonBounds.contain(point);-->
+<!--    // }-->
+<!--</script>-->
+<!--</body>-->
+<!--</html>-->
+<!--&lt;!&ndash;&ndash;&gt;-->
+<!--&lt;!&ndash;<script>&ndash;&gt;-->
+<!--&lt;!&ndash;    const urlParams = new URLSearchParams(window.location.search);&ndash;&gt;-->
+<!--&lt;!&ndash;    const regionX = urlParams.get('my_region_x');&ndash;&gt;-->
+<!--&lt;!&ndash;    const regionY = urlParams.get('my_region_y');&ndash;&gt;-->
+
+
+<!--&lt;!&ndash;    // 필요한 다른 작업을 여기서 수행할 수 있습니다.&ndash;&gt;-->
+<!--&lt;!&ndash;    console.log(`위도X: ${regionX}, 경도Y: ${regionY}`);&ndash;&gt;-->
+<!--&lt;!&ndash;    var mapContainer = document.getElementById('map'), // 지도를 표시할 div&ndash;&gt;-->
+<!--&lt;!&ndash;        mapOption = {&ndash;&gt;-->
+<!--&lt;!&ndash;            center: new kakao.maps.LatLng(regionX, regionY), // 지도의 중심좌표&ndash;&gt;-->
+<!--&lt;!&ndash;            level: 3 // 지도의 확대 레벨&ndash;&gt;-->
+<!--&lt;!&ndash;        };&ndash;&gt;-->
+
+<!--&lt;!&ndash;    // 지도를 표시할 div와  지도 옵션으로  지도를 생성합니다&ndash;&gt;-->
+<!--&lt;!&ndash;    var map = new kakao.maps.Map(mapContainer, mapOption);&ndash;&gt;-->
+
+<!--&lt;!&ndash;    // 마커가 표시될 위치&ndash;&gt;-->
+<!--&lt;!&ndash;    var markerPosition  = new kakao.maps.LatLng(regionX, regionY);&ndash;&gt;-->
+
+<!--&lt;!&ndash;    // 마커를 생성&ndash;&gt;-->
+<!--&lt;!&ndash;    var marker = new kakao.maps.Marker({&ndash;&gt;-->
+<!--&lt;!&ndash;        position: markerPosition&ndash;&gt;-->
+<!--&lt;!&ndash;    });&ndash;&gt;-->
+
+<!--&lt;!&ndash;    // 마커가 지도 위에 표시되도록 설정&ndash;&gt;-->
+<!--&lt;!&ndash;    marker.setMap(map);&ndash;&gt;-->

@@ -48,82 +48,43 @@
                                                 <div class="badge rounded-pill text-bg-light text-muted px-3 py-2">답변한 후기 90</div>
                                             </div>
                                         </div>                             
-                                        <!-- Header Row -->
-                                        <div class="row pt-2 fw-bold text-center">
-                                            <div class="col-1 py-3 border d-flex align-items-center justify-content-center"> 
+                                        <!-- Header -->
+                                        <div class="row pt-1 fw-bold text-center border">
+                                            <div class="col-1 py-3 d-flex align-items-center justify-content-center"> 
                                                 <input type="checkbox">
                                             </div>
-                                            <div class="col-1 py-3 border d-flex align-items-center justify-content-center">차량 번호</div>
-                                            <div class="col-1 py-3 border d-flex align-items-center justify-content-center">차량명</div>
-                                            <div class="col-1 py-3 border d-flex align-items-center justify-content-center">예약자명</div>
-                                            <div class="col-2 py-3 border d-flex align-items-center justify-content-center">대여/반납일</div>
-                                            <div class="col-2 py-3 border d-flex align-items-center justify-content-center">리뷰 평점</div>
-                                            <div class="col-2 py-3 border d-flex align-items-center justify-content-center">리뷰 내용</div>
-                                            <div class="col-2 py-3 border d-flex align-items-center justify-content-center">리뷰 작성일</div>
+                                            <div class="col-1 py-3 d-flex align-items-center justify-content-center">차량 번호</div>
+                                            <div class="col-1 py-3 d-flex align-items-center justify-content-center">차량명</div>
+                                            <div class="col-1 py-3 d-flex align-items-center justify-content-center">예약자명</div>
+                                            <div class="col-2 py-3 d-flex align-items-center justify-content-center">대여/반납일</div>
+                                            <div class="col-2 py-3 d-flex align-items-center justify-content-center">리뷰 평점</div>
+                                            <div class="col-2 py-3 d-flex align-items-center justify-content-center">리뷰 내용</div>
+                                            <div class="col-2 py-3 d-flex align-items-center justify-content-center">리뷰 작성일</div>
                                         </div>
 
-                                        <!-- Data Rows -->
-                                        <div class="row text-center align-items-center border">
-                                            <div class="col-1 py-4 border-end d-flex align-items-center justify-content-center">
-                                                <input type="checkbox">
-                                            </div>
-                                            <div class="col-1 py-3 border-end d-flex align-items-center justify-content-center">16</div>
-                                            <div class="col-1 py-3 border-end d-flex align-items-center justify-content-center">5인승</div>
-                                            <div class="col-1 py-3 border-end d-flex align-items-center justify-content-center">고구마</div>
-                                            <div class="col-2 py-3 border-end d-flex align-items-center justify-content-center">2024.08.15/2024.08.17</div>
-                                            <div class="col-2 py-3 border-end d-flex align-items-center justify-content-center">
-                                                <span class="text-warning">★★★★★</span> 5점
-                                            </div>
-                                            <div class="col-2 py-3 border d-flex align-items-center justify-content-center">감사해요</div>
-                                            <div class="col-2 py-3 border d-flex align-items-center justify-content-center">2024.08.16.11:15</div>
-                                        </div>
-
-                                        <div class="row text-center align-items-center border">
+                                        <!-- List -->
+                                        <div class="row text-center align-items-center border new-fs-9" th:each="reviewData : ${reviewCompany}">
                                             <div class="col-1 py-4 d-flex align-items-center justify-content-center">
                                                 <input type="checkbox">
                                             </div>
-                                            <div class="col-1 py-3 border d-flex align-items-center justify-content-center">16</div>
-                                            <div class="col-1 py-3 border d-flex align-items-center justify-content-center">5인승</div>
-                                            <div class="col-1 py-3 border d-flex align-items-center justify-content-center">고구마</div>
-                                            <div class="col-2 py-3 border d-flex align-items-center justify-content-center">2024.08.15/2024.08.17</div>
-                                            <div class="col-2 py-3 border d-flex align-items-center justify-content-center">
-                                                <span class="text-warning">★★★★★</span> 5점
+                                            <div class="col-1 py-3 d-flex align-items-center justify-content-center" th:text="${reviewData.product_id}">16</div>
+                                            <div class="col-1 py-3 d-flex align-items-center justify-content-center" th:text="${reviewData.product_name}">5인승</div>
+                                            <div class="col-1 py-3 d-flex align-items-center justify-content-center" th:text="${reviewData.nickname}">고구마</div>
+                                            <div class="col-2 py-3 d-flex align-items-center justify-content-center" th:text="${#dates.format(reviewData.start_date, 'yyyy.MM.dd HH:mm')}+ '/'+ ${#dates.format(reviewData.end_date, 'yyyy.MM.dd HH:mm')}">2024.08.15/2024.08.17</div>
+                                            <div class="col-2 py-3 d-flex align-items-center justify-content-center">
+                                                
+                                                <span class="text-warning">
+                                                    <span th:if="${reviewData.rate >=1}">★</span>
+                                                    <span th:if="${reviewData.rate >=2}">★</span>
+                                                    <span th:if="${reviewData.rate >=3}">★</span>
+                                                    <span th:if="${reviewData.rate >=4}">★</span>
+                                                    <span th:if="${reviewData.rate >=5}">★</span>
+                                                    <span class="text-dark fw-medium" th:text="${reviewData.rate}+'점'"></span>
+                                                </span>
                                             </div>
-                                            <div class="col-2 py-3 border d-flex align-items-center justify-content-center">감사해요</div>
-                                            <div class="col-2 py-3 border d-flex align-items-center justify-content-center">2024.08.16.11:15</div>
+                                            <div class="col-2 py-3 d-flex align-items-center justify-content-center" th:text="${reviewData.content}">감사해요</div>
+                                            <div class="col-2 py-3 d-flex align-items-center justify-content-center" th:text="${#dates.format(reviewData.created_at, 'yyyy.MM.dd HH:mm')}">2024.08.16.11:15</div>
                                         </div>
-
-                                        <div class="row text-center align-items-center border">
-                                            <div class="col-1 py-4 d-flex align-items-center justify-content-center">
-                                                <input type="checkbox">
-                                            </div>
-                                            <div class="col-1 py-3 border d-flex align-items-center justify-content-center">16</div>
-                                            <div class="col-1 py-3 border d-flex align-items-center justify-content-center">5인승</div>
-                                            <div class="col-1 py-3 border d-flex align-items-center justify-content-center">고구마</div>
-                                            <div class="col-2 py-3 border d-flex align-items-center justify-content-center">2024.08.15/2024.08.17</div>
-                                            <div class="col-2 py-3 border d-flex align-items-center justify-content-center">
-                                                <span class="text-warning">★★★★★</span> 5점
-                                            </div>
-                                            <div class="col-2 py-3 border d-flex align-items-center justify-content-center">감사해요</div>
-                                            <div class="col-2 py-3 border d-flex align-items-center justify-content-center">2024.08.16.11:15</div>
-                                        </div>
-
-                                        <div class="row text-center align-items-center border">
-                                            <div class="col-1 py-4 d-flex align-items-center justify-content-center">
-                                                <input type="checkbox">
-                                            </div>
-                                            <div class="col-1 py-3 border d-flex align-items-center justify-content-center">16</div>
-                                            <div class="col-1 py-3 border d-flex align-items-center justify-content-center">5인승</div>
-                                            <div class="col-1 py-3 border d-flex align-items-center justify-content-center">고구마</div>
-                                            <div class="col-2 py-3 border d-flex align-items-center justify-content-center">2024.08.15/2024.08.17</div>
-                                            <div class="col-2 py-3 border d-flex align-items-center justify-content-center">
-                                                <span class="text-warning">★★★★★</span> 5점
-                                            </div>
-                                            <div class="col-2 py-3 border d-flex align-items-center justify-content-center">감사해요</div>
-                                            <div class="col-2 py-3 border d-flex align-items-center justify-content-center">2024.08.16.11:15</div>
-                                        </div>
-
-
                                     </div>
                                 </div>
                             </div>

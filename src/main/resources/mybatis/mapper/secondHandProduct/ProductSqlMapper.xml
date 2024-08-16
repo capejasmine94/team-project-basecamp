@@ -8,9 +8,9 @@
             SELECT max(product_id) from bc_secondhand_product;
         </selectKey>
         INSERT INTO bc_secondhand_product
-        (user_id, category_id, main_image, title, price, explanation, status, read_count, chat_room_count)
+        (user_id, category_id, polygon_id, main_image, title, price, explanation, status, read_count, chat_room_count)
         values
-        (#{user_id},#{category_id}, #{main_image}, #{title}, #{price}, #{explanation}, #{status} , #{read_count}, 0)
+        (#{user_id}, #{category_id}, #{polygon_id}, #{main_image}, #{title}, #{price}, #{explanation}, #{status} , #{read_count}, 0)
     </insert>
     <!-- 상품 수정 -->
     <update id="updateSecondhandProduct">
@@ -19,32 +19,64 @@
             main_image = #{main_image},
             title = #{title},
             price = #{price},
-            explanation = #{explanation}
+            explanation = #{explanation},
+            category_id = #{category_id},
+            polygon_id = #{polygon_id},
+            updated_at = NOW()
         WHERE product_id = #{product_id}
     </update>
-    <!--메인페이지 전체 게시글  리스트-->
+    <!--메인페이지 전체 게시글  리스트 + 전체지역 -->
     <select id="selectSecondhandProductList"
             resultType="com.bulmeong.basecamp.secondHandProduct.dto.AllContentsProductDto">
         SELECT
             p.*,
             c.category_name,
-            COUNT(w.product_id) AS wish_list_count
+            COUNT(w.product_id) AS wish_list_count,
+            poly.polygon_name
         FROM bc_secondhand_product p
                  JOIN bc_secondhand_product_category c ON c.category_id = p.category_id
                  LEFT JOIN bc_secondhand_product_wish_list w ON p.product_id = w.product_id
+                 LEFT JOIN bc_secondhand_polygon poly ON poly.polygon_id = p.polygon_id
         GROUP BY p.product_id
         ORDER BY p.product_id DESC
     </select>
+    <!-- 메인페이지 전체 게시글 리스트 + 선택지역 -->
+    <select id="selectSecondhandProductIsAreaList"
+            resultType="com.bulmeong.basecamp.secondHandProduct.dto.AllContentsProductDto">
+        SELECT
+            p.*,
+            c.category_name,
+            COUNT(w.product_id) AS wish_list_count,
+            poly.polygon_name
+        FROM bc_secondhand_product p
+                 JOIN bc_secondhand_product_category c ON c.category_id = p.category_id
+                 LEFT JOIN bc_secondhand_product_wish_list w ON p.product_id = w.product_id
+                 LEFT JOIN bc_secondhand_polygon poly ON poly.polygon_id = p.polygon_id
+        WHERE poly.polygon_name = #{polygon_name}
+        GROUP BY p.product_id
+        ORDER BY p.product_id DESC
+    </select>
+
+    <!-- 제품 거래상태 업데이트 -->
+    <update id="updateProductStatus">
+        UPDATE bc_secondhand_product
+        SET
+            status = #{status}
+        WHERE product_id = #{product_id}
+    </update>
+
     <!--카테고리별 게시글 리스트-->
     <select id="selectSecondhandProductByCategoryList"
             resultType="com.bulmeong.basecamp.secondHandProduct.dto.AllContentsProductDto">
         SELECT
             p.*,
             c.category_name,
-            COUNT(w.product_id) AS wish_list_count
+            COUNT(w.product_id) AS wish_list_count,
+            poly.polygon_name
         FROM bc_secondhand_product p
                  JOIN bc_secondhand_product_category c ON c.category_id = p.category_id
                  LEFT JOIN bc_secondhand_product_wish_list w ON p.product_id = w.product_id
+                 LEFT JOIN bc_secondhand_polygon poly ON poly.polygon_id = p.polygon_id
         WHERE c.category_id = #{category_id}
         GROUP BY p.product_id, c.category_name
         ORDER BY p.product_id DESC
@@ -54,10 +86,12 @@
         SELECT
             p.*,
             c.category_name,
-            COUNT(w.product_id) AS wish_list_count
+            COUNT(w.product_id) AS wish_list_count,
+            poly.polygon_name
         FROM bc_secondhand_product p
                  JOIN bc_secondhand_product_category c ON c.category_id = p.category_id
                  LEFT JOIN bc_secondhand_product_wish_list w ON p.product_id = w.product_id
+                 LEFT JOIN bc_secondhand_polygon poly ON poly.polygon_id = p.polygon_id
         WHERE w.user_id = #{user_id}
         GROUP BY p.product_id, c.category_name
         ORDER BY p.product_id DESC
@@ -88,9 +122,10 @@
     <!--상품 디테일 정보-->
     <select id="selectSecondhandDetailProduct"
             resultType="com.bulmeong.basecamp.secondHandProduct.dto.AllContentsProductDto">
-        SELECT p.*, c.category_name
+        SELECT p.*, c.category_name, poly.*
         FROM bc_secondhand_product p
                  JOIN bc_secondhand_product_category c ON c.category_id = p.category_id
+                 LEFT JOIN bc_secondhand_polygon poly ON poly.polygon_id = p.polygon_id
         WHERE product_id = #{product_id}
     </select>
     <!-- 상품 디테일 조회수 -->
@@ -137,11 +172,68 @@
         WHERE product_id = #{product_id}
     </delete>
 
-
-
     <!--채팅방 상풍정보-->
     <select id="selectChatRoomProductInformation" resultType="com.bulmeong.basecamp.secondHandProduct.dto.SecondhandProductDto">
         SELECT * FROM bc_secondhand_product WHERE product_id = #{product_id}
+    </select>
+
+    <!-- 마이페이지 -->
+<!-- 판매내역 - 판매중   -->
+    <select id="selectSalesProduct"  resultType="com.bulmeong.basecamp.secondHandProduct.dto.AllContentsProductDto">
+        SELECT
+            p.*,
+            c.category_name,
+            COUNT(w.product_id) AS wish_list_count,
+            poly.polygon_name
+        FROM bc_secondhand_product p
+                 JOIN bc_secondhand_product_category c ON c.category_id = p.category_id
+                 LEFT JOIN bc_secondhand_product_wish_list w ON p.product_id = w.product_id
+                 LEFT JOIN bc_secondhand_polygon poly ON poly.polygon_id = p.polygon_id
+        WHERE p.user_id = #{user_id} AND p.status = "판매중"
+        GROUP BY p.product_id
+        ORDER BY p.product_id DESC
+    </select>
+<!-- 판매중 게시글 수 -->
+    <select id="getTotalSales" resultType="int">
+        SELECT
+            COUNT(*)
+        FROM bc_secondhand_product
+        WHERE user_id = #{user_id} AND status = '판매중';
+    </select>
+<!-- 판매내역 - 거래완료   -->
+    <select id="selectTransactionCompleteProduct"  resultType="com.bulmeong.basecamp.secondHandProduct.dto.AllContentsProductDto">
+        SELECT
+            p.*,
+            c.category_name,
+            COUNT(w.product_id) AS wish_list_count,
+            poly.polygon_name
+        FROM bc_secondhand_product p
+                 JOIN bc_secondhand_product_category c ON c.category_id = p.category_id
+                 LEFT JOIN bc_secondhand_product_wish_list w ON p.product_id = w.product_id
+                 LEFT JOIN bc_secondhand_polygon poly ON poly.polygon_id = p.polygon_id
+        WHERE p.user_id = #{user_id} AND p.status = "거래완료"
+        GROUP BY p.product_id
+        ORDER BY p.product_id DESC
+    </select>
+<!-- 거래완료 게시글 수 -->
+    <select id="getTotalTransactionComplete" resultType="int">
+        SELECT
+            COUNT(*)
+        FROM bc_secondhand_product
+        WHERE user_id = #{user_id} AND status = '거래완료';
+    </select>
+<!-- 거래완료 -> 구매자중 선택 목록 (채팅한 사람이 있다면) -->
+    <select id="getProductBuyerList" resultType="com.bulmeong.basecamp.secondHandProduct.dto.ProductBuyerDto">
+        SELECT
+            c.buyer_user_id,
+            u.nickname,
+            p.title,
+            c.message_time,
+            u.profile_image
+        FROM bc_secondhand_product_chat_room c
+        JOIN bc_user u ON u.id = c.buyer_user_id
+        JOIN bc_secondhand_product p ON p.product_id = c.product_id
+        WHERE c.seller_user_id = #{seller_user_id}
     </select>
 
 

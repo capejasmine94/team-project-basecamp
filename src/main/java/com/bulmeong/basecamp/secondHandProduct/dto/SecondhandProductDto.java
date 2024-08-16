@@ -9,6 +9,7 @@ public class SecondhandProductDto {
     private int product_id;
     private int user_id;
     private int category_id;
+    private int polygon_id;
     private String main_image;
     private String title;
     private int price;
@@ -17,4 +18,5 @@ public class SecondhandProductDto {
     private int read_count;
     private int chat_room_count;
     private Date created_at;
+    private Date updated_at;
 }

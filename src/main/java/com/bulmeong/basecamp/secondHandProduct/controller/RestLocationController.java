@@ -22,7 +22,7 @@ public class RestLocationController {
         RestResponseDto restResponseDto = new RestResponseDto();
         restResponseDto.setResult("success");
 
-        locationService.myLocation(locationDto);
+//        locationService.myLocation(locationDto);
 
         return restResponseDto;
     }
@@ -36,8 +36,8 @@ public class RestLocationController {
 
         UserDto userDto = (UserDto) session.getAttribute("sessionUserInfo");
 
-        LocationDto locationDto = locationService.selectMyLocation(userDto.getId());
-        restResponseDto.add("location", locationDto);
+//        LocationDto locationDto = locationService.selectMyLocation(userDto.getId());
+//        restResponseDto.add("location", locationDto);
 
         return restResponseDto;
     }

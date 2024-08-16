@@ -19,11 +19,11 @@
               nickname=${saleChatRoom.buyer_nickname})}"
            class="row mx-2 link-custom" style="margin-top: 2.5rem">
             <div class="col-auto pe-0">
-                <img th:src="@{/images/{image}(image=${saleChatRoom.main_image})}" class="rounded-2" style="width: 3rem; height: 3rem">
+                <img th:src="@{/images/{image}(image=${saleChatRoom.main_image})}" class="rounded-2" style="width: 3rem; height: 3rem; border: 0.05rem solid">
             </div>
             <div class="col">
                 <div class="row">
-                    <div class="col-auto pe-0 fw-bold d-flex align-items-center">
+                    <div class="col-auto pe-0 fw-semibold d-flex align-items-center">
                         <span th:text="${saleChatRoom.buyer_nickname}">판매자</span>
                     </div>
                     <div class="col ps-0 d-flex align-items-center" style="font-size: 0.8rem; margin-left: 0.3rem">
@@ -32,7 +32,7 @@
                 </div>
                 <div class="row">
                     <div class="col">
-                        <span class="chat-text-line" th:text="${saleChatRoom.message}">마지막 대화 내용</span>
+                        <span class="chat-text-line" style="color:#868e96;" th:text="${saleChatRoom.message}">마지막 대화 내용</span>
                     </div>
                 </div>
             </div>

@@ -5,25 +5,25 @@
 
     <!-- 내위치 등록    -->
     <insert id="insertMyLocation">
-        INSERT INTO bc_secondhand_location
-            (user_id, my_region_x, my_region_y)
-        values
-            (#{user_id}, #{my_region_x}, #{my_region_y})
+        INSERT INTO bc_secondhand_location (user_id , selected_area_name) values (#{user_id}, #{selected_area_name})
     </insert>
-    <!-- 내위치 업데이트    -->
+
+    <!-- 위치 등록 확인 -->
+    <select id="isAreaName" resultType="int">
+        SELECT COUNT(*) FROM bc_secondhand_location WHERE user_id = #{user_id}
+    </select>
+
+    <!-- 선택 지역 받아오기 -->
+    <select id="selectMyLocation" resultType="String">
+        SELECT selected_area_name FROM bc_secondhand_location WHERE user_id = #{user_id}
+    </select>
+
+    <!-- 선택 지역 업데이트 -->
     <update id="updateMyLocation">
         UPDATE bc_secondhand_location
         SET
-            my_region_x = #{my_region_x},
-            my_region_y = #{my_region_y}
-        WHERE user_id = #{user_id};
+            selected_area_name = #{selected_area_name}
+        WHERE user_id = #{user_id}
     </update>
-    <!-- 위칭 등록 확인 -->
-    <select id="isLocationRegistered" resultType="int">
-        SELECT COUNT(*) FROM bc_secondhand_location WHERE user_id = #{user_id}
-    </select>
-    <!-- 내 위치 가져오기 -->
-    <select id="selectMyLocation" resultType="com.bulmeong.basecamp.secondHandProduct.dto.LocationDto">
-        SELECT * FROM bc_secondhand_location WHERE user_id = #{user_id}
-    </select>
+
 </mapper>

@@ -48,9 +48,12 @@ public class ChatService {
     public List<SaleChatRoomDto> selectByProductChatRoomList(int product_id) {
         return chatSqlMapper.selectByProductChatRoomList(product_id);
     }
-
     public List<ChatMessageDto> selectChatRoomMessage(int chat_room_id) {
         return chatSqlMapper.selectChatRoomMessage(chat_room_id);
+    }
+
+    public String selectFindChatRoomByNullMessage(int chat_room_id) {
+        return chatSqlMapper.selectFindChatRoomByNullMessage(chat_room_id);
     }
 
     public void selectFindChatRoomByNullMessage(int chat_room_id, int product_id) {

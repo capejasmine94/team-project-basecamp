@@ -47,11 +47,14 @@ public class ProductService {
         }
     }
 
-
+    // 메인 전체 리스트
     public List<AllContentsProductDto> selectSecondhandProductList() {
         return productSqlMapper.selectSecondhandProductList();
     }
-
+    // 메인 지역 리스트
+    public List<AllContentsProductDto> selectSecondhandProductIsAreaList(String polygon_name) {
+        return productSqlMapper.selectSecondhandProductIsAreaList(polygon_name);
+    }
     public List<AllContentsProductDto> selectSecondhandProductByCategoryNameList(int category_id) {
         return productSqlMapper.selectSecondhandProductByCategoryList(category_id);
     }
@@ -78,6 +81,11 @@ public class ProductService {
 
 
         return map;
+    }
+
+    // 상품 거래상태 업데이트
+    public void updateProductStatus(AllContentsProductDto allContentsProductDto) {
+        productSqlMapper.updateProductStatus(allContentsProductDto);
     }
 
     public void updateSecondhandDetailProductCount(int product_id) {
@@ -109,9 +117,28 @@ public class ProductService {
         productSqlMapper.deletePost(product_id);
     }
 
-
     // 채팅방
     public SecondhandProductDto selectChatRoomProductInformation(int product_id) {
         return productSqlMapper.selectChatRoomProductInformation(product_id);
+    }
+
+//마이페이지
+    // 판매내역 - 판매중
+    public List<AllContentsProductDto> selectSalesProduct(int user_id, String status) {
+        return productSqlMapper.selectSalesProduct(user_id, status );
+    }
+    public int getTotalSales(int user_id, String status) {
+        return productSqlMapper.getTotalSales(user_id, status);
+    }
+    // 판매내역 - 거래완료
+    public List<AllContentsProductDto> selectTransactionCompleteProduct(int user_id, String status) {
+        return productSqlMapper.selectTransactionCompleteProduct(user_id, status );
+    }
+    public int getTotalTransactionComplete(int user_id, String status) {
+        return productSqlMapper.getTotalTransactionComplete(user_id, status);
+    }
+    // 거래완료 -> 구매자 리스트
+    public List<ProductBuyerDto> getProductBuyerList(int seller_user_id) {
+        return productSqlMapper.getProductBuyerList(seller_user_id);
     }
 }

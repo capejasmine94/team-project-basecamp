@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.bulmeong.basecamp.secondHandProduct.mapper.PolygonSqlMapper">
+    <!-- 서버 가동시 인서트 확인 -->
+    <select id="countPolygon" resultType="int">
+        SELECT COUNT(*) FROM bc_secondhand_polygon;
+    </select>
+    <!-- 서버 가동시 인서트    -->
+    <insert id="insertPolygon">
+        INSERT INTO bc_secondhand_polygon
+            (polygon_name)
+        VALUES
+            ( #{polygon_name} )
+    </insert>
+    <!-- 지역 리스트 -->
+    <select id="selectPolygon" resultType="com.bulmeong.basecamp.secondHandProduct.dto.PolygonDto">
+        SELECT * FROM bc_secondhand_polygon
+    </select>
+
+
+</mapper>

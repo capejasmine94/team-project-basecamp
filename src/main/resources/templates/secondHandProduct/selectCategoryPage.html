@@ -13,33 +13,33 @@
 </head>
 <body>
 <!--상단네비-->
-<div class="container g-0 py-2 fixed-top bg-light">
+<div class="container g-0 py-2 fixed-top bg-white">
     <div class="row mx-2">
-        <a href="javascript:history.back()" class="col fs-5" style="color: black">
+        <a href="javascript:history.back()" class="col" style="color: black; font-size: 1.1rem">
             <i class="bi bi-chevron-left"></i>
         </a>
-        <div class="col text-center fs-5">
-            <span>전체서비스</span>
+        <div class="col-auto text-center" style="font-size: 1.1rem">
+            <span>카테고리 서비스</span>
         </div>
         <div class="col"></div>
     </div>
 </div>
 <div class="container-fluid g-0" style="margin-top: 4rem; padding-bottom: 5rem">
     <div class="row mx-2">
-        <div class="col fs-3">
+        <div class="col" style="font-size: 1.1rem; font-weight: 600">
             중고거래
         </div>
     </div>
     <div class="row mx-3">
-        <div class="col" th:each="categoryList : ${categoryDtoList}">
-            <a th:href="@{/secondhandProduct/selectCategoryDetailListPage(category_id=${categoryList.category_id})}" class="row p-0 link-custom">
-<!-- 카테고리 반복 -->
-                <div class="col-auto">
-                    <div class="row-auto mt-4 ms-2">
-                        <div class="col border" style="border-radius: 50%; padding-left: 0.3rem; background-color: white;">
-                            <img th:src="${categoryList.category_image}">
+        <div class="col-3" th:each="categoryList : ${categoryDtoList}">
+            <a th:href="@{/secondhandProduct/selectCategoryDetailListPage(category_id=${categoryList.category_id})}" class="row p-0 link-custom text-center">
+                <!-- 카테고리 반복 -->
+                <div class="col-auto d-flex justify-content-center">
+                    <div class="d-flex flex-column align-items-center mt-3">
+                        <div class="d-flex justify-content-center align-items-center" style="width: 3.8rem; height: 3.8rem; border-radius: 50%; background-color: #F7F8FA;">
+                            <img th:src="${categoryList.category_image}" style="max-width: 2.5rem; max-height: 2.5rem; object-fit: contain;">
                         </div>
-                        <div class="col text-center">
+                        <div class="mt-2" style="font-size: 0.8rem">
                             <span th:text="${categoryList.category_name}">텐트/타프</span>
                         </div>
                     </div>

@@ -13,6 +13,11 @@ public interface ProductSqlMapper {
     public void updateSecondhandProduct(SecondhandProductDto secondhandProductDto);
     // 메인페이지 전체 게시글 리스트
     public List<AllContentsProductDto> selectSecondhandProductList();
+    public List<AllContentsProductDto> selectSecondhandProductIsAreaList(String polygon_name);
+
+    // 상품 거래상태 업데이트
+    public void updateProductStatus(AllContentsProductDto allContentsProductDto);
+
     // 상품 정보 디테일
     public AllContentsProductDto selectSecondhandDetailProduct(int product_id);
     // 상품 조회수
@@ -44,5 +49,17 @@ public interface ProductSqlMapper {
 
     // 채팅방
     public SecondhandProductDto selectChatRoomProductInformation(int product_id);
+
+//마이페이지
+    // 판매내역 - 판매중
+    public List<AllContentsProductDto> selectSalesProduct(int user_id, String status);
+    // 판매중 게시글 수
+    public int getTotalSales(int user_id, String status);
+    // 판매내역 - 거래완료
+    public List<AllContentsProductDto> selectTransactionCompleteProduct(int user_id, String status);
+    // 거래완료 게시글 수
+    public int getTotalTransactionComplete(int user_id, String status);
+    // 거래완료 -> 구매자 리스트
+    public List<ProductBuyerDto> getProductBuyerList(int seller_user_id);
 
 }
