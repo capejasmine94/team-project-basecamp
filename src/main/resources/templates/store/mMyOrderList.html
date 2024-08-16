@@ -486,6 +486,19 @@
                 </a>
             </div>
         </div>
+
+        <div class="row py-3 buttonsForReviewComplete">
+            <div class="col d-grid pe-0">
+                <button class="btn border py-2 bg-white rounded-0 f09">
+                    배송조회
+                </button>
+            </div>
+            <div class="col d-grid">
+                <a href="/store/myReview" class="btn border py-2 bg-white rounded-0 f09">
+                    작성한 리뷰 보기
+                </a>
+            </div>
+        </div>
         
         <div class="row py-3 buttonsForOrderComplete">
             <div class="col d-grid pe-0">
@@ -633,6 +646,9 @@
                             const buttonsForPurchaseConfirmation = document.querySelector("#template .buttonsForPurchaseConfirmation").cloneNode(true);
                             buttonsForPurchaseConfirmation.querySelector(".reviewButton").setAttribute("href", `/store/writeReview?id=${OrderProductData.orderProductDto.id}`)
                             orderProductCol.appendChild(buttonsForPurchaseConfirmation)
+                        }else if(status=='리뷰작성완료'){
+                            const buttonsForReviewComplete = document.querySelector("#template .buttonsForReviewComplete").cloneNode(true);
+                            orderProductCol.appendChild(buttonsForReviewComplete);
                         }
 
                         orderProductContainer.appendChild(newOrderProductTemplate);

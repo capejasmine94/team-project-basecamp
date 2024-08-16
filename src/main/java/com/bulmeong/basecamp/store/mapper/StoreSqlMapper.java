@@ -132,6 +132,7 @@ public interface StoreSqlMapper {
 
     public void insertPointUsageLog(MileageLogDto mileageLogDto);
     public void updateUserMileage(@Param("id") int id, @Param("used_point") int used_point);
+    public void updateUserMileagePlus(int id);
 
     public int[] selectCartProductOptionValuePrimaryKeys(int cart_product_id);
 
@@ -208,4 +209,8 @@ public interface StoreSqlMapper {
     public List<ProductImageDto> selectProductImageDtoListByProductId(int product_id);
 
     public int selectProductPurchaseQuantity(int product_id);
+
+    public List<Map<String, Object>> selectProductReviewDataListByProductId(int product_id);
+
+    public void insertReviewPoint(int user_id);
 }

@@ -444,10 +444,14 @@ public class RestStoreController {
     }
 
     @PostMapping("writeReview")
-    public RestResponseDto writeReview(@RequestBody ProductReviewDto productReviewDto){
+    public RestResponseDto writeReview(@RequestBody ProductReviewDto productReviewDto, HttpSession session){
         RestResponseDto restResponseDto = new RestResponseDto();
 
         storeService.writeReview(productReviewDto);
+
+        UserDto userDto = (UserDto)session.getAttribute("sessionUserInfo");
+        int user_id = userDto.getId();
+        storeService.getReviewPoint(user_id);
 
         return restResponseDto;
     }

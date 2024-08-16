@@ -303,6 +303,25 @@
         </foreach>
     </select>
 
+    <insert id="insertReviewPoint">
+        insert into bc_user_mileage_log(
+            user_id, mileage_log, change_amount
+        )values(
+            #{user_id}, '리뷰 포인트 적립', +500
+        )
+    </insert>
+
+    <select id="selectProductReviewDataListByProductId" resultType="java.util.HashMap">
+        select 
+            bu.profile_image, 
+            bu.account,
+            pr.*
+        from product_review pr
+        inner join order_product op on op.id = pr.order_product_id 
+        inner join bc_user bu on bu.id = pr.user_id 
+        where op.product_id = #{product_id}
+    </select>
+
     <select id="countOrderProductByOptionValueIds" parameterType="map" resultType="int">
         select coalesce(sum(quantity), 0) as quantity
         from (
@@ -557,6 +576,12 @@
     <update id="updateUserMileage">
         update bc_user
         set mileage = mileage-#{used_point}
+        where id = #{id}
+    </update>
+
+    <update id="updateUserMileagePlus">
+        update bc_user
+        set mileage = mileage+500
         where id = #{id}
     </update>
 

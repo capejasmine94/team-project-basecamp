@@ -265,6 +265,28 @@ public class StoreService {
 
         int purchaseQuantity = storeSqlMapper.selectProductPurchaseQuantity(id);
         List<ProductImageDto> productImageDtoList = storeSqlMapper.selectProductImageDtoListByProductId(id);
+        
+        List<Map<String, Object>> reviewDataList = storeSqlMapper.selectProductReviewDataListByProductId(id);
+        for(Map<String, Object> reviewData : reviewDataList){
+            int review_id = (int)reviewData.get("id");
+            StoreSellerReplyDto storeSellerReplyDto = storeSqlMapper.selectStoreSellerReplyByReviewId(review_id);
+            
+            int order_product_id = (int)reviewData.get("order_product_id");
+            int[] value_ids = storeSqlMapper.selectOrderProductOptionValueIds(order_product_id);
+
+            if(value_ids.length!=0){
+                List<String> valueNameList = new ArrayList<>();
+                for(int value_id : value_ids){
+                    String value_name = storeSqlMapper.selectOptionValueNameById(value_id);
+                    valueNameList.add(value_name);
+                }
+                reviewData.put("valueNameList", valueNameList);
+            }else{
+                reviewData.put("valueNameList", null);
+            }
+
+            reviewData.put("storeSellerReplyDto", storeSellerReplyDto);
+        }
 
         map.put("storeProductDto", storeProductDto);
         map.put("storeDto", storeDto);
@@ -272,6 +294,7 @@ public class StoreService {
         map.put("productWishCount", productWishCount);
         map.put("purchaseQuantity", purchaseQuantity);
         map.put("productImageDtoList", productImageDtoList);
+        map.put("reviewDataList", reviewDataList);
 
         return map;
 
@@ -1040,6 +1063,11 @@ public class StoreService {
         storeSqlMapper.insertProductReview(productReviewDto);
         int order_product_id = productReviewDto.getOrder_product_id();
         storeSqlMapper.updateOrderProductStatusToReviewComplete(order_product_id);
+    }
+
+    public void getReviewPoint(int user_id){
+        storeSqlMapper.updateUserMileagePlus(user_id);
+        storeSqlMapper.insertReviewPoint(user_id);
     }
 
     public List<Map<String, Object>> getPurchaseConfirmationList(int user_id){

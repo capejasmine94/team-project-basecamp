@@ -1,11 +1,14 @@
 <!DOCTYPE html>
 <html lang="ko">
+
 <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">    
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
     <script src="https://kit.fontawesome.com/7b271bba58.js" crossorigin="anonymous"></script>
     <script src="/public/js/store/store.js"></script>
 
@@ -18,60 +21,86 @@
         .fill-on {
             font-variation-settings: 'FILL' 1;
         }
-        .seller_profile img{
+
+        .seller_profile img {
             aspect-ratio: 1/1;
             width: 100px;
             object-fit: cover;
             object-position: center;
         }
-        .icon-col img{
+
+        .icon-col img {
             aspect-ratio: 1/1;
             width: 100%;
             object-fit: cover;
             object-position: center;
         }
-        .product-col img{
+
+        .review-profile-col img {
+            aspect-ratio: 1/1;
+            width: 2em;
+            object-fit: cover;
+            object-position: center;
+        }
+
+        .product-col img {
             aspect-ratio: 1/1;
             width: 100%;
             object-fit: cover;
             object-position: center;
         }
-        a{
+
+        a {
             text-decoration: none;
             color: black;
         }
-        button{
+
+        button {
             color: black;
         }
-        .f05{
+
+        .f05 {
             font-size: 0.5em;
         }
-        .f08{
+
+        .f08 {
             font-size: 0.8em;
         }
-        .f09{
+
+        .f09 {
             font-size: 0.9em;
         }
-        .f12{
+
+        .f12 {
             font-size: 1.2em;
         }
-        .f15{
+
+        .f15 {
             font-size: 1.5em;
         }
-        .f17{
+
+        .f17 {
             font-size: 1.7em;
         }
-        .f20{
+
+        .f20 {
             font-size: 2em;
         }
-        .f40{
+
+        .f40 {
             font-size: 4em;
         }
+
         .inputQuantity:focus {
-            outline:none;
+            outline: none;
+        }
+
+        .orangered {
+            color: orangered;
         }
     </style>
 </head>
+
 <body class="bg-body-tertiary">
 
     <!-- top-nav -->
@@ -105,17 +134,21 @@
                 <div id="carouselExample" class="carousel slide">
                     <div class="carousel-inner">
                         <div class="carousel-item active">
-                            <img th:src="|/images/${productData.storeProductDto.main_image}|" class="d-block w-100" style="aspect-ratio: 1/1; width: 100%; object-fit: cover; object-position: center;">
+                            <img th:src="|/images/${productData.storeProductDto.main_image}|" class="d-block w-100"
+                                style="aspect-ratio: 1/1; width: 100%; object-fit: cover; object-position: center;">
                         </div>
                         <div class="carousel-item" th:each="productImageDto : ${productData.productImageDtoList}">
-                            <img th:src="|/images/${productImageDto.location}|" class="d-block w-100" style="aspect-ratio: 1/1; width: 100%; object-fit: cover; object-position: center;">
+                            <img th:src="|/images/${productImageDto.location}|" class="d-block w-100"
+                                style="aspect-ratio: 1/1; width: 100%; object-fit: cover; object-position: center;">
                         </div>
                     </div>
-                    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
+                    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample"
+                        data-bs-slide="prev">
                         <span class="carousel-control-prev-icon" aria-hidden="true"></span>
                         <span class="visually-hidden">Previous</span>
                     </button>
-                    <button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
+                    <button class="carousel-control-next" type="button" data-bs-target="#carouselExample"
+                        data-bs-slide="next">
                         <span class="carousel-control-next-icon" aria-hidden="true"></span>
                         <span class="visually-hidden">Next</span>
                     </button>
@@ -147,13 +180,16 @@
                 </div>
                 <div class="row px-3" th:if="${productData.percentage!=0}">
                     <div class="col px-0 f08 text-body-tertiary" style="text-decoration: line-through;">
-                        <span th:text="|${#numbers.formatDecimal(productData.storeProductDto.price, 1, 'COMMA', 0, 'POINT')}원|">40,000원</span>
+                        <span
+                            th:text="|${#numbers.formatDecimal(productData.storeProductDto.price, 1, 'COMMA', 0, 'POINT')}원|">40,000원</span>
                     </div>
                 </div>
                 <div class="row px-3 pb-3">
                     <div class="col px-0 d-flex align-items-center">
-                        <span class="fw-semibold lightFont" th:if="${productData.percentage!=0}" th:text="|${productData.percentage}%&nbsp;&nbsp;|">30%</span>
-                        <span class="fw-semibold" id="salePrice" th:text="|${#numbers.formatDecimal(productData.salePrice, 1, 'COMMA', 0, 'POINT')}|">28,000</span>
+                        <span class="fw-semibold lightFont" th:if="${productData.percentage!=0}"
+                            th:text="|${productData.percentage}%&nbsp;&nbsp;|">30%</span>
+                        <span class="fw-semibold" id="salePrice"
+                            th:text="|${#numbers.formatDecimal(productData.salePrice, 1, 'COMMA', 0, 'POINT')}|">28,000</span>
                         <span class="f08">원</span>
                     </div>
                 </div>
@@ -194,19 +230,143 @@
         </div>
 
         <div class="row bg-white sticky-top text-center border-bottom fw-bold f09" style="top: 58px;">
-            <div class="col py-3" style="border-bottom: black solid 2px;">
+            <div class="col py-3 tab border-bottom border-2 border-dark" id="productInfoTab" onclick="changeTab(this)">
                 상품정보
             </div>
-            <div class="col py-3 text-body-tertiary">
-                리뷰
+            <div class="col py-3 text-body-tertiary tab" id="reviewTab" onclick="changeTab(this)">
+                리뷰<span th:text="|(${productData.reviewDataList.size})|"></span>
             </div>
         </div>
 
-        <div class="row py-4 mb-2 bg-white" th:if="${productData.productImageDtoList.size != 0}">
+        <div id="productInfoRow" class="row py-4 mb-2 bg-white" th:if="${productData.productImageDtoList.size != 0}">
             <div class="col">
                 <div class="row" th:each="productImageDto  : ${productData.productImageDtoList}">
                     <div class="col">
                         <img th:src="|/images/${productImageDto.location}|" style="width: 100%;">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row d-none" id="reviewRow">
+            <div class="col">
+                <!-- <div class="row mb-2 py-4 px-3 bg-white" th:if="${productData.reviewDataList.size != 0}">
+                    <div class="col p-0">
+                        <div class="row">
+                            <div class="col border-end">
+                                <div class="row text-center fw-semibold f09">
+                                    <div class="col">
+                                        사용자 총 평점
+                                    </div>
+                                </div>
+                                <div class="row f20 text-center fw-semibold">
+                                    <div class="col">
+                                        4.86
+                                    </div>
+                                </div>
+                                <div class="row text-center">
+                                    <div class="col f12">
+                                        <span>
+                                            ★★★★★
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="row text-center fw-semibold f09">
+                                    <div class="col">
+                                        평점 비율
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div> -->
+                <div class="row mb-2 bg-white">
+                    <div class="col">
+                        <div class="row px-3">
+                            <div class="col px-0 py-3 fw-semibold f09">
+                                리뷰<span th:text="|(${productData.reviewDataList.size})|">(20)</span>
+                            </div>
+                        </div>
+
+                        <div class="row px-3" th:each="reviewData : ${productData.reviewDataList}" th:if="${productData.reviewDataList.size != 0}">
+                            <div class="col px-0 py-3 border-top">
+                                <div class="row">
+                                    <div class="col-auto pe-0 review-profile-col">
+                                        <img th:src="|/images/${reviewData.profile_image}|" class="border rounded-circle" th:if="${reviewData.profile_image!='default'}">
+                                        <img src="/public/img/common/default_profile.png" class="border rounded-circle" th:unless="${reviewData.profile_image!='default'}">
+                                    </div>
+                                    <div class="col">
+                                        <div class="row">
+                                            <div class="col">
+                                                <span class="star-rating">
+                                                    <span th:if="${reviewData.rating==1}">★<span class="text-dark text-opacity-25">★★★★</span></span>
+                                                    <span th:if="${reviewData.rating==2}">★★<span class="text-dark text-opacity-25">★★★</span></span>
+                                                    <span th:if="${reviewData.rating==3}">★★★<span class="text-dark text-opacity-25">★★</span></span>
+                                                    <span th:if="${reviewData.rating==4}">★★★★<span class="text-dark text-opacity-25">★</span></span>
+                                                    <span th:if="${reviewData.rating==5}">★★★★★</span>
+                                                </span>
+                                            </div>
+                                        </div>
+                                        <div class="row f08 text-body-tertiary">
+                                            <div class="col">
+                                                <span th:text="${reviewData.account}">goguma</span>
+                                                &#183;
+                                                <span th:text="${#dates.format(reviewData.created_at, 'yy.MM.dd')}">24.08.02</span>
+                                            </div>
+                                        </div>
+                                        <div class="row pt-1 f08 text-body-tertiary" th:if="${reviewData.valueNameList}!=null">
+                                            <div class="col">
+                                                옵션 : 
+                                                <span th:each="name, iterStat : ${reviewData.valueNameList}">
+                                                    <span th:text="${name}">Black / M</span>
+                                                    <span th:if="${!iterStat.last}">/</span>
+                                                </span>
+                                            </div>
+                                        </div>
+                                        <div class="row f09 py-2">
+                                            <div class="col">
+                                                <span th:text="${reviewData.content}">내용내용</span>
+                                            </div>
+                                        </div>
+        
+                                        <div class="row px-2" th:if="${reviewData.storeSellerReplyDto!=null}">
+                                            <div class="col py-2 bg-body-secondary">
+                                                <div class="row f08">
+                                                    <div class="col">
+                                                        <span class="fw-semibold">판매자</span>
+                                                        &#183;
+                                                        <span class="text-body-tertiary" th:text="${#dates.format(reviewData.storeSellerReplyDto.created_at, 'yy.MM.dd')}">24.08.02</span>
+                                                    </div>
+                                                </div>
+                                                <div class="row pt-2 f09">
+                                                    <div class="col">
+                                                        <span th:text="${reviewData.storeSellerReplyDto.content}">내용내용</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+        
+                        </div>
+
+                        <div class="row px-3 pt-4 pb-5 text-center" th:unless="${productData.reviewDataList.size != 0}">
+                            <div class="col p-0 f09">
+                                <div class="row">
+                                    <div class="col">
+                                        이 상품의 첫번째 리뷰를 작성해보세요!
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col">
+                                        추가 <span class="lightFont">포인트</span>를 적립해드려요
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -237,7 +397,7 @@
             </div>
         </div>
 
-        <div class="row bg-white">
+        <!-- <div class="row bg-white">
             <div class="col">
                 <div class="row py-3 px-3 f09 fw-bold">
                     <div class="col p-0">
@@ -245,7 +405,7 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div> -->
 
         <!-- footer -->
         <div class="row py-2 bg-dark-subtle text-white text-center f09">
@@ -311,13 +471,16 @@
                 </div>
 
                 <div class="row pt-3 align-items-center">
-                    <div class="col-auto me-2 bg-dark-subtle rounded-circle d-flex align-items-center" style="aspect-ratio: 1/1;">
+                    <div class="col-auto me-2 bg-dark-subtle rounded-circle d-flex align-items-center"
+                        style="aspect-ratio: 1/1;">
                         <i class="bi bi-google-play"></i>
                     </div>
-                    <div class="col-auto me-2 bg-dark-subtle rounded-circle d-flex align-items-center" style="aspect-ratio: 1/1;">
+                    <div class="col-auto me-2 bg-dark-subtle rounded-circle d-flex align-items-center"
+                        style="aspect-ratio: 1/1;">
                         <i class="bi bi-youtube"></i>
                     </div>
-                    <div class="col-auto me-2 bg-dark-subtle rounded-circle d-flex align-items-center" style="aspect-ratio: 1/1;">
+                    <div class="col-auto me-2 bg-dark-subtle rounded-circle d-flex align-items-center"
+                        style="aspect-ratio: 1/1;">
                         <i class="bi bi-instagram"></i>
                     </div>
                     <div class="col-auto pe-0 f08">
@@ -339,7 +502,8 @@
             <div class="col-auto pe-0 text-center">
                 <div class="row">
                     <div class="col d-flex align-items-center" onclick="productWish()" style="cursor: pointer;">
-                        <span th:if="${isWishlisted}" id="heart" class="material-symbols-outlined fill-on f15 fw-light text-danger">
+                        <span th:if="${isWishlisted}" id="heart"
+                            class="material-symbols-outlined fill-on f15 fw-light text-danger">
                             favorite
                         </span>
                         <span th:unless="${isWishlisted}" id="heart" class="material-symbols-outlined f15 fw-light">
@@ -354,21 +518,25 @@
                 </div>
             </div>
             <div class="col d-grid">
-                <button type="button" class="btn btn-dark f09 rounded-0 py-3" data-bs-toggle="offcanvas" data-bs-target="#offcanvasBottom" th:if="${productData.storeProductDto.quantity > productData.purchaseQuantity}">
+                <button type="button" class="btn btn-dark f09 rounded-0 py-3" data-bs-toggle="offcanvas"
+                    data-bs-target="#offcanvasBottom"
+                    th:if="${productData.storeProductDto.quantity > productData.purchaseQuantity}">
                     구매하기
                 </button>
-                <button type="button" class="border-0 bg-dark-subtle text-white disabled rounded-0 py-2" data-bs-toggle="offcanvas" data-bs-target="#offcanvasBottom" th:unless="${productData.storeProductDto.quantity > productData.purchaseQuantity}">
+                <button type="button" class="border-0 bg-dark-subtle text-white disabled rounded-0 py-2"
+                    data-bs-toggle="offcanvas" data-bs-target="#offcanvasBottom"
+                    th:unless="${productData.storeProductDto.quantity > productData.purchaseQuantity}">
                     SOLD OUT
                 </button>
             </div>
         </div>
     </div>
 
-    
+
     <!-- offcanvas -->
     <div class="offcanvas offcanvas-bottom" tabindex="-1" id="offcanvasBottom" style="max-height: 90vh; height: auto;">
         <div class="offcanvas-header">
-          <button type="button" class="btn-close" data-bs-dismiss="offcanvas"></button>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas"></button>
         </div>
         <div class="offcanvas-body pb-4">
             <div class="row">
@@ -397,7 +565,7 @@
                     </a>
                 </div>
                 <div class="col py-3 d-grid">
-                    <a id="orderButton" type="button" class="btn btn-dark rounded-0 py-2">
+                    <a id="orderButton" type="button" class="btn btn-dark rounded-0 py-2" onclick="addToOrdersheet()">
                         구매하기
                     </a>
                 </div>
@@ -428,7 +596,8 @@
                         <!-- 선택된 옵션 아이디 출력 위치 -->
                     </div>
                     <div class="col-auto">
-                        <button type="button" class="border-0 p-0 bg-transparent deleteOptionButton" onclick="deleteOption(this)">
+                        <button type="button" class="border-0 p-0 bg-transparent deleteOptionButton"
+                            onclick="deleteOption(this)">
                             <span class="material-symbols-outlined f09">
                                 close
                             </span>
@@ -438,15 +607,21 @@
                 <div class="row ps-3 optionQuantityRow align-items-center">
                     <div class="col-auto border">
                         <div class="row align-items-center bg-white">
-                            <button type="button" class="col p-1 border-0 bg-white decreaseButton d-flex align-items-center" onclick="decreaseOptionQuantity(this)">
+                            <button type="button"
+                                class="col p-1 border-0 bg-white decreaseButton d-flex align-items-center"
+                                onclick="decreaseOptionQuantity(this)">
                                 <span class="material-symbols-outlined fw-semibold f09 p-1">
                                     remove
                                 </span>
                             </button>
                             <div class="col-auto p-0">
-                                <input type="text" class="bg-white f09 p-1 border-start border-0 rounded-0 border-end text-center inputQuantity" readonly value="1" style="width: 3em;">
+                                <input type="text"
+                                    class="bg-white f09 p-1 border-start border-0 rounded-0 border-end text-center inputQuantity"
+                                    readonly value="1" style="width: 3em;">
                             </div>
-                            <button type="button" class="col p-1 border-0 bg-white increaseButton d-flex align-items-center" onclick="increaseOptionQuantity(this)">
+                            <button type="button"
+                                class="col p-1 border-0 bg-white increaseButton d-flex align-items-center"
+                                onclick="increaseOptionQuantity(this)">
                                 <span class="material-symbols-outlined fw-semibold f09 p-1">
                                     add
                                 </span>
@@ -464,24 +639,29 @@
 
         <!-- 선택된 옵션 하나의 정보(출력용) -->
         <span class="selectedOptionValue">black</span>
-        
+
         <!-- 진짜 다 만드네 -->
         <input type="hidden" class="selectedOptionValueId">
     </div>
 
     <!-- toast -->
-    <div id="toast" class="toast align-items-center text-bg-dark border-0 fade position-fixed" style="bottom: 95px; left: 50%; transform: translate(-50%, -50%); z-index: 2000;" role="alert" aria-live="assertive" aria-atomic="true">
+    <div id="toast" class="toast align-items-center text-bg-dark border-0 fade position-fixed"
+        style="bottom: 95px; left: 50%; transform: translate(-50%, -50%); z-index: 2000;" role="alert"
+        aria-live="assertive" aria-atomic="true">
         <div class="toast-body row align-items-center">
-          <div class="col pe-0">
-            장바구니에 상품이 담겼습니다
-          </div>
-          <div class="col-auto">
-            <a href="/store/cart" class="text-primary" style="text-decoration: none;">장바구니로 가기</a>
-          </div>
+            <div class="col pe-0">
+                장바구니에 상품이 담겼습니다
+            </div>
+            <div class="col-auto">
+                <a href="/store/cart" class="text-primary" style="text-decoration: none;">장바구니로 가기</a>
+            </div>
         </div>
     </div>
 
-    <div id="alreadySelectedOptionToast" class="toast align-items-center text-bg-dark bg-opacity-75 border-0 fade position-fixed" style="bottom: 95px; left: 50%; transform: translate(-50%, -50%); z-index: 2000;" role="alert" aria-live="assertive" aria-atomic="true">
+    <div id="alreadySelectedOptionToast"
+        class="toast align-items-center text-bg-dark bg-opacity-75 border-0 fade position-fixed"
+        style="bottom: 95px; left: 50%; transform: translate(-50%, -50%); z-index: 2000;" role="alert"
+        aria-live="assertive" aria-atomic="true">
         <div class="toast-body row align-items-center text-center">
             <div class="col pe-0">
                 이미 선택한 옵션입니다.
@@ -495,32 +675,50 @@
 
         let myId = null;
 
-        document.addEventListener('DOMContentLoaded', function() {
-            document.getElementById('backButton').addEventListener('click', function() {
+        document.addEventListener('DOMContentLoaded', function () {
+            document.getElementById('backButton').addEventListener('click', function () {
                 history.back();
             });
             setOptionData();
             setSessionId();
         });
 
-        // function reloadProductWish(){
+        function changeTab(selectedTab){
+            const tabs = document.querySelectorAll(".tab")
+            for(tab of tabs){
+                tab.classList.add("text-body-tertiary");
+                tab.classList.remove("border-bottom");
+                tab.classList.remove("border-2");
+                tab.classList.remove("border-dark");
+            }
+            selectedTab.classList.remove("text-body-tertiary");
+            selectedTab.classList.add("border-bottom");
+            selectedTab.classList.add("border-2");
+            selectedTab.classList.add("border-dark");
 
-        // }
-
-        function setSessionId(){
-            const url = "/api/user/getSessionUserId";
-            fetch(url)
-            .then(response => response.json())
-            .then((response) => {
-                myId = response.data.userId;
-            })
+            if(selectedTab.id == "productInfoTab"){
+                document.getElementById("productInfoRow").classList.remove("d-none");
+                document.getElementById("reviewRow").classList.add("d-none");
+            }else{
+                document.getElementById("productInfoRow").classList.add("d-none");
+                document.getElementById("reviewRow").classList.remove("d-none");
+            }
         }
 
-        function productWish(){
+        function setSessionId() {
+            const url = "/api/user/getSessionUserId";
+            fetch(url)
+                .then(response => response.json())
+                .then((response) => {
+                    myId = response.data.userId;
+                })
+        }
 
-            if(myId==null){
-                if(confirm("로그인이 필요한 서비스 입니다. 로그인 페이지로 이동하시겠습니까?")){
-                    location.href="/user/login";
+        function productWish() {
+
+            if (myId == null) {
+                if (confirm("로그인이 필요한 서비스 입니다. 로그인 페이지로 이동하시겠습니까?")) {
+                    location.href = "/user/login";
                 }
                 return;
             }
@@ -538,142 +736,142 @@
                 },
                 body: JSON.stringify(productWish)
             })
-            .then(response => response.json())
-            .then((response) => {
-                const heart = document.getElementById("heart")
-                const productWishCount = document.getElementById("productWishCount")
+                .then(response => response.json())
+                .then((response) => {
+                    const heart = document.getElementById("heart")
+                    const productWishCount = document.getElementById("productWishCount")
 
-                const productWishData = response.data.productWishData;
-                if(productWishData.isWishlisted){
-                    heart.classList.add("fill-on")
-                    heart.classList.add("text-danger")
-                }else{
-                    heart.classList.remove("fill-on")
-                    heart.classList.remove("text-danger")
-                }
+                    const productWishData = response.data.productWishData;
+                    if (productWishData.isWishlisted) {
+                        heart.classList.add("fill-on")
+                        heart.classList.add("text-danger")
+                    } else {
+                        heart.classList.remove("fill-on")
+                        heart.classList.remove("text-danger")
+                    }
 
-                productWishCount.innerText = productWishData.productWishCount;
-            })
+                    productWishCount.innerText = productWishData.productWishCount;
+                })
         }
 
-        function setOptionData(){
+        function setOptionData() {
             const url = `/api/store/getOptionDataList?product_id=${product_id}`
             fetch(url)
-            .then(response => response.json())
-            .then(response => {
+                .then(response => response.json())
+                .then(response => {
 
-                const optionDataList = response.data.optionDataList;
+                    const optionDataList = response.data.optionDataList;
 
-                //옵션이 없을 때
-                if(optionDataList.length == 0){
-                    const optionQuantityRow = document.querySelector("#template .optionQuantityRow").cloneNode(true);
+                    //옵션이 없을 때
+                    if (optionDataList.length == 0) {
+                        const optionQuantityRow = document.querySelector("#template .optionQuantityRow").cloneNode(true);
 
-                    const salePrice = document.getElementById("salePrice").innerText
-                    
-                    optionQuantityRow.querySelector(".optionPrice").innerText = salePrice
-                    optionQuantityRow.querySelector(".inputOptionPrice").value = salePrice.replace(/,/g, '');
+                        const salePrice = document.getElementById("salePrice").innerText
 
-                    const getQuantityUrl = `/api/store/getStockQuantityByProudctId?id=${product_id}`
-                    fetch(getQuantityUrl)
-                    .then(response => response.json())
-                    .then(response => {
-                        optionQuantityRow.querySelector(".inputOptionStockQuantity").value = response.data.stock_quantity;
+                        optionQuantityRow.querySelector(".optionPrice").innerText = salePrice
+                        optionQuantityRow.querySelector(".inputOptionPrice").value = salePrice.replace(/,/g, '');
 
-                        document.getElementById("selectedOptionContainer").appendChild(optionQuantityRow)      
-                    })
+                        const getQuantityUrl = `/api/store/getStockQuantityByProudctId?id=${product_id}`
+                        fetch(getQuantityUrl)
+                            .then(response => response.json())
+                            .then(response => {
+                                optionQuantityRow.querySelector(".inputOptionStockQuantity").value = response.data.stock_quantity;
 
-                    return;
-                }
+                                document.getElementById("selectedOptionContainer").appendChild(optionQuantityRow)
+                            })
 
-                //옵션이 있을 때
-                const optionContainer = document.getElementById("optionContainer");
-                optionContainer.innerHTML="";
-
-                let index = 0;//몇번째 옵션인가
-                for(optionData of optionDataList){
-                    const optionSelectRow = document.querySelector("#template .optionSelectRow").cloneNode(true);
-
-                    const optionSelectBox = optionSelectRow.querySelector(".optionSelectBox");
-                    optionSelectBox.setAttribute("data-index", index);//몇번째 옵션인가
-
-                    optionSelectBox.querySelector(".optionName").innerText = optionData.productOptionNameDto.name;
-
-                    for(productOptionValueDto of optionData.productOptionValueDtoList){
-                        const optionValue = document.querySelector("#template .optionValue").cloneNode(true)
-                        optionValue.innerText = productOptionValueDto.name;
-                        optionValue.value = productOptionValueDto.id;
-
-                        optionSelectBox.appendChild(optionValue);
+                        return;
                     }
 
-                    //첫번째 옵션명부터 선택 가능
-                    if(index == 0){
-                        optionSelectBox.disabled = false;
-                    } else {
-                        optionSelectBox.disabled = true;
-                    }
+                    //옵션이 있을 때
+                    const optionContainer = document.getElementById("optionContainer");
+                    optionContainer.innerHTML = "";
 
-                    //마지막 옵션명임을 알리는 아이디 설정
-                    if(index == optionDataList.length-1){
-                        optionSelectBox.setAttribute("id", "lastSelectOption");
-                    }
+                    let index = 0;//몇번째 옵션인가
+                    for (optionData of optionDataList) {
+                        const optionSelectRow = document.querySelector("#template .optionSelectRow").cloneNode(true);
 
-                    optionContainer.appendChild(optionSelectRow);
+                        const optionSelectBox = optionSelectRow.querySelector(".optionSelectBox");
+                        optionSelectBox.setAttribute("data-index", index);//몇번째 옵션인가
 
-                    index++;
-                }
-                
-                //옵션이 하나일 때
-                if(optionDataList.length == 1){
-                    const url = `/api/store/getAdditionalInfo?product_id=${product_id}&currentIndex=0&value_ids=`
-                    fetch(url)
-                    .then(response => response.json())
-                    .then((response) => {
-                        const additionalInfoDataList = response.data.additionalInfoDataList;
-                        for(additionalInfoData of additionalInfoDataList){
-                            const lastSelectOption = document.getElementById("lastSelectOption");
-                            const optionValues = lastSelectOption.querySelectorAll(".optionValue");
+                        optionSelectBox.querySelector(".optionName").innerText = optionData.productOptionNameDto.name;
 
-                            for(optionValue of optionValues){
-                                //품절처리
-                                if(additionalInfoData.productOptionValueDto.id == optionValue.value && additionalInfoData.stock_quantity==0){
-                                    optionValue.disabled = true;
-                                    if(additionalInfoData.additionalInfoDto.additional_price!=0){
-                                        optionValue.innerText=`${additionalInfoData.productOptionValueDto.name}(+${additionalInfoData.additionalInfoDto.additional_price})(품절)`
-                                    }else if(additionalInfoData.productOptionValueDto.id == optionValue.value && additionalInfoData.additionalInfoDto.additional_price==0){
-                                        optionValue.innerText=`${additionalInfoData.productOptionValueDto.name}(품절)`
-                                    }
-                                }else if(additionalInfoData.productOptionValueDto.id == optionValue.value && additionalInfoData.stock_quantity!=0){
-                                    optionValue.disabled = false;
-                                    //추가정보를 가져 온 옵션값Dto의 id가 마지막 셀렉박스의 옵션값의 id와 일치하고, 추가금 정보가 0원이 아닐 때
-                                    //추가금 정보를 출력
-                                    if(additionalInfoData.additionalInfoDto.additional_price!=0){
-                                        optionValue.innerText=`${additionalInfoData.productOptionValueDto.name}(+${additionalInfoData.additionalInfoDto.additional_price})`
-                                    }else{
-                                        optionValue.innerText=additionalInfoData.productOptionValueDto.name
-                                    }
-                                }
-                            }
+                        for (productOptionValueDto of optionData.productOptionValueDtoList) {
+                            const optionValue = document.querySelector("#template .optionValue").cloneNode(true)
+                            optionValue.innerText = productOptionValueDto.name;
+                            optionValue.value = productOptionValueDto.id;
 
-                            lastSelectOption.disabled = false;
-
+                            optionSelectBox.appendChild(optionValue);
                         }
-                    })
-                }
-            })
+
+                        //첫번째 옵션명부터 선택 가능
+                        if (index == 0) {
+                            optionSelectBox.disabled = false;
+                        } else {
+                            optionSelectBox.disabled = true;
+                        }
+
+                        //마지막 옵션명임을 알리는 아이디 설정
+                        if (index == optionDataList.length - 1) {
+                            optionSelectBox.setAttribute("id", "lastSelectOption");
+                        }
+
+                        optionContainer.appendChild(optionSelectRow);
+
+                        index++;
+                    }
+
+                    //옵션이 하나일 때
+                    if (optionDataList.length == 1) {
+                        const url = `/api/store/getAdditionalInfo?product_id=${product_id}&currentIndex=0&value_ids=`
+                        fetch(url)
+                            .then(response => response.json())
+                            .then((response) => {
+                                const additionalInfoDataList = response.data.additionalInfoDataList;
+                                for (additionalInfoData of additionalInfoDataList) {
+                                    const lastSelectOption = document.getElementById("lastSelectOption");
+                                    const optionValues = lastSelectOption.querySelectorAll(".optionValue");
+
+                                    for (optionValue of optionValues) {
+                                        //품절처리
+                                        if (additionalInfoData.productOptionValueDto.id == optionValue.value && additionalInfoData.stock_quantity == 0) {
+                                            optionValue.disabled = true;
+                                            if (additionalInfoData.additionalInfoDto.additional_price != 0) {
+                                                optionValue.innerText = `${additionalInfoData.productOptionValueDto.name}(+${additionalInfoData.additionalInfoDto.additional_price})(품절)`
+                                            } else if (additionalInfoData.productOptionValueDto.id == optionValue.value && additionalInfoData.additionalInfoDto.additional_price == 0) {
+                                                optionValue.innerText = `${additionalInfoData.productOptionValueDto.name}(품절)`
+                                            }
+                                        } else if (additionalInfoData.productOptionValueDto.id == optionValue.value && additionalInfoData.stock_quantity != 0) {
+                                            optionValue.disabled = false;
+                                            //추가정보를 가져 온 옵션값Dto의 id가 마지막 셀렉박스의 옵션값의 id와 일치하고, 추가금 정보가 0원이 아닐 때
+                                            //추가금 정보를 출력
+                                            if (additionalInfoData.additionalInfoDto.additional_price != 0) {
+                                                optionValue.innerText = `${additionalInfoData.productOptionValueDto.name}(+${additionalInfoData.additionalInfoDto.additional_price})`
+                                            } else {
+                                                optionValue.innerText = additionalInfoData.productOptionValueDto.name
+                                            }
+                                        }
+                                    }
+
+                                    lastSelectOption.disabled = false;
+
+                                }
+                            })
+                    }
+                })
         }
 
 
 
-        function setSelectedOption(currentOptionSelectBox){
+        function setSelectedOption(currentOptionSelectBox) {
             const currentIndex = parseInt(currentOptionSelectBox.dataset.index, 10);//현재 선택한 옵션이 몇번째 옵션인가
             const optionSelectBoxes = document.querySelectorAll("#optionContainer .optionSelectBox");
 
             // 선택할 옵션이 두개 이상 남은 경우 다음 옵션 활성화 후 return
-            if (currentIndex < optionSelectBoxes.length - 2) { 
-                for(optionSelectBox of optionSelectBoxes){
+            if (currentIndex < optionSelectBoxes.length - 2) {
+                for (optionSelectBox of optionSelectBoxes) {
                     const selectbox_index = parseInt(optionSelectBox.dataset.index, 10)
-                    if(selectbox_index==currentIndex+1){
+                    if (selectbox_index == currentIndex + 1) {
                         optionSelectBox.disabled = false;
                         return;
                     }
@@ -682,7 +880,7 @@
             }
 
             // 마지막 옵션일 경우
-            if(currentIndex == optionSelectBoxes.length-1){
+            if (currentIndex == optionSelectBoxes.length - 1) {
 
                 const selectedOptionContainer = document.getElementById("selectedOptionContainer");
                 const selectedOptionRow = document.querySelector("#template .selectedOptionRow").cloneNode(true)
@@ -698,7 +896,7 @@
 
                 //이미 선택된 옵션인가?
                 const selectedOptionRows = document.querySelectorAll("#selectedOptionContainer .selectedOptionRow")
-                for(row of selectedOptionRows){
+                for (row of selectedOptionRows) {
                     const selectedOptionValueIds = row.querySelectorAll(".selectedOptionValueId");
                     const ids = Array.from(selectedOptionValueIds).map(selectedOptionValueId => selectedOptionValueId.value);
                     const valueIds = ids.join(",");
@@ -720,18 +918,18 @@
 
                 const url = `/api/store/getAdditionalInfoData?value_ids=${value_ids}`
                 fetch(url)
-                .then(response => response.json())
-                .then((response) => {
-                    const additionalInfoData = response.data.additionalInfoData;
-                    const additional_price = additionalInfoData.additionalInfoDto.additional_price;//추가금
-                    const salePrice = document.getElementById("salePrice").innerText.replace(/,/g, '');//판매가
+                    .then(response => response.json())
+                    .then((response) => {
+                        const additionalInfoData = response.data.additionalInfoData;
+                        const additional_price = additionalInfoData.additionalInfoDto.additional_price;//추가금
+                        const salePrice = document.getElementById("salePrice").innerText.replace(/,/g, '');//판매가
 
-                    optionPrice.innerText = formatNumberToPrice(parseInt(additional_price, 10)+parseInt(salePrice, 10))//아마 이게 출력용
-                    inputOptionPrice.value = parseInt(additional_price, 10)+parseInt(salePrice, 10)//이건 그냥 계산 빨리하려고 넣은 것 같은데 replace왜 안 썼는지 모를..
-                    inputOptionStockQuantity.value = additionalInfoData.stock_quantity;
-                })
+                        optionPrice.innerText = formatNumberToPrice(parseInt(additional_price, 10) + parseInt(salePrice, 10))//아마 이게 출력용
+                        inputOptionPrice.value = parseInt(additional_price, 10) + parseInt(salePrice, 10)//이건 그냥 계산 빨리하려고 넣은 것 같은데 replace왜 안 썼는지 모를..
+                        inputOptionStockQuantity.value = additionalInfoData.stock_quantity;
+                    })
 
-                for(optionSelectBox of optionSelectBoxes){
+                for (optionSelectBox of optionSelectBoxes) {
                     const selectedOptionValue = document.querySelector("#template .selectedOptionValue").cloneNode(true)
                     const selectedOptionValueId = document.querySelector("#template .selectedOptionValueId").cloneNode(true)
 
@@ -740,13 +938,13 @@
                     selectedOptionValueId.value = selectedOption.value;//선택된 옵션값의 value(id)
 
                     const selectedOptionValueCol = selectedOptionRow.querySelector(".selectedOptionValueCol");
-                    
+
                     selectedOptionValueCol.appendChild(selectedOptionValue);
                     selectedOptionValueCol.appendChild(selectedOptionValueId);
                 }
 
                 selectedOptionContainer.appendChild(selectedOptionRow);
-                
+
                 setOptionData();
 
                 return;
@@ -764,57 +962,57 @@
 
             const url = `/api/store/getAdditionalInfo?product_id=${product_id}&currentIndex=${currentIndex}&value_ids=${value_ids}`
             fetch(url)
-            .then(response => response.json())
-            .then((response) => {
-                const additionalInfoDataList = response.data.additionalInfoDataList;
-                for(additionalInfoData of additionalInfoDataList){
-                    const lastSelectOption = document.getElementById("lastSelectOption");
-                    const optionValues = lastSelectOption.querySelectorAll(".optionValue");//마지막 셀렉박스의 옵션들
+                .then(response => response.json())
+                .then((response) => {
+                    const additionalInfoDataList = response.data.additionalInfoDataList;
+                    for (additionalInfoData of additionalInfoDataList) {
+                        const lastSelectOption = document.getElementById("lastSelectOption");
+                        const optionValues = lastSelectOption.querySelectorAll(".optionValue");//마지막 셀렉박스의 옵션들
 
-                    for(optionValue of optionValues){
+                        for (optionValue of optionValues) {
 
-                        //품절처리
-                        if(additionalInfoData.productOptionValueDto.id == optionValue.value && additionalInfoData.stock_quantity==0){
-                            optionValue.disabled = true;
-                            if(additionalInfoData.additionalInfoDto.additional_price!=0){
-                                optionValue.innerText=`${additionalInfoData.productOptionValueDto.name}(+${additionalInfoData.additionalInfoDto.additional_price})(품절)`
-                            }else if(additionalInfoData.productOptionValueDto.id == optionValue.value && additionalInfoData.additionalInfoDto.additional_price==0){
-                                optionValue.innerText=`${additionalInfoData.productOptionValueDto.name}(품절)`
-                            }
-                        }else if(additionalInfoData.productOptionValueDto.id == optionValue.value && additionalInfoData.stock_quantity!=0){
-                            optionValue.disabled = false;
-                            //추가정보를 가져 온 옵션값Dto의 id가 마지막 셀렉박스의 옵션값의 id와 일치하고, 추가금 정보가 0원이 아닐 때
-                            //추가금 정보를 출력
-                            if(additionalInfoData.additionalInfoDto.additional_price!=0){
-                                optionValue.innerText=`${additionalInfoData.productOptionValueDto.name}(+${additionalInfoData.additionalInfoDto.additional_price})`
-                            }else{
-                                optionValue.innerText = additionalInfoData.productOptionValueDto.name;
+                            //품절처리
+                            if (additionalInfoData.productOptionValueDto.id == optionValue.value && additionalInfoData.stock_quantity == 0) {
+                                optionValue.disabled = true;
+                                if (additionalInfoData.additionalInfoDto.additional_price != 0) {
+                                    optionValue.innerText = `${additionalInfoData.productOptionValueDto.name}(+${additionalInfoData.additionalInfoDto.additional_price})(품절)`
+                                } else if (additionalInfoData.productOptionValueDto.id == optionValue.value && additionalInfoData.additionalInfoDto.additional_price == 0) {
+                                    optionValue.innerText = `${additionalInfoData.productOptionValueDto.name}(품절)`
+                                }
+                            } else if (additionalInfoData.productOptionValueDto.id == optionValue.value && additionalInfoData.stock_quantity != 0) {
+                                optionValue.disabled = false;
+                                //추가정보를 가져 온 옵션값Dto의 id가 마지막 셀렉박스의 옵션값의 id와 일치하고, 추가금 정보가 0원이 아닐 때
+                                //추가금 정보를 출력
+                                if (additionalInfoData.additionalInfoDto.additional_price != 0) {
+                                    optionValue.innerText = `${additionalInfoData.productOptionValueDto.name}(+${additionalInfoData.additionalInfoDto.additional_price})`
+                                } else {
+                                    optionValue.innerText = additionalInfoData.productOptionValueDto.name;
+                                }
                             }
                         }
-                    }
 
-                    lastSelectOption.disabled = false;
-                }
-            })
+                        lastSelectOption.disabled = false;
+                    }
+                })
 
         }
 
-        function decreaseOptionQuantity(decreaseButton){
+        function decreaseOptionQuantity(decreaseButton) {
             const optionQuantityRow = decreaseButton.closest(".optionQuantityRow")
             const inputQuantity = optionQuantityRow.querySelector(".inputQuantity");
             const optionPrice = optionQuantityRow.querySelector(".optionPrice");
             const inputOptionPrice = optionQuantityRow.querySelector(".inputOptionPrice");
 
-            if(inputQuantity.value == 1){
+            if (inputQuantity.value == 1) {
                 return;
-            }else{
+            } else {
                 inputQuantity.value = parseInt(inputQuantity.value, 10) - 1
             }
 
             optionPrice.innerText = formatNumberToPrice(parseInt(inputOptionPrice.value, 10) * parseInt(inputQuantity.value, 10))
         }
 
-        function increaseOptionQuantity(increaseButton){
+        function increaseOptionQuantity(increaseButton) {
             const optionQuantityRow = increaseButton.closest(".optionQuantityRow")
             const inputQuantity = optionQuantityRow.querySelector(".inputQuantity");
             const optionPrice = optionQuantityRow.querySelector(".optionPrice");
@@ -823,7 +1021,7 @@
 
             const newInputQuantity = parseInt(inputQuantity.value, 10) + 1
 
-            if(newInputQuantity>inputOptionStockQuantity.value){
+            if (newInputQuantity > inputOptionStockQuantity.value) {
                 alert("해당 옵션 상품의 재고가 부족합니다.")
                 return;
             }
@@ -833,17 +1031,15 @@
             //그 머더라 막아야지 수량
         }
 
-        function deleteOption(deleteOptionButton){
+        function deleteOption(deleteOptionButton) {
             const selectedOptionRow = deleteOptionButton.closest(".selectedOptionRow")
             selectedOptionRow.parentNode.removeChild(selectedOptionRow);
         }
 
-
-        //addToCart
-        async function addToCart(){
-            if(myId==null){
-                if(confirm("로그인 후 이용 가능합니다. 로그인 페이지로 이동하시겠습니까?")){
-                    location.href="/user/login";
+        function addToOrdersheet(){
+            if (myId == null) {
+                if (confirm("로그인 후 이용 가능합니다. 로그인 페이지로 이동하시겠습니까?")) {
+                    location.href = "/user/login";
                 }
                 return;
             }
@@ -851,13 +1047,31 @@
             const selectedOptionRows = document.querySelectorAll('#selectedOptionContainer .selectedOptionRow');
 
             const optionQuantityRow = document.querySelector('#selectedOptionContainer .optionQuantityRow');
-            if(optionQuantityRow==null){
+            if (optionQuantityRow == null) {
+                alert("상품 옵션을 선택해주세요");
+                return;
+            }
+        }
+
+        //addToCart
+        async function addToCart() {
+            if (myId == null) {
+                if (confirm("로그인 후 이용 가능합니다. 로그인 페이지로 이동하시겠습니까?")) {
+                    location.href = "/user/login";
+                }
+                return;
+            }
+
+            const selectedOptionRows = document.querySelectorAll('#selectedOptionContainer .selectedOptionRow');
+
+            const optionQuantityRow = document.querySelector('#selectedOptionContainer .optionQuantityRow');
+            if (optionQuantityRow == null) {
                 alert("상품 옵션을 선택해주세요");
                 return;
             }
 
             //옵션이 없는 상품일 때
-            if(selectedOptionRows.length==0){
+            if (selectedOptionRows.length == 0) {
                 const quantity = optionQuantityRow.querySelector('.inputQuantity').value;
                 const price = optionQuantityRow.querySelector('.inputOptionPrice').value;
 
@@ -878,7 +1092,7 @@
             for (const selectedOptionRow of selectedOptionRows) {
                 const quantity = selectedOptionRow.querySelector('.inputQuantity').value;
                 const price = selectedOptionRow.querySelector('.inputOptionPrice').value;
-                
+
                 const selectedOptionValueIds = selectedOptionRow.querySelectorAll('.selectedOptionValueId');
 
                 const valueIds = Array.from(selectedOptionValueIds).map(option => parseInt(option.value, 10));
@@ -897,9 +1111,12 @@
             setTimeout(() => {
                 toast.hide();
             }, 3000);
-            
+
         }
     </script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+        crossorigin="anonymous"></script>
 </body>
+
 </html>
