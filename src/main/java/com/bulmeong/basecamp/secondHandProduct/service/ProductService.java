@@ -122,7 +122,7 @@ public class ProductService {
         return productSqlMapper.selectChatRoomProductInformation(product_id);
     }
 
-//마이페이지
+// 마이페이지
     // 판매내역 - 판매중
     public List<AllContentsProductDto> selectSalesProduct(int user_id, String status) {
         return productSqlMapper.selectSalesProduct(user_id, status );
@@ -138,7 +138,16 @@ public class ProductService {
         return productSqlMapper.getTotalTransactionComplete(user_id, status);
     }
     // 거래완료 -> 구매자 리스트
-    public List<ProductBuyerDto> getProductBuyerList(int seller_user_id) {
-        return productSqlMapper.getProductBuyerList(seller_user_id);
+    public List<ProductBuyerDto> getProductBuyerList(ProductBuyerDto productBuyerDto) {
+        return productSqlMapper.getProductBuyerList(productBuyerDto);
+    }
+// 거래후기
+    // 좋아요 선택
+    public List<LikeReviewDto> selectLikeReviewList() {
+        return productSqlMapper.selectLikeReviewList();
+    }
+    // 싫어요 선택
+    public List<UnlikeReviewDto> selectUnlikeReviewList() {
+        return productSqlMapper.selectUnlikeReviewList();
     }
 }

@@ -60,6 +60,12 @@ public interface ProductSqlMapper {
     // 거래완료 게시글 수
     public int getTotalTransactionComplete(int user_id, String status);
     // 거래완료 -> 구매자 리스트
-    public List<ProductBuyerDto> getProductBuyerList(int seller_user_id);
+    public List<ProductBuyerDto> getProductBuyerList(ProductBuyerDto productBuyerDto);
+
+//거래후기
+    // 좋아요 후기 선택
+    public List<LikeReviewDto> selectLikeReviewList();
+    // 싫어요 후기 선택
+    public List<UnlikeReviewDto> selectUnlikeReviewList();
 
 }

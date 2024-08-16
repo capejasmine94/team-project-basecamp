@@ -226,15 +226,26 @@
     <select id="getProductBuyerList" resultType="com.bulmeong.basecamp.secondHandProduct.dto.ProductBuyerDto">
         SELECT
             c.buyer_user_id,
+            c.seller_user_id,
             u.nickname,
-            p.title,
+            p.title, p.product_id, p.main_image,
             c.message_time,
             u.profile_image
         FROM bc_secondhand_product_chat_room c
         JOIN bc_user u ON u.id = c.buyer_user_id
         JOIN bc_secondhand_product p ON p.product_id = c.product_id
         WHERE c.seller_user_id = #{seller_user_id}
+          AND c.product_id = #{product_id}
     </select>
+    <!-- 후기보내기 -> 좋아요 선택지 -->
+    <select id="selectLikeReviewList" resultType="com.bulmeong.basecamp.secondHandProduct.dto.LikeReviewDto">
+        SELECT * FROM bc_secondhand_like_review
+    </select>
+    <!-- 후기보내기 -> 싫어요 선택지 -->
+    <select id="selectUnlikeReviewList" resultType="com.bulmeong.basecamp.secondHandProduct.dto.UnlikeReviewDto">
+        SELECT * FROM bc_secondhand_unlike_review
+    </select>
+
 
 
 </mapper>

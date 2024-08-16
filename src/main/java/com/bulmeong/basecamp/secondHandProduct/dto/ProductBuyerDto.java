@@ -8,10 +8,12 @@ import java.util.Date;
 public class ProductBuyerDto {
 
     private int product_id;
+    private String title;
+    private String main_image;
     private int buyer_user_id;
+    private int seller_user_id;
     private String nickname;
     private String profile_image;
-    private String title;
     private Date message_time;
 
 }

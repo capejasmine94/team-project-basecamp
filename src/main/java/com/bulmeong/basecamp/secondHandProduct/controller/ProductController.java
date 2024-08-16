@@ -440,15 +440,47 @@ public class ProductController {
     public String buyerSelectionPage(Model model, HttpSession session,
                                      @RequestParam("product_id") int product_id) {
 
-        Map<String, Object> productTotalDtoList = productService.selectSecondhandDetailProduct(product_id);
-        model.addAttribute("productTotalDtoList", productTotalDtoList);
+        Map<String, Object> productTotalDtoMap = productService.selectSecondhandDetailProduct(product_id);
+        model.addAttribute("productTotalMap", productTotalDtoMap);
 
+        // 채팅방 때문에 가져옴
         UserDto sessionUserInfo = (UserDto) session.getAttribute("sessionUserInfo");
-        int seller_user_id = sessionUserInfo.getId();
-        List<ProductBuyerDto> productBuyerDtoList = productService.getProductBuyerList(seller_user_id);
+        ProductBuyerDto productBuyerDto = new ProductBuyerDto();
+        productBuyerDto.setProduct_id(product_id);
+        productBuyerDto.setSeller_user_id(sessionUserInfo.getId());
+        List<ProductBuyerDto> productBuyerDtoList = productService.getProductBuyerList(productBuyerDto);
         model.addAttribute("productBuyerDtoList", productBuyerDtoList);
 
         return "secondhandProduct/buyerSelectionPage";
+    }
+    // 거래완료 -> 판매자 선택 -> 거래후기
+    @PostMapping("transactionReviewPage")
+    public String transactionReview(Model model,
+                                    @RequestParam("product_id") int product_id,
+                                    @RequestParam("nickname") String nickname) {
+
+        Map<String, Object> productTotalDtoMap = productService.selectSecondhandDetailProduct(product_id);
+        model.addAttribute("productTotalMap", productTotalDtoMap);
+        model.addAttribute("nickname", nickname);
+
+        return "secondhandProduct/transactionReviewPage";
+    }
+    @RequestMapping("likeReviewSelectPage")
+    public String likeReviewSelectPage(Model model) {
+
+        List<LikeReviewDto> likeReviewDtoList = productService.selectLikeReviewList();
+        model.addAttribute("likeReviewDtoList", likeReviewDtoList);
+
+        return "partials/secondhandProduct/likeReviewSelectPage :: reviewSelect";
+    }
+
+    @RequestMapping("unlikeReviewSelectPage")
+    public String unlikeReviewSelectPage(Model model) {
+
+        List<UnlikeReviewDto> unlikeReviewDtoList = productService.selectUnlikeReviewList();
+        model.addAttribute("unlikeReviewDtoList", unlikeReviewDtoList);
+
+        return "partials/secondhandProduct/unlikeReviewSelectPage :: reviewSelect";
     }
 
 

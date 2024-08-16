@@ -39,23 +39,23 @@
 <div class="container-fluid g-0 border-bottom fixed-top" style="margin-top: 2.7rem; background-color: #F5F6F7">
   <div class="row mx-2 pt-2 pb-2">
     <div class="col-auto pe-0">
-      <img class="chatProductImg-custom" th:src="@{/images/{image}(image=${productTotalDtoList.AllContentsDto.main_image})}">
+      <img class="chatProductImg-custom" th:src="@{/images/{image}(image=${productTotalMap.AllContentsDto.main_image})}">
     </div>
     <div class="col">
       <div class="row-auto">
         <div class="col">
-          <span class="me-1" style="font-weight: 600" th:text="${productTotalDtoList.AllContentsDto.status}">거래상태</span>
-          <span style="font-weight: 400" th:text="${productTotalDtoList.AllContentsDto.title}">상품이름</span>
+          <span class="me-1" style="font-weight: 600" th:text="${productTotalMap.AllContentsDto.status}">거래상태</span>
+          <span style="font-weight: 400" th:text="${productTotalMap.AllContentsDto.title}">상품이름</span>
         </div>
         <div class="col" style="font-weight: 600">
-          <span th:text="|${#numbers.formatInteger(productTotalDtoList.AllContentsDto.price, 0, 'COMMA')}원|"></span>
+          <span th:text="|${#numbers.formatInteger(productTotalMap.AllContentsDto.price, 0, 'COMMA')}원|"></span>
         </div>
       </div>
     </div>
   </div>
 </div>
 <!-- 구매자 선택 -->
-<form action="">
+<form action="/secondhandProduct/transactionReviewPage" method="post">
 <div class="container-fluid g-0" style="margin-top: 7rem">
   <div class="row mx-2 py-3 border-bottom" th:each="productBuyerList, iterStat : ${productBuyerDtoList}">
     <div class="col-1 d-flex align-items-center">
@@ -85,6 +85,7 @@
   <div class="container g-0 py-2 bg-white fixed-bottom">
     <div class="row mx-2">
       <div class="col d-grid">
+        <input type="hidden" name="product_id" th:value="${productTotalMap.AllContentsDto.product_id}">
         <button type="submit" class="btn py-2" style="background-color: #28323C; color: white">구매자 선택</button>
       </div>
     </div>

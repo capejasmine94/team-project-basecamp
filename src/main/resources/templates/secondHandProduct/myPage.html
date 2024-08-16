@@ -31,6 +31,9 @@
             letter-spacing: 0.1rem; /* 글자 간격 조정 */
             word-spacing: 0.2rem; /* 단어 간격 조정 */
         }
+        .f08 {
+            font-size: 0.8em;
+        }
     </style>
 </head>
 <body>
@@ -154,21 +157,13 @@
 </div>
 <!---->
 <div class="container py-2 g-0 bg-white fixed-top">
-    <div class="row mx-2">
-        <div class="col-auto text-start font-edu">
-            SecPro
+    <a href="/secondhandProduct/mainPage" style="color: black">
+        <div class="row mx-2">
+            <div class="col-auto text-start font-edu">
+                SecPro
+            </div>
         </div>
-        <div class="col d-flex align-text-center justify-content-end">
-            <a href="/secondhandProduct/mainPage">
-                <span class="me-3" style="font-size: 1.2rem; color: black">
-                <i class="bi bi-house-door"></i>
-            </span>
-            </a>
-            <span style="font-size: 1.2rem">
-                <i class="bi bi-gear"></i>
-            </span>
-        </div>
-    </div>
+    </a>
 </div>
 <div class="container-fluid g-0 form-container" style="margin-top: 2.5rem">
     <div class="row mx-2 py-3 border-bottom align-items-center">
@@ -208,24 +203,133 @@
             <i class="bi bi-cart"></i><span class="ms-2">구매내역</span>
         </a>
     </div>
+    <div class="row mt-2 mx-2">
+        <a href="" class="col link-noneAndColor" style="font-size: 1.1rem; font-weight: 500">
+            <i class="bi bi-clipboard"></i><span class="ms-2">거래후기</span>
+        </a>
+    </div>
     <div class="row border-bottom mt-3"></div>
 <!--동네인증-->
+    <div class="row mt-3 mx-2">
+        <div class="col" style="font-size: 1.2rem; font-weight: 500">
+            나의 지역생활
+        </div>
+    </div>
+    <div class="row mt-2 mx-2">
+        <a href="/secondhandProduct/administrativeRegionListPage" class="col link-noneAndColor" style="font-size: 1.1rem; font-weight: 500">
+            <i class="bi bi-geo-alt"></i><span class="ms-2">내 동네 설정</span>
+        </a>
+    </div>
+    <div class="row mt-2 mx-2">
+        <a href="" class="col link-noneAndColor" style="font-size: 1.1rem; font-weight: 500">
+            <i class="bi bi-envelope"></i><span class="ms-2">진행 중인 이벤트</span>
+        </a>
+    </div>
+    <div class="row mt-2 mx-2">
+        <a href="" class="col link-noneAndColor" style="font-size: 1.1rem; font-weight: 500">
+            <i class="bi bi-journal-text"></i><span class="ms-2">공지사항</span>
+        </a>
+    </div>
+    <div class="row mt-2 mx-2">
+        <a href="" class="col link-noneAndColor" style="font-size: 1.1rem; font-weight: 500">
+            <i class="bi bi-megaphone"></i><span class="ms-2">광고</span>
+        </a>
+    </div>
+    <div class="row border-bottom mt-3"></div>
     <div class="row mt-3 mx-2">
         <div class="col" style="font-size: 1.2rem; font-weight: 500">
             기타
         </div>
     </div>
     <div class="row mt-2 mx-2">
-        <a href="/secondhandProduct/myNeighborhoodSettingsPage" class="col link-noneAndColor" style="font-size: 1.1rem; font-weight: 500">
-            <i class="bi bi-geo-alt"></i><span class="ms-2">내 동네 설정</span>
+        <a href="" class="col link-noneAndColor" style="font-size: 1.1rem; font-weight: 500">
+            <i class="bi bi-lightbulb"></i><span class="ms-2">자주 묻는 질문</span>
         </a>
     </div>
     <div class="row mt-2 mx-2">
-        <a href="/secondhandProduct/neighborhoodCertificationPage" class="col link-noneAndColor" style="font-size: 1.1rem; font-weight: 500">
-            <i class="bi bi-crosshair"></i><span class="ms-2">동네 인증하기</span>
+        <a href="" class="col link-noneAndColor" style="font-size: 1.1rem; font-weight: 500">
+            <i class="bi bi-shield-exclamation"></i><span class="ms-2">약관 및 정책 </span>
         </a>
     </div>
+    <!-- 홈페이지 설명  시작 -->
+    <div class="row mt-3 py-2 bg-dark-subtle text-white text-center f09">
+        <div class="col fw-bold border-end">
+            로그아웃
+        </div>
+        <div class="col fw-bold border-end">
+            고객센터
+        </div>
+        <div class="col fw-bold">
+            NEWS
+        </div>
+    </div>
+    <div class="row mx-2  py-4 px-3 bg-body-secondary text-secondary">
+        <div class="col">
+            <div class="row pb-2">
+                <div class="col p-0 fw-bold fs-3 d-flex align-items-center">
+                    <span class="material-symbols-outlined">camping</span>
+                    <span class="ms-1">BASECAMP</span>
+                </div>
+            </div>
+            <div class="row pb-3 border-bottom border-2">
+                <div class="col p-0 f08">
+                    BASECAMP는 통신판매 중개자로서 통신판매의 당사자가 아니며 상품의 예약, 이용 및 환불 등과 관련한 의무와 책임은 각 판매자에게 있습니다.
+                </div>
+            </div>
+
+            <div class="row pt-3 py-3 border-bottom border-2">
+                <div class="col-auto p-0">
+                    <button class="btn btn-sm bg-dark-subtle text-white fw-bold f08 d-flex align-items-center">
+                        <span class="material-symbols-outlined" style="font-size: 1rem; line-height: 1;">phone_in_talk</span>
+                        <span class="ms-1" style="font-size: 0.8rem;">고객센터</span>
+                    </button>
+                </div>
+                <div class="col-auto">
+                    <button class="btn btn-sm bg-dark-subtle text-white fw-bold f08" style="font-size: 0.8rem;">
+                        카카오 1:1 문의
+                    </button>
+                </div>
+                <div class="col p-0 f08">
+                    <div class="row">
+                        <div class="col">
+                            <span>평일</span> : 10:00 ~ 17:00
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <span>점심</span> : 12:00 ~ 13:00
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <span>※</span><span>주말 공휴일 휴무</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row pt-3 align-items-center">
+                <div class="col-auto me-2 bg-dark-subtle rounded-circle d-flex align-items-center" style="aspect-ratio: 1/1;">
+                    <i class="bi bi-google-play"></i>
+                </div>
+                <div class="col-auto me-2 bg-dark-subtle rounded-circle d-flex align-items-center" style="aspect-ratio: 1/1;">
+                    <i class="bi bi-youtube"></i>
+                </div>
+                <div class="col-auto me-2 bg-dark-subtle rounded-circle d-flex align-items-center" style="aspect-ratio: 1/1;">
+                    <i class="bi bi-instagram"></i>
+                </div>
+                <div class="col-auto pe-0 f08">
+                    이용약관
+                </div>
+                <div class="col f08">
+                    개인정보처리방침
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- 홈페이지 설명 끝 -->
 </div>
+
 
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>

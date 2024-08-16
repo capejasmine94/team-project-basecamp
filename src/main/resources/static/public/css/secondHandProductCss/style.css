@@ -272,11 +272,7 @@ body {
     background-color: #28323C; /* 삭제 버튼 색상 */
     color: white;
 }
-/*위치 등록 모달* - 삭제/
-#locationModal .modal-dialog {
-    width: 22rem;
-    margin: 1.75rem auto; /* 가운데 정렬을 위한 마진 */
-}
+
 #locationModal .modal-header {
     border-bottom: none;
     padding-bottom: 0;
