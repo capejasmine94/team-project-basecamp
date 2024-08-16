@@ -9,6 +9,7 @@ import com.bulmeong.basecamp.common.dto.ImageDto;
 import com.bulmeong.basecamp.store.dto.AdditionalInfoDto;
 import com.bulmeong.basecamp.store.dto.CartProductDto;
 import com.bulmeong.basecamp.store.dto.CartProductOptionValueDto;
+import com.bulmeong.basecamp.store.dto.OptionRequestData;
 import com.bulmeong.basecamp.store.dto.OptionValueAdditionalInfoDto;
 import com.bulmeong.basecamp.store.dto.OrderDeliveryInfoDto;
 import com.bulmeong.basecamp.store.dto.OrderProductDto;
@@ -110,6 +111,29 @@ public class StoreService {
         }
     }
 
+    public void insertProductAddtionalInfo(OptionRequestData requestData, AdditionalInfoDto additionalInfoDto){
+        storeSqlMapper.insertAdditionalInfo(additionalInfoDto);
+        int additional_info_id = additionalInfoDto.getId();
+
+        List<Map<String, String>> optionDataList = requestData.getOptionDataList();
+
+        for(Map<String, String> optionData : optionDataList){
+            OptionValueAdditionalInfoDto optionValueAdditionalInfoDto = new OptionValueAdditionalInfoDto();
+
+            String optionName = optionData.get("optionName");
+            String optionValue = optionData.get("optionValue");
+            int product_id = requestData.getProduct_id();
+
+            int option_value_id = storeSqlMapper.selectOptionValueIdByData(product_id, optionName, optionValue);
+
+            optionValueAdditionalInfoDto.setAdditional_info_id(additional_info_id);
+            optionValueAdditionalInfoDto.setOption_value_id(option_value_id);
+
+            storeSqlMapper.insertOptionValueAdditionalInfo(optionValueAdditionalInfoDto);
+        }
+    }
+
+    //insertProductAddtionalInfo로 변경
     public void registerProductAddtionalInfo(String[] names, AdditionalInfoDto additionalInfoDto){
 
         storeSqlMapper.insertAdditionalInfo(additionalInfoDto);

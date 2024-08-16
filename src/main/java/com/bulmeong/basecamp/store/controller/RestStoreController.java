@@ -15,6 +15,7 @@ import com.bulmeong.basecamp.common.dto.RestResponseDto;
 import com.bulmeong.basecamp.common.util.ImageUtil;
 import com.bulmeong.basecamp.store.dto.AdditionalInfoDto;
 import com.bulmeong.basecamp.store.dto.CartProductDto;
+import com.bulmeong.basecamp.store.dto.OptionRequestData;
 import com.bulmeong.basecamp.store.dto.OrderDeliveryInfoDto;
 import com.bulmeong.basecamp.store.dto.ProductOptionNameDto;
 import com.bulmeong.basecamp.store.dto.ProductRefundDto;
@@ -123,17 +124,16 @@ public class RestStoreController {
 
     @RequestMapping("registerAdditionalInfo")
     public RestResponseDto registerAdditionalInfo(
-        @RequestParam("valueNames") String[] valueNames, 
-        @RequestParam("additional_price") int additional_price, 
-        @RequestParam("quantity") int quantity
+        @RequestBody OptionRequestData requestData
     ){
+        System.out.println(requestData);
         RestResponseDto restResponseDto = new RestResponseDto();
 
         AdditionalInfoDto additionalInfoDto = new AdditionalInfoDto();
-        additionalInfoDto.setAdditional_price(additional_price);
-        additionalInfoDto.setQuantity(quantity);
+        additionalInfoDto.setAdditional_price(requestData.getAdditional_price());
+        additionalInfoDto.setQuantity(requestData.getQuantity());
 
-        storeService.registerProductAddtionalInfo(valueNames, additionalInfoDto);
+        storeService.insertProductAddtionalInfo(requestData, additionalInfoDto);
 
         return restResponseDto;
     }

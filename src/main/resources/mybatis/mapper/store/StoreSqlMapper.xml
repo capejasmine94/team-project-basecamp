@@ -175,6 +175,15 @@
         where name = #{name}
     </select>
 
+    <select id="selectOptionValueIdByData" resultType="int">
+        select ov.id from product_option_value ov 
+        inner join product_option_name pon on ov.option_id = pon.id
+        inner join store_product sp on sp.id = pon.product_id 
+        where sp.id = #{product_id}
+        and pon.name = #{option_name}
+        and ov.name = #{value_name}
+    </select>
+
     <insert id="insertOptionValueAdditionalInfo">
         insert into option_value_additional_info(
             option_value_id,
@@ -295,12 +304,11 @@
     </select>
 
     <select id="countOrderProductByOptionValueIds" parameterType="map" resultType="int">
-        select count(*)
+        select coalesce(sum(quantity), 0) as quantity
         from (
-            select opov.order_product_id
-            from order_product_option_value opov
-            inner join order_product op on op.id = opov.order_product_id
-            where opov.option_value_id in
+        select distinct op.id, op.quantity from order_product op
+        inner join order_product_option_value opov on op.id = opov.order_product_id
+        where opov.option_value_id in
             <foreach item="item" index="index" collection="orderProductOptionValueIds" open="(" separator="," close=")">
                 #{item}
             </foreach>
@@ -735,7 +743,7 @@
         from store_product sp 
         left outer join store_product_discount spd on sp.discount_id = spd.id 
         left outer join (
-            select sp.id, op.quantity as purchase_quantity 
+            select sp.id, sum(op.quantity) as purchase_quantity 
             from order_product op 
             inner join store_order so on op.order_id = so.id 
             inner join store_product sp on sp.id = op.product_id 

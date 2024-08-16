@@ -61,6 +61,8 @@ public interface StoreSqlMapper {
 
     public void insertAdditionalInfo(AdditionalInfoDto additionalInfoDto);
     public int selectOptionValueIdByName(String name);
+    public int selectOptionValueIdByData(@Param("product_id")int product_id, @Param("option_name") String option_name, @Param("value_name") String value_name);
+
     public void insertOptionValueAdditionalInfo(OptionValueAdditionalInfoDto optionValueAdditionalInfoDto);
 
     public List<StoreProductDto> selectAllProducts();
@@ -86,6 +88,7 @@ public interface StoreSqlMapper {
 
     public int selectAdditionalInfoIdByValueIds(@Param("valueIds") int[] valueIds);
     public int countOrderProductByOptionValueIds(@Param("orderProductOptionValueIds") int[] orderProductOptionValueIds, @Param("optionValueCount") int optionValueCount);
+    public int selectPurchaseCountByOptionValueIds(@Param("orderProductOptionValueIds") int[] orderProductOptionValueIds, @Param("optionValueCount") int optionValueCount);
 
     public int selectPurchaseCountByProductId(int product_id);
 

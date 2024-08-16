@@ -649,6 +649,8 @@
                                     //추가금 정보를 출력
                                     if(additionalInfoData.additionalInfoDto.additional_price!=0){
                                         optionValue.innerText=`${additionalInfoData.productOptionValueDto.name}(+${additionalInfoData.additionalInfoDto.additional_price})`
+                                    }else{
+                                        optionValue.innerText=additionalInfoData.productOptionValueDto.name
                                     }
                                 }
                             }
@@ -785,6 +787,8 @@
                             //추가금 정보를 출력
                             if(additionalInfoData.additionalInfoDto.additional_price!=0){
                                 optionValue.innerText=`${additionalInfoData.productOptionValueDto.name}(+${additionalInfoData.additionalInfoDto.additional_price})`
+                            }else{
+                                optionValue.innerText = additionalInfoData.productOptionValueDto.name;
                             }
                         }
                     }

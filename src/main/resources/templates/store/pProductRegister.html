@@ -1253,18 +1253,39 @@
                     for(e of optionValueTemplates){
                         const optionValueCols = e.querySelectorAll(".optionValueCol");
                         
-                        const valueNames = []
+                        let optionDataList = [];
                         for(optionValueCol of optionValueCols){
-                            const valueName = optionValueCol.innerText;
-                            valueNames.push(valueName);
+                            const optionData = {};
+                            optionData.optionName = optionValueCol.dataset.optionname;
+                            optionData.optionValue = optionValueCol.innerText;
+
+                            optionDataList.push(optionData);
                         }
+
+                        console.log("여기봐라:", optionDataList); 
+
+                        // for(optionValueCol of optionValueCols){
+                        //     const valueName = optionValueCol.innerText;
+                        //     valueNames.push(valueName);
+                        // }
 
                         const additional_price = e.querySelector(".optionPriceInput").value;
                         const quantity = e.querySelector(".optionQuantityInput").value;
 
-                        const url = `/api/store/registerAdditionalInfo?valueNames=${valueNames}&additional_price=${additional_price}&quantity=${quantity}`
+                        const url = "/api/store/registerAdditionalInfo";
+                        const data = {
+                            optionDataList: optionDataList,
+                            additional_price: additional_price,
+                            quantity: quantity,
+                            product_id: product_id
+                        }
+
                         await fetch(url, {
-                            method: "post"
+                            method: "post",
+                            headers: {
+                                "Content-Type": "application/json"
+                            },
+                            body: JSON.stringify(data)
                         })
                     }
 
@@ -1324,18 +1345,22 @@
                 optionAddButton.classList.remove("disabled");
             }
 
-            function addToOptionList(){
+            function addToOptionList() {
                 const optionNameRow = document.getElementById("optionNameRow");
                 optionNameRow.innerHTML = "";
 
                 const optionNameCol = document.querySelector("#template .optionNameCol");
                 const inputOptionNames = document.querySelectorAll("#optionBox .inputOptionName");
 
-                for(e of inputOptionNames){
+                // 옵션 이름들을 저장할 배열
+                const optionNames = [];
+
+                // 옵션 이름들을 optionNameRow에 추가하고 배열에 저장
+                for (e of inputOptionNames) {
                     const newOptionNameCol = optionNameCol.cloneNode(true);
                     newOptionNameCol.innerText = e.value;
-
                     optionNameRow.appendChild(newOptionNameCol);
+                    optionNames.push(e.value); // 옵션 이름을 배열에 추가
                 }
 
                 const inputOptionValues = document.querySelectorAll("#optionBox .inputOptionValue");
@@ -1368,9 +1393,12 @@
                     const newOptionValueTemplate = optionValueTemplate.cloneNode(true);
                     const optionValueRow = newOptionValueTemplate.querySelector(".optionValueRow")
 
-                    comb.forEach(value => {
+                    comb.forEach((value, index) => {
                         const newOptionValueCol = document.querySelector("#template .optionValueCol").cloneNode(true);
                         newOptionValueCol.innerText = value;
+                        
+                        // data-optionname 속성 추가
+                        newOptionValueCol.setAttribute("data-optionname", optionNames[index]);
 
                         optionValueRow.appendChild(newOptionValueCol);
                     })
@@ -1379,6 +1407,7 @@
 
                 optionListCount();
             }
+
 
             function getProductSubcategoryList(categoryRow){
                 const selectedCategoryRow = document.getElementById("selectedCategoryRow");
