@@ -12,6 +12,7 @@ import com.bulmeong.basecamp.campingcar.dto.CampingCarLikeDto;
 import com.bulmeong.basecamp.campingcar.dto.ProductDetailImgDto;
 import com.bulmeong.basecamp.campingcar.dto.RentUserDto;
 import com.bulmeong.basecamp.campingcar.dto.RentalExternalInspectionDto;
+import com.bulmeong.basecamp.campingcar.dto.RentalReview;
 import com.bulmeong.basecamp.campingcar.dto.ReservationDto;
 
 @Mapper
@@ -50,7 +51,7 @@ public interface CampingcarSqlMapper {
     public void createReservation(ReservationDto reservationDto);
 
     // 최종 예약 정보 확인
-    public Map<String,Object> findReservationByRentUserIdAndProduct_Id(@Param("rent_user_id") int rent_user_id, @Param("id")int id);
+    public Map<String,Object> findReservationByRentUserIdAndReservationId(@Param("rent_user_id") int rent_user_id, @Param("id")int id);
 
     //차량 대여 점검 
     public void createRentShoot(RentalExternalInspectionDto parmas);
@@ -58,4 +59,15 @@ public interface CampingcarSqlMapper {
     public void createReturnShoot(ReturnExternalInspectionDto parmas);
     // 이용내역
     public List<Map<String,Object>> useageHistroyAllByRentUserId(int id);
+    // 리뷰작성
+    public void createCarReview(RentalReview review);
+
+    // 해당 차량의 리뷰 리스트
+    public List<Map<String,Object>> reviewAllbyCarId(int id);
+    // 해당 차량의 리뷰 별점 평균 
+    public Double avgByCarId(int id);
+    // 해당 차량의 리뷰 참여 인원 수
+    public int reviewByCountPerson (int id);
+    // 해당 차량의 각 별점 마다 인원수
+    public List<Map<String,Object>> ratingGroupBycar(int id);
 }

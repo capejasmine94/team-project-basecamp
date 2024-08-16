@@ -297,7 +297,7 @@
                     <div class="row border-bottom pb-4">
                         <div class="col-4 text-center pe-0">
                             <div class="badge text-bg-secondary fw-semibold text-center px-2">
-                                <span class="fw-semibold new-fs-7" th:text="${campingcarDetails.countReview}+ '개 리뷰 별점 평균'"></span>
+                                <span class="fw-semibold new-fs-7" th:text="${reivewCountBycar}+ '개 리뷰 별점 평균'"></span>
                             </div>
                             <div class="fs-2 text-center">
                                 <i class="bi bi-star-fill " style="color: #FFD700;"></i>
@@ -309,13 +309,13 @@
                             <div th:each="rating : ${ratings}">
                                 <div class="d-flex align-items-center">
                                     <!-- 점수 표시 -->
-                                    <span class="font-roboto new-fs-8 fw-semibold" th:text="${rating.rate} + '점'"></span>
+                                    <span class="new-fs-8 fw-semibold" th:text="${rating.rate} + '점'"></span>
                                     <!-- progress bar -->
                                     <div class="progress flex-grow-1 mx-2" style="height: 10px; background-color: #e9ecef;">
-                                        <div class="progress-bar bg-dark" role="progressbar" th:style="'width: ' + (${campingcarDetails.countReview} > 1 ? ${campingcarDetails.countReview} : 1) + '%'">
+                                        <div class="progress-bar bg-dark" role="progressbar" th:style="'width: ' + (${rating.count} > 1 ? ${rating.count} : 1) + '%'">
                                         </div>
                                     </div> 
-                                    <span class="font-roboto new-fs-8 fw-semibold" th:text="${campingcarDetails.countReview} + '명'" style="color: #7C7B7B;"></span>
+                                    <span class="new-fs-8 fw-semibold" th:text="${rating.count} + '명'" style="color: #7C7B7B;"></span>
                                 </div>
                             </div>
                         </div>
@@ -326,26 +326,26 @@
                             <!--리뷰 리스트: 후기 쓴 사용자 이미지와 닉네임-->
                             <div class="row">
                                 <div class="col fw-semibold py-2">
-                                    <img th:if="${reviewList.userDto.profile_image != null}" th:src="|/images/${reviewList.userDto.profile_image}|" class="rounded-circle me-2 img-fluid"
+                                    <img th:if="${reviewList.profile_image != null}" th:src="|/images/${reviewList.profile_image}|" class="rounded-circle me-2 img-fluid"
                                     style="width: 20px; height: 20px;">
-                                    <img th:unless="${reviewList.userDto.profile_image != null}" style="width: 20px; height: 20px;">
-                                    <span class="font-roboto new-fs-85" th:text="${reviewList.userDto.nickname}"></span>
+                                    <img th:unless="${reviewList.profile_image != null}" style="width: 20px; height: 20px;">
+                                    <span class="new-fs-85" th:text="${reviewList.nickname}"></span>
                                 </div>
                             </div>
                             <!--리뷰 리스트: 후기 쓴 사용자 별점,리뷰 쓴 시간-->
                             <div class="row d-flex justify-content-between">
-                                <div class="col-8 fw-semibold font-roboto">
+                                <div class="col-8 fw-semibold">
                                     <i class="bi bi-star-fill" style="color: #FFD700;"></i>
-                                    <span class="new-fs-85" th:text="${campingcarDetails.countReview}"></span> 
+                                    <span class="new-fs-85" th:text="${reviewList.rate}"></span> 
                                 </div>
                                 <div class="col text-end pt-1">
-                                    <!-- <div class="fw-semibold font-roboto new-fs-7 createdAt" th:text="${#dates.format(reviewList.reviewList.create_at, 'yyyy.MM.dd HH.mm')}" style="color: #7C7B7B;"></div> -->
+                                    <div class="fw-semibold new-fs-7 createdAt" th:text="${#dates.format(reviewList.created_at, 'yyyy.MM.dd HH.mm')}" style="color: #7C7B7B;"></div>
                                 </div>
                             </div>
                             <!--리뷰 리스트: 후기 내용-->
                             <div class="row pt-2 pb-3 border-bottom">
                                 <div class="col">
-                                    <!-- <span class="font-roboto fs-7" th:text="${reviewList.reviewList.content}" style="word-wrap: break-word;"></span> -->
+                                    <span class="fs-7" th:text="${reviewList.content}" style="word-wrap: break-word;"></span>
                                 </div>
                             </div>
                         </div>

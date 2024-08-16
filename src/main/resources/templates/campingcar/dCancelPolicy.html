@@ -346,9 +346,14 @@
         <div class="final-price">
             월 256,500원
         </div> -->
-        <div class="row">
-            <div class="col py-3 px-3 d-grid">
-                <button class="btn btn-dark btn-lg fw-bold" style="color: #C6ED6F;">예약하기</button>
+        <div class="container">
+            <div class="row">
+                <div class="col py-3 px-3 d-grid">
+                    <a class="text-white btn btn-lg fw-bold" th:href="@{/campingcar/reservationInfo(id=${campingcarDetails.campingcarDto.id})}" style="background-color: #C6ED6F;">
+                        <span th:text="${#numbers.formatInteger(campingcarDetails.campingcarDto.rental_fee_weekdays, 3, 'COMMA') + '원'}"></span>
+                        <div class="fs-6">예약하기</div>
+                    </a>
+                </div>
             </div>
         </div>
 

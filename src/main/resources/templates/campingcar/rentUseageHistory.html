@@ -77,7 +77,7 @@
     <div class="container">
         <div class="row bg-white pt-2 pe-1 justify-content-end">
             <div class="col-auto">
-                <i class="bi bi-x-lg fs-2"  onclick="window.close()"></i>
+                <i class="bi bi-x-lg fs-2"  onclick="history.back()"></i>
             </div>
         </div>  
         <div class="row">
@@ -90,14 +90,21 @@
         <div class="row section" th:each="rentuserHistoryList : ${rentuserHistoryData}">
             <div class="col">
                 <div class="row">
-                    <div class="col">
+                    <div class="col-4 pe-0 new-fs-7 d-flex align-items-center" style="width: 30%;">
+                        <span th:text="'예약번호 : ' + ${rentuserHistoryList.id}"></span>
+                    </div>
+                    <div class="col-4 ps-0 d-flex justify-content-start align-items-center">
                         <span class="badge text-bg-light" th:text="${rentuserHistoryList.progress}"></span>
                     </div>
+                    <div class="col text-end px-0">
+                        <a th:href="@{/campingcar/campingCarDetailPage(id=${rentuserHistoryList.product_id})}" class="bi bi-chevron-right"></a>
+                    </div>
                 </div>
+
                 <!-- 렌트카 회사 정보 -->
                 <div class="row">
                     <div class="col d-flex align-items-center justify-content-between px-3">
-                        <div class="row">
+                        <div class="row pt-1">
                             <div class="col-3">
                                 <div class="px-0" th:if="${#strings.equals(rentuserHistoryList.carTypeName, '모터홈')}">
                                     <img th:src="@{/public/img/campingCarImage/모터홈.jpg}" class="d-block w-100  img-fluid" alt="모터홈" style="max-width: 50px; max-height: 50px;">
@@ -112,7 +119,7 @@
                                     <img th:src="@{/public/img/campingCarImage/카라반.png}" class="d-block w-100 img-fluid" alt="모터홈" style="max-width: 50px; max-height: 50px;">
                                 </div>
                             </div>
-                            <div class="col-9">
+                            <div class="col-9 px-3">
                                 <div th:text="${rentuserHistoryList.carTypeName}"></div>
                                 <div class="ellipsis" th:text="${rentuserHistoryList.product_name}"></div>
                             </div>
@@ -145,11 +152,17 @@
                     </div>
                 </div>
             </div>
+            <div class="row mx-0 px-0 pt-3">
+                <div class="col text-center px-0">
+                    <a th:if="${rentuserHistoryList.progress == '반납완료'}" th:href="@{/campingcar/carReviewPage(id=${rentuserHistoryList.id})}" class="btn btn-outline-info d-grid">리뷰작성하기</a>
+                    <div class="text-muted new-fs-7 pt-2">예약취소하기</div>
+                </div>
+            </div>
         </div>
         <div class="row text-center pb-3">
             <div class="col" th:each="rentuserHistoryList : ${rentuserHistoryData}"></div>
             <div th:if="${#lists.isEmpty(rentuserHistoryList)}">
-                <span class="text-muted">모든 내용을 불러왔습니다.</span>
+                <span class="text-body-tertiary">모든 내용을 불러왔습니다.</span>
             </div>
         </div>
     </div>

@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <!-- Font Awesome -->
+    <script src="https://kit.fontawesome.com/7b271bba58.js" crossorigin="anonymous"></script>
+    <!-- Google Material Icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet">
+    <!-- partner 오른쪽  본문 css -->
+    <link href="/public/css/campingcar/right-content.css" rel="stylesheet">
+    <link href="/public/css/common.css" rel="stylesheet">
+    <!-- 이미지 js -->
+    <script src="/public/js/util.js"></script>
+    <!-- 캘린더 js -->
+    <script src="/public/js/calendar.js"></script>
+   
+</head>
+<body>
+    <div th:replace="~{partner/carNavi::topNavi}"></div>
+    <div class="container-fluid">
+        <div class="row">
+            <div th:replace="~{partner/carNavi::leftNavi}"></div>
+            <!-- right -->
+            <div class="col right bg-body-secondary" style="padding-top: 55px;">
+                <div class="row py-3 px-4 d-flex align-items-center bg-white">
+                    <div class="col fs-6 fw-semibold">
+                        리뷰 관리
+                    </div>
+                </div>
+                <!-- 본문내용(templets) -->
+                <div class="row px-4 pt-3">
+                    <div class="col px-0">
+                        <div class="card">
+                            <div class="card-head py-3 px-3">
+                                <div class="fw-semibold">리뷰 목록</div>
+                                <div class="card-body">
+                                    <div class="form-group">
+                                        <div class="row pb-3">
+                                            <div class="col-auto px-1">
+                                                <div class="badge rounded-pill text-bg-primary px-3 py-2">후기 전체 242</div>
+                                            </div>
+                                            <div class="col-auto px-0">
+                                                <div class="badge rounded-pill text-bg-light text-muted px-3 py-2">답변하지 않은 후기 152</div>
+                                            </div>
+                                            <div class="col-auto px-1">
+                                                <div class="badge rounded-pill text-bg-light text-muted px-3 py-2">답변한 후기 90</div>
+                                            </div>
+                                        </div>                             
+                                        <!-- Header Row -->
+                                        <div class="row pt-2 fw-bold text-center">
+                                            <div class="col-1 py-3 border d-flex align-items-center justify-content-center"> 
+                                                <input type="checkbox">
+                                            </div>
+                                            <div class="col-1 py-3 border d-flex align-items-center justify-content-center">차량 번호</div>
+                                            <div class="col-1 py-3 border d-flex align-items-center justify-content-center">차량명</div>
+                                            <div class="col-1 py-3 border d-flex align-items-center justify-content-center">예약자명</div>
+                                            <div class="col-2 py-3 border d-flex align-items-center justify-content-center">대여/반납일</div>
+                                            <div class="col-2 py-3 border d-flex align-items-center justify-content-center">리뷰 평점</div>
+                                            <div class="col-2 py-3 border d-flex align-items-center justify-content-center">리뷰 내용</div>
+                                            <div class="col-2 py-3 border d-flex align-items-center justify-content-center">리뷰 작성일</div>
+                                        </div>
+
+                                        <!-- Data Rows -->
+                                        <div class="row text-center align-items-center border">
+                                            <div class="col-1 py-4 border-end d-flex align-items-center justify-content-center">
+                                                <input type="checkbox">
+                                            </div>
+                                            <div class="col-1 py-3 border-end d-flex align-items-center justify-content-center">16</div>
+                                            <div class="col-1 py-3 border-end d-flex align-items-center justify-content-center">5인승</div>
+                                            <div class="col-1 py-3 border-end d-flex align-items-center justify-content-center">고구마</div>
+                                            <div class="col-2 py-3 border-end d-flex align-items-center justify-content-center">2024.08.15/2024.08.17</div>
+                                            <div class="col-2 py-3 border-end d-flex align-items-center justify-content-center">
+                                                <span class="text-warning">★★★★★</span> 5점
+                                            </div>
+                                            <div class="col-2 py-3 border d-flex align-items-center justify-content-center">감사해요</div>
+                                            <div class="col-2 py-3 border d-flex align-items-center justify-content-center">2024.08.16.11:15</div>
+                                        </div>
+
+                                        <div class="row text-center align-items-center border">
+                                            <div class="col-1 py-4 d-flex align-items-center justify-content-center">
+                                                <input type="checkbox">
+                                            </div>
+                                            <div class="col-1 py-3 border d-flex align-items-center justify-content-center">16</div>
+                                            <div class="col-1 py-3 border d-flex align-items-center justify-content-center">5인승</div>
+                                            <div class="col-1 py-3 border d-flex align-items-center justify-content-center">고구마</div>
+                                            <div class="col-2 py-3 border d-flex align-items-center justify-content-center">2024.08.15/2024.08.17</div>
+                                            <div class="col-2 py-3 border d-flex align-items-center justify-content-center">
+                                                <span class="text-warning">★★★★★</span> 5점
+                                            </div>
+                                            <div class="col-2 py-3 border d-flex align-items-center justify-content-center">감사해요</div>
+                                            <div class="col-2 py-3 border d-flex align-items-center justify-content-center">2024.08.16.11:15</div>
+                                        </div>
+
+                                        <div class="row text-center align-items-center border">
+                                            <div class="col-1 py-4 d-flex align-items-center justify-content-center">
+                                                <input type="checkbox">
+                                            </div>
+                                            <div class="col-1 py-3 border d-flex align-items-center justify-content-center">16</div>
+                                            <div class="col-1 py-3 border d-flex align-items-center justify-content-center">5인승</div>
+                                            <div class="col-1 py-3 border d-flex align-items-center justify-content-center">고구마</div>
+                                            <div class="col-2 py-3 border d-flex align-items-center justify-content-center">2024.08.15/2024.08.17</div>
+                                            <div class="col-2 py-3 border d-flex align-items-center justify-content-center">
+                                                <span class="text-warning">★★★★★</span> 5점
+                                            </div>
+                                            <div class="col-2 py-3 border d-flex align-items-center justify-content-center">감사해요</div>
+                                            <div class="col-2 py-3 border d-flex align-items-center justify-content-center">2024.08.16.11:15</div>
+                                        </div>
+
+                                        <div class="row text-center align-items-center border">
+                                            <div class="col-1 py-4 d-flex align-items-center justify-content-center">
+                                                <input type="checkbox">
+                                            </div>
+                                            <div class="col-1 py-3 border d-flex align-items-center justify-content-center">16</div>
+                                            <div class="col-1 py-3 border d-flex align-items-center justify-content-center">5인승</div>
+                                            <div class="col-1 py-3 border d-flex align-items-center justify-content-center">고구마</div>
+                                            <div class="col-2 py-3 border d-flex align-items-center justify-content-center">2024.08.15/2024.08.17</div>
+                                            <div class="col-2 py-3 border d-flex align-items-center justify-content-center">
+                                                <span class="text-warning">★★★★★</span> 5점
+                                            </div>
+                                            <div class="col-2 py-3 border d-flex align-items-center justify-content-center">감사해요</div>
+                                            <div class="col-2 py-3 border d-flex align-items-center justify-content-center">2024.08.16.11:15</div>
+                                        </div>
+
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+ 
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js"></script>
+    <script src="/public/js/campingcar/partnermain.js"></script>
+
+</body>
+</html>

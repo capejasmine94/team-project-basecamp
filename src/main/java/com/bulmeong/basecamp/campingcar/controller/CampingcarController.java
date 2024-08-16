@@ -6,7 +6,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -21,6 +20,7 @@ import com.bulmeong.basecamp.campingcar.dto.DriverLicenseDto;
 import com.bulmeong.basecamp.campingcar.dto.ProductDetailImgDto;
 import com.bulmeong.basecamp.campingcar.dto.RentUserDto;
 import com.bulmeong.basecamp.campingcar.dto.RentalExternalInspectionDto;
+import com.bulmeong.basecamp.campingcar.dto.RentalReview;
 import com.bulmeong.basecamp.campingcar.dto.ReservationDto;
 import com.bulmeong.basecamp.campingcar.service.CampingcarService;
 import com.bulmeong.basecamp.campingcar.service.PartnerCampingCarService;
@@ -40,7 +40,6 @@ public class CampingcarController {
 
     @RequestMapping("main")
     public String main(){
-
 
         return "campingcar/main";
 
@@ -100,6 +99,21 @@ public class CampingcarController {
 
         Map<String,Object> campingcarDetails = campingcarService.getCampingCarDetailByid(id);
         model.addAttribute("campingcarDetails", campingcarDetails);
+        //리뷰 리스트
+        List<Map<String,Object>> reviewData = campingcarService.getReviewAllbyCarId(id);
+        model.addAttribute("reviewData", reviewData);
+
+        // 해당 차량의 리뷰 별점 평균 
+        Double reviewAvg = campingcarService.getAvgByCarId(id);
+        model.addAttribute("reviewAvg", reviewAvg);
+
+        // 해당 차량의 리뷰 참여 인원 수
+        int reivewCountBycar = campingcarService.getReviewByCountPersont(id);
+        model.addAttribute("reivewCountBycar", reivewCountBycar);
+
+        // 해당 차량의 각 별점 마다 인원수
+        List<Map<String,Object>> ratings = campingcarService.ratingGroupBycar(id);
+        model.addAttribute("ratings", ratings);
 
         return "campingcar/dReviews";
     }
@@ -183,6 +197,7 @@ public class CampingcarController {
 
     @RequestMapping("rentUseageHistory")
     public String rentUseageHistory(HttpSession session, Model model) { 
+
         UserDto sessionUserInfo = (UserDto)session.getAttribute("sessionUserInfo");
         int rentUserPk = campingcarService.getExistingByRentUserId(sessionUserInfo.getId());
         
@@ -192,10 +207,27 @@ public class CampingcarController {
         return "campingcar/rentUseageHistory";
     }
 
+    // 리뷰작성하기
+    @RequestMapping("carReviewPage")
+    public String carReviewPage(@RequestParam("id")int id, HttpSession session, Model model) {
 
+        UserDto sessionUserInfo = (UserDto)session.getAttribute("sessionUserInfo");
+        int rentUserPk = campingcarService.getExistingByRentUserId(sessionUserInfo.getId());
 
+        Map<String,Object> reservationConfirm = campingcarService.getReservationDetails(rentUserPk, id);
+        model.addAttribute("reservationConfirm", reservationConfirm);
+;
 
+        return "campingcar/carReviewPage";
+    }
+    // 리뷰작성Process
+    @RequestMapping("carReviewProcess")
+    public String carReviewProcess(RentalReview review) {
 
+        campingcarService.registerReview(review);
+
+        return "redirect:/campingcar/main";
+    }
 
 
     @RequestMapping("carExteriorInteriorShoot")
@@ -263,6 +295,7 @@ public class CampingcarController {
         String newName = todayPath + filename;
         return newName;
     }
+
 
 
 }

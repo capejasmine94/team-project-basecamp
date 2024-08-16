@@ -138,6 +138,11 @@ public class PartnerCampingCarController {
         return "redirect:/partner/bookReservation";
     }
 
+    @RequestMapping("reviewManage")
+    public String reviewManga() {
+
+        return "partner/reviewManage";
+    }
 
 
 

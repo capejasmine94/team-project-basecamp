@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org:">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>차량 리뷰 페이지</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+     <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <!-- Google Material Icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet">
+    <link href="/public/css/common.css" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+        }
+        .rating {
+            direction: rtl;
+            display: flex;
+            justify-content: center;
+        }
+        .rating input {
+            display: none;
+        }
+        .rating label {
+            font-size: 2rem;
+            color: #2D2926;
+            cursor: pointer;
+        }
+        .rating label:hover,
+        .rating label:hover ~ label,
+        .rating input:checked ~ label {
+            color: #FFD700; /* 선택된 별 색상 */
+        }
+        .section {
+            margin: 1.5rem 1rem; /* 1.5rem은 margin-top과 margin-bottom */ /*1rem은 margin-left와 margin-right*/
+            padding: 1rem;
+            border-radius:0.75rem;
+            box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+            background-color: #fff;
+            border: 1px solid #e0e0e0;
+        }
+        .section img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 8px;
+        }
+        .section-title {
+            font-size: 16px;
+            font-weight: bold;
+            margin-bottom: 8px;
+        }
+        .section-text {
+            font-size: 14px;
+            color: #888;
+            margin-bottom: 8px;
+        }
+
+    </style>
+</head>
+<body class="bg-body-tertiary">
+
+    <div class="container">
+        <form class="row" action="/campingcar/carReviewProcess" method="post">
+            <div class="col section">                       
+                <div class="row justify-content-center">
+                    <div class="col pt-5 pb-2 fw-semibold fs-2 text-center font-roboto">
+                        <div class="d-flex justify-content-center align-items-center mb-0">
+                            <img th:if="${#strings.equals(reservationConfirm.carTypeName, '모터홈')}" th:src="@{/public/img/campingCarImage/모터홈.jpg}" alt class="d-block w-100 img-fluid">
+                            <img th:if="${#strings.equals(reservationConfirm.carTypeName, '차박형(중형)')}" th:src="@{/public/img/campingCarImage/차박형(중형).png}" alt class="d-block w-100 img-fluid">
+                            <img th:if="${#strings.equals(reservationConfirm.carTypeName, '차박형(소형)')}" th:src="@{/public/img/campingCarImage/차박형(소형).png}" alt class="d-block w-100 img-fluid">
+                            <img th:if="${#strings.equals(reservationConfirm.carTypeName, '카라반')}" th:src="@{/public/img/campingCarImage/카라반.png}" alt class="d-block w-100 img-fluid">
+                        </div>
+                    </div>
+                </div>
+                <div class="row justify-content-center">
+                    <div class="col">
+                        <div th:text="${reservationConfirm.product_name}" class="fw-medium fs-5 text-center"></div>
+                    </div>
+                </div>
+                <div class="row justify-content-center">
+                    <div class="col text-center">
+                        <div class="fs-7">대여하신 캠핑카 리뷰를 작성해주세요</div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col py-3">
+                        <div class="rating">
+                            <input type="radio" id="star5" name="rate" checked value="5">
+                            <label for="star5" class="bi bi-star"></label>
+
+                            <input type="radio" id="star4" name="rate" value="4">
+                            <label for="star4" class="bi bi-star"></label>
+
+                            <input type="radio" id="star3" name="rate" value="3">
+                            <label for="star3" class="bi bi-star"></label>
+
+                            <input type="radio" id="star2" name="rate" value="2">
+                            <label for="star2" class="bi bi-star"></label>
+
+                            <input type="radio" id="star1" name="rate" value="1">
+                            <label for="star1" class="bi bi-star"></label>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col pt-2">
+                        <div class="form-floating px-2">
+                            <textarea name="content" class="form-control" id="floatingTextarea2" 
+                            style="height: 100%;width: 100%;" onclick="clearLabel();"></textarea>
+                            <label id="labelTextarea" for="floatingTextarea2" class="new-fs-7 ps-3" style="width: 100%; white-space: normal; word-wrap: break-word;">다른 고객들이 도움이 될 수 있도록 차량 상태, 청결도, 이용경험 등 자세히 남겨주세요</label>
+                        </div>
+                        <input type="hidden" name="reservation_id" th:value="${reservationConfirm.id}">
+                    </div>
+                </div>
+                <div class="row d-flex justify-content-center">
+                    <div class="col pt-3 text-center pe-4">
+                        <button class="btn btn-info new-fs-8 fw-semibold rounded-3">리뷰등록</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+
+        
+    <!-- 부트스트랩 JS -->
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js"></script>
+    <script>
+        function clearLabel() {
+            var labelTextarea = document.getElementById("labelTextarea");
+            labelTextarea.textContent = '';
+        }
+    </script>
+</body>
+</html>
