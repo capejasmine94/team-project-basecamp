@@ -6,6 +6,8 @@
     <link rel="stylesheet" href="/public/css/common.css">
     <link rel="stylesheet" href="/public/css/basecamp.css">
 
+    <script src="/public/js/lockLikeMobile.js"></script>
+
     <style>
         .fixed-background {
             /* background-color: #0F273C !important; /* 원하는 배경색으로 변경 */
@@ -13,9 +15,15 @@
             background: linear-gradient(to left, #0D263C, #091724);
             background: -webkit-linear-gradient(to right, #1C3F5B, #0D263C);
         }
-        
-        
+
     </style>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            document.getElementById('backButton').addEventListener('click', function() {
+                history.back();
+            });
+        });
+    </script>
 
 </head>
 <body>
@@ -23,10 +31,12 @@
     <!-- 탑네비 부분 -->
     <div class="container bg-body-tertiary" style="padding-top: 60.792px;">
     
-        <div class="fixed-top px-4 row border-bottom py-3 shadow-sm bg-white">
-            <div class="col align-items-center d-flex ps-0"><span class="material-symbols-outlined">arrow_back</span></div>
+        <div class="fixed-top row border-bottom py-3 shadow-sm bg-white">
+            <div id="backButton" class="col ps-4 align-items-center d-flex ps-0" style="cursor: pointer;">
+                <span class="material-symbols-outlined">arrow_back</span>
+            </div>
             <div class="col text-center fw-medium">마이페이지</div>
-            <a class="col justify-content-end d-flex pe-0" href="/user/logoutProcess" th:unless="${session.sessionUserInfo == null}">
+            <a class="col pe-4 justify-content-end d-flex pe-0" href="/user/logoutProcess" th:unless="${session.sessionUserInfo == null}">
                 <span class="material-symbols-outlined">logout</span>
             </a>
         </div>
@@ -157,31 +167,31 @@
                                 </div>
                                 <div class="row bg-white pb-2">
                                     <div class="col">
-                                        <div class="row pb-2">
+                                        <a href="/store/myOrderList" class="row pb-2">
                                             <div class="col">
                                                 주문내역
                                             </div>
-                                        </div>
-                                        <div class="row pb-2">
+                                        </a>
+                                        <!-- <a href="/store/myOrderList" class="row pb-2">
                                             <div class="col">
                                                 취소/반품/교환 내역
                                             </div>
-                                        </div>
-                                        <div class="row pb-2">
+                                        </a> -->
+                                        <a href="/store/myReview" class="row pb-2">
                                             <div class="col">
                                                 리뷰 작성
                                             </div>
-                                        </div>
-                                        <div class="row pb-2">
+                                        </a>
+                                        <a href="/store/addressBook" class="row pb-3">
                                             <div class="col">
                                                 배송지 관리
                                             </div>
-                                        </div>
-                                        <div class="row pb-3">
+                                        </a>
+                                        <!-- <a href="/store/myOrderList" class="row pb-3">
                                             <div class="col">
                                                 위시리시트
                                             </div>
-                                        </div>
+                                        </a> -->
                                     </div>
                                 </div>
 
@@ -265,9 +275,6 @@
         </div>
     </div>
     
-   
-
-
 
  
 
