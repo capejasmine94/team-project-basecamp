@@ -1,23 +1,23 @@
 package com.bulmeong.basecamp.secondHandProduct.controller;
 //
-import org.json.JSONException;
-import org.json.JSONObject;
-import com.bulmeong.basecamp.campingcar.dto.RestResponseDto;
-import org.json.JSONArray;
-import org.springframework.web.bind.annotation.GetMapping;
+//import org.json.JSONException;
+//import org.json.JSONObject;
+//import com.bulmeong.basecamp.campingcar.dto.RestResponseDto;
+//import org.json.JSONArray;
+//import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.net.URLEncoder;
-import java.util.ArrayList;
-import java.util.List;
-
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+//
+//import java.io.BufferedReader;
+//import java.io.InputStreamReader;
+//import java.net.HttpURLConnection;
+//import java.net.URL;
+//import java.net.URLEncoder;
+//import java.util.ArrayList;
+//import java.util.List;
+//
+//import org.springframework.web.bind.annotation.RequestMapping;
+//import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("api")
