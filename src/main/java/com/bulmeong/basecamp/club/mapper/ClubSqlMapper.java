@@ -1,6 +1,7 @@
 package com.bulmeong.basecamp.club.mapper;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -21,6 +22,7 @@ import com.bulmeong.basecamp.club.dto.ClubPostLikeDto;
 import com.bulmeong.basecamp.club.dto.ClubPostImageDto;
 import com.bulmeong.basecamp.club.dto.ClubRegionCategoryDto;
 import com.bulmeong.basecamp.club.dto.ClubVisitDto;
+import com.bulmeong.basecamp.secondHandProduct.dto.CategoryDto;
 import com.bulmeong.basecamp.user.dto.UserDto;
 
 
@@ -143,6 +145,11 @@ public interface ClubSqlMapper {
     // 오늘 총방문자수
     public int selectTodayVisitCount(int club_id);
 
+    // 카테고리 목록
+    public List<CategoryDto> selectCategoryList();
+
+    // 검색
+    public List<Map<String,Object>> selectSearchPosts(@Param("searchOption") String searchOption, @Param("searchWord") String searchWord);
 
 }
 

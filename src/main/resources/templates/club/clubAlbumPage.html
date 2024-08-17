@@ -100,6 +100,53 @@
             .thicker-light-border {
                 border-bottom: 7px solid #dee2e6;
             }
+
+            /* 사진 배열 부분 시작*/
+            .image-container {
+                position: relative;
+                width: 100%;
+                overflow: hidden;
+                padding-bottom: 100%; /* 1:1 비율 유지 */
+                margin: 0.10rem; /* 이미지 간 간격 추가 */
+            }
+
+            .image-item {
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+                transition: transform 0.3s ease;
+            }
+
+            .image-container:hover .image-item {
+                transform: scale(1.05); /* 확대 효과 */
+            }
+
+            .overlay {
+                position: absolute;
+                top: 0;
+                right: 0;
+                bottom: 0;
+                left: 0;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                background-color: rgba(0, 0, 0, 0.3); /* 반투명 검은색 오버레이 */
+                opacity: 0;
+                transition: opacity 0.3s ease;
+            }
+
+            .image-container:hover .overlay {
+                opacity: 1; /* 마우스를 올렸을 때 오버레이 표시 */
+            }
+
+            .overlay i {
+                color: white;
+                font-size: 2rem;
+            }
+            /* 사진 배열 부분 끝 */
         
  
         </style>
@@ -107,7 +154,9 @@
     <body>
         <div class="container-fluid fixed-top bg-white">
             <div class="row pt-3 pb-2 bg-white">
-                <div class="col-2 ps-2 justify-content-center align-items-center d-flex"><span onclick="history.back()" class="material-symbols-outlined">arrow_back</span></div>
+                <a href="/club/main" class="col-2 ps-2 justify-content-center align-items-center d-flex">
+                    <span class="material-symbols-outlined">close</span>
+                </a>
                 <div class="col text-center fw-medium" th:text="${clubDto.name}">소모임 이름</div>
                 <div class="col-2"></div>
             </div>
@@ -133,107 +182,130 @@
         </div>
 
         <div class="container" style="padding-top: 75.22px;">
-            <div class="row">
+            
+            <!-- <div class="row">
                 <div class="col">
 
-                <div class="row px-3">
-                    <div class="col">
-                        <div class="row pt-2">
-                            <div class="col">
-
-                                <div class="row">
-                                    <div class="col-4 px-0 pb d-flex justify-content-center" th:each="postImageDto : ${postImageDtoList}">
-                                         <div>
+                    <div class="row">
+                        <div class="col">
+                            <div class="row pt-2">
+                                <div class="col">
+                                    <div class="row">
+                                        <div class="col-4 px-0 pb d-flex justify-content-center" th:each="postImageDto : ${postImageDtoList}">
+                                            <div>
+                                                <a th:href="@{/club/readPost(id=${postImageDto.post_id})}">
+                                                    <img
+                                                    th:src="|/images/${postImageDto.post_img_location}|"
+                                                    class="img-fluid middle"
+                                                    style="aspect-ratio: 1/1; height: 10em;">
+                                                </a>
+                                            </div>
                                         
-                                            <a th:href="@{/club/readPost(id=${postImageDto.post_id})}">
-                                                <img
-                                                th:src="|/images/${postImageDto.post_img_location}|"
-                                                class="img-fluid middle"
-                                                style="aspect-ratio: 1/1; height: 10em;">
-                                            </a>
-
                                         </div>
-                                    
                                     </div>
                                 </div>
-
-
                             </div>
                         </div>
-
+                    </div>
+        
+                </div>
+            </div> -->
+            <div class="row">
+                <div class="col">
+                    <div class="row">
+                        <div class="col">
+                            <div class="row pt-2">
+                                <div class="col">
+                                    <div class="row">
+                                        <div class="col-4 px-0 pb d-flex justify-content-center" th:each="postImageDto : ${postImageDtoList}">
+                                            <div class="image-container">
+                                                <a th:href="@{/club/readPost(id=${postImageDto.post_id})}">
+                                                    <img th:src="|/images/${postImageDto.post_img_location}|"
+                                                         class="img-fluid image-item">
+                                                    <div class="overlay">
+                                                        <span class="material-symbols-outlined text-white">
+                                                            image
+                                                            </span>
+                                                    </div>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
-        
             </div>
-        </div>
+            
 
 
             <!-- footer 시작 -->
- <div class="row py-4 px-3 bg-body-secondary text-secondary">
-    <div class="col">
-        <div class="row pb-2">
-            <div class="col p-0 fw-bold fs-3 d-flex align-items-center">
-                <span class="material-symbols-outlined">camping</span>
-                <span class="ms-1">BASECAMP</span>
-            </div>
-        </div>
-        <div class="row pb-3 border-bottom border-2">
-            <div class="col p-0 f08">
-                BASECAMP는 통신판매 중개자로서 통신판매의 당사자가 아니며 상품의 예약, 이용 및 환불 등과 관련한 의무와 책임은 각 판매자에게 있습니다.
-            </div>
-        </div>
+            <div class="row py-4 px-3 bg-body-secondary text-secondary">
+                <div class="col">
+                    <div class="row pb-2">
+                        <div class="col p-0 fw-bold fs-3 d-flex align-items-center">
+                            <span class="material-symbols-outlined">camping</span>
+                            <span class="ms-1">BASECAMP</span>
+                        </div>
+                    </div>
+                    <div class="row pb-3 border-bottom border-2">
+                        <div class="col p-0 f08">
+                            BASECAMP는 통신판매 중개자로서 통신판매의 당사자가 아니며 상품의 예약, 이용 및 환불 등과 관련한 의무와 책임은 각 판매자에게 있습니다.
+                        </div>
+                    </div>
 
-        <div class="row pt-3 py-3 border-bottom border-2">
-            <div class="col-auto p-0">
-                <button class="btn btn-sm bg-dark-subtle text-white fw-bold f08 d-flex align-items-center">
-                    <span class="material-symbols-outlined" style="font-size: 1rem; line-height: 1;">phone_in_talk</span>
-                    <span class="ms-1" style="font-size: 0.8rem;">고객센터</span>
-                </button>
-            </div>
-            <div class="col-auto">
-                <button class="btn btn-sm bg-dark-subtle text-white fw-bold f08" style="font-size: 0.8rem;">
-                    카카오 1:1 문의
-                </button>
-            </div>
-            <div class="col p-0 f08">
-                <div class="row">
-                    <div class="col">
-                        <span>평일</span> : 10:00 ~ 17:00
+                    <div class="row pt-3 py-3 border-bottom border-2">
+                        <div class="col-auto p-0">
+                            <button class="btn btn-sm bg-dark-subtle text-white fw-bold f08 d-flex align-items-center">
+                                <span class="material-symbols-outlined" style="font-size: 1rem; line-height: 1;">phone_in_talk</span>
+                                <span class="ms-1" style="font-size: 0.8rem;">고객센터</span>
+                            </button>
+                        </div>
+                        <div class="col-auto">
+                            <button class="btn btn-sm bg-dark-subtle text-white fw-bold f08" style="font-size: 0.8rem;">
+                                카카오 1:1 문의
+                            </button>
+                        </div>
+                        <div class="col p-0 f08">
+                            <div class="row">
+                                <div class="col">
+                                    <span>평일</span> : 10:00 ~ 17:00
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col">
+                                    <span>점심</span> : 12:00 ~ 13:00
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col">
+                                    <span>※</span><span>주말 공휴일 휴무</span>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                </div>
-                <div class="row">
-                    <div class="col">
-                        <span>점심</span> : 12:00 ~ 13:00
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col">
-                        <span>※</span><span>주말 공휴일 휴무</span>
-                    </div>
-                </div>
-            </div>
-        </div>
 
-        <div class="row pt-3 mb-4 pb-5 align-items-center">
-            <div class="col-auto me-2 bg-dark-subtle rounded-circle d-flex align-items-center" style="aspect-ratio: 1/1;">
-                <i class="bi bi-google-play"></i>
+                    <div class="row pt-3 mb-4 pb-5 align-items-center">
+                        <div class="col-auto me-2 bg-dark-subtle rounded-circle d-flex align-items-center" style="aspect-ratio: 1/1;">
+                            <i class="bi bi-google-play"></i>
+                        </div>
+                        <div class="col-auto me-2 bg-dark-subtle rounded-circle d-flex align-items-center" style="aspect-ratio: 1/1;">
+                            <i class="bi bi-youtube"></i>
+                        </div>
+                        <div class="col-auto me-2 bg-dark-subtle rounded-circle d-flex align-items-center" style="aspect-ratio: 1/1;">
+                            <i class="bi bi-instagram"></i>
+                        </div>
+                        <div class="col-auto pe-0 f08">
+                            이용약관
+                        </div>
+                        <div class="col f08">
+                            개인정보처리방침
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div class="col-auto me-2 bg-dark-subtle rounded-circle d-flex align-items-center" style="aspect-ratio: 1/1;">
-                <i class="bi bi-youtube"></i>
-            </div>
-            <div class="col-auto me-2 bg-dark-subtle rounded-circle d-flex align-items-center" style="aspect-ratio: 1/1;">
-                <i class="bi bi-instagram"></i>
-            </div>
-            <div class="col-auto pe-0 f08">
-                이용약관
-            </div>
-            <div class="col f08">
-                개인정보처리방침
-            </div>
-        </div>
-    </div>
-</div>
-<!-- footer 끝 -->
+            <!-- footer 끝 -->
 
 
 

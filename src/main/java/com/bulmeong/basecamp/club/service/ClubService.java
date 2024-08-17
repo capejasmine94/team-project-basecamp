@@ -200,6 +200,7 @@ public class ClubService {
             int totalComment = clubSqlMapper.countTotalComment(clubPostDto.getId());
             int totalPostLike = clubSqlMapper.countTotalPostLike(clubPostDto.getId());
             ClubDto clubDto = clubSqlMapper.selectClubDtoById(club_id);
+           
 
             Map<String, Object> postDetailMap = new HashMap<>();
             postDetailMap.put("clubPostDto", clubPostDto);
@@ -232,6 +233,16 @@ public class ClubService {
         return map ;
     }
 
+    // 게시글 검색
+    public List<Map<String,Object>> getSearchPosts(String searchOption, String searchWord){
+        List<Map<String,Object>> searchPosts = clubSqlMapper.selectSearchPosts(searchOption, searchWord);
+        for (Map<String,Object> post  : searchPosts) {
+            int post_id = (int) post.get("id");
+            int totalComment = clubSqlMapper.countTotalComment(post_id);
+            post.put("totalComment", totalComment);
+        }
+        return searchPosts;
+    }
 
 
     // 이미지

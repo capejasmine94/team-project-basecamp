@@ -165,7 +165,9 @@
   
         <div class="container-fluid fixed-top bg-white">
             <div class="row pt-3 pb-2 bg-white">
-                <div class="col-2 ps-2 justify-content-center align-items-center d-flex"><span onclick="history.back()" class="material-symbols-outlined">arrow_back</span></div>
+                    <a href="/club/main" class="col-2 ps-2 justify-content-center align-items-center d-flex">
+                        <span class="material-symbols-outlined">close</span>
+                    </a>
                 <div class="col text-center fw-medium" th:text="${map.clubDto.name}">소모임 이름</div>
                 <a th:href="@{/club/managementClub(id=${id})}" class="col-2 pe-2 text-end justify-content-center align-items-center d-flex">
                 <span  class="material-symbols-outlined fw-light">settings</span></a>   

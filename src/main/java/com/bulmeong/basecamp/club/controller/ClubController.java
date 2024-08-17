@@ -35,6 +35,7 @@ import com.bulmeong.basecamp.common.dto.ImageDto;
 
 import com.bulmeong.basecamp.common.util.ImageUtil;
 import com.bulmeong.basecamp.common.util.Utils;
+import com.bulmeong.basecamp.secondHandProduct.dto.CategoryDto;
 import com.bulmeong.basecamp.user.dto.UserDto;
 import com.bulmeong.basecamp.user.service.UserService;
 
@@ -241,6 +242,9 @@ public class ClubController {
 
         ClubDto clubDto = clubSqlMapper.selectClubDtoById(id);
         model.addAttribute("clubDto", clubDto);
+
+        List<CategoryDto> categoryList = clubSqlMapper.selectCategoryList();
+        model.addAttribute("categoryList", categoryList);
         
 
         return "club/clubBoardPage";

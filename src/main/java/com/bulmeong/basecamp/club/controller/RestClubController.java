@@ -201,7 +201,17 @@ public class RestClubController {
         return restResponseDto;
     }
 
-    
+    @GetMapping("posts")
+    public RestResponseDto getPosts(@RequestParam("option")String option,
+                                    @RequestParam("searchWord") String searchWord){
+        RestResponseDto restResponseDto = new RestResponseDto();
+        List<Map<String,Object>> searchPosts = clubService.getSearchPosts(option, searchWord);
+        restResponseDto.add("searchPosts", searchPosts);
+        System.out.println(searchPosts);
+        System.out.println(option + searchWord);
+        return restResponseDto;
+    }
+
 
     public RestResponseDto template(){
         RestResponseDto restResponseDto = new RestResponseDto();

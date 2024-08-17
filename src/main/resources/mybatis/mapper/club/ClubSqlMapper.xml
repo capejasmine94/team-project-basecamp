@@ -615,6 +615,32 @@
         where id=#{id}
     </select>
 
+    <!-- 카테고리 -->
+    <select id="selectCategoryList" resultType="com.bulmeong.basecamp.club.dto.ClubCategoryDto">
+        select * from bc_club_post_category;
+    </select>
+
+    <!-- 검색  -->
+    <select id="selectSearchPosts" resultType="map">
+        SELECT * FROM bc_club_post bcp
+        INNER JOIN bc_user bu ON bcp.user_id = bu.id
+        inner join bc_club_post_category bcpc on bcp.category_id = bcpc.id
+        WHERE 
+        <choose>
+        <when test="searchOption == 'title'">
+            bcp.title LIKE CONCAT('%', #{searchWord}, '%')
+        </when>
+        <when test="searchOption == 'content'">
+            bcp.content LIKE CONCAT('%', #{searchWord}, '%')
+        </when>
+        <when test="searchOption == 'nickname'">
+            bu.nickname LIKE CONCAT('%', #{searchWord}, '%')
+        </when>
+        <otherwise>
+            1 = 0 <!-- 매칭되지 않는 경우 빈 결과 반환 -->
+        </otherwise>
+    </choose>
+    </select>
  
 
 
