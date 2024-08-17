@@ -1,5 +1,5 @@
 package com.bulmeong.basecamp.secondHandProduct.controller;
-
+//
 import org.json.JSONException;
 import org.json.JSONObject;
 import com.bulmeong.basecamp.campingcar.dto.RestResponseDto;
@@ -15,6 +15,9 @@ import java.net.URL;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
+
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("api")
