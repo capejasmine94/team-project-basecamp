@@ -52,6 +52,8 @@ public class StoreOrderController {
             // 카카오 결제 요청하기
             ApproveResponse approveResponse = kakaoPayService.payApprove(tid, pgToken, storeOrderDto.getId(), storeOrderDto.getUser_id());
 
+            System.out.println(approveResponse);
+
             storeService.orderProcess(storeOrderDto.getUser_id(), storeOrderDto);
             int[] pendingOrderCartProductIds = (int[])session.getAttribute("pendingOrderCartProductIds");
             if(pendingOrderCartProductIds!=null){

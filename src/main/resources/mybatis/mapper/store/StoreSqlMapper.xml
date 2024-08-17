@@ -936,6 +936,7 @@
         select coalesce(sum(op.quantity), 0) from order_product op
         inner join store_product sp on op.product_id = sp.id 
         where sp.id = #{product_id}
+        and op.status != 'pending'
     </select>
 
 </mapper>

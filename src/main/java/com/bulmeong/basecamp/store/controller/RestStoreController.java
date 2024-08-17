@@ -17,6 +17,7 @@ import com.bulmeong.basecamp.store.dto.AdditionalInfoDto;
 import com.bulmeong.basecamp.store.dto.CartProductDto;
 import com.bulmeong.basecamp.store.dto.OptionRequestData;
 import com.bulmeong.basecamp.store.dto.OrderDeliveryInfoDto;
+import com.bulmeong.basecamp.store.dto.OrderProductDto;
 import com.bulmeong.basecamp.store.dto.ProductOptionNameDto;
 import com.bulmeong.basecamp.store.dto.ProductRefundDto;
 import com.bulmeong.basecamp.store.dto.ProductReviewDto;
@@ -285,6 +286,38 @@ public class RestStoreController {
 
         storeService.deletePendingOrder(user_id);
         storeService.insertPendingOrder(user_id, cart_product_ids);
+
+        return restResponseDto;
+    }
+
+
+    @RequestMapping("removePendingOrder")
+    public RestResponseDto removePendingOrder(HttpSession session){
+        RestResponseDto restResponseDto = new RestResponseDto();
+
+        session.removeAttribute("pendingOrderCartProductIds");
+
+        UserDto userDto = (UserDto)session.getAttribute("sessionUserInfo");
+        storeService.deletePendingOrder(userDto.getId());
+
+        return restResponseDto;
+    }
+
+    @RequestMapping("addToOrdersheetBuyNow")
+    public RestResponseDto addToOrdersheetBuyNow(
+        @RequestParam("quantity") int quantity,
+        @RequestParam("product_id") int product_id,
+        @RequestParam("value_ids") int[] value_ids,
+        @RequestParam("user_id") int user_id,
+        HttpSession session
+    ){
+        RestResponseDto restResponseDto = new RestResponseDto();
+
+        OrderProductDto orderProductDto = new OrderProductDto();
+        orderProductDto.setProduct_id(product_id);
+        orderProductDto.setQuantity(quantity);
+
+        storeService.insertPendingOrderBuyNow(user_id, orderProductDto, value_ids);
 
         return restResponseDto;
     }

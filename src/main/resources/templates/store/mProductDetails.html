@@ -565,7 +565,7 @@
                     </a>
                 </div>
                 <div class="col py-3 d-grid">
-                    <a id="orderButton" type="button" class="btn btn-dark rounded-0 py-2" onclick="addToOrdersheet()">
+                    <a id="orderButton" type="button" class="btn btn-dark rounded-0 py-2" onclick="addToOrdersheetBuyNow()">
                         구매하기
                     </a>
                 </div>
@@ -1036,7 +1036,8 @@
             selectedOptionRow.parentNode.removeChild(selectedOptionRow);
         }
 
-        function addToOrdersheet(){
+        //바로구매
+        async function addToOrdersheetBuyNow(){
             if (myId == null) {
                 if (confirm("로그인 후 이용 가능합니다. 로그인 페이지로 이동하시겠습니까?")) {
                     location.href = "/user/login";
@@ -1051,6 +1052,36 @@
                 alert("상품 옵션을 선택해주세요");
                 return;
             }
+
+            const url = '/api/store/removePendingOrder'
+            await fetch(url)
+
+            //옵션이 없는 상품일 때
+            if (selectedOptionRows.length == 0) {
+                const quantity = optionQuantityRow.querySelector('.inputQuantity').value;
+                const price = optionQuantityRow.querySelector('.inputOptionPrice').value;
+
+                const url = `/api/store/addToOrdersheetBuyNow?quantity=${quantity}&product_id=${product_id}&value_ids=0&user_id=${myId}`;
+                await fetch(url);
+
+            }else{
+                for (const selectedOptionRow of selectedOptionRows) {
+                    const quantity = selectedOptionRow.querySelector('.inputQuantity').value;
+                    const price = selectedOptionRow.querySelector('.inputOptionPrice').value;
+
+                    const selectedOptionValueIds = selectedOptionRow.querySelectorAll('.selectedOptionValueId');
+
+                    const valueIds = Array.from(selectedOptionValueIds).map(option => parseInt(option.value, 10));
+
+                    const value_ids = valueIds.join(",");
+
+                    const url = `/api/store/addToOrdersheetBuyNow?quantity=${quantity}&product_id=${product_id}&value_ids=${value_ids}&user_id=${myId}`;
+                    await fetch(url);
+                }
+            }
+
+            location.href = "/store/ordersheet";
+
         }
 
         //addToCart

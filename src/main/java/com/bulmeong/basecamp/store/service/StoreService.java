@@ -610,6 +610,31 @@ public class StoreService {
         }
     }
 
+    public void insertPendingOrderBuyNow(int user_id, OrderProductDto orderProductDto, int[] value_ids){
+        StoreOrderDto storeOrderDto = new StoreOrderDto();
+        storeOrderDto.setUser_id(user_id);
+        storeSqlMapper.insertPendingOrder(storeOrderDto);
+
+        int order_id = storeOrderDto.getId();
+
+        orderProductDto.setOrder_id(order_id);
+        storeSqlMapper.insertOrderProduct(orderProductDto);
+
+        if(value_ids[0]==0){
+            return;
+        }
+
+        int order_product_id = orderProductDto.getId();
+
+        for(int value_id : value_ids){
+            OrderProductOptionValueDto orderProductOptionValueDto = new OrderProductOptionValueDto();
+            orderProductOptionValueDto.setOrder_product_id(order_product_id);
+            orderProductOptionValueDto.setOption_value_id(value_id);
+
+            storeSqlMapper.insertProductOptionValue(orderProductOptionValueDto);
+        }
+    }
+
     public int getPendingOrderId(int user_id){
         List<StoreOrderDto> storeOrderDtoList = storeSqlMapper.selectPendingOrderDtoListByUserId(user_id);
 
@@ -671,7 +696,7 @@ public class StoreService {
                     double percentage = storeProductDiscountDto.getPercentage();
                     orderProductDto.setDiscount_percentage(percentage);
                     
-                    if(value_ids != null){
+                    if(value_ids != null && value_ids.length != 0){
                         //옵션 있는 경우
                         int additional_info_id = storeSqlMapper.selectAdditionalInfoIdByValueIds(value_ids);
                         AdditionalInfoDto additionalInfoDto = storeSqlMapper.selectAdditionalInfoById(additional_info_id);
@@ -706,7 +731,7 @@ public class StoreService {
                     System.out.println("여기 봐라");
                     System.out.println(orderProductDto);
 
-                    if(value_ids.length != 0){
+                    if(value_ids != null && value_ids.length != 0){
                         //옵션 있는 경우
                         int additional_info_id = storeSqlMapper.selectAdditionalInfoIdByValueIds(value_ids);
                         AdditionalInfoDto additionalInfoDto = storeSqlMapper.selectAdditionalInfoById(additional_info_id);
