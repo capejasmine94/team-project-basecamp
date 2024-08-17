@@ -8,14 +8,134 @@
     <script src="https://kit.fontawesome.com/7b271bba58.js" crossorigin="anonymous"></script>
     <!-- Google Material Icons -->
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet">
-    <!-- partner 오른쪽  본문 css -->
+    <!-- partner 오른쪽 본문 css -->
     <link href="/public/css/campingcar/right-content.css" rel="stylesheet">
     <link href="/public/css/common.css" rel="stylesheet">
     <!-- 이미지 js -->
     <script src="/public/js/util.js"></script>
-    <!-- 캘린더 js -->
-    <script src="/public/js/calendar.js"></script>
-   
+
+    <style>
+        /* 달력 컨트롤과 범례의 전체적인 레이아웃 설정 */
+        .calendar-controls {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 20px;
+            background-color: #f8f9fa;
+            border-bottom: 1px solid #dee2e6;
+            position: relative;
+        }
+
+        .calendar-controls .navigation {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: absolute;
+            left: 50%;
+            transform: translateX(-80%);
+        }
+
+        .btn-icon {
+            background: none;
+            border: none;
+            color: #6c757d;
+            cursor: pointer;
+            padding: 5px 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .btn-icon:hover {
+            background-color: #f8f9fa;
+        }
+
+        #monthYear {
+            font-size: 20px;
+            font-weight: bold;
+            margin: 0 15px;
+        }
+
+        .calendar-controls .legend {
+            display: flex;
+            justify-content: flex-end;
+            flex-grow: 1;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            margin-left: 20px;
+            font-size: 14px;
+        }
+
+        .dot {
+            height: 10px;
+            width: 10px;
+            border-radius: 50%;
+            margin-right: 5px;
+            display: inline-block;
+        }
+        .high-season .dot { background-color: #f8d7da; }
+        .mid-season .dot { background-color: #fff3cd; }
+        .designated-period .dot { background-color: #d1ecf1; }
+        .holiday .dot { background-color: #cccccc; }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th {
+            text-align: center !important;
+            vertical-align: middle !important;
+            height: 60px !important;
+            padding: 0 !important;
+            font-weight: bold !important;
+            font-size: 18px !important;
+        }
+
+        td {
+            padding: 12px;
+            border: 1px solid #dee2e6;
+            text-align: left; /* 셀 안의 텍스트를 왼쪽 정렬 */
+            vertical-align: top; /* 셀 안의 텍스트를 상단 정렬 */
+            height: 80px; /* 셀의 높이를 고정 */
+        }
+
+        .date-cell {
+            padding: 5px;
+            font-size: 14px;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+
+        .date-cell:hover {
+            background-color: #e9ecef;
+        }
+
+        .sunday {
+            color: red;
+        }
+
+        .selected-day {
+            border: 2px solid red;
+        }
+
+        .inactive {
+            color: #dcdcdc;
+        }
+
+        /* 이전/다음 달 날짜 스타일 */
+        .other-month {
+            color: #999999;
+        }
+
+        /* 이전/다음 달 날짜에 muted 스타일 적용 */
+        .text-muted {
+            color: #6c757d !important;
+        }
+    </style>
 </head>
 <body>
     <div th:replace="~{partner/carNavi::topNavi}"></div>
@@ -120,20 +240,24 @@
                                 <head>기간 및 가격 확인</head>
                                 <div class="card-body">
                                     <div class="form-group">
-                                        <div class="row font-robot">
-                                            <div class="col margin-0">
-                                                <div class="alert alert-info border-5 border-top-0 border-end-0 border-bottom-0 border-primary-subtle fw-normal new-fs-9" style="background: #FAFAFA;">
-                                                    달력에서 날짜를 눌러 요금 타입을 변경하실 수 있습니다. 
-                                                </div>
+                                        <div class="calendar-controls">
+                                            <div class="navigation">
+                                                <button id="prevMonth" class="btn-icon">
+                                                    <span class="material-symbols-outlined">chevron_left</span>
+                                                </button>
+                                                <span id="monthYear"></span>
+                                                <button id="nextMonth" class="btn-icon">
+                                                    <span class="material-symbols-outlined">chevron_right</span>
+                                                </button>
+                                            </div>
+                                            <div class="legend">
+                                                <span class="legend-item high-season"><span class="dot"></span>성수기</span>
+                                                <span class="legend-item mid-season"><span class="dot"></span>준성수기</span>
+                                                <span class="legend-item designated-period"><span class="dot"></span>지정기간</span>
+                                                <span class="legend-item holiday"><span class="dot"></span>휴일</span>
                                             </div>
                                         </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <div class="row font-robot">
-                                            <div class="col margin-0">
-                                                <div id="calendar_peak"></div>
-                                            </div>
-                                        </div>
+                                        <div id="calendar_peak"></div><!-- 달력이 표시될 부분 -->
                                     </div>
                                 </div>
                             </div>
@@ -143,21 +267,117 @@
             </div>
         </div>
     </div>
- 
+
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js"></script>
     <script src="/public/js/campingcar/partnermain.js"></script>
     <script>
-        // 현재 날짜와 시간을 포함하는 Date 객체 생성
-        const nextYear = new Date();
+        let currentDate = new Date();
 
-        // Date 객체의 연도를 현재 연도에서 1년 더한 값으로 설정
-        nextYear.setFullYear(nextYear.getFullYear() + 1);
+        // 페이지가 로드되면 현재 날짜를 기준으로 달력을 생성합니다.
+        document.addEventListener('DOMContentLoaded', function () {
+            createDynamicCalendar(currentDate.getFullYear(), currentDate.getMonth());
+        });
 
-        // "peak"라는 식별자로, 다음 해부터 365일간의 달력 데이터 생성 또는 처리
-        createRangeCalendar("peak", 365, nextYear);
+        // 이전 달 버튼 클릭 시 현재 월을 이전 달로 설정하고 달력을 갱신합니다.
+        document.getElementById('prevMonth').addEventListener('click', function() {
+            currentDate.setMonth(currentDate.getMonth() - 1);
+            createDynamicCalendar(currentDate.getFullYear(), currentDate.getMonth());
+        });
+
+        // 다음 달 버튼 클릭 시 현재 월을 다음 달로 설정하고 달력을 갱신합니다.
+        document.getElementById('nextMonth').addEventListener('click', function() {
+            currentDate.setMonth(currentDate.getMonth() + 1);
+            createDynamicCalendar(currentDate.getFullYear(), currentDate.getMonth());
+        });
+
+        // 동적으로 달력을 생성하는 함수입니다.
+        function createDynamicCalendar(year, month) {
+            const container = document.getElementById('calendar_peak');
+            container.innerHTML = ''; // 기존 달력을 지웁니다.
+            document.getElementById('monthYear').textContent = `${year}년 ${month + 1}월`; // 현재 연도와 월을 표시합니다.
+
+            const table = document.createElement('table');
+            table.className = 'table calendar-table'; // Bootstrap 스타일 적용
+            const header = table.createTHead();
+            const headerRow = header.insertRow();
+            const daysOfWeek = ['일', '월', '화', '수', '목', '금', '토'];
+            daysOfWeek.forEach(day => {
+                const cell = headerRow.insertCell();
+                cell.textContent = day;
+                cell.className = 'text-center fw-semibold'; // 중앙 정렬 및 강조된 스타일 적용
+            });
+
+            const body = table.createTBody();
+            const firstDay = new Date(year, month, 1).getDay(); // 해당 월의 첫 번째 날의 요일을 계산합니다.
+            const daysInMonth = new Date(year, month + 1, 0).getDate(); // 해당 월의 일수를 계산합니다.
+            const previousMonthDays = new Date(year, month, 0).getDate(); // 이전 달의 총 일수를 계산합니다.
+
+            let date = 1; // 현재 월의 날짜를 추적하는 변수입니다.
+            let nextMonthDate = 1; // 다음 달의 날짜를 추적하는 변수입니다.
+
+            for (let i = 0; i < 6; i++) { // 최대 6주를 생성합니다.
+                const row = body.insertRow();
+                for (let j = 0; j < 7; j++) { // 7일을 생성합니다.
+                    const cell = row.insertCell();
+                    cell.className = 'date-cell'; // 날짜 셀의 기본 스타일을 설정합니다.
+                    if (j === 0) {
+                        cell.classList.add('sunday'); // 일요일은 빨간색으로 표시됩니다.
+                    }
+                    if (i === 0 && j < firstDay) {
+                        // 이전 달의 날짜를 표시
+                        const prevDate = previousMonthDays - (firstDay - j - 1);
+                        cell.textContent = prevDate;
+                        cell.classList.add('text-muted'); // 이전 달 날짜에 muted 스타일을 추가합니다.
+                        cell.onclick = function() {
+                            selectDay(cell, year, month - 1, prevDate); // 이전 달의 날짜를 클릭할 때 선택 가능하도록 설정
+                        };
+                    } else if (date > daysInMonth) {
+                        // 다음 달의 날짜를 표시
+                        const currentNextMonthDate = nextMonthDate; // 클로저로 값을 캡처
+                        cell.textContent = currentNextMonthDate;
+                        cell.classList.add('text-muted'); // 다음 달 날짜에 muted 스타일을 추가합니다.
+                        cell.onclick = function() {
+                            selectDay(cell, year, month + 1, currentNextMonthDate); // 다음 달의 날짜를 클릭할 때 선택 가능하도록 설정
+                        };
+                        nextMonthDate++;
+                    } else {
+                        const currentDay = date; // 현재 날짜를 클로저로 캡처합니다.
+                        cell.textContent = currentDay;
+                        cell.onclick = function() {
+                            selectDay(cell, year, month, currentDay); // 선택된 날짜로 함수를 호출합니다.
+                        };
+                        date++;
+                    }
+                }
+            }
+
+            container.appendChild(table); // 달력을 컨테이너에 추가합니다.
+        }
+
+        // 날짜 선택 시 호출되는 함수입니다.
+        function selectDay(cell, year, month, day) {
+            const previouslySelected = document.querySelector('.selected-day');
+            if (previouslySelected) previouslySelected.classList.remove('selected-day'); // 이전에 선택된 날짜의 스타일을 제거합니다.
+            cell.classList.add('selected-day'); // 선택된 날짜에 스타일을 추가합니다.
+
+            // 월이 12월(11) 이상일 경우, 다음 해로 넘어가도록 처리
+            if (month > 11) {
+                month = 0;
+                year++;
+            }
+            // 월이 1월(0) 이하일 경우, 이전 해로 넘어가도록 처리
+            if (month < 0) {
+                month = 11;
+                year--;
+            }
+
+            const formattedMonth = String(month + 1).padStart(2, '0'); // 월을 두 자릿수로 포맷합니다.
+            const formattedDay = String(day).padStart(2, '0'); // 일을 두 자릿수로 포맷합니다.
+
+            console.log(`Year: ${year}, Month: ${formattedMonth}, Day: ${formattedDay}`); // 선택된 날짜를 콘솔에 출력합니다.
+        }
     </script>
-
 </body>
 </html>

@@ -163,6 +163,10 @@
                                             <div class="card-body">
                                                 <div class="form-group">
                                                     <label for="garage_address" class="control-label fw-semibold pb-3">차고지 주소</label>
+                                                    <div class="form-check">
+                                                        <input type="checkbox" id="sameAsCompAddress" class="form-check-input">
+                                                        <label for="sameAsCompAddress" class="form-check-label">사업장 주소와 동일</label>
+                                                    </div>
                                                     <input name="garage_address" type="text" class="form-control custom-bottom-border ps-0" placeholder="차고지 주소를 입력하세요" id="garage_address" maxlength="200">
                                                     <div class="new-fs-7" style="color: #7C7B7B;">차고지 주소는 정확하게 입력해 주세요. 부정확한 주소는 예약시 고객의 혼란을 야기할 수 있습니다.</div>
                                                 </div>
@@ -590,7 +594,7 @@
             </div>
         </div>
     </div>
-
+>
     
  
     <!-- Bootstrap JS -->
@@ -604,7 +608,23 @@
     <script>
     createUploader("main_image");
     createMultipleUploader("detailedImg");
-    </script>
+    
+    // "사업장 주소와 동일" 체크박스 기능 구현
+    document.addEventListener("DOMContentLoaded", function() {
+        const compAddress = '[[${session.sessionCaravanInfo.comp_address}]]';
+        const detailedAddress = '[[${session.sessionCaravanInfo.comp_detailed_address}]]';
 
+        const sameAsCompAddressCheckbox = document.getElementById('sameAsCompAddress');
+        const garageAddress = document.getElementById('garage_address');
+
+        sameAsCompAddressCheckbox.addEventListener('change', function() {
+            if (this.checked) {
+                garageAddress.value = compAddress + ', ' + detailedAddress;
+            } else {
+                garageAddress.value = '';
+            }
+        });
+    });
+    </script>
 </body>
 </html>

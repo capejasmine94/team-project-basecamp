@@ -50,7 +50,9 @@ public class PartnerCampingCarController {
 
 // 판매자 회원가입 등록
     @RequestMapping("sellerRegisterProcess")
-    public String sellerRegisterProcess(RentalCompanyDto rentalCompanyDto, @RequestParam("profile_image") MultipartFile comp_profile_image) {
+    public String sellerRegisterProcess(RentalCompanyDto rentalCompanyDto, 
+                                        @RequestParam("profile_image") MultipartFile comp_profile_image
+                                        ) {
         
         rentalCompanyDto.setComp_profile_image(ImageUtil.saveImageAndReturnLocation(comp_profile_image));
         
@@ -188,6 +190,12 @@ public class PartnerCampingCarController {
 // 내가 만든 main용 
     @RequestMapping("maintest")
     public String maintest() {
-        return "admin/maintest";
+        return "partner/maintest";
+    }
+    @RequestMapping("maintest2")
+    public String maintest2() {
+        return "partner/maintest2";
     }
 }
+
+

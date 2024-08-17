@@ -173,7 +173,7 @@
                         <div class="col px-4 border bg-white">
                             <div class="row py-3 border-bottom">
                                 <div class="col fw-bold">
-                                    판매자 기본 정보 입력
+                                    캠핑카 기본 정보 입력
                                 </div>
                             </div>
                             <div class="row pt-4">
@@ -247,7 +247,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    
+                                   
                                     <div class="row align-items-center">
                                         <div class="col">
                                             <div class="row pb-2">
@@ -301,7 +301,6 @@
         <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
         <script src="/public/js/campingcar/partnermain.js"></script>
         <script>
-            
             function automaticallyInputOriginAddress(){
                 const originAddressCheckBox = document.getElementById("originAddressCheckBox");
                 const origin_postcode = document.getElementById("origin_postcode");
@@ -492,75 +491,75 @@
             //     descriptionCount.textContent = currentLength + "/50";
             // }
 
-            function origin_execDaumPostcode() {
-                new daum.Postcode({
-                    oncomplete: function(data) {
+            // function origin_execDaumPostcode() {
+            //     new daum.Postcode({
+            //         oncomplete: function(data) {
 
-                        var addr = '';
-                        var extraAddr = '';
+            //             var addr = '';
+            //             var extraAddr = '';
 
-                        if (data.userSelectedType === 'R') {
-                            addr = data.roadAddress;
-                        } else {
-                            addr = data.jibunAddress;
-                        }
+            //             if (data.userSelectedType === 'R') {
+            //                 addr = data.roadAddress;
+            //             } else {
+            //                 addr = data.jibunAddress;
+            //             }
 
-                        if(data.userSelectedType === 'R'){
-                            if(data.bname !== '' && /[동|로|가]$/g.test(data.bname)){
-                                extraAddr += data.bname;
-                            }
+            //             if(data.userSelectedType === 'R'){
+            //                 if(data.bname !== '' && /[동|로|가]$/g.test(data.bname)){
+            //                     extraAddr += data.bname;
+            //                 }
 
-                            if(data.buildingName !== '' && data.apartment === 'Y'){
-                                extraAddr += (extraAddr !== '' ? ', ' + data.buildingName : data.buildingName);
-                            }
+            //                 if(data.buildingName !== '' && data.apartment === 'Y'){
+            //                     extraAddr += (extraAddr !== '' ? ', ' + data.buildingName : data.buildingName);
+            //                 }
 
-                            if(extraAddr !== ''){
-                                extraAddr = ' (' + extraAddr + ')';
-                            }
-                        }
+            //                 if(extraAddr !== ''){
+            //                     extraAddr = ' (' + extraAddr + ')';
+            //                 }
+            //             }
 
-                        document.getElementById('origin_postcode').value = data.zonecode;
-                        document.getElementById("origin_address").value = addr+extraAddr;
+            //             document.getElementById('origin_postcode').value = data.zonecode;
+            //             document.getElementById("origin_address").value = addr+extraAddr;
 
-                        document.getElementById("origin_detailAddress").focus();
-                    }
-                }).open();
-            }
+            //             document.getElementById("origin_detailAddress").focus();
+            //         }
+            //     }).open();
+            // }
 
-            function return_execDaumPostcode() {
-                new daum.Postcode({
-                    oncomplete: function(data) {
+            // function return_execDaumPostcode() {
+            //     new daum.Postcode({
+            //         oncomplete: function(data) {
 
-                        var addr = '';
-                        var extraAddr = '';
+            //             var addr = '';
+            //             var extraAddr = '';
 
-                        if (data.userSelectedType === 'R') {
-                            addr = data.roadAddress;
-                        } else {
-                            addr = data.jibunAddress;
-                        }
+            //             if (data.userSelectedType === 'R') {
+            //                 addr = data.roadAddress;
+            //             } else {
+            //                 addr = data.jibunAddress;
+            //             }
 
-                        if(data.userSelectedType === 'R'){
-                            if(data.bname !== '' && /[동|로|가]$/g.test(data.bname)){
-                                extraAddr += data.bname;
-                            }
+            //             if(data.userSelectedType === 'R'){
+            //                 if(data.bname !== '' && /[동|로|가]$/g.test(data.bname)){
+            //                     extraAddr += data.bname;
+            //                 }
 
-                            if(data.buildingName !== '' && data.apartment === 'Y'){
-                                extraAddr += (extraAddr !== '' ? ', ' + data.buildingName : data.buildingName);
-                            }
+            //                 if(data.buildingName !== '' && data.apartment === 'Y'){
+            //                     extraAddr += (extraAddr !== '' ? ', ' + data.buildingName : data.buildingName);
+            //                 }
 
-                            if(extraAddr !== ''){
-                                extraAddr = ' (' + extraAddr + ')';
-                            }
-                        }
+            //                 if(extraAddr !== ''){
+            //                     extraAddr = ' (' + extraAddr + ')';
+            //                 }
+            //             }
 
-                        document.getElementById('return_postcode').value = data.zonecode;
-                        document.getElementById("return_address").value = addr+extraAddr;
+            //             document.getElementById('return_postcode').value = data.zonecode;
+            //             document.getElementById("return_address").value = addr+extraAddr;
 
-                        document.getElementById("return_detailAddress").focus();
-                    }
-                }).open();
-            }
+            //             document.getElementById("return_detailAddress").focus();
+            //         }
+            //     }).open();
+            // }
 
             function execDaumPostcode() {
                 new daum.Postcode({
