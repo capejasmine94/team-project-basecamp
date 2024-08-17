@@ -51,6 +51,30 @@ public class CampingcarController {
         Map<String,Object> campingcarDetails = campingcarService.getCampingCarDetailByid(id);
         model.addAttribute("campingcarDetails", campingcarDetails);
 
+        // 캠핑옵션 
+        List<ProductDetailImgDto> detailImgDto = campingcarService.getProductDetailImgByProductId(id);
+        model.addAttribute("detailImgDto", detailImgDto);
+
+        // 차량옵션
+        List<BasicFacilitiesDto> facilities = campingcarService.getBasicFacilitiesByProductId(id);
+        model.addAttribute("facilities", facilities);
+
+        //리뷰 리스트
+        List<Map<String,Object>> reviewData = campingcarService.getReviewAllbyCarId(id);
+        model.addAttribute("reviewData", reviewData);
+
+        // 해당 차량의 리뷰 별점 평균 
+        Double reviewAvg = campingcarService.getAvgByCarId(id);
+        model.addAttribute("reviewAvg", reviewAvg);
+
+        // 해당 차량의 리뷰 참여 인원 수
+        int reivewCountBycar = campingcarService.getReviewByCountPersont(id);
+        model.addAttribute("reivewCountBycar", reivewCountBycar);
+
+        // 해당 차량의 각 별점 마다 인원수
+        List<Map<String,Object>> ratings = campingcarService.ratingGroupBycar(id);
+        model.addAttribute("ratings", ratings);
+
         return "campingcar/campingCarDetailPage";
     }
 
