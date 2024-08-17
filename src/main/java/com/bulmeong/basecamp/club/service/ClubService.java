@@ -23,6 +23,8 @@ import com.bulmeong.basecamp.common.dto.ImageDto;
 import com.bulmeong.basecamp.user.dto.UserDto;
 import com.bulmeong.basecamp.user.mapper.UserSqlMapper;
 
+import jakarta.servlet.http.HttpSession;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;

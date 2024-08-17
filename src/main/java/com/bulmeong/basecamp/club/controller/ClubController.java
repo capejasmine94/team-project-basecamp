@@ -448,8 +448,21 @@ public class ClubController {
     }
     
     @RequestMapping("meeting")
-    public String meeting(@RequestParam("id") int id, Model model){
+    public String meeting(@RequestParam("id") int id, Model model, HttpSession session){
         model.addAttribute("id", id);
+        ClubDto clubDto = clubService.selectClubDtoById(id);
+        model.addAttribute("clubDto", clubDto);
+
+        UserDto userDto = (UserDto)session.getAttribute("sessionUserInfo");
+        ClubMemberDto clubMemberDto = new ClubMemberDto();
+        clubMemberDto.setClub_id(id);
+        clubMemberDto.setUser_id(userDto.getId());
+
+        int isMemberInClub = clubSqlMapper.checkClubMembership(clubMemberDto);
+        model.addAttribute("isMemberInClub", isMemberInClub);
+
+
+        // int isMemberInClub = clubSqlMapper.checkClubMembership(clubMemberDto);
         return "club/clubMeetingPage";
     }
 

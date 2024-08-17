@@ -5,7 +5,6 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0" >
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
-
         <link rel="stylesheet" href="/public/css/common.css">
         <link rel="stylesheet" href="/public/css/basecamp.css">
         <style>
@@ -167,6 +166,31 @@
             padding: 0.05em 0; /* 텍스트에 패딩 추가 */
             font-weight: 300;
         }
+
+        /* 작성 버튼 */
+            /* 스크롤 시 텍스트 숨기기 */
+            .scroll-text {
+                transition: opacity 0.3s ease, max-width 0.3s ease; /* 부드러운 애니메이션 */
+                opacity: 1;
+                max-width: 12.5em; /* 초기 최대 너비 설정 */
+                overflow: hidden; /* 숨겨진 부분은 표시하지 않음 */
+                white-space: nowrap;
+                visibility: visible; /* 텍스트 가시성 */
+                padding-right: 0;
+            }
+
+            #scrollButton.small .scroll-text {
+                opacity: 0; /* 텍스트를 투명하게 만듦 */
+                max-width: 0; /* 너비를 0으로 설정하여 숨김 */
+                visibility: hidden; /* 텍스트를 숨김 */
+                padding: 0;
+            }
+
+            #scrollButton.small {
+                padding-right: 0.83em !important;
+                font-size: 1.165em;
+            }
+            /* 작성 버튼 끝 */
         
  
         </style>
@@ -174,8 +198,8 @@
     <body>
         <div class="container-fluid fixed-top">
             <div class="row pt-3 pb-2 bg-white">
-                <div class="col-2 ps-1 align-items-center d-flex ps-0"><span onclick="history.back()" class="material-symbols-outlined">arrow_back</span></div>
-                <span class="col text-center"> 정기모임</span>
+                <div class="col-2 ps-2 justify-content-center align-items-center d-flex"><span onclick="history.back()" class="material-symbols-outlined">arrow_back</span></div>
+                <span class="col text-center fw-medium" th:text="${clubDto.name}"> 정기모임</span>
                 <div class="col-2"></div>
             </div>
             <div class="row px-0">
@@ -199,12 +223,12 @@
             </div>
         </div>
 
-        <div class="container" style="padding-top: 75.22px;">
+        <div class="container pb-5" style="padding-top: 75.22px;">
 
-            <div class="row bg-white">
-                <div class="col">
+            <div class="row pb-5 bg-white">
+                <div class="col  mb-5 pb-5">
 
-                    <div class="row px-3 pt-4 pb-3">
+                    <div class="row px-3 pt-5 pb-3">
                         <div class="col ps-0 fw-semi-bold">
                             다가오는 정기모임, 잊지 마세요!
                         </div>
@@ -252,7 +276,7 @@
 
               <!-- 정기모임 템플릿 -->
                <div class="col d-none" id="upcoming-meeting-template">
-                <div class="row pt-3 upcoming-meeting-wrapper">
+                <div class="row pt-1 px-3 upcoming-meeting-wrapper">
                     <div class="col">
                         <div class="row justify-content-center">
                             <div class="col border rounded shadow-sm pt-2 pb-3">
@@ -262,23 +286,18 @@
                                         <div class="row pb-1 pt-1">
                                             <div class="col" style="font-size: 0.9em;">
                                                 <span class="d-day text-danger fw-medium"></span>
-                                            
-                                            </div>
-                                        </div>
-                                        
-                                        <div class="row pb-1 pt-1">
-                                            <div class="col ellipsis-line-one" style="font-size: 0.9em;">
                                                 <span class="upcoming-meeting-name"></span>
                                             </div>
                                         </div>
+                                        
                                         <div class="row pb-2 mb-2">
-                                            <div class="col ellipsis-line-two text-secondary" style="font-size: 0.8em;">
+                                            <div class="col text-secondary" style="font-size: 0.8em;">
                                                 <span class="upcoming-meeting-description"></span>
                                                 <!-- <span th:text="${meetingData.clubMeetingDto.description}"></span> -->
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-auto text-end align-items-center d-flex">
+                                    <!-- <div class="col-auto text-end align-items-center d-flex">
                                         <div class="col-auto align-self-center">
                                             <div class="row">
                                                 <div class="col">
@@ -286,7 +305,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
+                                    </div> -->
                                 </div>
                      
     
@@ -294,7 +313,7 @@
                                     <div class="col">
                                         <div class="row">
                                             <div class="col-auto">  
-                                                <img class="rounded-2 upcoming-meeting-image" style="width: 7em; height: 5em; object-fit: cover;">
+                                                <img class="rounded-2 upcoming-meeting-image" style="width: 9em; height: 6em; object-fit: cover;">
                                             </div>
                                             <div class="col ps-1" style="font-size: 0.8em;">
                                                 <div class="row">
@@ -472,16 +491,16 @@
             </div>
         </div>
 
-        <!-- 게시글 작성하기 -->
-        <div class="container fixed-bottom mb-5 pb-4 pe-2">
-            <div class="row justify-content-end mb-4 pe-3">
-                <a th:if="${session.sessionUserInfo != null}" th:href="@{/club/writePost(id=${id})}" class="col-auto bg-light ps-2 py-2 shadow rounded-pill text-decoration-none">
+        <!-- 정모 생성 버튼 -->
+        <div class="container fixed-bottom mb-5 pb-4">
+            <div class="row justify-content-end mb-4 pb-2 pe-3">
+                <a th:if="${isMemberInClub == 1}" th:href="@{/club/createNewMeeting(id=${id})}" id="scrollButton" class="col-auto lightBg ps-1 pe-4 py-1 shadow rounded-pill text-decoration-none">
                     <div class="row text-dark">
                         <div class="col-auto pe-0 align-self-center d-flex">
-                            <span class="material-symbols-outlined fs-3">add</span>
+                            <span class="material-symbols-outlined text-white" style="font-size: 2em;">add</span>
                         </div>
-                        <div class="col ps-0 fs-7 fw-medium d-flex align-self-center text-center" style="letter-spacing: -0.5px;">
-                            글 작성
+                        <div class="col-auto px-0 btn-text fw-medium text-white d-flex align-self-center text-center scroll-text text-primary-0" style="letter-spacing: -0.5px;">
+                            정모 개설
                         </div>
                     </div>
                 </a>
@@ -491,5 +510,20 @@
         <script src="/public/js/lockLikeMobile.js"></script>
         <script src="/public/js/club/clubMeeting.js"></script> 
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+        <script>
+            // 스크롤 이벤트 감지
+            window.onscroll = function() {
+                scrollFunction();
+            };
+        
+            function scrollFunction() {
+                const scrollButton = document.getElementById("scrollButton");
+                if (document.body.scrollTop > 50 || document.documentElement.scrollTop > 50) {
+                    scrollButton.classList.add("small"); // 스크롤이 내려갈 때 버튼을 축소
+                } else {
+                    scrollButton.classList.remove("small"); // 스크롤이 맨 위에 있을 때 전체 버튼 표시
+                }
+            }
+        </script>
     </body>
 </html>

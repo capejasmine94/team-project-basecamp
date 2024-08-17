@@ -107,9 +107,9 @@
     <body>
         <div class="container-fluid fixed-top">
             <div class="row pt-3 pb-2 bg-white">
-                <div class="col-2 ps-1 align-items-center d-flex ps-0"><span onclick="history.back()" class="material-symbols-outlined">arrow_back</span></div>
+                <div class="col-2 ps-2 justify-content-center align-items-center d-flex"><span onclick="history.back()" class="material-symbols-outlined">arrow_back</span></div>
                 <div class="col text-center fw-medium" th:text="${clubDto.name}">소모임 이름</div>
-                <div class="col-2">MY</div>
+                <div class="col-2"></div>
             </div>
             <div class="row px-0">
                 <div class="col">
@@ -290,21 +290,7 @@
             </div>
         </div>
 
-        <!-- 게시글 작성하기 -->
-        <div class="container fixed-bottom mb-5 pb-4 pe-2" style="z-index: 1010;">
-            <div class="row justify-content-end mb-4 pe-3">
-                <a th:if="${session.sessionUserInfo != null}" th:href="@{/club/writePost(id=${id})}" class="col-auto bg-light ps-2 py-2 shadow rounded-pill text-decoration-none">
-                    <div class="row text-dark">
-                        <div class="col-auto pe-0 align-self-center d-flex">
-                            <span class="material-symbols-outlined fs-3">add</span>
-                        </div>
-                        <div class="col ps-0 fs-7 fw-medium d-flex align-self-center text-center" style="letter-spacing: -0.5px;">
-                            글 작성
-                        </div>
-                    </div>
-                </a>
-            </div>
-        </div>
+    
          
         <script src="/public/js/lockLikeMobile.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>

@@ -603,23 +603,23 @@
                                             <img th:src="|/images/${bookmarkedClubData.bookmarkedClubDto.main_image}|" class="img-fluid rounded-circle"  style="aspect-ratio: 1/1; object-fit: cover;">
                                         </a>
                                     </div>
-                                    <div class="col">
+                                    <div class="col-10">
                                         <div class="row">
-                                            <div class="col fw-medium" style="font-size: 0.9em;">
+                                            <div class="col pe-0 fw-medium" style="font-size: 0.9em;">
                                                 <a th:href="@{/club/home(id=${bookmarkedClubData.bookmarkedClubDto.id})}">
                                                     <span th:text="${bookmarkedClubData.bookmarkedClubDto.name}"></span>
                                                 </a>
                                             </div>
                                         </div>
                                         <div class="row">
-                                            <div class="col ellipsis-line-two" style="font-size: 0.9em;">
-                                                <a th:href="@{/club/home(id=${bookmarkedClubData.bookmarkedClubDto.id})}">
+                                            <!-- <div class="col ellipsis-line-one pe-0" style="font-size: 0.8em;"> -->
+                                                <a class="col text-truncate pe-0" style="font-size: 0.8em;" th:href="@{/club/home(id=${bookmarkedClubData.bookmarkedClubDto.id})}">
                                                     <span th:text="${bookmarkedClubData.bookmarkedClubDto.description}"></span>
                                                 </a>
-                                            </div>
+                                            <!-- </div> -->
                                         </div>
                                         <div class="row">
-                                            <div class="col text-secondary" style="font-size: 0.8em;">
+                                            <div class="col pe-0 text-secondary" style="font-size: 0.8em;">
                                                 <span>강남구 &#183;</span>
                                                 <span> 멤버 19 &#183;</span>
                                                 <span> 카테고리</span>
