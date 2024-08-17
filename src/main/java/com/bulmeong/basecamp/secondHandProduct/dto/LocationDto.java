@@ -2,8 +2,6 @@ package com.bulmeong.basecamp.secondHandProduct.dto;
 
 import lombok.Data;
 
-import java.math.BigDecimal;
-
 @Data
 public class LocationDto {
 
