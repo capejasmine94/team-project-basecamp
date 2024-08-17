@@ -465,23 +465,23 @@ public class ProductController {
 
         return "secondhandProduct/transactionReviewPage";
     }
-    @RequestMapping("likeReviewSelectPage")
-    public String likeReviewSelectPage(Model model) {
-
-        List<LikeReviewDto> likeReviewDtoList = productService.selectLikeReviewList();
-        model.addAttribute("likeReviewDtoList", likeReviewDtoList);
-
-        return "partials/secondhandProduct/likeReviewSelectPage :: reviewSelect";
-    }
-
-    @RequestMapping("unlikeReviewSelectPage")
-    public String unlikeReviewSelectPage(Model model) {
-
-        List<UnlikeReviewDto> unlikeReviewDtoList = productService.selectUnlikeReviewList();
-        model.addAttribute("unlikeReviewDtoList", unlikeReviewDtoList);
-
-        return "partials/secondhandProduct/unlikeReviewSelectPage :: reviewSelect";
-    }
+//    @RequestMapping("likeReviewSelectPage")
+//    public String likeReviewSelectPage(Model model) {
+//
+//        List<LikeReviewDto> likeReviewDtoList = productService.selectLikeReviewList();
+//        model.addAttribute("likeReviewDtoList", likeReviewDtoList);
+//
+//        return "partials/secondhandProduct/likeReviewSelectPage :: reviewSelect";
+//    }
+//
+//    @RequestMapping("unlikeReviewSelectPage")
+//    public String unlikeReviewSelectPage(Model model) {
+//
+//        List<UnlikeReviewDto> unlikeReviewDtoList = productService.selectUnlikeReviewList();
+//        model.addAttribute("unlikeReviewDtoList", unlikeReviewDtoList);
+//
+//        return "partials/secondhandProduct/unlikeReviewSelectPage :: reviewSelect";
+//    }
 
 
 }

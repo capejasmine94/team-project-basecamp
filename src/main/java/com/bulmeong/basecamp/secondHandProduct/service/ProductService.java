@@ -141,13 +141,13 @@ public class ProductService {
     public List<ProductBuyerDto> getProductBuyerList(ProductBuyerDto productBuyerDto) {
         return productSqlMapper.getProductBuyerList(productBuyerDto);
     }
-// 거래후기
-    // 좋아요 선택
-    public List<LikeReviewDto> selectLikeReviewList() {
-        return productSqlMapper.selectLikeReviewList();
-    }
-    // 싫어요 선택
-    public List<UnlikeReviewDto> selectUnlikeReviewList() {
-        return productSqlMapper.selectUnlikeReviewList();
-    }
+//// 거래후기
+//    // 좋아요 선택
+//    public List<LikeReviewDto> selectLikeReviewList() {
+//        return productSqlMapper.selectLikeReviewList();
+//    }
+//    // 싫어요 선택
+//    public List<UnlikeReviewDto> selectUnlikeReviewList() {
+//        return productSqlMapper.selectUnlikeReviewList();
+//    }
 }

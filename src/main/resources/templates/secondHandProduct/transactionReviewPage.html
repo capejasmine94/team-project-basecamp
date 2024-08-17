@@ -1,144 +1,144 @@
-<!doctype html>
-<html lang="ko" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>채팅방</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
-    <link rel="stylesheet" href="/public/css/secondHandProductCss/style.css">
-    <link rel="stylesheet" href="/public/css/secondHandProductCss/chat.css">
-    <style>
-        .buyer-profile-custom {
-            width: 4rem;
-            height: 3rem;
-        }
-        .buyer-profile-custom img {
-            width: 100%;
-            height: 100%;
-            border-radius: 50%;
-        }
-        .review-icon {
-            text-decoration: none;
-        }
-        .review-inactive {
-            text-decoration: none;
-            color: silver;
-        }
-        .review-active {
-            text-decoration: none;
-            color: #28323C;
-        }
-    </style>
-</head>
-<body>
-<!--상단네비-->
-<div class="container g-0 py-2 bg-white fixed-top">
-    <div class="row mx-2">
-        <a href="javascript:history.back()" class="col" style="color: black; font-size: 1.1rem">
-            <i class="bi bi-chevron-left"></i>
-        </a>
-        <div class="col-auto text-center" style="font-size: 1.1rem">
-            <span>거래 후기 보내기</span>
-        </div>
-        <div class="col"></div>
-    </div>
-</div>
-<!-- 거래완료 상품정보 -->
-<div class="container-fluid g-0 border-bottom fixed-top" style="margin-top: 2.7rem;">
-    <div class="row mx-2 pt-2 pb-2">
-        <div class="col-auto pe-0">
-            <img class="chatProductImg-custom" th:src="@{/images/{image}(image=${productTotalMap.AllContentsDto.main_image})}">
-        </div>
-        <div class="col">
-            <div class="row-auto">
-                <div class="col">
-                    <span style="font-weight: 600" th:text="${productTotalMap.AllContentsDto.title}">상품이름</span>
-                </div>
-                <div class="col" style="font-weight: 400">
-                    <span style="font-size: 0.9rem">거래한 이웃</span>
-                    <span th:text="${nickname}" style="font-weight: 600;font-size: 1rem"></span>
-                    <a th:href="@{/secondhandProduct/buyerSelectionPage(product_id=${param.product_id})}" style="color: #868e96">
-                        <span style="font-size: 0.9rem">변경</span>
-                    </a>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-<div class="container-fluid g-0" style="margin-top: 8.5rem">
-    <div class="row mx-2">
-        <div class="col" style="font-size: 1.1rem; font-weight: 600">
-            <span th:text="${session.sessionUserInfo.nickname} + '님,'"></span>
-        </div>
-    </div>
-    <div class="row mx-2">
-        <div class="col" style="font-size: 1.1rem; font-weight: 600">
-            <span th:text="${nickname} + '님과 거래가 어떠셨나요?'"></span>
-        </div>
-    </div>
-    <div class="row mx-2">
-        <div class="col" style="font-size: 0.9rem;">
-            <span style="color: #868e96;">거래 선호도는 나만 볼 수 있어요.</span>
-        </div>
-    </div>
-</div>
-<div class="container-fluid g-0" style="margin-top: 0.8rem">
-    <div class="row mx-2">
-        <a href="#" class="col text-center review-icon review-inactive" onclick="loadContent('/secondhandProduct/likeReviewSelectPage', this)">
-            <div class="row">
-                <div class="col">
-                    <span class="material-symbols-outlined" style="font-size: 5rem">sentiment_very_satisfied</span>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col">
-                    <span style="font-weight: 600">좋아요!</span>
-                </div>
-            </div>
-        </a>
-        <a href="#" class="col text-center review-icon review-inactive" onclick="loadContent('/secondhandProduct/unlikeReviewSelectPage', this)">
-            <div class="row">
-                <div class="col">
-                    <span class="material-symbols-outlined" style="font-size: 5rem">mood_bad</span>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col">
-                    <span style="font-weight: 600">별로예요</span>
-                </div>
-            </div>
-        </a>
-    </div>
-</div>
-<div id="reviewSelect">
-    <!-- 리뷰 선택 동적 페이지 -->
-</div>
+<!--<!doctype html>-->
+<!--<html lang="ko" xmlns:th="http://www.thymeleaf.org">-->
+<!--<head>-->
+<!--    <meta charset="UTF-8">-->
+<!--    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">-->
+<!--    <meta http-equiv="X-UA-Compatible" content="ie=edge">-->
+<!--    <title>채팅방</title>-->
+<!--    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">-->
+<!--    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">-->
+<!--    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />-->
+<!--    <link rel="stylesheet" href="/public/css/secondHandProductCss/style.css">-->
+<!--    <link rel="stylesheet" href="/public/css/secondHandProductCss/chat.css">-->
+<!--    <style>-->
+<!--        .buyer-profile-custom {-->
+<!--            width: 4rem;-->
+<!--            height: 3rem;-->
+<!--        }-->
+<!--        .buyer-profile-custom img {-->
+<!--            width: 100%;-->
+<!--            height: 100%;-->
+<!--            border-radius: 50%;-->
+<!--        }-->
+<!--        .review-icon {-->
+<!--            text-decoration: none;-->
+<!--        }-->
+<!--        .review-inactive {-->
+<!--            text-decoration: none;-->
+<!--            color: silver;-->
+<!--        }-->
+<!--        .review-active {-->
+<!--            text-decoration: none;-->
+<!--            color: #28323C;-->
+<!--        }-->
+<!--    </style>-->
+<!--</head>-->
+<!--<body>-->
+<!--&lt;!&ndash;상단네비&ndash;&gt;-->
+<!--<div class="container g-0 py-2 bg-white fixed-top">-->
+<!--    <div class="row mx-2">-->
+<!--        <a href="javascript:history.back()" class="col" style="color: black; font-size: 1.1rem">-->
+<!--            <i class="bi bi-chevron-left"></i>-->
+<!--        </a>-->
+<!--        <div class="col-auto text-center" style="font-size: 1.1rem">-->
+<!--            <span>거래 후기 보내기</span>-->
+<!--        </div>-->
+<!--        <div class="col"></div>-->
+<!--    </div>-->
+<!--</div>-->
+<!--&lt;!&ndash; 거래완료 상품정보 &ndash;&gt;-->
+<!--<div class="container-fluid g-0 border-bottom fixed-top" style="margin-top: 2.7rem;">-->
+<!--    <div class="row mx-2 pt-2 pb-2">-->
+<!--        <div class="col-auto pe-0">-->
+<!--            <img class="chatProductImg-custom" th:src="@{/images/{image}(image=${productTotalMap.AllContentsDto.main_image})}">-->
+<!--        </div>-->
+<!--        <div class="col">-->
+<!--            <div class="row-auto">-->
+<!--                <div class="col">-->
+<!--                    <span style="font-weight: 600" th:text="${productTotalMap.AllContentsDto.title}">상품이름</span>-->
+<!--                </div>-->
+<!--                <div class="col" style="font-weight: 400">-->
+<!--                    <span style="font-size: 0.9rem">거래한 이웃</span>-->
+<!--                    <span th:text="${nickname}" style="font-weight: 600;font-size: 1rem"></span>-->
+<!--                    <a th:href="@{/secondhandProduct/buyerSelectionPage(product_id=${param.product_id})}" style="color: #868e96">-->
+<!--                        <span style="font-size: 0.9rem">변경</span>-->
+<!--                    </a>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </div>-->
+<!--</div>-->
+<!--<div class="container-fluid g-0" style="margin-top: 8.5rem">-->
+<!--    <div class="row mx-2">-->
+<!--        <div class="col" style="font-size: 1.1rem; font-weight: 600">-->
+<!--            <span th:text="${session.sessionUserInfo.nickname} + '님,'"></span>-->
+<!--        </div>-->
+<!--    </div>-->
+<!--    <div class="row mx-2">-->
+<!--        <div class="col" style="font-size: 1.1rem; font-weight: 600">-->
+<!--            <span th:text="${nickname} + '님과 거래가 어떠셨나요?'"></span>-->
+<!--        </div>-->
+<!--    </div>-->
+<!--    <div class="row mx-2">-->
+<!--        <div class="col" style="font-size: 0.9rem;">-->
+<!--            <span style="color: #868e96;">거래 선호도는 나만 볼 수 있어요.</span>-->
+<!--        </div>-->
+<!--    </div>-->
+<!--</div>-->
+<!--<div class="container-fluid g-0" style="margin-top: 0.8rem">-->
+<!--    <div class="row mx-2">-->
+<!--        <a href="#" class="col text-center review-icon review-inactive" onclick="loadContent('/secondhandProduct/likeReviewSelectPage', this)">-->
+<!--            <div class="row">-->
+<!--                <div class="col">-->
+<!--                    <span class="material-symbols-outlined" style="font-size: 5rem">sentiment_very_satisfied</span>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--            <div class="row">-->
+<!--                <div class="col">-->
+<!--                    <span style="font-weight: 600">좋아요!</span>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </a>-->
+<!--        <a href="#" class="col text-center review-icon review-inactive" onclick="loadContent('/secondhandProduct/unlikeReviewSelectPage', this)">-->
+<!--            <div class="row">-->
+<!--                <div class="col">-->
+<!--                    <span class="material-symbols-outlined" style="font-size: 5rem">mood_bad</span>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--            <div class="row">-->
+<!--                <div class="col">-->
+<!--                    <span style="font-weight: 600">별로예요</span>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </a>-->
+<!--    </div>-->
+<!--</div>-->
+<!--<div id="reviewSelect">-->
+<!--    &lt;!&ndash; 리뷰 선택 동적 페이지 &ndash;&gt;-->
+<!--</div>-->
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-<script>
-</script>
-<script>
-    function loadContent(url, element) {
-        // 모든 링크에서 review-active 클래스 제거하고 review-inactive 클래스 추가
-        document.querySelectorAll('.review-icon').forEach(link => {
-            link.classList.remove('review-active');
-            link.classList.add('review-inactive');
-        });
+<!--<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>-->
+<!--<script>-->
+<!--</script>-->
+<!--<script>-->
+<!--    function loadContent(url, element) {-->
+<!--        // 모든 링크에서 review-active 클래스 제거하고 review-inactive 클래스 추가-->
+<!--        document.querySelectorAll('.review-icon').forEach(link => {-->
+<!--            link.classList.remove('review-active');-->
+<!--            link.classList.add('review-inactive');-->
+<!--        });-->
 
-        // 클릭된 링크에 review-active 클래스 추가하고 review-inactive 클래스 제거
-        element.classList.add('review-active');
-        element.classList.remove('review-inactive');
+<!--        // 클릭된 링크에 review-active 클래스 추가하고 review-inactive 클래스 제거-->
+<!--        element.classList.add('review-active');-->
+<!--        element.classList.remove('review-inactive');-->
 
-        // 콘텐츠 로드
-        fetch(url)
-            .then(response => response.text())
-            .then(html => {
-                document.getElementById('reviewSelect').innerHTML = html;
-            });
-    }
-</script>
-</body>
-</html>
+<!--        // 콘텐츠 로드-->
+<!--        fetch(url)-->
+<!--            .then(response => response.text())-->
+<!--            .then(html => {-->
+<!--                document.getElementById('reviewSelect').innerHTML = html;-->
+<!--            });-->
+<!--    }-->
+<!--</script>-->
+<!--</body>-->
+<!--</html>-->

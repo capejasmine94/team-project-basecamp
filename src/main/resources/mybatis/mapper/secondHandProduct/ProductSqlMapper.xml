@@ -237,14 +237,14 @@
         WHERE c.seller_user_id = #{seller_user_id}
           AND c.product_id = #{product_id}
     </select>
-    <!-- 후기보내기 -> 좋아요 선택지 -->
-    <select id="selectLikeReviewList" resultType="com.bulmeong.basecamp.secondHandProduct.dto.LikeReviewDto">
-        SELECT * FROM bc_secondhand_like_review
-    </select>
-    <!-- 후기보내기 -> 싫어요 선택지 -->
-    <select id="selectUnlikeReviewList" resultType="com.bulmeong.basecamp.secondHandProduct.dto.UnlikeReviewDto">
-        SELECT * FROM bc_secondhand_unlike_review
-    </select>
+<!--    &lt;!&ndash; 후기보내기 -> 좋아요 선택지 &ndash;&gt;-->
+<!--    <select id="selectLikeReviewList" resultType="com.bulmeong.basecamp.secondHandProduct.dto.LikeReviewDto">-->
+<!--        SELECT * FROM bc_secondhand_like_review-->
+<!--    </select>-->
+<!--    &lt;!&ndash; 후기보내기 -> 싫어요 선택지 &ndash;&gt;-->
+<!--    <select id="selectUnlikeReviewList" resultType="com.bulmeong.basecamp.secondHandProduct.dto.UnlikeReviewDto">-->
+<!--        SELECT * FROM bc_secondhand_unlike_review-->
+<!--    </select>-->
 
 
 
