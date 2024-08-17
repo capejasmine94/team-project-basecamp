@@ -598,4 +598,9 @@ public class RestStoreController {
 
         return restResponseDto;
     }
+
+    @RequestMapping("updateCartProductQuantity")
+    public void updateCartProductQuantity(@RequestParam("quantity")int quantity, @RequestParam("cart_product_id") int cart_product_id){
+        storeService.updateCartProductQuantity(quantity, cart_product_id);
+    }
 }

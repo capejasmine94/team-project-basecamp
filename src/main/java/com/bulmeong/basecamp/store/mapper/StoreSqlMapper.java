@@ -213,4 +213,16 @@ public interface StoreSqlMapper {
     public List<Map<String, Object>> selectProductReviewDataListByProductId(int product_id);
 
     public void insertReviewPoint(int user_id);
+
+    public int selectCartProductCountByProductId(CartProductDto cartProductDto);
+    public void deleteCartProductByProductId(CartProductDto cartProductDto);
+
+    public Integer selectCartProductIdByOptionValueIds(
+        @Param("valueIds") int[] valueIds,
+        @Param("optionValueCount") int optionValueCount,
+        @Param("product_id") int product_id,
+        @Param("user_id") int user_id
+    );
+
+    public void updateCartProductQuantity(@Param("quantity")int quantity, @Param("cart_product_id") int cart_product_id);
 }

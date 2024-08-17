@@ -1,21 +1,63 @@
-.seller-dark-bg{
-    background-color: #222222;
-}
-
-.seller-light-bg{
-    background-color: #FAFAFA;
+.fill-on {
+    font-variation-settings: 'FILL' 1;
 }
 
 .category{
     transition: background-color 0.3s;
 }
-.category:hover{
-    background-color: #EEEEEE;
+.bi-chevron-down, .bi-chevron-up{
+    color: #8F9399;
+}
+a{
+    text-decoration: none;
+}
+.product-category a{
+    color: black;
 }
 
-/* color 변경 */
-.store-center{
+.top-nav{
+    height: 58px;
+}
+.left{
+    width: 15em;
+}
+
+/* scrollBar */
+.scrollBar {
+    width: 15em;
+    overflow-y: scroll;
+}
+
+.scrollBar::-webkit-scrollbar-thumb {
+    height: 30%; /* 스크롤바의 길이 */
+    background: #ffffff29; /* 스크롤바의 색상 */
+}
+.king{
+    left: 55%;
+    top: -10%;
+}
+
+.searchInput::placeholder{
+    font-size: 0.9em;
+}
+.searchInput:focus{
+    outline: none;
+}
+.left select{
+    font-size: 0.9em;
+}
+.left select:focus{
+    outline: none;
+}
+
+
+/* ///////////////// */
+
+/* .store-center{
     background-color: #1F2D3D;
+}
+.category:hover{
+    background-color: #EEEEEE;
 }
 .subcategory {
     background-color: #1F2D3D;
@@ -24,100 +66,17 @@
 .subcategory:hover{
     background-color: #001528;
 }
-.bi-chevron-down, .bi-chevron-up{
-    color: #8F9399;
-}
 
-.fill-on {
-    font-variation-settings: 'FILL' 1;
-}
-.fill-off {
-    font-variation-settings: 'FILL' 0;
-}
-.seller_profile img{
-    aspect-ratio: 1/1;
-    width: 100px;
-    object-fit: cover;
-    object-position: center;
-}
 .scrollable {
     height: 100vh;
-    /* height: calc(100vh - 58px); */
     overflow-y: auto;
     position: fixed;
 }
 
-a{
-    text-decoration: none;
-}
-.product-category a{
-    color: black;
-}
 .left a{
     color: #F4F4F5;
 }
 
-.f08{
-    font-size: 0.8em;
-}
-.f09{
-    font-size: 0.9em;
-}
-.f40{
-    font-size: 4em;
-}
-.top-nav{
-    height: 58px;
-}
-.left{
-    width: 15em;
-}
 .right{
     margin-left: 15em;
-}
-
-.imageAddButton span{
-    height: 100px;
-    display: inline-flex;
-    border: 1px dashed #d3d3d3;
-    aspect-ratio: 1/1;
-    transition: background-color 0.3s;
-    font-size: 4em;
-    color: #d3d3d3;
-}
-
-.imageAddButton span:hover {
-    background-color: #f0f0f0;
-}
-
-.categoryRow:hover, .subcategoryRow:hover{
-    background-color: #f0f0f0;
-    color: blue;
-}
-.optionQuantityInput:focus, .optionPriceInput:focus{
-    outline: 1px solid blue;
-}
-
-
-/* scrollBar */
-/* 임의의 영역 생성 */
-.scrollBar {
-    width: 15em;
-    overflow-y: scroll;
-}
-
-/* 아래의 모든 코드는 영역::코드로 사용 */
-.scrollBar::-webkit-scrollbar {
-    width: 7px;  /* 스크롤바의 너비 */
-}
-
-.scrollBar::-webkit-scrollbar-thumb {
-    height: 30%; /* 스크롤바의 길이 */
-    background: #ffffff29; /* 스크롤바의 색상 */
-    
-    /* border-radius: 10px; */
-}
-
-.scrollBar::-webkit-scrollbar-track {
-    background: rgba(33, 122, 244, .1);  /*스크롤바 뒷 배경 색상*/
-}
+} */

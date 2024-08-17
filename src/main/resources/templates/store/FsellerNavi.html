@@ -1,0 +1,27 @@
+<!-- top-navi -->
+<div th:fragment="topNavi" class="container-fluid fixed-top">
+    <div id="topNaviSeller" class="row py-3 px-3 store-center">
+        <div class="col d-flex text-white align-items-center">
+            <img src="/public/img/common/로고흰버전.png" style="width: 9.3em;">
+            <span class="f12" style="color: #9E9E9E;">&nbsp;&nbsp;Store Center</span>
+        </div>
+        <div class="col pe-2 text-end">
+            <span class="f08 text-white" th:if="${session.sessionStoreInfo!=null}" th:text="|${session.sessionStoreInfo.account_id}님|">
+                Sacabambaspis
+            </span>
+        </div>
+        <div class="col-auto px-2 d-flex align-items-center text-white position-relative">
+            <div class="col d-flex align-items-center position-relative ps-0">
+                <span class="material-symbols-outlined fw-light">
+                    notifications
+                </span>
+                <span class="badge d-flex align-items-center text-bg-danger rounded-circle position-absolute king" style="padding: 0.2em;">
+                    <span class="f07">N</span>
+                </span>
+            </div>
+        </div>
+        <form action="/storeCenter/logoutProcess" class="col-auto ps-0">
+            <button class="btn btn-sm text-white f08 fw-semibold">로그아웃</button>
+        </form>
+    </div>
+</div>

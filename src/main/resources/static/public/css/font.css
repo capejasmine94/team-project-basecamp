@@ -7,3 +7,39 @@ body {
     font-optical-sizing: auto;
     font-style: normal;
 }
+
+.f05{
+    font-size: 0.5em;
+}
+
+.f07{
+    font-size: 0.7em;
+}
+
+.f08{
+    font-size: 0.8em;
+}
+
+.f09{
+    font-size: 0.9em;
+}
+
+.f12{
+    font-size: 1.2em;
+}
+
+.f15{
+    font-size: 1.5em;
+}
+
+.f17{
+    font-size: 1.7em;
+}
+
+.f20{
+    font-size: 2em;
+}
+
+.f40{
+    font-size: 4em;
+}

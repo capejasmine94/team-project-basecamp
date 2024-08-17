@@ -398,23 +398,67 @@ public class StoreService {
     }
 
     public void insertCartProduct(CartProductDto cartProductDto, int[] value_ids){
-        storeSqlMapper.insertCartProduct(cartProductDto);
-
         if(value_ids[0]==0){
-            return;
+            int cartProductCount = storeSqlMapper.selectCartProductCountByProductId(cartProductDto);
+
+            if(cartProductCount>0){
+                storeSqlMapper.deleteCartProductByProductId(cartProductDto);
+                storeSqlMapper.insertCartProduct(cartProductDto);
+                return;
+            }else{
+                storeSqlMapper.insertCartProduct(cartProductDto);
+                return;
+            }
+        }else{
+            Integer cartProductIdForDelete = storeSqlMapper.selectCartProductIdByOptionValueIds(value_ids, value_ids.length, cartProductDto.getProduct_id(), cartProductDto.getUser_id());
+
+            if(cartProductIdForDelete!=null){
+                storeSqlMapper.deleteCartProduct(cartProductIdForDelete);
+                storeSqlMapper.deleteCartProductOptionValueByCartProductId(cartProductIdForDelete);
+                
+                storeSqlMapper.insertCartProduct(cartProductDto);
+                int cart_product_id = cartProductDto.getId();
+
+                for(int value_id : value_ids){
+                    CartProductOptionValueDto cartProductOptionValueDto = new CartProductOptionValueDto();
+                    cartProductOptionValueDto.setCart_product_id(cart_product_id);
+                    cartProductOptionValueDto.setOption_value_id(value_id);
+        
+                    storeSqlMapper.insertCartProductOptionValue(cartProductOptionValueDto);
+                }
+                return;
+            }else{
+                storeSqlMapper.insertCartProduct(cartProductDto);
+                int cart_product_id = cartProductDto.getId();
+
+                for(int value_id : value_ids){
+                    CartProductOptionValueDto cartProductOptionValueDto = new CartProductOptionValueDto();
+                    cartProductOptionValueDto.setCart_product_id(cart_product_id);
+                    cartProductOptionValueDto.setOption_value_id(value_id);
+        
+                    storeSqlMapper.insertCartProductOptionValue(cartProductOptionValueDto);
+                }
+                return;
+            }
         }
 
-        int cart_product_id = cartProductDto.getId();
 
-        for(int value_id : value_ids){
-            CartProductOptionValueDto cartProductOptionValueDto = new CartProductOptionValueDto();
-            cartProductOptionValueDto.setCart_product_id(cart_product_id);
-            cartProductOptionValueDto.setOption_value_id(value_id);
-
-            storeSqlMapper.insertCartProductOptionValue(cartProductOptionValueDto);
-        }
 
     }
+
+    // public void deleteCartProductDataList(int[] cartProductIds){
+
+    //     for(int cartProductId : cartProductIds){
+
+    //         int[] cartProductOptionValueIds = storeSqlMapper.selectCartProductOptionValuePrimaryKeys(cartProductId);
+
+    //         storeSqlMapper.deleteCartProduct(cartProductId);            
+
+    //         for(int cartProductOptionValueId : cartProductOptionValueIds){
+    //             storeSqlMapper.deleteCartProductOptionValue(cartProductOptionValueId);
+    //         }
+    //     }
+    // }
 
     public List<Map<String, Object>> getCartProductDataList(int user_id){
         List<Map<String, Object>> result = new ArrayList<>();
@@ -448,6 +492,13 @@ public class StoreService {
                     int[] option_value_ids = storeSqlMapper.selectCartProductOptionValueIds(cart_product_id);
 
                     if(option_value_ids.length==0){
+                        int product_id = (int)cartProductData.get("product_id");
+
+                        int quantity = storeSqlMapper.selectProductDtoByID(product_id).getQuantity();
+                        int purchaseQuantity = storeSqlMapper.selectProductPurchaseQuantity(product_id);
+
+                        cartProductData.put("stockQuantity", quantity-purchaseQuantity);
+
                         list.add(cartProductData);
                         continue;//here
                     }
@@ -462,7 +513,11 @@ public class StoreService {
                     }
                     cartProductData.put("valueNameList", valueNameList);
                     
-                    additionalInfoDto.getQuantity();//옵션의 총 수량(이거 나중에 처리...)
+                    int quantity = additionalInfoDto.getQuantity();//옵션의 총 수량(이거 나중에 처리...)
+                    int purchaseQuantity = storeSqlMapper.countOrderProductByOptionValueIds(option_value_ids, option_value_ids.length);
+
+                    cartProductData.put("stockQuantity", quantity-purchaseQuantity);
+                    
                     int additional_price = additionalInfoDto.getAdditional_price();
 
                     cartProductData.put("additional_price", additional_price);
@@ -1255,5 +1310,9 @@ public class StoreService {
         }
         
         return map;
+    }
+
+    public void updateCartProductQuantity(int quantity, int cart_product_id){
+        storeSqlMapper.updateCartProductQuantity(quantity, cart_product_id);
     }
 }

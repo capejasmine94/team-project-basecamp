@@ -395,7 +395,8 @@
             sp.price,
             sp.discount_id,
             cp.quantity,
-            cp.id
+            cp.id,
+            cp.product_id
         from cart_product cp
         inner join store_product sp on sp.id = cp.product_id  
         where cp.id = #{cart_product_id}
@@ -938,5 +939,36 @@
         where sp.id = #{product_id}
         and op.status != 'pending'
     </select>
+
+    <select id="selectCartProductCountByProductId" resultType="int">
+        select count(*) from cart_product
+        where product_id = #{product_id}
+        and user_id = #{user_id}
+    </select>
+
+    <delete id="deleteCartProductByProductId">
+        delete from cart_product
+        where product_id = #{product_id}
+        and user_id = #{user_id}
+    </delete>
+
+    <select id="selectCartProductIdByOptionValueIds" resultType="Integer">
+        select cp.id from cart_product cp
+        inner join cart_product_option_value cpov on cp.id = cpov.cart_product_id 
+        where cp.user_id = #{user_id}
+        and cp.product_id = #{product_id}
+        and cpov.option_value_id in
+        <foreach item="item" index="index" collection="valueIds" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+        group by cp.id
+        having count(distinct cpov.option_value_id) = #{optionValueCount}
+    </select>
+
+    <update id="updateCartProductQuantity">
+        update cart_product
+        set quantity = #{quantity}
+        where id = #{cart_product_id}
+    </update>
 
 </mapper>
