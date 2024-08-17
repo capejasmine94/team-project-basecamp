@@ -105,7 +105,7 @@
         </style>
     </head>
     <body>
-        <div class="container-fluid fixed-top">
+        <div class="container-fluid fixed-top bg-white">
             <div class="row pt-3 pb-2 bg-white">
                 <div class="col-2 ps-2 justify-content-center align-items-center d-flex"><span onclick="history.back()" class="material-symbols-outlined">arrow_back</span></div>
                 <div class="col text-center fw-medium" th:text="${clubDto.name}">소모임 이름</div>
@@ -166,6 +166,77 @@
         
             </div>
         </div>
+
+
+            <!-- footer 시작 -->
+ <div class="row py-4 px-3 bg-body-secondary text-secondary">
+    <div class="col">
+        <div class="row pb-2">
+            <div class="col p-0 fw-bold fs-3 d-flex align-items-center">
+                <span class="material-symbols-outlined">camping</span>
+                <span class="ms-1">BASECAMP</span>
+            </div>
+        </div>
+        <div class="row pb-3 border-bottom border-2">
+            <div class="col p-0 f08">
+                BASECAMP는 통신판매 중개자로서 통신판매의 당사자가 아니며 상품의 예약, 이용 및 환불 등과 관련한 의무와 책임은 각 판매자에게 있습니다.
+            </div>
+        </div>
+
+        <div class="row pt-3 py-3 border-bottom border-2">
+            <div class="col-auto p-0">
+                <button class="btn btn-sm bg-dark-subtle text-white fw-bold f08 d-flex align-items-center">
+                    <span class="material-symbols-outlined" style="font-size: 1rem; line-height: 1;">phone_in_talk</span>
+                    <span class="ms-1" style="font-size: 0.8rem;">고객센터</span>
+                </button>
+            </div>
+            <div class="col-auto">
+                <button class="btn btn-sm bg-dark-subtle text-white fw-bold f08" style="font-size: 0.8rem;">
+                    카카오 1:1 문의
+                </button>
+            </div>
+            <div class="col p-0 f08">
+                <div class="row">
+                    <div class="col">
+                        <span>평일</span> : 10:00 ~ 17:00
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <span>점심</span> : 12:00 ~ 13:00
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <span>※</span><span>주말 공휴일 휴무</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row pt-3 mb-4 pb-5 align-items-center">
+            <div class="col-auto me-2 bg-dark-subtle rounded-circle d-flex align-items-center" style="aspect-ratio: 1/1;">
+                <i class="bi bi-google-play"></i>
+            </div>
+            <div class="col-auto me-2 bg-dark-subtle rounded-circle d-flex align-items-center" style="aspect-ratio: 1/1;">
+                <i class="bi bi-youtube"></i>
+            </div>
+            <div class="col-auto me-2 bg-dark-subtle rounded-circle d-flex align-items-center" style="aspect-ratio: 1/1;">
+                <i class="bi bi-instagram"></i>
+            </div>
+            <div class="col-auto pe-0 f08">
+                이용약관
+            </div>
+            <div class="col f08">
+                개인정보처리방침
+            </div>
+        </div>
+    </div>
+</div>
+<!-- footer 끝 -->
+
+
+
 
         
 

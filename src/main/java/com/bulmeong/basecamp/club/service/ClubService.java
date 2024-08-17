@@ -602,6 +602,7 @@ public class ClubService {
             Map<String, Object> upcomingMeetingMap = new HashMap<>();
             int meetingPk = upcomingMeetingDto.getId();
             int meetingMemberCount = clubSqlMapper.selectMeetingMemberCount(meetingPk);
+            List<UserDto> userDtoList = clubSqlMapper.selectMeetingMemberUserDto(meetingPk);
             
             ClubDto clubDto = clubSqlMapper.selectClubDtoById(upcomingMeetingDto.getClub_id());
             ClubRegionCategoryDto clubRegionCategoryDto = clubSqlMapper.selectRegionCategoryDtoById(clubDto.getCategory_id());
@@ -610,6 +611,7 @@ public class ClubService {
             upcomingMeetingMap.put("meetingMemberCount", meetingMemberCount);
             upcomingMeetingMap.put("clubDto", clubDto);
             upcomingMeetingMap.put("clubRegionCategoryDto", clubRegionCategoryDto);
+            upcomingMeetingMap.put("userDtoList", userDtoList);
 
             upcomingMeetingList.add(upcomingMeetingMap);
 

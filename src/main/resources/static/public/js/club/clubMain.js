@@ -88,6 +88,10 @@ function getUpcomingMeetingList(selectedDate) {
 
                 const newUpcomingMeetingWrapper = upcomingMeetingWrapper.cloneNode(true);
 
+                newUpcomingMeetingWrapper.onclick = () => {
+                    showMeetingModal(upcomingMeetingData);
+                };
+
                 const upcomingMeetingImage = newUpcomingMeetingWrapper.querySelector('.upcoming-meeting-image');
                 upcomingMeetingImage.src = `/images/${upcomingMeetingData.upcomingMeetingDto.main_image}`;
 
@@ -161,4 +165,82 @@ function formatDate(inputDate) {
     return `${month}/${day}`;
 }
 
+function showMeetingModal(upcomingMeetingData){
+    const modal = bootstrap.Modal.getOrCreateInstance("#meeting-modal-for-main");
+
+    console.log(upcomingMeetingData);
+    
+    const meetingModalForMain = document.getElementById('meeting-modal-for-main')
+    const upcomingMeetingWrapper = meetingModalForMain.querySelector('.upcoming-meeting-wrapper')
+    const upcomingMeetingName = upcomingMeetingWrapper.querySelector('.upcoming-meeting-name')
+    upcomingMeetingName.innerText = upcomingMeetingData.upcomingMeetingDto.name;
+    
+    const upcomingMeetingDescription = upcomingMeetingWrapper.querySelector('.upcoming-meeting-description')
+    upcomingMeetingDescription.innerText = upcomingMeetingData.upcomingMeetingDto.description;
+
+   const upcomingMeetingDate = upcomingMeetingWrapper.querySelector('.upcoming-meeting-date')
+    upcomingMeetingDate.innerText = upcomingMeetingData.upcomingMeetingDto.meeting_date;
+    // meetingDateString 변수 선언
+    const meetingDateString = upcomingMeetingData.upcomingMeetingDto.meeting_date;
+
+    // Date 객체로 변환 (로컬 시간대 고려)
+    const meetingDate = new Date(meetingDateString);
+
+    // 날짜 형식을 8/11 형태로 변환
+    const month = meetingDate.getMonth() + 1; // 월은 0부터 시작하므로 +1
+    const day = meetingDate.getDate(); // 날짜를 가져옴
+
+    // 요일을 숫자로 가져옴 (0: 일요일, 1: 월요일, ..., 6: 토요일)
+    const dayOfWeekNumber = meetingDate.getDay();
+
+    // 숫자를 요일 이름으로 변환하기 위한 배열
+    const daysOfWeek = ['일', '월', '화', '수', '목', '금', '토'];
+
+    // 요일 이름 가져오기
+    const dayOfWeek = daysOfWeek[dayOfWeekNumber];
+
+    // 형식: 8/11 (목)
+    const formattedDate = `${month}/${day} (${dayOfWeek})`;
+
+    upcomingMeetingDate.innerText = formattedDate;
+
+    const upcomingMeetingLocation = upcomingMeetingWrapper.querySelector('.upcoming-meeting-location')
+    upcomingMeetingLocation.innerText = upcomingMeetingData.upcomingMeetingDto.location;
+
+    const upcomingMeetingFee = upcomingMeetingWrapper.querySelector('.upcoming-meeting-fee')
+    upcomingMeetingFee.innerText = `${upcomingMeetingData.upcomingMeetingDto.fee.toLocaleString()}`;
+
+    // const upcomingMemberCount = upcomingMeetingWrapper.querySelector('.upcoming-member-count')
+    // upcomingMemberCount.innerText = upcomingMeetingData.upcomingMeetingDto.meetingMemberCount;
+
+
+    const upcomingMeetingMemberCount = upcomingMeetingWrapper.querySelector('.upcoming-member-count');
+    upcomingMeetingMemberCount.innerText = upcomingMeetingData.meetingMemberCount;
+   
+
+    const upcomingMeetingCapacity = upcomingMeetingWrapper.querySelector('.upcoming-capacity');
+    upcomingMeetingCapacity.innerText = upcomingMeetingData.upcomingMeetingDto.capacity;
+
+    const upcomingMeetingImage = upcomingMeetingWrapper.querySelector('.upcoming-meeting-image');
+    upcomingMeetingImage.src = `/images/${upcomingMeetingData.upcomingMeetingDto.main_image}`;
+
+    const goClub = upcomingMeetingWrapper.querySelector('.go-club');
+    goClub.href = `/club/home?id=${upcomingMeetingData.clubDto.id}`;
+
+    const joinMemberProfileBox = document.getElementById('join-member-profile-box');
+    joinMemberProfileBox.innerHTML = '';
+    for(const userDto of upcomingMeetingData.userDtoList){
+       const upcomingMeetingUserDtoWrapper = document.querySelector('#join-member-profile-template .wrapper');
+       const upcomingMeetingUserDto = upcomingMeetingUserDtoWrapper.cloneNode(true);
+
+       if(userDto.profile_image === 'default') {
+        upcomingMeetingUserDto.querySelector('.join-member-profile').src= `/public/img/common/default_profile.png`;  
+       } else {
+        upcomingMeetingUserDto.querySelector('.join-member-profile').src= `/images/${userDto.profile_image}`;
+       }
+       joinMemberProfileBox.appendChild(upcomingMeetingUserDto);
+    }
+    
+    modal.show();
+}
 

@@ -137,6 +137,31 @@
             object-position: center; /* 이미지의 중심부를 유지 */
         }
         
+          /* 작성 버튼 */
+            /* 스크롤 시 텍스트 숨기기 */
+            .scroll-text {
+                transition: opacity 0.3s ease, max-width 0.3s ease; /* 부드러운 애니메이션 */
+                opacity: 1;
+                max-width: 12.5em; /* 초기 최대 너비 설정 */
+                overflow: hidden; /* 숨겨진 부분은 표시하지 않음 */
+                white-space: nowrap;
+                visibility: visible; /* 텍스트 가시성 */
+                padding-right: 0;
+            }
+
+            #scrollButton.small .scroll-text {
+                opacity: 0; /* 텍스트를 투명하게 만듦 */
+                max-width: 0; /* 너비를 0으로 설정하여 숨김 */
+                visibility: hidden; /* 텍스트를 숨김 */
+                padding: 0;
+            }
+
+            #scrollButton.small {
+                padding-right: 0.83em !important;
+                font-size: 1.165em;
+            }
+            /* 작성 버튼 끝 */
+
         </style>
 
         
@@ -150,15 +175,13 @@
                 </a>
                 <div class="col fw-semibold text-body-secondary ps-2 f09 align-self-end"></div>
                 <div class="col-auto pe-0 text-end pt-1 d-flex align-items-center">
+                  
+                </div>
+                <div class="col-auto pe-0 d-flex align-items-center text-black">
                     <span class="material-symbols-outlined fw-light">
                         search
                     </span>
                 </div>
-                <a href="/store/cart" class="col-auto pe-0 d-flex align-items-center text-black">
-                    <span class="material-symbols-outlined fw-light">
-                        shopping_bag
-                    </span>
-                </a>
             </div>
 
 
@@ -675,6 +698,88 @@
                 </div> 
 
 
+
+
+                
+                <!-- footer 시작 -->
+                <div class="row py-4 px-3 bg-body-secondary text-secondary">
+                    <div class="col">
+                        <div class="row pb-2">
+                            <div class="col p-0 fw-bold fs-3 d-flex align-items-center">
+                                <span class="material-symbols-outlined">camping</span>
+                                <span class="ms-1">BASECAMP</span>
+                            </div>
+                        </div>
+                        <div class="row pb-3 border-bottom border-2">
+                            <div class="col p-0 f08">
+                                BASECAMP는 통신판매 중개자로서 통신판매의 당사자가 아니며 상품의 예약, 이용 및 환불 등과 관련한 의무와 책임은 각 판매자에게 있습니다.
+                            </div>
+                        </div>
+    
+                        <div class="row pt-3 py-3 border-bottom border-2">
+                            <div class="col-auto p-0">
+                                <button class="btn btn-sm bg-dark-subtle text-white fw-bold f08 d-flex align-items-center">
+                                    <span class="material-symbols-outlined" style="font-size: 1rem; line-height: 1;">phone_in_talk</span>
+                                    <span class="ms-1" style="font-size: 0.8rem;">고객센터</span>
+                                </button>
+                            </div>
+                            <div class="col-auto">
+                                <button class="btn btn-sm bg-dark-subtle text-white fw-bold f08" style="font-size: 0.8rem;">
+                                    카카오 1:1 문의
+                                </button>
+                            </div>
+                            <div class="col p-0 f08">
+                                <div class="row">
+                                    <div class="col">
+                                        <span>평일</span> : 10:00 ~ 17:00
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col">
+                                        <span>점심</span> : 12:00 ~ 13:00
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col">
+                                        <span>※</span><span>주말 공휴일 휴무</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+    
+                        <div class="row pt-3 mb-4 pb-5 align-items-center">
+                            <div class="col-auto me-2 bg-dark-subtle rounded-circle d-flex align-items-center" style="aspect-ratio: 1/1;">
+                                <i class="bi bi-google-play"></i>
+                            </div>
+                            <div class="col-auto me-2 bg-dark-subtle rounded-circle d-flex align-items-center" style="aspect-ratio: 1/1;">
+                                <i class="bi bi-youtube"></i>
+                            </div>
+                            <div class="col-auto me-2 bg-dark-subtle rounded-circle d-flex align-items-center" style="aspect-ratio: 1/1;">
+                                <i class="bi bi-instagram"></i>
+                            </div>
+                            <div class="col-auto pe-0 f08">
+                                이용약관
+                            </div>
+                            <div class="col f08">
+                                개인정보처리방침
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- footer 끝 -->
+
+
+
+
+
+
+
+
+
+
+
+
+
         <!-- 다가오는 정기모임 템플릿 -->
         <div class="row d-none" id="upcoming-meeting-template">
             <div class="col-5 upcoming-meeting-wrapper">
@@ -844,7 +949,7 @@
 
          
 
-        <div class="container fixed-bottom mb-5 pb-4 pe-2" style="z-index: 1010;">
+        <!-- <div class="container fixed-bottom mb-5 pb-4 pe-2" style="z-index: 1010;">
             <div class="row justify-content-end mb-4 pe-3">
                 <a th:if="${session.sessionUserInfo != null}" href="/club/createNewClub" class="col-auto bg-light ps-2 py-2 shadow rounded-pill text-decoration-none">
                     <div class="row text-dark">
@@ -857,11 +962,161 @@
                     </div>
                 </a>
             </div>
+        </div> -->
+
+        <div class="container fixed-bottom mb-5 pb-4" style="z-index: 1;">
+            <div class="row justify-content-end mb-4 pb-2 pe-3">
+                <a th:if="${session.sessionUserInfo != null}" href="/club/createNewClub" id="scrollButton" class="col-auto lightBg ps-1 pe-4 py-1 shadow rounded-pill text-decoration-none">
+                    <div class="row text-dark">
+                        <div class="col-auto pe-0 align-self-center d-flex">
+                            <span class="material-symbols-outlined text-white" style="font-size: 2em;">add</span>
+                        </div>
+                        <div class="col-auto px-0 btn-text fw-medium text-white d-flex align-self-center text-center scroll-text text-primary-0" style="letter-spacing: -0.5px;">
+                            소모임 개설
+                        </div>
+                    </div>
+                </a>
+            </div>
         </div>
-         
-   
+
+     
+        
+
+
+        
+        
+        <!-- Modal -->
+        <div class="modal fade" id="meeting-modal-for-main" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <!-- <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div> -->
+                <div class="modal-body p-3 py-1">
+            
+                    <div class="row upcoming-meeting-wrapper">
+                        <div class="col">
+                            <div class="row justify-content-center">
+                                <div class="col pt-2 pb-3">
+        
+                                    <div class="row">
+                                        <div class="col">
+                                            <div class="row pb-1 pt-1">
+                                                <div class="col fw-medium   ">
+                                                    <span class="d-day text-danger fw-medium"></span>
+                                                    <span class="upcoming-meeting-name"></span>
+                                                </div>
+                                            </div>
+                                            
+                                            <div class="row pb-2 mb-2">
+                                                <div class="col text-secondary" style="font-size: 0.9em;">
+                                                    <span class="upcoming-meeting-description"></span>
+                                                    <!-- <span th:text="${meetingData.clubMeetingDto.description}"></span> -->
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-auto text-end align-items-center d-flex">
+                                            <div class="col-auto align-self-center">
+                                                <div class="row">
+                                                    <!-- <a th:href="@{/club/home(id=${clubDto.id})}"> -->
+                                                    <div class="col">
+                                                        <a class="form-control btn lightBg text-white go-club">둘러보기</a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    
+                         
+        
+                                    <div class="row">
+                                        <div class="col">
+                                            <div class="row">
+                                                <div class="col-auto">  
+                                                    <img class="rounded-2 upcoming-meeting-image" style="width: 9em; height: 6em; object-fit: cover;">
+                                                </div>
+                                                <div class="col align-self-center ps-1" style="font-size: 0.8em;">
+                                                    <div class="row">
+                                                        <div class="col">
+                                                            <span class="text-secondary">일시</span>
+                                                            <span class="upcoming-meeting-date"></span>
+                                                            
+                                                            <!-- <span th:text="${#dates.format(meetingData.clubMeetingDto.meeting_date, 'yyyy.MM.dd')}"></span> -->
+                                                        </div>   
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col">
+                                                            <span class="text-secondary">위치</span>
+                                                            <span class="upcoming-meeting-location"></span>
+                                                        </div>   
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col">
+                                                            <span class="text-secondary">비용</span>
+                                                            <span class="upcoming-meeting-fee"></span>
+                                                        </div>   
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col">
+                                                            <span class="text-secondary">참석</span> 
+                                                            <span class="text-danger upcoming-member-count"></span> / <span class="upcoming-capacity"></span>
+                                                            <span class="text-secondary remainCapacity"></span>
+                                                        </div>   
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row pt-2">
+                                                <div class="col">
+                                                    <span class="text-secondary" style="font-size: 0.8em;">
+                                                        참석 멤버
+                                                    </span>
+                                                </div>
+                                            </div>
+                                            <div class="row mt-1" id="join-member-profile-box">
+                                                
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <!-- <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Save changes</button>
+                </div> -->
+            </div>
+            </div>
+        </div>
+
+        <div class="row d-none" id="join-member-profile-template">
+            <div class="col-2 wrapper seller_profile">
+                <img class="join-member-profile img-fluid rounded-circle"  style="aspect-ratio: 1/1;">                  
+            </div>
+            </div>
+
+
+            
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script> 
         <script src="/public/js/lockLikeMobile.js"></script>
         <script src="/public/js/club/clubMain.js"></script>   
+        <script>
+            // 스크롤 이벤트 감지
+            window.onscroll = function() {
+                scrollFunction();
+            };
+        
+            function scrollFunction() {
+                const scrollButton = document.getElementById("scrollButton");
+                if (document.body.scrollTop > 50 || document.documentElement.scrollTop > 50) {
+                    scrollButton.classList.add("small"); // 스크롤이 내려갈 때 버튼을 축소
+                } else {
+                    scrollButton.classList.remove("small"); // 스크롤이 맨 위에 있을 때 전체 버튼 표시
+                }
+            }
+        </script>
     </body>
 </html>
