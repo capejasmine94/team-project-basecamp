@@ -34,30 +34,31 @@ function getUserData(){
         console.log(profileImage);
         
         if (response.data.clubMemberData.userDto.profile_image === 'default') {
-            profileImage.src = '/public/img/clubImage/profile.jpg';
+            profileImage.src= `/public/img/common/default_profile.png`;
         } else {
             profileImage.src = `/images/${response.data.clubMemberData.userDto.profile_image}`;
         }
 
-        const nickname = document.getElementById('nickname')
+
+        const nickname = document.getElementById('nickname');
         nickname.innerText = response.data.clubMemberData.userDto.nickname;
         console.log(nickname);
         
 
-        const account = document.getElementById('account')
+        const account = document.getElementById('account');
         account.innerText = response.data.clubMemberData.userDto.account;
 
-        const updatedAt = document.getElementById('updated-at')
+        const updatedAt = document.getElementById('updated-at');
         updatedAt.innerText = formatDateDetail(response.data.clubMemberData.clubMemberDto.updated_at);
 
-        const joinDate = document.getElementById('join-date')
+        const joinDate = document.getElementById('join-date');
         joinDate.innerText = formatDateDetail(response.data.clubMemberData.clubMemberDto.joined_at);
         
-        const roleId = document.getElementById('role-id')
+        const roleId = document.getElementById('role-id');
         roleId.value = response.data.clubMemberData.clubMemberDto.role_id;
 
-        const toastTrigger = document.getElementById('role-update')
-        const toastLiveExample = document.getElementById('liveToast')
+        const toastTrigger = document.getElementById('role-update');
+        const toastLiveExample = document.getElementById('liveToast');
 
         if (toastTrigger) {
         const toastBootstrap = bootstrap.Toast.getOrCreateInstance(toastLiveExample)

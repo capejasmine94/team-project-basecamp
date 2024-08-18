@@ -8,12 +8,12 @@
         <link rel="stylesheet" href="/public/css/common.css">
     
     </head>
-    <body class="new-bg-gray">
+    <body class>
         <div class="container px-0 overflow-x-hidden">
 
-            <div class="row border-bottom bg-body-tertiary py-3">
+            <div class="row bg-body-tertiary">
                 <div class="col">
-                    <div class="row">
+                    <div class="row pt-3 pb-2 bg-white">
                         <div class="col-2 ps-2 justify-content-center align-items-center d-flex"><span onclick="history.back()" class="material-symbols-outlined">arrow_back</span></div>
                         <div class="col text-center fw-medium">스탭 관리</div>
                         <div class="col-2"></div>
@@ -23,16 +23,16 @@
            
             <!-- 전체박스 -->
             <div class="row">
-                <div class="col mx-4">
-                    <div class="row pt-4">
-                        <div class="col ps-0" style="font-size: 0.8em;">
+                <div class="col">
+                    <div class="row border-bottom px-3 pt-4">
+                        <div class="co pb-2" style="font-size: 0.8em;">
                             최근 가입 <span><i class="bi bi-arrow-clockwise"></i></span>
                         </div>
                     </div>
                    
-                    <div class="row pt-2 pb-3" th:each="clubMemberData : ${memberList}">
-                        <div class="col-1 px-0">
-                            <img th:if="${clubMemberData.userDto.profile_image == 'default'}" src="/public/img/clubImage/profile.jpg" class="img-fluid rounded-circle"  style="aspect-ratio: 1/1;">
+                    <div class="row border-bottom bg-body-tertiary px-3 py-2" th:each="clubMemberData : ${memberList}">
+                        <div class="col-2">
+                            <img th:if="${clubMemberData.userDto.profile_image == 'default'}" src="/public/img/common/default_profile.png" class="img-fluid rounded-circle"  style="aspect-ratio: 1/1;">
                             <img th:unless="${clubMemberData.userDto.profile_image == 'default'}" th:src="|/images/${clubMemberData.userDto.profile_image}|" class="img-fluid rounded-circle"  style="aspect-ratio: 1/1;">
                         </div>
                         <div class="col align-self-center">
