@@ -12,7 +12,6 @@ import com.bulmeong.basecamp.camp.mapper.CampsiteSqlMapper;
 import com.bulmeong.basecamp.seller.dto.ApproveResponse;
 import com.bulmeong.basecamp.seller.dto.ReadyResponse;
 import com.bulmeong.basecamp.store.dto.StoreOrderDto;
-import com.bulmeong.basecamp.user.dto.UserDto;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -33,7 +32,7 @@ public class KakaoPayService {
         requestBody.put("cid", "TC0ONETIME");
         requestBody.put("partner_order_id", storeOrderDto.getId());
         requestBody.put("partner_user_id", storeOrderDto.getUser_id());
-        requestBody.put("item_name", "초코파이");
+        requestBody.put("item_name", "BASECAMP STORE");
         requestBody.put("quantity", "1");
         requestBody.put("total_amount", storeOrderDto.getPayment_amount());
         requestBody.put("tax_free_amount", "0");
