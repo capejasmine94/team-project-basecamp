@@ -7,6 +7,7 @@ import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.bulmeong.basecamp.common.dto.RestResponseDto;
@@ -57,6 +58,15 @@ public class UserRestController {
         RestResponseDto result = new RestResponseDto();
 
         result.add("userDto", userService.getUserByAccountAndPassword(userDto));
+
+        return result;
+    }
+
+    @RequestMapping("isExistAccount")
+    public RestResponseDto isExistAccount(@RequestParam("id") String id){
+        RestResponseDto result = new RestResponseDto();
+
+        result.add("isExist", userService.isExistAccount(id));
 
         return result;
     }

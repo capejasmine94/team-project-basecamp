@@ -565,6 +565,14 @@
         )
     </insert>
 
+    <insert id="insertPointRefundLog">
+        insert into bc_user_mileage_log(
+            user_id, mileage_log, change_amount
+        )values(
+            #{user_id}, '포인트 환불', #{change_amount}
+        )
+    </insert>
+
     <!-- <insert id="insertPoint Log">
         insert into bc_user_mileage_log(
             user_id, mileage_log, change_amount
@@ -583,6 +591,12 @@
     <update id="updateUserMileagePlus">
         update bc_user
         set mileage = mileage+500
+        where id = #{id}
+    </update>
+
+    <update id="updateUserMileageRefund">
+        update bc_user
+        set mileage = mileage+#{refund_mileage}
         where id = #{id}
     </update>
 
@@ -970,5 +984,16 @@
         set quantity = #{quantity}
         where id = #{cart_product_id}
     </update>
+
+    <select id="selectFiveProductList" resultType="com.bulmeong.basecamp.store.dto.StoreProductDto">
+        select * from store_product
+        order by id desc
+        limit 5
+    </select>
+    <select id="selectTenProductListDesc" resultType="com.bulmeong.basecamp.store.dto.StoreProductDto">
+        select * from store_product
+        order by id desc
+        limit 10
+    </select>
 
 </mapper>

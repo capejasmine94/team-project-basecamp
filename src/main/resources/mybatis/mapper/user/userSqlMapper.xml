@@ -7,7 +7,7 @@
             INSERT INTO bc_user
                 (account, password, nickname, email, phone, profile_image, mileage, gender, birth)
             values
-                (#{account}, #{password}, #{nickname}, #{email}, #{phone}, default, 0, #{gender} , #{birth})
+                (#{account}, #{password}, #{nickname}, #{email}, #{phone}, default, 1000, #{gender} , #{birth})
         </insert>
     <!-- 유저 로그인 -->
     <select id="getUserByAccountAndPassword" resultType="com.bulmeong.basecamp.user.dto.UserDto">
@@ -36,4 +36,7 @@
         </select>
     <!-- ============================================== -->
 
+        <select id="getUserCountByAccount" resultType="int">
+            select count(*) from bc_user where account = #{account}    
+        </select>
 </mapper>

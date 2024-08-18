@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/public/css/common.css">
+    <link rel="stylesheet" href="/public/css/basecamp.css">
+</head>
+<body style="background-color: #52AD8B">
+<div class="container-fluid g-0">
+    <div class="row mx-2 py-2">
+        <div class="col fs-3">
+            <a href="/user/login" style="color: white">
+                <i class="bi bi-chevron-left"></i>
+            </a>
+        </div>
+    </div>
+</div>
+<div class="container-fluid">
+    <div class="row" style="padding-top: 4rem">
+        <div class="col text-center" style="font-family: 'EF_jejudoldam', sans-serif; font-size: 2.5rem; color: white">
+            SIGN
+        </div>
+    </div>
+    <form action="/user/registerProcess" method="post">
+        <!--아이디-->
+        <div class="row mx-2" style="margin-top: 2rem">
+            <div class="col">
+                아이디
+            </div>
+        </div>
+        <div class="row mx-2 mt-1">
+            <div class="col d-grid text-center">
+                <input name="account" type="text" placeholder="아이디" class="py-2 ps-3 border border-0 rounded bg-light d-inline-flex focus-ring focus-ring-success">
+            </div>
+        </div>
+        <!-- 비밀번호-->
+        <div class="row mx-2" style="margin-top: 0.5rem">
+            <div class="col">
+                비밀번호
+            </div>
+        </div>
+        <div class="row mx-2 mt-1">
+            <div class="col d-grid text-center">
+                <input name="password" type="password" placeholder="비밀번호" class="py-2 ps-3 border border-0 rounded bg-light d-inline-flex focus-ring focus-ring-success">
+            </div>
+        </div>
+        <!-- 비밀번호 재확인 -->
+<!--        <div class="row mx-2" style="margin-top: 0.5rem">-->
+<!--            <div class="col">-->
+<!--                비밀번호 재확인-->
+<!--            </div>-->
+<!--        </div>-->
+<!--        <div class="row mx-2 mt-1">-->
+<!--            <div class="col d-grid text-center">-->
+<!--                <input type="password" placeholder="비밀번호 재확인" class="py-2 ps-3 border border-0 rounded bg-light d-inline-flex focus-ring focus-ring-success">-->
+<!--            </div>-->
+<!--        </div>-->
+        <!-- 닉네임 -->
+        <div class="row mx-2" style="margin-top: 0.5rem">
+            <div class="col">
+                닉네임
+            </div>
+        </div>
+        <div class="row mx-2 mt-1">
+            <div class="col d-grid text-center">
+                <input name="nickname" type="text" placeholder="닉네임" class="py-2 ps-3 border border-0 rounded bg-light d-inline-flex focus-ring focus-ring-success">
+            </div>
+        </div>
+        <!-- 이메일 -->
+        <div class="row mx-2" style="margin-top: 0.5rem">
+            <div class="col">
+                이메일
+            </div>
+        </div>
+        <div class="row mx-2 mt-1">
+            <div class="col d-grid text-center">
+                <input name="email" type="text" placeholder="example@example.com" class="py-2 ps-3 border border-0 rounded bg-light d-inline-flex focus-ring focus-ring-success">
+            </div>
+        </div>
+        <!-- 전화번호 -->
+        <div class="row mx-2" style="margin-top: 0.5rem">
+            <div class="col">
+                전화번호
+            </div>
+        </div>
+        <div class="row mx-2 mt-1">
+            <div class="col d-grid text-center">
+                <input name="phone" type="text" placeholder="전화번호" class="py-2 ps-3 border border-0 rounded bg-light d-inline-flex focus-ring focus-ring-success">
+            </div>
+        </div>
+        <!-- 성별 -->
+        <div class="row mx-2" style="margin-top: 0.5rem">
+            <div class="col">
+                성별
+            </div>
+        </div>
+        <div class="row mx-2 mt-1">
+            <div class="col d-grid text-center">
+                <select name="gender" class="py-2 ps-3 border border-0 rounded bg-light d-inline-flex focus-ring focus-ring-success">
+                    <option value="" disabled selected>성별</option>
+                    <option value="M">남성</option>
+                    <option value="F">여성</option>
+                </select>
+            </div>
+        </div>
+        <!-- 생일 -->
+        <div class="row mx-2" style="margin-top: 0.5rem">
+            <div class="col">
+                생일
+            </div>
+        </div>
+        <div class="row mx-2 mt-1">
+            <div class="col d-grid text-center">
+                <input name="birth" type="date" class="py-2 ps-3 border border-0 rounded bg-light d-inline-flex focus-ring focus-ring-success">
+            </div>
+        </div>
+        <div class="row mx-2 mt-4">
+            <div class="col d-grid text-center">
+                <button type="submit" class="py-2 border border-0 rounded bg-success">
+                    <span class="fs-2" style="color: white;">회원가입</span>
+                </button>
+            </div>
+        </div>
+    </form>
+</div>
+
+<!-- 네비가 추가됨 -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://kit.fontawesome.com/7b271bba58.js" crossorigin="anonymous"></script>
+</body>
+</html>

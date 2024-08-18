@@ -380,10 +380,26 @@
             })
         }
 
+        async function deleteSelectedProduct(){
+            const productSelectCheckboxes = document.querySelectorAll("#cartProductContainer .productSelectCheckbox");
+            const checkedCheckboxes = Array.from(productSelectCheckboxes).filter(checkbox => checkbox.checked && !checkbox.disabled);
+
+            for(checkedCheckbox of checkedCheckboxes){
+                const url = `/api/store/deleteCartProduct?id=${checkedCheckbox.value}`
+                await fetch(url)
+            }
+            reloadCartProductList();
+        }
+
         function addAllProductToOrdersheet(){
 
             const productSelectCheckboxes = document.querySelectorAll("#cartProductContainer .productSelectCheckbox");
             const checkedCheckboxes = Array.from(productSelectCheckboxes).filter(checkbox => checkbox.checked && !checkbox.disabled);
+
+            if(checkedCheckboxes.length==0){
+                alert("주문하실 상품을 선택해주세요");
+                return;
+            }
 
             const checkedValues = checkedCheckboxes.map(checkbox => parseInt(checkbox.value, 10));
 
@@ -402,6 +418,11 @@
             const storeWrapper = addButton.closest(".storeWrapper");
             const productSelectCheckboxes = storeWrapper.querySelectorAll(".productSelectCheckbox");
             const checkedCheckboxes = Array.from(productSelectCheckboxes).filter(checkbox => checkbox.checked && !checkbox.disabled);
+
+            if(checkedCheckboxes.length==0){
+                alert("주문하실 상품을 선택해주세요");
+                return;
+            }
 
             const checkedValues = checkedCheckboxes.map(checkbox => parseInt(checkbox.value, 10));
 
@@ -521,7 +542,7 @@
                 </label>
             </div>
             <div class="col-auto p-0">
-                <button type="button" id="deleteSelectionbutton" class="btn btn-sm rounded-0 bg-white border d-flex align-items-center">
+                <button type="button" id="deleteSelectionbutton" class="btn btn-sm rounded-0 bg-white border d-flex align-items-center" onclick="deleteSelectedProduct()">
                     <span class="material-symbols-outlined f12">
                         close
                     </span>

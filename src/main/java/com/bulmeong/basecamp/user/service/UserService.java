@@ -38,6 +38,12 @@ public class UserService {
         return userSqlMapper.getUserByAccount(userDto);   
     }
 
+    public boolean isExistAccount(String account){
+        account = account.replace(" ", "");
+
+        return userSqlMapper.getUserCountByAccount(account)>0;
+    }
+
     //고유번호
     public UserDto getUserById(int id) {
         UserDto userDto = new UserDto();

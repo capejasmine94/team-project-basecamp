@@ -475,11 +475,6 @@
         </div>
 
         <div class="row py-3 buttonsForPurchaseConfirmation">
-            <div class="col d-grid pe-0">
-                <button class="btn border py-2 bg-white rounded-0 f09">
-                    배송조회
-                </button>
-            </div>
             <div class="col d-grid">
                 <a class="btn reviewButton border py-2 bg-white rounded-0 f09">
                     리뷰작성
@@ -488,11 +483,6 @@
         </div>
 
         <div class="row py-3 buttonsForReviewComplete">
-            <div class="col d-grid pe-0">
-                <button class="btn border py-2 bg-white rounded-0 f09">
-                    배송조회
-                </button>
-            </div>
             <div class="col d-grid">
                 <a href="/store/myReview" class="btn border py-2 bg-white rounded-0 f09">
                     작성한 리뷰 보기
@@ -519,14 +509,16 @@
                     환불요청
                 </a>
             </div>
-            <div class="col d-grid pe-0">
-                <button class="btn border py-2 bg-white rounded-0 f09">
-                    배송조회
-                </button>
-            </div>
             <div class="col d-grid">
                 <a type="button" class="purchaseConfirmationButton btn border py-2 bg-white rounded-0 f09">
                     구매확정
+                </a>
+            </div>
+        </div>
+        <div class="row py-3 buttonsForRefundComplete">
+            <div class="col d-grid">
+                <a type="button" class="btn border py-2 bg-white rounded-0 f09">
+                    환불상세
                 </a>
             </div>
         </div>
@@ -649,6 +641,9 @@
                         }else if(status=='리뷰작성완료'){
                             const buttonsForReviewComplete = document.querySelector("#template .buttonsForReviewComplete").cloneNode(true);
                             orderProductCol.appendChild(buttonsForReviewComplete);
+                        }else if(status=='환불완료'){
+                            const buttonsForRefundComplete = document.querySelector("#template .buttonsForRefundComplete").cloneNode(true);
+                            orderProductCol.appendChild(buttonsForRefundComplete);
                         }
 
                         orderProductContainer.appendChild(newOrderProductTemplate);

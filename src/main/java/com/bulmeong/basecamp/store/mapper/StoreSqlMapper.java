@@ -131,8 +131,10 @@ public interface StoreSqlMapper {
     public void updateOrderProduct(OrderProductDto orderProductDto);
 
     public void insertPointUsageLog(MileageLogDto mileageLogDto);
+    public void insertPointRefundLog(MileageLogDto mileageLogDto);
     public void updateUserMileage(@Param("id") int id, @Param("used_point") int used_point);
     public void updateUserMileagePlus(int id);
+    public void updateUserMileageRefund(@Param("user_id")int user_id, @Param("refund_mileage")int refund_mileage);
 
     public int[] selectCartProductOptionValuePrimaryKeys(int cart_product_id);
 
@@ -225,4 +227,7 @@ public interface StoreSqlMapper {
     );
 
     public void updateCartProductQuantity(@Param("quantity")int quantity, @Param("cart_product_id") int cart_product_id);
+
+    public List<StoreProductDto> selectFiveProductList();
+    public List<StoreProductDto> selectTenProductListDesc();
 }

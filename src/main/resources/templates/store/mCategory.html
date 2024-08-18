@@ -66,6 +66,14 @@
             font-weight: bold;
             border-bottom: 2px solid black;
         }
+        .sold-out {
+            background-color: rgba(0, 0, 0, 0.6);
+            aspect-ratio: 1/1;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
     </style>
     <script>
         const urlParams = new URL(window.location.href).searchParams;
@@ -138,6 +146,12 @@
                         salePrice.classList.remove("d-none")
                     }
                     newProductCol.querySelector(".mainImage").setAttribute("src", `/images/${e.storeProductDto.main_image}`)
+                    
+                    if(e.stockQuantity>0){
+                        newProductCol.querySelector(".soldout_col").classList.add("d-none");
+                    }else{
+                        newProductCol.querySelector(".soldout_col").classList.remove("d-none");
+                    }
 
                     contentBox.appendChild(newProductCol);
                 }
@@ -163,9 +177,9 @@
 </head>
 <body class="bg-body-tertiary">
 
-    <div class="container">
+    <div class="container fixed-top">
         <!-- top-nav -->
-        <div class="fixed-top px-4 row border-bottom shadow-sm bg-white">
+        <div class=" px-3 row border-bottom shadow-sm bg-white">
             <div class="col">
                 <div class="row py-3 align-items-center">
                     <div class="col-auto ps-0">
@@ -305,9 +319,12 @@
 
     <div id="template" class="d-none">
         <a class="col-6 py-3 pe-0 ps-3 productCol">
-            <div class="row">
+            <div class="row position-relative">
                 <div class="col product-col">
-                    <img class="border rounded-2 mainImage" src="">
+                    <img class="border mainImage" src="">
+                </div>
+                <div class="col position-absolute soldout_col">
+                    <span class="sold-out fw-semibold text-white">SOLD OUT</span>
                 </div>
             </div>
             <div class="row pt-1 f08 fw-semibold">
@@ -327,7 +344,7 @@
             </div>
             <div class="row fw-semibold">
                 <div class="col">
-                    <span style="color: orangered;" class="percentage d-none">30% </span>
+                    <span class="percentage lightFont d-none">30% </span>
                     <span class="salePrice d-none">28,000</span>
                 </div>
             </div>

@@ -212,8 +212,11 @@ public class StoreService {
             }else{
                 map.put("percentage", 0);
             }
+            
+            int purchase_quantity = storeSqlMapper.selectProductPurchaseQuantity(storeProductDto.getId());
+            int quantity = storeProductDto.getQuantity();
 
-
+            map.put("stockQuantity", quantity-purchase_quantity);
             map.put("storeProductDto", storeProductDto);
             map.put("storeDto", storeDto);
 
@@ -1248,7 +1251,41 @@ public class StoreService {
     // }
     
     public Map<String, Object> getOrderProductDataForRefund(int order_product_id){
-        return storeSqlMapper.selectOrderProductDataForRefund(order_product_id);
+        Map<String, Object> map = storeSqlMapper.selectOrderProductDataForRefund(order_product_id);
+        int[]value_ids =  storeSqlMapper.selectOrderProductOptionValueIds(order_product_id);
+        
+        int product_price = (int)map.get("product_price");
+        if(value_ids.length!=0&& value_ids!=null){
+            int additional_info_id = storeSqlMapper.selectAdditionalInfoIdByValueIds(value_ids);
+            AdditionalInfoDto additionalInfoDto = storeSqlMapper.selectAdditionalInfoById(additional_info_id);
+            int additional_price = additionalInfoDto.getAdditional_price();
+
+            int salePrice = product_price+additional_price;
+
+            map.put("salePrice", salePrice);
+
+            List<String> valueNameList = new ArrayList<>();
+            for(int value_id : value_ids){
+                String value_name = storeSqlMapper.selectOptionValueNameById(value_id);
+                valueNameList.add(value_name);
+            }
+            map.put("valueNameList", valueNameList);
+
+        }else{
+            map.put("salePrice", product_price);
+            map.put("valueNameList", null);
+        }
+
+        double percentage = (double)map.get("discount_percentage");
+        if(percentage!=0){
+            int discount_amount = (int)Math.round(product_price*percentage);
+            map.put("discount_amount", discount_amount);
+        }else{
+            map.put("discount_amount", 0);
+        }
+
+
+        return map;
     }
 
     public List<ProductRefundReasonDto> getRefundReasonList(){
@@ -1288,8 +1325,25 @@ public class StoreService {
     }
 
     public int orderProductRefund(ProductRefundDto productRefundDto){
-        storeSqlMapper.updateOrderProductStatusToRefundComplete(productRefundDto.getOrder_product_id());
+        int order_product_id = productRefundDto.getOrder_product_id();
+        storeSqlMapper.updateOrderProductStatusToRefundComplete(order_product_id);
         storeSqlMapper.insertProductRefund(productRefundDto);
+
+        OrderProductDto orderProductDto = storeSqlMapper.selectOrderProductDtoById(order_product_id);
+        int used_point = orderProductDto.getUsed_point();
+
+        if(used_point==0){
+            return productRefundDto.getId();
+        }
+
+        StoreOrderDto storeOrderDto = storeSqlMapper.selectStoreOrderDtoById(orderProductDto.getOrder_id());
+        int user_id = storeOrderDto.getUser_id();
+        storeSqlMapper.updateUserMileageRefund(user_id, used_point);
+
+        MileageLogDto mileageLogDto = new MileageLogDto();
+        mileageLogDto.setUser_id(user_id);
+        mileageLogDto.setChange_amount(used_point);
+        storeSqlMapper.insertPointRefundLog(mileageLogDto);
 
         return productRefundDto.getId();
     }
@@ -1314,5 +1368,85 @@ public class StoreService {
 
     public void updateCartProductQuantity(int quantity, int cart_product_id){
         storeSqlMapper.updateCartProductQuantity(quantity, cart_product_id);
+    }
+
+    public List<Map<String, Object>> getBestProductDataList(){
+        //여기 수정
+        List<Map<String, Object>> result = new ArrayList<>();
+
+        List<StoreProductDto> storeProductDtoList = storeSqlMapper.selectFiveProductList();
+        if(storeProductDtoList.size()!=0&&storeProductDtoList!=null){
+            for(StoreProductDto storeProductDto : storeProductDtoList){
+                Map<String, Object> map = new HashMap<>();
+    
+                int discount_id = storeProductDto.getDiscount_id();
+                int price = storeProductDto.getPrice();
+    
+                if(discount_id!=0){
+                    StoreProductDiscountDto storeProductDiscountDto = storeSqlMapper.selectDiscountById(discount_id);
+    
+                    double percentage = storeProductDiscountDto.getPercentage();
+                    int salePrice = (int)Math.round(price-price*percentage);
+    
+                    map.put("salePrice", salePrice);
+                    map.put("percentage", (int)(percentage*100));
+                    map.put("storeProductDto", storeProductDto);
+                    result.add(map);
+                }else{
+                    map.put("salePrice", price);
+                    map.put("percentage", 0);
+                    map.put("storeProductDto", storeProductDto);
+                    result.add(map);
+                }
+
+                StoreDto storeDto = storeSqlMapper.selectStoreDtoById(storeProductDto.getStore_id());
+                map.put("storeDto", storeDto);
+
+                int purchase_quantity = storeSqlMapper.selectProductPurchaseQuantity(storeProductDto.getId());
+                map.put("purchase_quantity", purchase_quantity);
+            }
+        }
+
+
+        return result;
+    }
+
+    public List<Map<String, Object>> getBestTenProductDataList(){
+        //여기 수정
+        List<Map<String, Object>> result = new ArrayList<>();
+
+        List<StoreProductDto> storeProductDtoList = storeSqlMapper.selectTenProductListDesc();
+        if(storeProductDtoList.size()!=0&&storeProductDtoList!=null){
+            for(StoreProductDto storeProductDto : storeProductDtoList){
+                Map<String, Object> map = new HashMap<>();
+    
+                int discount_id = storeProductDto.getDiscount_id();
+                int price = storeProductDto.getPrice();
+    
+                if(discount_id!=0){
+                    StoreProductDiscountDto storeProductDiscountDto = storeSqlMapper.selectDiscountById(discount_id);
+    
+                    double percentage = storeProductDiscountDto.getPercentage();
+                    int salePrice = (int)Math.round(price-price*percentage);
+    
+                    map.put("salePrice", salePrice);
+                    map.put("percentage", (int)(percentage*100));
+                    map.put("storeProductDto", storeProductDto);
+                    result.add(map);
+                }else{
+                    map.put("salePrice", price);
+                    map.put("percentage", 0);
+                    map.put("storeProductDto", storeProductDto);
+                    result.add(map);
+                }
+
+                StoreDto storeDto = storeSqlMapper.selectStoreDtoById(storeProductDto.getStore_id());
+                map.put("storeDto", storeDto);
+
+                int purchase_quantity = storeSqlMapper.selectProductPurchaseQuantity(storeProductDto.getId());
+                map.put("purchase_quantity", purchase_quantity);
+            }
+        }
+        return result;
     }
 }

@@ -27,6 +27,7 @@ public class StoreController {
     @RequestMapping("")
     public String main(Model model){
         model.addAttribute("allProductDataList", storeService.getAllProductDataList());
+        model.addAttribute("bestProductDataList", storeService.getBestProductDataList());
 
         return "store/mStoreMain";
     }
@@ -209,4 +210,10 @@ public class StoreController {
     //     return "common/tempLogin";
     // }
 
+    @RequestMapping("bestProduct")
+    public String bestProduct(Model model){
+        model.addAttribute("bestProductDataList", storeService.getBestTenProductDataList());
+
+        return "store/mBestProduct";
+    }
 }
