@@ -50,6 +50,11 @@ public class StoreCenterController {
         model.addAttribute("productCategoryDtoList", storeService.getProductCategoryAll());
         return "store/pProductRegister";
     }
+
+    @RequestMapping("storeInfo")
+    public String storeInfo(){
+        return "store/pStoreInfo";
+    }
     
     @RequestMapping("sellerInfo")
     public String sellerInfo(HttpSession session, Model model){
@@ -139,8 +144,4 @@ public class StoreCenterController {
         return "store/Xstatistics";
     }
 
-    @RequestMapping("storeInfo")
-    public String storeInfo(){
-        return "store/XstoreInfo";
-    }
 }

@@ -27,7 +27,7 @@ public class StoreController {
     @RequestMapping("")
     public String main(Model model){
         model.addAttribute("allProductDataList", storeService.getAllProductDataList());
-        model.addAttribute("bestProductDataList", storeService.getBestProductDataList());
+        model.addAttribute("bestProductDataList", storeService.getFiveProductDataList());
 
         return "store/mStoreMain";
     }
@@ -212,8 +212,17 @@ public class StoreController {
 
     @RequestMapping("bestProduct")
     public String bestProduct(Model model){
-        model.addAttribute("bestProductDataList", storeService.getBestTenProductDataList());
+        //여기 수정
+        model.addAttribute("bestProductDataList", storeService.getTenProductDataList());
 
         return "store/mBestProduct";
+    }
+
+    @RequestMapping("newProduct")
+    public String newProduct(Model model){
+        model.addAttribute("newProductDataList", storeService.getFiveProductDataList());
+        model.addAttribute("newStoreData", storeService.getNewStoreData());
+
+        return "store/mNewProduct";
     }
 }

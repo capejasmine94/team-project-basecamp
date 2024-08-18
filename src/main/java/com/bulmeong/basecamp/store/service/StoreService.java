@@ -1370,8 +1370,7 @@ public class StoreService {
         storeSqlMapper.updateCartProductQuantity(quantity, cart_product_id);
     }
 
-    public List<Map<String, Object>> getBestProductDataList(){
-        //여기 수정
+    public List<Map<String, Object>> getFiveProductDataList(){
         List<Map<String, Object>> result = new ArrayList<>();
 
         List<StoreProductDto> storeProductDtoList = storeSqlMapper.selectFiveProductList();
@@ -1411,8 +1410,7 @@ public class StoreService {
         return result;
     }
 
-    public List<Map<String, Object>> getBestTenProductDataList(){
-        //여기 수정
+    public List<Map<String, Object>> getTenProductDataList(){
         List<Map<String, Object>> result = new ArrayList<>();
 
         List<StoreProductDto> storeProductDtoList = storeSqlMapper.selectTenProductListDesc();
@@ -1448,5 +1446,17 @@ public class StoreService {
             }
         }
         return result;
+    }
+
+    public Map<String, Object> getNewStoreData(){
+        Map<String, Object> map = new HashMap<>();
+        map.put("storeDto", storeSqlMapper.selectNewStoreDto());
+        map.put("productDataList", storeSqlMapper.selectNewStoreProductDataList());
+        
+        return map;
+    }
+
+    public void updateStoreDto(StoreDto storeDto){
+        storeSqlMapper.updateStoreDto(storeDto);
     }
 }

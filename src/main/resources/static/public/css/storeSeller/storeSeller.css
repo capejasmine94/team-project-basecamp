@@ -11,31 +11,79 @@
 a{
     text-decoration: none;
 }
-.product-category a{
-    color: black;
-}
 
-.top-nav{
-    height: 58px;
-}
 .left{
     width: 15em;
 }
 
-/* scrollBar */
-.scrollBar {
-    width: 15em;
-    overflow-y: scroll;
-}
-
-.scrollBar::-webkit-scrollbar-thumb {
-    height: 30%; /* 스크롤바의 길이 */
-    background: #ffffff29; /* 스크롤바의 색상 */
-}
 .king{
     left: 55%;
     top: -10%;
 }
+
+.store-center{
+    background-color: #222222;
+}
+.category:hover{
+    background-color: #EEEEEE;
+}
+.subcategory {
+    background-color: #FAFAFA;
+    transition: background-color 0.3s;
+    font-size: 0.9em;
+}
+
+.subcategory:hover{
+    color: #067DFD;
+}
+
+.left a{
+    color: black;
+}
+
+.seller_profile img{
+    aspect-ratio: 1/1;
+    width: 80px;
+    object-fit: cover;
+    object-position: center;
+}
+.s-light-btn {
+    --bs-btn-color: #fff;
+    --bs-btn-bg: #409EFF;
+    --bs-btn-border-color: #409EFF;
+
+    --bs-btn-hover-color: #fff;
+    --bs-btn-hover-bg: #409EFF;
+    --bs-btn-hover-border-color: #0a58ca;
+    --bs-btn-focus-shadow-rgb: 49, 132, 253;
+    --bs-btn-active-color: #fff;
+
+    --bs-btn-active-bg: #0a58ca;
+    --bs-btn-active-border-color: #0a53be;
+    --bs-btn-active-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
+
+    --bs-btn-disabled-color: #fff;
+    --bs-btn-disabled-bg: #0d6efd;
+    --bs-btn-disabled-border-color: #0d6efd;
+}
+.s-white-btn {
+    --bs-btn-color: #242424;
+    --bs-btn-bg: #fdfdfd;
+    --bs-btn-border-color: #d3d3d3;
+
+    --bs-btn-hover-color: #242424;
+    --bs-btn-hover-bg: #f8f8f8;
+    --bs-btn-hover-border-color: #d3d3d3;
+    --bs-btn-focus-shadow-rgb: 49, 132, 253;
+    
+    --bs-btn-active-color: #242424;
+    --bs-btn-active-bg: #efefef;
+    --bs-btn-active-border-color: #d3d3d3;
+    --bs-btn-active-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
+}
+
+
+
 
 .searchInput::placeholder{
     font-size: 0.9em;
@@ -51,32 +99,26 @@ a{
 }
 
 
-/* ///////////////// */
-
-/* .store-center{
-    background-color: #1F2D3D;
-}
-.category:hover{
-    background-color: #EEEEEE;
-}
-.subcategory {
-    background-color: #1F2D3D;
-    transition: background-color 0.3s;
-}
-.subcategory:hover{
-    background-color: #001528;
+/* scrollBar */
+.scrollBar {
+    width: 15em;
+    overflow-y: scroll;
 }
 
-.scrollable {
+.scrollBar::-webkit-scrollbar-thumb {
+    height: 30%;
+    background: #ffffff29;
+}
+.scrollBar::-webkit-scrollbar {
+    display: none;
+}
+
+/* .scrollable {
     height: 100vh;
     overflow-y: auto;
     position: fixed;
-}
+} */
 
-.left a{
-    color: #F4F4F5;
-}
-
-.right{
-    margin-left: 15em;
+/* .right{
+    padding-left: 15em;
 } */

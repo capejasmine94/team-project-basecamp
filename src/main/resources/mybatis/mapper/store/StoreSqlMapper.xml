@@ -996,4 +996,43 @@
         limit 10
     </select>
 
+    <select id="selectNewStoreDto" resultType="com.bulmeong.basecamp.store.dto.StoreDto">
+        select s.* from store s 
+        inner join (
+            select s.id, count(sp.id) as product_quantity from store s
+            inner join store_product sp on s.id = sp.store_id
+            group by s.id
+        )t1 on s.id = t1.id
+        where t1.product_quantity &gt; 2
+        order by s.id desc
+        limit 1
+    </select>
+
+    <select id="selectNewStoreProductDataList" resultType="java.util.HashMap">
+        select 
+            t2.name as store_name,
+            sp2.*,
+            sp2.price - sp2.price*COALESCE(spd.percentage, 0) as sale_price
+        from (select s.* from store s 
+        inner join (
+            select s.id, count(sp.id) as product_quantity from store s
+            inner join store_product sp on s.id = sp.store_id
+            group by s.id
+        )t1 on s.id = t1.id
+        where t1.product_quantity &gt; 2
+        order by s.id desc
+        limit 1) t2
+        inner join store_product sp2 on t2.id = sp2.store_id 
+        inner join store_product_discount spd on sp2.discount_id = spd.id 
+        order by sp2.id desc
+        limit 2
+    </select>
+
+    <update id="updateStoreDto">
+        update store
+        set description = #{description},
+            main_image = #{main_image}
+        where id = #{id}
+    </update>
+
 </mapper>

@@ -230,4 +230,9 @@ public interface StoreSqlMapper {
 
     public List<StoreProductDto> selectFiveProductList();
     public List<StoreProductDto> selectTenProductListDesc();
+
+    public StoreDto selectNewStoreDto();
+    public List<Map<String, Object>> selectNewStoreProductDataList();
+
+    public void updateStoreDto(StoreDto storeDto);
 }

@@ -106,6 +106,28 @@ public class RestStoreController {
         return restResponseDto;
     }
 
+    @RequestMapping("updateStoreInfo")
+    public RestResponseDto updateStoreInfo(
+        @RequestParam("description") String description,
+        @RequestParam("newProfile") MultipartFile newProfile,
+        HttpSession session
+    ){
+        RestResponseDto restResponseDto = new RestResponseDto();
+
+        StoreDto storeDto = (StoreDto)session.getAttribute("sessionStoreInfo");
+        storeDto.setDescription(description);
+        storeDto.setMain_image(ImageUtil.saveImageAndReturnLocation(newProfile));
+
+        System.out.println(storeDto);
+
+        storeService.updateStoreDto(storeDto);
+
+        StoreDto newStoreDto = storeService.getStoreDtoByAccountInfo(storeDto.getAccount_id(), storeDto.getAccount_pw());
+        session.setAttribute("sessionStoreInfo", newStoreDto);
+
+        return restResponseDto;
+    }
+
     @RequestMapping("registerProductOption")
     public RestResponseDto registerProductOption(
         @RequestParam("product_id") int product_id,
@@ -603,4 +625,6 @@ public class RestStoreController {
     public void updateCartProductQuantity(@RequestParam("quantity")int quantity, @RequestParam("cart_product_id") int cart_product_id){
         storeService.updateCartProductQuantity(quantity, cart_product_id);
     }
+
+
 }
