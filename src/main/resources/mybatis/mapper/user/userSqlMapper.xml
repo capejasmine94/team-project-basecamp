@@ -5,9 +5,9 @@
     <!-- 유저 등록 -->
         <insert id="insertUser">
             INSERT INTO bc_user
-                (account, password, nickname, email, phone, profile_image, mileage, gender, birth)
+                (account, password, nickname, email, phone, profile_image, mileage, gender, birth, name)
             values
-                (#{account}, #{password}, #{nickname}, #{email}, #{phone}, default, 1000, #{gender} , #{birth})
+                (#{account}, #{password}, #{nickname}, #{email}, #{phone}, default, 1000, #{gender} , #{birth}, #{name})
         </insert>
     <!-- 유저 로그인 -->
     <select id="getUserByAccountAndPassword" resultType="com.bulmeong.basecamp.user.dto.UserDto">
