@@ -12,6 +12,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.bulmeong.basecamp.camp.dto.CampsiteAreaDto;
 import com.bulmeong.basecamp.camp.dto.CampsiteBankDto;
 import com.bulmeong.basecamp.camp.dto.CampsiteDto;
+import com.bulmeong.basecamp.camp.dto.CampsiteOrderDto;
 import com.bulmeong.basecamp.camp.service.CampsiteService;
 import com.bulmeong.basecamp.common.util.Utils;
 //
@@ -28,11 +29,20 @@ public class CampsiteSellerController {
         return (CampsiteDto)info.get("dto");
     }
 
+    private void initSession() {
+        if(utils.getSession("campsite") != null)
+        {
+            int id = sessionCampsiteDto().getId();
+            utils.setSession("campsite", service.campsiteInfo(id));
+        }
+    }
+
     //============================================================================
     // 리퀘스트 구역
     //============================================================================
     @RequestMapping("/main")
     public String mainPage() {
+        initSession();
         return "camp/seller/main";
     }
     @RequestMapping("")
@@ -42,30 +52,37 @@ public class CampsiteSellerController {
 
     @RequestMapping("/campsite")
     public String manageCampsite() {
+        initSession();
         return "camp/seller/campsite";
     }
 
     @RequestMapping("/area")
     public String manageArea() {
+        initSession();
         return "camp/seller/area";
     }
 
     @RequestMapping("/reservation")
     public String manageReservation() {
+        initSession();
+        setOrder();
         return "camp/seller/reservation";
     }
 
     @RequestMapping("/review")
     public String manageReview() {
+        initSession();
         return "camp/seller/review";
     }
 
     @RequestMapping("/asset")
     public String manageAsset() {
+        initSession();
         return "camp/seller/asset";
     }
     @RequestMapping("/statistics")
     public String manageStatistics() {
+        initSession();
         return "camp/seller/statistics";
     }
 
@@ -139,6 +156,15 @@ public class CampsiteSellerController {
         return "redirect:./area";      
     }
 
+    @RequestMapping("/cancelOrderProcess")
+    public String requestMethodName(@RequestParam("order_id") int order_id) {
+        service.cancelOrder(order_id);
+         // 세션 데이터 갱신
+        CampsiteDto campsiteDto = sessionCampsiteDto();
+        utils.setSession("campsite", service.campsiteInfo(campsiteDto.getId()));
+        return "redirect:./reservation";
+    }
+
     @RequestMapping("/updateAreaProcess")
     public String updateAreaProcess(
         CampsiteAreaDto areaDto, 
@@ -156,5 +182,17 @@ public class CampsiteSellerController {
         return "redirect:./area";      
     }
 
+      private void setOrder() {
+        Date now = new Date();
+        List<CampsiteOrderDto> list = service.getOrderList();
+        for(CampsiteOrderDto order : list) {
+            if(order.getProgress().equals("예약 대기 중"))
+            {
+                if(order.getStart_date().getTime() <= now.getTime()){
+                    service.updateOrder(order.getId());
+                }
+            }
+        }
+    }
     //============================================================================
 }

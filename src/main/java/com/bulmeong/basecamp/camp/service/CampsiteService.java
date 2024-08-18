@@ -527,6 +527,11 @@ public class CampsiteService {
         }
         return result;
     }
+
+    // 예약 취소
+    public void cancelOrder(int order_id) {
+        campsiteSqlMapper.cancelOrder(order_id);
+    }
     
     // 이미 예약해 본 캠프인 경우
     public boolean isAlreadyOrdered(int campsite_id) {

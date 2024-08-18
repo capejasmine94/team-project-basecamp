@@ -96,4 +96,5 @@ public interface CampsiteSqlMapper {
     public List<Map<String,Object>> getReivewByCampsiteId5Index(@Param("campsite_id") int campsite_id);
     public int getCountOrderByWaitProgress(@Param("campsite_id") int campsite_id);
     public int getCountOrderBy3Day(@Param("campsite_id") int campsite_id);
+    public void cancelOrder(@Param("order_id")int order_id);
 }

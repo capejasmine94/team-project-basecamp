@@ -184,9 +184,9 @@
                                                                     <div class="col-3 text-end">결제일</div>
                                                                     <div class="col-5 ms-5 fw-semibold created_at">2023.12.11</div>
                                                                 </div>
-                                                                <div class="row mt-2 justify-content-end" id="cancelOrder">
+                                                                <div class="row mt-2 justify-content-end">
                                                                     <div class="col-auto">
-                                                                        <button class="btn btn-danger">예약 취소</button>
+                                                                        <button class="btn btn-danger" id="cancelOrder">예약 취소</button>
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -274,12 +274,7 @@
                     car.innerText = value.car_number;
                     carList.appendChild(car);
                 }
-                if(new Date(order.dto.start_date) <= new Date()){
-                progress.innerText = '완료';
-                }
-                else {
-                    progress.innerText = '대기';
-                }
+                progress.innerText = order.dto.progress;
 
                 totalPrise.innerText = order.dto.total_prise;
                 prise.innerText = order.dto.origin_prise;
@@ -324,9 +319,12 @@
 
                 if(progress.innerText != '예약 대기 중')
                     cancelOrder.classList.add('d-none');
-                else   
+                else   {
                     cancelOrder.classList.remove('d-none');
-
+                    cancelOrder.onclick = function() {
+                        location.href = "/campsiteCenter/cancelOrderProcess?order_id=" + order.dto.id;
+                    };
+                }
                 addColonMoneyInput();
                 showDetail.classList.remove('d-none')
             }

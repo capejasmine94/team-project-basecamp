@@ -188,9 +188,10 @@
                 customer_phone.innerText = orderData.dto.customer_phone;
                 total_prise.innerText = orderData.dto.total_prise;
                 progress.innerHTML = orderData.dto.progress;
-                orderDay.innerText = `${formatDate(orderData.dto.start_date)} ~  ${formatDate(orderData.dto.end_date)}`;
-                car_tab.innerHTML='';
+                orderDay.innerText = `${formatDate(orderData.dto.start_date,'-')} ~  ${formatDate(orderData.dto.end_date,'-')}`;
+                car_list.innerHTML='';
                 if(orderData.carNumbers.length > 0) {
+                    console.log(orderData.carNumbers);
                     for(const car of orderData.carNumbers){
                         const carTab = document.createElement('div');
                         carTab.classList.add("row", "mb-1");
@@ -199,8 +200,9 @@
                     }
                     car_tab.classList.remove('d-none');
                 }
-                else
+                else{
                     car_tab.classList.add('d-none');
+                }
                 reservation.classList.remove('d-none');
                 emptyReservation.classList.add('d-none');
             }

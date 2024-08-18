@@ -341,6 +341,14 @@
                 progress = '완료'
             where id = #{order_id}
         </update>
+
+        <!-- 예약 취소 -->
+        <update id="cancelOrder">
+            UPDATE bc_campsite_order
+            SET 
+                progress = '취소됨'
+            where id = #{order_id}
+        </update>
         
         <!-- 포인트 추가 -->
         <insert id="registerPoint">
