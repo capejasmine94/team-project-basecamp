@@ -33,8 +33,12 @@
         <div class="row mb-5">
             <div class="col">
                 <div class="row border-bottom fixed-top px-2" style="background-color: white;">
-                    <div class="col-auto pe-1" style="padding-left: 4.5%;">
-                        <a th:href="@{./instaMainPage(user_id=${session.sessionUserInfo.id})}" style="color: black;"><i class="bi bi-x-lg"></i></a>
+                    <div class="col-auto pe-1 d-flex justify-content-center">
+                        <a class="d-flex align-items-center" th:href="@{./instaMainPage(user_id=${session.sessionUserInfo.id})}" style="color: black;">
+                            <span class="material-symbols-outlined fw-light">
+                                arrow_back
+                            </span>
+                        </a>
                     </div>
                     <div class="col ps-1 search-container">
                         <i class="bi bi-search"></i>         

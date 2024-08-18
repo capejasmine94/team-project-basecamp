@@ -445,6 +445,13 @@ public class InstaService {
         instaSqlMapper.recentSearchAllDeleteByUserId(user_id);
     }
 
+    // 게시글 좋아요누른 유저 목록(and 팔로우 유무 확인) _ resultType 해쉬맵 사용
+    public List<Map<String, Object>> selectArticleLikeUserInfo(int article_id, int user_id){
+        List<Map<String, Object>> instaUserInfoDtoList = instaSqlMapper.selectArticleLikeUserInfo(article_id, user_id);
+
+        return instaUserInfoDtoList;
+    }
+
 }
 
 

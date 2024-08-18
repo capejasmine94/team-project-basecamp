@@ -129,6 +129,6 @@ a {
     left: 75%;
 }
 .order-list-scroll {
-    max-height: 500px; /* 원하는 높이 설정 */
+    height: 74vh; /* 원하는 높이 설정 */
     overflow-y: auto;
 }

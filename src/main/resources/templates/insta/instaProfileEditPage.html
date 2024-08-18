@@ -41,36 +41,18 @@
         <div class="row">
             <form class="col" action="./confirmProcess" method="post" enctype="multipart/form-data">
                 <div class="row fixed-top bg-white border-bottom fixed-top px-2">
-                    <div class="col text-start">
-                        <!-- 뒤로가기 -->
-                        <button onclick="goBack()" type="button" class="btn py-0 d-flex align-items-center" style="line-height: 20px;">
-                            <span class="material-symbols-outlined fw-light">
-                                arrow_back
-                            </span>
-                        </button>
-                    </div>
-                    <div class="col text-center align-self-center">
-                        <span>campstagram</span>
-                    </div>
-                    <div class="col text-end"></div>
-                </div>
-                
-                <div class="row mt-5 pt-4">
-                    <div class="col" style="text-align: center;">
-                        <span th:text="${session.sessionUserInfo.nickname}"></span><span>님 반갑습니다!</span>
-                        <input type="hidden" name="user_id" th:value="${session.sessionUserInfo.id}">
-                    </div>
-                </div>
-                <div class="row mt-3">
-                    <div class="col" style="text-align: center;">
-                        <span>
-                            campstagram에서 사용할 프로필을 설정해주세요
+                    <a class="col-auto d-flex align-items-center" th:href="@{./instaMainPage(user_id=${session.sessionUserInfo.id})}" style="color: black; padding-left: 4%;">
+                        <span class="material-symbols-outlined fw-light">
+                            arrow_back
                         </span>
+                    </a>
+                    <div class="col" style="padding-right: 15%;">
+                        <span>프로필 편집</span>
                     </div>
                 </div>
 
                 <!-- 이미지 -->
-                <div class="row">
+                <div class="row mt-5 pt-2">
                     <div class="col-3"></div>
                     <div class="col-6 text-center pt-4">
                         <img id="profileImage" src="/public/img/common/default_profile.png" class="img-fluid rounded-circle" alt="Profile Image">
@@ -86,7 +68,16 @@
                     </div>
                 </div>
 
-                <div class="pb-2 border-bottom border-secondary-subtle mt-3"></div>
+                <div class="row mt-3 fontBasic">
+                    <div class="col-auto d-flex justify-content-center">
+                        <span class="material-symbols-outlined fw-light" style="font-size: 1.5em;">
+                            info
+                        </span>
+                        <span>프로필은 14일 동안 최대 두 번까지 변경할 수 있습니다.</span>
+                    </div>
+                </div>
+
+                <div class="border-bottom border-secondary-subtle mt-3"></div>
             
                 <div class="row mt-3">
                     <div class="col">
@@ -107,7 +98,7 @@
 
                 <div class="row">
                     <div class="col d-grid position-fixed bottom-0 py-3 border-top" style="background-color: white;">
-                        <button type="submit" class="btn" style="background-color: #0095f6; color: white;">입장하기</button>
+                        <button type="submit" class="btn" style="background-color: #0095f6; color: white;">저장</button>
                     </div>
                 </div>
             </form>

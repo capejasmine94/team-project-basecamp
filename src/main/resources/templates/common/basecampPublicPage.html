@@ -114,7 +114,7 @@
             left: 75%;
         }
         .order-list-scroll {
-            max-height: 500px; /* 원하는 높이 설정 */
+            height: 74vh; /* 원하는 높이 설정 */
             overflow-y: auto;
         }
 
@@ -1138,6 +1138,12 @@
                         <span style="font-size: 0.8em; color: rgb(168, 168, 168);">로그아웃</span>
                     </a>
                 </div>
+
+                <div class="row mb-5 py-2">
+                    <div class="col">
+
+                    </div>
+                </div>
             </div>
         </div>
 
@@ -1157,31 +1163,30 @@
             <span class="text-navi pt-1 fw-bold" style="font-size: 0.7em;">홈</span>
         </a>        
 
-        <!--구매-->
+        <!-- 구매 -->
         <div class="col icon-and-text dropdown dropup">
-            <span data-bs-toggle="dropdown" class="material-symbols-outlined fw-light" style="font-size: 1.7em; color: darkgray;">
-                storefront
+            <span data-bs-toggle="dropdown" aria-expanded="false">
+                <span class="material-symbols-outlined fw-light" style="font-size: 1.7em; color: darkgray; display: block;">
+                    storefront
+                </span>
+                <span class="text-navi pt-1" style="font-size: 0.7em; color: darkgray; display: block;">
+                    구매
+                </span>
             </span>
-            <span class="text-navi pt-1" style="font-size: 0.7em; color: darkgray;">구매</span>
             <ul class="dropdown-menu custom-dropdown-menu">
-                <!-- 변초연 -->
+                <!-- 메뉴 내용 -->
                 <a class="dropdown-item col" href="/store">
                     <div class="row w-100">
                         <div class="col-auto d-flex">
-                            <span class="material-symbols-outlined pe-1 ps-1 fw-light">
-                                shopping_bag
-                            </span>
+                            <span class="material-symbols-outlined pe-1 ps-1 fw-light">shopping_bag</span>
                             <span style="font-size: 0.9em;">스토어</span>
                         </div>
                     </div>
                 </a>
-                <!-- 심규진 -->
                 <a class="dropdown-item col" href="/secondhandProduct/mainPage">
                     <div class="row w-100">
                         <div class="col-auto d-flex">
-                            <span class="material-symbols-outlined pe-1 ps-1 fw-light">
-                                eco
-                            </span>
+                            <span class="material-symbols-outlined pe-1 ps-1 fw-light">eco</span>
                             <span style="font-size: 0.9em;">중고</span>
                         </div>
                     </div>
@@ -1189,31 +1194,30 @@
             </ul>
         </div>
 
-        <!--예약-->
+        <!-- 예약 -->
         <div class="col icon-and-text dropdown dropup">
-            <span data-bs-toggle="dropdown" class="material-symbols-outlined fw-light" style="font-size: 1.7em; color: darkgray;">
-                event_available
+            <span data-bs-toggle="dropdown" aria-expanded="false">
+                <span class="material-symbols-outlined fw-light" style="font-size: 1.7em; color: darkgray; display: block;">
+                    event_available
+                </span>
+                <span class="text-navi pt-1" style="font-size: 0.7em; color: darkgray;">
+                    예약
+                </span>
             </span>
-            <span class="text-navi pt-1" style="font-size: 0.7em; color: darkgray;">예약</span>
             <ul class="dropdown-menu row custom-dropdown-menu">
-                <!-- 조준희 -->
+                <!-- 메뉴 내용 -->
                 <a class="dropdown-item col" href="/camp/main">
                     <div class="row w-100">
                         <div class="col-auto d-flex">
-                            <span class="material-symbols-outlined pe-1 ps-1 fw-light">
-                                camping
-                            </span>
+                            <span class="material-symbols-outlined pe-1 ps-1 fw-light">camping</span>
                             <span style="font-size: 0.9em;">캠핑장</span>
                         </div>
                     </div>
                 </a>
-                <!-- 양은자 -->
                 <a class="dropdown-item col" href="/campingcar/main">
                     <div class="row w-100">
                         <div class="col-auto d-flex">
-                            <span class="material-symbols-outlined pe-1 ps-1 fw-light">
-                                airport_shuttle
-                            </span>
+                            <span class="material-symbols-outlined pe-1 ps-1 fw-light">airport_shuttle</span>
                             <span style="font-size: 0.9em;">캠핑카</span>
                         </div>
                     </div>
@@ -1221,25 +1225,26 @@
             </ul>
         </div>
 
-        <!--커뮤-->
+        <!-- 커뮤니티 -->
         <div class="col icon-and-text dropdown dropup">
-            <span data-bs-toggle="dropdown" class="material-symbols-outlined fw-light" style="font-size: 1.7em; color: darkgray;">
-                forum
+            <span data-bs-toggle="dropdown" aria-expanded="false">
+                <span class="material-symbols-outlined fw-light" style="font-size: 1.7em; color: darkgray; display: block;">
+                    forum
+                </span>
+                <span class="text-navi pt-1" style="font-size: 0.7em; color: darkgray; display: block;">
+                    커뮤니티
+                </span>
             </span>
-            <span class="text-navi pt-1" style="font-size: 0.7em; color: darkgray;">커뮤니티</span>
             <ul class="dropdown-menu custom-dropdown-menu">
-                <!-- 이시은 -->
+                <!-- 메뉴 내용 -->
                 <a class="dropdown-item col" href="/club/main">
                     <div class="row w-100">
                         <div class="col-auto d-flex">
-                            <span class="material-symbols-outlined pe-1 ps-1 fw-light">
-                                group
-                            </span>
+                            <span class="material-symbols-outlined pe-1 ps-1 fw-light">group</span>
                             <span style="font-size: 0.9em;">소모임</span>
                         </div>
                     </div>
                 </a>
-                <!-- 남현지 -->
                 <a class="dropdown-item col" href="/insta/instaMainPage">
                     <span>
                         <img src="/public/img/instaImage/campstagram.png" class="img-fluid">
@@ -1248,34 +1253,20 @@
             </ul>
         </div>
         
-        <!--내정보-->
-        <!-- <a class="col icon-and-text" href="/user/login" th:if="${session.sessionUserInfo == null}">
-            <span class="material-symbols-outlined pe-1 ps-1 fw-light"style="font-size: 1.7em; color: darkgray;">
-                person
-            </span>
-            <span class="text-navi pt-1" style="font-size: 0.7em; color: darkgray;">마이</span>
-        </a>
-        <a class="col icon-and-text" href="/user/myPage" th:unless="${session.sessionUserInfo == null}">
-            <span class="material-symbols-outlined pe-1 ps-1 fw-light"style="font-size: 1.7em; color: darkgray;">
-                person
-            </span>
-            <span class="text-navi pt-1" style="font-size: 0.7em; color: darkgray;">마이</span>
-        </a> -->
-        
         <!--canvas 버튼-->
         <div class="col">
-            <button class="btn py-0" style="font-size: 1.7em; color: darkgray; line-height: 1px;" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight">
+            <button class="btn py-0" style=" color: darkgray; line-height: 20px;" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight">
                 <span class="material-symbols-outlined">
                     menu
                 </span>
-            </button>
-            <div class="row">
-                <div class="col">
-                    <span style="font-size: 0.7em; color: darkgray;">
-                        메뉴
-                    </span>
+                <div class="row">
+                    <div class="col">
+                        <span style="font-size: 0.7em; color: darkgray;">
+                            메뉴
+                        </span>
+                    </div>
                 </div>
-            </div>
+            </button>
         </div>
         
     </div>

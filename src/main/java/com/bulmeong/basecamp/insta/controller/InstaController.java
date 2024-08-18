@@ -1,7 +1,7 @@
 package com.bulmeong.basecamp.insta.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-
+import org.springframework.core.io.ClassPathResource;
 import org.thymeleaf.util.StringUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -10,8 +10,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.net.URLEncoder;
+import java.io.IOException;
 import java.net.URLDecoder;
 import java.nio.charset.StandardCharsets;
+import java.io.File;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 import com.bulmeong.basecamp.common.dto.ImageDto;
 import com.bulmeong.basecamp.common.util.ImageUtil;
@@ -78,7 +83,30 @@ public class InstaController {
     @RequestMapping("confirmProcess") // MultipartFile = 한개의 파일만 받을 때 / MultipartFile[] = 여러개의 파일만 받을 때
     public String confirmProcess(InstaUserInfoDto instaUserInfoDto, @RequestParam("insta_img") MultipartFile insta_img){
 
-        instaUserInfoDto.setInsta_profile_img(ImageUtil.saveImageAndReturnLocation(insta_img));
+        if (insta_img == null || insta_img.isEmpty()) {
+            try {
+                // 기본 이미지의 실제 파일 시스템 경로를 가져옴
+                ClassPathResource resource = new ClassPathResource("static/img/common/default_profile.png");
+                File sourceFile = resource.getFile();
+                Path sourcePath = sourceFile.toPath();
+
+                // 고유한 파일명 생성 (UUID 사용)
+                String uniqueFileName = UUID.randomUUID().toString() + "_default_profile.png";
+                Path destinationPath = Paths.get("src/main/resources/static/img/user_profiles/" + uniqueFileName);
+
+                // 기본 이미지를 고유한 이름으로 복사하여 저장
+                Files.copy(sourcePath, destinationPath);
+
+                // 사용자에게 고유한 경로로 설정 (웹 경로로 설정)
+                instaUserInfoDto.setInsta_profile_img("/img/user_profiles/" + uniqueFileName);
+            } catch (IOException e) {
+                e.printStackTrace();
+                // 복사 실패 시 기본 이미지 경로 설정
+                instaUserInfoDto.setInsta_profile_img("/img/common/default_profile.png");
+            }
+        }else{
+            instaUserInfoDto.setInsta_profile_img(ImageUtil.saveImageAndReturnLocation(insta_img));
+        }
 
         System.out.println(instaUserInfoDto.getInsta_profile_img());
 
@@ -300,7 +328,14 @@ public class InstaController {
     }
 
     @RequestMapping("pushLikeUserPage")
-    public String pushLikeUserPage(){
+    public String pushLikeUserPage(Model model, @RequestParam("article_id") int article_id,
+                                                @RequestParam("user_id") int user_id){ // user_id = session 유저 아이디
+
+        InstaUserInfoDto instaUserInfoDto = instaService.userInfoByUserId(user_id);
+        System.out.println(instaUserInfoDto.getId());
+
+        List<Map<String, Object>> instaUserInfoDtoList = instaService.selectArticleLikeUserInfo(article_id, instaUserInfoDto.getId());
+        model.addAttribute("instaUserInfoDtoList", instaUserInfoDtoList);
 
         return "insta/pushLikeUserPage";
     }
@@ -466,6 +501,12 @@ public class InstaController {
         return "insta/instaStatsPage?user_id=" + instaUserInfoDto.getId();
     }
 
+    // 프로필 편집
+    @RequestMapping("instaProfileEditPage")
+    public String instaProfileEditPage(){
+
+        return "insta/instaProfileEditPage";
+    }
 }
 
 

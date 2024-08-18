@@ -9,6 +9,9 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap">
 
+    <!-- Google Material Icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet">
+
     <link rel="stylesheet" href="/public/css/insta/instaStyle.css">
     <script src="/public/js/uploader.js"></script>
     <link rel="stylesheet" href="/public/css/common.css">
@@ -60,13 +63,16 @@
             <!-- enctype사용할때는 method를 get으로 하면 안되나..? -->
             <form class="col" action="./instaWriteProcess" method="post" enctype="multipart/form-data">
                 <!-- 상단바 -->
-                <div class="row mb-5 border-bottom fixed-top" style="background-color: white;">
-                    <div class="col-2">
-                        <a th:href="@{./instaMainPage(user_id=${session.sessionUserInfo.id})}" style="color: black;"><i class="bi bi-x-lg"></i></a>
-                    </div>
-                    <div class="col-10" style="padding-right: 16%;">
+                <div class="row px-2 mb-5 border-bottom fixed-top" style="background-color: white;">
+                    <a class="col-auto pe-1 d-flex align-items-center" th:href="@{./instaMainPage(user_id=${session.sessionUserInfo.id})}" style="color: black;">
+                        <span class="material-symbols-outlined fw-light">
+                            arrow_back
+                        </span>
+                    </a>
+                    <div class="col-9 ps-1">
                         <span>새 게시물</span>
                     </div>
+                    <div class="col-1"></div>
                 </div>
                 
                 <!-- 이미지 -->

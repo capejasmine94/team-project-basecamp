@@ -31,12 +31,16 @@
 <body>
     <div class="container">
         <!-- 상단바 -->
-        <div class="row mb-5 border-bottom fixed-top" style="background-color: white;">
-            <div class="col-auto pe-1" style="padding-left: 6.35%;">
-                <a th:href="@{./instaMainPage(user_id=${session.sessionUserInfo.id})}" style="color: black;"><i class="bi bi-x-lg"></i></a>
+        <div class="row mb-5 border-bottom fixed-top px-2" style="background-color: white;">
+            <div class="col-auto pe-1 d-flex justify-content-center">
+                <a class="d-flex align-items-center" th:href="@{./instaMainPage(user_id=${session.sessionUserInfo.id})}" style="color: black;">
+                    <span class="material-symbols-outlined fw-light">
+                        arrow_back
+                    </span>
+                </a>
             </div>
             <div class="col">
-                <form class="row pe-2" action="./instaSearchProcess" method="get">                        
+                <form class="row" action="./instaSearchProcess" method="get">                        
                     <div class="col ps-1 search-container">
                         <i class="bi bi-search"></i>         
                         <input name="searchWord" type="text" class="form-control form-control-sm" placeholder="내용, #해시태그 등" style="font-size: 0.85em;">

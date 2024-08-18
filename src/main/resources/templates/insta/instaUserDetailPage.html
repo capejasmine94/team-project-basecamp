@@ -9,6 +9,9 @@
         <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap">
         <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap">
 
+        <!-- Google Material Icons -->
+        <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet">
+
         <link rel="stylesheet" href="/public/css/insta/instaStyle.css">
         <link rel="stylesheet" href="/public/css/common.css">
         <link rel="stylesheet" href="/public/css/basecamp.css">
@@ -28,14 +31,16 @@
     <body>
         <div class="container">
             <!-- 상단바 -->
-            <div class="row border-bottom fixed-top" style="background-color: white;">
-                <div class="col-2">
-                    <a th:href="@{./instaMainPage(user_id=${session.sessionUserInfo.id})}" style="color: black;"><i class="bi bi-x-lg"></i></a>
-                </div>
-                <div class="col-8 pe-1 fontNine">
+            <div class="row border-bottom fixed-top px-2" style="background-color: white;">
+                <a class="col-auto pe-1 d-flex align-items-center" th:href="@{./instaMainPage(user_id=${session.sessionUserInfo.id})}" style="color: black;">
+                    <span class="material-symbols-outlined fw-light">
+                        arrow_back
+                    </span>
+                </a>
+                <div class="col-9 fontNine">
                     <span>설정 및 활동</span>
                 </div>
-                <div class="col-2"></div>
+                <div class="col-1"></div>
             </div>
 
             <!-- 검색 -->

@@ -9,7 +9,11 @@
         <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap">
         <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap">
 
+        <!-- Google Material Icons -->
+        <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet">
+
         <link rel="stylesheet" href="/public/css/insta/instaStyle.css">
+        <link rel="stylesheet" href="/public/css/basecamp.css">
         <link rel="stylesheet" href="/public/css/common.css">
 
         <!-- 이걸로 레이아웃 확인하셈 -->
@@ -74,13 +78,16 @@
     <body>
         <div class="container">
             <!-- 상단바 -->
-            <div class="row mb-5 border-bottom fixed-top" style="background-color: white;">
-                <div class="col-2">
-                    <a th:href="@{./instaMainPage(user_id=${session.sessionUserInfo.id})}" style="color: black;"><i class="bi bi-x-lg"></i></a>
-                </div>
-                <div class="col-10" style="padding-right: 16%;">
+            <div class="row px-2 mb-5 border-bottom fixed-top" style="background-color: white;">
+                <a class="col-auto pe-1 d-flex align-items-center" th:href="@{./instaMainPage(user_id=${session.sessionUserInfo.id})}" style="color: black;">
+                    <span class="material-symbols-outlined fw-light">
+                        arrow_back
+                    </span>
+                </a>
+                <div class="col-9 ps-1">
                     <span>좋아요</span>
                 </div>
+                <div class="col-1"></div>
             </div>
 
             <div class="row mt-5 pt-3 px-1" style="background-color: white;">
@@ -91,44 +98,52 @@
             </div>
 
             <!-- 좋아요 한 List 출력 -->
-            <div class="row mt-3">
+            <div class="row mt-3" th:each="instaUserInfoDto : ${instaUserInfoDtoList}">
                 <div class="col">
+
                     <div class="row">
                         <!-- 글 작성한 사람 프로필 이미지 -->
-                        <a class="col-auto pe-1 link-dark link-offset-2 link-underline link-underline-opacity-0" href="./instaUserPage">
-                            <!-- <img th:src="|/basecampImage/${instaArticleList.instaArticleDto.insta_profile_img}|" class="img-fluid rounded-circle commentImage"> -->
-                            <img src="/public/img/instaImage/hahaha4.jpg" class="img-fluid rounded-circle profileImage">
+                        <a class="col-auto pe-1 link-dark link-offset-2 link-underline link-underline-opacity-0"
+                           th:if="${instaUserInfoDto.user_id == session.sessionUserInfo.id}"
+                           th:href="@{./instaMyPage(user_id=${instaUserInfoDto.id})}" 
+                           style="position: relative;">
+                            <img src="/public/img/instaImage/story.jpg" class="img-fluid rounded-circle articleLikeImg">
+                            <img th:src="|/images/${instaUserInfoDto.insta_profile_img}|" class="img-fluid rounded-circle profileImage" style="position: relative;">
+                        </a>
+                        <a class="col-auto pe-1 link-dark link-offset-2 link-underline link-underline-opacity-0"
+                           th:unless="${instaUserInfoDto.user_id == session.sessionUserInfo.id}"
+                           th:href="@{./instaUserPage(user_id=${instaUserInfoDto.id})}" 
+                           style="position: relative;">
+                            <img src="/public/img/instaImage/story.jpg" class="img-fluid rounded-circle articleLikeImg">
+                            <img th:src="|/images/${instaUserInfoDto.insta_profile_img}|" class="img-fluid rounded-circle profileImage" style="position: relative;">
                         </a>
                         <!-- 글 작성한 사람 닉네임 -->
-                        <a class="col-auto fontBasic align-self-center pt-1 link-dark link-offset-2 link-underline link-underline-opacity-0" href="./instaUserPage">
-                            <!-- <span th:text="${session.sessionUserInfo.nickname}">aa</span> -->
-                            <span>닉네임</span>
+                        <a class="col fontBasic align-self-center pt-1 link-dark link-offset-2 link-underline link-underline-opacity-0"
+                           th:if="${instaUserInfoDto.user_id == session.sessionUserInfo.id}"
+                           th:href="@{./instaMyPage(user_id=${instaUserInfoDto.id})}">
+                            <span th:text="${instaUserInfoDto.insta_nickname}">닉네임</span>
                         </a>
-                        <div class="col-5"></div>
-                        <div class="col align-self-center" style="padding-right: 6.5%;">
+                        <a class="col fontBasic align-self-center pt-1 link-dark link-offset-2 link-underline link-underline-opacity-0"
+                           th:unless="${instaUserInfoDto.user_id == session.sessionUserInfo.id}"
+                           th:href="@{./instaUserPage(user_id=${instaUserInfoDto.id})}">
+                            <span th:text="${instaUserInfoDto.insta_nickname}">닉네임</span>
+                        </a>
+                        <div th:if="${instaUserInfoDto.user_id != session.sessionUserInfo.id}" class="col-3 align-self-center" style="padding-right: 6.5%;">
                             <div class="row fontNine">
-                                <div class="col badge d-grid" href="./userEditProfile" style="height: 30px; background-color: #0095f6; text-decoration: none;">
+                                <div th:if="${instaUserInfoDto.is_following == 0}" class="col badge d-grid lightBg" style="height: 30px; text-decoration: none;">
                                     <span class="align-self-center" style="font-size: 1.2em;">팔로우</span>
                                 </div>
-                                <!-- <div class="col badge d-grid" href="./userEditProfile" style="height: 30px; background-color: #262626; text-decoration: none;">
+                                <div th:unless="${instaUserInfoDto.is_following == 0}" class="col badge d-grid darkBg" style="height: 30px; text-decoration: none;">
                                     <span class="align-self-center" style="font-size: 1.2em;">팔로잉</span>
-                                </div> -->
+                                </div>
                             </div>
                         </div>
                     </div>
+                    
+
                 </div>
             </div>
 
-            <!-- 글쓰기 버튼 -->
-            <!-- style="aspect-ratio: 1/1;" -> 익스펙토 주문 : 정방향을 만들어준다 -->
-            <!-- <div class="write-button-container">
-                <form action="./instaWritePage" method="get">
-                    <button class="btn bg-white rounded-2 border border-2 border-black px-2 py-1" type="submit">
-                        <i class="fa-solid fa-plus"></i>
-                        <input type="hidden" name="user_id" th:value="${session.sessionUserInfo.id}">
-                    </button>
-                </form>
-            </div> -->
         </div>
 
 
@@ -137,12 +152,6 @@
         <script src="https://kit.fontawesome.com/7b271bba58.js" crossorigin="anonymous"></script>
     </body>
 </html>
-
-
-
-
-
-
 
 
 

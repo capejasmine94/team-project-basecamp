@@ -493,6 +493,25 @@
         where user_id = #{user_id}
     </delete>
 
+    <!-- 게시글 좋아요 목록 -->
+    <select id="selectArticleLikeUserInfo" resultType="java.util.HashMap">
+        select biui.*, 
+            (bial.user_id = #{user_id}) as is_logged_user,
+            (bif.follower_user_id is not null) as is_following
+        from bc_insta_article_like bial
+        inner join bc_insta_user_info biui
+            on biui.id = bial.user_id
+        left outer join bc_insta_follow bif 
+            on bif.follower_user_id = #{user_id}
+            and bif.following_user_id = biui.id
+        where bial.article_id = #{article_id}
+        order by is_logged_user desc, <!-- is_logged_user 로그인 한 사용자 -->
+                is_following desc, <!-- is_following 로그인 한 사용자가 게시글 좋아요 유저들을 팔로우 했는지에대한 유무 확인 -->
+                bial.id desc
+    </select>
+    
+    
+
 </mapper>
 
 

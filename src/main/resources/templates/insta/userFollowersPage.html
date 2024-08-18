@@ -9,6 +9,9 @@
         <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap">
         <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap">
 
+        <!-- Google Material Icons -->
+        <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet">
+
         <link rel="stylesheet" href="/public/css/insta/instaStyle.css">
         <link rel="stylesheet" href="/public/css/common.css">
         <link rel="stylesheet" href="/public/css/basecamp.css">
@@ -77,11 +80,13 @@
             <!-- 상단바 -->
             <div class="row fixed-top" style="background-color: white;">
                 <div class="col" style="padding-top: 3.1%;">
-                    <div class="row">
-                        <div class="col-2">
-                            <a th:href="@{./instaMainPage(user_id=${session.sessionUserInfo.id})}" style="color: black;"><i class="bi bi-x-lg"></i></a>
-                        </div>
-                        <div class="col-10" style="padding-right: 16%;">
+                    <div class="row px-2">
+                        <a class="col-auto d-flex align-items-center" th:href="@{./instaMainPage(user_id=${session.sessionUserInfo.id})}" style="color: black; padding-left: 4%;">
+                            <span class="material-symbols-outlined fw-light">
+                                arrow_back
+                            </span>
+                        </a>
+                        <div class="col" style="padding-right: 15%;">
                             <span>유저 닉네임</span>
                         </div>
                     </div>
