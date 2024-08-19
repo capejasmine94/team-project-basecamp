@@ -8,6 +8,8 @@ import com.bulmeong.basecamp.secondHandProduct.service.PolygonService;
 import com.bulmeong.basecamp.secondHandProduct.service.ProductService;
 import com.bulmeong.basecamp.user.dto.UserDto;
 import jakarta.servlet.http.HttpSession;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -32,51 +34,49 @@ public class ProductController {
     @Autowired
     private Utils utils;
 
+//    @GetMapping("mainPage")
+//    public String mainPage(Model model,
+//                           HttpSession session,
+//                           @RequestParam(name = "selected_area_name", required = false) String selected_area_name) {
+//
+//        UserDto sessionUserInfo = (UserDto) session.getAttribute("sessionUserInfo");
+//
+//        String areaName = locationService.selectMyLocation(sessionUserInfo.getId());
+//        model.addAttribute("areaName", areaName);
+//
+//        if(areaName == null || areaName.equals("전체")) {
+//            List<AllContentsProductDto> productDtoList = productService.selectSecondhandProductList();
+//            model.addAttribute("productDtoList", productDtoList);
+//        } else {
+//            List<AllContentsProductDto> productDtoList = productService.selectSecondhandProductIsAreaList(areaName);
+//            model.addAttribute("productDtoList", productDtoList);
+//        }
+//
+//        return "secondhandProduct/mainPage";
+//    }
+
+    private static final Logger logger = LoggerFactory.getLogger(ProductController.class);
+
     @GetMapping("mainPage")
-    public String mainPage(Model model,
-                           HttpSession session,
-                           @RequestParam(name = "selected_area_name", required = false) String selected_area_name) {
+    public String mainPage() {
+
+        logger.info("mainPage 메서드 호출");
 
         try {
-            UserDto sessionUserInfo = (UserDto) session.getAttribute("sessionUserInfo");
+            logger.debug("view:  secondhandProduct/mainPage");
 
-            // 사용자 정보가 없는 경우 로그인 페이지로 리다이렉트
-            if (sessionUserInfo == null) {
-                return "redirect:https://basecamp.null-pointer-exception.com/user/login";
-            }
-
-            // 사용자 지역 정보 가져오기
-            String areaName = locationService.selectMyLocation(sessionUserInfo.getId());
-
-            // 지역 정보가 null인 경우 기본값 설정
-            if (areaName == null) {
-                areaName = "전체";
-            }
-
-            // 모델에 지역 정보 추가
-            model.addAttribute("areaName", areaName);
-
-            // 상품 리스트 가져오기 (지역 정보에 따라)
-            List<AllContentsProductDto> productDtoList;
-            if (areaName.equals("전체")) {
-                productDtoList = productService.selectSecondhandProductList();
-            } else {
-                productDtoList = productService.selectSecondhandProductIsAreaList(areaName);
-            }
-
-            // Null 체크 후 모델에 추가
-            if (productDtoList == null) {
-                productDtoList = new ArrayList<>();
-            }
-            model.addAttribute("productDtoList", productDtoList);
+            // 뷰 반환
+            return "secondhandProduct/mainPage";
 
         } catch (Exception e) {
-            // 예외 발생 시 오류 메시지를 모델에 추가하고 에러 페이지로 이동
-            model.addAttribute("errorMessage", "오류 발생");
-            return "redirect:https://basecamp.null-pointer-exception.com/user/login";
+            // 예외 발생 시 로그 기록 (ERROR 수준)
+            logger.error("Exception 발생 in mainPage()", e);
+
+            // 예외 처리 후, 오류 페이지 또는 다른 페이지로 리다이렉트 가능
+            return "secondhandProduct/mainPage"; // 예외 발생 시 error.html 페이지로 리다이렉트
         }
 
-        return "secondhandProduct/mainPage";
+//        return "secondhandProduct/mainPage";
     }
 
     @GetMapping("productRegistrationPage")
@@ -553,7 +553,7 @@ public class ProductController {
             }
         }
 
-        return "/secondhandProduct/mainPage";
+        return "secondhandProduct/mainPage";
     }
 
 

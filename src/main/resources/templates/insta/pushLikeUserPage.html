@@ -122,11 +122,13 @@
                            th:if="${instaUserInfoDto.user_id == session.sessionUserInfo.id}"
                            th:href="@{./instaMyPage(user_id=${instaUserInfoDto.id})}">
                             <span th:text="${instaUserInfoDto.insta_nickname}">닉네임</span>
+                            <img src="/public/img/instaImage/badge.png" class="img-fluid" style="width: 13px; height: 13px;">
                         </a>
                         <a class="col fontBasic align-self-center pt-1 link-dark link-offset-2 link-underline link-underline-opacity-0"
                            th:unless="${instaUserInfoDto.user_id == session.sessionUserInfo.id}"
                            th:href="@{./instaUserPage(user_id=${instaUserInfoDto.id})}">
                             <span th:text="${instaUserInfoDto.insta_nickname}">닉네임</span>
+                            <img src="/public/img/instaImage/badge.png" class="img-fluid" style="width: 13px; height: 13px;">
                         </a>
                         <div th:if="${instaUserInfoDto.user_id != session.sessionUserInfo.id}" class="col-3 align-self-center" style="padding-right: 6.5%;">
                             <div class="row fontNine">
