@@ -66,14 +66,14 @@ public class ProductController {
             logger.debug("view:  secondhandProduct/mainPage");
 
             // 뷰 반환
-            return "secondhandProduct/mainPage";
+            return "/secondhandProduct/mainPage";
 
         } catch (Exception e) {
             // 예외 발생 시 로그 기록 (ERROR 수준)
             logger.error("Exception 발생 in mainPage()", e);
 
             // 예외 처리 후, 오류 페이지 또는 다른 페이지로 리다이렉트 가능
-            return "secondhandProduct/mainPage"; // 예외 발생 시 error.html 페이지로 리다이렉트
+            return "/secondhandProduct/mainPage"; // 예외 발생 시 error.html 페이지로 리다이렉트
         }
 
 //        return "secondhandProduct/mainPage";
@@ -553,7 +553,7 @@ public class ProductController {
             }
         }
 
-        return "/secondhandProduct/mainPage";
+        return "secondhandProduct/mainPage";
     }
 
 
