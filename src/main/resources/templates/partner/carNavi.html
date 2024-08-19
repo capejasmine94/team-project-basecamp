@@ -29,9 +29,9 @@ id="leftAccordion" style="color: white; padding-top: 58px; background-color: #30
             <div class="row">
                 <div class="col seller_profile text-center">
                      <!-- 올바른 변수명을 사용하고, Thymeleaf 문자열 연결 구문을 정확하게 적용 -->
-                     <img src="/public/img/common/default_profile.png" class="rounded-circle">
-                    <!-- <img th:if="${session.sessionCaravanInfo != null}" th:src="@{/images/${session.sessionCaravanInfo.comp_profile_image}}" class="rounded-circle">
-                    <img th:unless="${session.sessionCaravanInfo != null}" src="/public/img/common/default_profile.png" class="rounded-circle"> -->
+                     <!-- <img src="/public/img/common/default_profile.png" class="rounded-circle"> -->
+                    <img th:if="${session.sessionCaravanInfo != null}" th:src="@{/images/${session.sessionCaravanInfo.comp_profile_image}}" class="rounded-circle">
+                    <img th:unless="${session.sessionCaravanInfo != null}" src="/public/img/common/default_profile.png" class="rounded-circle">
                 </div>
             </div>
             <div class="row text-center pt-2 fw-bold">

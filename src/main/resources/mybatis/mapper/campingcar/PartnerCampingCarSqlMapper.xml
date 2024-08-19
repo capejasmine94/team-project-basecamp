@@ -6,10 +6,10 @@
     <insert id="createSeller">
         insert into bc_rental_company_info(
             location_category_id, account_id, account_pw, crn, comp_name, representative_name,
-		    comp_email, comp_address, contact_number, comp_profile_image, comp_nickname, comp_url
+		    comp_email, comp_address, comp_detailed_address, contact_number, comp_profile_image, comp_nickname, comp_url
         )values(
             #{location_category_id}, #{account_id}, #{account_pw}, #{crn}, #{comp_name}, #{representative_name},
-		    #{comp_email}, #{comp_address}, #{contact_number}, #{comp_profile_image}, #{comp_nickname}, #{comp_url}
+		    #{comp_email}, #{comp_address}, #{comp_detailed_address}, #{contact_number}, #{comp_profile_image}, #{comp_nickname}, #{comp_url}
         )
     </insert>
 
@@ -89,16 +89,19 @@
     <!-- 성수기/휴일관리_캘린더 표시를 위한 등록 차량 리스트 -->
     <select id="getcampingCarListForCalendar" resultType="Map">
         select         
-                    bc.id AS product_id,
-                    brci.comp_name, 
-                    bctc.name AS car_type_name, 
-                    bc.product_name, 
-                    bc.rental_fee_weekdays, 
-                    bc.rental_fee_weekend,
-                    brpp.weekdays_price AS peak_weekdays_price,
-                    brpp.weekend_price AS peak_weekend_price,
-                    bc.created_at,
-                    brpp.created_at AS peakDate_create_at
+                bc.id AS product_id,
+                brci.comp_name, 
+                bctc.name AS car_type_name, 
+                bc.product_name, 
+                bc.rental_fee_weekdays, 
+                bc.rental_fee_weekend,
+                brpp.weekdays_price AS peak_weekdays_price,
+                brpp.weekend_price AS peak_weekend_price,
+                brpp.peak_start_date,
+                brpp.peak_end_date,
+                bc.created_at ,
+                brpp.created_at AS peakDate_create_at,
+                brpp.updated_at
         from bc_campingcar bc 
         INNER join 
                     bc_rental_company_info brci on bc.rental_company_id = brci.id
@@ -148,7 +151,7 @@
         insert into bc_product_detail_img(
             product_id,location,original_filename
         ) values(
-        #{product_id}, #{location}, #{original_filename}
+            #{product_id}, #{location}, #{original_filename}
         )
     </insert>
     <!-- main 페이지의 차량 등록 list(외래키의 받은 모든 테이블을 엮음) : 
@@ -218,6 +221,7 @@
         left join bc_campingcar_like cl on cl.product_id = bc.id 
         left join bc_rental_peak_price brpp on bc.id = brpp.product_id
         where bc.rental_company_id = #{rental_company_id}
+        order by bc.id DESC
     </select>
 
     <!-- 판매자의 예약신청 내역 -->
