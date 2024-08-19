@@ -68,6 +68,8 @@ public class PartnerCampingCarService {
         // 3. 최종 DetailImageList 담을 인스턴스 생성, 차량등록의 세부이미지 테이블 insert
         List<ProductDetailImgDto> productImageList = new ArrayList<>();
         List<ImageDto> ImgeDtoList = ImageUtil.saveImageAndReturnDtoList(detailedImg);
+
+        System.out.println("222222222222222222+" + ImgeDtoList );
         for(ImageDto imgeDto : ImgeDtoList){
             ProductDetailImgDto productDetailImgDto = new ProductDetailImgDto();
             productDetailImgDto.setLocation(imgeDto.getLocation());

@@ -485,148 +485,151 @@
 
         // 동적으로 달력을 생성하는 함수입니다. carList 데이터를 받아와 각 셀에 데이터를 추가합니다.
         function createDynamicCalendar(year, month, carList, userDefinedPeriods = []) {
-    const container = document.getElementById('calendar_peak');
-    container.innerHTML = ''; // 기존 달력을 지웁니다.
-    document.getElementById('monthYear').textContent = `${year}년 ${month + 1}월`; // 현재 연도와 월을 표시합니다.
+            const container = document.getElementById('calendar_peak');
+            container.innerHTML = ''; // 기존 달력을 지웁니다.
+            document.getElementById('monthYear').textContent = `${year}년 ${month + 1}월`; // 현재 연도와 월을 표시합니다.
 
-    const table = document.createElement('table');
-    table.className = 'table calendar-table'; // Bootstrap 스타일 적용
-    const header = table.createTHead();
-    const headerRow = header.insertRow();
-    const daysOfWeek = ['일', '월', '화', '수', '목', '금', '토'];
-    daysOfWeek.forEach(day => {
-        const cell = headerRow.insertCell();
-        cell.textContent = day;
-        cell.className = 'text-center fw-semibold'; // 중앙 정렬 및 강조된 스타일 적용
-    });
+            const table = document.createElement('table');
+            table.className = 'table calendar-table'; // Bootstrap 스타일 적용
+            const header = table.createTHead();
+            const headerRow = header.insertRow();
+            const daysOfWeek = ['일', '월', '화', '수', '목', '금', '토'];
+            daysOfWeek.forEach(day => {
+                const cell = headerRow.insertCell();
+                cell.textContent = day;
+                cell.className = 'text-center fw-semibold'; // 중앙 정렬 및 강조된 스타일 적용
+            });
 
-    const body = table.createTBody();
-    const firstDay = new Date(year, month, 1).getDay(); // 해당 월의 첫 번째 날의 요일을 계산합니다.
-    const daysInMonth = new Date(year, month + 1, 0).getDate(); // 해당 월의 일수를 계산합니다.
-    const previousMonthDays = new Date(year, month, 0).getDate(); // 이전 달의 총 일수를 계산합니다.
+            const body = table.createTBody();
+            const firstDay = new Date(year, month, 1).getDay(); // 해당 월의 첫 번째 날의 요일을 계산합니다.
+            const daysInMonth = new Date(year, month + 1, 0).getDate(); // 해당 월의 일수를 계산합니다.
+            const previousMonthDays = new Date(year, month, 0).getDate(); // 이전 달의 총 일수를 계산합니다.
 
-    let date = 1; // 현재 월의 날짜를 추적하는 변수입니다.
-    let nextMonthDate = 1; // 다음 달의 날짜를 추적하는 변수입니다.
+            let date = 1; // 현재 월의 날짜를 추적하는 변수입니다.
+            let nextMonthDate = 1; // 다음 달의 날짜를 추적하는 변수입니다.
 
-    for (let i = 0; i < 6; i++) { // 최대 6주를 생성합니다.
-        const row = body.insertRow();
-        for (let j = 0; j < 7; j++) { // 7일을 생성합니다.
-            const cell = row.insertCell();
-            cell.className = 'date-cell'; // 날짜 셀의 기본 스타일을 설정합니다.
-            if (j === 0) {
-                cell.classList.add('sunday'); // 일요일은 빨간색으로 표시됩니다.
-            }
-            if (i === 0 && j < firstDay) {
-                // 이전 달의 날짜를 표시
-                const prevDate = previousMonthDays - (firstDay - j - 1);
-                const dateDiv = document.createElement('div');
-                dateDiv.className = 'calendar-date';
-                dateDiv.textContent = prevDate;
-                cell.appendChild(dateDiv);
-                cell.classList.add('text-muted'); // 이전 달 날짜에 muted 스타일을 추가합니다.
-                cell.onclick = function() {
-                    selectDay(cell, year, month - 1, prevDate); // 이전 달의 날짜를 클릭할 때 선택 가능하도록 설정
-                };
-            } else if (date > daysInMonth) {
-                // 다음 달의 날짜를 표시
-                const currentNextMonthDate = nextMonthDate; // 클로저로 값을 캡처
-                const dateDiv = document.createElement('div');
-                dateDiv.className = 'calendar-date';
-                dateDiv.textContent = currentNextMonthDate;
-                cell.appendChild(dateDiv);
-                cell.classList.add('text-muted'); // 다음 달 날짜에 muted 스타일을 추가합니다.
-                cell.onclick = function() {
-                    selectDay(cell, year, month + 1, currentNextMonthDate); // 다음 달의 날짜를 클릭할 때 선택 가능하도록 설정
-                };
-                nextMonthDate++;
-            } else {
-                const currentDay = date; // 현재 날짜를 클로저로 캡처합니다.
-                const dateDiv = document.createElement('div');
-                dateDiv.className = 'calendar-date';
-                dateDiv.textContent = currentDay;
-                cell.appendChild(dateDiv);
-                cell.setAttribute('data-date', date); // 날짜 셀에 data-date 속성 추가
-                cell.onclick = function() {
-                    selectDay(cell, year, month, currentDay); // 선택된 날짜로 함수를 호출합니다.
-                };
+            for (let i = 0; i < 6; i++) { // 최대 6주를 생성합니다.
+                const row = body.insertRow();
+                for (let j = 0; j < 7; j++) { // 7일을 생성합니다.
+                    const cell = row.insertCell();
+                    cell.className = 'date-cell'; // 날짜 셀의 기본 스타일을 설정합니다.
+                    if (j === 0) {
+                        cell.classList.add('sunday'); // 일요일은 빨간색으로 표시됩니다.
+                    }
+                    if (i === 0 && j < firstDay) {
+                        // 이전 달의 날짜를 표시
+                        const prevDate = previousMonthDays - (firstDay - j - 1);
+                        const dateDiv = document.createElement('div');
+                        dateDiv.className = 'calendar-date';
+                        dateDiv.textContent = prevDate;
+                        cell.appendChild(dateDiv);
+                        cell.classList.add('text-muted'); // 이전 달 날짜에 muted 스타일을 추가합니다.
+                        cell.onclick = function() {
+                            selectDay(cell, year, month - 1, prevDate); // 이전 달의 날짜를 클릭할 때 선택 가능하도록 설정
+                        };
+                    } else if (date > daysInMonth) {
+                        // 다음 달의 날짜를 표시
+                        const currentNextMonthDate = nextMonthDate; // 클로저로 값을 캡처
+                        const dateDiv = document.createElement('div');
+                        dateDiv.className = 'calendar-date';
+                        dateDiv.textContent = currentNextMonthDate;
+                        cell.appendChild(dateDiv);
+                        cell.classList.add('text-muted'); // 다음 달 날짜에 muted 스타일을 추가합니다.
+                        cell.onclick = function() {
+                            selectDay(cell, year, month + 1, currentNextMonthDate); // 다음 달의 날짜를 클릭할 때 선택 가능하도록 설정
+                        };
+                        nextMonthDate++;
+                    } else {
+                        const currentDay = date; // 현재 날짜를 클로저로 캡처합니다.
+                        const dateDiv = document.createElement('div');
+                        dateDiv.className = 'calendar-date';
+                        dateDiv.textContent = currentDay;
+                        cell.appendChild(dateDiv);
+                        cell.setAttribute('data-date', date); // 날짜 셀에 data-date 속성 추가
+                        cell.onclick = function() {
+                            selectDay(cell, year, month, currentDay); // 선택된 날짜로 함수를 호출합니다.
+                        };
 
-                // 성수기 기간에 해당하는 날짜인지 확인하고 스타일 적용
-                const isPeakPeriod = carList.some(car => {
-                    const startDate = new Date(car.peak_start_date);
-                    const endDate = new Date(car.peak_end_date);
-                    const currentDate = new Date(year, month, currentDay);
-                    return currentDate >= startDate && currentDate <= endDate;
-                });
+                        // 성수기 기간에 해당하는 날짜인지 확인하고 스타일 적용
+                        const isPeakPeriod = carList.some(car => {
+                            const startDate = new Date(car.peak_start_date);
+                            const endDate = new Date(car.peak_end_date);
+                            const currentDate = new Date(year, month, currentDay);
+                            return currentDate >= startDate && currentDate <= endDate;
+                        });
 
-                // 사용자 정의 성수기 기간 확인
-                const isUserDefinedPeakPeriod = userDefinedPeriods.some(period => {
-                    const startDate = new Date(period.startDate);
-                    const endDate = new Date(period.endDate);
-                    const currentDate = new Date(year, month, currentDay);
-                    return currentDate >= startDate && currentDate <= endDate;
-                });
+                        // 사용자 정의 성수기 기간 확인
+                        const isUserDefinedPeakPeriod = userDefinedPeriods.some(period => {
+                            const startDate = new Date(period.startDate);
+                            const endDate = new Date(period.endDate);
+                            const currentDate = new Date(year, month, currentDay);
+                            return currentDate >= startDate && currentDate <= endDate;
+                        });
 
-                // 사용자 정의 성수기 기간명 적용
-                if (isUserDefinedPeakPeriod) {
-                    const userPeriodName = userDefinedPeriods.find(period => {
-                        const startDate = new Date(period.startDate);
-                        const endDate = new Date(period.endDate);
-                        const currentDate = new Date(year, month, currentDay);
-                        return currentDate >= startDate && currentDate <= endDate;
-                    })?.periodName;
+                        // 사용자 정의 성수기 기간명 적용
+                        if (isUserDefinedPeakPeriod) {
+                            const userPeriodName = userDefinedPeriods.find(period => {
+                                const startDate = new Date(period.startDate);
+                                const endDate = new Date(period.endDate);
+                                const currentDate = new Date(year, month, currentDay);
+                                return currentDate >= startDate && currentDate <= endDate;
+                            })?.periodName;
 
-                    if (userPeriodName) {
-                        const userPeriodNameDiv = document.createElement('div');
-                        userPeriodNameDiv.textContent = userPeriodName;
-                        userPeriodNameDiv.style.color = '#f8d7da';
-                        userPeriodNameDiv.className = 'fw-bold';
-                        cell.appendChild(userPeriodNameDiv);
+                            if (userPeriodName) {
+                                const userPeriodNameDiv = document.createElement('div');
+                                userPeriodNameDiv.textContent = userPeriodName;
+                                userPeriodNameDiv.style.color = '#f8d7da';
+                                userPeriodNameDiv.className = 'fw-bold';
+                                cell.appendChild(userPeriodNameDiv);
+                            }
+                        }
+                        function getDateOnly(date) {
+                            return new Date(date.getFullYear(), date.getMonth(), date.getDate());
+                        }
+
+                        // 차량 정보를 해당 날짜 셀에 추가
+                        carList.forEach(car => {
+                            console.log("car",car);
+                            const dayOfWeek = new Date(year, month, currentDay).getDay(); // 요일을 가져옵니다 (0: 일요일, 6: 토요일)
+                            const carInfo = document.createElement('div');
+                            carInfo.className = 'car-info'; // 차량 정보에 대한 클래스 지정
+
+                            // 현재 날짜가 성수기 기간 내에 있는지 확인
+                            const currentDate = getDateOnly(new Date(year, month, currentDay));
+                            const peakStartDate = getDateOnly(new Date(car.peak_start_date));
+                            const peakEndDate = getDateOnly(new Date(car.peak_end_date));
+
+                            console.log("currentDate",currentDate);
+                            console.log("peakStartDate",peakStartDate);
+                            console.log("peakEndDate",peakEndDate);
+
+                            const isCarInPeakPeriod = peakStartDate <= currentDate && currentDate <= peakEndDate;
+
+                            // 요일에 따라 가격을 선택
+                            if (dayOfWeek === 0 || dayOfWeek === 6) { // 일요일(0) 또는 토요일(6)
+                                if (isCarInPeakPeriod) {
+                                    carInfo.textContent = `${car.product_name}\n${car.peak_weekend_price.toLocaleString('ko-KR')}원`;
+                                } else {
+                                    carInfo.textContent = `${car.product_name}\n${car.rental_fee_weekend.toLocaleString('ko-KR')}원`;
+                                }
+                            } else { // 월~금
+                                if (isCarInPeakPeriod) {
+                                    carInfo.textContent = `${car.product_name}\n${car.peak_weekdays_price.toLocaleString('ko-KR')}원`;
+                                } else {
+                                    carInfo.textContent = `${car.product_name}\n${car.rental_fee_weekdays.toLocaleString('ko-KR')}원`;
+                                }
+                            }
+
+                            cell.appendChild(carInfo);
+                        });
+
+                        date++;
                     }
                 }
-
-                // 차량 정보를 해당 날짜 셀에 추가
-                carList.forEach(car => {
-                    console.log("car",car);
-                    const dayOfWeek = new Date(year, month, currentDay).getDay(); // 요일을 가져옵니다 (0: 일요일, 6: 토요일)
-                    const carInfo = document.createElement('div');
-                    carInfo.className = 'car-info'; // 차량 정보에 대한 클래스 지정
-
-                    // 현재 날짜가 성수기 기간 내에 있는지 확인
-                    const currentDate = new Date(year, month, currentDay);
-                    const peakStartDate = new Date(car.peak_start_date);
-                    const peakEndDate = new Date(car.peak_end_date);
-
-                    console.log("currentDate",currentDate);
-                    console.log("peakStartDate",peakStartDate);
-                    console.log("peakEndDate",peakEndDate);
-
-                    const isCarInPeakPeriod = peakStartDate <= currentDate && currentDate <= peakEndDate;
-
-                    // 요일에 따라 가격을 선택
-                    if (dayOfWeek === 0 || dayOfWeek === 6) { // 일요일(0) 또는 토요일(6)
-                        if (isCarInPeakPeriod) {
-                            carInfo.textContent = `${car.product_name}\n${car.peak_weekend_price.toLocaleString('ko-KR')}원`;
-                        } else {
-                            carInfo.textContent = `${car.product_name}\n${car.rental_fee_weekend.toLocaleString('ko-KR')}원`;
-                        }
-                    } else { // 월~금
-                        if (isCarInPeakPeriod) {
-                            carInfo.textContent = `${car.product_name}\n${car.peak_weekdays_price.toLocaleString('ko-KR')}원`;
-                        } else {
-                            carInfo.textContent = `${car.product_name}\n${car.rental_fee_weekdays.toLocaleString('ko-KR')}원`;
-                        }
-                    }
-
-                    cell.appendChild(carInfo);
-                });
-
-                date++;
             }
-        }
-    }
 
-    container.appendChild(table); // 달력을 컨테이너에 추가합니다.
-}
+            container.appendChild(table); // 달력을 컨테이너에 추가합니다.
+        }
 
 
         // 서버에서 차량 데이터를 가져오는 함수
@@ -693,60 +696,60 @@
         };
 
         function inputPeakData() {
-    const periodType = document.querySelector('.radio-group input[type="radio"]:checked').value;
-    const periodName = document.getElementById('periodName').value; // 사용자가 입력한 기간명
-    const startDate = document.getElementById('startDate').value;
-    const endDate = document.getElementById('endDate').value;
+            const periodType = document.querySelector('.radio-group input[type="radio"]:checked').value;
+            const periodName = document.getElementById('periodName').value; // 사용자가 입력한 기간명
+            const startDate = document.getElementById('startDate').value;
+            const endDate = document.getElementById('endDate').value;
 
-    if (periodType === 'peak') {
-        const url = "/api/campingcar/addRentalPeakDate";
-        const data = {
-            peak_start_date: startDate,
-            peak_end_date: endDate
-        };
+            if (periodType === 'peak') {
+                const url = "/api/campingcar/addRentalPeakDate";
+                const data = {
+                    peak_start_date: startDate,
+                    peak_end_date: endDate
+                };
 
-        // 데이터 출력하여 확인
-        console.log('Sending data:', JSON.stringify(data));
+                // 데이터 출력하여 확인
+                console.log('Sending data:', JSON.stringify(data));
 
-        fetch(url, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(data)
-            
-        })
-        .then(response => {
-            if (!response.ok) {
-                throw new Error(`HTTP error! status: ${response.status}`);
+                fetch(url, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(data)
+                    
+                })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! status: ${response.status}`);
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    if (data.result === 'success') {
+                        alert('성수기 기간이 성공적으로 추가되었습니다.');
+
+                        // 사용자 정의 성수기 기간을 동적으로 반영
+                        const userDefinedPeriods = [
+                            { periodName: periodName, startDate: startDate, endDate: endDate }
+                        ];
+
+                        loadCalendarData(currentDate.getFullYear(), currentDate.getMonth(), userDefinedPeriods);
+
+                        // 모달 닫기
+                        const exampleModal = document.getElementById('exampleModal');
+                        const modal = bootstrap.Modal.getInstance(exampleModal);
+                        modal.hide(); // 모달을 닫는 메서드
+                    } else {
+                        alert('성수기 기간 추가 중 오류가 발생했습니다.');
+                    }
+                })
+                .catch(error => {
+                    console.error('Error adding peak period:', error);
+                    alert('성수기 기간 추가 중 오류가 발생했습니다.');
+                });
             }
-            return response.json();
-        })
-        .then(data => {
-            if (data.result === 'success') {
-                alert('성수기 기간이 성공적으로 추가되었습니다.');
-
-                // 사용자 정의 성수기 기간을 동적으로 반영
-                const userDefinedPeriods = [
-                    { periodName: periodName, startDate: startDate, endDate: endDate }
-                ];
-
-                loadCalendarData(currentDate.getFullYear(), currentDate.getMonth(), userDefinedPeriods);
-
-                // 모달 닫기
-                const exampleModal = document.getElementById('exampleModal');
-                const modal = bootstrap.Modal.getInstance(exampleModal);
-                modal.hide(); // 모달을 닫는 메서드
-            } else {
-                alert('성수기 기간 추가 중 오류가 발생했습니다.');
-            }
-        })
-        .catch(error => {
-            console.error('Error adding peak period:', error);
-            alert('성수기 기간 추가 중 오류가 발생했습니다.');
-        });
-    }
-}
+        }
 
     </script>
 </body>

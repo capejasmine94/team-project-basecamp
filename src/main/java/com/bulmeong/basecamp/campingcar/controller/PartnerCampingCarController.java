@@ -116,6 +116,10 @@ public class PartnerCampingCarController {
                                      ,@RequestParam("detailedImg") MultipartFile[] detailedImg
                                      ,@RequestParam(value = "basicFacilites_id") List<Integer> basicFacilites_id
                                      ,RentalPeakPriceDto rentalPeakPriceDto) {
+                                        for(MultipartFile img : detailedImg) {
+                                            System.out.println("Processing image: " + img.getOriginalFilename());
+                                        }
+                                        
         campingcarDto.setMain_img(ImageUtil.saveImageAndReturnLocation(main_image));
 
         partnerCampingCarService.registerCamping(campingcarDto,basicFacilites_id,detailedImg,rentalPeakPriceDto);
