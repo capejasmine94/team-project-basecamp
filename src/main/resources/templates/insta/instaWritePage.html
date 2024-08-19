@@ -53,7 +53,86 @@
             color: #0095f6;
         }
 
-        
+
+
+        /* 규진이 사진 복붙 */
+        .photo-upload span {
+            position: absolute;
+            bottom: 1rem;
+            left: 0;
+            width: 100%;
+            font-size: 1.2rem;
+            text-align: center;
+        }
+        .photo-upload i {
+            font-size: 4rem;
+        }
+        .photo-box {
+            width: 8rem;
+            height: 8rem;
+            margin-left: 0.5rem;
+            display: inline-block;
+            position: relative;
+            border: 1px solid #ccc;
+            flex-shrink: 0;
+        }
+        .photo-box img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .delete-btn {
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 1rem;
+            height: 1rem;
+            background-color: black;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+        .photo-label {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background-color: black;
+            color: white;
+            text-align: center;
+            font-size: 0.8rem;
+            padding: 0.2rem 0;
+        }
+        #photo-container {
+            display: flex;
+            align-items: center;
+            overflow-x: auto;
+            white-space: nowrap;
+            scrollbar-width: none; /* Firefox */
+            -ms-overflow-style: none;  /* Internet Explorer 10+ */
+        }
+        #photo-container::-webkit-scrollbar { /* WebKit */
+            display: none;
+        }
+        .container.photo-upload {
+            display: inline-block;
+            flex-shrink: 0;
+        }
+        .photo-upload {
+            width: 8rem;
+            height: 8rem;
+            display: inline-block;
+            position: relative;
+            border: 1px solid #ccc;
+            border-radius: 0.5rem;
+            flex-shrink: 0;
+            text-align: center;
+        }
     </style>
 
 </head>
@@ -76,14 +155,26 @@
                 </div>
                 
                 <!-- 이미지 -->
-                <div class="row mt-5 pt-3">
+                <!-- <div class="row mt-5 pt-3">
                     <div class="col">
                         <div class="input-group">
                             <div id="upload_insta">
 
                             </div>
                             <input type="hidden" name="user_id" th:value="${instaUserInfoDto.id}">
-                            <!-- <label class="input-group-text" for="bowWow_image">Choose File</label> -->
+                        </div>
+                    </div>
+                </div> -->
+                <div class="container-fluid g-0 form-container" style="margin-top: 5rem; position: relative;">
+                    <div id="photo-container" class="mx-3" style="overflow-x: auto;">
+                        <div class="photo-upload text-center position-relative">
+                            <label for="file-input" style="width: 100%; height: 100%;">
+                                <i class="bi bi-camera"></i>
+                                <span id="photo-count">0/10</span>
+                            </label>
+
+                            <input name="insta" id="file-input" type="file" style="display: none;" multiple accept="image/*">
+                            <input type="hidden" name="user_id" th:value="${instaUserInfoDto.id}">
                         </div>
                     </div>
                 </div>
@@ -123,10 +214,77 @@
     </div>
 
 
-    <script>
-        createMultipleUploader('insta', 10);
-    </script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
-    <script src="https://kit.fontawesome.com/7b271bba58.js" crossorigin="anonymous"></script>
+<script>
+    // createMultipleUploader('insta', 10);
+
+    function updatePhotoCount(count) {
+        const photoCount = document.getElementById('photo-count');
+        photoCount.textContent = `${count}/10`;
+    }
+
+    function updatePhotoLabels() {
+        const photoBoxes = document.querySelectorAll('.photo-box');
+        photoBoxes.forEach((box, index) => {
+            const label = box.querySelector('.photo-label');
+            if (index === 0 && !label) {
+                const newLabel = document.createElement('div');
+                newLabel.className = 'photo-label';
+                // newLabel.textContent = '대표 사진';
+                box.appendChild(newLabel);
+            } else if (index !== 0 && label) {
+                box.removeChild(label);
+            }
+        });
+    }
+
+    document.getElementById('file-input').addEventListener('change', function(event) {
+        const files = event.target.files;
+        const photoContainer = document.getElementById('photo-container');
+        const photoCount = document.getElementById('photo-count');
+        const maxPhotos = 10;
+        const currentPhotoCount = photoContainer.childElementCount - 1; // subtract 1 for the camera icon
+
+        if (currentPhotoCount + files.length > maxPhotos) {
+            alert('이미지는 최대 10장까지 첨부할 수 있어요.');
+            return;
+    }
+
+        Array.from(files).forEach((file, index) => {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const photoBox = document.createElement('div');
+                photoBox.className = 'photo-box';
+                const img = document.createElement('img');
+                img.src = e.target.result;
+
+                // 첫 번째 선택된 파일을 대표 사진으로 설정
+                // if (photoContainer.childElementCount === 1) {
+                //     document.getElementById('main_image').value = file.name;
+                // }
+
+                const deleteBtn = document.createElement('button');
+                deleteBtn.className = 'delete-btn';
+                deleteBtn.innerHTML = '<i class="bi bi-x"></i>';
+                deleteBtn.onclick = function() {
+                    photoContainer.removeChild(photoBox);
+                    const updatedPhotoCount = photoContainer.childElementCount - 1;
+                    updatePhotoCount(updatedPhotoCount);
+                    updatePhotoLabels();
+                };
+
+                photoBox.appendChild(img);
+                photoBox.appendChild(deleteBtn);
+                photoContainer.insertBefore(photoBox, photoContainer.childNodes[photoContainer.childNodes.length - 1]);
+                updatePhotoLabels();
+            };
+            reader.readAsDataURL(file);
+        });
+
+        const updatedPhotoCount = currentPhotoCount + files.length;
+        updatePhotoCount(updatedPhotoCount);
+    });
+</script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+<script src="https://kit.fontawesome.com/7b271bba58.js" crossorigin="anonymous"></script>
 </body>
 </html>

@@ -18,6 +18,8 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
+import java.text.SimpleDateFormat;
+
 import com.bulmeong.basecamp.common.dto.ImageDto;
 import com.bulmeong.basecamp.common.util.ImageUtil;
 import com.bulmeong.basecamp.common.util.Utils;
@@ -64,9 +66,9 @@ public class InstaController {
         // System.out.println("userC" + userC);
 
         if(userC == 1){
-            return "redirect:./instaMainPage?user_id=" + userDto.getId();
+            return "redirect:https://basecamp.null-pointer-exception.com/instaMainPage?user_id=" + userDto.getId();
         }else{
-            return "redirect:./instaConfirmPage";
+            return "redirect:https://basecamp.null-pointer-exception.com/instaConfirmPage";
         }
 
     }
@@ -113,7 +115,7 @@ public class InstaController {
         instaService.instaUserInfo(instaUserInfoDto);
         
         // return "insta/confirmProcess";
-        return "redirect:./instaMainPage?user_id=" + instaUserInfoDto.getUser_id();
+        return "redirect:https://basecamp.null-pointer-exception.com/instaMainPage?user_id=" + instaUserInfoDto.getUser_id();
     }
 
     // 인스타 메인페이지
@@ -145,12 +147,12 @@ public class InstaController {
                 return "insta/instaMainPage";
             }else{ // 인스타에 프로필 등록 안 된 유저
 
-                return "redirect:./instaConfirmPage";
+                return "redirect:https://basecamp.null-pointer-exception.com/instaConfirmPage";
             }
             
         }else{ // 로그인 안 된 상태
 
-            return "redirect:/user/login";
+            return "redirect:https://basecamp.null-pointer-exception.com/user/login";
         }
         
     }
@@ -162,7 +164,7 @@ public class InstaController {
 
         instaService.like(instaArticleLikeDto);
 
-        return "redirect:./instaMainPage?user_id=" + userDto.getId();
+        return "redirect:https://basecamp.null-pointer-exception.com/instaMainPage?user_id=" + userDto.getId();
     }
 
     @RequestMapping("pushArticleLikeDeleteProcess")
@@ -171,7 +173,7 @@ public class InstaController {
 
         instaService.unLike(instaArticleLikeDto);
 
-        return "redirect:./instaMainPage?user_id=" + userDto.getId();
+        return "redirect:https://basecamp.null-pointer-exception.com/instaMainPage?user_id=" + userDto.getId();
     }
 
     @RequestMapping("instaWritePage")
@@ -182,31 +184,70 @@ public class InstaController {
         return "insta/instaWritePage";
     }
 
+    
     @RequestMapping("instaWriteProcess")
     public String instaWriteProcess(InstaArticleDto instaArticleDto, @RequestParam("text") String text,
                                     @RequestParam("insta") MultipartFile[]insta_article_img){
 
         instaService.writeArticle(instaArticleDto, text);
-        // System.out.println("instaArticleDto : " + instaArticleDto);
-        // System.out.println("instaId" + instaArticleDto.getId());
 
         InstaUserInfoDto instaUserInfoDto = instaService.selectUserInfo(instaArticleDto.getUser_id());
 
         List<InstaArticleImgDto> instaAtricleImgDtoList = new ArrayList<>();
-        List<ImageDto> instaImgList = ImageUtil.saveImageAndReturnDtoList(insta_article_img);
-        for(ImageDto imageDto : instaImgList){
-            InstaArticleImgDto instaArticleImgDto = new InstaArticleImgDto();
-            instaArticleImgDto.setImg_link(imageDto.getLocation());
-            instaArticleImgDto.setArticle_id(instaArticleDto.getId());
-            instaAtricleImgDtoList.add(instaArticleImgDto);
+        // List<ImageDto> instaImgList = ImageUtil.saveImageAndReturnDtoList(insta_article_img);
+        // for(ImageDto imageDto : instaImgList){
+        //     InstaArticleImgDto instaArticleImgDto = new InstaArticleImgDto();
+        //     instaArticleImgDto.setImg_link(imageDto.getLocation());
+        //     instaArticleImgDto.setArticle_id(instaArticleDto.getId());
+        //     instaAtricleImgDtoList.add(instaArticleImgDto);
+        // }
+        if (insta_article_img != null) {
+            for (int i = 0; i < insta_article_img.length; i++) {
+                MultipartFile image = insta_article_img[i];
+                if (image.isEmpty()) {
+                    continue;
+                }
+                String rootPath = "C:/basecampeImage_insta/";
+
+                // 날짜 폴더
+                SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd/");
+                String todayPath = sdf.format(new Date());
+
+                File todayFolderForCreate = new File(rootPath + todayPath);
+
+                if (!todayFolderForCreate.exists()) {
+                    todayFolderForCreate.mkdirs();
+                }
+
+                // 파일 충돌 방지
+                String originalFileName = image.getOriginalFilename();
+                String uuid = UUID.randomUUID().toString();
+                long currentTime = System.currentTimeMillis();
+                String fileName = uuid + "_" + currentTime;
+                // 확장자 추출
+                String ext = originalFileName.substring(originalFileName.lastIndexOf("."));
+                fileName += ext;
+
+                try {
+                    image.transferTo(new File(rootPath + todayPath + fileName));
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                // 첫 번째 이미지를 메인 이미지로 설정
+                // if (i == 0) {
+                //     secondhandProductDto.setMain_image(todayPath + fileName);
+                // }
+                // DB 저장 DTO
+                InstaArticleImgDto instaArticleImgDto = new InstaArticleImgDto();
+                instaArticleImgDto.setImg_link(todayPath + fileName);
+                instaAtricleImgDtoList.add(instaArticleImgDto);
+            }
+
         }
 
         instaService.writeArticleImg(instaAtricleImgDtoList);
 
-        // System.out.println("instaArticleDto : " + instaArticleDto);
-        // System.out.println("instaAtricleImgDtoList : " + instaAtricleImgDtoList);
-
-        return "redirect:./instaMainPage?user_id=" + instaUserInfoDto.getUser_id();
+        return "redirect:https://basecamp.null-pointer-exception.com/instaMainPage?user_id=" + instaUserInfoDto.getUser_id();
     }
 
     @RequestMapping("commentWritePage")
@@ -282,7 +323,7 @@ public class InstaController {
 
         instaService.insertBookmark(instaBookmarkDto);
 
-        return "redirect:./instaMainPage?user_id=" + userDto.getId();
+        return "redirect:https://basecamp.null-pointer-exception.com/instaMainPage?user_id=" + userDto.getId();
     }
 
     @RequestMapping("pushBookmarkDeleteProcess")
@@ -291,7 +332,7 @@ public class InstaController {
 
         instaService.deleteBookmark(instaBookmarkDto);
         
-        return "redirect:./instaMainPage?user_id=" + userDto.getId();
+        return "redirect:https://basecamp.null-pointer-exception.com/instaMainPage?user_id=" + userDto.getId();
     }
     
     @RequestMapping("instaUserPage")
@@ -356,7 +397,7 @@ public class InstaController {
     public String articleDeleteProcess(@RequestParam("article_id") int id, @RequestParam("user_id") int user_id){
         instaService.deleteArticle(id);
 
-        return "redirect:./instaMainPage?user_id=" + user_id;
+        return "redirect:https://basecamp.null-pointer-exception.com/instaMainPage?user_id=" + user_id;
     }
 
     // 검색 페이지
@@ -383,7 +424,7 @@ public class InstaController {
         String encodedContent = URLEncoder.encode(searchWord, StandardCharsets.UTF_8);
         
 
-        return "redirect:./instaSearchResultPage?searchWord=" + encodedContent + "&user_id=" + user_id;
+        return "redirect:https://basecamp.null-pointer-exception.com/instaSearchResultPage?searchWord=" + encodedContent + "&user_id=" + user_id;
     }
 
     // 검색 결과 페이지 _ 일반 검색과 해시태그 검색 두가지로 분기
@@ -470,7 +511,7 @@ public class InstaController {
 
         instaService.recentSearchDeleteContent(content, instaUserInfoDto.getId());
 
-        return "redirect:./instaSearchPage?user_id=" + instaUserInfoDto.getId();
+        return "redirect:https://basecamp.null-pointer-exception.com/instaSearchPage?user_id=" + instaUserInfoDto.getId();
     }
 
     // 태그 id로 태그 검색 삭제
@@ -480,7 +521,7 @@ public class InstaController {
 
         instaService.recentSearchDeleteTag(tag_id, instaUserInfoDto.getId());
 
-        return "redirect:./instaSearchPage?user_id=" + instaUserInfoDto.getId();
+        return "redirect:https://basecamp.null-pointer-exception.com/instaSearchPage?user_id=" + instaUserInfoDto.getId();
     }
 
     // 검색 기록 전체 삭제
@@ -490,7 +531,7 @@ public class InstaController {
 
         instaService.recentSearchAllDelete(instaUserInfoDto.getId());
 
-        return "redirect:./instaSearchPage?user_id=" + instaUserInfoDto.getId();
+        return "redirect:https://basecamp.null-pointer-exception.com/instaSearchPage?user_id=" + instaUserInfoDto.getId();
     }
 
     // 인사이트 _ 통계
