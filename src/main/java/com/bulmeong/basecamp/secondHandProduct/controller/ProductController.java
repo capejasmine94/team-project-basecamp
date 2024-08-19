@@ -53,7 +53,7 @@ public class ProductController {
 //        return "secondhandProduct/mainPage";
 //    }
     @GetMapping("mainPage")
-    public String mainPage(@RequestParam(name = "selected_area_name", required = false) String selected_area_name) {
+    public String mainPage() {
 
 
         return "secondhandProduct/mainPage";
