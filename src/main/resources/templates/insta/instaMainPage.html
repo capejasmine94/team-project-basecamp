@@ -336,6 +336,7 @@
                             th:href="${session.sessionUserInfo.id == instaArticleList.instaUserInfoDto.user_id} ?
                                         @{./instaMyPage(user_id=${instaArticleList.instaUserInfoDto.id})} : @{./instaUserPage(user_id=${instaArticleList.instaUserInfoDto.id})}">
                     <span th:text="${instaArticleList.instaUserInfoDto.insta_nickname}" style="font-size: 0.8em;"></span>
+                    <img src="/public/img/instaImage/badge.png" class="img-fluid" style="width: 13px; height: 13px;">
                 </a>
 
 
@@ -957,6 +958,9 @@
                         <a class="commentName col-auto pe-0 link-dark link-offset-2 link-underline link-underline-opacity-0" href="./instaUserPage">
                             닉네임
                         </a>
+                        <div class="col-auto px-1">
+                            <img src="/public/img/instaImage/badge.png" class="img-fluid" style="width: 13px; height: 13px;">
+                        </div>
                         <div class="commentDate col-auto ps-1 pe-0 fontNine" style="color: rgb(162, 162, 162); padding-top: 0.5%;">날짜</div>
                         <!-- 삭제버튼 -->
                         <div class="commentDeleteButton d-none col" style="color: rgb(162, 162, 162);">
@@ -1057,6 +1061,9 @@
                         <a class="replyName col-auto pe-0 link-dark link-offset-2 link-underline link-underline-opacity-0" href="./instaUserPage">
                             닉네임
                         </a>
+                        <div class="col-auto px-1">
+                            <img src="/public/img/instaImage/badge.png" class="img-fluid" style="width: 13px; height: 13px;">
+                        </div>
                         <div class="replyDate col-auto ps-1 pe-0 fontNine" style="color: rgb(162, 162, 162); padding-top: 0.5%;">날짜</div>
                         <!-- 삭제버튼 -->
                         <div class="replyDeleteButton d-none col" style="color: rgb(162, 162, 162);">
