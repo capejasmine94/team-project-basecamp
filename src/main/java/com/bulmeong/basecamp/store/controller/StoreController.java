@@ -92,7 +92,7 @@ public class StoreController {
         StoreOrderDto storeOrderDto = storeService.getStoreOrderDtoById(id);
         
         if(userDto==null||storeOrderDto.getUser_id()!=userDto.getId()){
-            return "redirect:/store";
+            return "redirect:https://basecamp.null-pointer-exception.com/store";
         }else{
             model.addAttribute("orderData", storeService.getOrderDataByOrderId(id));
             return "store/mOrderComplete";
@@ -104,7 +104,7 @@ public class StoreController {
         UserDto userDto = (UserDto)session.getAttribute("sessionUserInfo");
 
         if(userDto == null){
-            return "redirect:/user/login";
+            return "redirect:https://basecamp.null-pointer-exception.com/user/login";
         }else{
             return "store/mMy";
         }
@@ -115,7 +115,7 @@ public class StoreController {
         UserDto userDto = (UserDto)session.getAttribute("sessionUserInfo");
 
         if(userDto==null){
-            return "redirect:/user/login";
+            return "redirect:https://basecamp.null-pointer-exception.com/user/login";
         }else{
             int user_id = userDto.getId();
             Map<String, Object> map = storeService.getOrderStatusCountData(user_id);
@@ -149,7 +149,7 @@ public class StoreController {
         UserDto userDto = (UserDto)session.getAttribute("sessionUserInfo");
 
         if(userDto==null){
-            return "redirect:/user/login";
+            return "redirect:https://basecamp.null-pointer-exception.com/user/login";
         }else{
             List<UserDeliveryInfoDto> userDeliveryInfoDtoList = storeService.getUserDeliveryInfoByUserId(userDto.getId());
             model.addAttribute("userDeliveryInfoDtoList", userDeliveryInfoDtoList);
@@ -196,7 +196,7 @@ public class StoreController {
         Map<String, Object> refundData = storeService.getRefundProductDataForCompletePage(id);
 
         if(userDto == null || userDto.getId()!= (int)refundData.get("user_id")){
-            return "redirect:/store";
+            return "redirect:https://basecamp.null-pointer-exception.com/store";
         }else{
             model.addAttribute("refundData", refundData);
             return "store/mRefundRequestComplete";
