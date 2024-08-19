@@ -1,6 +1,5 @@
 package com.bulmeong.basecamp.secondHandProduct.controller;
 
-import com.bulmeong.basecamp.common.dto.RestResponseDto;
 import com.bulmeong.basecamp.common.util.Utils;
 import com.bulmeong.basecamp.secondHandProduct.dto.*;
 import com.bulmeong.basecamp.secondHandProduct.service.ChatService;

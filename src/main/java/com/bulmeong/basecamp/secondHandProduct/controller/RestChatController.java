@@ -4,17 +4,10 @@ package com.bulmeong.basecamp.secondHandProduct.controller;
 import com.bulmeong.basecamp.common.dto.RestResponseDto;
 import com.bulmeong.basecamp.secondHandProduct.dto.ChatMessageDto;
 import com.bulmeong.basecamp.secondHandProduct.dto.ChatRoomDto;
-import com.bulmeong.basecamp.secondHandProduct.dto.SaleChatRoomDto;
 import com.bulmeong.basecamp.secondHandProduct.service.ChatService;
-import com.bulmeong.basecamp.user.dto.UserDto;
-import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.format.annotation.DateTimeFormat;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 @RestController
