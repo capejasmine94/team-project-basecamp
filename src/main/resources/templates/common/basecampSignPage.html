@@ -172,7 +172,7 @@
                         </div>
                         <div class="row">
                             <div class="col d-grid position-relative">
-                                <input type="text" name="account" class="py-3 px-2 borderInput" oninput="checkAccountID()" onfocus="idInfo()" id="inputId" placeholder="아이디 입력">
+                                <input type="text" name="account" class="py-3 px-2 borderInput" oninput="checkAccountID()" onfocus="idInfo()" id="inputId" th:value="'u'+${userCount}" placeholder="아이디 입력">
                                 <div id="confirmResult" class="position-absolute f08" style="left: 1em; top: 4.5em;"></div>
                             </div>
                         </div>
@@ -184,10 +184,10 @@
                         </div>
                         <div class="row">
                             <div class="col d-grid">
-                                <input type="password" name="password" class="py-3 px-2 borderInput" id="inputPw" placeholder="비밀번호 입력">
+                                <input type="password" name="password" class="py-3 px-2 borderInput" id="inputPw" value="1234" placeholder="비밀번호 입력">
                             </div>
                         </div>
-
+                       
                         <div class="row pt-5">
                             <div class="col f08">
                                 비밀번호 확인<span class="text-danger">*</span>
@@ -195,7 +195,7 @@
                         </div>
                         <div class="row">
                             <div class="col d-grid position-relative">
-                                <input type="password" class="py-3 px-2 borderInput" onkeyup="checkAccountPwConfirm()" id="inputPwConfirm" placeholder="비밀번호 재입력">
+                                <input type="password" class="py-3 px-2 borderInput" onkeyup="checkAccountPwConfirm()" id="inputPwConfirm" value="1234" placeholder="비밀번호 재입력">
                                 <div id="confirmAccountPw" class="position-absolute f08 text-danger" style="left: 1em; top: 4.5em;"></div>
                             </div>
                         </div>
@@ -207,7 +207,7 @@
                         </div>
                         <div class="row">
                             <div class="col d-grid">
-                                <input type="text" id="inputNickname" name="nickname" class="py-3 px-2 borderInput" placeholder="닉네임 입력">
+                                <input type="text" id="inputNickname" name="nickname" class="py-3 px-2 borderInput" th:value="${userNick}" placeholder="닉네임 입력">
                             </div>
                         </div>
 
@@ -218,7 +218,7 @@
                         </div>
                         <div class="row">
                             <div class="col d-grid">
-                                <input type="text" id="inputEmail" name="email" class="py-3 px-2 borderInput" placeholder="이메일 입력">
+                                <input type="text" id="inputEmail" name="email" class="py-3 px-2 borderInput" th:value="${email}" placeholder="이메일 입력">
                             </div>
                         </div>
                         
@@ -229,7 +229,7 @@
                         </div>
                         <div class="row">
                             <div class="col d-grid">
-                                <input type="text" id="inputName" name="name" class="py-3 px-2 borderInput" placeholder="이름 입력">
+                                <input type="text" id="inputName" name="name" class="py-3 px-2 borderInput" th:value="'유저'+${userCount}" placeholder="이름 입력">
                             </div>
                         </div>
 
@@ -240,7 +240,7 @@
                         </div>
                         <div class="row">
                             <div class="col d-grid">
-                                <input type="text" name="phone" id="inputPhone" class="py-3 px-2 borderInput" maxlength="13" oninput="formatPhoneNumber(this)" placeholder="전화번호 입력">
+                                <input type="text" name="phone" id="inputPhone" class="py-3 px-2 borderInput" maxlength="13" oninput="formatPhoneNumber(this)" placeholder="전화번호 입력" th:value="${phone}">
                             </div>
                         </div>
 
@@ -268,7 +268,7 @@
                         </div>
                         <div class="row pt-2">
                             <div class="col d-grid">
-                                <input type="date" name="birth" id="inputBirth" class="border col py-2 px-2 bg-white rounded-0 borderInput">
+                                <input type="date" name="birth" id="inputBirth" class="border col py-2 px-2 bg-white rounded-0 borderInput"  th:value="${#dates.format(#dates.createNow(), 'yyyy-MM-dd')}">
                             </div>
                         </div>
                     </div>
@@ -431,7 +431,6 @@
             const registerForm = document.getElementById("registerForm");
             registerForm.submit();
         }
-
     </script>
 
 </body>

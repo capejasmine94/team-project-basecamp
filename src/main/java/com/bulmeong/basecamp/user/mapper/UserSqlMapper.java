@@ -14,5 +14,6 @@ public interface UserSqlMapper {
     public UserDto getUserByAccount(UserDto userDto);
     public List<UserDto> getAllUser();
     public int getAllUserCount();
+    public int getLastUserCount();
     public int getUserCountByAccount(String account);
 }

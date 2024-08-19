@@ -52,6 +52,12 @@ const leftSummaryHtml = `
     <div class="row mt-5">
         <a href="/seller/login" class="col text-center lightFont fw-semibold">판매자 페이지</a>
     </div>
+    <div class="row pt-3">
+        <div class="col new-fs-85 text-center">
+            <span class="text-secondary">비밀번호 : 1234</span>
+        </div>
+    </div>
+
 </div>
 `;
 

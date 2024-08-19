@@ -35,7 +35,9 @@
             select * from bc_user where account = #{account}    
         </select>
     <!-- ============================================== -->
-
+        <select id="getLastUserCount" resultType="int">
+            select max(id) from bc_user;
+        </select>
         <select id="getUserCountByAccount" resultType="int">
             select count(*) from bc_user where account = #{account}    
         </select>

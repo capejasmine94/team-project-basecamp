@@ -54,6 +54,10 @@ public class UserService {
         return userSqlMapper.getUserById(userDto);
     }
     
+    public int getLastUserCount() {
+        return userSqlMapper.getLastUserCount();
+    }
+
     /**모든 유저의 정보를 담은 맵입니다.
      @param dtoList => [List(UserDto)] 유저의 정보가 담긴 리스트
      @param count => [int] 유저의 수
