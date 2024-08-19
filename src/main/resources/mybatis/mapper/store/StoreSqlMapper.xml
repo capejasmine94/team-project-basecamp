@@ -1039,7 +1039,7 @@
         select 
             sp.*,
             s.name as store_name,
-            spd.percentage,
+            COALESCE(spd.percentage, 0) as percentage,
             sp.price - sp.price*COALESCE(spd.percentage, 0) as sale_price
         from product_wish pw 
         inner join store_product sp on pw.product_id = sp.id 
