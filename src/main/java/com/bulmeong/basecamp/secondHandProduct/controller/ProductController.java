@@ -31,53 +31,30 @@ public class ProductController {
     private PolygonService polygonService;
     @Autowired
     private LocationService locationService;
-    @Autowired
-    private Utils utils;
-
-//    @GetMapping("mainPage")
-//    public String mainPage(Model model,
-//                           HttpSession session,
-//                           @RequestParam(name = "selected_area_name", required = false) String selected_area_name) {
-//
-//        UserDto sessionUserInfo = (UserDto) session.getAttribute("sessionUserInfo");
-//
-//        String areaName = locationService.selectMyLocation(sessionUserInfo.getId());
-//        model.addAttribute("areaName", areaName);
-//
-//        if(areaName == null || areaName.equals("전체")) {
-//            List<AllContentsProductDto> productDtoList = productService.selectSecondhandProductList();
-//            model.addAttribute("productDtoList", productDtoList);
-//        } else {
-//            List<AllContentsProductDto> productDtoList = productService.selectSecondhandProductIsAreaList(areaName);
-//            model.addAttribute("productDtoList", productDtoList);
-//        }
-//
-//        return "secondhandProduct/mainPage";
-//    }
-
     private static final Logger logger = LoggerFactory.getLogger(ProductController.class);
 
     @GetMapping("mainPage")
-    public String mainPage() {
+    public String mainPage(Model model,
+                           HttpSession session,
+                           @RequestParam(name = "selected_area_name", required = false) String selected_area_name) {
+        logger.info("mainPage 시작");
 
-        logger.info("mainPage 메서드 호출");
+        UserDto sessionUserInfo = (UserDto) session.getAttribute("sessionUserInfo");
 
-        try {
-            logger.debug("view:  secondhandProduct/mainPage");
+        String areaName = locationService.selectMyLocation(sessionUserInfo.getId());
+        model.addAttribute("areaName", areaName);
 
-            // 뷰 반환
-            return "secondhandProduct/mainPage";
-
-        } catch (Exception e) {
-            // 예외 발생 시 로그 기록 (ERROR 수준)
-            logger.error("Exception 발생 in mainPage()", e);
-
-            // 예외 처리 후, 오류 페이지 또는 다른 페이지로 리다이렉트 가능
-            return "secondhandProduct/mainPage"; // 예외 발생 시 error.html 페이지로 리다이렉트
+        if(areaName == null || areaName.equals("전체")) {
+            List<AllContentsProductDto> productDtoList = productService.selectSecondhandProductList();
+            model.addAttribute("productDtoList", productDtoList);
+        } else {
+            List<AllContentsProductDto> productDtoList = productService.selectSecondhandProductIsAreaList(areaName);
+            model.addAttribute("productDtoList", productDtoList);
         }
 
-//        return "secondhandProduct/mainPage";
+        return "secondhandProduct/mainPage";
     }
+
 
     @GetMapping("productRegistrationPage")
     public String productRegistrationPage(HttpSession session,
