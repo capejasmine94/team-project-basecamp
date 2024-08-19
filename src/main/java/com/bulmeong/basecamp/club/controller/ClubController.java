@@ -221,7 +221,6 @@ public class ClubController {
     @RequestMapping("writePostProcess")
     public String writePostProcess(ClubPostDto clubPostDto, @RequestParam("main_image") MultipartFile[]main_image){
     
-
         List<ImageDto> imgList = ImageUtil.saveImageAndReturnDtoList(main_image);
         if(imgList == null || imgList.isEmpty()){
             imgList = new ArrayList<>();

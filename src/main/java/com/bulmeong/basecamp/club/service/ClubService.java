@@ -580,6 +580,7 @@ public class ClubService {
            List<Map<String,Object>> hotPostsList = new ArrayList<>();
            
            List<ClubPostDto> clubPostDtoList = clubSqlMapper.selectAllPosts();
+           
             for(ClubPostDto clubPostDto : clubPostDtoList){
                 Map<String, Object> mapForHotPosts = new HashMap<>();
                 int postPk = clubPostDto.getId();
@@ -598,7 +599,7 @@ public class ClubService {
                 mapForHotPosts.put("clubCategory", clubCategory);
 
                 hotPostsList.add(mapForHotPosts);
-
+                
             }
             
                 return hotPostsList;

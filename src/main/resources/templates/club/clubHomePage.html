@@ -469,109 +469,94 @@
                             </div>
                         </div>
 
+                        <div class="container fixed-bottom py-4" id="registerBtn" th:if="${session.sessionUserInfo != null && isMemberInClub == 0}">
+                            <div class="row pt-2 pb-4 text-center" th:if="${totalClubMember &lt; confirmCapacity}">
+                                <div class="col pb-5 mb-1">
+                                    <span id="register-club-btn" class="btn form-control btn lightBg text-white">가입하기</span>
+                                </div>
+                            </div>
+                            <div class="row text-center" th:unless="${totalClubMember &lt; confirmCapacity}">
+                                <div class="col text-danger">
+                                    <p class="border py-2 rounded text-bg-danger">모집인원이 마감되었습니다.</p>
+                                </div>
+                            </div>
+                        </div>
 
 
 
- <!-- footer 시작 -->
- <div class="row py-4 px-3 bg-body-secondary text-secondary">
-    <div class="col">
-        <div class="row pb-2">
-            <div class="col p-0 fw-bold fs-3 d-flex align-items-center">
-                <span class="material-symbols-outlined">camping</span>
-                <span class="ms-1">BASECAMP</span>
-            </div>
-        </div>
-        <div class="row pb-3 border-bottom border-2">
-            <div class="col p-0 f08">
-                BASECAMP는 통신판매 중개자로서 통신판매의 당사자가 아니며 상품의 예약, 이용 및 환불 등과 관련한 의무와 책임은 각 판매자에게 있습니다.
-            </div>
-        </div>
 
-        <div class="row pt-3 py-3 border-bottom border-2">
-            <div class="col-auto p-0">
-                <button class="btn btn-sm bg-dark-subtle text-white fw-bold f08 d-flex align-items-center">
-                    <span class="material-symbols-outlined" style="font-size: 1rem; line-height: 1;">phone_in_talk</span>
-                    <span class="ms-1" style="font-size: 0.8rem;">고객센터</span>
-                </button>
-            </div>
-            <div class="col-auto">
-                <button class="btn btn-sm bg-dark-subtle text-white fw-bold f08" style="font-size: 0.8rem;">
-                    카카오 1:1 문의
-                </button>
-            </div>
-            <div class="col p-0 f08">
-                <div class="row">
-                    <div class="col">
-                        <span>평일</span> : 10:00 ~ 17:00
+                    <!-- footer 시작 -->
+                    <div class="row py-4 px-3 bg-body-secondary text-secondary">
+                        <div class="col">
+                            <div class="row pb-2">
+                                <div class="col p-0 fw-bold fs-3 d-flex align-items-center">
+                                    <span class="material-symbols-outlined">camping</span>
+                                    <span class="ms-1">BASECAMP</span>
+                                </div>
+                            </div>
+                            <div class="row pb-3 border-bottom border-2">
+                                <div class="col p-0 f08">
+                                    BASECAMP는 통신판매 중개자로서 통신판매의 당사자가 아니며 상품의 예약, 이용 및 환불 등과 관련한 의무와 책임은 각 판매자에게 있습니다.
+                                </div>
+                            </div>
+
+                            <div class="row pt-3 py-3 border-bottom border-2">
+                                <div class="col-auto p-0">
+                                    <button class="btn btn-sm bg-dark-subtle text-white fw-bold f08 d-flex align-items-center">
+                                        <span class="material-symbols-outlined" style="font-size: 1rem; line-height: 1;">phone_in_talk</span>
+                                        <span class="ms-1" style="font-size: 0.8rem;">고객센터</span>
+                                    </button>
+                                </div>
+                                <div class="col-auto">
+                                    <button class="btn btn-sm bg-dark-subtle text-white fw-bold f08" style="font-size: 0.8rem;">
+                                        카카오 1:1 문의
+                                    </button>
+                                </div>
+                                <div class="col p-0 f08">
+                                    <div class="row">
+                                        <div class="col">
+                                            <span>평일</span> : 10:00 ~ 17:00
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col">
+                                            <span>점심</span> : 12:00 ~ 13:00
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col">
+                                            <span>※</span><span>주말 공휴일 휴무</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row pt-3 mb-4 pb-5 align-items-center">
+                                <div class="col-auto me-2 bg-dark-subtle rounded-circle d-flex align-items-center" style="aspect-ratio: 1/1;">
+                                    <i class="bi bi-google-play"></i>
+                                </div>
+                                <div class="col-auto me-2 bg-dark-subtle rounded-circle d-flex align-items-center" style="aspect-ratio: 1/1;">
+                                    <i class="bi bi-youtube"></i>
+                                </div>
+                                <div class="col-auto me-2 bg-dark-subtle rounded-circle d-flex align-items-center" style="aspect-ratio: 1/1;">
+                                    <i class="bi bi-instagram"></i>
+                                </div>
+                                <div class="col-auto pe-0 f08">
+                                    이용약관
+                                </div>
+                                <div class="col f08">
+                                    개인정보처리방침
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                </div>
-                <div class="row">
-                    <div class="col">
-                        <span>점심</span> : 12:00 ~ 13:00
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col">
-                        <span>※</span><span>주말 공휴일 휴무</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="row pt-3 mb-4 pb-5 align-items-center">
-            <div class="col-auto me-2 bg-dark-subtle rounded-circle d-flex align-items-center" style="aspect-ratio: 1/1;">
-                <i class="bi bi-google-play"></i>
-            </div>
-            <div class="col-auto me-2 bg-dark-subtle rounded-circle d-flex align-items-center" style="aspect-ratio: 1/1;">
-                <i class="bi bi-youtube"></i>
-            </div>
-            <div class="col-auto me-2 bg-dark-subtle rounded-circle d-flex align-items-center" style="aspect-ratio: 1/1;">
-                <i class="bi bi-instagram"></i>
-            </div>
-            <div class="col-auto pe-0 f08">
-                이용약관
-            </div>
-            <div class="col f08">
-                개인정보처리방침
-            </div>
-        </div>
-    </div>
-</div>
-<!-- footer 끝 -->
-
-
-
-
+                    <!-- footer 끝 -->
 
 
             </div>
-
-            <!-- 상단 네비바 -->
-<!-- 
-            <div class="container fixed-top py-2 navbar-custom navbar-transparent">
-                <div class="row">
-                    <div class="col-auto navbar-brand fs-3" onclick="history.back()">
-                        <i class="bi bi-chevron-left"></i>
-                    </div>
-                    <a th:href="@{/club/managementClub(id=${id})}" class="col align-self-center text-end fs-3 navbar-brand">
-                        <span> <i class="bi bi-gear"></i></span>
-                    </a>
-                </div>
-            </div> -->
             
 
-            <div class="container fixed-bottom py-4" id="registerBtn" th:if="${session.sessionUserInfo != null && isMemberInClub == 0}">
-                <div class="row pt-2 pb-3 text-center" th:if="${totalClubMember &lt; confirmCapacity}">
-                    <div class="col">
-                        <span id="register-club-btn" class="btn form-control btn-dark">가입하기</span>
-                    </div>
-                </div>
-                <div class="row text-center" th:unless="${totalClubMember &lt; confirmCapacity}">
-                    <div class="col text-danger">
-                        <p class="border py-2 rounded text-bg-danger">모집인원이 마감되었습니다.</p>
-                    </div>
-                </div>
-            </div>
+      
 
             
  <!--커뮤니티 하단네비 -->
