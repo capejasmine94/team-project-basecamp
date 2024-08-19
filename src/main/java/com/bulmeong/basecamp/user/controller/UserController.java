@@ -44,6 +44,7 @@ public class UserController {
 
     @PostMapping("registerProcess")
     public String signProcess(@ModelAttribute UserDto userDto) {
+        
         userService.insertUser(userDto);
         return "redirect:/user/login";
     }
