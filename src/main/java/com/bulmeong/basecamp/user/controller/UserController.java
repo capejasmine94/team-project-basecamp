@@ -38,7 +38,7 @@ public class UserController {
         utils.setModel("userNick",nicknames[count-1]);
         utils.setModel("userName",names[count-1]);
         utils.setModel("email",String.format("user%d@email.com", count));
-        utils.setModel("phone", String.format("010-%2d%2d-%2d%2d", count,count,count,count));
+        utils.setModel("phone", String.format("010-%04d-%04d", count,count));
         return "common/basecampSignPage";
     }
 
