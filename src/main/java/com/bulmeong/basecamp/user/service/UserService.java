@@ -20,6 +20,7 @@ public class UserService {
 
     // 유저등록
     public void insertUser(UserDto userDto) {
+        if(getUserByAccount(userDto) != null) return;
         userSqlMapper.insertUser(userDto);
     }
     //아이디 / 비밀번호
