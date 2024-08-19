@@ -38,7 +38,9 @@ public class ProductController {
                            @RequestParam(name = "selected_area_name", required = false) String selected_area_name) {
 
         UserDto sessionUserInfo = (UserDto) session.getAttribute("sessionUserInfo");
-
+        if (sessionUserInfo == null) {
+            return "redirect:/user/login"; // 로그인 페이지로 리다이렉트
+        }
         String areaName = locationService.selectMyLocation(sessionUserInfo.getId());
         model.addAttribute("areaName", areaName);
 
