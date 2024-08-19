@@ -487,12 +487,12 @@ public class ProductController {
 
     @GetMapping("myReviewPage")
     public String myReviewPage(Model model,
-                               @RequestParam("buyerUserId") int buyerUserId) {
+                               @RequestParam("buyer_user_id") int buyer_user_id) {
 
-        List<LikeTransactionReviewListDto> myLikeReviewList = productService.myLikeReviewList(buyerUserId);
+        List<LikeTransactionReviewListDto> myLikeReviewList = productService.myLikeReviewList(buyer_user_id);
         model.addAttribute("myLikeReviewList", myLikeReviewList);
 
-        List<UnLikeTransactionReviewListDto> myUnlikeReviewList = productService.myUnlikeReviewList(buyerUserId);
+        List<UnLikeTransactionReviewListDto> myUnlikeReviewList = productService.myUnlikeReviewList(buyer_user_id);
         model.addAttribute("myUnlikeReviewList", myUnlikeReviewList);
 
 
