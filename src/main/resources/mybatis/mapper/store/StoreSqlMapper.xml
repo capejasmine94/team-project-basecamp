@@ -1023,7 +1023,7 @@
         order by s.id desc
         limit 1) t2
         inner join store_product sp2 on t2.id = sp2.store_id 
-        inner join store_product_discount spd on sp2.discount_id = spd.id 
+        left outer join store_product_discount spd on sp2.discount_id = spd.id 
         order by sp2.id desc
         limit 2
     </select>
@@ -1034,5 +1034,18 @@
             main_image = #{main_image}
         where id = #{id}
     </update>
+
+    <select id="selectWishListByUserId" resultType="java.util.HashMap">
+        select 
+            sp.*,
+            s.name as store_name,
+            spd.percentage,
+            sp.price - sp.price*COALESCE(spd.percentage, 0) as sale_price
+        from product_wish pw 
+        inner join store_product sp on pw.product_id = sp.id 
+        inner join store s on s.id = sp.store_id 
+        left outer join store_product_discount spd on sp.discount_id = spd.id 
+        where pw.user_id = #{user_id}
+    </select>
 
 </mapper>

@@ -94,7 +94,7 @@ public class StoreCenterController {
         }
         model.addAttribute("orderProductData", storeService.getOrderProductData(id));
 
-        return "store/orderProductDetails";
+        return "store/orderProductDetails(Pop-up)";
     }
 
     @RequestMapping("productManage")
@@ -112,12 +112,12 @@ public class StoreCenterController {
 
         return "store/pManageReview";
     }
-    //////////////////////////////////////////////////////////////////////////
 
     @RequestMapping("orderIntegration")
     public String orderIntegration(){
-        return "store/XorderIntegration";
+        return "store/pOrderIntegration";
     }
+    //////////////////////////////////////////////////////////////////////////
 
     @RequestMapping("cancelManage")
     public String cancelManage(){

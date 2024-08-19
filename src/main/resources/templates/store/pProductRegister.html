@@ -297,7 +297,7 @@
                 <!-- right -->
                 <form id="productRegisterForm" class="col right bg-body-secondary" style="padding-top: 58px;">
                     <div class="row py-3 px-4">
-                        <div class="col fs-3 fw-bold">
+                        <div class="col p-0 fs-3 fw-bold">
                             상품 등록
                         </div>
                     </div>
@@ -770,7 +770,7 @@
                             </div>
                         </div>
                     </div>
-
+<!-- 
                     <div class="row px-4 pb-4">
                         <div class="col border bg-white rounded-2">
                             <div class="row py-3 px-3 border-bottom">
@@ -893,7 +893,7 @@
                             </div>
 
                         </div>
-                    </div>
+                    </div> -->
 
                     <!-- footer -->
                     <div class="row pt-4 pb-5 border-top fw-light">
@@ -1200,8 +1200,9 @@
                     const optionValueTemplates = document.querySelectorAll("#optionListBox .optionValueTemplate");
 
                     if(optionValueTemplates.length==0){
-                        alert("상품 등록이 완료되었습니다.(이거 나중에 상품페이지로 가거나 조회수정페이지로 가는거 고를 수 있게)")
+                        alert("상품 등록이 완료되었습니다.")
                         location.href = "/storeCenter/productManage";
+                        return;
                     }
 
                     const optionInputRows = document.querySelectorAll("#optionBox .optionInputRow");
@@ -1257,7 +1258,7 @@
                         })
                     }
 
-                    alert("상품 등록이 완료되었습니다.(이거 나중에 상품페이지로 가거나 조회수정페이지로 가는거 고를 수 있게)")
+                    alert("상품 등록이 완료되었습니다.")
                     location.href = "/storeCenter/productManage";
                 })
             }

@@ -1459,4 +1459,23 @@ public class StoreService {
     public void updateStoreDto(StoreDto storeDto){
         storeSqlMapper.updateStoreDto(storeDto);
     }
+
+    public List<Map<String, Object>> getWishListByUserId(int user_id){
+        List<Map<String, Object>> result = new ArrayList<>();
+
+        List<Map<String, Object>> wishDataList = storeSqlMapper.selectWishListByUserId(user_id);
+
+        for(Map<String, Object> wishData : wishDataList){
+            int product_id = (int)wishData.get("id");
+            int purchase_quantity = storeSqlMapper.selectProductPurchaseQuantity(product_id);
+            wishData.put("purchase_quantity", purchase_quantity);
+
+            double percentage = (double)wishData.get("percentage");
+            wishData.put("percentage", (int)(percentage*100));
+
+            result.add(wishData);
+        }
+
+        return result;
+    };
 }

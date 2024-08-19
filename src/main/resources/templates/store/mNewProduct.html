@@ -80,25 +80,32 @@
             object-fit: cover;
             object-position: center;
         }
+        .newStoreCol span{
+            aspect-ratio: 1.7/1;
+            width: 100%;
+        }
         .bgBorder{
             border-bottom: 10px solid #F8F9FA;
+        }
+        .best-items-scroll::-webkit-scrollbar {
+            display: none;
         }
     </style>
 </head>
 <body class="bg-body-tertiary">
 
-    <div class="container-fluid fixed-top bg-white shadow-sm" style="height: 97.2px;">
+    <div class="container-fluid fixed-top bg-white shadow-sm" style="height: 93.2px;">
         <!-- top-nav -->
         <div class="row align-items-bottomline px-3 py-3 shadow-sm bg-white">
             <a href="/" class="col-auto p-0 fw-bold d-flex align-items-center f12 text-black">
                 <img src="/public/img/common/배캠.png" style="width: 6.5em;">
             </a>
             <div class="col fw-semibold text-body-secondary ps-2 f09 align-self-end"></div>
-            <div class="col-auto pe-0 text-end pt-1 d-flex align-items-center">
+            <a href="/store/wish" class="col-auto pe-0 text-end d-flex align-items-center text-black">
                 <span class="material-symbols-outlined fw-light">
-                    search
+                    favorite
                 </span>
-            </div>
+            </a>
             <a href="/store/cart" class="col-auto pe-0 d-flex align-items-center text-black">
                 <span class="material-symbols-outlined fw-light">
                     shopping_bag
@@ -117,9 +124,9 @@
                     <a href="/store/newProduct" class="col py-2 border-bottom border-2 border-dark">
                         NEW
                     </a>
-                    <div class="col py-2 text-body-tertiary">
+                    <!-- <div class="col py-2 text-body-tertiary">
                         SALE
-                    </div>
+                    </div> -->
                     <div class="col py-2 text-body-tertiary" onclick="alert('서비스 준비중입니다. 빠른 시일 내에 이용하실 수 있도록 노력하겠습니다.')">
                         EVENT
                     </div>
@@ -129,7 +136,7 @@
 
     </div>
 
-    <div class="container" style="padding-top: 97.2px;">
+    <div class="container" style="padding-top: 93.2px;">
 
         <div class="row px-3 bg-white pt-4 pb-3">
             <div class="col p-0">
@@ -193,10 +200,13 @@
         </div>
         <div class="row pb-4 bg-white bgBorder" th:if="${newStoreData.storeDto!=null}">
             <div class="col">
-                <div class="row px-3">
-                    <div class="col newStoreCol p-0">
+                <div class="row position-relative align-items-center">
+                    <div class="col px-3 newStoreCol p-0">
                         <img th:if="${newStoreData.storeDto.main_image}!=null" th:src="|/images/${newStoreData.storeDto.main_image}|">
                         <img th:unless="${newStoreData.storeDto.main_image}!=null" src="/public/img/storeImage/store_default_profile.jpg">
+                    </div>
+                    <div class="col px-3 newStoreCol position-absolute text-white fw-bold f17 text-center">
+                        <span th:text="${newStoreData.storeDto.name}"></span>
                     </div>
                 </div>
                 <div class="row px-3 align-items-center pt-3" th:each="productData : ${newStoreData.productDataList}">

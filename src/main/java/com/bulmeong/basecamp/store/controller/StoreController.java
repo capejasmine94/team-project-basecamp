@@ -225,4 +225,14 @@ public class StoreController {
 
         return "store/mNewProduct";
     }
+
+    @RequestMapping("wish")
+    public String wish(Model model, HttpSession session){
+        UserDto userDto = (UserDto)session.getAttribute("sessionUserInfo");
+        int user_id = userDto.getId();
+        model.addAttribute("wishDataList", storeService.getWishListByUserId(user_id));
+        model.addAttribute("productCategoryList", storeService.getProductCategoryAll());
+
+        return "store/mWish";
+    }
 }
