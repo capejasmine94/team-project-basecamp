@@ -12,6 +12,8 @@
 
     <script src="/public/js/lockLikeMobile.js"></script>
 
+    <title>BASECAMP</title>
+
     <style>
         .fill-on {
             font-variation-settings: 'FILL' 1;
@@ -81,7 +83,7 @@
 </head>
 <body class="bg-body-tertiary">
 
-    <div class="container-fluid fixed-top bg-white shadow-sm" style="height: 93.2px;">
+    <div class="container-fluid fixed-top bg-white shadow-sm" style="height: 56px;">
         <!-- top-nav -->
         <div class="row py-3 shadow-sm bg-white align-items-center">
             <a class="col-auto d-flex align-items-center" onclick="history.back()">
@@ -99,7 +101,7 @@
             </a>
         </div>
 
-        <div class="row bg-white">
+        <!-- <div class="row bg-white">
             <div class="col px-3 overflow-x-auto scroll">
                 <div class="row f08 fw-bold text-center flex-nowrap">
                     <a href="/store" class="col-auto py-2 border-bottom border-2 border-dark">
@@ -111,11 +113,11 @@
                     </a>
                 </div>
             </div>
-        </div>
+        </div> -->
 
     </div>
 
-    <div class="container" style="padding-top: 93.2px;">
+    <div class="container" style="padding-top: 56px;">
 
         <div class="row pb-5 bg-white pe-3" id="contentBox">
             <a th:href="@{/store/productDetails(id=${wishData.id})}" class="col-6 py-3 pe-0 ps-3" th:each="wishData : ${wishDataList}">
