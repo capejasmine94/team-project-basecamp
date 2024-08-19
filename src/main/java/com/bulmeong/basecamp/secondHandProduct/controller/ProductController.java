@@ -448,40 +448,88 @@ public class ProductController {
         ProductBuyerDto productBuyerDto = new ProductBuyerDto();
         productBuyerDto.setProduct_id(product_id);
         productBuyerDto.setSeller_user_id(sessionUserInfo.getId());
+
         List<ProductBuyerDto> productBuyerDtoList = productService.getProductBuyerList(productBuyerDto);
         model.addAttribute("productBuyerDtoList", productBuyerDtoList);
 
         return "secondhandProduct/buyerSelectionPage";
     }
     // 거래완료 -> 판매자 선택 -> 거래후기
-    @PostMapping("transactionReviewPage")
+    @PostMapping("transactionReview")
     public String transactionReview(Model model,
-                                    @RequestParam("product_id") int product_id,
-                                    @RequestParam("nickname") String nickname) {
+                                    @RequestParam("product_id") int productId,
+                                    @RequestParam("buyer_nickname") String nickname,
+                                    @RequestParam("buyer_user_id") int buyerUserId) {
 
-        Map<String, Object> productTotalDtoMap = productService.selectSecondhandDetailProduct(product_id);
+        Map<String, Object> productTotalDtoMap = productService.selectSecondhandDetailProduct(productId);
         model.addAttribute("productTotalMap", productTotalDtoMap);
         model.addAttribute("nickname", nickname);
+        model.addAttribute("buyer_user_id", buyerUserId);
 
-        return "secondhandProduct/transactionReviewPage";
+        return "secondhandProduct/transactionReviewPage";  // 템플릿 파일 이름
     }
-//    @RequestMapping("likeReviewSelectPage")
-//    public String likeReviewSelectPage(Model model) {
-//
-//        List<LikeReviewDto> likeReviewDtoList = productService.selectLikeReviewList();
-//        model.addAttribute("likeReviewDtoList", likeReviewDtoList);
-//
-//        return "partials/secondhandProduct/likeReviewSelectPage :: reviewSelect";
-//    }
-//
-//    @RequestMapping("unlikeReviewSelectPage")
-//    public String unlikeReviewSelectPage(Model model) {
-//
-//        List<UnlikeReviewDto> unlikeReviewDtoList = productService.selectUnlikeReviewList();
-//        model.addAttribute("unlikeReviewDtoList", unlikeReviewDtoList);
-//
-//        return "partials/secondhandProduct/unlikeReviewSelectPage :: reviewSelect";
-//    }
+    @RequestMapping("likeReviewSelectPage")
+    public String likeReviewSelectPage(Model model) {
+
+        List<LikeReviewDto> likeReviewDtoList = productService.selectLikeReviewList();
+        model.addAttribute("likeReviewDtoList", likeReviewDtoList);
+
+        return "partials/secondhandProduct/likeReviewSelectPage :: reviewSelect";
+    }
+
+    @RequestMapping("unlikeReviewSelectPage")
+    public String unlikeReviewSelectPage(Model model) {
+
+        List<UnlikeReviewDto> unlikeReviewDtoList = productService.selectUnlikeReviewList();
+        model.addAttribute("unlikeReviewDtoList", unlikeReviewDtoList);
+
+        return "partials/secondhandProduct/unlikeReviewSelectPage :: reviewSelect";
+    }
+
+    @GetMapping("myReviewPage")
+    public String myReviewPage(Model model,
+                               @RequestParam("buyerUserId") int buyerUserId) {
+
+        List<LikeTransactionReviewListDto> myLikeReviewList = productService.myLikeReviewList(buyerUserId);
+        model.addAttribute("myLikeReviewList", myLikeReviewList);
+
+        List<UnLikeTransactionReviewListDto> myUnlikeReviewList = productService.myUnlikeReviewList(buyerUserId);
+        model.addAttribute("myUnlikeReviewList", myUnlikeReviewList);
+
+
+        return "secondhandProduct/myReviewPage";
+    }
+
+    @GetMapping("insertReview")
+    public String insertReview(@RequestParam("buyer_user_id") int buyer_user_id,
+                               @RequestParam(name = "like_review", required = false) int[] like_review,
+                               @RequestParam(name = "unlike_review", required = false) int[] unlike_review) {
+
+        if (like_review != null && like_review.length > 0) {
+            for (int likeReview : like_review) {
+
+                productService.selectedLikeReviewCount(likeReview);
+
+                LikeTransactionReview likeReviewDto = new LikeTransactionReview();
+                likeReviewDto.setLike_review_id(likeReview);
+                likeReviewDto.setBuyer_user_id(buyer_user_id);
+                productService.insertLikeReview(likeReviewDto);
+            }
+        }
+        if (unlike_review != null && unlike_review.length > 0) {
+            for (int unlikeReview : unlike_review) {
+
+                productService.selectedUnlikeReviewCount(unlikeReview);
+
+                UnlikeTransactionReview unlikeReviewDto = new UnlikeTransactionReview();
+                unlikeReviewDto.setUnlike_review_id(unlikeReview);
+                unlikeReviewDto.setBuyer_user_id(buyer_user_id);
+                productService.insertUnlikeReview(unlikeReviewDto);
+            }
+        }
+
+        return "/secondhandProduct/mainPage";
+    }
 
 
 }

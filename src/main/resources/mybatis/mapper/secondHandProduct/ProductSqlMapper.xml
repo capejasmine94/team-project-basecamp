@@ -237,14 +237,60 @@
         WHERE c.seller_user_id = #{seller_user_id}
           AND c.product_id = #{product_id}
     </select>
-<!--    &lt;!&ndash; 후기보내기 -> 좋아요 선택지 &ndash;&gt;-->
-<!--    <select id="selectLikeReviewList" resultType="com.bulmeong.basecamp.secondHandProduct.dto.LikeReviewDto">-->
-<!--        SELECT * FROM bc_secondhand_like_review-->
-<!--    </select>-->
-<!--    &lt;!&ndash; 후기보내기 -> 싫어요 선택지 &ndash;&gt;-->
-<!--    <select id="selectUnlikeReviewList" resultType="com.bulmeong.basecamp.secondHandProduct.dto.UnlikeReviewDto">-->
-<!--        SELECT * FROM bc_secondhand_unlike_review-->
-<!--    </select>-->
+    <!-- 후기보내기 -> 좋아요 선택지 -->
+    <select id="selectLikeReviewList" resultType="com.bulmeong.basecamp.secondHandProduct.dto.LikeReviewDto">
+        SELECT * FROM bc_secondhand_like_review
+    </select>
+    <!-- 후기보내기 -> 싫어요 선택지 -->
+    <select id="selectUnlikeReviewList" resultType="com.bulmeong.basecamp.secondHandProduct.dto.UnlikeReviewDto">
+        SELECT * FROM bc_secondhand_unlike_review
+    </select>
+
+    <!-- 좋아요 거래후기 저장 -->
+    <insert id="insertLikeReview">
+        INSERT INTO bc_secondhand_product_like_transaction_review
+            (buyer_user_id, like_review_id)
+        values
+            (#{buyer_user_id} , #{like_review_id});
+    </insert>
+    <!-- 좋아요 선택지 횟수 업데이트 -->
+    <update id="selectedLikeReviewCount">
+        UPDATE bc_secondhand_like_review
+        SET
+            like_count = like_count + 1
+        WHERE like_review_id = #{like_review_id}
+    </update>
+    <!-- 좋아요 유저 거래후기 리스트 -->
+    <select id="myLikeReviewList" resultType="com.bulmeong.basecamp.secondHandProduct.dto.LikeTransactionReviewListDto">
+        SELECT tr.*, lr.like_review_content , lr.like_count
+        FROM bc_secondhand_product_like_transaction_review tr
+        JOIN bc_secondhand_like_review lr ON lr.like_review_id = tr.like_review_id
+        WHERE tr.buyer_user_id = #{buyer_user_id}
+        GROUP BY lr.like_review_id
+    </select>
+
+    <!-- 싫어요 거래후기 저장 -->
+    <insert id="insertUnlikeReview">
+        INSERT INTO bc_secondhand_product_unlike_transaction_review
+            (buyer_user_id, unlike_review_id)
+        values
+            (#{buyer_user_id} , #{unlike_review_id})
+    </insert>
+    <!-- 싫어요 선택지 횟수 업데이트 -->
+    <update id="selectedUnlikeReviewCount">
+        UPDATE bc_secondhand_unlike_review
+        SET
+            unlike_count = unlike_count + 1
+        WHERE unlike_review_id = #{unlike_review_id}
+    </update>
+    <!--    -->
+    <select id="myUnlikeReviewList" resultType="com.bulmeong.basecamp.secondHandProduct.dto.UnLikeTransactionReviewListDto">
+        SELECT tr.*, ur.unlike_review_content , ur.unlike_count
+        FROM bc_secondhand_product_unlike_transaction_review tr
+                 JOIN bc_secondhand_unlike_review ur ON ur.unlike_review_id = tr.unlike_review_id
+        WHERE tr.buyer_user_id = #{buyer_user_id}
+        GROUP BY ur.unlike_review_id
+    </select>
 
 
 

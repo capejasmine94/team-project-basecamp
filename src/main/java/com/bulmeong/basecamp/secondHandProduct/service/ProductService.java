@@ -141,13 +141,36 @@ public class ProductService {
     public List<ProductBuyerDto> getProductBuyerList(ProductBuyerDto productBuyerDto) {
         return productSqlMapper.getProductBuyerList(productBuyerDto);
     }
-//// 거래후기
-//    // 좋아요 선택
-//    public List<LikeReviewDto> selectLikeReviewList() {
-//        return productSqlMapper.selectLikeReviewList();
-//    }
-//    // 싫어요 선택
-//    public List<UnlikeReviewDto> selectUnlikeReviewList() {
-//        return productSqlMapper.selectUnlikeReviewList();
-//    }
+// 거래후기
+    // 좋아요 선택 리스트
+    public List<LikeReviewDto> selectLikeReviewList() {
+        return productSqlMapper.selectLikeReviewList();
+    }
+    // 싫어요 선택 리스트
+    public List<UnlikeReviewDto> selectUnlikeReviewList() {
+        return productSqlMapper.selectUnlikeReviewList();
+    }
+
+    // 좋아요 후기
+    public void insertLikeReview(LikeTransactionReview likeTransactionReview) {
+        productSqlMapper.insertLikeReview(likeTransactionReview);
+    }
+    public void selectedLikeReviewCount(int like_review_id) {
+        productSqlMapper.selectedLikeReviewCount(like_review_id);
+    }
+    public List<LikeTransactionReviewListDto> myLikeReviewList(int buyer_user_id) {
+        return productSqlMapper.myLikeReviewList(buyer_user_id);
+    }
+
+    // 싫어요 후기
+    public void insertUnlikeReview(UnlikeTransactionReview unlikeTransactionReview) {
+        productSqlMapper.insertUnlikeReview(unlikeTransactionReview);
+    }
+    public void selectedUnlikeReviewCount(int unlike_review_id) {
+        productSqlMapper.selectedUnlikeReviewCount(unlike_review_id);
+    }
+    public List<UnLikeTransactionReviewListDto> myUnlikeReviewList(int buyer_user_id) {
+        return productSqlMapper.myUnlikeReviewList(buyer_user_id);
+    }
 }
+

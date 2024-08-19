@@ -37,10 +37,4 @@ public interface ChatSqlMapper {
     // 채팅방 삭제
     public void deleteChatRoom(int chat_room_id);
 
-
-
-
-    // 채팅방아이디 확인
-    public int selectCountRoomById(int chat_room_id);
-
 }

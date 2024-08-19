@@ -62,10 +62,22 @@ public interface ProductSqlMapper {
     // 거래완료 -> 구매자 리스트
     public List<ProductBuyerDto> getProductBuyerList(ProductBuyerDto productBuyerDto);
 
-////거래후기
-//    // 좋아요 후기 선택
-//    public List<LikeReviewDto> selectLikeReviewList();
-//    // 싫어요 후기 선택
-//    public List<UnlikeReviewDto> selectUnlikeReviewList();
+//거래후기
+    // 좋아요 후기 선택
+    public List<LikeReviewDto> selectLikeReviewList();
+    // 싫어요 후기 선택
+    public List<UnlikeReviewDto> selectUnlikeReviewList();
+
+    public void insertLikeReview(LikeTransactionReview likeTransactionReview);
+    public void selectedLikeReviewCount(int like_review_id);
+    public List<LikeTransactionReviewListDto> myLikeReviewList(int buyer_user_id);
+
+    public void insertUnlikeReview(UnlikeTransactionReview unlikeTransactionReview);
+    public void selectedUnlikeReviewCount(int unlike_review_id);
+    public List<UnLikeTransactionReviewListDto> myUnlikeReviewList(int buyer_user_id);
+
+
+
+
 
 }
