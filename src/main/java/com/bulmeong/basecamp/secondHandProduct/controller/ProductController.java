@@ -8,6 +8,8 @@ import com.bulmeong.basecamp.secondHandProduct.service.PolygonService;
 import com.bulmeong.basecamp.secondHandProduct.service.ProductService;
 import com.bulmeong.basecamp.user.dto.UserDto;
 import jakarta.servlet.http.HttpSession;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -52,11 +54,29 @@ public class ProductController {
 //
 //        return "secondhandProduct/mainPage";
 //    }
+
+    private static final Logger logger = LoggerFactory.getLogger(ProductController.class);
+
     @GetMapping("mainPage")
     public String mainPage() {
 
+        logger.info("mainPage 메서드 호출");
 
-        return "secondhandProduct/mainPage";
+        try {
+            logger.debug("view:  secondhandProduct/mainPage");
+
+            // 뷰 반환
+            return "secondhandProduct/mainPage";
+
+        } catch (Exception e) {
+            // 예외 발생 시 로그 기록 (ERROR 수준)
+            logger.error("Exception 발생 in mainPage()", e);
+
+            // 예외 처리 후, 오류 페이지 또는 다른 페이지로 리다이렉트 가능
+            return "secondhandProduct/mainPage"; // 예외 발생 시 error.html 페이지로 리다이렉트
+        }
+
+//        return "secondhandProduct/mainPage";
     }
 
     @GetMapping("productRegistrationPage")

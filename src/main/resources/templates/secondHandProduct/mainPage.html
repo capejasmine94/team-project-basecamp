@@ -389,57 +389,6 @@
             location.reload();
         }
     });
-
-    // // 내 위치 등록중 + 모달
-    // function myLocation() {
-    //     if (navigator.geolocation) {
-    //         console.log("내 위치저장 시작");
-    //
-    //         var registeringLocation = new bootstrap.Modal(document.getElementById('registeringLocation'), {
-    //             backdrop: 'static',
-    //             keyboard: false
-    //         });
-    //         registeringLocation.show();
-    //
-    //         navigator.geolocation.getCurrentPosition(function (position) {
-    //             var legionX = position.coords.latitude; // 위도
-    //             var legionY = position.coords.longitude; // 경도
-    //
-    //             console.log("위도X: " + legionX);
-    //             console.log("경도Y: " + legionY);
-    //
-    //             const url = "/api/location/saveLocation";
-    //             fetch(url, {
-    //                 method: 'POST',
-    //                 headers: {
-    //                     'Content-Type': 'application/json'
-    //                 },
-    //                 body: JSON.stringify({user_id: myId, my_region_x: legionX, my_region_y: legionY })
-    //             })
-    //                 .then(response => response.json())
-    //                 .then((response) => {
-    //                     console.log("내 위치저장 끝");
-    //                     setTimeout(() => {
-    //                         registeringLocation.hide();
-    //                         loadLocation();
-    //                     }, 500); // 0.5초 지연
-    //                 })
-    //         });
-    //     }
-    // }
-    // // 내위치 보내기
-    // function loadLocation() {
-    //     const url = "/api/location/loadLocation"
-    //     fetch(url)
-    //         .then(response => response.json())
-    //             .then(response => {
-    //             if (response.result === "success") {
-    //                 const regionX  = response.data.location.my_region_x;
-    //                 const regionY = response.data.location.my_region_y;
-    //                 window.location.href = `/secondhandProduct/neighborhoodCertificationPage?my_region_x=${regionX}&my_region_y=${regionY}`;
-    //             }
-    //         });
-    // }
 </script>
 </body>
 </html>
