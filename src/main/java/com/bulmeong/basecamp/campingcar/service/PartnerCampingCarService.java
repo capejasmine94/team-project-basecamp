@@ -1,6 +1,7 @@
 package com.bulmeong.basecamp.campingcar.service;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -18,6 +19,7 @@ import com.bulmeong.basecamp.campingcar.dto.DriverLicenseDto;
 import com.bulmeong.basecamp.campingcar.dto.LocationDto;
 import com.bulmeong.basecamp.campingcar.dto.ProductDetailImgDto;
 import com.bulmeong.basecamp.campingcar.dto.RentalCompanyDto;
+import com.bulmeong.basecamp.campingcar.dto.RentalPeakPriceDto;
 import com.bulmeong.basecamp.campingcar.dto.RentalReview;
 import com.bulmeong.basecamp.campingcar.dto.ReservationDto;
 import com.bulmeong.basecamp.campingcar.mapper.PartnerCampingCarSqlMapper;
@@ -52,16 +54,18 @@ public class PartnerCampingCarService {
     }
 
     // 차량등록 
-    public void registerCamping(CampingcarDto campingCar, List<Integer> basicFacilites_id, MultipartFile[] detailedImg) {
-        // 기본 차량등록 insert
+    public void registerCamping(CampingcarDto campingCar, List<Integer> basicFacilites_id, MultipartFile[] detailedImg,
+                                RentalPeakPriceDto rentalPeakPriceDto) {
+        // 1. 기본 차량등록 insert
         partnerCampingCarSqlMapper.createCamping(campingCar);
-        // 차량등록X기본보유옵션 테이블 insert
+
+        // 2. 차량등록X기본보유옵션 테이블 insert
         int product_id = campingCar.getId();
         for(int basic_facilities_id :basicFacilites_id) {
             partnerCampingCarSqlMapper.createCarBasic(basic_facilities_id,product_id);
         }
 
-        // 최종 DetailImageList 담을 인스턴스 생성, 차량등록의 세부이미지 테이블 insert
+        // 3. 최종 DetailImageList 담을 인스턴스 생성, 차량등록의 세부이미지 테이블 insert
         List<ProductDetailImgDto> productImageList = new ArrayList<>();
         List<ImageDto> ImgeDtoList = ImageUtil.saveImageAndReturnDtoList(detailedImg);
         for(ImageDto imgeDto : ImgeDtoList){
@@ -76,9 +80,26 @@ public class PartnerCampingCarService {
                                            productDetailImgDto.getLocation(),
                                            productDetailImgDto.getOriginal_filename());
                                            
-            System.out.println("상세이미지_test_service" + productDetailImgDto);
         }
 
+        // 4. 성수기 가격 등록
+        rentalPeakPriceDto.setProduct_id(product_id);  // RentalPeakPriceDto에 product_id 설정
+        partnerCampingCarSqlMapper.createRentalPeakPrice(rentalPeakPriceDto);
+
+    }
+
+    public void updateRentalPeakDates(int productId, Date peakStartDate, Date peakEndDate) {
+        RentalPeakPriceDto rentalPeakPriceDto = partnerCampingCarSqlMapper.getRentalPeakPriceByProductId(productId);
+        if (rentalPeakPriceDto != null) {
+            rentalPeakPriceDto.setPeak_start_date(peakStartDate);
+            rentalPeakPriceDto.setPeak_end_date(peakEndDate);
+            partnerCampingCarSqlMapper.updateRentalPeakDates(rentalPeakPriceDto);
+        }
+    }
+
+    // 성수기/휴일관리_캘린더 표시를 위한 등록 차량 리스트
+    public List<Map<String,Object>> getcampingCarListForCalendar(int id) {
+        return partnerCampingCarSqlMapper.getcampingCarListForCalendar(id);
     }
 
     // 차량등록_캠핑카 유형 Category List

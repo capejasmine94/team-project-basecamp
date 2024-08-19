@@ -1,4 +1,4 @@
-package com.bulmeong.basecamp.campingcar.controller;
+package com.bulmeong.basecamp.campingcar.dto;
 
 import java.util.Date;
 

@@ -13,6 +13,7 @@ import com.bulmeong.basecamp.campingcar.dto.DriverExperienceCondDto;
 import com.bulmeong.basecamp.campingcar.dto.DriverLicenseDto;
 import com.bulmeong.basecamp.campingcar.dto.LocationDto;
 import com.bulmeong.basecamp.campingcar.dto.RentalCompanyDto;
+import com.bulmeong.basecamp.campingcar.dto.RentalPeakPriceDto;
 import com.bulmeong.basecamp.campingcar.dto.RentalReview;
 
 
@@ -30,6 +31,17 @@ public interface PartnerCampingCarSqlMapper {
 
     // 차량등록
     public void createCamping(CampingcarDto campingcarDto);
+
+    // 성수기 가격 등록
+    public void createRentalPeakPrice(RentalPeakPriceDto rentalPeakPriceDto);
+    // 특정 차량의 성수기 가격 정보 가져오기
+    RentalPeakPriceDto getRentalPeakPriceByProductId(int product_id);
+
+    // 성수기 날짜 업데이트
+    void updateRentalPeakDates(RentalPeakPriceDto rentalPeakPriceDto);
+
+    // 성수기/휴일관리_캘린더 표시를 위한 등록 차량 리스트
+    public List<Map<String,Object>> getcampingCarListForCalendar(int id); 
 
     // 차량등록X기본보유시설 
     public void createCarBasic(@Param("basic_facilities_id")int basic_facilities_id, @Param("product_id")int product_id);

@@ -52,6 +52,65 @@
                 #{cancellation_policy}, #{is_opened}, #{update_date}
             )
     </insert>
+    
+    <!-- 성수기 가격  및 시작일/종료일 지정 -->
+    <insert id="createRentalPeakPrice">
+        insert into bc_rental_peak_price(
+            product_id,
+            weekdays_price, 
+            weekend_price,
+            peak_start_date,
+            peak_end_date,
+            updated_at
+        ) values (
+            #{product_id},
+            #{weekdays_price}, 
+            #{weekend_price},
+            #{peak_start_date},
+            #{peak_end_date},
+            #{updated_at}
+        )
+    </insert>
+
+    <!-- 특정 차량의 성수기 가격 정보 가져오기 -->
+    <select id="getRentalPeakPriceByProductId" resultType="com.bulmeong.basecamp.campingcar.dto.RentalPeakPriceDto">
+        select * from bc_rental_peak_price where product_id = #{product_id}
+    </select>
+
+    <!-- 성수기 날짜 업데이트 -->
+    <update id="updateRentalPeakDates">
+        update bc_rental_peak_price
+        set
+            peak_start_date = #{peak_start_date},
+            peak_end_date = #{peak_end_date}
+        where product_id = #{product_id}
+    </update>
+
+    <!-- 성수기/휴일관리_캘린더 표시를 위한 등록 차량 리스트 -->
+    <select id="getcampingCarListForCalendar" resultType="Map">
+        select         
+                    bc.id AS product_id,
+                    brci.comp_name, 
+                    bctc.name AS car_type_name, 
+                    bc.product_name, 
+                    bc.rental_fee_weekdays, 
+                    bc.rental_fee_weekend,
+                    brpp.weekdays_price AS peak_weekdays_price,
+                    brpp.weekend_price AS peak_weekend_price,
+                    bc.created_at,
+                    brpp.created_at AS peakDate_create_at
+        from bc_campingcar bc 
+        INNER join 
+                    bc_rental_company_info brci on bc.rental_company_id = brci.id
+        inner join 
+                    bc_car_type_categories bctc on bc.category_id = bctc.id
+        left join 
+                    bc_rental_peak_price brpp on bc.id = brpp.product_id
+        where bc.rental_company_id = #{id}
+        order by bc.id DESC
+    </select>
+
+
     <!-- 차량등록X보유시설 -->
     <insert id="createCarBasic">
         insert into bc_product_x_basic_facilities (product_id,basic_facilities_id) 

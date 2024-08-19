@@ -18,6 +18,7 @@ import com.bulmeong.basecamp.campingcar.dto.DriverExperienceCondDto;
 import com.bulmeong.basecamp.campingcar.dto.DriverLicenseDto;
 import com.bulmeong.basecamp.campingcar.dto.LocationDto;
 import com.bulmeong.basecamp.campingcar.dto.RentalCompanyDto;
+import com.bulmeong.basecamp.campingcar.dto.RentalPeakPriceDto;
 import com.bulmeong.basecamp.campingcar.dto.RentalReview;
 import com.bulmeong.basecamp.campingcar.dto.ReservationDto;
 import com.bulmeong.basecamp.campingcar.service.CampingcarService;
@@ -48,7 +49,7 @@ public class PartnerCampingCarController {
         return "partner/nfRegisterPage";
     }
 
-// 판매자 회원가입 등록
+    // 판매자 회원가입 등록
     @RequestMapping("sellerRegisterProcess")
     public String sellerRegisterProcess(RentalCompanyDto rentalCompanyDto, 
                                         @RequestParam("profile_image") MultipartFile comp_profile_image
@@ -113,10 +114,11 @@ public class PartnerCampingCarController {
     @RequestMapping("carRegisterProgress")
     public String carRegisterProgress(CampingcarDto campingcarDto,@RequestParam("main_image")MultipartFile main_image
                                      ,@RequestParam("detailedImg") MultipartFile[] detailedImg
-                                     ,@RequestParam(value = "basicFacilites_id") List<Integer> basicFacilites_id) {
+                                     ,@RequestParam(value = "basicFacilites_id") List<Integer> basicFacilites_id
+                                     ,RentalPeakPriceDto rentalPeakPriceDto) {
         campingcarDto.setMain_img(ImageUtil.saveImageAndReturnLocation(main_image));
 
-        partnerCampingCarService.registerCamping(campingcarDto,basicFacilites_id,detailedImg);
+        partnerCampingCarService.registerCamping(campingcarDto,basicFacilites_id,detailedImg,rentalPeakPriceDto);
 
         return "redirect:/partner/main";
     }
@@ -128,7 +130,7 @@ public class PartnerCampingCarController {
     }
     
     @RequestMapping("peakSeason")
-    public String peakSeason(){
+    public String peakSeason() {
 
         return "partner/peakSeason";
     }

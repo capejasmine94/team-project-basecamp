@@ -6,7 +6,6 @@ import java.util.Map;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
-import com.bulmeong.basecamp.campingcar.controller.ReturnExternalInspectionDto;
 import com.bulmeong.basecamp.campingcar.dto.BasicFacilitiesDto;
 import com.bulmeong.basecamp.campingcar.dto.CampingCarLikeDto;
 import com.bulmeong.basecamp.campingcar.dto.ProductDetailImgDto;
@@ -14,6 +13,7 @@ import com.bulmeong.basecamp.campingcar.dto.RentUserDto;
 import com.bulmeong.basecamp.campingcar.dto.RentalExternalInspectionDto;
 import com.bulmeong.basecamp.campingcar.dto.RentalReview;
 import com.bulmeong.basecamp.campingcar.dto.ReservationDto;
+import com.bulmeong.basecamp.campingcar.dto.ReturnExternalInspectionDto;
 
 @Mapper
 public interface CampingcarSqlMapper {
