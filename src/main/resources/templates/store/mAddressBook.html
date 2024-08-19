@@ -131,7 +131,8 @@
                                 기본배송지
                             </div>
                             <div class="col f08 text-body-tertiary text-end deleteOrModify">
-                                <span th:if="${userDeliveryInfoDto.is_default_address}!=1" onclick="deleteDeliveryInfo(this)">삭제 |</span> <span onclick="modifyDeliveryInfo(this)">수정</span>
+                                <span th:if="${userDeliveryInfoDto.is_default_address}!=1" onclick="deleteDeliveryInfo(this)">삭제</span>
+                                <!-- <span onclick="modifyDeliveryInfo(this)">수정</span> -->
                                 <input type="hidden" th:value="${userDeliveryInfoDto.id}" class="inputDeliveryId">
                             </div>
                         </div>

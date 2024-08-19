@@ -71,6 +71,9 @@
             font-weight: bold;
             border-bottom: 2px solid black;
         }
+        .bgBorder{
+            border-bottom: 10px solid #F8F9FA;
+        }
     </style>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
@@ -83,22 +86,20 @@
 <body class="bg-light">
 
     <!-- top-nav -->
-    <div class="container">
-        <div class="fixed-top px-4 row border-bottom bg-white">
+    <div class="container fixed-top">
+        <div class="row px-3 border-bottom bg-white">
             <div class="col">
                 <div class="row py-3 align-items-center">
-                    <div class="col-auto ps-0">
-                        <button id="backButton" class="border-0 bg-transparent d-flex align-items-center">
-                            <span class="material-symbols-outlined">
-                                arrow_back_ios
-                            </span>
-                        </button>
+                    <div class="col-auto ps-0 d-flex align-items-center" onclick="history.back()">
+                        <span class="material-symbols-outlined fw-light">
+                            arrow_back
+                        </span>
                     </div>
-                    <div class="col ps-0 fw-bold f12 text-center">
+                    <div class="col ps-0 fw-bold text-center">
                         주문 상세내역
                     </div>
-                    <a href="/" class="col-auto pe-0 d-flex align-items-center text-black">
-                        <span class="material-symbols-outlined">
+                    <a href="/" class="col-auto pe-0 d-flex align-items-center">
+                        <span class="material-symbols-outlined fw-light">
                             home
                         </span>
                     </a>
@@ -125,7 +126,7 @@
                     </div>
                 </div>
 
-                <div class="row px-3 mb-3 border-bottom bg-white">
+                <div class="row px-3 bgBorder bg-white">
                     <div class="col p-0">
         
                         <!-- 상품 하나의 정보 -->
@@ -162,7 +163,7 @@
                                                 <span th:text="|${orderProductData.orderProductDto.quantity}개|">5개</span>
                                             </div>
                                         </div>
-                                        <div class="row f09 pt-3 toggle-icon" data-bs-toggle="collapse" th:data-bs-target="|#${orderProductData.orderProductDto.id}|">
+                                        <div class="row f09 pt-3 toggle-icon" data-bs-toggle="collapse" th:data-bs-target="|#${orderProductData.orderProductDto.id}|" style="cursor: pointer;">
                                             <div class="col">
                                                 주문금액 (상세)
                                             </div>
@@ -207,11 +208,11 @@
                                     </div>
                                 </div>
                                 <div class="row py-3" th:if="${orderProductData.orderProductDto.status}=='구매확정'">
-                                    <div class="col d-grid pe-0">
+                                    <!-- <div class="col d-grid pe-0">
                                         <button class="btn f09 border bg-white rounded-0">
                                             배송조회
                                         </button>
-                                    </div>
+                                    </div> -->
                                     <div class="col d-grid">
                                         <button class="btn f09 border-primary text-primary bg-white rounded-0">
                                             리뷰작성
@@ -224,7 +225,7 @@
                                             환불요청
                                         </a>
                                     </div>
-                                    <div class="col d-grid pe-0">
+                                    <!-- <div class="col d-grid pe-0">
                                         <a type="button" class="btn px-0 f09 border bg-white rounded-0">
                                             교환요청
                                         </a>
@@ -233,14 +234,14 @@
                                         <button class="btn px-0 f09 border bg-white rounded-0">
                                             배송조회
                                         </button>
-                                    </div>
+                                    </div> -->
                                     <div class="col d-grid">
                                         <button class="btn px-0 f09 border bg-white rounded-0">
                                             구매확정
                                         </button>
                                     </div>
                                 </div>
-                                <div class="row py-3" th:if="${orderProductData.orderProductDto.status}=='주문완료'">
+                                <!-- <div class="row py-3" th:if="${orderProductData.orderProductDto.status}=='주문완료'">
                                     <div class="col d-grid pe-0">
                                         <a type="button" class="btn px-0 f09 border bg-white rounded-0">
                                             주문취소
@@ -251,7 +252,7 @@
                                             배송지 변경
                                         </a>
                                     </div>
-                                </div>
+                                </div> -->
                             </div>
                         </div>
                         
@@ -260,10 +261,10 @@
                 </div>
 
                 <!-- 배송지 정보 -->
-                <div class="row informationContainer bg-white px-3 border-bottom border-top mb-3">
+                <div class="row informationContainer bg-white px-3 bgBorder">
                     <div class="col p-0">
                         
-                        <div onclick="showAdditionalInfo(this)" class="row py-4">
+                        <div onclick="showAdditionalInfo(this)" class="row py-4" style="cursor: pointer;">
                             <div class="col fw-bold">
                                 배송지 정보
                             </div>
@@ -331,18 +332,18 @@
                 </div>
 
                 <!-- 할인정보 -->
-                <div class="row bg-white px-3 border-top" th:if="${orderData.discountPriceSum+orderData.storeOrderDto.used_point!=0}">
+                <div class="row bg-white px-3" th:if="${orderData.discountPriceSum+orderData.storeOrderDto.used_point!=0}">
                     <div class="col p-0">
                         
                         <div class="row py-4">
                             <div class="col fw-bold">
                                 할인 정보
                             </div>
-                            <div class="col d-flex align-items-center justify-content-end">
+                            <!-- <div class="col d-flex align-items-center justify-content-end">
                                 <span class="material-symbols-outlined fw-light">
                                     keyboard_arrow_down
                                 </span>
-                            </div>
+                            </div> -->
                         </div>
 
                         <div class="row f08">
@@ -369,7 +370,7 @@
                     </div>
                 </div>
                 <!-- 할인정보 -->
-                <div class="row px-3 fw-bold f08 bg-white mb-3 border-bottom" th:if="${orderData.discountPriceSum+orderData.storeOrderDto.used_point!=0}">
+                <div class="row px-3 fw-bold f08 bg-white bgBorder" th:if="${orderData.discountPriceSum+orderData.storeOrderDto.used_point!=0}">
                     <div class="col p-0 py-3 border-top">
                         <div class="row">
                             <div class="col">
@@ -386,18 +387,18 @@
                 </div>
 
                 <!-- 최종 결제 정보 -->
-                <div class="row bg-white pb-4 px-3 border-top">
+                <div class="row bg-white pb-4 px-3">
                     <div class="col p-0">
                         
                         <div class="row py-4">
                             <div class="col fw-bold">
                                 최종 결제 정보
                             </div>
-                            <div class="col d-flex align-items-center justify-content-end">
+                            <!-- <div class="col d-flex align-items-center justify-content-end">
                                 <span class="material-symbols-outlined fw-light">
                                     keyboard_arrow_down
                                 </span>
-                            </div>
+                            </div> -->
                         </div>
 
                         <div class="row f08">
@@ -434,7 +435,7 @@
                     </div>
                 </div>
                 <!-- 최종 결제 정보 -->
-                <div class="row px-3 fw-bold f08 bg-white mb-3 border-bottom">
+                <div class="row px-3 fw-bold f08 bg-white bgBorder">
                     <div class="col p-0 py-3 border-top">
                         <div class="row">
                             <div class="col">
@@ -448,18 +449,18 @@
                 </div>
 
                 <!-- 결제 수단 -->
-                <div class="row bg-white pb-4 px-3 border-top mb-3 border-bottom">
+                <div class="row bg-white pb-4 px-3">
                     <div class="col p-0">
                         
                         <div class="row py-4">
                             <div class="col fw-bold">
                                 결제 수단
                             </div>
-                            <div class="col d-flex align-items-center justify-content-end">
+                            <!-- <div class="col d-flex align-items-center justify-content-end">
                                 <span class="material-symbols-outlined fw-light">
                                     keyboard_arrow_down
                                 </span>
-                            </div>
+                            </div> -->
                         </div>
 
                         <div class="row f08">
@@ -472,14 +473,14 @@
                                         카카오페이 <span th:if="${orderData.storeOrderDto.used_point!=0}">+ 적립금</span>
                                     </div>
                                 </div>
-                                <div class="row fw-bold">
+                                <!-- <div class="row fw-bold">
                                     <a class="col text-end pe-0 text-primary" style="text-decoration: underline;">
                                         영수증보기
                                     </a>
                                     <a class="col-auto text-end text-primary" style="text-decoration: underline;">
                                         거래 명세서
                                     </a>
-                                </div>
+                                </div> -->
                             </div>
                         </div>
                     </div>
@@ -538,13 +539,16 @@
                 </div>
                  -->
 
-                <div class="row px-2 bg-white pt-3 pb-5 border-top">
+                <!-- <div class="row px-2 bg-white pt-3 pb-5">
                     <div class="col d-grid">
                         <a href="" type="button" class="btn rounded-0 f09 py-2 bg-white border">
                             주문 내역 삭제
                         </a>
                     </div>
-                </div>
+                </div> -->
+
+                <div class="row bg-white py-4"></div>
+
             </div>
         </div>
 

@@ -235,4 +235,9 @@ public class StoreController {
 
         return "store/mWish";
     }
+
+    @RequestMapping("brand")
+    public String brand(){
+        return "store/mBrand";
+    }
 }
