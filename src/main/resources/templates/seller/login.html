@@ -106,29 +106,6 @@
                 inputId.value = button.value == 'Store' ? 'northpeak' : button.value == 'Campsite' ? 'campsite01' : '';
                 inputPw.value = button.value == 'Store' || button.value == 'Campsite' ? '1234' : '';
             }
-
-          
-            
-            // function formSubmit(){
-            //     const inputId = document.getElementById("inputId");
-            //     const inputPw = document.getElementById("inputPw");
-            //     const sellerType = document.getElementById("sellerType");
-
-            //     const url = `/api/seller/getSellerDtoByAccountInfo?account_id=${inputId.value}&account_pw=${inputPw.value}&seller_type=${sellerType.value}`
-            //     fetch(url)
-            //     .then(response => response.json())
-            //     .then((response) => {
-
-            //         const loginFail = document.getElementById("loginFail");
-
-            //         if(response.data.sellerDto==null){
-            //             loginFail.innerText = "로그인에 실패했습니다. 아이디(ID)와 비밀번호를 확인하고 다시 시도해 주세요.";
-            //         }else{
-            //             const loginForm = document.getElementById("loginForm");
-            //             loginForm.submit();
-            //         }
-            //     })
-            // }
         </script>
     </head>
     <body>
@@ -215,37 +192,34 @@
                 </div>
             </div>
         </div>
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
         <script>
-              document.addEventListener("DOMContentLoaded", () => {
-                const loginForm = document.getElementById("loginForm");
+            document.addEventListener("DOMContentLoaded", () => {
+              const loginForm = document.getElementById("loginForm");
+              const inputId = document.getElementById("inputId");
+              const inputPw = document.getElementById("inputPw");
+              inputId.value = 'northpeak';
+              inputPw.value = '1234';
+              loginForm.addEventListener("submit", (event) => {
+                  event.preventDefault();
+                  const sellerType = document.getElementById("sellerType");
+                  const url = `/api/seller/getSellerDtoByAccountInfo?account_id=${inputId.value}&account_pw=${inputPw.value}&seller_type=${sellerType.value}`
+                  fetch(url)
+                  .then(response => response.json())
+                  .then((response) => {
 
-                loginForm.addEventListener("submit", (event) => {
-                    event.preventDefault();
+                      const loginFail = document.getElementById("loginFail");
 
-                    const inputId = document.getElementById("inputId");
-                    const inputPw = document.getElementById("inputPw");
-                    const sellerType = document.getElementById("sellerType");
+                      if(response.data.sellerDto==null){
+                          loginFail.innerText = "로그인에 실패했습니다. 아이디(ID)와 비밀번호를 확인하고 다시 시도해 주세요.";
+                      }else{
+                          const loginForm = document.getElementById("loginForm");
+                          loginForm.submit();
+                      }
+                  })
+              })
+          })
+      </script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 
-                    inputId.value = 'northpeak';
-                    inputPw.value = '1234';
-
-                    const url = `/api/seller/getSellerDtoByAccountInfo?account_id=${inputId.value}&account_pw=${inputPw.value}&seller_type=${sellerType.value}`
-                    fetch(url)
-                    .then(response => response.json())
-                    .then((response) => {
-
-                        const loginFail = document.getElementById("loginFail");
-
-                        if(response.data.sellerDto==null){
-                            loginFail.innerText = "로그인에 실패했습니다. 아이디(ID)와 비밀번호를 확인하고 다시 시도해 주세요.";
-                        }else{
-                            const loginForm = document.getElementById("loginForm");
-                            loginForm.submit();
-                        }
-                    })
-                })
-            })
-        </script>
     </body>
 </html>
