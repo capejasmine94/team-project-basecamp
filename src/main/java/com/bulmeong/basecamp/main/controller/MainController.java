@@ -3,6 +3,7 @@ package com.bulmeong.basecamp.main.controller;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -25,6 +26,15 @@ public class MainController {
     @GetMapping("/auth/kakao/callback")
     public @ResponseBody String kakaoCallback(@RequestParam("code") String code){
         return "우와"+code;
+    }
+
+    @RequestMapping("myPage")
+    public String basecampMyInfoPage(HttpSession session, 
+                                     Model model){
+        UserDto sessionUserInfo = (UserDto) session.getAttribute("sessionUserInfo");
+        model.addAttribute("sessionUserInfo", sessionUserInfo);
+        
+        return "common/basecampMyInfoPage";
     }
 
 }

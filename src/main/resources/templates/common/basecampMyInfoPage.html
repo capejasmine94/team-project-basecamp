@@ -52,7 +52,7 @@
                         <img src="/public/img/common/default_profile.png" class="img-fluid rounded-circle" style="aspect-ratio: 1/1;">
                     </div>
                     <div class="col align-items-center d-flex">
-                        nickname 님
+                        <span th:text="${session.sessionUserInfo.nickname}"></span>&nbsp님
                     </div>
                     <div class="col-auto align-items-center d-flex">
                         <span class="material-symbols-outlined">
