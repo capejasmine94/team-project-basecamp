@@ -71,7 +71,7 @@
                                                                         <div class="row mt-4 align-items-center">
                                                                             <div class="col-1 text-secondary text-end">기본 가격</div>
                                                                             <div class="col-2 fw-semibold">
-                                                                                <input required type="text" class="form-control moneyInput" id="prise" name="prise" value="10,000"></input>
+                                                                                <input required type="text" class="form-control moneyInput" id="prise" name="prise" value="10,000">
                                                                             </div>
                                                                             <div class="col-auto fw-semibold">원</div>
                                                                         </div>
@@ -135,7 +135,7 @@
                                                                 </div>
                                                                 <div class="row py-2 border-bottom" th:unless="${session.campsite.area.size() <= 0}" th:id="'area_' + ${area.dto.id}" th:each="area:${session.campsite.area}" th:attr="onclick=|selectArea('${area.dto.id}',onSelectArea)|">
                                                                     <div class="col-4 ms-1" th:text="${area.dto.name}">구역이름</div>
-                                                                    <div class="col-2 ps-0 ms-2 pe-3 text-end" th:text="${area.dto.prise}">가격</div>
+                                                                    <div class="col-2 moneyInput ps-0 ms-2 pe-3 text-end" th:text="${area.dto.prise}">가격</div>
                                                                     <div class="col-2 ms-5 ps-0 pe-2 text-end" th:unless="${area.pointInfo.point != null}">0</div>
                                                                     <div class="col-2 ms-5 ps-0 pe-2 text-end" th:if="${area.pointInfo.point != null}" th:text="${area.pointInfo.point.size()}">포인트 수</div>
                                                                     <div class="col-2 text-end pe-3 me-5 text-primary" th:text="${area.dto.process}">양호</div>
@@ -733,8 +733,10 @@
                 }
             }
 
-            initFormButton();
-            addColonMoneyInput();
+            document.addEventListener('DOMContentLoaded',()=>{
+                initFormButton();
+                addColonMoneyInput();
+            });
         </script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
     </body>

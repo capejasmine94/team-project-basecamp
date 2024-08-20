@@ -172,7 +172,7 @@
                         </div>
                         <div class="row">
                             <div class="col d-grid position-relative">
-                                <input type="text" name="account" class="py-3 px-2 borderInput" oninput="checkAccountID()" onfocus="idInfo()" id="inputId" th:value="'basecamp'+${userCount}" placeholder="아이디 입력">
+                                <input required type="text" name="account" class="py-3 px-2 borderInput" oninput="checkAccountID()" onfocus="idInfo()" id="inputId" th:value="'basecamp'+${userCount}" placeholder="아이디 입력">
                                 <div id="confirmResult" class="position-absolute f08" style="left: 1em; top: 4.5em;"></div>
                             </div>
                         </div>
@@ -184,7 +184,7 @@
                         </div>
                         <div class="row">
                             <div class="col d-grid">
-                                <input type="password" name="password" class="py-3 px-2 borderInput" id="inputPw" value="1234" placeholder="비밀번호 입력">
+                                <input required type="password" name="password" class="py-3 px-2 borderInput" id="inputPw" value="1234" placeholder="비밀번호 입력">
                             </div>
                         </div>
                        
@@ -195,7 +195,7 @@
                         </div>
                         <div class="row">
                             <div class="col d-grid position-relative">
-                                <input type="password" class="py-3 px-2 borderInput" onkeyup="checkAccountPwConfirm()" id="inputPwConfirm" value="1234" placeholder="비밀번호 재입력">
+                                <input required type="password" class="py-3 px-2 borderInput" onkeyup="checkAccountPwConfirm()" id="inputPwConfirm" value="1234" placeholder="비밀번호 재입력">
                                 <div id="confirmAccountPw" class="position-absolute f08 text-danger" style="left: 1em; top: 4.5em;"></div>
                             </div>
                         </div>
@@ -207,7 +207,7 @@
                         </div>
                         <div class="row">
                             <div class="col d-grid">
-                                <input type="text" id="inputNickname" name="nickname" class="py-3 px-2 borderInput" th:value="${userNick}" placeholder="닉네임 입력">
+                                <input required type="text" id="inputNickname" name="nickname" class="py-3 px-2 borderInput" th:value="${userNick}" placeholder="닉네임 입력">
                             </div>
                         </div>
 
@@ -218,7 +218,7 @@
                         </div>
                         <div class="row">
                             <div class="col d-grid">
-                                <input type="text" id="inputEmail" name="email" class="py-3 px-2 borderInput" th:value="${email}" placeholder="이메일 입력">
+                                <input required type="text" id="inputEmail" name="email" class="py-3 px-2 borderInput" th:value="${email}" placeholder="이메일 입력">
                             </div>
                         </div>
                         
@@ -229,7 +229,7 @@
                         </div>
                         <div class="row">
                             <div class="col d-grid">
-                                <input type="text" id="inputName" name="name" class="py-3 px-2 borderInput" th:value="${userName}" placeholder="이름 입력">
+                                <input required type="text" id="inputName" name="name" class="py-3 px-2 borderInput" th:value="${userName}" placeholder="이름 입력">
                             </div>
                         </div>
 
@@ -240,7 +240,7 @@
                         </div>
                         <div class="row">
                             <div class="col d-grid">
-                                <input type="text" name="phone" id="inputPhone" class="py-3 px-2 borderInput" maxlength="13" oninput="formatPhoneNumber(this)" placeholder="전화번호 입력" th:value="${phone}">
+                                <input required type="text" name="phone" id="inputPhone" class="py-3 px-2 borderInput" maxlength="13" oninput="formatPhoneNumber(this)" placeholder="전화번호 입력" th:value="${phone}">
                             </div>
                         </div>
 
@@ -251,11 +251,11 @@
                         </div>
                         <div class="row pt-2">
                             <div class="col pe-0 d-grid">
-                                <input type="radio" id="genderOption1" class="btn-check" name="gender" value="M" checked>
+                                <input required type="radio" id="genderOption1" class="btn-check" name="gender" value="M" checked>
                                 <label for="genderOption1" class="btn btn-outline-dark rounded-1 f08 py-2">남자</label>
                             </div>
                             <div class="col d-grid">
-                                <input type="radio" id="genderOption2" class="btn-check" name="gender" value="F">
+                                <input required type="radio" id="genderOption2" class="btn-check" name="gender" value="F">
                                 <label for="genderOption2" class="btn btn-outline-dark rounded-1 f08 py-2">여자</label>
                             </div>
                         </div>
@@ -268,7 +268,7 @@
                         </div>
                         <div class="row pt-2">
                             <div class="col d-grid">
-                                <input type="date" name="birth" id="inputBirth" class="border col py-2 px-2 bg-white rounded-0 borderInput"  th:value="${#dates.format(#dates.createNow(), 'yyyy-MM-dd')}">
+                                <input required type="date" name="birth" id="inputBirth" class="border col py-2 px-2 bg-white rounded-0 borderInput"  th:value="${#dates.format(#dates.createNow(), 'yyyy-MM-dd')}">
                             </div>
                         </div>
                     </div>
@@ -376,60 +376,75 @@
 
             const inputId = document.getElementById("inputId");
             const confirmResult = document.getElementById("confirmResult");
-            if(inputId.value == '' || confirmResult.innerText=="이미 사용중인 아이디입니다") {
-                inputId.focus();
+
+            if(inputId.value==""){
+                confirmResult.innerText = "아이디를 입력해주세요";
+                confirmResult.classList.add("text-danger")
+                inputId.classList.add("border-bottom")
+                inputId.classList.add("border-danger")
                 return;
             }
 
-            const inputPw = document.getElementById("inputPw");
-            if(inputPw.value == '') {
-                inputPw.focus();
-                return;
-            }
+            const url = `/api/user/isExistAccount?id=${inputId.value}`
+            fetch(url)
+            .then(response => response.json())
+            .then((response) => {
+                if(response.data.isExist){
+                    alert("이미 사용중인 아이디입니다");
+                    inputId.focus();
+                    return;
+                }
 
-            const inputPwConfirm = document.getElementById("inputPwConfirm");
-            const confirmAccountPw = document.getElementById("confirmAccountPw");
-            if(inputPw.value != inputPwConfirm.value){
-                confirmAccountPw.innerText = "비밀번호가 일치하지 않습니다";
-                inputPwConfirm.focus();
-                return;
-            }
+                const inputPw = document.getElementById("inputPw");
+                if(inputPw.value == '') {
+                    inputPw.focus();
+                    return;
+                }
 
-            const inputNickname = document.getElementById("inputNickname");
-            if(inputNickname.value == ''){
-                inputNickname.focus();
-                return;
-            }
+                const inputPwConfirm = document.getElementById("inputPwConfirm");
+                const confirmAccountPw = document.getElementById("confirmAccountPw");
+                if(inputPw.value != inputPwConfirm.value){
+                    confirmAccountPw.innerText = "비밀번호가 일치하지 않습니다";
+                    inputPwConfirm.focus();
+                    return;
+                }
 
-            const inputEmail = document.getElementById("inputEmail");
-            if(inputEmail.value == ''){
-                inputEmail.focus();
-                return;
-            }
+                const inputNickname = document.getElementById("inputNickname");
+                if(inputNickname.value == ''){
+                    inputNickname.focus();
+                    return;
+                }
 
-            const inputName = document.getElementById("inputName");
-            if(inputName.value == ''){
-                inputName.focus();
-                return;
-            }
-            
-            const inputPhone = document.getElementById("inputPhone");
-            if(inputPhone.value == ''){
-                inputPhone.focus();
-                return;
-            }
+                const inputEmail = document.getElementById("inputEmail");
+                if(inputEmail.value == ''){
+                    inputEmail.focus();
+                    return;
+                }
 
-            const inputBirth = document.getElementById("inputBirth");
-            if(inputBirth.value == ''){
-                inputBirth.focus();
-                return;
-            }
+                const inputName = document.getElementById("inputName");
+                if(inputName.value == ''){
+                    inputName.focus();
+                    return;
+                }
+                
+                const inputPhone = document.getElementById("inputPhone");
+                if(inputPhone.value == ''){
+                    inputPhone.focus();
+                    return;
+                }
 
-            //아이디 중복검사
-            //이메일인증, 유효성검사
+                const inputBirth = document.getElementById("inputBirth");
+                if(inputBirth.value == ''){
+                    inputBirth.focus();
+                    return;
+                }
 
-            const registerForm = document.getElementById("registerForm");
-            registerForm.submit();
+                //아이디 중복검사
+                //이메일인증, 유효성검사
+
+                const registerForm = document.getElementById("registerForm");
+                registerForm.submit();
+            })
         }
     </script>
 
