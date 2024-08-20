@@ -14,13 +14,12 @@
     <style>
         .floating-btn {
             position: fixed;
-            /*위치*/
             bottom: 6rem;
-            right: 0.5rem;
+            right: 25rem;
             background-color: #28323C;
             color: white;
-            border-radius: 1.5rem;
-            width: auto;
+            border-radius: 1.2rem;
+            width: 6.5rem;
             height: 2.8rem;
             padding: 0 1rem;
             display: flex;
@@ -28,6 +27,7 @@
             align-items: center;
             font-size: 1rem;
         }
+
         .floating-btn .plus-icon {
             position: relative;
             top: 0;
@@ -213,7 +213,6 @@
         </a>
     </div>
 </div>
-<div th:replace="secondhandProduct/commonModal::registeringLocation"></div>
 <!--상단네비-->
 <div class="container-fluid g-0 bg-white fixed-top">
     <div class="row py-2 mx-2">
@@ -254,10 +253,10 @@
             <span class="me-3" style="font-size: 1.2rem;">
                 <i class="bi bi-bell"></i>
             </span>
-            <a href="/secondhandProduct/myPage  ">
+            <a href="/secondhandProduct/myPage">
                 <span style="font-size: 1.2rem; color: black">
-                <i class="bi bi-gear"></i>
-                </span><span><i class="bi bi-dot position-absolute king" style="color: rgb(233, 40, 40); font-size: 1.5em;"></i></span>
+                    <i class="bi bi-gear"></i>
+                    </span><span><i class="bi bi-dot position-absolute king" style="color: rgb(233, 40, 40); font-size: 1.5em;"></i></span>
                 </span>
             </a>
         </div>
@@ -390,5 +389,6 @@
         }
     });
 </script>
+<script src="/public/js/lockLikeMobile.js"></script>
 </body>
 </html>

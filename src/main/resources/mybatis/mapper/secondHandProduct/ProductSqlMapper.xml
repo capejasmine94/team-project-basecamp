@@ -249,9 +249,9 @@
     <!-- 좋아요 거래후기 저장 -->
     <insert id="insertLikeReview">
         INSERT INTO bc_secondhand_product_like_transaction_review
-            (buyer_user_id, like_review_id)
+            (product_id, buyer_user_id, seller_user_id, like_review_id)
         values
-            (#{buyer_user_id} , #{like_review_id});
+            (#{product_id}, #{buyer_user_id}, #{seller_user_id}, #{like_review_id})
     </insert>
     <!-- 좋아요 선택지 횟수 업데이트 -->
     <update id="selectedLikeReviewCount">
@@ -272,9 +272,9 @@
     <!-- 싫어요 거래후기 저장 -->
     <insert id="insertUnlikeReview">
         INSERT INTO bc_secondhand_product_unlike_transaction_review
-            (buyer_user_id, unlike_review_id)
+            (product_id, buyer_user_id, seller_user_id, unlike_review_id)
         values
-            (#{buyer_user_id} , #{unlike_review_id})
+            (#{product_id}, #{buyer_user_id}, #{seller_user_id}, #{unlike_review_id})
     </insert>
     <!-- 싫어요 선택지 횟수 업데이트 -->
     <update id="selectedUnlikeReviewCount">
@@ -283,13 +283,35 @@
             unlike_count = unlike_count + 1
         WHERE unlike_review_id = #{unlike_review_id}
     </update>
-    <!--    -->
+    <!-- 싫어요 유저 거래후기 리스트 -->
     <select id="myUnlikeReviewList" resultType="com.bulmeong.basecamp.secondHandProduct.dto.UnLikeTransactionReviewListDto">
         SELECT tr.*, ur.unlike_review_content , ur.unlike_count
         FROM bc_secondhand_product_unlike_transaction_review tr
                  JOIN bc_secondhand_unlike_review ur ON ur.unlike_review_id = tr.unlike_review_id
         WHERE tr.buyer_user_id = #{buyer_user_id}
         GROUP BY ur.unlike_review_id
+    </select>
+    <!-- 유저 닉네임 받아서 id 가져오기 -->
+    <select id="getBuyerUserId" resultType="int">
+        SELECT id FROM bc_user WHERE nickname = #{nickname}
+    </select>
+    <!-- user_id에 등록된 위치 받아오    기 -->
+    <select id="getSessionUserArea" resultType="String">
+        SELECT selected_area_name FROM bc_secondhand_location WHERE user_id = #{user_id}
+    </select>
+    <!-- 판매자 -> 구매자 거래후기 확인하기 -->
+    <select id="checkSellerReviews" resultType="int">
+        SELECT
+            (SELECT COUNT(*)
+             FROM bc_secondhand_product_like_transaction_review
+             WHERE seller_user_id = #{seller_user_id}
+               AND product_id = #{product_id})
+                +
+            (SELECT COUNT(*)
+             FROM bc_secondhand_product_unlike_transaction_review
+             WHERE seller_user_id = #{seller_user_id}
+               AND product_id = #{product_id})
+                AS total_reviews
     </select>
 
 

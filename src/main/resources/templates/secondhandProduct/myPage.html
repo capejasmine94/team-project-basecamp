@@ -174,7 +174,7 @@
             <span th:text="${session.sessionUserInfo.nickname}" th:unless="${session.sessionUserInfo == null}"></span>
         </div>
         <div class="col text-end" style="font-size: 0.75rem">
-            <a href="">
+            <a href="/user/myPage">
                 <span class="border px-2 py-2" style="color: black">프로필 보기</span>
             </a>
         </div>
@@ -187,24 +187,24 @@
     </div>
 <!--  관심  -->
     <div class="row mt-2 mx-2">
-        <a th:href="@{/secondhandProduct/watchlistPage(user_id=${session.sessionUserInfo.id})}" class="col link-noneAndColor" style="font-size: 1.1rem; font-weight: 500">
+        <a th:href="@{/secondhandProduct/watchlistPage(user_id=${session.sessionUserInfo.id})}" class="col link-noneAndColor" style="font-size: 1.1rem; font-weight: 400">
             <i class="bi bi-heart"></i><span class="ms-2">관심목록</span>
         </a>
     </div>
 <!-- 판매   -->
     <div class="row mt-2 mx-2">
-        <a href="/secondhandProduct/mySalesHistoryPage" class="col link-noneAndColor" style="font-size: 1.1rem; font-weight: 500">
+        <a href="/secondhandProduct/mySalesHistoryPage" class="col link-noneAndColor" style="font-size: 1.1rem; font-weight: 400">
             <i class="bi bi-clipboard-check"></i><span class="ms-2">판매내역</span>
         </a>
     </div>
 <!--  구매  -->
     <div class="row mt-2 mx-2">
-        <a href="/secondhandProduct/purchaseHistoryPage" class="col link-noneAndColor" style="font-size: 1.1rem; font-weight: 500">
+        <a href="/secondhandProduct/purchaseHistoryPage" class="col link-noneAndColor" style="font-size: 1.1rem; font-weight: 400">
             <i class="bi bi-cart"></i><span class="ms-2">구매내역</span>
         </a>
     </div>
     <div class="row mt-2 mx-2">
-        <a th:href="@{/secondhandProduct/myReviewPage(buyer_user_id=${session.sessionUserInfo.id})}" class="col link-noneAndColor" style="font-size: 1.1rem; font-weight: 500">
+        <a th:href="@{/secondhandProduct/myReviewPage(buyer_user_id=${session.sessionUserInfo.id})}" class="col link-noneAndColor" style="font-size: 1.1rem; font-weight: 400">
             <i class="bi bi-clipboard"></i><span class="ms-2">거래후기</span>
         </a>
     </div>
@@ -334,5 +334,6 @@
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://kit.fontawesome.com/7b271bba58.js" crossorigin="anonymous"></script>
+<script src="/public/js/lockLikeMobile.js"></script>
 </body>
 </html>

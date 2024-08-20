@@ -55,43 +55,61 @@
   </div>
 </div>
 
-<form action="/secondhandProduct/transactionReview" method="post">
+<!-- 리뷰 등록시 안내문 -->
+<div class="container-fluid g-0" style="margin-top: 15rem" th:if="${checkMessage != null}">
+  <div class="row">
+    <div class="col text-center">
+      <span th:text="${checkMessage}" style="font-weight: 500; color: #868e96;"></span>
+    </div>
+  </div>
+</div>
+
+<form action="/secondhandProduct/transactionReview" method="get">
   <div class="container-fluid g-0" style="margin-top: 7rem">
-    <div class="row mx-2 py-3 border-bottom" th:each="productBuyerList, iterStat : ${productBuyerDtoList}">
-      <div class="col-1 d-flex align-items-center">
-        <!-- 라디오 버튼 클릭 시 바이어 아이디와 닉네임을 히든 필드에 설정 -->
-        <input name="nickname" type="radio" th:value="${productBuyerList.nickname}" th:checked="${iterStat.index == 0}"
-               onclick="setBuyerInfo(${productBuyerList.buyer_user_id}, '${productBuyerList.nickname}')" id="radio_${iterStat.index}">
-      </div>
-      <div class="col-auto pe-0 buyer-profile-custom">
-        <img src="/public/img/secondHandProductImage/profile.png">
-      </div>
-      <div class="col d-flex align-items-center">
-        <div>
-          <div class="row-auto">
-            <div class="col">
-              <span class="me-2" style="font-weight: 600" th:text="${productBuyerList.nickname}">구매자 아이디</span>
-            </div>
-            <div class="col" style="font-weight: 400; font-size: 0.8rem; color: #868e96;">
-              <span>마지막 대화</span>
-              <span th:text="${T(com.bulmeong.basecamp.common.util.TimeUtil).timeAgo(productBuyerList.message_time)}">시간</span>
+<!-- 리뷰 미등록  -->
+    <div th:if="${checkMessage == null}">
+      <div class="row mx-2 py-3 border-bottom" th:each="productBuyerList, iterStat : ${productBuyerDtoList}">
+        <div class="col-1 d-flex align-items-center">
+          <!-- 라디오 버튼 클릭 시 바이어 아이디와 닉네임을 히든 필드에 설정 -->
+          <input name="nickname" type="radio"
+                 th:value="${productBuyerList.nickname}" th:checked="${iterStat.index == 0}">
+        </div>
+        <div class="col-auto pe-0 buyer-profile-custom">
+          <img src="/public/img/secondHandProductImage/profile.png">
+        </div>
+        <div class="col d-flex align-items-center">
+          <div>
+            <div class="row-auto">
+              <div class="col">
+                <span class="me-2" style="font-weight: 600" th:text="${productBuyerList.nickname}">구매자 아이디</span>
+              </div>
+              <div class="col" style="font-weight: 400; font-size: 0.8rem; color: #868e96;">
+                <span>마지막 대화</span>
+                <span th:text="${T(com.bulmeong.basecamp.common.util.TimeUtil).timeAgo(productBuyerList.message_time)}">시간</span>
+              </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
-    <div class="row mt-4">
-      <a th:href="@{/secondhandProduct/conversationChatPage(product_id=${param.product_id})}" class="col text-center" style="color: black">
-        <span style="color: #868e96;">최근 채팅 목록에서 구매자 찾기</span>
-      </a>
-    </div>
-    <div class="container g-0 py-2 bg-white fixed-bottom">
-      <div class="row mx-2">
-        <div class="col d-grid">
-          <input type="hidden" name="product_id" th:value="${productTotalMap.AllContentsDto.product_id}">
-          <input type="hidden" id="buyer_user_id" name="buyer_user_id" th:value="${productBuyerDtoList[0].buyer_user_id}">
-          <input type="hidden" id="buyer_nickname" name="buyer_nickname" th:value="${productBuyerDtoList[0].nickname}">
-          <button type="submit" class="btn py-2" style="background-color: #28323C; color: white">구매자 선택</button>
+  <!-- 채팅방이 있을때 -->
+      <div class="row mt-4" th:if="${!#lists.isEmpty(productBuyerDtoList)}">
+        <a th:href="@{/secondhandProduct/conversationChatPage(product_id=${param.product_id})}" class="col text-center" style="color: black">
+          <span style="color: #868e96;">최근 채팅 목록에서 구매자 찾기</span>
+        </a>
+      </div>
+  <!-- 채팅방이 없을때 -->
+      <div class="row" th:if="${#lists.isEmpty(productBuyerDtoList)}" style="margin-top: 15rem">
+        <a th:href="@{/secondhandProduct/conversationChatPage(product_id=${param.product_id})}" class="col text-center" style="color: black">
+          <span style="color: #868e96;">최근 채팅 목록에 찾기</span>
+        </a>
+      </div>
+      <div class="container g-0 py-2 bg-white fixed-bottom">
+        <div class="row mx-2">
+          <!-- 채팅방이 없으면 비활성화 -->
+          <div class="col d-grid" th:if="${!#lists.isEmpty(productBuyerDtoList)}">
+            <input type="hidden" name="product_id" th:value="${productTotalMap.AllContentsDto.product_id}">
+            <button type="submit" class="btn py-2" style="background-color: #28323C; color: white">구매자 선택</button>
+          </div>
         </div>
       </div>
     </div>
@@ -99,18 +117,8 @@
 </form>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="/public/js/lockLikeMobile.js"></script>
 <script>
-  document.addEventListener("DOMContentLoaded", function() {
-    const firstRadioButton = document.querySelector('input[name="nickname"]:checked');
-    if (firstRadioButton) {
-      setBuyerInfo(firstRadioButton.getAttribute('onclick').match(/\d+/)[0], firstRadioButton.value);
-    }
-  });
-
-  function setBuyerInfo(buyerUserId, buyerNickname) {
-    document.getElementById('buyer_user_id').value = buyerUserId;  // 바이어 ID 설정
-    document.getElementById('buyer_nickname').value = buyerNickname;  // 바이어 닉네임 설정
-  }
 </script>
 </body>
 </html>

@@ -127,10 +127,7 @@
         <div class="col">
             <div class="row-auto">
                 <div class="col">
-                    <span th:if="${productTotalDtoList.userDto != null}" th:text="${productTotalDtoList.userDto.nickname}" class="post-title-font">닉네임</span>
-                    <span th:if="${productTotalDtoList.userDto == null}" class="post-title-font">닉네임 정보 없음</span>
-        <!-- 스케줄러 빼면 위에 두개 뺄것 -->
-<!--                    <span th:text="${productTotalDtoList.userDto.nickname}" class="post-title-font">닉네임</span>-->
+                    <span th:text="${productTotalDtoList.userDto.nickname}" class="post-title-font">닉네임</span>
                 </div>
                 <div class="col post-subtitle-font">
                     <span th:text="${productTotalDtoList.AllContentsDto.polygon_name}">위치</span>
@@ -431,8 +428,7 @@
             .then(response => response.json())
             .then(response => {
                 if (response.result === "success") {
-                    window.location.href = "/secondhandProduct/buyerSelectionPage?product_id=" + productId;
-                    // window.location.href = "/secondhandProduct/postDetailsPage?product_id=" + productId + "&user_id=" + sellerUserId + "&polygon_name=" + selectedName;
+                    window.location.href = "/secondhandProduct/buyerSelectionPage?product_id=" + productId + "&user_id=" + sellerUserId;
                 }
             })
 
@@ -605,5 +601,6 @@
         });
     }
 </script>
+<script src="/public/js/lockLikeMobile.js"></script>
 </body>
 </html>

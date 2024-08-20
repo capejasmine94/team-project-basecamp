@@ -28,7 +28,7 @@
 <!-- 상단 -->
 <div class="container py-2 g-0 bg-white fixed-top">
     <div class="row mx-2">
-        <a href="javascript:history.back()" class="col" style="color: black; font-size: 1.1rem">
+        <a href="/secondhandProduct/myPage" class="col" style="color: black; font-size: 1.1rem">
             <i class="bi bi-chevron-left"></i>
         </a>
         <div class="col-auto" style="font-size: 1.1rem">나의 판매내역</div>
@@ -103,6 +103,38 @@
     </div>
 </div>
 
+<!-- transactionModal 메뉴 모달 -->
+<div class="modal fade modal-bottom" id="transactionModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="list-group">
+                <button type="button" class="list-group-item list-group-item-action text-danger" data-bs-toggle="modal" data-bs-target="#tDeleteModal">삭제</button>
+                <button type="button" class="list-group-item list-group-item-action" data-bs-dismiss="modal">취소</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- transactionModal 삭제 모달-->
+<div class="modal fade" id="tDeleteModal" tabindex="-1" style="overflow: hidden">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content" style="border-radius: 1rem">
+            <div class="row modal-header">
+                <div class="col modal-title" style="font-size: 1rem">
+                    <span class="ms-1">게시글을 삭제할까요?</span>
+                </div>
+            </div>
+            <div class="row modal-footer">
+                <div class="col pe-0 d-grid">
+                    <button type="button" class="btn border" data-bs-dismiss="modal">취소</button>
+                </div>
+                <div class="col ps-0 d-grid">
+                    <button onclick="tDeletePost()" type="button" class="btn btn-delete">삭제</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://kit.fontawesome.com/7b271bba58.js" crossorigin="anonymous"></script>
 <script>
@@ -138,6 +170,14 @@
             productId = button.getAttribute('data-product-id'); // product_id 값 저장
         });
     }
+    // transactionModal 모달 트리거 버튼 값 받아오기
+    var transactionModal = document.getElementById('transactionModal');
+    if (transactionModal) {
+        transactionModal.addEventListener('show.bs.modal', function (event) {
+            var tButton = event.relatedTarget;
+            productId = tButton.getAttribute('data-product-id'); // product_id 값 저장
+        });
+    }
 
     // sales 탭 모달 -> 게시글 수정
     function editPost() {
@@ -157,9 +197,21 @@
         fetch(url)
             .then(response => response.json())
             .then(response => {
-                window.location.href = "/secondhandProduct/mySalesHistoryPage?product_id=" + productId;
+                window.location.href = "/secondhandProduct/mySalesHistoryPage";
+                // window.location.href = "/secondhandProduct/mySalesHistoryPage?product_id=" + productId;
+            })
+    }
+    // transactionModal 탭 모달 -> 게시글 삭제
+    function tDeletePost() {
+        const url = "/api/secondhandProduct/deletePost?product_id=" + productId
+        fetch(url)
+            .then(response => response.json())
+            .then(response => {
+                window.location.href = "/secondhandProduct/mySalesHistoryPage";
+                // window.location.href = "/secondhandProduct/mySalesHistoryPage?product_id=" + productId;
             })
     }
 </script>
+<script src="/public/js/lockLikeMobile.js"></script>
 </body>
 </html>

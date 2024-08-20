@@ -76,6 +76,10 @@ public interface ProductSqlMapper {
     public void selectedUnlikeReviewCount(int unlike_review_id);
     public List<UnLikeTransactionReviewListDto> myUnlikeReviewList(int buyer_user_id);
 
+    public int getBuyerUserId(String nickname);
+    public String getSessionUserArea(int user_id);
+
+    public int checkSellerReviews(int seller_user_id, int product_id);
 
 
 

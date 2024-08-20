@@ -1,6 +1,5 @@
 package com.bulmeong.basecamp.secondHandProduct.controller;
 
-import com.bulmeong.basecamp.common.util.Utils;
 import com.bulmeong.basecamp.secondHandProduct.dto.*;
 import com.bulmeong.basecamp.secondHandProduct.service.ChatService;
 import com.bulmeong.basecamp.secondHandProduct.service.LocationService;
@@ -242,7 +241,6 @@ public class ProductController {
 
 
         Map<String, Object> productTotalDtoList = productService.selectSecondhandDetailProduct(product_id);
-        System.out.println(productTotalDtoList);
         model.addAttribute("productTotalDtoList", productTotalDtoList);
 
 
@@ -439,34 +437,45 @@ public class ProductController {
 
     // 거래완료 -> 판매자 선택
     @GetMapping("buyerSelectionPage")
-    public String buyerSelectionPage(Model model, HttpSession session,
-                                     @RequestParam("product_id") int product_id) {
+    public String buyerSelectionPage(Model model,
+                                     @RequestParam("product_id") int product_id,
+                                     @RequestParam("user_id") int seller_user_id) {
+
 
         Map<String, Object> productTotalDtoMap = productService.selectSecondhandDetailProduct(product_id);
         model.addAttribute("productTotalMap", productTotalDtoMap);
 
+        int checkReview =  productService.checkSellerReviews(seller_user_id, product_id);
+        if (checkReview > 0) {
+            String checkMessage = "후기를 등록한 제품 입니다.";
+            model.addAttribute("checkMessage", checkMessage);
+            return "secondhandProduct/buyerSelectionPage";
+        }
         // 채팅방 때문에 가져옴
-        UserDto sessionUserInfo = (UserDto) session.getAttribute("sessionUserInfo");
         ProductBuyerDto productBuyerDto = new ProductBuyerDto();
         productBuyerDto.setProduct_id(product_id);
-        productBuyerDto.setSeller_user_id(sessionUserInfo.getId());
+        productBuyerDto.setSeller_user_id(seller_user_id);
 
         List<ProductBuyerDto> productBuyerDtoList = productService.getProductBuyerList(productBuyerDto);
+        System.out.println(productBuyerDtoList);
         model.addAttribute("productBuyerDtoList", productBuyerDtoList);
+
 
         return "secondhandProduct/buyerSelectionPage";
     }
     // 거래완료 -> 판매자 선택 -> 거래후기
-    @PostMapping("transactionReview")
+    @GetMapping("transactionReview")
     public String transactionReview(Model model,
                                     @RequestParam("product_id") int productId,
-                                    @RequestParam("buyer_nickname") String nickname,
-                                    @RequestParam("buyer_user_id") int buyerUserId) {
+                                    @RequestParam("nickname") String nickname) {
+        logger.info("transactionReview 시작");
+
+        int buyerUserId = productService.getBuyerUserId(nickname);
 
         Map<String, Object> productTotalDtoMap = productService.selectSecondhandDetailProduct(productId);
         model.addAttribute("productTotalMap", productTotalDtoMap);
         model.addAttribute("nickname", nickname);
-        model.addAttribute("buyer_user_id", buyerUserId);
+        model.addAttribute("buyerUserId", buyerUserId);
 
         return "secondhandProduct/transactionReviewPage";  // 템플릿 파일 이름
     }
@@ -503,9 +512,13 @@ public class ProductController {
     }
 
     @GetMapping("insertReview")
-    public String insertReview(@RequestParam("buyer_user_id") int buyer_user_id,
+    public String insertReview(HttpSession session,
+                               @RequestParam("buyer_user_id") int buyer_user_id,
+                               @RequestParam("product_id") int product_id,
                                @RequestParam(name = "like_review", required = false) int[] like_review,
                                @RequestParam(name = "unlike_review", required = false) int[] unlike_review) {
+
+        UserDto sessionUserInfo = (UserDto) session.getAttribute("sessionUserInfo");
 
         if (like_review != null && like_review.length > 0) {
             for (int likeReview : like_review) {
@@ -515,6 +528,8 @@ public class ProductController {
                 LikeTransactionReview likeReviewDto = new LikeTransactionReview();
                 likeReviewDto.setLike_review_id(likeReview);
                 likeReviewDto.setBuyer_user_id(buyer_user_id);
+                likeReviewDto.setProduct_id(product_id);
+                likeReviewDto.setSeller_user_id(sessionUserInfo.getId());
                 productService.insertLikeReview(likeReviewDto);
             }
         }
@@ -526,11 +541,14 @@ public class ProductController {
                 UnlikeTransactionReview unlikeReviewDto = new UnlikeTransactionReview();
                 unlikeReviewDto.setUnlike_review_id(unlikeReview);
                 unlikeReviewDto.setBuyer_user_id(buyer_user_id);
+                unlikeReviewDto.setProduct_id(product_id);
+                unlikeReviewDto.setSeller_user_id(sessionUserInfo.getId());
                 productService.insertUnlikeReview(unlikeReviewDto);
             }
         }
 
-        return "secondhandProduct/mainPage";
+        return "redirect:/secondhandProduct/mainPage";
+
     }
 
 

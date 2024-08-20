@@ -172,5 +172,15 @@ public class ProductService {
     public List<UnLikeTransactionReviewListDto> myUnlikeReviewList(int buyer_user_id) {
         return productSqlMapper.myUnlikeReviewList(buyer_user_id);
     }
+
+    public int getBuyerUserId(String nickname) {
+        return productSqlMapper.getBuyerUserId(nickname);
+    }
+    public String getSessionUserArea(int user_id) {
+        return productSqlMapper.getSessionUserArea(user_id);
+    }
+    public int checkSellerReviews(int seller_user_id, int product_id) {
+        return productSqlMapper.checkSellerReviews(seller_user_id, product_id);
+    }
 }
 
