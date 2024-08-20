@@ -485,38 +485,62 @@
         });
     }
     function initPointList() {
+        function dateGet(date) {
+            const year = date.getFullYear();
+            const month = String(date.getMonth() + 1).padStart(2, '0'); // 월은 0부터 시작하므로 +1
+            const day = String(date.getDate()).padStart(2, '0');
+
+            const formattedDate = `${year}-${month}-${day}`;
+            return formattedDate;
+        }
         const pointList = document.getElementById('pointList');
-        const id = parseInt(new URLSearchParams(window.location.search).get('area_id'));
+        // 현재 페이지의 URL을 가져옵니다.
+        const urlParams = new URLSearchParams(window.location.search);
+        const id = parseInt(urlParams.get('area_id'));
+        const startDate = new Date(urlParams.get('selectDay_start_date'));
+        const endDate = new Date(urlParams.get('selectDay_end_date'));
         let url ='/api/camp/selectArea?area_id=' + id;
         let deleteValue = 0;
         fetch(url)
         .then(response => response.json())
         .then((response) => {
             const curArea = response.data.curAreaUser;
-            for(const point of curArea.pointInfo.point) {
-                const row = document.createElement('div');
-                row.classList.add("row", "ms-1", "mt-1", "pb-1");
-                const name = document.createElement('span');
-                name.classList.add('fw-semibold','ps-0','mb-2');
-                name.innerText = point.name;
-                row.appendChild(name);
-                let url =`/api/camp/selectPoint?point_id=${point.point_id}&number=0`;
-                fetch(url)
-                .then(response => response.json())
-                .then((response) => {
-                    const list = response.data.pointList;
-                    console.log(list);
-                    for(let i = 0; i < list.length; i++) {
-                        const container = document.createElement('div');
-                        container.classList.add('col-auto','border','py-2','px-2','mb-2','ms-1');
-                        container.innerText = i+1;
-                        container.id = `point_${point.point_id}_${i+1}`
-                        container.onclick=function(){selectPoint(i+1, point.point_id,list[i].id)};
-                        row.appendChild(container);
-                    }
+            url = `/api/camp/isAlreadyOrderPointList?area_id=${id}&startDate=${dateGet(startDate)}&endDate=${dateGet(endDate)}`;
+            fetch(url)
+            .then(response => response.json())
+            .then((response) => {
+                const alreadyOrdered = response.data.isAlreadyOrdered;
+                for(const point of curArea.pointInfo.point) {
+                    const row = document.createElement('div');
+                    row.classList.add("row", "ms-1", "mt-1", "pb-1");
+                    const name = document.createElement('span');
+                    name.classList.add('fw-semibold','ps-0','mb-2');
+                    name.innerText = point.name;
+                    row.appendChild(name);
+                    let url =`/api/camp/selectPoint?point_id=${point.point_id}&number=0`;
+                    fetch(url)
+                    .then(response => response.json())
+                    .then((response) => {
+                        const list = response.data.pointList;
+                        console.log(list);
+                        for(let i = 0; i < list.length; i++) {
+                            const container = document.createElement('div');
+                            container.classList.add('col-auto','border','py-2','px-2','mb-2','ms-1');
+                            container.innerText = i+1;
+                            container.id = `point_${point.point_id}_${i+1}`
+                            if(alreadyOrdered.includes(point.id)){
+                                container.classList.add('bg-secondary');
+                            }
+                            else{
+                                container.onclick=function(){selectPoint(i+1, point.point_id,list[i].id)};
+                            }
+                            row.appendChild(container);
+                        }
+                        pointList.appendChild(row);
+                    });
+                }
+              
                 });
-                pointList.appendChild(row);
-            }
         });
     }
     function initSelect() {

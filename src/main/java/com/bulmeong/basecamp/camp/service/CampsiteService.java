@@ -1,4 +1,5 @@
 package com.bulmeong.basecamp.camp.service;
+import java.util.Date;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -554,7 +555,13 @@ public class CampsiteService {
     public List<CampsiteAreaPointDto> pointByPointId(int point_id) {
         return campsiteSqlMapper.pointByPointId(point_id);
     }
-
+    // 이미 예약 되었는지 확인
+    public List<CampsiteAreaPointDto> alreadyOrderedPointListByAreaId(int area_id, Date startDate, Date endDate) {
+        return campsiteSqlMapper.alreadyOrderedPointListByAreaId(area_id, startDate, endDate);
+    }
+    public boolean isAlreadyOrderedByPoint(CampsiteOrderDto orderDto) {
+        return campsiteSqlMapper.isAlreadyOrderedByPoint(orderDto);
+    }
     // 예약 등록
     public void registerOrder(CampsiteOrderDto campsiteOrderDto, int useMileage, String[] carNumbers) {
         campsiteSqlMapper.registerOrder(campsiteOrderDto);

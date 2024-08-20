@@ -1,5 +1,6 @@
 package com.bulmeong.basecamp.camp.mapper;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -97,4 +98,6 @@ public interface CampsiteSqlMapper {
     public int getCountOrderByWaitProgress(@Param("campsite_id") int campsite_id);
     public int getCountOrderBy3Day(@Param("campsite_id") int campsite_id);
     public void cancelOrder(@Param("order_id")int order_id);
+    public boolean isAlreadyOrderedByPoint(CampsiteOrderDto orderDto);
+    public List<CampsiteAreaPointDto> alreadyOrderedPointListByAreaId(@Param("area_id") int area_id, @Param("startDate") Date startDate, @Param("endDate") Date endDate);
 }

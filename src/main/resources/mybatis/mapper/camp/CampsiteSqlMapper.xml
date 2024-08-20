@@ -367,6 +367,24 @@
             )
         </insert>   
 
+        <!-- 이미 예약된 포인트인지 확인 -->
+         <select id="alreadyOrderedPointListByAreaId"  resultType="com.bulmeong.basecamp.camp.dto.CampsiteAreaPointDto">
+            SELECT * 
+            FROM bc_campsite_area_point pt
+            inner join bc_campsite_order odr on
+            odr.point_id = pt.id
+            WHERE area_id = #{area_id} 
+            AND (odr.start_date &lt;= #{endDate} AND odr.end_date >= #{startDate})
+        </select>
+        <select id="isAlreadyOrderedByPoint"  resultType="boolean">
+            SELECT COUNT(*) > 0 
+            FROM bc_campsite_area_point pt
+            inner join bc_campsite_order odr on
+            odr.point_id = pt.id
+            WHERE id = #{id} 
+            AND (odr.start_date &lt;= #{end_date} AND odr.end_date >= #{start_date})
+        </select>
+
         <!-- 포인트 생성 시 첫번째 포인트의 아이디를 포인트 아이디로 -->
         <update id="registerPointId">
             UPDATE bc_campsite_area_point

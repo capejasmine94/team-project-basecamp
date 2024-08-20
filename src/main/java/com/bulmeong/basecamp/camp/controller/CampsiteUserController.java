@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -63,13 +64,16 @@ public class CampsiteUserController {
         @RequestParam(name="area_id",defaultValue = "0") int area_id,
         @RequestParam("adult") int adult,
         @RequestParam("kid") int kid,
-        @RequestParam("car") int car
+        @RequestParam("car") int car,
+        @RequestParam("selectDay_start_date") @DateTimeFormat(pattern = "yyyy-MM-dd") Date startDate,
+        @RequestParam("selectDay_end_date") @DateTimeFormat(pattern = "yyyy-MM-dd") Date endDate
     ) {
         utils.setSession("redirectAfterLogin",utils.currentUrl());
         utils.setModel("adult", adult);
         utils.setModel("kid", kid);
         utils.setModel("car", car);
         utils.setSession("curArea", service.areaInfo(area_id));
+        utils.setModel("startDate", service.alreadyOrderedPointListByAreaId(area_id, startDate, endDate));
         return "camp/user/reservationPage_2";
     }
 
@@ -90,6 +94,9 @@ public class CampsiteUserController {
         @RequestParam(defaultValue = "0", name= "useMileage") int useMileage,
         @RequestParam("number") int number) {
         // 예약 번호
+        if(service.isAlreadyOrderedByPoint(campsiteOrderDto)){
+            return "/rorre";
+        }
         campsiteOrderDto.setReservation_code(utils.randomCode(12));
         service.registerOrder(campsiteOrderDto, useMileage, carNumbers);
         utils.setSession("order", service.getOrderByCode(campsiteOrderDto.getReservation_code()));
