@@ -69,7 +69,7 @@ public class MainController {
         MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
 		params.add("grant_type", "authorization_code");
 		params.add("client_id", "111ec870310ec7e3890df38c0637862b");
-		params.add("redirect_uri", "http://localhost:8888/auth/kakao/callback");
+		params.add("redirect_uri", "https://basecamp.null-pointer-exception.com/auth/kakao/callback");
 		params.add("code", code);
 
         HttpEntity<MultiValueMap<String, String>> kakaoTokenRequest = new HttpEntity<>(params, headers);
