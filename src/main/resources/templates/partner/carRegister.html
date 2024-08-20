@@ -54,14 +54,14 @@
                                 </ul>
                             </div>
                             <!-- 1단계 -->
-                            <div id="step-1" class="step-container active  font-roboto px-4">                     
+                            <div id="step-1" class="step-container active px-4">                     
                                 <div class="row">
-                                    <div class="col px-0 pt-2">
+                                    <div class="col px-0 pt-3">
                                         <div class="card">
-                                            <div class="card-body">
+                                            <div class="card-body" style="margin-right: 1.8rem;">
                                                 <div class="form-group">
                                                     <label for="option" class="control-label fw-semibold pb-3">캠핑카 유형</label>
-                                                    <select class="form-select" aria-label="Default select example" id="option" name="category_id">
+                                                    <select class="form-select" style="margin-left: 0.75rem;" aria-label="Default select example" id="option" name="category_id">
                                                         <option th:value="'selectPlease'" th:text="'캠핑카 유형 선택'"></option>
                                                         <option th:each="carTypeDto : ${carType}" 
                                                                 th:value="${carTypeDto.id}" 
@@ -73,28 +73,28 @@
                                     </div>
                                 </div>
                                 <div class="row">
-                                    <div class="col-6 ps-0 pe-2"> <!-- 등록 상품명 -->
-                                        <div class="card" style="height: 90%;">
-                                            <div class="card-body">
+                                    <div class="col-6 ps-0 pe-2 pt-3"> <!-- 등록 상품명 -->
+                                        <div class="card" style="height: 93%;">
+                                            <div class="card-body" style="margin-right: 1.8rem;">
                                                 <div class="form-group">
                                                     <label for="product_name" class="control-label fw-semibold pb-3">등록차량명</label>
-                                                    <input name="product_name" type="text" class="form-control custom-bottom-border ps-0" placeholder="등록차량명을 입력하세요" id="product_name" maxlength="200">
-                                                    <div class="new-fs-7" style="color: #7C7B7B;">차량 명칭은 <span class="fw-bold text-danger">최대 200자 내로</span> 입력해 주세요. 간결하고 명확한 명칭이 고객에게 더욱 직관적입니다.</div>
+                                                    <input name="product_name" type="text" class="form-control custom-bottom-border ps-0" style="margin-left: 0.75rem;" placeholder="등록차량명을 입력하세요" id="product_name" maxlength="200">
+                                                    <div class="new-fs-75" style="color: #7C7B7B; margin-left: 0.75rem;">차량 명칭은 <span class="fw-bold text-danger">최대 200자 내로</span> 입력해 주세요. 간결하고 명확한 명칭이 고객에게 더욱 직관적입니다.</div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-6 px-0"> <!-- 썸네일 이미지 등록 -->
+                                    <div class="col-6 px-0 pt-3"> <!-- 썸네일 이미지 등록 -->
                                         <div class="card">
-                                            <div class="card-body">
+                                            <div class="card-body" style="margin-right: 1.3rem;">
                                                 <div class="form-group">
                                                     <div class="">
                                                         <label for="main_img" class="control-label fw-semibold pb-3"> 썸네일 이미지 </label>
-                                                        <div id="upload_main_image"></div>
-                                                        <div class="new-fs-7">
-                                                            <div style="color: #7C7B7B;">최대 업로드 사이즈 : <span class="fw-bold text-dark">256 MB. 파일</span>을 첨부하세요.</div>
-                                                            <div style="color: #7C7B7B;">파일은 <span class="fw-bold text-dark">JPEG, PNG 형식</span>으로 업로드해 주세요.</div>
-                                                            <div style="color: #7C7B7B;">※ 업로드하는 모든 이미지는 <sapn class="fw-bold text-danger">저작권법을 준수</sapn>해야 하며, <div class="fst-italic fw-bold text-decoration-underline">저작권 침해가 의심되는 경우, <span class="fw-bold text-danger">해당 이미지는 제거</span>될 수 있습니다.</div></div>
+                                                        <div id="upload_main_image" style="margin-left: 0.75rem;"></div>
+                                                        <div class="new-fs-75">
+                                                            <div style="color: #7C7B7B; margin-left: 0.75rem;">최대 업로드 사이즈 : <span class="fw-bold text-dark">256 MB. 파일</span>을 첨부하세요.</div>
+                                                            <div style="color: #7C7B7B; margin-left: 0.75rem;">파일은 <span class="fw-bold text-dark">JPEG, PNG 형식</span>으로 업로드해 주세요.</div>
+                                                            <div style="color: #7C7B7B; margin-left: 0.75rem;">※ 업로드하는 모든 이미지는 <sapn class="fw-bold text-danger">저작권법을 준수</sapn>해야 하며, <div class="fst-italic fw-bold text-decoration-underline">저작권 침해가 의심되는 경우, <span class="fw-bold text-danger">해당 이미지는 제거</span>될 수 있습니다.</div></div>
                                                         </div>
                                                     </div> 
                                                     <!-- <div class="upload-container" id="main_img">
@@ -111,11 +111,11 @@
                                 <div class="row pt-3">
                                     <div class="col px-0">
                                         <div class="card">
-                                            <div class="card-body">
+                                            <div class="card-body" style="margin-right: 1.8rem;">
                                                 <div class="form-group">
                                                     <label for="short_description" class="control-label fw-semibold pb-3">한줄 소개</label>
-                                                    <input name="short_description" type="text" class="form-control custom-bottom-border ps-0" placeholder="한줄 소개 입력하세요" id="short_description" maxlength="200">
-                                                    <div class="new-fs-7" style="color: #7C7B7B;">한 줄 소개는 <span class="fw-bold text-danger">최대 100자까지</span> 입력 가능합니다. 차량의 핵심 매력을 간단명료하게 표현해 주세요.</div>
+                                                    <input name="short_description" type="text" class="form-control custom-bottom-border ps-0" style="margin-left: 0.75rem;" placeholder="한줄 소개 입력하세요" id="short_description" maxlength="200">
+                                                    <div class="new-fs-75" style="color: #7C7B7B; margin-left: 0.75rem;">한 줄 소개는 <span class="fw-bold text-danger">최대 100자까지</span> 입력 가능합니다. 차량의 핵심 매력을 간단명료하게 표현해 주세요.</div>
                                                 </div>
                                             </div>
                                         </div>
@@ -125,13 +125,13 @@
                                 <div class="row pt-3">
                                     <div class="col px-0">
                                         <div class="card">
-                                            <div class="card-body">
+                                            <div class="card-body" style="margin-right: 1.8rem;">
                                                 <div class="form-group">
                                                     <label for="detailed_description" class="control-label fw-semibold pb-3">캠핑카 소개</label>
-                                                    <textarea name="detailed_description" class="form-control" placeholder="해당 차량에 대해 상세하게 소개하세요" id="detailed_description"></textarea>
-                                                    <div class="new-fs-7" style="color: #7C7B7B;">차량의 상세 정보를 입력할 때는 정확성을 기해 주십시오. 해당 정보는 고객이 차량을 선택하는 중요한 기준이 됩니다.</div>
-                                                    <div class="new-fs-7" style="color: #7C7B7B;">모든 필드를 완성하고 정보가 최신 상태인지 확인하세요. 정확하지 않은 정보는 고객의 실망을 초래할 수 있습니다.</div>
-                                                    <div class="new-fs-7" style="color: #7C7B7B;"> <span class="fw-bold text-danger">최대 1000자까지</span> 입력 가능합니다.</div>
+                                                    <textarea name="detailed_description" class="form-control" style="margin-left: 0.75rem;" placeholder="해당 차량에 대해 상세하게 소개하세요" id="detailed_description"></textarea>
+                                                    <div class="new-fs-75 ps-1 pt-1" style="color: #7C7B7B; margin-left: 0.75rem;">차량의 상세 정보를 입력할 때는 정확성을 기해 주십시오. 해당 정보는 고객이 차량을 선택하는 중요한 기준이 됩니다.</div>
+                                                    <div class="new-fs-75 ps-1" style="color: #7C7B7B; margin-left: 0.75rem;">모든 필드를 완성하고 정보가 최신 상태인지 확인하세요. 정확하지 않은 정보는 고객의 실망을 초래할 수 있습니다.</div>
+                                                    <div class="new-fs-75 ps-1" style="color: #7C7B7B; margin-left: 0.75rem;"> <span class="fw-bold text-danger">최대 1000자까지</span> 입력 가능합니다.</div>
                                                 </div>
                                             </div>
                                         </div>
@@ -140,13 +140,12 @@
                                 <!-- 상세이미지-->
                                 <div class="row pt-3">
                                     <div class="col px-0">
-                                        
                                         <div class="card">
-                                            <div class="card-body">
+                                            <div class="card-body" style="margin-right: 1.3rem;">
                                                 <div class="form-group">
                                                     <label for="detailedImg" class="control-label fw-semibold pb-3">상세 이미지</label>
-                                                    <div id="upload_detailedImg"></div>
-                                                    <div class="new-fs-7">
+                                                    <div id="upload_detailedImg" style="margin-left: 0.75rem;"></div>
+                                                    <div class="new-fs-75" style="margin-left: 0.75rem;">
                                                         <div style="color: #7C7B7B;">최대 업로드 사이즈 : <span class="fw-bold text-dark">256 MB. 파일</span>을 첨부하세요.</div>
                                                         <div style="color: #7C7B7B;">파일은 <span class="fw-bold text-dark">JPEG, PNG 형식</span>으로 업로드해 주세요.</div>
                                                         <div style="color: #7C7B7B;">※ 업로드하는 모든 이미지는 <sapn class="fw-bold text-danger">저작권법을 준수</sapn>해야 하며, <div class="fst-italic fw-bold text-decoration-underline">저작권 침해가 의심되는 경우, <span class="fw-bold text-danger">해당 이미지는 제거</span>될 수 있습니다.</div></div>
@@ -160,15 +159,19 @@
                                 <div class="row pt-3">
                                     <div class="col px-0">
                                         <div class="card">
-                                            <div class="card-body">
+                                            <div class="card-body" style="margin-right: 1.8rem;">
                                                 <div class="form-group">
-                                                    <label for="garage_address" class="control-label fw-semibold pb-3">차고지 주소</label>
-                                                    <div class="form-check">
-                                                        <input type="checkbox" id="sameAsCompAddress" class="form-check-input">
-                                                        <label for="sameAsCompAddress" class="form-check-label">사업장 주소와 동일</label>
+                                                    <div class="row">
+                                                        <div class="col d-flex-justify-betw">
+                                                            <label for="garage_address" class="control-label fw-semibold pb-3">차고지 주소</label>
+                                                            <div class="form-check" style="margin-left: 0.75rem;">
+                                                                <input type="checkbox" id="sameAsCompAddress" class="form-check-input ps-0">
+                                                                <label for="sameAsCompAddress" class="form-check-label">사업장 주소와 동일</label>
+                                                            </div>
+                                                            <input name="garage_address" type="text" class="form-control custom-bottom-border ps-0" style="margin-left: 0.75rem;" placeholder="차고지 주소를 입력하세요" id="garage_address" maxlength="200">
+                                                            <div class="new-fs-75" style="color: #7C7B7B; margin-left: 0.75rem;">차고지 주소는 정확하게 입력해 주세요. 부정확한 주소는 예약시 고객의 혼란을 야기할 수 있습니다.</div>
+                                                        </div>
                                                     </div>
-                                                    <input name="garage_address" type="text" class="form-control custom-bottom-border ps-0" placeholder="차고지 주소를 입력하세요" id="garage_address" maxlength="200">
-                                                    <div class="new-fs-7" style="color: #7C7B7B;">차고지 주소는 정확하게 입력해 주세요. 부정확한 주소는 예약시 고객의 혼란을 야기할 수 있습니다.</div>
                                                 </div>
                                             </div>
                                         </div>
@@ -195,13 +198,13 @@
                                                         <div class="row d-flex justify-content-between">
                                                             <div class="col">
                                                                 <label for="seating_capacity" class="control-label new-fs-85 fw-semibold pb-3">동승인원수</label>
-                                                                <input name="seating_capacity" type="number" class="form-control custom-bottom-border new-fs-85 ps-0" id="seating_capacity" min="1" max="5">
-                                                                <div class="new-fs-7" style="color: #7C7B7B;">기준 동승인원까지는 추가 요금을 받지 않습니다.</div>
+                                                                <input name="seating_capacity" type="number" class="form-control custom-bottom-border new-fs-85 ps-0" id="seating_capacity" min="1" max="5" placeholder="최대 동승인원수">
+                                                                <div class="new-fs-75" style="color: #7C7B7B;">기준 동승인원까지는 추가 요금을 받지 않습니다.</div>
                                                             </div>
                                                             <div class="col">
                                                                 <label for="sleeping_capacity" class="control-label new-fs-85 fw-semibold pb-3">취침인원수</label>
-                                                                <input name="sleeping_capacity" type="number" class="form-control custom-bottom-border new-fs-85 ps-0" id="sleeping_capacity" min="1" max="5">
-                                                                <div class="new-fs-7" style="color: #7C7B7B;">기준 취침인원수까지는 추가 요금을 받지 않습니다.</div>
+                                                                <input name="sleeping_capacity" type="number" class="form-control custom-bottom-border new-fs-85 ps-0" id="sleeping_capacity" min="1" max="5" placeholder="최대 취침인원수">
+                                                                <div class="new-fs-75" style="color: #7C7B7B;">기준 취침인원수까지는 추가 요금을 받지 않습니다.</div>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -222,7 +225,7 @@
                                                     <div class="form-group">
                                                         <div class="row d-flex justify-content-between">
                                                             <div class="col">
-                                                                <label for="driver_license_condition" class="control-label new-fs-85 fw-semibold pb-3">운전자 면허 종류</label>
+                                                                <label for="driver_license_condition" class="control-label new-fs-85 fw-semibold pb-4">운전자 면허 종류</label>
                                                                 <select class="form-select" aria-label="Default select example" id="driver_license_condition" name="driver_license_id">
                                                                     <option th:value="'selectPlease'" th:text="'운전자 면허증 선택'"></option>
                                                                     <option th:each="driverLicenseDto : ${driverLicense}" 
@@ -231,7 +234,7 @@
                                                                 </select>
                                                             </div>
                                                             <div class="col">
-                                                                <label for="driver_age_condition" class="control-label new-fs-85 fw-semibold pb-3">운전자 최소 연령</label>
+                                                                <label for="driver_age_condition" class="control-label new-fs-85 fw-semibold pb-4">운전자 최소 연령</label>
                                                                 <select class="form-select" aria-label="Default select example" id="driver_age_condition" name="driver_age_id">
                                                                     <option th:value="'selectPlease'" th:text="'운전자 최소 연령 선택'"></option>
                                                                     <option th:each="driverAgeCondDto : ${driverAge}" 
@@ -240,7 +243,7 @@
                                                                 </select>
                                                             </div>
                                                             <div class="col">
-                                                                <label for="driver_experience_condition" class="control-label new-fs-85 fw-semibold pb-3">운전자 운전 경력</label>
+                                                                <label for="driver_experience_condition" class="control-label new-fs-85 fw-semibold pb-4">운전자 운전 경력</label>
                                                                 <select class="form-select" aria-label="Default select example" id="driver_experience_condition" name="driver_experience_id">
                                                                     <option th:value="'selectPlease'" th:text="'운전자 운전 경력 선택'"></option>
                                                                     <option th:each="driverExpericneceConDto : ${driverExpericnece}" 
@@ -252,28 +255,28 @@
                                                     </div>
                                                     <!-- 반려동물 동승 가능 여부-->
                                                     <div class="form-group">
-                                                        <div class="row">
-                                                            <div class="col">
-                                                                <label for="pet_Friendly" class="control-label new-fs-85 fw-semibold pb-3">반려동물 동승 가능 여부</label>
+                                                        <div class="row" style="padding-left: 0.75rem;">
+                                                            <div class="col ps-0">
+                                                                <label for="pet_Friendly" class="control-label new-fs-85 fw-semibold pb-4">반려동물 동승 가능 여부</label>
                                                                 <div class="row d-flex justify-content-between">
-                                                                    <div class="col text-center border rounded-4">
+                                                                    <div class="col text-center border rounded-4" style="margin-left: 0.75rem;">
                                                                         <label for="pet_friendlyYes">
                                                                             <input name="pet_friendly" type="radio" id="petfriendlyYes" checked value="동승가능">
                                                                             <div class="row">
                                                                                 <div class="col">
                                                                                     <span class="material-symbols-outlined">sentiment_excited</span>
-                                                                                    <div class="font-roboto" id="petfriendlyYes">가능해요</div>
+                                                                                    <div id="petfriendlyYes">가능해요</div>
                                                                                 </div>
                                                                             </div>
                                                                         </label>
                                                                     </div>
-                                                                    <div class="col text-center border rounded-4">
+                                                                    <div class="col text-center border rounded-4" style="margin-right: 0.75rem;">
                                                                         <label for="pet_friendlyNo">
                                                                             <input name="pet_friendly" type="radio" id="pet_friendlyNo" value="동승불가능">
                                                                             <div class="row">
                                                                                 <div class="col">
                                                                                     <span class="material-symbols-outlined">sentiment_sad</span>
-                                                                                    <div class="font-roboto" id="pet_friendlyNo">불가능해요</div>
+                                                                                    <div id="pet_friendlyNo">불가능해요</div>
                                                                                 </div>
                                                                             </div>
                                                                         </label>
@@ -318,11 +321,11 @@
                                     <div class="col px-0">
                                         <div class="card">
                                             <div class="card-head fw-semibold py-3 px-3">
-                                                <head>기본정보</head>
+                                                <head>가격정보</head>
                                                 <div class="card-body">
                                                     <!-- 각종 기간 설정 안내 고지  -->
                                                     <div class="form-group">
-                                                        <div class="row font-robot">
+                                                        <div class="row">
                                                             <div class="col margin-0">
                                                                 <div class="alert alert-info border-5 border-top-0 border-end-0 border-bottom-0 border-primary-subtle fw-normal new-fs-9" style="background: #FAFAFA;">
                                                                     성수기 등 각종 기간 설정은 <span style="color: blue;">성수기/휴일 관리</span>에서 가능합니다.
@@ -453,24 +456,24 @@
                                                             <div class="col">
                                                                 <label for="is_opened" class="control-label new-fs-85 fw-semibold pb-3">바로가기 예약 활성화</label>
                                                                 <div class="row d-flex justify-content-between">
-                                                                    <div class="col text-center border rounded-4">
+                                                                    <div class="col text-center border rounded-4" style="margin-left: 0.75rem;">
                                                                         <label for="is_openedYes" class="control-label new-fs-85 fw-semibold">
                                                                             <input name="is_opened" type="radio" id="is_openedYes" checked value="Yes">
                                                                             <div class="row">
                                                                                 <div class="col">
                                                                                     <span class="material-symbols-outlined">event_available</span>
-                                                                                    <div class="font-roboto">Yes</div>
+                                                                                    <div class="">Yes</div>
                                                                                 </div>
                                                                             </div>
                                                                         </label>
                                                                     </div>  
-                                                                    <div class="col text-center border rounded-4">
+                                                                    <div class="col text-center border rounded-4" style="margin-right: 0.75rem;">
                                                                         <label for="is_openedNo" class="control-label new-fs-85 fw-semibold">
                                                                             <input name="is_opened" type="radio" id="is_openedNo" value="No">
                                                                             <div class="row">
                                                                                 <div class="col">
                                                                                     <span class="material-symbols-outlined">event_busy</span>
-                                                                                    <div class="font-roboto">No</div>
+                                                                                    <div class="">No</div>
                                                                                 </div>
                                                                             </div>
                                                                         </label>
@@ -485,13 +488,13 @@
                                                             <div class="col">
                                                                 <label for="min" class="control-label new-fs-85 fw-semibold pb-3">최소 예약 일수</label>
                                                                     <input type="number" class="form-control custom-bottom-border new-fs-85 ps-0" id="min" min="1" max="5">
-                                                                    <div class="new-fs-7" style="color: #7C7B7B;">허용 가능한 <span class="text-danger">최소 예약 기간</span>을 입력합니다.</div>
+                                                                    <div class="new-fs-75" style="color: #7C7B7B;">허용 가능한 <span class="text-danger">최소 예약 기간</span>을 입력합니다.</div>
                                                                 </label>
                                                             </div>
                                                             <div class="col">
                                                                 <label for="max" class="control-label new-fs-85 fw-semibold pb-3">최대 예약 일수</label>
                                                                     <input type="number" class="form-control custom-bottom-border new-fs-85 ps-0" id="max" min="1" max="5">
-                                                                    <div class="new-fs-7" style="color: #7C7B7B;">허용 가능한 <span class="text-danger">최대 예약 기간</span>을 입력합니다.</div>
+                                                                    <div class="new-fs-75" style="color: #7C7B7B;">허용 가능한 <span class="text-danger">최대 예약 기간</span>을 입력합니다.</div>
                                                                 </label> 
                                                             </div>
                                                         </div>
@@ -505,13 +508,13 @@
                                 <div class="row pt-3">
                                     <div class="col px-0">
                                         <div class="card">
-                                            <div class="card-body">
+                                            <div class="card-body me-4">
                                                 <!-- 취소 규정-->
                                                 <div class="form-group">
                                                     <div class="row">
                                                         <div class="col">
                                                             <label for="cancellationPolicy" class="control-label fw-semibold pb-3">취소 규정</label>
-                                                            <textarea id="cancellationPolicy" class="form-control" rows="3" cols="50" name="cancellation_policy" readonly>- 출발일 기준 7일전 취소시: 80% 환불
+                                                            <textarea id="cancellationPolicy" class="form-control" style="margin-left: 0.75rem;" rows="3" cols="50" name="cancellation_policy" readonly>- 출발일 기준 7일전 취소시: 80% 환불
 - 출발일 기준 6일~4일전 취소시: 50% 환불 
 - 출발일 기준 3일~당일 취소시: 환불 불가
                                                             </textarea>
@@ -594,7 +597,6 @@
             </div>
         </div>
     </div>
->
     
  
     <!-- Bootstrap JS -->
@@ -607,7 +609,7 @@
     <script src="/public/js/uploader.js"></script>
     <script>
     createUploader("main_image");
-    createMultipleUploader("detailedImg");
+    createMultipleUploader("detailedImg",20);
     
     // "사업장 주소와 동일" 체크박스 기능 구현
     document.addEventListener("DOMContentLoaded", function() {

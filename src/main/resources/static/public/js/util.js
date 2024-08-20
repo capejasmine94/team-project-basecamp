@@ -181,7 +181,7 @@ function replaceMoneyInput() {
     let textWithoutComma = node.value.replace(/,/g, '');
 
     // 문자열을 정수로 변환
-    let parsedInt = parseInt(textWithoutComma, 10);
+    let parsedInt = parseInt(textWithoutComma, 20);
     node.value = parsedInt;
   }
 }
