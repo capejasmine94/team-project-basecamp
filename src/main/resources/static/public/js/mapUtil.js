@@ -5,13 +5,16 @@
 // 스크립트로 showMap(주소)를 쓰면 지도에 주소위치가 땋 뜹니다
 
 // 지도를 생성합니다    
-const mapContainer = document.getElementById('map'), // 지도를 표시할 div 
-mapOption = {
-    center: new kakao.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
-    level: 3 // 지도의 확대 레벨
-};  
-const map = new kakao.maps.Map(mapContainer, mapOption); 
+window.setTimeout(function(){
+    const mapContainer = document.getElementById('map'), // 지도를 표시할 div 
+    mapOption = {
+        center: new kakao.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
+        level: 3 // 지도의 확대 레벨
+    };  
+    map = new kakao.maps.Map(mapContainer, mapOption); 
+},100);
 
+let map
 
 function showMap(address){
 // 주소-좌표 변환 객체를 생성합니다
