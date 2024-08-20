@@ -609,12 +609,12 @@
     <script src="/public/js/uploader.js"></script>
     <script>
     createUploader("main_image");
-    createMultipleUploader("detailedImg",20);
+    createMultipleUploader("detailedImg",10);
     
     // "사업장 주소와 동일" 체크박스 기능 구현
     document.addEventListener("DOMContentLoaded", function() {
-        const compAddress = '[[${session.sessionCaravanInfo.comp_address}]]';
-        const detailedAddress = '[[${session.sessionCaravanInfo.comp_detailed_address}]]';
+        const compAddress = '[[${session.sessionCaravanInfo != null ? session.sessionCaravanInfo.comp_address : ""}]]';
+        const detailedAddress = '[[${session.sessionCaravanInfo != null ? session.sessionCaravanInfo.comp_detailed_address : ""}]]';
 
         const sameAsCompAddressCheckbox = document.getElementById('sameAsCompAddress');
         const garageAddress = document.getElementById('garage_address');

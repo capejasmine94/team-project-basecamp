@@ -69,7 +69,6 @@ public class PartnerCampingCarService {
         List<ProductDetailImgDto> productImageList = new ArrayList<>();
         List<ImageDto> ImgeDtoList = ImageUtil.saveImageAndReturnDtoList(detailedImg);
 
-        System.out.println("222222222222222222+" + ImgeDtoList );
         for(ImageDto imgeDto : ImgeDtoList){
             ProductDetailImgDto productDetailImgDto = new ProductDetailImgDto();
             productDetailImgDto.setLocation(imgeDto.getLocation());
