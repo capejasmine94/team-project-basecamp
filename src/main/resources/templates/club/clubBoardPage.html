@@ -519,7 +519,7 @@
 
         <div class="container fixed-bottom mb-5 pb-4">
             <div class="row justify-content-end mb-4 pb-2 pe-3">
-                <a th:if="${session.sessionUserInfo != null}" th:href="@{/club/writePost(id=${id})}" id="scrollButton" class="col-auto lightBg ps-1 pe-4 py-1 shadow rounded-pill text-decoration-none">
+                <a th:if="${session.sessionUserInfo != null && isMemberInClub == 1}" th:href="@{/club/writePost(id=${id})}" id="scrollButton" class="col-auto lightBg ps-1 pe-4 py-1 shadow rounded-pill text-decoration-none">
                     <div class="row text-dark">
                         <div class="col-auto pe-0 align-self-center d-flex">
                             <span class="material-symbols-outlined text-white" style="font-size: 2em;">add</span>

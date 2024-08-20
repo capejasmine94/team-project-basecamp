@@ -81,23 +81,23 @@
 <body class="bg-body-tertiary">
 
     <!-- top-nav -->
-    <div class="container">
-        <div class="fixed-top px-4 row border-bottom bg-white">
+    <div class="container fixed-top">
+        <div class="px-3 row border-bottom bg-white" style="height: 60.792px;;">
             <div class="col">
     
                 <div class="row py-3">
-                    <div class="col-auto ps-0">
+                    <div class="col-1 ps-0">
                         <!-- <button id="backButton" class="border-0 bg-transparent d-flex align-items-center">
                             <span class="material-symbols-outlined">
                                 arrow_back_ios
                             </span>
                         </button> -->
                     </div>
-                    <div class="col ps-0 fw-bold f12 text-center">
+                    <div class="col p-0 fw-semibold text-center">
                         주문완료
                     </div>
-                    <div class="col-auto pe-0 d-flex align-items-center">
-                        <span class="material-symbols-outlined">
+                    <div class="col-1 pe-0 d-flex text-end align-items-center">
+                        <span class="material-symbols-outlined fw-light">
                             home
                         </span>
                     </div>
@@ -116,12 +116,12 @@
         </div>
         <div class="row bg-white py-4">
             <div class="col text-center align-items-center">
-                <span class="fw-bold f12">주문이 완료되었습니다</span>
+                <span class="fw-semibold">주문이 완료되었습니다</span>
             </div>
         </div>
         <div class="row px-3 f09 bg-white pb-2">
             <div class="col p-0">
-                <span class="fw-bold">김첨지</span>
+                <span class="fw-semibold">김첨지</span>
                 <span class="text-body-tertiary">010-1234-5678</span>
             </div>
         </div>
@@ -134,17 +134,17 @@
         <div class="row px-3 bg-white py-2 toggle-icon" data-bs-toggle="collapse" data-bs-target="#first-collapse">
             <div class="col p-0">
                 <a type="button" class="f09 accordion-button collapsed">
-                    <div class="col-auto fw-bold text-body-tertiary">
+                    <div class="col-auto fw-semibold text-body-tertiary">
                         상품정보
                     </div>
                     <div class="col text-center">
-                        <span class="fw-bold">이거 js로 해야될 것 같기도 하고</span>
-                        <!-- <span class="fw-bold">진짜맛있는 납작복숭아</span> -->
+                        <!-- <span class="fw-semibold">이거 js로 해야될 것 같기도 하고</span> -->
+                        <!-- <span class="fw-semibold">진짜맛있는 납작복숭아</span> -->
                         <!-- <span> 외 3건</span> -->
                     </div>
-                    <div class="col-auto d-flex align-items-center fw-bold text-body-tertiary">
+                    <div class="col-auto d-flex align-items-center fw-semibold text-body-tertiary">
                         <span class="material-symbols-outlined">
-                            keyboard_arrow_down
+                            keyboard_arrow_up
                         </span>
                     </div>
                 </a>
@@ -153,10 +153,10 @@
 
 <!--                         
         <div class="row px-3 f09 bg-white py-2">
-            <div class="col p-0 fw-bold text-body-tertiary">
+            <div class="col p-0 fw-semibold text-body-tertiary">
                 상품정보
             </div>
-            <div class="col-auto p-0 d-flex align-items-center fw-bold text-body-tertiary">
+            <div class="col-auto p-0 d-flex align-items-center fw-semibold text-body-tertiary">
                 <span class="material-symbols-outlined">
                     keyboard_arrow_up
                 </span>
@@ -164,7 +164,7 @@
         </div>
          -->
 
-        <div class="row accordion-collapse collapse bg-white px-3" id="first-collapse">
+        <div class="row accordion-collapse collapse bg-white px-3 show" id="first-collapse">
             <div class="col p-0 border-bottom">
                 
                 <!-- 상품 하나의 정보 -->
@@ -178,7 +178,7 @@
                                 <span th:text="${orderProductData.storeName}">GamjaStore</span>
                             </div>
                         </div>
-                        <div class="row fw-bold f09">
+                        <div class="row fw-semibold f09">
                             <div class="col">
                                 <span th:text="${orderProductData.orderProductDto.product_name}">엄청 맛있는 납작복숭아</span>
                             </div>
@@ -190,7 +190,7 @@
                                     <span th:if="${!iterStat.last}">/</span>
                                 </span> <span th:if="${orderProductData.valueNameList.size!=0}">|</span> <span th:text="${orderProductData.orderProductDto.quantity}">1</span>개
                             </div>
-                            <div class="col fw-bold text-end">
+                            <div class="col fw-semibold text-end">
                                 <span th:text="${#numbers.formatDecimal(orderProductData.orderProductDto.order_price, 1, 'COMMA', 0, 'POINT')}">28,000</span>원
                             </div>
                         </div>
@@ -201,7 +201,7 @@
         </div>
        
 
-        <div class="row px-3 f09 bg-white py-3 fw-bold">
+        <div class="row px-3 f09 bg-white py-3 fw-semibold">
             <div class="col-auto ps-0 text-body-tertiary">
                 결제금액
             </div>
@@ -212,12 +212,12 @@
 
         <div class="row px-3 bg-white pt-2 pb-4">
             <div class="col p-0 d-grid">
-                <a th:href="@{/store/orderView(id=${orderData.storeOrderDto.id})}" type="button" class="btn btn-outline-dark py-2 fw-bold f09 rounded-0">
+                <a th:href="@{/store/orderView(id=${orderData.storeOrderDto.id})}" type="button" class="btn btn-outline-dark py-2 fw-semibold f09 rounded-0">
                     주문 상세보기
                 </a>
             </div>
             <div class="col pe-0 d-grid">
-                <a href="/store" type="button" class="btn btn-dark py-2 fw-bold f09 rounded-0">
+                <a href="/store" type="button" class="btn btn-dark py-2 fw-semibold f09 rounded-0">
                     쇼핑 홈
                 </a>
             </div>
@@ -227,13 +227,13 @@
 
         <!-- footer -->
         <div class="row py-2 bg-dark-subtle text-white text-center f09">
-            <div class="col fw-bold border-end">
+            <div class="col fw-semibold border-end">
                 로그아웃
             </div>
-            <div class="col fw-bold border-end">
+            <div class="col fw-semibold border-end">
                 고객센터
             </div>
-            <div class="col fw-bold">
+            <div class="col fw-semibold">
                 NEWS
             </div>
         </div>
@@ -245,7 +245,7 @@
                             camping
                         </span>
                     </div>
-                    <div class="col p-0 fw-bold fs-3">
+                    <div class="col p-0 fw-semibold fs-3">
                         <span>&nbsp;BASECAMP</span>
                     </div>
                 </div>
@@ -257,7 +257,7 @@
 
                 <div class="row pt-3 py-3 border-bottom border-2">
                     <div class="col-auto p-0">
-                        <button class="btn btn-sm bg-dark-subtle text-white fw-bold f08 d-flex align-items-center">
+                        <button class="btn btn-sm bg-dark-subtle text-white fw-semibold f08 d-flex align-items-center">
                             <span class="material-symbols-outlined f12">
                                 phone_in_talk
                             </span>
@@ -265,7 +265,7 @@
                         </button>
                     </div>
                     <div class="col-auto">
-                        <button class="btn btn-sm bg-dark-subtle text-white fw-bold f08">
+                        <button class="btn btn-sm bg-dark-subtle text-white fw-semibold f08">
                             카카오 1:1 문의
                         </button>
                     </div>

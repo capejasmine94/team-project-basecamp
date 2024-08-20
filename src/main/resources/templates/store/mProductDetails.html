@@ -275,8 +275,8 @@
                             <div class="col px-0 py-3 border-top">
                                 <div class="row">
                                     <div class="col-auto pe-0 review-profile-col">
-                                        <img th:src="|/images/${reviewData.profile_image}|" class="border rounded-circle" th:if="${reviewData.profile_image!='default'}">
-                                        <img src="/public/img/common/default_profile.png" class="border rounded-circle" th:unless="${reviewData.profile_image!='default'}">
+                                        <img th:src="|/images/${reviewData.profile_image}|" class="border rounded-circle" th:if="${reviewData.profile_image!='default_profile'}">
+                                        <img src="/public/img/common/default_profile.png" class="border rounded-circle" th:unless="${reviewData.profile_image!='default_profile'}">
                                     </div>
                                     <div class="col">
                                         <div class="row">

@@ -76,5 +76,7 @@ public class UserService {
     }
     //------------------------------------------------------------
 
-    
+    public void registerKakaoUser(UserDto userDto){
+        userSqlMapper.insertKakaoUser(userDto);
+    }
 }

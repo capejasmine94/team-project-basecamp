@@ -14,24 +14,6 @@
         <title>Basecamp - Store Center</title>
         
         <style>
-            .store-center{
-                background-color: #1F2D3D;
-            }
-            .category a{
-                color: #F4F4F5;
-            }
-            .category:hover{
-                background-color: #263445;
-            }
-            .subcategory {
-                background-color: #1F2D3D;
-                transition: background-color 0.3s;
-                font-size: 0.9em;
-            }
-            .subcategory:hover{
-                background-color: #001528;
-            }
-
             /* storeInfo */
             .store-image-col img{
                 aspect-ratio: 1/1;
@@ -41,16 +23,16 @@
             }
         </style>
     </head>
-    <body>
+    <body style="background-color: #F5F5F5;">
 
         <div th:replace="~{store/FsellerNavi::topNavi}"></div>
 
-        <div class="container-fluid">
+        <div class="container-fluid" style="min-width: 1320px; max-width: 1980px;">
             <div class="row">
                 <!-- left -->
-                <div class="col-2 border-end scrollable scrollBar left" id="leftAccordion" style="color: #F4F4F5; padding-top: 60.58px; background-color: #304156;">
+                <div class="col-2 border-end scrollable scrollBar left" id="leftAccordion" style="padding-top: 60.58px; background-color: #FAFAFA;">
                     
-                    <div class="row py-4">
+                    <div class="row py-4 border-bottom">
                         <div class="col">
 
                             <div class="row">
@@ -64,28 +46,51 @@
                                 </div>
                             </div>
                             <div class="row pt-1 text-center">
-                                <div class="col f08" style="color: #BFCBD9;">
+                                <div class="col f08 text-body-tertiary">
                                     통합 매니저
                                 </div>
                             </div>
+                            <!-- <div class="row pt-3 px-3">
+                                <div class="col px-2 d-grid rounded-2 border bg-white">
+                                    <select class="f09 py-2 border-0 bg-transparent" id="">
+                                        <option value="">수취인명</option>
+                                        <option value="">구매자명</option>
+                                        <option value="">구매자아이디</option>
+                                        <option value="">주문번호</option>
+                                        <option value="">상품번호</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="row pt-2 px-3">
+                                <div class="col border rounded-2 bg-white">
+                                    <div class="row">
+                                        <div class="col p-0">
+                                            <input type="text" class="border-0 px-2 py-2 bg-transparent searchInput w-100" placeholder="입력 후 검색하세요">
+                                        </div>
+                                        <div class="col-auto px-2 d-flex align-items-center">
+                                            <span class="material-symbols-outlined f12">
+                                                search
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div> -->
 
                         </div>
                     </div>
 
                     <div class="row category px-3">
-                        <div class="col p-0 d-grid">
-                            <a href="/storeCenter/dashboard" type="button" class="py-3 fw-semibold d-flex align-items-center">
-                                <span class="material-symbols-outlined fw-light pe-2">
-                                    dashboard
-                                </span>Dashboard
+                        <div class="col p-0 d-grid border-bottom">
+                            <a href="/storeCenter/dashboard" type="button" class="py-3 fw-semibold">
+                                Dashboard
                             </a>
                         </div>
                     </div>
                     <div class="row category toggle-icon px-3" data-bs-toggle="collapse" data-bs-target="#first-collapse">
-                        <div class="col p-0">
+                        <div class="col border-bottom p-0">
                             <div class="row">
                                 <div class="col pe-0 d-grid fs-5">
-                                    <button type="button" class="py-3 accordion-button collapsed fw-semibold categorybutton">
+                                    <button type="button" class="py-3 accordion-button collapsed fw-semibold">
                                         상품관리
                                     </button>
                                 </div>
@@ -99,10 +104,10 @@
                     </div>
                     <div class="row accordion-collapse collapse p-0" id="first-collapse" data-bs-parent="#leftAccordion">
                         <div class="col">
-                            <a class="row accordion-body py-3 ps-4 subcategory" href="/storeCenter/productManage" style="color: #BFCBD9;">
+                            <a class="row accordion-body py-3 ps-4 subcategory" href="/storeCenter/productManage">
                                 상품조회/수정
                             </a>
-                            <a class="row accordion-body py-3 ps-4 subcategory" href="/storeCenter/productRegister" style="color: #BFCBD9;">
+                            <a class="row accordion-body py-3 ps-4 subcategory" href="/storeCenter/productRegister" id="productRegister">
                                 상품등록
                             </a>
                             <!-- <a class="row accordion-body py-3 ps-4 subcategory" href="/storeCenter/deliveryInfo">
@@ -112,10 +117,10 @@
                     </div>
 
                     <div class="row category toggle-icon px-3" data-bs-toggle="collapse" data-bs-target="#second-collapse">
-                        <div class="col p-0">
+                        <div class="col border-bottom p-0">
                             <div class="row">
                                 <div class="col pe-0 d-grid fs-5">
-                                    <button type="button" class="py-3 accordion-button collapsed fw-semibold categorybutton">
+                                    <button type="button" class="py-3 accordion-button collapsed fw-semibold">
                                         판매관리
                                     </button>
                                 </div>
@@ -129,31 +134,59 @@
                     </div>
                     <div class="row accordion-collapse collapse p-0 show" id="second-collapse" data-bs-parent="#leftAccordion">
                         <div class="col">
-                            <a class="row accordion-body py-3 ps-4 subcategory" href="/storeCenter/orderIntegration" style="color: #409EFF;">
+                            <a class="row accordion-body py-3 ps-4 subcategory" href="/storeCenter/orderIntegration" style="color: #067DFD;">
                                 주문 통합 검색
                             </a>
-                            <a class="row accordion-body py-3 ps-4 subcategory" href="/storeCenter/sendProcessing" style="color: #BFCBD9;">
+                            <a class="row accordion-body py-3 ps-4 subcategory" href="/storeCenter/sendProcessing">
                                 발송관리
                             </a>
-                            <!-- <a class="row accordion-body py-3 ps-4 subcategory" href="/storeCenter/cancelManage" style="color: #BFCBD9;">
+                            <!-- <a class="row accordion-body py-3 ps-4 subcategory" href="/storeCenter/cancelManage">
                                 취소관리
                             </a> -->
-                            <a class="row accordion-body py-3 ps-4 subcategory" href="/storeCenter/returnManage" style="color: #BFCBD9;">
+                            <a class="row accordion-body py-3 ps-4 subcategory" href="/storeCenter/returnManage">
                                 반품관리
                             </a>
                         </div>
                     </div>
 
+                    <!-- <div class="row category toggle-icon px-3" data-bs-toggle="collapse" data-bs-target="#third-collapse">
+                        <div class="col border-bottom p-0">
+                            <div class="row">
+                                <div class="col pe-0 d-grid fs-5">
+                                    <button type="button" class="py-3 accordion-button collapsed fw-semibold">
+                                        문의/리뷰 관리
+                                    </button>
+                                </div>
+                                <div class="col-auto ps-0 d-grid fs-5">
+                                    <button type="button" class="py-3 accordion-button collapsed">
+                                        <i class="bi bi-chevron-down"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row accordion-collapse collapse p-0" id="third-collapse" data-bs-parent="#leftAccordion">
+                        <div class="col">
+                            <a class="row accordion-body py-3 ps-4 subcategory" href="/storeCenter/manageQnA">
+                                문의관리
+                            </a>
+                            <a class="row accordion-body py-3 ps-4 subcategory" href="/storeCenter/manageReview">
+                                리뷰관리
+                            </a>
+                        </div>
+                    </div> -->
+
+
                     <div class="row category px-3">
-                        <div class="col p-0 d-grid">
-                            <a href="/storeCenter/manageReview" type="button" class="py-3 fw-semibold">
+                        <div class="col p-0 d-grid border-bottom">
+                            <a  href="/storeCenter/manageReview" type="button" class="py-3 fw-semibold">
                                 리뷰관리
                             </a>
                         </div>
                     </div>
-                    
+
                     <!-- <div class="row category px-3">
-                        <div class="col p-0 d-grid">
+                        <div class="col p-0 d-grid border-bottom">
                             <a href="/storeCenter/balanceAccountsList" type="button" class="py-3 fw-semibold">
                                 정산관리
                             </a>
@@ -161,7 +194,7 @@
                     </div> -->
 
                     <div class="row category px-3">
-                        <div class="col p-0 d-grid">
+                        <div class="col p-0 d-grid border-bottom">
                             <a href="/storeCenter/statistics" type="button" class="py-3 fw-semibold">
                                 통계
                             </a>
@@ -169,7 +202,7 @@
                     </div>
 
                     <div class="row category px-3">
-                        <div class="col p-0 d-grid">
+                        <div class="col p-0 d-grid border-bottom">
                             <a href="/storeCenter/storeInfo" type="button" class="py-3 fw-semibold">
                                 스토어관리
                             </a>
@@ -177,7 +210,7 @@
                     </div>
                     
                     <div class="row category px-3">
-                        <div class="col p-0 d-grid">
+                        <div class="col p-0 d-grid border-bottom">
                             <a href="/storeCenter/sellerInfo" type="button" class="py-3 fw-semibold">
                                 판매자정보
                             </a>
@@ -188,12 +221,12 @@
                         <div class="col p-0">
                             <div class="row py-3">
                                 <div class="col">
-                                    <div class="row f08" style="color: #BFCBD9;">
+                                    <div class="row f08 text-body-secondary">
                                         <div class="col">
                                             금융 서비스 바로가기
                                         </div>
                                     </div>
-                                    <div class="row pt-2" style="color: #BFCBD9;;">
+                                    <div class="row pt-2">
                                         <div class="col d-flex align-items-center">
                                             <span class="f09">선정산 서비스</span>
                                             <span class="material-symbols-outlined fw-light f12">
@@ -206,15 +239,15 @@
 
                             <div class="row py-3">
                                 <div class="col">
-                                    <div class="row f08" style="color: #BFCBD9;">
+                                    <div class="row f08 text-body-secondary">
                                         <div class="col">
                                             판매 지원 프로그램
                                         </div>
                                     </div>
-                                    <div class="row pt-2" style="color: #BFCBD9;">
+                                    <div class="row pt-2">
                                         <div class="col d-flex align-items-center">
                                             <span class="f09">파트너센터</span>
-                                            <span class="material-symbols-outlined f12">
+                                            <span class="material-symbols-outlined fw-light f12">
                                                 open_in_new
                                             </span>
                                         </div>
@@ -222,22 +255,22 @@
                                 </div>
                             </div>
 
-                            <div class="row pt-3 pb-5">
+                            <div class="row py-3">
                                 <div class="col">
-                                    <div class="row f08" style="color: #BFCBD9;">
+                                    <div class="row f08 text-body-secondary">
                                         <div class="col">
                                             판매 지원 프로그램
                                         </div>
                                     </div>
-                                    <div class="row pt-2" style="color: #BFCBD9;">
+                                    <div class="row pt-2">
                                         <div class="col d-flex align-items-center">
                                             <span class="f09">판매 가이드</span>
-                                            <span class="material-symbols-outlined f12">
+                                            <span class="material-symbols-outlined fw-light f12">
                                                 open_in_new
                                             </span>
                                         </div>
                                     </div>
-                                    <div class="row pt-2 " style="color: #BFCBD9;">
+                                    <div class="row pt-2">
                                         <div class="col d-flex align-items-center">
                                             <span class="f09">온라인 교육</span>
                                             <span class="material-symbols-outlined fw-light f12">
@@ -245,7 +278,7 @@
                                             </span>
                                         </div>
                                     </div>
-                                    <div class="row pt-2 " style="color: #BFCBD9;">
+                                    <div class="row pt-2">
                                         <div class="col d-flex align-items-center">
                                             <span class="f09">해외직구/판매 안내</span>
                                             <span class="material-symbols-outlined fw-light f12">
@@ -258,8 +291,32 @@
                         </div>
                     </div>
                     
+                    <!-- <div class="row pb-5 px-3">
+                        <div class="col">
+                            <div class="row">
+                                <div class="col p-0 pb-2 f09 border-bottom border-dark fw-semibold">
+                                    도움이 필요하신가요?
+                                </div>
+                            </div>
+                            <div class="row pt-3">
+                                <div class="col d-grid p-0">
+                                    <button class="btn bg-white border py-2 d-flex align-items-center justify-content-center">
+                                        <span class="material-symbols-outlined f12 fw-light">
+                                            headset_mic
+                                        </span> <span class="f09">고객센터 바로가기</span>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="row pt-2">
+                                <div class="col d-grid p-0">
+                                    <button class="btn bg-white border py-2 f09">
+                                        카테고리 담당자 찾기
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div> -->
                 </div>
-                
                 
                 <!-- right -->
                 <div class="col bg-body-tertiary right" style="padding-top: 60.58px; background-color: rgb(237, 240, 245);">
@@ -278,13 +335,13 @@
                                     조회기간
                                 </div>
                                 <div class="col-2">
-                                    <input type="date" class="form-control">
+                                    <input type="date" class="form-control rounded-0">
                                 </div>
                                 <div class="col-auto">
                                     ~
                                 </div>
                                 <div class="col-2">
-                                    <input type="date" class="form-control">
+                                    <input type="date" class="form-control rounded-0">
                                 </div>
                             </div>
 
@@ -293,7 +350,7 @@
                                     검색어
                                 </div>
                                 <div class="col-2">
-                                    <select id="" class="form-select">
+                                    <select id="" class="form-select rounded-0">
                                         <option value="" selected>
                                             주문번호
                                         </option>
@@ -306,7 +363,7 @@
                                     </select>
                                 </div>
                                 <div class="col">
-                                    <input type="text" class="form-control">
+                                    <input type="text" class="form-control rounded-0">
                                 </div>
                                 <div class="col-2"></div>
                             </div>
@@ -341,7 +398,7 @@
                                 <div class="col border bg-white" style="height: 25em; overflow-y: auto;">
                                     <div class="row d-flex align-items-stretch border-bottom text-center align-items-center bg-body-tertiary" style="position: sticky; top: 0; z-index: 1;">
                                         <div class="col-auto py-3 align-items-center justify-content-center d-flex">
-                                            <input id="allOptionsSelectCheckBox" type="checkbox" class="form-check-input">
+                                            <input id="allOptionsSelectCheckBox" type="checkbox" class="form-check-input rounded-0">
                                         </div>
                                         <div class="col align-items-center justify-content-center d-flex border-end border-start">
                                             주문번호

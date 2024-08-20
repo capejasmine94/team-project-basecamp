@@ -16,4 +16,6 @@ public interface UserSqlMapper {
     public int getAllUserCount();
     public int getLastUserCount();
     public int getUserCountByAccount(String account);
+
+    public void insertKakaoUser(UserDto userDto);
 }

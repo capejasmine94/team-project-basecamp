@@ -69,7 +69,7 @@ public class ClubController {
             // 북마크한 소모임 목록 3개 리미트 걸기
             List<Map<String, Object>> bookmarkedClubDataList = clubService.getBookmarkedClubDtoList(userDto.getId());
             List<Map<String,Object>> limitedBookmarkedClubDtoList = bookmarkedClubDataList.stream()
-            .limit(3)
+            .limit(10)
             .collect(Collectors.toList());
             
             model.addAttribute("bookmarkedClubDataList", limitedBookmarkedClubDtoList);
@@ -77,7 +77,7 @@ public class ClubController {
             //  내가 가입한 소모임 목록
             List<ClubDto> joinClubDtoList = clubService.findJoinClubDtoList(userDto.getId());
             List<ClubDto> limitedJoinClubDtoList = joinClubDtoList.stream()
-            .limit(3)
+            .limit(10)
             .collect(Collectors.toList());
             model.addAttribute("joinClubDtoList", limitedJoinClubDtoList);
         }
@@ -85,7 +85,7 @@ public class ClubController {
             // 새로운 소모임 목록
             List<ClubDto> clubDtoList = clubService.findClubDtoList();
             List<ClubDto> limitedClubDtoList = clubDtoList.stream()
-            .limit(3)
+            .limit(10)
             .collect(Collectors.toList());
             model.addAttribute("clubDtoList", limitedClubDtoList);
 
@@ -136,6 +136,7 @@ public class ClubController {
             int isMemberInClub = clubService.checkClubMembership(clubMemberDto);
             model.addAttribute("isMemberInClub", isMemberInClub);
         }
+
         int totalClubMember = clubService.countTotalClubMember(id);
         int confirmCapacity = clubService.confirmCapacity(id);
         int countTodayVisit = clubService.countTodayVisit(id);
@@ -233,7 +234,7 @@ public class ClubController {
 
     
     @RequestMapping("board")
-    public String clubBoard(@RequestParam("id") int id, Model model){
+    public String clubBoard(@RequestParam("id") int id, Model model, HttpSession session){
         model.addAttribute("id", id);
         
         List<Map<String,Object>> postDetailList = clubService.getClubPostDtoList(id);
@@ -244,6 +245,15 @@ public class ClubController {
 
         List<CategoryDto> categoryList = clubSqlMapper.selectCategoryList();
         model.addAttribute("categoryList", categoryList);
+
+        UserDto userDto = (UserDto)session.getAttribute("sessionUserInfo");
+        ClubMemberDto clubMemberDto = new ClubMemberDto();
+        if(userDto != null){
+            clubMemberDto.setClub_id(id);
+            clubMemberDto.setUser_id(userDto.getId());
+            int isMemberInClub = clubService.checkClubMembership(clubMemberDto);
+            model.addAttribute("isMemberInClub", isMemberInClub);
+        }
         
 
         return "club/clubBoardPage";
@@ -456,6 +466,7 @@ public class ClubController {
         ClubDto clubDto = clubService.selectClubDtoById(id);
         model.addAttribute("clubDto", clubDto);
 
+        
         UserDto userDto = (UserDto)session.getAttribute("sessionUserInfo");
         ClubMemberDto clubMemberDto = new ClubMemberDto();
         clubMemberDto.setClub_id(id);
