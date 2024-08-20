@@ -1158,22 +1158,22 @@
         ;
     }
 
-    function like(){
-        const url = "/api/insta/like?article_id=" + articleId;
-        if(myId == null){
-            if(confirm("로그인 후 이용부탁드립니다. 로그인 페이지로 이동하시겠습니까?")){
-                location.href = "/insta/instaLoginPage";
-            }
-            return;
-        }
+    // function like(){
+    //     const url = "/api/insta/like?article_id=" + articleId;
+    //     if(myId == null){
+    //         if(confirm("로그인 후 이용부탁드립니다. 로그인 페이지로 이동하시겠습니까?")){
+    //             location.href = "/insta/instaLoginPage";
+    //         }
+    //         return;
+    //     }
 
-        fetch(url)
-            .then(response => response.json())
-            .then(response => {
-                reloadHeart();
-            })
-            ;
-    }
+    //     fetch(url)
+    //         .then(response => response.json())
+    //         .then(response => {
+    //             reloadHeart();
+    //         })
+    //         ;
+    // }
 
     // function reloadHeart() {
     //     if(myId == null){
@@ -1203,24 +1203,24 @@
 
     // }
 
-    function unLike(){
+    // function unLike(){
 
-        if(myId == null){
-            if(confirm("로그인 후 이용부탁드립니다. 로그인 페이지로 이동하시겠습니까?")){
-                location.href = "/insta/instaLoginPage";
-            }
-            return;
-        }
+    //     if(myId == null){
+    //         if(confirm("로그인 후 이용부탁드립니다. 로그인 페이지로 이동하시겠습니까?")){
+    //             location.href = "/insta/instaLoginPage";
+    //         }
+    //         return;
+    //     }
 
-        const url = "/api/insta/unLike?article_id=" + articleId;
+    //     const url = "/api/insta/unLike?article_id=" + articleId;
 
-        fetch(url)
-        .then(response => response.json())
-        .then(response => {
-            reloadHeart();
-        })
-        ;
-    }
+    //     fetch(url)
+    //     .then(response => response.json())
+    //     .then(response => {
+    //         reloadHeart();
+    //     })
+    //     ;
+    // }
 
 
     // aHide 함수는 오프캔버스를 닫는 역할을 합니다.

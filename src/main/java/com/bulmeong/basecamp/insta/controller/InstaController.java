@@ -20,7 +20,6 @@ import java.nio.file.Paths;
 
 import java.text.SimpleDateFormat;
 
-import com.bulmeong.basecamp.common.dto.ImageDto;
 import com.bulmeong.basecamp.common.util.ImageUtil;
 import com.bulmeong.basecamp.common.util.Utils;
 import com.bulmeong.basecamp.insta.dto.InstaArticleDto;
@@ -66,8 +65,10 @@ public class InstaController {
         // System.out.println("userC" + userC);
 
         if(userC == 1){
+            // return "redirect:./instaMainPage?user_id=" + userDto.getId();
             return "redirect:https://basecamp.null-pointer-exception.com/instaMainPage?user_id=" + userDto.getId();
         }else{
+            // return "redirect:./instaConfirmPage";
             return "redirect:https://basecamp.null-pointer-exception.com/instaConfirmPage";
         }
 
@@ -115,6 +116,7 @@ public class InstaController {
         instaService.instaUserInfo(instaUserInfoDto);
         
         // return "insta/confirmProcess";
+        // return "redirect:./instaMainPage?user_id=" + instaUserInfoDto.getUser_id();
         return "redirect:https://basecamp.null-pointer-exception.com/instaMainPage?user_id=" + instaUserInfoDto.getUser_id();
     }
 
@@ -147,11 +149,13 @@ public class InstaController {
                 return "insta/instaMainPage";
             }else{ // 인스타에 프로필 등록 안 된 유저
 
+                // return "redirect:./instaConfirmPage";
                 return "redirect:https://basecamp.null-pointer-exception.com/instaConfirmPage";
             }
             
         }else{ // 로그인 안 된 상태
 
+            // return "redirect:./user/login";
             return "redirect:https://basecamp.null-pointer-exception.com/user/login";
         }
         
@@ -164,6 +168,7 @@ public class InstaController {
 
         instaService.like(instaArticleLikeDto);
 
+        // return "redirect:./instaMainPage?user_id=" + userDto.getId();
         return "redirect:https://basecamp.null-pointer-exception.com/instaMainPage?user_id=" + userDto.getId();
     }
 
@@ -173,6 +178,7 @@ public class InstaController {
 
         instaService.unLike(instaArticleLikeDto);
 
+        // return "redirect:./instaMainPage?user_id=" + userDto.getId();
         return "redirect:https://basecamp.null-pointer-exception.com/instaMainPage?user_id=" + userDto.getId();
     }
 
@@ -247,6 +253,7 @@ public class InstaController {
 
         instaService.writeArticleImg(instaAtricleImgDtoList);
 
+        // return "redirect:./instaMainPage?user_id=" + instaUserInfoDto.getUser_id();
         return "redirect:https://basecamp.null-pointer-exception.com/instaMainPage?user_id=" + instaUserInfoDto.getUser_id();
     }
 
@@ -323,6 +330,7 @@ public class InstaController {
 
         instaService.insertBookmark(instaBookmarkDto);
 
+        // return "redirect:./instaMainPage?user_id=" + userDto.getId();
         return "redirect:https://basecamp.null-pointer-exception.com/instaMainPage?user_id=" + userDto.getId();
     }
 
@@ -332,6 +340,7 @@ public class InstaController {
 
         instaService.deleteBookmark(instaBookmarkDto);
         
+        // return "redirect:./instaMainPage?user_id=" + userDto.getId();
         return "redirect:https://basecamp.null-pointer-exception.com/instaMainPage?user_id=" + userDto.getId();
     }
     
@@ -397,6 +406,7 @@ public class InstaController {
     public String articleDeleteProcess(@RequestParam("article_id") int id, @RequestParam("user_id") int user_id){
         instaService.deleteArticle(id);
 
+        // return "redirect:./instaMainPage?user_id=" + user_id;
         return "redirect:https://basecamp.null-pointer-exception.com/instaMainPage?user_id=" + user_id;
     }
 
@@ -424,6 +434,7 @@ public class InstaController {
         String encodedContent = URLEncoder.encode(searchWord, StandardCharsets.UTF_8);
         
 
+        // return "redirect:./instaSearchResultPage?searchWord=" + encodedContent + "&user_id=" + user_id;
         return "redirect:https://basecamp.null-pointer-exception.com/instaSearchResultPage?searchWord=" + encodedContent + "&user_id=" + user_id;
     }
 
@@ -511,6 +522,7 @@ public class InstaController {
 
         instaService.recentSearchDeleteContent(content, instaUserInfoDto.getId());
 
+        // return "redirect:./instaSearchPage?user_id=" + instaUserInfoDto.getId();
         return "redirect:https://basecamp.null-pointer-exception.com/instaSearchPage?user_id=" + instaUserInfoDto.getId();
     }
 
@@ -521,6 +533,7 @@ public class InstaController {
 
         instaService.recentSearchDeleteTag(tag_id, instaUserInfoDto.getId());
 
+        // return "redirect:./instaSearchPage?user_id=" + instaUserInfoDto.getId();
         return "redirect:https://basecamp.null-pointer-exception.com/instaSearchPage?user_id=" + instaUserInfoDto.getId();
     }
 
@@ -531,6 +544,7 @@ public class InstaController {
 
         instaService.recentSearchAllDelete(instaUserInfoDto.getId());
 
+        // return "redirect:./instaSearchPage?user_id=" + instaUserInfoDto.getId();
         return "redirect:https://basecamp.null-pointer-exception.com/instaSearchPage?user_id=" + instaUserInfoDto.getId();
     }
 
