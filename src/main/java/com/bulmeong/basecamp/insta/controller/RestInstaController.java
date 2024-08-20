@@ -25,71 +25,59 @@ public class RestInstaController {
     private InstaService instaService;
 
     // 게시글 List
-    @RequestMapping("getArticleList")
-    public InstaRestResponseDto getArticleList(@RequestParam("user_id") int s_user_id){
-        InstaRestResponseDto instaRestResponseDto = new InstaRestResponseDto();
-        instaRestResponseDto.setResult("success");
-
-        instaRestResponseDto.add("articleList", instaService.selectInstaArticleList(s_user_id));
-
-        return instaRestResponseDto;
-    }
+    // @RequestMapping("getArticleList")
+    // public InstaRestResponseDto getArticleList(@RequestParam("user_id") int s_user_id){
+    //     InstaRestResponseDto instaRestResponseDto = new InstaRestResponseDto();
+    //     instaRestResponseDto.setResult("success");
+    //     instaRestResponseDto.add("articleList", instaService.selectInstaArticleList(s_user_id));
+    //     return instaRestResponseDto;
+    // }
 
 
     // 좋아요 like insert
-    @RequestMapping("like")
-    public InstaRestResponseDto like(InstaArticleLikeDto params, HttpSession session){
-        InstaRestResponseDto instaRestResponseDto = new InstaRestResponseDto();
-        instaRestResponseDto.setResult("success");
+    // @RequestMapping("like")
+    // public InstaRestResponseDto like(InstaArticleLikeDto params, HttpSession session){
+    //     InstaRestResponseDto instaRestResponseDto = new InstaRestResponseDto();
+    //     instaRestResponseDto.setResult("success");
+    //     UserDto userDto = (UserDto) session.getAttribute("sessionUserInfo");
+    //     params.setUser_id(userDto.getId());
+    //     instaService.like(params);
+    //     return instaRestResponseDto;
+    // }
 
-        // 로그인이 되어있다는 가정하에
-        UserDto userDto = (UserDto) session.getAttribute("sessionUserInfo");
-        params.setUser_id(userDto.getId());
-
-        instaService.like(params);
-
-        return instaRestResponseDto;
-    }
-
-    @RequestMapping("unLike") // like delete
-    public InstaRestResponseDto unLike(InstaArticleLikeDto params, HttpSession session){
-        InstaRestResponseDto instaRestResponseDto = new InstaRestResponseDto();
-        instaRestResponseDto.setResult("success");
-
-        // 로그인이 되어있다는 가정하에
-        UserDto userDto = (UserDto) session.getAttribute("sessionUserInfo");
-        params.setUser_id(userDto.getId());
-
-        instaService.unLike(params);
-
-        return instaRestResponseDto;
-    }
+    // @RequestMapping("unLike")
+    // public InstaRestResponseDto unLike(InstaArticleLikeDto params, HttpSession session){
+    //     InstaRestResponseDto instaRestResponseDto = new InstaRestResponseDto();
+    //     instaRestResponseDto.setResult("success");
+    //     UserDto userDto = (UserDto) session.getAttribute("sessionUserInfo");
+    //     params.setUser_id(userDto.getId());
+    //     instaService.unLike(params);
+    //     return instaRestResponseDto;
+    // }
 
     // count의 경우 로그인 안 해도 보여야되기때문에 session을 받을 필요 없음
-    @RequestMapping("getTotalLikeCount") // 해당 게시글 좋아요 개수
-    public InstaRestResponseDto getTotalLikeCount(@RequestParam("article_id") int article_id){
-        InstaRestResponseDto instaRestResponseDto = new InstaRestResponseDto();
-        instaRestResponseDto.setResult("success");
+    // 해당 게시글 좋아요 개수
+    // @RequestMapping("getTotalLikeCount")
+    // public InstaRestResponseDto getTotalLikeCount(@RequestParam("article_id") int article_id){
+    //     InstaRestResponseDto instaRestResponseDto = new InstaRestResponseDto();
+    //     instaRestResponseDto.setResult("success");
+    //     int count = instaService.getLikeTotalCount(article_id);
+    //     instaRestResponseDto.add("count", count);
+    //     return instaRestResponseDto; 
+    // }
 
-        int count = instaService.getLikeTotalCount(article_id);
-        instaRestResponseDto.add("count", count);
-
-        return instaRestResponseDto; 
-    }
-
-    @RequestMapping("isLiked") // 해당 게시글에 내가 좋아요를 눌렀냐
-    public InstaRestResponseDto isLiked(InstaArticleLikeDto params, HttpSession session){
-        InstaRestResponseDto instaRestResponseDto = new InstaRestResponseDto();
-        instaRestResponseDto.setResult("success");
-
-        UserDto userDto = (UserDto) session.getAttribute("sessionUserInfo");
-        params.setUser_id(userDto.getId());
-
-        boolean x = instaService.isLiked(params);
-        instaRestResponseDto.add("isLiked", x); // x값이 true, false로 변환이 됨
-
-        return instaRestResponseDto;
-    }
+    // 해당 게시글에 내가 좋아요를 눌렀냐
+    // @RequestMapping("isLiked")
+    // public InstaRestResponseDto isLiked(InstaArticleLikeDto params, HttpSession session){
+    //     InstaRestResponseDto instaRestResponseDto = new InstaRestResponseDto();
+    //     instaRestResponseDto.setResult("success");
+    //     UserDto userDto = (UserDto) session.getAttribute("sessionUserInfo");
+    //     params.setUser_id(userDto.getId());
+    //     boolean x = instaService.isLiked(params);
+    //     instaRestResponseDto.add("isLiked", x);
+    //     x값이 true, false로 변환이 됨
+    //     return instaRestResponseDto;
+    // }
 
 
     // 댓글 좋아요
