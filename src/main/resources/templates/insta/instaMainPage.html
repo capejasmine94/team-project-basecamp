@@ -541,7 +541,7 @@
 
             <div class="row align-items-center" style="height: 25px;">
                 <!-- 좋아요 -->
-                <form action="./pushArticleLikeDeleteProcess" method="get" class="col-auto px-0" th:if="${instaArticleList.like == 1}">
+                <form action="./pushArticleLikeDeleteProcess" method="get" class="col-auto px-0" th:if="${instaArticleList.like >= 1}">
                     <button class="btn d-flex align-items-center pb-0">
                         <i class="fa-solid fa-heart likeColor"></i>
                     </button>
@@ -549,10 +549,10 @@
                     <input type="hidden" name="user_id" th:value="${instaUserInfoDto.id}">
                     <input type="hidden" name="article_id" th:value="${instaArticleList.instaArticleDto.id}">
                 </form>
-                <form action="./pushArticleLikeProcess" method="get" class="col-auto px-0" th:if="${instaArticleList.like != 1}">
+                <form action="./pushArticleLikeProcess" method="get" class="col-auto px-0" th:if="${instaArticleList.like < 1}">
                     <button class="btn d-flex align-items-center pb-0">
                         <!-- onclick="like(/*[[${instaArticleList.instaArticleDto.id}]]*/)" -->
-                        <i id="heart" onclick="like()" class="fa-regular fa-heart"></i>
+                        <i id="heart" class="fa-regular fa-heart"></i>
                     </button>
 
                     <input type="hidden" name="user_id" th:value="${instaUserInfoDto.id}">
@@ -1130,7 +1130,7 @@
     let isReply = false; // 대댓글 여부를 추적하는 변수
     let parentCommentId = null; // 대댓글의 부모 댓글 ID
 
-    let articleId = null; // 현재 처리 중인 기사 ID
+    // let articleId = null; // 현재 처리 중인 기사 ID
     let reloadButton = null; // 현재 처리 중인 버튼 요소
 
     function setSessionId(){

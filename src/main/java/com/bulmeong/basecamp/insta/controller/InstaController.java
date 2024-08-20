@@ -145,6 +145,7 @@ public class InstaController {
                 // 인스스 _ 로그인 유저가 팔로우 한 유저 출력
                 List<InstaUserInfoDto> instaStoryList = instaService.likeInstaStoryButIsNotSoSad(instaUserInfoDto.getId());
                 model.addAttribute("instaStoryList", instaStoryList);
+                
 
                 return "insta/instaMainPage";
             }else{ // 인스타에 프로필 등록 안 된 유저

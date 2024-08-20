@@ -36,8 +36,8 @@ public class RestInstaController {
     }
 
 
-    // 좋아요
-    @RequestMapping("like") // like insert
+    // 좋아요 like insert
+    @RequestMapping("like")
     public InstaRestResponseDto like(InstaArticleLikeDto params, HttpSession session){
         InstaRestResponseDto instaRestResponseDto = new InstaRestResponseDto();
         instaRestResponseDto.setResult("success");
@@ -328,21 +328,6 @@ public class RestInstaController {
         return instaRestResponseDto;
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
