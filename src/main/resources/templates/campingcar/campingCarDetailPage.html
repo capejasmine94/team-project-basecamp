@@ -136,15 +136,15 @@
 <body>
     <div class="container-fluid fixed-top">
         <div class="row bg-white align-items-center py-2 border-bottom">
-            <div class="col-auto px-0">
+            <div class="col-auto px-0 pe-1">
                 <button class="border-0 bg-transparent d-flex align-items-center text-dark">
                     <span class="material-symbols-outlined" onclick="history.back();" style="cursor: pointer;">arrow_back</span>
                 </button>
             </div>
-            <div class="col text-center">
-                <h5 class="mb-0 fw-semibold" style="font-size: 16px;">상세 정보</h5>
+            <div class="col ps-4 text-center">
+                <div class="mb-0 fw-semibold" style="font-size: 16px;">상세 정보</div>
             </div>
-            <div class="col-1 me-3">
+            <div class="col-2">
             </div>
         </div>
     </div>
@@ -167,7 +167,7 @@
                                 <div class="carousel-inner">
                                     <!-- 첫 번째 슬라이드 (모터홈) -->
                                     <div th:if="${#strings.equals(campingcarDetails.campingcarDto.car_type_name, '모터홈')}" class="carousel-item active">
-                                        <img th:src="@{/public/img/campingCarImage/모터홈.png}" class="d-block w-100 img-fluid" alt="모터홈">
+                                        <img th:src="@{/public/img/campingCarImage/모터홈.png}" class="d-block w-100 h-100 img-fluid" alt="모터홈">
                                         <div class="position-absolute d-flex gap-2" style="top: 10px; right: 10px;">
                                             <i class="bi bi-heart" style="font-size: 12px; font-weight: bold; color: white; padding: 4px; border-radius: 50%;"></i>
                                             <i class="bi bi-house-door" style="font-size: 12px; font-weight: bold; color: white; padding: 4px; border-radius: 50%;"></i>
@@ -175,7 +175,7 @@
                                     </div>
                                     <!-- 두 번째 슬라이드 (차박형(중형)) -->
                                     <div th:if="${#strings.equals(campingcarDetails.campingcarDto.car_type_name, '차박형(중형)')}" class="carousel-item active">
-                                        <img th:src="@{/public/img/campingCarImage/차박형(중형).png}" class="d-block w-100 img-fluid" alt="차박형(중형)">
+                                        <img th:src="@{/public/img/campingCarImage/차박형(중형).png}" class="d-block w-100 h-100 img-fluid" alt="차박형(중형)">
                                         <div class="position-absolute d-flex gap-2" style="top: 10px; right: 10px;">
                                             <i class="bi bi-heart" style="font-size: 12px; font-weight: bold; color: white; padding: 4px; border-radius: 50%;"></i>
                                             <i class="bi bi-house-door" style="font-size: 12px; font-weight: bold; color: white; padding: 4px; border-radius: 50%;"></i>
@@ -183,7 +183,7 @@
                                     </div>
                                     <!-- 세 번째 슬라이드 (차박형(소형)) -->
                                     <div th:if="${#strings.equals(campingcarDetails.campingcarDto.car_type_name, '차박형(소형)')}" class="carousel-item active">
-                                        <img th:src="@{/public/img/campingCarImage/차박형(소형).png}" class="d-block w-100 img-fluid" alt="차박형(소형)">
+                                        <img th:src="@{/public/img/campingCarImage/차박형(소형).png}" class="d-block w-100 h-100 img-fluid" alt="차박형(소형)">
                                         <div class="position-absolute d-flex gap-2" style="top: 10px; right: 10px;">
                                             <i class="bi bi-heart" style="font-size: 12px; font-weight: bold; color: white; padding: 4px; border-radius: 50%;"></i>
                                             <i class="bi bi-house-door" style="font-size: 12px; font-weight: bold; color: white; padding: 4px; border-radius: 50%;"></i>
@@ -191,7 +191,7 @@
                                     </div>
                                     <!-- 네 번째 슬라이드 (카라반펜션) -->
                                     <div th:if="${#strings.equals(campingcarDetails.campingcarDto.car_type_name, '카라반펜션')}" class="carousel-item active">
-                                        <img th:src="@{/public/img/campingCarImage/카라반.png}" class="d-block w-100 img-fluid" alt="카라반펜션">
+                                        <img th:src="@{/public/img/campingCarImage/카라반.png}" class="d-block w-100 h-100 img-fluid" alt="카라반펜션">
                                         <div class="position-absolute d-flex gap-2" style="top: 10px; right: 10px;">
                                             <i class="bi bi-heart" style="font-size: 12px; font-weight: bold; color: white; padding: 4px; border-radius: 50%;"></i>
                                             <i class="bi bi-house-door" style="font-size: 12px; font-weight: bold; color: white; padding: 4px; border-radius: 50%;"></i>
@@ -277,11 +277,11 @@
                                     <div class="d-flex ps-4 pt-2">
                                         <div class="d-flex justify-content-center align-items-center rounded-circle" style="width: 2.18575rem; height: 2.18575rem; background-color: #FFD700;">
                                             <!-- 회사별 채팅 기능 -->
-                                            <i class="bi bi-chat-fill" style="color: #000000; font-size: 18px;"></i>
+                                            <span class="bi bi-chat-fill" style="color: #000000; font-size: 18px;"></span>
                                         </div>
-                                        <div class="d-flex align-items-center justify-content-center rounded-circle border ms-2" style="width: 2.18575rem; height: 2.18575rem;">
+                                        <div class="d-flex align-items-center justify-content-center rounded-circle border" style="width: 2.18575rem; height: 2.18575rem;">
                                             <!-- 회사별 전화 통화 기능 -->
-                                            <i class="bi bi-telephone-fill"></i>
+                                            <span class="bi bi-telephone-fill"></span>
                                         </div>
                                     </div>
                                 </div>
@@ -292,257 +292,396 @@
             </div>
         </div>
 
-        <div class="section mb-0 border-0">
-            <nav class="row sticky-menu pb-3 d-flex justify-content-between border-bottom">
+        <div class="section sticky-top mb-0 border-0 py-0" style="z-index: 1040;overflow-x: hidden;">
+            <nav class="row pb-0 d-flex justify-content-between border-bottom nav nav-underline">
                 <div class="col-auto">
-                    <a class="fw-semibold" href="#rules">이용규정</a>
+                    <a class="fw-semibold nav-link" href="#rules">이용규정</a>
                 </div>
                 <div class="col-auto">
-                    <a class="fw-semibold" href="#info">예약정보</a>
+                    <a class="fw-semibold nav-link" href="#info">예약정보</a>
                 </div>
                 <div class="col-auto">
-                    <a class="fw-semibold" href="#options">차량 옵션</a>
+                    <a class="fw-semibold nav-link" href="#options">차량 옵션</a>
                 </div>
-                <div class="col-3 px-0 text-center">
-                    <a class="fw-semibold" href="#conditions">운전자 대여조건</a>
+                <div class="col-auto px-0 text-center">
+                    <a class="fw-semibold nav-link" href="#conditions">운전자 대여조건</a>
                 </div>
                 <div class="col-auto">
-                    <a class="fw-semibold" href="#reviews">리뷰</a>
+                    <a class="fw-semibold nav-link" href="#reviews">리뷰</a>
                 </div>
             </nav>
         </div>
-        <div class="py-3" id="rules"></div>
-        <div class="row section">
-            <div class="col">
-                <div class="row">
-                    <div class="col">
-                        <div class="fs-5 fw-bold pt-1 pb-3" style="color: #494949;">렌트카 예약 전, 꼭 확인해주세요! </div>
-                        <div class="row">
-                            <div class="col">
-                                <div class="row d-flex align-items-start">
-                                    <div class="col-1">
-                                        <span class="material-symbols-outlined text-primary">check</span>
+        <div class="container">
+            <div id="rules" class="py-2"></div>
+            <div class="row section border-0 pt-3 mt-3">
+                <div class="col">
+                    <div class="row">
+                        <div class="col">
+                            <div class="fs-5 fw-bold pt-1 pb-3" style="color: #494949;">렌트카 예약 전, 꼭 확인해주세요! </div>
+                            <div class="row">
+                                <div class="col">
+                                    <div class="row d-flex align-items-start">
+                                        <div class="col-1">
+                                            <span class="material-symbols-outlined text-primary">check</span>
+                                        </div>
+                                        <div class="col ps-1">
+                                            <span class="fs-6" style="color: #494949;">제주도의 경우, 렌트카 업체 영업시간 외 대여/반납이 필요한 경우, 네추럴포레스트 고객센터를 통한 상담 후 예약 진행해주세요</span>
+                                        </div>
                                     </div>
-                                    <div class="col ms-1 ps-1">
-                                        <span class="fs-6" style="color: #494949;">제주도의 경우, 렌트카 업체 영업시간 외 대여/반납이 필요한 경우, 네추럴포레스트 고객센터를 통한 상담 후 예약 진행해주세요</span>
-                                    </div>
-                                </div>
-                                <div class="row d-flex align-items-start">
-                                    <div class="col-1">
-                                        <span class="material-symbols-outlined text-primary">check</span>
-                                    </div>
-                                    <div class="col ms-1 ps-1">
-                                        <div class="fs-6" style="color: #494949;">외국인 대여, 낚시용품 지참, 애견동물 동반 가능 여부와 주행거리 제한 규정은</div>
-                                        <div class="fs-6" style="color: #494949;">업체별로 상이하므로 업체별 대여규정을 반드시 확인해주세요.</div>
-                                        <div class="fs-6" style="color: #494949;">대여조건이 맞지 않을 경우 렌트카 이용이 불가합니다.</div>
+                                    <div class="row d-flex align-items-start">
+                                        <div class="col-1">
+                                            <span class="material-symbols-outlined text-primary">check</span>
+                                        </div>
+                                        <div class="col ps-1">
+                                            <div class="fs-6" style="color: #494949;">외국인 대여, 낚시용품 지참, 애견동물 동반 가능 여부와 주행거리 제한 규정은</div>
+                                            <div class="fs-6" style="color: #494949;">업체별로 상이하므로 업체별 대여규정을 반드시 확인해주세요.</div>
+                                            <div class="fs-6" style="color: #494949;">대여조건이 맞지 않을 경우 렌트카 이용이 불가합니다.</div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="row pt-2">
-                    <div class="col">
-                        <div class="fs-5 fw-bold pt-1 pb-3" style="color: #494949;">기타 특이사항</div>
-                        <div class="row">
-                            <div class="col">
-                                <div class="row d-flex align-items-start">
-                                    <div class="col-1">
-                                        <span class="material-symbols-outlined text-primary">check</span>
+                    <div class="row pt-2">
+                        <div class="col">
+                            <div class="fs-5 fw-bold pt-1 pb-3" style="color: #494949;">기타 특이사항</div>
+                            <div class="row">
+                                <div class="col">
+                                    <div class="row d-flex align-items-start">
+                                        <div class="col-1">
+                                            <span class="material-symbols-outlined text-primary">check</span>
+                                        </div>
+                                        <div class="col ps-1">
+                                            <div class="fs-6" style="color: #494949;">차량 반납 시, 차량 내 문제 확인되면 실내 클리닝 비용 10만원 청구</div>
+                                        </div>
                                     </div>
-                                    <div class="col ms-1 ps-1">
-                                        <div class="fs-6" style="color: #494949;">차량 반납 시, 차량 내 문제 확인되면 실내 클리닝 비용 10만원 청구</div>
+                                    <div class="row d-flex align-items-start">
+                                        <div class="col-1">
+                                            <span class="material-symbols-outlined text-primary">check</span>
+                                        </div>
+                                        <div class="col ps-1">
+                                            <div class="fs-6" style="color: #494949;">이외 추가 문의사항이 있는 경우, 업체로 사전 문의 필수</div>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="row d-flex align-items-start">
-                                    <div class="col-1">
-                                        <span class="material-symbols-outlined text-primary">check</span>
-                                    </div>
-                                    <div class="col ms-1 ps-1">
-                                        <div class="fs-6" style="color: #494949;">이외 추가 문의사항이 있는 경우, 업체로 사전 문의 필수</div>
-                                    </div>
-                                </div>
 
-                                <div class="row pt-3">
-                                    <div class="col fw-semibold">
-                                        <div class="fs-6 text-muted">낚시용품/군인/외국인</div>
-                                        <div class="row pt-1 ps-3">
-                                            <div class="col">
-                                                <div class="new-fs-85 text-muted">낚시용품 지참시 대여 불가능</div>
-                                                <div class="row">
-                                                    <div class="col">
-                                                        <div class="new-fs-85 text-muted pt-1">실내클리닝 비용 청구</div>
-                                                        <div class="row ps-3">
-                                                            <div class="col">
-                                                                <div class="new-fs-75 text-muted fw-normal">·악취/오염 발생 시 정도에 따라 실내 클리닝 비용 청구</div>
+                                    <div class="row pt-3">
+                                        <div class="col fw-semibold">
+                                            <div class="fs-6 text-muted">낚시용품/군인/외국인</div>
+                                            <div class="row pt-1 ps-3">
+                                                <div class="col">
+                                                    <div class="new-fs-85 text-muted">낚시용품 지참시 대여 불가능</div>
+                                                    <div class="row">
+                                                        <div class="col">
+                                                            <div class="new-fs-85 text-muted pt-1">실내클리닝 비용 청구</div>
+                                                            <div class="row ps-3">
+                                                                <div class="col">
+                                                                    <div class="new-fs-75 text-muted fw-normal">·악취/오염 발생 시 정도에 따라 실내 클리닝 비용 청구</div>
+                                                                </div>
                                                             </div>
                                                         </div>
                                                     </div>
+                                                    <div class="row">
+                                                        <div class="col">
+                                                            <div class="new-fs-85 text-muted pt-1">군인대여 불가능</div>
+                                                        </div>
+                                                    </div> 
+                                                    <div class="row">
+                                                        <div class="col">
+                                                            <div class="new-fs-85 text-muted pt-1">외국인대여 가능</div>
+                                                            <div class="row ps-3">
+                                                                <div class="col">
+                                                                    <div class="new-fs-75 text-muted fw-nomal fw-normal">·한국 면허증 지참</div>
+                                                                    <div class="new-fs-75 text-muted fw-nomal fw-normal">·한국어 소통 가능</div>
+                                                                    <div class="new-fs-75 text-muted fw-nomal fw-normal">·In order to rent a car, dirves should be able to communicate in Korean.</div>
+                                                                    <div class="new-fs-75 text-muted fw-nomal fw-normal ps-1">Please contactus if you have any question</div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>                                                      
                                                 </div>
-                                                <div class="row">
-                                                    <div class="col">
-                                                        <div class="new-fs-85 text-muted pt-1">군인대여 불가능</div>
-                                                    </div>
-                                                </div> 
-                                                <div class="row">
-                                                    <div class="col">
-                                                        <div class="new-fs-85 text-muted pt-1">외국인대여 가능</div>
-                                                        <div class="row ps-3">
-                                                            <div class="col">
-                                                                <div class="new-fs-75 text-muted fw-nomal fw-normal">·한국 면허증 지참</div>
-                                                                <div class="new-fs-75 text-muted fw-nomal fw-normal">·한국어 소통 가능</div>
-                                                                <div class="new-fs-75 text-muted fw-nomal fw-normal">·In order to rent a car, dirves should be able to communicate in Korean.</div>
-                                                                <div class="new-fs-75 text-muted fw-nomal fw-normal ps-1">Please contactus if you have any question</div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>                                                      
                                             </div>
                                         </div>
                                     </div>
+                                    <div class="row pt-3">
+                                        <div class="col">
+                                            <div class="fs-6 text-muted pt-1 fw-semibold">대여 특이사항</div>
+                                            <div class="row ps-2">
+                                                <div class="col">
+                                                    <div class="new-fs-75 text-muted fw-nomal fw-normal">- 대여 불가능 및 100% 환불 불가 내용</div>
+                                                    <div class="new-fs-75 text-muted fw-nomal fw-normal ps-2">1) 탑승인원(영유아 포함)초과</div>
+                                                    <div class="new-fs-75 text-muted fw-nomal fw-normal ps-2">2) 당사의 요청 사항 및 자료 요구에 불응</div>
+                                                    <div class="new-fs-75 text-muted fw-nomal fw-normal ps-2">3) 기타 당사의 합리적, 보편적인 판단에 의거 차량 대여가 불가한 경우</div>
+                                                    <div class="new-fs-75 text-muted fw-nomal fw-normal ps-4">- 차량 반납시, 차량 내 문제 확인되면 10~30만원 청구</div>
+                                                </div>
+                                            </div>
+                                            <div class="row ps-4">
+                                                <div class="col">
+                                                    <div class="new-fs-75 text-muted fw-nomal fw-normal">&lt;최대 대여 일수&gt;</div>
+                                                    <div class="new-fs-75 text-muted fw-nomal fw-normal ps-2">- 최대 대여일수 7일 이후 연속 2회까지 대여 가능</div>
+                                                    <div class="new-fs-75 text-muted fw-nomal fw-normal ps-2">- 7일 빌릴 때마다 본사에서 차량 점검 및 계약서 작서 필수</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row pt-3">
+                                        <div class="col">
+                                            <div class="fs-6 text-muted pt-1 fw-semibold">야간인수</div>
+                                            <div class="row ps-2">
+                                                <div class="col">
+                                                    <div class="new-fs-75 text-muted fw-nomal fw-normal">· 야간인수 시간은 오후8시 ~ 오후9시입니다.</div>
+                                                    <div class="new-fs-75 text-muted fw-nomal fw-normal">· 20시 이후 1만원</div>
+                                                    <div class="new-fs-75 text-muted fw-nomal fw-normal">· 야간인수 비용이 발생할 경우, 대여업체에 별도 납부해주세요</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>         
                                 </div>
-                                <div class="row pt-3">
-                                    <div class="col">
-                                        <div class="fs-6 text-muted pt-1 fw-semibold">대여 특이사항</div>
-                                        <div class="row ps-2">
-                                            <div class="col">
-                                                <div class="new-fs-75 text-muted fw-nomal fw-normal">- 대여 불가능 및 100% 환불 불가 내용</div>
-                                                <div class="new-fs-75 text-muted fw-nomal fw-normal ps-2">1) 탑승인원(영유아 포함)초과</div>
-                                                <div class="new-fs-75 text-muted fw-nomal fw-normal ps-2">2) 당사의 요청 사항 및 자료 요구에 불응</div>
-                                                <div class="new-fs-75 text-muted fw-nomal fw-normal ps-2">3) 기타 당사의 합리적, 보편적인 판단에 의거 차량 대여가 불가한 경우</div>
-                                                <div class="new-fs-75 text-muted fw-nomal fw-normal ps-4">- 차량 반납시, 차량 내 문제 확인되면 10~30만원 청구</div>
-                                            </div>
-                                        </div>
-                                        <div class="row ps-4">
-                                            <div class="col">
-                                                <div class="new-fs-75 text-muted fw-nomal fw-normal">&lt;최대 대여 일수&gt;</div>
-                                                <div class="new-fs-75 text-muted fw-nomal fw-normal ps-2">- 최대 대여일수 7일 이후 연속 2회까지 대여 가능</div>
-                                                <div class="new-fs-75 text-muted fw-nomal fw-normal ps-2">- 7일 빌릴 때마다 본사에서 차량 점검 및 계약서 작서 필수</div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row pt-3">
-                                    <div class="col">
-                                        <div class="fs-6 text-muted pt-1 fw-semibold">야간인수</div>
-                                        <div class="row ps-2">
-                                            <div class="col">
-                                                <div class="new-fs-75 text-muted fw-nomal fw-normal">· 야간인수 시간은 오후8시 ~ 오후9시입니다.</div>
-                                                <div class="new-fs-75 text-muted fw-nomal fw-normal">· 20시 이후 1만원</div>
-                                                <div class="new-fs-75 text-muted fw-nomal fw-normal">· 야간인수 비용이 발생할 경우, 대여업체에 별도 납부해주세요</div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>         
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="row pt-3">
-                    <div class="col">
-                        <div class="row">
-                            <div class="col info-item-title">
-                                취소 규정
+                    <div class="row pt-3">
+                        <div class="col">
+                            <div class="row">
+                                <div class="col info-item-title">
+                                    취소 규정
+                                </div>
                             </div>
-                        </div>
-                        <div class="row">
-                            <div class="col">
-                                <div class="row info-items">
-                                    <div class="col">
-                                        <div class="row">
-                                            <div class="col">
-                                                <pre class="new-fs-75 text-muted fw-nomal" th:text="${campingcarDetails.campingcarDto.cancellation_policy}"></pre>
+                            <div class="row">
+                                <div class="col">
+                                    <div class="row info-items">
+                                        <div class="col">
+                                            <div class="row">
+                                                <div class="col">
+                                                    <pre class="new-fs-75 text-muted fw-nomal" th:text="${campingcarDetails.campingcarDto.cancellation_policy}"></pre>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col">
+                                                    <div class="new-fs-75 text-muted fw-nomal">· 결제 후 무료취소 구간에 취소를 하였더라도 대여 시간이 지났을 경우 예약 금액에 대한 환불이 불가능합니다.</div>
+                                                    <div class="new-fs-75 text-muted fw-nomal">· 상세한 취소 규정은 "취소 규정 자세히보기"에서 확인할 수 있습니다.</div>
+                                                </div>
+                                                </div>
                                             </div>
                                         </div>
-                                        <div class="row">
-                                            <div class="col">
-                                                <div class="new-fs-75 text-muted fw-nomal">· 결제 후 무료취소 구간에 취소를 하였더라도 대여 시간이 지났을 경우 예약 금액에 대한 환불이 불가능합니다.</div>
-                                                <div class="new-fs-75 text-muted fw-nomal">· 상세한 취소 규정은 "취소 규정 자세히보기"에서 확인할 수 있습니다.</div>
-                                            </div>
-                                            </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row pt-3">
+                                <div class="col">
+                                    <div class="fs-6 text-muted pt-1 fw-semibold">노쇼(No-show) 취소 수수료</div>
+                                    <div class="row ps-2">
+                                        <div class="col">
+                                            <div class="new-fs-75 text-muted fw-nomal">* 노쇼란? 대여시간 이후 사전 협의 없이 대여 장소에 나타나지 않고, 연락 두절하는 경우를 가리킵니다.</div>
+                                            <div class="new-fs-75 text-muted">- 노쇼일 경우, 환불 불가합니다. (연락이 닿아도 대여시간이 지난 이후 환불은 불가합니다.)</div>
+                                            <div class="new-fs-75 text-muted">- 대여시간 3시간이 지난 후에는 연락이 되었거나 차량 이용을 원하더라도 차량 대여가 불가합니다.</div>
+                                            <div class="new-fs-75 text-muted">- (배달 신청 고객) 배차 전 연락이 닿지 않으면 배차가 어려울 수 있으며, 대여시작 시간이 지난 후 3시간 이내에 업체 차고지에서 직접 인수해야 합니다.</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div> 
+                            <div class="row px-3 pt-3">
+                                <div class="col">
+                                    <div class="fs-6 text-muted pt-1 fw-semibold">대여조건 미충족시</div>
+                                    <div class="row ps-2">
+                                        <div class="col">
+                                            <div class="new-fs-75 text-muted fw-nomal">현장에서 대여조건에 미충족 된 경우에는 50%의 환불이 진행됩니다.</div>
+                                            <div class="new-fs-75 text-muted">- 노쇼일 경우, 환불 불가합니다. (연락이 닿아도 대여시간이 지난 이후 환불은 불가합니다.)</div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
+                            <div class="row px-3 pt-3">
+                                <div class="col">
+                                    <div class="fs-6 text-muted pt-1 fw-semibold">결항/결박 취소 수수료</div>
+                                    <div class="row ps-2">
+                                        <div class="col">
+                                            <div class="new-fs-75 text-muted fw-nomal">결항, 결박 시 발생하는 수수료를 안내드립니다..</div>
+                                            <div class="new-fs-75 text-muted">인수 당일 결항, 결박건에 한해 결항(결박) 확인서를 카모아로 전달주시면 100% 환불 가능합니다.</div>
+                                            <div class="new-fs-75 text-muted">결항확인서는 결항 발생 당일 제출해주셔야 합니다.</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div> 
                         </div>
-                        <div class="row pt-3">
-                            <div class="col">
-                                <div class="fs-6 text-muted pt-1 fw-semibold">노쇼(No-show) 취소 수수료</div>
-                                <div class="row ps-2">
-                                    <div class="col">
-                                        <div class="new-fs-75 text-muted fw-nomal">* 노쇼란? 대여시간 이후 사전 협의 없이 대여 장소에 나타나지 않고, 연락 두절하는 경우를 가리킵니다.</div>
-                                        <div class="new-fs-75 text-muted">- 노쇼일 경우, 환불 불가합니다. (연락이 닿아도 대여시간이 지난 이후 환불은 불가합니다.)</div>
-                                        <div class="new-fs-75 text-muted">- 대여시간 3시간이 지난 후에는 연락이 되었거나 차량 이용을 원하더라도 차량 대여가 불가합니다.</div>
-                                        <div class="new-fs-75 text-muted">- (배달 신청 고객) 배차 전 연락이 닿지 않으면 배차가 어려울 수 있으며, 대여시작 시간이 지난 후 3시간 이내에 업체 차고지에서 직접 인수해야 합니다.</div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div> 
-                        <div class="row px-3 pt-3">
-                            <div class="col">
-                                <div class="fs-6 text-muted pt-1 fw-semibold">대여조건 미충족시</div>
-                                <div class="row ps-2">
-                                    <div class="col">
-                                        <div class="new-fs-75 text-muted fw-nomal">현장에서 대여조건에 미충족 된 경우에는 50%의 환불이 진행됩니다.</div>
-                                        <div class="new-fs-75 text-muted">- 노쇼일 경우, 환불 불가합니다. (연락이 닿아도 대여시간이 지난 이후 환불은 불가합니다.)</div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row px-3 pt-3">
-                            <div class="col">
-                                <div class="fs-6 text-muted pt-1 fw-semibold">결항/결박 취소 수수료</div>
-                                <div class="row ps-2">
-                                    <div class="col">
-                                        <div class="new-fs-75 text-muted fw-nomal">결항, 결박 시 발생하는 수수료를 안내드립니다..</div>
-                                        <div class="new-fs-75 text-muted">인수 당일 결항, 결박건에 한해 결항(결박) 확인서를 카모아로 전달주시면 100% 환불 가능합니다.</div>
-                                        <div class="new-fs-75 text-muted">결항확인서는 결항 발생 당일 제출해주셔야 합니다.</div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div> 
                     </div>
                 </div>
             </div>
         </div>
-    <div class="py-3" id="info"></div>
-    <div class="row section">
-        <div class="col">
-            <div class="row info-items">
-                <div class="col"> 
-                    <div class="info-item-title">가능 여부</div>
-                    <div class="row mt-3 ps-2">
-                        <div class="col-auto"></div>
-                        <div class="col ps-2 d-flex align-items-center">
-                            <div class="icon-box px-2 border rounded-pill" style="width: 2.8125rem; height: 2.8125rem"><span class="material-symbols-outlined">groups</span></div>
-                            <div class="ms-3 text-muted new-fs-9">동승 인원 <div th:text="${campingcarDetails.campingcarDto.seating_capacity}+'명'" class="text-center text-dark fs-6"></div></div>
-                        </div>
-                        <div class="col d-flex align-items-center">
-                            <div class="icon-box px-2 border rounded-pill" style="width: 2.8125rem; height: 2.8125rem"><span class="material-symbols-outlined">bedroom_parent</span></div>
-                            <div class="ps-3 text-muted new-fs-9 text-center">취침 인원 <div th:text="${campingcarDetails.campingcarDto.sleeping_capacity}+'명'" class="text-center text-dark fs-6"></div></div>
-                        </div>
-                    </div>
-                    <div class="row mt-3 ps-2">
-                        <div class="col-auto"></div>
-                        <div class="col ps-2 d-flex align-items-center">
-                            <div class="icon-box px-2 border rounded-pill" style="width: 2.8125rem; height: 2.8125rem"><span class="material-symbols-outlined">Pets</span></div>
-                            <div class="ms-3 text-muted new-fs-9 text-center">반려동물 <div th:text="${campingcarDetails.campingcarDto.pet_friendly}" class="text-center text-dark fs-6"></div></div>
-                        </div>
-                        <div class="col d-flex align-items-center">
-                            <div class="icon-box px-2 border rounded-pill" style="width: 2.8125rem; height: 2.8125rem"><span class="material-symbols-outlined">event_available</span></div>
-                            <div class="ps-3 ms-2 text-muted new-fs-9 text-center">예약<div th:text="${campingcarDetails.campingcarDto.is_opened == 'Y' ? '있어요' : '없어요'}" class="text-center text-dark fs-6"></div></div>
-                        </div>
-                    </div>
-                    <div class="row info-items pt-4">
+        <div class="container">
+            <div class="py-3" id="info"></div>
+            <div class="row section border-0 pt-3 mt-3">
+                <div class="col">
+                    <div class="row info-items">
                         <div class="col"> 
-                            <div class="info-item-title py-2">상세 설명</div>
-                            <pre class="info-item-value" th:text="${campingcarDetails.campingcarDto.detailed_description}" style="white-space: pre-line;text-align: justify;"></ㅔ>
+                            <div class="info-item-title">가능 여부</div>
+                            <div class="row mt-3 ps-2">
+                                <div class="col-auto"></div>
+                                <div class="col ps-2 d-flex align-items-center">
+                                    <div class="icon-box px-2 border rounded-pill" style="width: 2.8125rem; height: 2.8125rem"><span class="material-symbols-outlined">groups</span></div>
+                                    <div class="ps-3 text-muted new-fs-9">동승 인원 <div th:text="${campingcarDetails.campingcarDto.seating_capacity}+'명'" class="text-center text-dark fs-6 fw-semibold"></div></div>
+                                </div>
+                                <div class="col d-flex align-items-center">
+                                    <div class="icon-box px-2 border rounded-pill" style="width: 2.8125rem; height: 2.8125rem"><span class="material-symbols-outlined">bedroom_parent</span></div>
+                                    <div class="ps-3 text-muted new-fs-9 text-center">취침 인원 <div th:text="${campingcarDetails.campingcarDto.sleeping_capacity}+'명'" class="text-center text-dark fs-6 fw-semibold"></div></div>
+                                </div>
+                            </div>
+                            <div class="row mt-3 ps-2">
+                                <div class="col-auto"></div>
+                                <div class="col ps-2 d-flex align-items-center">
+                                    <div class="icon-box px-2 border rounded-pill" style="width: 2.8125rem; height: 2.8125rem"><span class="material-symbols-outlined">Pets</span></div>
+                                    <div class="ps-3 text-muted new-fs-9 text-center">반려동물 <div th:text="${campingcarDetails.campingcarDto.pet_friendly}" class="text-center text-dark fs-6 fw-semibold"></div></div>
+                                </div>
+                                <div class="col d-flex align-items-center">
+                                    <div class="icon-box px-2 border rounded-pill" style="width: 2.8125rem; height: 2.8125rem"><span class="material-symbols-outlined">event_available</span></div>
+                                    <div class="ps-3 ms-2 text-muted new-fs-9 text-center">예약<div th:text="${campingcarDetails.campingcarDto.is_opened == 'Y' ? '있어요' : '없어요'}" class="text-center text-dark fs-6 fw-semibold"></div></div>
+                                </div>
+                            </div>
+                            <div class="row info-items pt-4">
+                                <div class="col"> 
+                                    <div class="info-item-title py-2">상세 설명</div>
+                                    <pre class="info-item-value" th:text="${campingcarDetails.campingcarDto.detailed_description}" style="white-space: pre-line;text-align: justify;"></ㅔ>
+                                </div>
+                            </div>
+                            <div class="d-flex flex-wrap pt-4">
+                                <div class="info-item-title py-2">세부 사진</div>
+                                <div class="col-12 d-flex justify-content-center" th:each="detailImg : ${detailImgDto}">
+                                    <img th:src="|/images/${detailImg.location}|" class="rounded-0" style="width: 23.88rem; height: 56.25rem;" >
+                                </div>
+                            </div>
                         </div>
                     </div>
-                    <div class="d-flex flex-wrap pt-4">
-                        <div class="info-item-title py-2">세부 사진</div>
-                        <div class="col-12 d-flex justify-content-center" th:each="detailImg : ${detailImgDto}">
-                            <img th:src="|/images/${detailImg.location}|" class="rounded-0" style="width: 23.88rem; height: 56.25rem;" >
+                </div>
+            </div>
+        </div>
+    
+    <div class="container">
+        <div class="py-3" id="options"></div>
+        <div class="row section border-0 pt-3 mt-3">
+            <div class="col">
+                <div class="rowo pb-3">
+                    <div class="col info-item-title">
+                        차량 기본 보유 옵션
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <ul class="list-group">
+                            <li th:each="facility : ${facilities}" class="list-group-item d-flex justify-content-between align-items-center">
+                                <span th:text="${facility.name}"></span>
+                                <span th:if="${facility.name} == '화장실'" class="material-symbols-outlined">wc</span>
+                                <span th:if="${facility.name} == '샤워실'" class="material-symbols-outlined">shower</span>
+                                <span th:if="${facility.name} == '침대'" class="material-symbols-outlined">bed</span>
+                                <span th:if="${facility.name} == '싱크대'" class="material-symbols-outlined">kitchen</span>
+                                <span th:if="${facility.name} == '인덕션'" class="material-symbols-outlined">local_dining</span>
+                                <span th:if="${facility.name} == '가스레인지'" class="material-symbols-outlined">local_fire_department</span>
+                                <span th:if="${facility.name} == '전기레인지'" class="material-symbols-outlined">microwave</span>
+                                <span th:if="${facility.name} == '냉장고'" class="material-symbols-outlined">kitchen</span>
+                                <span th:if="${facility.name} == '온수기'" class="material-symbols-outlined">hot_tub</span>
+                                <span th:if="${facility.name} == '테이블'" class="material-symbols-outlined">table_bar</span>
+                                <span th:if="${facility.name} == 'TV'" class="material-symbols-outlined">tv</span>
+                                <span th:if="${facility.name} == '에어컨'" class="material-symbols-outlined">ac_unit</span>
+                                <span th:if="${facility.name} == '무시동히터'" class="material-symbols-outlined">water_heater</span>
+                                <span th:if="${facility.name} == '인산철 배터리'" class="bi bi-battery-charging"></span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="container">
+        <div class="py-3" id="conditions"></div>
+        <div class="row section border-0 pt-3">
+            <div class="col">
+                <div class="row pb-3">
+                    <div class="col info-item-title">
+                        차량 대여조건
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <div class="row py-2">
+                            <div class="col d-flex justify-content-start align-items-center ps-4">
+                                <span class="material-symbols-outlined">badge</span>
+                                <span class="fs-6 fw-normal">운전면허증 : </span><span class="px-1 fs-6" th:text="${campingcarDetails.campingcarDto.driver_license_name}"></span>
+                            </div>
+                        </div>
+                        <div class="row py-2">
+                            <div class="col d-flex justify-content-start align-items-center ps-4">
+                                <span class="material-symbols-outlined">airline_seat_recline_extra</span>
+                                <span class="fs-6">운전자 나이 : </span><span class="px-1 fs-6" th:text="${campingcarDetails.campingcarDto.driver_age_condition_name}"></span>
+                            </div>
+                        </div>
+                        <div class="row py-2">
+                            <div class="col d-flex justify-content-start align-items-center ps-4">
+                                <span class="material-symbols-outlined">directions_car</span>
+                                <span class="fs-6 fw-normal">운전경력 : </span><span class="px-1 fs-6" th:text="${campingcarDetails.campingcarDto.driver_experience_condition_name}"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+        
+    <div class="container">
+        <div class="py-3" id="reviews"></div>
+        <div class="row section border-0 pt-3 mt-3">
+            <div class="col">
+                <div class="row border-bottom pb-4">
+                    <div class="col-4 text-center pe-0">
+                        <div class="badge text-bg-secondary fw-semibold text-center px-2">
+                            <span class="fw-semibold new-fs-7" th:text="${reivewCountBycar}+ '개 리뷰 별점 평균'"></span>
+                        </div>
+                        <div class="fs-2 text-center">
+                            <i class="bi bi-star-fill " style="color: #FFD700;"></i>
+                            <div class="fw-semibold" th:text="${reviewAvg}"></div>
+                        </div>
+                    </div>
+                    <!-- 리뷰 평균 -->
+                    <div class="col-8">
+                        <div th:each="rating : ${ratings}">
+                            <div class="d-flex align-items-center">
+                                <!-- 점수 표시 -->
+                                <span class="new-fs-8 fw-semibold" th:text="${rating.rate} + '점'"></span>
+                                <!-- progress bar -->
+                                <div class="progress flex-grow-1" style="height: 10px; background-color: #e9ecef;">
+                                    <div class="progress-bar bg-dark" role="progressbar" th:style="'width: ' + (${rating.count} > 1 ? ${rating.count} : 1) + '%'">
+                                    </div>
+                                </div> 
+                                <span class="new-fs-8 fw-semibold" th:text="${rating.count} + '명'" style="color: #7C7B7B;"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--리뷰 리스트-->
+                <div class="row pt-2" th:each="reviewList : ${reviewData}">
+                    <div class="col">
+                        <!--리뷰 리스트: 후기 쓴 사용자 이미지와 닉네임-->
+                        <div class="row">
+                            <div class="col fw-semibold py-2">
+                                <img th:if="${reviewList.profile_image != null}" th:src="|/images/${reviewList.profile_image}|" class="rounded-circle img-fluid"
+                                style="width: 20px; height: 20px;">
+                                <img th:unless="${reviewList.profile_image != null}" style="width: 20px; height: 20px;">
+                                <span class="new-fs-85" th:text="${reviewList.nickname}"></span>
+                            </div>
+                        </div>
+                        <!--리뷰 리스트: 후기 쓴 사용자 별점,리뷰 쓴 시간-->
+                        <div class="row d-flex justify-content-between">
+                            <div class="col-8 fw-semibold">
+                                <i class="bi bi-star-fill" style="color: #FFD700;"></i>
+                                <span class="new-fs-85" th:text="${reviewList.rate}"></span> 
+                            </div>
+                            <div class="col text-end pt-1">
+                                <div class="fw-semibold new-fs-7 createdAt" th:text="${#dates.format(reviewList.created_at, 'yyyy.MM.dd HH:mm')}" style="color: #7C7B7B;"></div>
+                            </div>
+                        </div>
+                        <!--리뷰 리스트: 후기 내용-->
+                        <div class="row pt-2 pb-3 border-bottom">
+                            <div class="col">
+                                <span class="fs-7" th:text="${reviewList.content}" style="word-wrap: break-word;"></span>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -550,134 +689,6 @@
         </div>
     </div>
     
-    <div class="py-3" id="options"></div>
-    <div class="row section">
-        <div class="col">
-            <div class="rowo pb-3">
-                <div class="col info-item-title">
-                    차량 기본 보유 옵션
-                </div>
-            </div>
-            <div class="row">
-                <div class="col">
-                    <ul class="list-group">
-                        <li th:each="facility : ${facilities}" class="list-group-item d-flex justify-content-between align-items-center">
-                            <span th:text="${facility.name}"></span>
-                            <span th:if="${facility.name} == '화장실'" class="material-symbols-outlined">wc</span>
-                            <span th:if="${facility.name} == '샤워실'" class="material-symbols-outlined">shower</span>
-                            <span th:if="${facility.name} == '침대'" class="material-symbols-outlined">bed</span>
-                            <span th:if="${facility.name} == '싱크대'" class="material-symbols-outlined">kitchen</span>
-                            <span th:if="${facility.name} == '인덕션'" class="material-symbols-outlined">local_dining</span>
-                            <span th:if="${facility.name} == '가스레인지'" class="material-symbols-outlined">local_fire_department</span>
-                            <span th:if="${facility.name} == '전기레인지'" class="material-symbols-outlined">microwave</span>
-                            <span th:if="${facility.name} == '냉장고'" class="material-symbols-outlined">kitchen</span>
-                            <span th:if="${facility.name} == '온수기'" class="material-symbols-outlined">hot_tub</span>
-                            <span th:if="${facility.name} == '테이블'" class="material-symbols-outlined">table_bar</span>
-                            <span th:if="${facility.name} == 'TV'" class="material-symbols-outlined">tv</span>
-                            <span th:if="${facility.name} == '에어컨'" class="material-symbols-outlined">ac_unit</span>
-                            <span th:if="${facility.name} == '무시동히터'" class="material-symbols-outlined">water_heater</span>
-                            <span th:if="${facility.name} == '인산철 배터리'" class="bi bi-battery-charging"></span>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="py-3" id="conditions"></div>
-    <div class="row section">
-        <div class="col">
-            <div class="row pb-3">
-                <div class="col info-item-title">
-                    차량 대여조건
-                </div>
-            </div>
-            <div class="row">
-                <div class="col">
-                    <div class="row py-2">
-                        <div class="col d-flex justify-content-start align-items-center ps-4">
-                            <span class="material-symbols-outlined">badge</span>
-                            <span class="fs-6 fw-normal">운전면허증 : </span><span class="px-1 fs-6" th:text="${campingcarDetails.campingcarDto.driver_license_name}"></span>
-                        </div>
-                    </div>
-                    <div class="row py-2">
-                        <div class="col d-flex justify-content-start align-items-center ps-4">
-                            <span class="material-symbols-outlined">airline_seat_recline_extra</span>
-                            <span class="fs-6">운전자 나이 : </span><span class="px-1 fs-6" th:text="${campingcarDetails.campingcarDto.driver_age_condition_name}"></span>
-                        </div>
-                    </div>
-                    <div class="row py-2">
-                        <div class="col d-flex justify-content-start align-items-center ps-4">
-                            <span class="material-symbols-outlined">directions_car</span>
-                            <span class="fs-6 fw-normal">운전경력 : </span><span class="px-1 fs-6" th:text="${campingcarDetails.campingcarDto.driver_experience_condition_name}"></span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="py-3" id="reviews"></div>
-    <div class="row section">
-        <div class="col">
-            <div class="row border-bottom pb-4">
-                <div class="col-4 text-center pe-0">
-                    <div class="badge text-bg-secondary fw-semibold text-center px-2">
-                        <span class="fw-semibold new-fs-7" th:text="${reivewCountBycar}+ '개 리뷰 별점 평균'"></span>
-                    </div>
-                    <div class="fs-2 text-center">
-                        <i class="bi bi-star-fill " style="color: #FFD700;"></i>
-                        <div class="fw-semibold" th:text="${reviewAvg}"></div>
-                    </div>
-                </div>
-                <!-- 리뷰 평균 -->
-                <div class="col-8">
-                    <div th:each="rating : ${ratings}">
-                        <div class="d-flex align-items-center">
-                            <!-- 점수 표시 -->
-                            <span class="new-fs-8 fw-semibold" th:text="${rating.rate} + '점'"></span>
-                            <!-- progress bar -->
-                            <div class="progress flex-grow-1 mx-2" style="height: 10px; background-color: #e9ecef;">
-                                <div class="progress-bar bg-dark" role="progressbar" th:style="'width: ' + (${rating.count} > 1 ? ${rating.count} : 1) + '%'">
-                                </div>
-                            </div> 
-                            <span class="new-fs-8 fw-semibold" th:text="${rating.count} + '명'" style="color: #7C7B7B;"></span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!--리뷰 리스트-->
-            <div class="row pt-2" th:each="reviewList : ${reviewData}">
-                <div class="col">
-                    <!--리뷰 리스트: 후기 쓴 사용자 이미지와 닉네임-->
-                    <div class="row">
-                        <div class="col fw-semibold py-2">
-                            <img th:if="${reviewList.profile_image != null}" th:src="|/images/${reviewList.profile_image}|" class="rounded-circle me-2 img-fluid"
-                            style="width: 20px; height: 20px;">
-                            <img th:unless="${reviewList.profile_image != null}" style="width: 20px; height: 20px;">
-                            <span class="new-fs-85" th:text="${reviewList.nickname}"></span>
-                        </div>
-                    </div>
-                    <!--리뷰 리스트: 후기 쓴 사용자 별점,리뷰 쓴 시간-->
-                    <div class="row d-flex justify-content-between">
-                        <div class="col-8 fw-semibold">
-                            <i class="bi bi-star-fill" style="color: #FFD700;"></i>
-                            <span class="new-fs-85" th:text="${reviewList.rate}"></span> 
-                        </div>
-                        <div class="col text-end pt-1">
-                            <div class="fw-semibold new-fs-7 createdAt" th:text="${#dates.format(reviewList.created_at, 'yyyy.MM.dd HH:mm')}" style="color: #7C7B7B;"></div>
-                        </div>
-                    </div>
-                    <!--리뷰 리스트: 후기 내용-->
-                    <div class="row pt-2 pb-3 border-bottom">
-                        <div class="col">
-                            <span class="fs-7" th:text="${reviewList.content}" style="word-wrap: break-word;"></span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
         
         
         
@@ -716,11 +727,11 @@
             월 256,500원
         </div> -->
         <div class="container">
-            <div class="row">
-                <div class="col py-3 px-3 d-grid">
-                    <a class="text-white btn btn-lg fw-bold" th:href="@{/campingcar/reservationInfo(id=${campingcarDetails.campingcarDto.id})}" style="background-color: #C6ED6F;">
-                        <span th:text="${#numbers.formatInteger(campingcarDetails.campingcarDto.rental_fee_weekdays, 3, 'COMMA') + '원'}"></span>
-                        <div class="fs-6">예약하기</div>
+            <div class="row py-0">
+                <div class="col d-grid">
+                    <a class="btn btn-dark btn-lg fw-bold" th:href="@{/campingcar/reservationInfo(id=${campingcarDetails.campingcarDto.id})}" style="color:#C6ED6F;">
+                        <div class="new-fs-85">캠핑카 바로 예약</div>
+                        <span class="new-fs-9" th:text="${#numbers.formatInteger(campingcarDetails.campingcarDto.rental_fee_weekdays, 3, 'COMMA') + '원'}">
                     </a>
                 </div>
             </div>
