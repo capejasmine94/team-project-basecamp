@@ -41,4 +41,11 @@
         <select id="getUserCountByAccount" resultType="int">
             select count(*) from bc_user where account = #{account}    
         </select>
+
+        <insert id="insertKakaoUser">
+            INSERT INTO bc_user
+                (account, password, nickname, profile_image, mileage, name)
+            values
+                (#{account}, #{password}, #{nickname}, default, 1000, #{name})
+        </insert>
 </mapper>
