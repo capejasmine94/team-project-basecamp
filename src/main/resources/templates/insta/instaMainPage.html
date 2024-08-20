@@ -487,7 +487,8 @@
                                     class="carousel-item"
                                     th:classappend="${iterStat.index == 0 ? 'active' : ''}"> <!-- data-bs-interval="5000" _ 5초에 한번씩 사진 슬라이드 -->
                                     <!-- 타임리프에서 classappend라는 구문을 사용하여 HTML 요소의 class 속성에 동적으로 클래스를 추가할 수 있습니다. -->
-                                <img th:src="|/images/${image.img_link}|" class="d-block w-100" style="object-fit: cover; object-position: center; aspect-ratio: 1.3/1;">
+                                <img th:src="@{/images/{image}(image=${image.img_link})}" class="d-block w-100" style="object-fit: cover; object-position: center; aspect-ratio: 1.3/1;">
+                                
                             </div>
                         </div>
                         
