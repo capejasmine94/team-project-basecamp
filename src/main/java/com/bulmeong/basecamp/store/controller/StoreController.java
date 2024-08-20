@@ -99,16 +99,16 @@ public class StoreController {
         }
     }
 
-    @RequestMapping("my")
-    public String my(HttpSession session){
-        UserDto userDto = (UserDto)session.getAttribute("sessionUserInfo");
+    // @RequestMapping("my")
+    // public String my(HttpSession session){
+    //     UserDto userDto = (UserDto)session.getAttribute("sessionUserInfo");
 
-        if(userDto == null){
-            return "redirect:https://basecamp.null-pointer-exception.com/user/login";
-        }else{
-            return "store/mMy";
-        }
-    }
+    //     if(userDto == null){
+    //         return "redirect:https://basecamp.null-pointer-exception.com/user/login";
+    //     }else{
+    //         return "store/mMy";
+    //     }
+    // }
 
     @RequestMapping("myOrderList")
     public String myOrderList(HttpSession session, Model model){
