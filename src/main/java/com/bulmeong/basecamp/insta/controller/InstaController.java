@@ -201,6 +201,8 @@ public class InstaController {
         InstaUserInfoDto instaUserInfoDto = instaService.selectUserInfo(instaArticleDto.getUser_id());
 
         List<InstaArticleImgDto> instaAtricleImgDtoList = new ArrayList<>();
+
+        // 원래 내 코드(준희님 유틸 사용)
         // List<ImageDto> instaImgList = ImageUtil.saveImageAndReturnDtoList(insta_article_img);
         // for(ImageDto imageDto : instaImgList){
         //     InstaArticleImgDto instaArticleImgDto = new InstaArticleImgDto();
@@ -208,6 +210,8 @@ public class InstaController {
         //     instaArticleImgDto.setArticle_id(instaArticleDto.getId());
         //     instaAtricleImgDtoList.add(instaArticleImgDto);
         // }
+
+        // 규진이 이미지 유틸 사용
         if (insta_article_img != null) {
             for (int i = 0; i < insta_article_img.length; i++) {
                 MultipartFile image = insta_article_img[i];
@@ -247,6 +251,7 @@ public class InstaController {
                 // DB 저장 DTO
                 InstaArticleImgDto instaArticleImgDto = new InstaArticleImgDto();
                 instaArticleImgDto.setImg_link(todayPath + fileName);
+                instaArticleImgDto.setArticle_id(instaArticleDto.getId());
                 instaAtricleImgDtoList.add(instaArticleImgDto);
             }
 

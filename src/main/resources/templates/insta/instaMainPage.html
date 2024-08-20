@@ -15,7 +15,7 @@
     <!-- 이걸로 레이아웃 확인하셈 -->
     <script src="/public/js/lockLikeMobile.js"></script>
     
-    <title>campstagram</title>
+    <title>BASECAMP</title>
 
 
     <style>
@@ -506,37 +506,6 @@
                     </div>
                 </div>
             </div>
-
-            <!-- 잘못 만든거 -->
-            <!-- <div class="row mt-3">
-                <div class="col px-0">
-                    <div th:id="'carouselExampleInterval' + ${instaArticleList.instaArticleDto.id}" class="carousel slide"> 
-
-                        <ol class="carousel-indicators">
-                            
-                            <li th:each="image, iterStat : ${instaArticleList.instaArticleImgDtoList}"
-                                th:classappend="${iterStat.index == 0 ? 'active' : ''}"
-                                th:data-bs-slide-to="${iterStat.index}"></li>
-                        </ol>
-                        
-                        <div class="carousel-inner">
-                            
-                            <div class="carousel-item active"
-                                th:each="image : ${instaArticleList.instaArticleImgDtoList}"> 
-                                <img th:src="|/images/${image.img_link}|" class="d-block w-100">
-                            </div>
-                        </div>
-                        <button class="carousel-control-prev" type="button" th:data-bs-target="'#carouselExampleInterval' + ${instaArticleList.instaArticleDto.id}" data-bs-slide="prev">
-                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                            <span class="visually-hidden">Previous</span>
-                        </button>
-                        <button class="carousel-control-next" type="button" th:data-bs-target="'#carouselExampleInterval' + ${instaArticleList.instaArticleDto.id}" data-bs-slide="next">
-                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                            <span class="visually-hidden">Next</span>
-                        </button>
-                        </div>
-                </div>
-            </div> -->
 
 
             <div class="row align-items-center" style="height: 25px;">
