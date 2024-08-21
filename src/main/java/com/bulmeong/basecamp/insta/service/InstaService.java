@@ -452,6 +452,34 @@ public class InstaService {
         return instaUserInfoDtoList;
     }
 
+    // 게시물 상세 페이지 resultType 해쉬맵 사용
+    public Map<String, Object> articleDtailPageSelectArticleInfo(int article_id){
+        Map<String, Object> articleInfo = instaSqlMapper.articleDtailPageSelectUserProfileAndUserNicknameAndArticleContent(article_id);
+
+        return articleInfo;
+    }
+
+    // 상세글 이미지 List
+    public List<InstaArticleImgDto> selectArticleImgList(int article_id){
+        List<InstaArticleImgDto> instaArticleImgDtoList = instaSqlMapper.selectArticleImgByArticleId(article_id);
+
+        return instaArticleImgDtoList;
+    }
+
+    // 게시물 상세 페이지 태그List select
+    public List<InstaTagDto> selectTagTextList(int article_id){
+        List<InstaTagDto> instaTagDtoList = instaSqlMapper.selectTagTextByArticleId(article_id);
+
+        return instaTagDtoList;
+    }
+
+    // 게시물 상세 페이지 게시물 댓글 수
+    public int articleCommentCount(int article_id){
+        int articleCommentCount = instaSqlMapper.commentCountByArticleId(article_id);
+
+        return articleCommentCount;
+    }
+
 }
 
 

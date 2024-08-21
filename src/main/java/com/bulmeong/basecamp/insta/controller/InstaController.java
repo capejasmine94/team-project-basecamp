@@ -568,6 +568,34 @@ public class InstaController {
 
         return "insta/instaProfileEditPage";
     }
+
+    // 상세 글 페이지
+    @RequestMapping("instaArticleDetailPage")
+    public String instaArticleDetailPage(Model model, @RequestParam("article_id") int article_id) { // user_id = sessionId
+
+        // 유저프로필, 닉네임, 게시글 내용
+        Map<String, Object> articleInfo = instaService.articleDtailPageSelectArticleInfo(article_id);
+        model.addAttribute("articleInfo", articleInfo);
+
+        // 게시물 이미지 List
+        List<InstaArticleImgDto> instaArticleImgDtoList = instaService.selectArticleImgList(article_id);
+        model.addAttribute("instaArticleImgDtoList", instaArticleImgDtoList);
+
+        // 게시물 좋아요 수
+        int articleLikeCount = instaService.getLikeTotalCount(article_id);
+        model.addAttribute("articleLikeCount", articleLikeCount);
+
+        // 게시물 태그List
+        List<InstaTagDto> instaTagDtoList = instaService.selectTagTextList(article_id);
+        model.addAttribute("instaTagDtoList", instaTagDtoList);
+
+        // 게시물 댓글 수
+        int articleCommentCount = instaService.articleCommentCount(article_id);
+        model.addAttribute("articleCommentCount", articleCommentCount);
+
+
+        return "insta/instaArticleDetailPage";
+    }
 }
 
 
