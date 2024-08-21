@@ -34,7 +34,7 @@
             .floating-btn {
                 position: fixed;
                 bottom: 6rem; /* PC에서는 조금 더 위쪽에 위치 */
-                right: 26rem; /* PC에서는 더 안쪽으로 위치 */
+                right: 25rem; /* PC에서는 더 안쪽으로 위치 */
                 height: 2.8rem;
                 border-radius: 1.3rem;
             }
@@ -62,7 +62,7 @@
             .floating-menu {
                 position: fixed;
                 bottom: 9.3rem; /* PC에서는 조금 더 위쪽에 위치 */
-                right: 26rem; /* PC에서는 더 안쪽으로 위치 */
+                right: 25rem; /* PC에서는 더 안쪽으로 위치 */
                 border-radius: 0.5rem;
             }
         }
@@ -286,7 +286,7 @@
     <a th:href="@{/secondhandProduct/postDetailsPage(product_id=${productList.product_id}, user_id=${productList.user_id}, polygon_name=${productList.polygon_name})}"
        class="row mx-2 pt-3 pb-2 border-bottom mainPostLink-custom" th:each="productList : ${productDtoList}">
         <div class="col-4" style="height: 7rem;">
-            <img class="mainPostImg-custom" th:src="@{/images/{image}(image=${productList.main_image})}">
+            <img class="mainPostImg-custom" style="object-fit: cover; object-position: center" th:src="@{/images/{image}(image=${productList.main_image})}">
         </div>
         <div class="col ps-0">
             <div class="row-auto">

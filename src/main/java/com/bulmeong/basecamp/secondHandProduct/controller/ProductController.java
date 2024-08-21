@@ -235,7 +235,7 @@ public class ProductController {
         secondhandProductDto.setUser_id(userId);
         productService.insertProduct(secondhandProductDto, imageDtoList);
 
-        //return "redirect:/secondhandProduct/mainPage";
+//        return "redirect:/secondhandProduct/mainPage";
         return "redirect:https://basecamp.null-pointer-exception.com/secondhandProduct/mainPage";
     }
 
