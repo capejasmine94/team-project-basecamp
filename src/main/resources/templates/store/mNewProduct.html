@@ -35,7 +35,7 @@
         }
         .product-col img{
             aspect-ratio: 1/1;
-            width: 100%;
+            width: 8em;
             object-fit: cover;
             object-position: center;
         }
@@ -157,9 +157,9 @@
         
         <div class="row bg-white" th:if="${newProductDataList.size!=0 && newProductDataList!=null}">
             <div class="col overflow-x-auto best-items-scroll">
-                <div class="row bg-white px-3 pb-3 d-flex flex-wrap" style="width: 200%; gap: 8px;">
+                <div class="row bg-white px-3 pb-3 d-flex flex-nowrap" style="gap: 8px;">
         
-                    <a th:href="@{/store/productDetails(id=${newProductData.storeProductDto.id})}" class="col px-0" style="flex: 1 1 calc(20% - 8px);" th:each="newProductData : ${newProductDataList}">
+                    <a th:href="@{/store/productDetails(id=${newProductData.storeProductDto.id})}" class="col px-0" th:each="newProductData : ${newProductDataList}">
                         <div class="row">
                             <div class="col product-col">
                                 <img class="border" th:src="|/images/${newProductData.storeProductDto.main_image}|">
@@ -170,8 +170,8 @@
                                 <span th:text="${newProductData.storeDto.name}">맛있는 납작복숭아</span>
                             </div>
                         </div>
-                        <div class="row f08">
-                            <div class="col">
+                        <div class="row f08 ellipsis-line-one">
+                            <div class="col ">
                                 <span th:text="${newProductData.storeProductDto.name}">맛있는 납작복숭아</span>
                             </div>
                         </div>
@@ -208,7 +208,7 @@
                         <img th:if="${newStoreData.storeDto.main_image}!=null" th:src="|/images/${newStoreData.storeDto.main_image}|">
                         <img th:unless="${newStoreData.storeDto.main_image}!=null" class="bg-dark">
                     </div>
-                    <div class="col px-3 newStoreCol position-absolute text-white fw-bold f17 text-center">
+                    <div class="col px-3 newStoreCol position-absolute text-white fw-bold f17 text-center" th:unless="${newStoreData.storeDto.main_image}!=null">
                         <span th:text="${newStoreData.storeDto.name}"></span>
                     </div>
                 </div>

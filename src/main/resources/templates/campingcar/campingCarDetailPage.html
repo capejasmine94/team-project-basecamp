@@ -19,6 +19,7 @@
         body {
             margin: 0;
             padding: 0;
+            padding-bottom: 100px;
         }
         .tab-content {
             width: 100%;
@@ -71,13 +72,7 @@
             color: #ff5e57;
             font-weight: bold;
         }
-        .final-price {
-            font-size: 24px;
-            font-weight: bold;
-            color: #007aff;
-            text-align: center;
-            margin-bottom: 16px;
-        }
+
         .info-item {
             display: flex;
             justify-content: space-between;
@@ -164,6 +159,7 @@
             object-fit: cover;
             object-position: center;
         }
+        /* 로그인 모달 */
         a{
             text-decoration: none;
             color: black;
@@ -210,6 +206,16 @@
         .loginInput::placeholder{
             font-size: 0.9em;
         }
+        /* 하단 예약하기 버튼 고정 */
+        .fixed-bottom-button {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1050;
+            background-color: white;
+            border-top: 1px solid #e0e0e0;
+        }        
     </style>
 </head>
 <body>
@@ -379,24 +385,24 @@
                 <div class="col-auto">
                     <a class="fw-semibold nav-link" href="#info">예약정보</a>
                 </div>
-                <div class="col-auto">
+                <!-- <div class="col-auto">
                     <a class="fw-semibold nav-link" href="#options">차량 옵션</a>
                 </div>
                 <div class="col-auto px-0 text-center">
                     <a class="fw-semibold nav-link" href="#conditions">운전자 대여조건</a>
-                </div>
+                </div> -->
                 <div class="col-auto">
                     <a class="fw-semibold nav-link" href="#reviews">리뷰</a>
                 </div>
             </nav>
         </div>
         <div class="container overflow-x-hidden">
-            <div id="rules" class="py-2"></div>
-            <div class="row section border-0 pt-3 mt-3">
+            <!-- <div id="rules" class="py-2"></div> -->
+            <div class="row section border-0" id="rules">
                 <div class="col">
-                    <div class="row">
+                    <div class="row pt-3">
                         <div class="col">
-                            <div class="fs-5 fw-bold pt-1 pb-3" style="color: #494949;">
+                            <div class="fs-5 fw-bold pb-3" style="color: #494949;">
                                 <span class="underline-bg dc-inline-block">렌트카 예약 전, 꼭 확인해주세요!</span>
                             </div>
                             <div class="row">
@@ -591,10 +597,9 @@
             </div>
         </div>
         <div class="container overflow-x-hidden">
-            <div class="py-2" id="info"></div>
-            <div class="row section border-0 pt-3 mt-3">
+            <div class="row section border-0" id="info">
                 <div class="col">
-                    <div class="row info-items">
+                    <div class="row info-items pt-3">
                         <div class="col"> 
                             <div class="info-item-title">
                                 <span class="underline-bg dc-inline-block">가능 여부</span>
@@ -641,13 +646,76 @@
                     </div>
                 </div>
             </div>
+            <div class="row section border-0 pt-3 mt-3">
+                <div class="col">
+                    <div class="row pb-3">
+                        <div class="col info-item-title">
+                            <span class="underline-bg dc-inline-block">차량 기본 보유 옵션</span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <ul class="list-group">
+                                <li th:each="facility : ${facilities}" class="list-group-item d-flex justify-content-between align-items-center">
+                                    <span th:text="${facility.name}"></span>
+                                    <span th:if="${facility.name} == '화장실'" class="material-symbols-outlined">wc</span>
+                                    <span th:if="${facility.name} == '샤워실'" class="material-symbols-outlined">shower</span>
+                                    <span th:if="${facility.name} == '침대'" class="material-symbols-outlined">bed</span>
+                                    <span th:if="${facility.name} == '싱크대'" class="material-symbols-outlined">kitchen</span>
+                                    <span th:if="${facility.name} == '인덕션'" class="material-symbols-outlined">local_dining</span>
+                                    <span th:if="${facility.name} == '가스레인지'" class="material-symbols-outlined">local_fire_department</span>
+                                    <span th:if="${facility.name} == '전기레인지'" class="material-symbols-outlined">microwave</span>
+                                    <span th:if="${facility.name} == '냉장고'" class="material-symbols-outlined">kitchen</span>
+                                    <span th:if="${facility.name} == '온수기'" class="material-symbols-outlined">hot_tub</span>
+                                    <span th:if="${facility.name} == '테이블'" class="material-symbols-outlined">table_bar</span>
+                                    <span th:if="${facility.name} == 'TV'" class="material-symbols-outlined">tv</span>
+                                    <span th:if="${facility.name} == '에어컨'" class="material-symbols-outlined">ac_unit</span>
+                                    <span th:if="${facility.name} == '무시동히터'" class="material-symbols-outlined">water_heater</span>
+                                    <span th:if="${facility.name} == '인산철 배터리'" class="bi bi-battery-charging"></span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row section border-0 pt-3">
+                <div class="col">
+                    <div class="row pb-3">
+                        <div class="col info-item-title">
+                            <span class="underline-bg dc-inline-block">차량 대여조건</span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <div class="row py-2">
+                                <div class="col d-flex justify-content-start align-items-center ps-4">
+                                    <span class="material-symbols-outlined">badge</span>
+                                    <span class="fs-6 fw-normal">운전면허증 : </span><span class="px-1 fs-6" th:text="${campingcarDetails.campingcarDto.driver_license_name}"></span>
+                                </div>
+                            </div>
+                            <div class="row py-2">
+                                <div class="col d-flex justify-content-start align-items-center ps-4">
+                                    <span class="material-symbols-outlined">airline_seat_recline_extra</span>
+                                    <span class="fs-6">운전자 나이 : </span><span class="px-1 fs-6" th:text="${campingcarDetails.campingcarDto.driver_age_condition_name}"></span>
+                                </div>
+                            </div>
+                            <div class="row py-2">
+                                <div class="col d-flex justify-content-start align-items-center ps-4">
+                                    <span class="material-symbols-outlined">directions_car</span>
+                                    <span class="fs-6 fw-normal">운전경력 : </span><span class="px-1 fs-6" th:text="${campingcarDetails.campingcarDto.driver_experience_condition_name}"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     
-    <div class="container overflow-x-hidden">
+    <!-- <div class="container overflow-x-hidden">
         <div class="py-3" id="options"></div>
         <div class="row section border-0 pt-3 mt-3">
             <div class="col">
-                <div class="rowo pb-3">
+                <div class="row pb-3">
                     <div class="col info-item-title">
                         <span class="underline-bg dc-inline-block">차량 기본 보유 옵션</span>
                     </div>
@@ -677,9 +745,9 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> -->
     
-    <div class="container overflow-x-hidden">
+    <!-- <div class="container overflow-x-hidden">
         <div class="py-3" id="conditions"></div>
         <div class="row section border-0 pt-3">
             <div class="col">
@@ -712,11 +780,10 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> -->
         
     <div class="container overflow-x-hidden">
-        <div class="py-3" id="reviews"></div>
-        <div class="row section border-0 pt-3 mt-3">
+        <div class="row section border-0 pt-3 pb-5" id="reviews">
             <div class="col">
                 <div class="row border-bottom pb-4">
                     <div class="col-4 text-center pe-0">
@@ -815,8 +882,8 @@
         <div class="final-price">
             월 256,500원
         </div> -->
-        <div class="container overflow-x-hidden border-top">
-            <div class="row py-3">
+        <div class="container overflow-x-hidden border-top fixed-bottom-button">
+            <div class="row pt-3 pb-5">
                 <div class="col d-grid">
                     <a class="btn btn-dark btn-lg fw-bold" 
                     th:if="${session.sessionUserInfo != null}"
@@ -827,7 +894,7 @@
                     </a>
                     <a class="btn btn-dark btn-lg fw-bold" 
                         th:unless="${session.sessionUserInfo != null}"
-                        data-bs-toggle="modal"  data-bs-target="#loginModal" style="color:#C6ED6F;">
+                        data-bs-toggle="modal"  data-bs-target="#loginModal" style="background-color: #28323C;color: #fff;">
                         <div class="new-fs-85" onclick="openLoginPage()">캠핑카 바로 예약</div>
                         <span class="new-fs-9" th:text="${#numbers.formatInteger(campingcarDetails.campingcarDto.rental_fee_weekdays, 3, 'COMMA') + '원'}">
                     </a>
@@ -835,7 +902,7 @@
             </div>
         </div>
         <!-- 로그인 유도 모달 -->
-        <div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
+        <div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true" style="z-index: 1100;">
             <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -843,6 +910,7 @@
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
+                        <!-- 로그인 폼 시작 -->
                         <div class="container">
                             <div class="row px-3">
                                 <div class="col p-0">
@@ -875,14 +943,14 @@
                                                 </div>
                                             </div>
         
-                                            <!-- <div class="row py-4">
+                                            <div class="row py-4">
                                                 <div class="col d-grid">
                                                     <button type="submit" class="btn btn-dark rounded-0 py-3 f08 fw-semibold">
                                                         로그인
                                                     </button>
                                                 </div>
-                                            </div> -->
-                                            <div class="row justify-content-center f08 py-4">
+                                            </div>
+                                            <div class="row justify-content-center f08">
                                                 <div class="col text-end border-end">
                                                     아이디 찾기
                                                 </div>
@@ -900,7 +968,7 @@
                                                 </div>
                                             </div>
         
-                                            <div class="row py-5 f08 justify-content-center">
+                                            <div class="row py-3 f08 justify-content-center">
                                                 <div class="col-auto pe-0">
                                                     아직 BASECAMP 회원이 아니신가요?
                                                 </div>
@@ -913,19 +981,15 @@
                                 </div>
                             </div>
                         </div>
+                        <!-- 로그인 폼 끝 -->
                     </div>
-                    <div class="modal-footer">
-                        <!-- <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button> -->
-                        <!-- 로그인하기 버튼이 폼을 제출 -->
-                        <div class="row">
-                            <div class="col d-grid">
-                                <button type="button" class="btn btn-dark rounded-0 py-3 f08 fw-semibold" id="loginSubmitButton">로그인하기</button>
-                            </div>
-                        </div>
-                    </div>
+                    <!-- <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
+                    </div> -->
                 </div>
             </div>
         </div>
+        
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <!-- 부트스트랩 JS -->
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
@@ -940,61 +1004,71 @@
     </div>
     <script>
         // 모달 열기 함수
-        const openLoginPage = () => {
-          const loginModal = document.getElementById('loginModal');
-          const modal = new bootstrap.Modal(loginModal);
-          modal.show();
-        };
+    document.addEventListener("DOMContentLoaded", () => {
+        const loginForm = document.getElementById("loginForm");
+        const loginSubmitButton = document.getElementById("loginSubmitButton");
 
-        document.addEventListener("DOMContentLoaded", () => {
-            const loginForm = document.getElementById("loginForm");
-            const loginSubmitButton = document.getElementById("loginSubmitButton");
-
-            // 로그인하기 버튼 클릭 시 폼 제출
-            loginSubmitButton.addEventListener("click", () => {
-                loginForm.submit();
-            });
-
-            loginForm.addEventListener("submit", (event) => {
-                event.preventDefault();
-
-                const inputId = document.getElementById("inputId");
-                const inputPw = document.getElementById("inputPw");
-
-                const userDto = {
-                    account: inputId.value,
-                    password: inputPw.value
-                };
-
-                const url = `/api/user/getUserDtoByAccountInfo`
-                fetch(url, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify(userDto)
-                })
-                .then(response => response.json())
-                .then((response) => {
-
-                    if(response.data.userDto==null){
-                        const loginFailToast = bootstrap.Toast.getOrCreateInstance(document.getElementById("loginFailToast"))
-                        loginFailToast.show();
-                        setTimeout(() => {
-                            loginFailToast.hide();
-                        }, 3000);
-                    }else{
-                        const loginForm = document.getElementById("loginForm");
-                        loginForm.submit();
-                    }
-
-                })
-            });
+        loginSubmitButton.addEventListener("click", () => {
+            loginForm.submit();
         });
 
-        function backButton(){
-            history.back();
-        }
+        loginForm.addEventListener("submit", (event) => {
+            event.preventDefault();
+
+            const inputId = document.getElementById("inputId");
+            const inputPw = document.getElementById("inputPw");
+
+            const userDto = {
+                account: inputId.value,
+                password: inputPw.value
+            };
+
+            const url = `/api/user/getUserDtoByAccountInfo`;
+            fetch(url, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(userDto)
+            })
+            .then(response => response.json())
+            .then((response) => {
+                if(response.data.userDto == null){
+                    const loginFailToast = bootstrap.Toast.getOrCreateInstance(document.getElementById("loginFailToast"));
+                    loginFailToast.show();
+                    setTimeout(() => {
+                        loginFailToast.hide();
+                    }, 3000);
+                } else {
+                    loginForm.submit();
+                }
+            });
+        });
+    });
+
+    function backButton(){
+        history.back();
+    }
+
+    document.addEventListener("DOMContentLoaded", function() {
+            const navLinks = document.querySelectorAll('.nav-link');
+
+            navLinks.forEach(link => {
+                link.addEventListener('click', function(event) {
+                    event.preventDefault();
+
+                    const targetId = this.getAttribute('href').substring(1);
+                    const targetElement = document.getElementById(targetId);
+
+                    if (targetElement) {
+                        window.scrollTo({
+                            top: targetElement.offsetTop - 50,  // 헤더 높이 보정
+                            behavior: 'smooth'
+                        });
+                    }
+                });
+            });
+        });
     </script>
       
 </body>

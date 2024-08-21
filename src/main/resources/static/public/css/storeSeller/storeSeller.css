@@ -95,6 +95,10 @@ a{
     --bs-btn-active-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
 }
 
+.s-dark-bg{
+    background-color: #222222;
+}
+
 /* .s-light-btn {
     --bs-btn-color: #fff;
     --bs-btn-bg: #409EFF;
