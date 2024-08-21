@@ -81,6 +81,10 @@ public interface ProductSqlMapper {
 
     public int checkSellerReviews(int seller_user_id, int product_id);
 
+    // 구매자 확인
+    public int insertBuyerConfirmation(BuyerConfirmationDto buyerConfirmationDto);
+    public List<BuyerConfirmationProductDto> selectBuyerConfirmationProductList(int buyer_user_id);
+
 
 
 

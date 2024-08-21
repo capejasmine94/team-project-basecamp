@@ -8,6 +8,7 @@
     <title>BASECAMP</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link rel="shotcut icon" href="/public/img/common/campFire.ico" type="image/x-icon">
     <link rel="stylesheet" href="/public/css/secondHandProductCss/style.css">
     <style>
         .area-dropdown-menu {
@@ -17,10 +18,20 @@
             overflow-y: auto;
             left: 14rem !important;
         }
+        #map {
+            margin-top: 2.8rem;
+            height: 33rem;
+        }
+        @media (min-width: 768px) {
+            #map {
+                margin-top: 2.8rem;
+                height: 50rem;
+            }
+        }
     </style>
 </head>
 <body>
-<div id="map" style="margin-top: 2.8rem; height: 33rem"></div>
+<div id="map"></div>
 <div class="container-fluid g-0 py-2 bg-white fixed-top">
     <div class="row mx-2">
         <a href="/secondhandProduct/administrativeRegionListPage" class="col text-start link-noneAndColor" style="font-size: 1.1rem">
@@ -53,99 +64,105 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=9df23aae97fe2a243134f72e80584d0a"></script>
-<script>
-    // URL 파라미터에서 name 값을 가져옴
-    var urlParams = new URLSearchParams(window.location.search);
-    var selectedName = urlParams.get('selected_area_name') || "전체"; // 선택된 이름이 없으면 전체를 보여줌
-    console.log(selectedName);
+<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=9df23aae97fe2a243134f72e80584d0a"></script><script>
+    // Wrap the map initialization code inside a function
+    function initializeMap() {
+        // URL 파라미터에서 name 값을 가져옴
+        var urlParams = new URLSearchParams(window.location.search);
+        var selectedName = urlParams.get('selected_area_name') || "전체"; // 선택된 이름이 없으면 전체를 보여줌
+        console.log(selectedName);
 
-    var areas = [];
-    var bounds = new kakao.maps.LatLngBounds(); // 경기도 폴리곤 경계를 담을 객체
-    var latSum = 0, lngSum = 0, count = 0; // 중심좌표 계산을 위한 변수
+        var areas = [];
+        var bounds = new kakao.maps.LatLngBounds(); // 경기도 폴리곤 경계를 담을 객체
+        var latSum = 0, lngSum = 0, count = 0; // 중심좌표 계산을 위한 변수
 
-    // JSON 파일을 읽어들여 경기도 영역만 필터링하여 areas 배열에 채워넣는 작업
-    $.ajaxSetup({
-        async: false
-    });
-
-    $.getJSON("/json/secondhandProduct/sido.json", function(geojson) {
-        var units = geojson.features;
-        $.each(units, function(index, unit) {
-            var coordinates = [];
-            var name = unit.properties.SIG_KOR_NM;
-
-            // 선택된 지역 또는 전체를 필터링
-            if (selectedName === "전체" || name === selectedName) {
-                coordinates = unit.geometry.coordinates;
-                var ob = new Object();
-                ob.name = name;
-                ob.path = [];
-
-                $.each(coordinates[0], function(index, coordinate) {
-                    var latlng = new kakao.maps.LatLng(coordinate[1], coordinate[0]);
-                    ob.path.push(latlng);
-                    bounds.extend(latlng); // 경기도 경계를 LatLngBounds에 추가
-
-                    latSum += coordinate[1];
-                    lngSum += coordinate[0];
-                    count++;
-                });
-
-                areas.push(ob);
-            }
-        });
-    });
-
-    // 중심좌표 계산
-    var centerLat = latSum / count;
-    var centerLng = lngSum / count;
-    var mapLevel; // 확대 레벨을 저장할 변수
-
-    // 전달받은 지역 이름에 따라 확대 레벨 설정
-    if (selectedName === "전체") {
-        mapLevel = 13;
-    } else if (["서울", "인천", "광주", "대전", "세종", "울산", "대구"].includes(selectedName)) {
-        mapLevel = 10;
-    } else if (["제주","부산"].includes(selectedName)) {
-        mapLevel = 11;
-    }
-    else {
-        mapLevel = 12; // 기본 확대 레벨
-    }
-
-    // 지도 띄우기
-    var mapContainer = document.getElementById('map'),
-        mapOption = {
-            center: new kakao.maps.LatLng(centerLat, centerLng), // 직접 계산한 중심 좌표로 설정
-            level: mapLevel, // 확대 레벨
-            draggable: false, // 지도를 드래그로 이동 불가능하게 설정
-            scrollwheel: false, // 마우스 휠로 확대/축소를 불가능하게 설정
-            disableDoubleClickZoom: true // 더블클릭으로 확대/축소 불가능하게 설정
-        };
-
-    var map = new kakao.maps.Map(mapContainer, mapOption);
-
-    var customOverlay = new kakao.maps.CustomOverlay({}),
-        infowindow = new kakao.maps.InfoWindow({removable: true});
-
-    // 지도에 영역데이터를 폴리곤으로 표시
-    for (var i = 0, len = areas.length; i < len; i++) {
-        displayArea(areas[i]);
-    }
-
-    // 다각형 폴리곤 모습
-    function displayArea(area) {
-        var polygon = new kakao.maps.Polygon({
-            map: map,
-            path: area.path,
-            strokeWeight: 2,
-            strokeColor: '#00B8FF',
-            strokeOpacity: 0.8,
-            fillColor: '#fff',
-            fillOpacity: 0.8
+        // JSON 파일을 읽어들여 경기도 영역만 필터링하여 areas 배열에 채워넣는 작업
+        $.ajaxSetup({
+            async: false
         });
 
+        $.getJSON("/json/secondhandProduct/sido.json", function(geojson) {
+            var units = geojson.features;
+            $.each(units, function(index, unit) {
+                var coordinates = [];
+                var name = unit.properties.SIG_KOR_NM;
+
+                // 선택된 지역 또는 전체를 필터링
+                if (selectedName === "전체" || name === selectedName) {
+                    coordinates = unit.geometry.coordinates;
+                    var ob = new Object();
+                    ob.name = name;
+                    ob.path = [];
+
+                    $.each(coordinates[0], function(index, coordinate) {
+                        var latlng = new kakao.maps.LatLng(coordinate[1], coordinate[0]);
+                        ob.path.push(latlng);
+                        bounds.extend(latlng); // 경기도 경계를 LatLngBounds에 추가
+
+                        latSum += coordinate[1];
+                        lngSum += coordinate[0];
+                        count++;
+                    });
+
+                    areas.push(ob);
+                }
+            });
+        });
+
+        // 중심좌표 계산
+        var centerLat = latSum / count;
+        var centerLng = lngSum / count;
+        var mapLevel; // 확대 레벨을 저장할 변수
+
+        // 전달받은 지역 이름에 따라 확대 레벨 설정
+        if (selectedName === "전체") {
+            mapLevel = 13;
+        } else if (["서울", "인천", "광주", "대전", "세종", "울산", "대구"].includes(selectedName)) {
+            mapLevel = 10;
+        } else if (["제주","부산"].includes(selectedName)) {
+            mapLevel = 11;
+        }
+        else {
+            mapLevel = 12; // 기본 확대 레벨
+        }
+
+        // 지도 띄우기
+        var mapContainer = document.getElementById('map'),
+            mapOption = {
+                center: new kakao.maps.LatLng(centerLat, centerLng), // 직접 계산한 중심 좌표로 설정
+                level: mapLevel, // 확대 레벨
+                draggable: false, // 지도를 드래그로 이동 불가능하게 설정
+                scrollwheel: false, // 마우스 휠로 확대/축소를 불가능하게 설정
+                disableDoubleClickZoom: true // 더블클릭으로 확대/축소 불가능하게 설정
+            };
+
+        var map = new kakao.maps.Map(mapContainer, mapOption);
+
+        var customOverlay = new kakao.maps.CustomOverlay({}),
+            infowindow = new kakao.maps.InfoWindow({removable: true});
+
+        // 지도에 영역데이터를 폴리곤으로 표시
+        for (var i = 0, len = areas.length; i < len; i++) {
+            displayArea(areas[i]);
+        }
+
+        // 다각형 폴리곤 모습
+        function displayArea(area) {
+            var polygon = new kakao.maps.Polygon({
+                map: map,
+                path: area.path,
+                strokeWeight: 2,
+                strokeColor: '#00B8FF',
+                strokeOpacity: 0.8,
+                fillColor: '#fff',
+                fillOpacity: 0.8
+            });
+
+        }
     }
+
+    // Delay map initialization by 5 seconds
+    setTimeout(initializeMap, 100);
 </script>
 <script src="/public/js/lockLikeMobile.js"></script>
 </body>
