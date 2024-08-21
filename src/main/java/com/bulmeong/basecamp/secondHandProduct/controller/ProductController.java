@@ -193,7 +193,8 @@ public class ProductController {
                 if (image.isEmpty()) {
                     continue;
                 }
-                String rootPath = "/Users/simgyujin/basecampImage/";
+//                String rootPath = "/Users/simgyujin/basecampImage/";
+                String rootPath = "/basecampImage/";
 
                 // 날짜 폴더
                 SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd/");
