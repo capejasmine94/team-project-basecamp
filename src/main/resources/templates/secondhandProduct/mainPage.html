@@ -34,7 +34,7 @@
             .floating-btn {
                 position: fixed;
                 bottom: 6rem; /* PC에서는 조금 더 위쪽에 위치 */
-                right: 25rem; /* PC에서는 더 안쪽으로 위치 */
+                right: 38.5rem; /* PC에서는 더 안쪽으로 위치 */
                 height: 2.8rem;
                 border-radius: 1.3rem;
             }
@@ -62,7 +62,7 @@
             .floating-menu {
                 position: fixed;
                 bottom: 9.3rem; /* PC에서는 조금 더 위쪽에 위치 */
-                right: 25rem; /* PC에서는 더 안쪽으로 위치 */
+                right: 38.5rem; /* PC에서는 더 안쪽으로 위치 */
                 border-radius: 0.5rem;
             }
         }
@@ -109,6 +109,12 @@
         .king{
             top: -6%;
             left: 83%;
+        }
+        .floating-btn {
+            z-index: 1000;
+        }
+        .floating-menu {
+            z-index: 1000; /* Ensure it's higher than other page elements */
         }
     </style>
 </head>
@@ -246,7 +252,7 @@
                 <span th:text="${areaName}"></span>
                 <span class="ms-1" style="font-weight: 600"><i class="bi bi-chevron-down"></i></span>
             </span>
-<!--            -->
+            <!--            -->
             <ul class="dropdown-menu location-dropdown-menu">
                 <li>
                     <!-- 초기 지역 -->
@@ -408,3 +414,4 @@
 <script src="/public/js/lockLikeMobile.js"></script>
 </body>
 </html>
+
