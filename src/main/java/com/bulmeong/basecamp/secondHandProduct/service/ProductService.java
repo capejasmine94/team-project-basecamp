@@ -71,12 +71,17 @@ public class ProductService {
 
         Map<String, Object> map = new HashMap<>();
 
-        AllContentsProductDto AllContentsProductDto = productSqlMapper.selectSecondhandDetailProduct(product_id);
-        UserDto userDto = userService.getUserById(AllContentsProductDto.getUser_id());
+        AllContentsProductDto allContentsProductDto = productSqlMapper.selectSecondhandDetailProduct(product_id);
+
+        if (allContentsProductDto.getExplanation() != null) {
+            allContentsProductDto.setExplanation(allContentsProductDto.getExplanation().replace("\n", "<br/>"));
+        }
+
+        UserDto userDto = userService.getUserById(allContentsProductDto.getUser_id());
         List<ImageDto> imageDtoList = productSqlMapper.selectSecondhandProductImgList(product_id);
 
         map.put("userDto", userDto);
-        map.put("AllContentsDto", AllContentsProductDto);
+        map.put("AllContentsDto", allContentsProductDto);
         map.put("imageDtoList", imageDtoList);
 
 

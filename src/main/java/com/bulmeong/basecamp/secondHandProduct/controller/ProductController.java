@@ -186,6 +186,7 @@ public class ProductController {
                                  @RequestParam(name = "main_image") String mainImage,
                                  @RequestParam(name = "user_id") int userId) {
 
+
         List<ImageDto> imageDtoList = new ArrayList<>();
         if (images != null) {
             for (int i = 0; i < images.length; i++) {
@@ -235,19 +236,17 @@ public class ProductController {
         secondhandProductDto.setUser_id(userId);
         productService.insertProduct(secondhandProductDto, imageDtoList);
 
-//        return "redirect:/secondhandProduct/mainPage";
-        return "redirect:https://basecamp.null-pointer-exception.com/secondhandProduct/mainPage";
+        return "redirect:/secondhandProduct/mainPage";
+//        return "redirect:https://basecamp.null-pointer-exception.com/secondhandProduct/mainPage";
     }
 
     @GetMapping("postDetailsPage")
     public String postDetailsPage(Model model,
                                   @RequestParam(name = "product_id") int product_id) {
 
-
-
         Map<String, Object> productTotalDtoList = productService.selectSecondhandDetailProduct(product_id);
-        model.addAttribute("productTotalDtoList", productTotalDtoList);
 
+        model.addAttribute("productTotalDtoList", productTotalDtoList);
 
         productService.updateSecondhandDetailProductCount(product_id);
 

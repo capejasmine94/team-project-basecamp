@@ -1,6 +1,4 @@
-<!doctype html>
-<html lang="ko" xmlns:th="http://www.thymeleaf.org">
-<head>
+<!doctype html><html lang="ko" xmlns:th="http://www.thymeleaf.org"><head>
     <meta charset="UTF-8">
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
@@ -18,9 +16,7 @@
         .post-input-custom:focus {
             border-color: #000;
         }
-    </style>
-</head>
-<body>
+    </style></head><body>
 
 <div class="container p-0 py-2 fixed-top bg-white">
     <div class="row mx-2">
@@ -29,10 +25,9 @@
         </a>
         <div class="col-auto text-center" style="font-size: 1.1rem">내 물건 팔기</div>
         <div class="col"></div>
-    </div>
-</div>
+    </div></div>
 
-<form action="/secondhandProduct/productProcess" method="post" enctype="multipart/form-data">
+<form id="productForm" action="/secondhandProduct/productProcess" method="post" enctype="multipart/form-data">
     <input type="hidden" name="user_id" th:value="${session.sessionUserInfo.id}">
     <input type="hidden" id="main_image" name="main_image">
     <div class="container-fluid g-0 form-container" style="margin-top: 3rem; position: relative;">
@@ -63,7 +58,7 @@
         <div class="row mx-2 mt-1">
             <div class="col">
                 <select class="form-select post-input-custom" aria-label="카테고리 선택" name="category_id">
-                    <option selected >카테고리를 선택하세요</option>
+                    <option selected>카테고리를 선택하세요</option>
                     <option th:each="categoryList : ${categoryDtoList}" th:value="${categoryList.category_id}" th:text="${categoryList.category_name}"></option>
                 </select>
             </div>
@@ -76,7 +71,7 @@
         <div class="row mx-2 mt-1">
             <div class="col">
                 <select class="form-select post-input-custom" aria-label="판매지역 선택" name="polygon_id">
-                    <option selected >판매 지역을 선택하세요</option>
+                    <option selected>판매 지역을 선택하세요</option>
                     <option th:each="polygonList : ${polygonDtoList}" th:value="${polygonList.polygon_id}" th:text="${polygonList.polygon_name}"></option>
                 </select>
             </div>
@@ -89,7 +84,7 @@
         </div>
         <div class="row mx-2 mt-1">
             <div class="col d-grid">
-                <input name="price" class="post-input-custom py-2 ps-2" type="text" placeholder="가격을 입력해주세요">
+                <input name="price" id="priceInput" class="post-input-custom py-2 ps-2" type="text" placeholder="가격을 입력해주세요">
             </div>
         </div>
         <div class="row mx-2 mt-3">
@@ -98,7 +93,7 @@
             </div>
         </div>
         <div class="row mx-2 mt-1">
-            <div class="col d-grid" style="height: 8rem;font-size: 0.9rem; font-weight: 500">
+            <div class="col d-grid" style="height: 8rem;font-size: 0.9rem; font-weight: 500;">
                 <textarea name="explanation" class="ps-2 pt-2 post-input-custom" placeholder="신뢰할수 있는 거래를 위해 자세히 적어주세요."></textarea>
             </div>
         </div>
@@ -106,19 +101,29 @@
     <div class="container g-0 py-2 bg-white fixed-bottom">
         <div class="row mx-2">
             <div class="col d-grid">
-                <button class="btn py-2" style="background-color: #28323C; color: white">작성 완료</button>
+                <button type="submit" class="btn py-2" style="background-color: #28323C; color: white">작성 완료</button>
             </div>
         </div>
     </div>
 </form>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-<script src="https://kit.fontawesome.com/7b271bba58.js" crossorigin="anonymous"></script>
-<script>
-    function updatePhotoCount(count) {
-        const photoCount = document.getElementById('photo-count');
-        photoCount.textContent = `${count}/10`;
-    }
 
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script><script src="https://kit.fontawesome.com/7b271bba58.js" crossorigin="anonymous"></script><script>
+    // 숫자에 쉼표를 추가하는 함수
+    document.getElementById('priceInput').addEventListener('input', function (e) {
+        let value = e.target.value.replace(/,/g, '');  // 쉼표 제거
+        if (!isNaN(value) && value !== '') {  // 값이 숫자인지 확인하고 빈 문자열이 아닌지 확인
+            value = Number(value).toLocaleString();  // 숫자를 쉼표 형식으로 변환
+            e.target.value = value;  // 변환된 값을 다시 입력란에 설정
+        }
+    });
+
+    // 폼 제출 시 쉼표 제거
+    document.getElementById('productForm').addEventListener('submit', function() {
+        let priceInput = document.getElementById('priceInput');
+        priceInput.value = priceInput.value.replace(/,/g, '');  // 폼 제출 전에 쉼표 제거
+    });
+
+    // 이미지 관련 코드 유지
     function updatePhotoLabels() {
         const photoBoxes = document.querySelectorAll('.photo-box');
         photoBoxes.forEach((box, index) => {
@@ -151,9 +156,7 @@
             reader.onload = function(e) {
                 const photoBox = document.createElement('div');
                 photoBox.className = 'photo-box';
-                const img = document.createElement('img');
-                img.src = e.target.result;
-
+                const img = document.createElement
                 // 첫 번째 선택된 파일을 대표 사진으로 설정
                 if (photoContainer.childElementCount === 1) {
                     document.getElementById('main_image').value = file.name;
@@ -180,6 +183,10 @@
         const updatedPhotoCount = currentPhotoCount + files.length;
         updatePhotoCount(updatedPhotoCount);
     });
+
+    function updatePhotoCount(count) {
+        document.getElementById('photo-count').textContent = count + "/10";
+    }
 </script>
 <script src="/public/js/lockLikeMobile.js"></script>
 </body>
