@@ -30,7 +30,7 @@ const llmRightSummarySettingValues = {
     right: 0,                                    // auto 옵션 만들어야 되나
     top: 0,
     // backgroundColor: "#FFF",
-    width: 43,
+    width: 0,
     height: 50,
 };
 
