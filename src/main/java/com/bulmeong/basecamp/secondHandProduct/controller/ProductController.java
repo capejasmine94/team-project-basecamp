@@ -175,7 +175,7 @@ public class ProductController {
         secondhandProductDto.setUpdated_at(new Date());
         productService.updateProduct(secondhandProductDto, imageDtoList);
 
-        //return "redirect:/secondhandProduct/mainPage";
+//        return "redirect:/secondhandProduct/mainPage";
         return "redirect:https://basecamp.null-pointer-exception.com/secondhandProduct/mainPage";
     }
 
@@ -236,8 +236,8 @@ public class ProductController {
         secondhandProductDto.setUser_id(userId);
         productService.insertProduct(secondhandProductDto, imageDtoList);
 
-        return "redirect:/secondhandProduct/mainPage";
-//        return "redirect:https://basecamp.null-pointer-exception.com/secondhandProduct/mainPage";
+//        return "redirect:/secondhandProduct/mainPage";
+        return "redirect:https://basecamp.null-pointer-exception.com/secondhandProduct/mainPage";
     }
 
     @GetMapping("postDetailsPage")
