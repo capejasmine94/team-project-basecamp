@@ -239,11 +239,11 @@
         </select>
         <!-- 구역번호로 포인트 -->
         <select id="pointByAreaId" resultType="com.bulmeong.basecamp.camp.dto.CampsiteAreaPointDto">
-            select * from bc_campsite_area_point where area_id = #{area_id} order by id
+            select * from bc_campsite_area_point where area_id = #{area_id} order by id asc
         </select>
         <!-- 포인트번호로 포인트 -->
         <select id="pointByPointId" resultType="com.bulmeong.basecamp.camp.dto.CampsiteAreaPointDto">
-            select * from bc_campsite_area_point where point_id = #{point_id} order by id
+            select * from bc_campsite_area_point where point_id = #{point_id} order by id asc
         </select>
         <!-- 고유번호로 포인트 -->
         <select id="pointById" resultType="com.bulmeong.basecamp.camp.dto.CampsiteAreaPointDto">
