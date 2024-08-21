@@ -59,19 +59,22 @@ const leftSummaryHtml = `
                     <span class="text-secondary">비밀번호 : 1234</span>
                 </div>
             </div>
-             <div class="row pt-4">
+             <div class="row pt-1 mt-5">
                 <div class="col fw-semibold text-center">
                     캠핑장 쓰레기투기 방지 캠페인
                 </div>
             </div>
             <a class="row mt-2 justify-content-center"  href="/camp/unity">
                 <div class="col-auto">
-                    <img class="img-fluid" src="/unity/CampgameTitle.png" style="height:11em;">
+                    <img class="img-fluid" src="/unity/CampgameQR.png" style="height:9em;">
                 </div>
             </a>
-             <div class="row mt-2">
+             <div class="row flex-column mt-2">
                 <div class="col text-center">
                     ↑캠프파이어 게임 플레이하기↑
+                </div>
+                 <div class="col text-center">
+                    QR코드를 클릭하세요!
                 </div>
             </div>
         </div>
