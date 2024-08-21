@@ -64,17 +64,29 @@ function getDate(calendarName) {
 }
 function setStartDate(calendarName, date) {
     const data = getCalendarData(calendarName);
-    if(data == null) return;
+    if (data == null) return;
+    
+    // 현재 날짜에 하루를 더함
+    const nextDay = new Date(date);
+    nextDay.setDate(nextDay.getDate() + 1);
+    
     data.startDate = date;
+    
     const startDate = document.querySelector('#' + calendarName + '_start_date');
-    startDate.valueAsDate = data.startDate;
+    startDate.valueAsDate = nextDay;
 }
 function setEndDate(calendarName, date) {
     const data = getCalendarData(calendarName);
-    if(data == null) return;
+    if (data == null) return;
+    
+    // 현재 날짜에 하루를 더함
+    const nextDay = new Date(date);
+    nextDay.setDate(nextDay.getDate() + 1);
+    
     data.endDate = date;
+    
     const endDate = document.querySelector('#' + calendarName + '_end_date');
-    endDate.valueAsDate = data.endDate;
+    endDate.valueAsDate = nextDay;
 }
 function setDate(calendarName, date) {
     const data = getCalendarData(calendarName);
@@ -179,10 +191,10 @@ function refreshCalendar(name, range) {
         tempDate.setMonth(tempDate.getMonth()); // 임시 날짜를 이전 달로 설정
 
     // 임시 날짜가 오늘보다 이전인 경우 이동 불가
-    if (tempDate.getFullYear() < today.getFullYear() || 
-        (tempDate.getFullYear() === today.getFullYear() && tempDate.getMonth() < today.getMonth())) {
-    return;
-    }
+    // if (tempDate.getFullYear() < today.getFullYear() || 
+    //     (tempDate.getFullYear() === today.getFullYear() && tempDate.getMonth() < today.getMonth())) {
+    // return;
+    // }
 
     data.currentDate.setMonth(data.currentDate.getMonth()); // 현재 월을 한 달 감소
     if(range) {
@@ -215,6 +227,7 @@ function refreshCalendar(name, range) {
             }
             cell.addEventListener('click', function() {
                 setStartDate(name,cellDate); // 시작 날짜 설정
+                console.log(getStartDate(name));
                 //calendarBody.querySelector('startDate').value = cellDate;
                 renderCalendarOne(data.startDate); // 달력 다시 렌더링
                 //데이터 정보 입력
@@ -255,7 +268,8 @@ function refreshCalendar(name, range) {
         }
 
         // 제한되는 예약일을 추가합니다.
-        if (cellDate.getTime() > data.limit.getTime()) {
+        if (cellDate.getTime() > data.limit.getTime() ||
+            cellDate.getTime() < new Date()) {
             cell.classList.add('inactive');
         }
 
@@ -318,11 +332,13 @@ function refreshCalendar(name, range) {
 
         // 일 선택 이벤트 추가 함수
         function addCellSelectEvent(cell, cellDate) {
-            if(cellDate.getTime() > data.limit.getTime())
+            if(cellDate.getTime() > data.limit.getTime() ||
+               cellDate.getTime() < new Date())
             return;
             cell.addEventListener('click', function() {
                 if (!data.startDate || (data.startDate && data.endDate)) {
                 setStartDate(name, cellDate); // 시작 날짜 설정
+                console.log(getStartDate(name));
                 setEndDate(name,null); // 종료 날짜 초기화
                 } else if (cellDate.getTime() === data.startDate.getTime()) {
                     cell.classList.remove('selected-start');
@@ -390,7 +406,8 @@ function refreshCalendar(name, range) {
         }
 
         // 제한되는 예약일을 추가합니다.
-        if (cellDate.getTime() > data.limit.getTime()) {
+        if (cellDate.getTime() > data.limit.getTime() ||
+            cellDate.getTime() < new Date()) {
             cell.classList.add('inactive');
         }
 
@@ -475,7 +492,8 @@ function createRangeCalendar(name, length, limit) {
 
         // 일 선택 이벤트 추가 함수
         function addCellSelectEvent(cell, cellDate) {
-            if(cellDate.getTime() > data.limit.getTime())
+            if(cellDate.getTime() > data.limit.getTime()||
+               cellDate.getTime() < new Date())
             return;
             cell.addEventListener('click', function() {
                 if (!data.startDate || (data.startDate && data.endDate)) {
@@ -502,6 +520,7 @@ function createRangeCalendar(name, length, limit) {
                 }
     
                 setEndDate(name, cellDate); // 종료 날짜 설정
+                console.log(getEndDate(name));
                 }
                 renderCalendar(data.currentDate); // 달력 다시 렌더링
                 //데이터 정보 입력
@@ -547,7 +566,8 @@ function createRangeCalendar(name, length, limit) {
         }
 
         // 제한되는 예약일을 추가합니다.
-        if (cellDate.getTime() > data.limit.getTime()) {
+        if (cellDate.getTime() > data.limit.getTime() ||
+            cellDate.getTime() < new Date()) {
             cell.classList.add('inactive');
         }
 
@@ -661,7 +681,8 @@ function createCalendar(name, limit) {
 
         // 일 선택 이벤트 추가 함수
         function addCellSelectEvent(cell, cellDate) {
-            if(cellDate.getTime() > data.limit.getTime()){
+            if(cellDate.getTime() > data.limit.getTime() || 
+               cellDate.getTime() < new Date()){
                 return;
             }
             cell.addEventListener('click', function() {
@@ -706,7 +727,8 @@ function createCalendar(name, limit) {
         }
 
         // 제한되는 예약일을 추가합니다.
-        if (cellDate.getTime() > data.limit.getTime()) {
+        if (cellDate.getTime() > data.limit.getTime() ||
+            cellDate.getTime() < new Date()) {
             cell.classList.add('inactive');
         }
 
@@ -812,7 +834,8 @@ function createRangeCalendarWithMin(name, min, length, limit) {
 
         // 일 선택 이벤트 추가 함수
         function addCellSelectEvent(cell, cellDate) {
-            if(cellDate.getTime() > data.limit.getTime())
+            if(cellDate.getTime() > data.limit.getTime() ||
+               cellDate.getTime() < new Date())
             return;
             cell.addEventListener('click', function() {
                 if (!data.startDate || (data.startDate && data.endDate)) {
@@ -890,7 +913,8 @@ function createRangeCalendarWithMin(name, min, length, limit) {
         }
 
         // 제한되는 예약일을 추가합니다.
-        if (cellDate.getTime() > data.limit.getTime()) {
+        if (cellDate.getTime() > data.limit.getTime() ||
+            cellDate.getTime() < new Date()) {
             cell.classList.add('inactive');
         }
 

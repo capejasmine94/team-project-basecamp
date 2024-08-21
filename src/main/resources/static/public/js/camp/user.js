@@ -29,6 +29,7 @@ function getCampsiteList(searchWord, category) {
 
 function refreshCampsite() {
     const campList = document.getElementById('campsiteList');
+    if(campList == null) return;
     campList.innerHTML = '';
     for(let campsite of campsiteList) {
         const template = document.createElement('div');

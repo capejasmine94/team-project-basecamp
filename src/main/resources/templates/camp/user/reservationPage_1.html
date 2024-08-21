@@ -253,31 +253,55 @@
             <div class="row my-2">
                 <div class="col">
                     <div class="row align-items-center">
-                        <div class="col-3 text-end">
+                        <div class="col-3 ms-2 text-end">
                             <span>성인</span>
                         </div>
                         <input type="hidden" name="adult" id="adult" value="0">
-                        <div class="col-auto"><button class="btn btn-outline-secondary px-2" type="button" onclick="addValue('adult',-1)">◀</button></div>
+                        <div class="col-auto"><button class="btn btn-outline-secondary p-0" type="button" onclick="addValue('adult',-1)">
+                            <span class="material-symbols-outlined">
+                                remove
+                            </span>
+                    </button></div>
                         <div class="col-2 text-center"><span class="fs-5" id="value_adult">0</span></div>
-                        <div class="col-auto"><button class="btn btn-outline-secondary px-2" type="button" onclick="addValue('adult',1)">▶</button></div>
+                        <div class="col-auto"><button class="btn btn-outline-secondary p-0" type="button" onclick="addValue('adult',1)">
+                            <span class="material-symbols-outlined">
+                                add
+                            </span>
+                        </button></div>
                     </div>
                     <div class="row align-items-center mt-2 text-end">
-                        <div class="col-3">
+                        <div class="col-3 ms-2">
                             <span>미성년자</span>
                         </div>
                         <input type="hidden" name="kid" id="kid" value="0">
-                        <div class="col-auto"><button class="btn btn-outline-secondary px-2" type="button" onclick="addValue('kid',-1)">◀</button></div>
+                        <div class="col-auto"><button class="btn btn-outline-secondary p-0" type="button" onclick="addValue('kid',-1)">
+                            <span class="material-symbols-outlined">
+                                remove
+                            </span>
+                        </button></div>
                         <div class="col-2 text-center"><span class="fs-5" id="value_kid">0</span></div>
-                        <div class="col-auto"><button class="btn btn-outline-secondary px-2" type="button" onclick="addValue('kid',1)">▶</button></div>
+                        <div class="col-auto"><button class="btn btn-outline-secondary p-0" type="button" onclick="addValue('kid',1)">
+                            <span class="material-symbols-outlined">
+                                add
+                            </span>
+                        </button></div>
                     </div>
                     <div class="row align-items-center mt-2 text-end">
-                        <div class="col-3">
+                        <div class="col-3 ms-2">
                             <span>차량</span>
                         </div>
                         <input type="hidden" name="car" id="car" value="0">
-                        <div class="col-auto"><button class="btn btn-outline-secondary px-2" type="button" onclick="addValue('car',-1)">◀</button></div>
+                        <div class="col-auto"><button class="btn btn-outline-secondary p-0" type="button" onclick="addValue('car',-1)">
+                            <span class="material-symbols-outlined">
+                                remove
+                            </span>
+                        </button></div>
                         <div class="col-2 text-center"><span class="fs-5" id="value_car">0</span></div>
-                        <div class="col-auto"><button class="btn btn-outline-secondary px-2" type="button" onclick="addValue('car',1)">▶</button></div>
+                        <div class="col-auto"><button class="btn btn-outline-secondary p-0" type="button" onclick="addValue('car',1)">
+                            <span class="material-symbols-outlined">
+                                add
+                            </span>
+                        </button></div>
                     </div>
                 </div>
             </div>
