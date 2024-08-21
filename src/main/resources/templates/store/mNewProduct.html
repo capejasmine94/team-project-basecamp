@@ -206,7 +206,7 @@
                 <div class="row position-relative align-items-center">
                     <div class="col px-3 newStoreCol p-0">
                         <img th:if="${newStoreData.storeDto.main_image}!=null" th:src="|/images/${newStoreData.storeDto.main_image}|">
-                        <img th:unless="${newStoreData.storeDto.main_image}!=null" src="/public/img/storeImage/store_default_profile.jpg">
+                        <img th:unless="${newStoreData.storeDto.main_image}!=null" class="bg-dark">
                     </div>
                     <div class="col px-3 newStoreCol position-absolute text-white fw-bold f17 text-center">
                         <span th:text="${newStoreData.storeDto.name}"></span>

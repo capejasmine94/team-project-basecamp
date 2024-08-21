@@ -237,4 +237,7 @@ public interface StoreSqlMapper {
     public void updateStoreDto(StoreDto storeDto);
 
     public List<Map<String, Object>> selectWishListByUserId(int user_id);
+
+    public List<Map<String, Object>> selectNewTenProductDataListByCategoryId(int category_id);
+    public List<Map<String, Object>> selectNewTenProductDataListBySubcategoryId(int subcategory_id);
 }

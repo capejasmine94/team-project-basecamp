@@ -44,7 +44,13 @@
             padding: 16px;
             background-color: #fff;
             border: 1px solid #e0e0e0;
+            -ms-overflow-style: none;
+            scrollbar-width:none;
         }
+        .section::webkit-scrollbar {
+            display: none;
+        }
+
         .section img {
             width: 100%;
             height: 200px;
@@ -124,17 +130,11 @@
             color: black !important;
             background-color: transparent !important;
         }
-        .sticky-menu {
-            position: sticky;
-            top: 0;
-            background-color: white; /* 배경색은 필요에 따라 조정 */
-            z-index: 1025; /* 다른 요소 위에 오도록 z-index 설정 */
-            padding: 10px 0; /* 필요에 따라 여백 설정 */
-        }
+    
     </style>
 </head>
 <body>
-    <div class="container-fluid fixed-top">
+    <div class="container-fluid fixed-top overflow-x-hidden" style="height: 43px;">
         <div class="row bg-white align-items-center py-2 border-bottom">
             <div class="col-auto px-0 pe-1">
                 <button class="border-0 bg-transparent d-flex align-items-center text-dark">
@@ -148,7 +148,7 @@
             </div>
         </div>
     </div>
-        <div class="container bg-body-secondary">
+        <div class="container bg-body-secondary overflow-x-hidden">
             <div class="row" style="margin-top: 42px;">
                 <div class="col-12 px-3 pb-1 pt-1">
                     <div class="text-center text-white fw-medium rounded-pill" style="background-color: #4AAEFF; font-size: 0.782em; padding: 0.1em;">
@@ -292,27 +292,27 @@
             </div>
         </div>
 
-        <div class="section sticky-top mb-0 border-0 py-0" style="z-index: 1040;overflow-x: hidden;">
-            <nav class="row pb-0 d-flex justify-content-between border-bottom nav nav-underline">
+        <div class="section sticky-top mb-0 border-0 py-0 overflow-x-hidden" style="z-index: 1040; overflow-x: auto; white-space:nowrap; top: 43px;">
+            <nav class="row pb-0 d-flex justify-content-between border-bottom nav nav-underline" style="flex-wrap: nowrap;">
                 <div class="col-auto">
                     <a class="fw-semibold nav-link" href="#rules">이용규정</a>
                 </div>
                 <div class="col-auto">
                     <a class="fw-semibold nav-link" href="#info">예약정보</a>
                 </div>
-                <div class="col-auto">
+                <!-- <div class="col-auto">
                     <a class="fw-semibold nav-link" href="#options">차량 옵션</a>
                 </div>
                 <div class="col-auto px-0 text-center">
                     <a class="fw-semibold nav-link" href="#conditions">운전자 대여조건</a>
-                </div>
+                </div> -->
                 <div class="col-auto">
                     <a class="fw-semibold nav-link" href="#reviews">리뷰</a>
                 </div>
             </nav>
         </div>
-        <div class="container">
-            <div id="rules" class="py-2"></div>
+        <div class="container overflow-x-hidden">
+            <div id="rules" class="mt-3 pt-5"></div>
             <div class="row section border-0 pt-3 mt-3">
                 <div class="col">
                     <div class="row">
@@ -507,8 +507,8 @@
                 </div>
             </div>
         </div>
-        <div class="container">
-            <div class="py-3" id="info"></div>
+        <div class="container overflow-x-hidden">
+            <div class="pt-3" id="info"></div>
             <div class="row section border-0 pt-3 mt-3">
                 <div class="col">
                     <div class="row info-items">
@@ -550,82 +550,66 @@
                             </div>
                         </div>
                     </div>
-                </div>
-            </div>
-        </div>
-    
-    <div class="container">
-        <div class="py-3" id="options"></div>
-        <div class="row section border-0 pt-3 mt-3">
-            <div class="col">
-                <div class="rowo pb-3">
-                    <div class="col info-item-title">
-                        차량 기본 보유 옵션
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col">
-                        <ul class="list-group">
-                            <li th:each="facility : ${facilities}" class="list-group-item d-flex justify-content-between align-items-center">
-                                <span th:text="${facility.name}"></span>
-                                <span th:if="${facility.name} == '화장실'" class="material-symbols-outlined">wc</span>
-                                <span th:if="${facility.name} == '샤워실'" class="material-symbols-outlined">shower</span>
-                                <span th:if="${facility.name} == '침대'" class="material-symbols-outlined">bed</span>
-                                <span th:if="${facility.name} == '싱크대'" class="material-symbols-outlined">kitchen</span>
-                                <span th:if="${facility.name} == '인덕션'" class="material-symbols-outlined">local_dining</span>
-                                <span th:if="${facility.name} == '가스레인지'" class="material-symbols-outlined">local_fire_department</span>
-                                <span th:if="${facility.name} == '전기레인지'" class="material-symbols-outlined">microwave</span>
-                                <span th:if="${facility.name} == '냉장고'" class="material-symbols-outlined">kitchen</span>
-                                <span th:if="${facility.name} == '온수기'" class="material-symbols-outlined">hot_tub</span>
-                                <span th:if="${facility.name} == '테이블'" class="material-symbols-outlined">table_bar</span>
-                                <span th:if="${facility.name} == 'TV'" class="material-symbols-outlined">tv</span>
-                                <span th:if="${facility.name} == '에어컨'" class="material-symbols-outlined">ac_unit</span>
-                                <span th:if="${facility.name} == '무시동히터'" class="material-symbols-outlined">water_heater</span>
-                                <span th:if="${facility.name} == '인산철 배터리'" class="bi bi-battery-charging"></span>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    
-    <div class="container">
-        <div class="py-3" id="conditions"></div>
-        <div class="row section border-0 pt-3">
-            <div class="col">
-                <div class="row pb-3">
-                    <div class="col info-item-title">
-                        차량 대여조건
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col">
-                        <div class="row py-2">
-                            <div class="col d-flex justify-content-start align-items-center ps-4">
-                                <span class="material-symbols-outlined">badge</span>
-                                <span class="fs-6 fw-normal">운전면허증 : </span><span class="px-1 fs-6" th:text="${campingcarDetails.campingcarDto.driver_license_name}"></span>
-                            </div>
+
+                    <div class="row pb-3">
+                        <div class="col info-item-title">
+                            차량 기본 보유 옵션
                         </div>
-                        <div class="row py-2">
-                            <div class="col d-flex justify-content-start align-items-center ps-4">
-                                <span class="material-symbols-outlined">airline_seat_recline_extra</span>
-                                <span class="fs-6">운전자 나이 : </span><span class="px-1 fs-6" th:text="${campingcarDetails.campingcarDto.driver_age_condition_name}"></span>
-                            </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <ul class="list-group">
+                                <li th:each="facility : ${facilities}" class="list-group-item d-flex justify-content-between align-items-center">
+                                    <span th:text="${facility.name}"></span>
+                                    <span th:if="${facility.name} == '화장실'" class="material-symbols-outlined">wc</span>
+                                    <span th:if="${facility.name} == '샤워실'" class="material-symbols-outlined">shower</span>
+                                    <span th:if="${facility.name} == '침대'" class="material-symbols-outlined">bed</span>
+                                    <span th:if="${facility.name} == '싱크대'" class="material-symbols-outlined">kitchen</span>
+                                    <span th:if="${facility.name} == '인덕션'" class="material-symbols-outlined">local_dining</span>
+                                    <span th:if="${facility.name} == '가스레인지'" class="material-symbols-outlined">local_fire_department</span>
+                                    <span th:if="${facility.name} == '전기레인지'" class="material-symbols-outlined">microwave</span>
+                                    <span th:if="${facility.name} == '냉장고'" class="material-symbols-outlined">kitchen</span>
+                                    <span th:if="${facility.name} == '온수기'" class="material-symbols-outlined">hot_tub</span>
+                                    <span th:if="${facility.name} == '테이블'" class="material-symbols-outlined">table_bar</span>
+                                    <span th:if="${facility.name} == 'TV'" class="material-symbols-outlined">tv</span>
+                                    <span th:if="${facility.name} == '에어컨'" class="material-symbols-outlined">ac_unit</span>
+                                    <span th:if="${facility.name} == '무시동히터'" class="material-symbols-outlined">water_heater</span>
+                                </li>
+                            </ul>
                         </div>
-                        <div class="row py-2">
-                            <div class="col d-flex justify-content-start align-items-center ps-4">
-                                <span class="material-symbols-outlined">directions_car</span>
-                                <span class="fs-6 fw-normal">운전경력 : </span><span class="px-1 fs-6" th:text="${campingcarDetails.campingcarDto.driver_experience_condition_name}"></span>
+                    </div>
+                    <div class="row pb-3">
+                        <div class="col info-item-title">
+                            차량 대여조건
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <div class="row py-2">
+                                <div class="col d-flex justify-content-start align-items-center ps-4">
+                                    <span class="material-symbols-outlined">badge</span>
+                                    <span class="fs-6 fw-normal">운전면허증 : </span><span class="px-1 fs-6" th:text="${campingcarDetails.campingcarDto.driver_license_name}"></span>
+                                </div>
+                            </div>
+                            <div class="row py-2">
+                                <div class="col d-flex justify-content-start align-items-center ps-4">
+                                    <span class="material-symbols-outlined">airline_seat_recline_extra</span>
+                                    <span class="fs-6">운전자 나이 : </span><span class="px-1 fs-6" th:text="${campingcarDetails.campingcarDto.driver_age_condition_name}"></span>
+                                </div>
+                            </div>
+                            <div class="row py-2">
+                                <div class="col d-flex justify-content-start align-items-center ps-4">
+                                    <span class="material-symbols-outlined">directions_car</span>
+                                    <span class="fs-6 fw-normal">운전경력 : </span><span class="px-1 fs-6" th:text="${campingcarDetails.campingcarDto.driver_experience_condition_name}"></span>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
         
-    <div class="container">
+    <div class="container overflow-x-hidden">
         <div class="py-3" id="reviews"></div>
         <div class="row section border-0 pt-3 mt-3">
             <div class="col">
@@ -726,7 +710,7 @@
         <div class="final-price">
             월 256,500원
         </div> -->
-        <div class="container">
+        <div class="container overflow-x-hidden">
             <div class="row py-0">
                 <div class="col d-grid">
                     <a class="btn btn-dark btn-lg fw-bold" th:href="@{/campingcar/reservationInfo(id=${campingcarDetails.campingcarDto.id})}" style="color:#C6ED6F;">
