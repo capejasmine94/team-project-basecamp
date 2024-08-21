@@ -221,6 +221,7 @@
         <if test="subcategory_id != null">
             and ps.id = #{subcategory_id}
         </if>
+        order by sp.id desc
     </select>
 
     <select id="countProductDtoByCategoryId" resultType="int">
