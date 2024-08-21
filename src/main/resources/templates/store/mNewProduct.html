@@ -208,7 +208,7 @@
                         <img th:if="${newStoreData.storeDto.main_image}!=null" th:src="|/images/${newStoreData.storeDto.main_image}|">
                         <img th:unless="${newStoreData.storeDto.main_image}!=null" class="bg-dark">
                     </div>
-                    <div class="col px-3 newStoreCol position-absolute text-white fw-bold f17 text-center">
+                    <div class="col px-3 newStoreCol position-absolute text-white fw-bold f17 text-center" th:unless="${newStoreData.storeDto.main_image}!=null">
                         <span th:text="${newStoreData.storeDto.name}"></span>
                     </div>
                 </div>
