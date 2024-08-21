@@ -116,8 +116,8 @@ public class PartnerCampingCarController {
                                      ,@RequestParam("detailedImg") MultipartFile[] detailedImg
                                      ,@RequestParam(value = "basicFacilites_id") List<Integer> basicFacilites_id
                                      ,RentalPeakPriceDto rentalPeakPriceDto) {
-        for(MultipartFile img : detailedImg) {
-        }
+        // for(MultipartFile img : detailedImg) {
+        // }
                                         
         campingcarDto.setMain_img(ImageUtil.saveImageAndReturnLocation(main_image));
 

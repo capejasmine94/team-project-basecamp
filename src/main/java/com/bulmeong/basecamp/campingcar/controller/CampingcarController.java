@@ -46,8 +46,10 @@ public class CampingcarController {
     }
 
     @RequestMapping("campingCarDetailPage")
-    public String campingCarDetailPage(@RequestParam("id") int id, Model model) {
-
+    public String campingCarDetailPage(@RequestParam("id") int id, Model model, HttpSession session) {
+        UserDto sessionUserInfo = (UserDto) session.getAttribute("sessionUserInfo");
+        model.addAttribute("sessionUserInfo", sessionUserInfo);
+        
         Map<String,Object> campingcarDetails = campingcarService.getCampingCarDetailByid(id);
         model.addAttribute("campingcarDetails", campingcarDetails);
 
@@ -76,79 +78,6 @@ public class CampingcarController {
         model.addAttribute("ratings", ratings);
 
         return "campingcar/campingCarDetailPage";
-    }
-
-    @RequestMapping("dRules")
-    public String dRules(@RequestParam("id") int id, Model model) {
-
-        Map<String,Object> campingcarDetails = campingcarService.getCampingCarDetailByid(id);
-        model.addAttribute("campingcarDetails", campingcarDetails);
-        return "campingcar/dRules";
-    }
-
-    @RequestMapping("dCarInfo")
-    public String dCarInfo(@RequestParam("id") int id, Model model) {
-
-        Map<String,Object> campingcarDetails = campingcarService.getCampingCarDetailByid(id);
-        model.addAttribute("campingcarDetails", campingcarDetails);
-        
-        List<ProductDetailImgDto> detailImgDto = campingcarService.getProductDetailImgByProductId(id);
-        model.addAttribute("detailImgDto", detailImgDto);
-        return "campingcar/dCarInfo";
-    }
-
-    @RequestMapping("dCarOption")
-    public String dCarOption(@RequestParam("id") int id, Model model) {
-
-        Map<String,Object> campingcarDetails = campingcarService.getCampingCarDetailByid(id);
-        model.addAttribute("campingcarDetails", campingcarDetails);
-
-        List<BasicFacilitiesDto> facilities = campingcarService.getBasicFacilitiesByProductId(id);
-        model.addAttribute("facilities", facilities);
-
-        return "campingcar/dCarOption";
-    }
-
-    @RequestMapping("dRentalCondition")
-    public String dRentalCondition(@RequestParam("id") int id, Model model) {
-
-        Map<String,Object> campingcarDetails = campingcarService.getCampingCarDetailByid(id);
-        model.addAttribute("campingcarDetails", campingcarDetails);
-
-        return "campingcar/dRentalCondition";
-    }
-
-    @RequestMapping("dReviews") 
-    public String dReviews(@RequestParam("id") int id, Model model) {
-
-        Map<String,Object> campingcarDetails = campingcarService.getCampingCarDetailByid(id);
-        model.addAttribute("campingcarDetails", campingcarDetails);
-        //리뷰 리스트
-        List<Map<String,Object>> reviewData = campingcarService.getReviewAllbyCarId(id);
-        model.addAttribute("reviewData", reviewData);
-
-        // 해당 차량의 리뷰 별점 평균 
-        Double reviewAvg = campingcarService.getAvgByCarId(id);
-        model.addAttribute("reviewAvg", reviewAvg);
-
-        // 해당 차량의 리뷰 참여 인원 수
-        int reivewCountBycar = campingcarService.getReviewByCountPersont(id);
-        model.addAttribute("reivewCountBycar", reivewCountBycar);
-
-        // 해당 차량의 각 별점 마다 인원수
-        List<Map<String,Object>> ratings = campingcarService.ratingGroupBycar(id);
-        model.addAttribute("ratings", ratings);
-
-        return "campingcar/dReviews";
-    }
-
-
-    @RequestMapping("dCancelPolicy")
-    public String dCancelPolicy(@RequestParam("id") int id, Model model) {
-
-        Map<String,Object> campingcarDetails = campingcarService.getCampingCarDetailByid(id);
-        model.addAttribute("campingcarDetails", campingcarDetails);
-        return "campingcar/dCancelPolicy";
     }
 
     @RequestMapping("reservationInfo")

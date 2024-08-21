@@ -137,13 +137,19 @@
                     <div class="row new-mt-45 pb-3">
                         <div class="col">
                             <div class="row">
-                                <div class="col fw-medium">
-                                    <span class="new-fs-8 bg-body-secondary badge text-body-secondary material-symbols-outlined">rv_hookup<span class="new-fs-65"th:text="${campingcarDetails.campingcarDto.car_type_name}">모터홈</span></span>
+                                <div class="col fw-medium px-2">
+                                    <span class="new-fs-75 bg-body-secondary badge text-body-secondary material-symbols-outlined">rv_hookup<span class="new-fs-65"th:text="${campingcarDetails.campingcarDto.car_type_name}" style="background-color: rgb(241,244,249); color: rgb(123,139,171);">모터홈</span></span>
                                 </div>
                             </div>
                             <div class="row pt-2">
                                 <div class="col">
-                                    <span class="fw-bold fs-5" th:text="${campingcarDetails.campingcarDto.product_name}"></span>
+                                    <div class="fw-bold fs-5" th:text="${campingcarDetails.campingcarDto.product_name}"></div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col d-flex justify-content-start align-itmes-center">
+                                    <span class="material-symbols-outlined fs-6 pt-1 mt-2 d-flex align-itmes-center" style="color: #424346;">home</span>
+                                    <span class="new-fs-85 pt-1 d-flex align-itmes-center" th:text="${campingcarDetails.campingcarDto.comp_name}" style="color: #666666; margin-top: 0.375rem;"></span>
                                 </div>
                             </div>
                             <div class="row form-group">
@@ -159,7 +165,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <row>
+                                    <div class="row">
                                         <div class="col">
                                             <div class="border border-0">
                                                 <!-- 반납 가능 시간 -->
@@ -169,7 +175,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                    </row>
+                                    </div>
                                     
                                 </div>
                                 
@@ -177,31 +183,107 @@
                             <!-- 렌트카 회사 정보 -->
                             <div class="row">
                                 <div class="col">
-                                    <div class="row ps-3 mb-3">
-                                        <div class="col-2 d-flex align-items-center info-item">
-                                            <span class="info-item-title">차량정보</span>
-                                        </div>
-                                        <div class="col">
-                                            <div class="d-flex flex-wrap">
-                                                <span class="me-3" th:text="${campingcarDetails.campingcarDto.driver_license_name}"></span>
-                                                <span class="me-3" th:text="${campingcarDetails.campingcarDto.driver_age_condition_name}"></span>
-                                                <span class="me-3" th:text="${campingcarDetails.campingcarDto.driver_experience_condition_name}"></span>
-                                                <span class="me-3" th:text="'동승인원 ' + ${campingcarDetails.campingcarDto.seating_capacity} + '명'"></span>
-                                                <span class="me-3" th:text="'취침인원 ' + ${campingcarDetails.campingcarDto.sleeping_capacity} + '명'"></span>
-                                                <span class="me-3" th:text="'반려동물 ' + ${campingcarDetails.campingcarDto.pet_friendly}"></span>
-                                            </div>
+                                    <div class="row">
+                                        <div class="col d-flex justify-content-center">
+                                            <button class="btn btn-light new-fs-85 fw-medium" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="true" aria-controls="collapseExample"  style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem; color: #666;">더보기</button>
                                         </div>
                                     </div>
-                                    <div class="row ps-3">
-                                        <div class="col-2 d-flex align-items-center info-item">
-                                            <span class="fw-bold info-title">차량옵션</span>
+                                    <div class="collapse" id="collapseExample">
+                                        <div class="row ps-3 mb-3 pt-3" >
+                                            <div class="col-2 d-flex align-items-start info-item">
+                                                <span class="fw-semibold new-fs-85">차량정보</span>
+                                            </div>
+                                            <div class="col-10">
+                                                <div class="fw-normal d-flex flex-wrap aling-items-center fs-6" style="word-break: break-word; color: #424346;">
+                                                    <div class="d-flex align-itmes-center new-fs-75">
+                                                        <span class="material-symbols-outlined" style="color: #7B8BAB;">badge</span>
+                                                        <span class="pe-4 pt-1 fw-semibold" style="color: #666;" th:text="${campingcarDetails.campingcarDto.driver_license_name}"></span>
+                                                    </div>
+                                                    <div class="d-flex align-items-center new-fs-75">
+                                                        <span class="material-symbols-outlined" style="color: #7B8BAB;">airline_seat_recline_extra</span>
+                                                        <span class="pe-4 pt-1 fw-semibold" style="color: #666;" th:text="${campingcarDetails.campingcarDto.driver_age_condition_name}"></span>
+                                                    </div>
+                                                    <div class="d-flex align-items-center new-fs-75">
+                                                        <span class="material-symbols-outlined" style="color: #7B8BAB;">directions_car</span>
+                                                        <span class="pe-4 pt-1 fw-semibold" style="color: #666;" th:text="${campingcarDetails.campingcarDto.driver_experience_condition_name}"></span>
+                                                    </div>
+                                                    <div class="d-flex align-items-center new-fs-75">
+                                                        <span class="material-symbols-outlined" style="color: #7B8BAB;">groups</span>
+                                                        <span class="pe-4 pt-1 fw-semibold" style="color: #666;" th:text="'동승인원 ' + ${campingcarDetails.campingcarDto.seating_capacity} + '명'"></span>
+                                                    </div>
+                                                    <div class="d-flex align-items-center new-fs-75">
+                                                        <span class="material-symbols-outlined" style="color: #7B8BAB;">bedroom_parent</span>
+                                                        <span class="pe-4 pt-1 fw-semibold" style="color: #666;" th:text="'취침인원 ' + ${campingcarDetails.campingcarDto.sleeping_capacity} + '명'"></span>
+                                                    </div>
+                                                    <div class="d-flex align-items-center new-fs-75">
+                                                        <span class="material-symbols-outlined" style="color: #7B8BAB;">Pets</span>
+                                                        <span class="pe-4 pt-1 fw-semibold" style="color: #666;" th:text="'반려동물 ' + ${campingcarDetails.campingcarDto.pet_friendly}"></span>
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </div>
-                                        <div class="col">
-                                            <div class="d-flex flex-wrap align-items-center">
-                                                <!-- 이 부분이 수정된 부분입니다 -->
-                                                <span class="d-flex align-items-center pe-2 mb-2" th:each="facility : ${facilities}">
-                                                    <span th:text="${facility.name}"></span>
-                                                </span>      
+                                        <div class="row pt-3 ps-3 border-top">
+                                            <div class="col-2 d-flex align-items-center info-item">
+                                                <span class="fw-semibold new-fs-85">차량옵션</span>
+                                            </div>
+                                            <div class="col-10">
+                                                <div class="d-flex flex-wrap aling-items-center fs-6">
+                                                    <span class="d-flex align-items-center pe-2 mb-2 fw-normal" th:each="facility : ${facilities}" style="word-break: break-word;color: #424346;">
+                                                        <!-- <span th:text="${facility.name}"></span> -->
+                                                        <span th:if="${facility.name} == '화장실'" class="d-flex align-items-center new-fs-75">
+                                                            <span class="material-symbols-outlined" style="color: #7B8BAB;">wc</span>
+                                                            <span class="pe-4 pt-1 fw-semibold" style="color: #666;">화장실</span>
+                                                        </span>
+                                                        <span th:if="${facility.name} == '샤워실'" class="d-flex align-items-center new-fs-75">
+                                                            <span class="material-symbols-outlined" style="color: #7B8BAB;">shower</span>
+                                                            <span class="pe-4 pt-1 fw-semibold" style="color:#666">샤워실</span>
+                                                        </span>
+                                                        <span th:if="${facility.name} == '침대'" class="d-flex align-items-center new-fs-75">
+                                                            <span class="material-symbols-outlined" style="color: #7B8BAB;">bed</span>
+                                                            <span class="pe-4 pt-1 fw-semibold" style="color: #666;">침대</span>
+                                                        </span>
+                                                        <span th:if="${facility.name} == '싱크대'" class="d-flex align-items-center new-fs-75">
+                                                            <span class="material-symbols-outlined" style="color: #7B8BAB;">kitchen</span>
+                                                            <span class="pe-4 pt-1 fw-semibold" style="color: #666;">싱크대</span>
+                                                        </span>
+                                                        <span th:if="${facility.name} == '인덕션'" class="d-flex align-items-center new-fs-75">
+                                                            <span class="material-symbols-outlined" style="color: #7B8BAB;">local_dining</span>
+                                                            <span class="pe-4 pt-1 fw-semibold" style="color: #666;">인덕션</span>
+                                                        </span>
+                                                        <span th:if="${facility.name} == '가스레인지'" class="d-flex align-items-center new-fs-75">
+                                                            <span class="material-symbols-outlined" style="color: #7B8BAB;">local_fire_department</span>
+                                                            <span class="pe-4 pt-1 fw-semibold" style="color: #666;">가스레인지</span>
+                                                        </span>
+                                                        <span th:if="${facility.name} == '전기레인지'" class="d-flex align-items-center new-fs-75">
+                                                            <span class="material-symbols-outlined" style="color: #7B8BAB;">microwave</span>
+                                                            <span class="pe-4 pt-1 fw-semibold" style="color: #666;">전기레인지</span>
+                                                        </span>
+                                                        <span th:if="${facility.name} == '냉장고'" class="d-flex align-items-center new-fs-75">
+                                                            <span class="material-symbols-outlined" style="color: #7B8BAB;">kitchen</span>
+                                                            <span class="pe-4 pt-1 fw-semibold" style="color: #666;">냉장고</span>
+                                                        </span>
+                                                        <span th:if="${facility.name} == '온수기'" class="d-flex align-items-center new-fs-75">
+                                                            <span class="material-symbols-outlined" style="color: #7B8BAB;">hot_tub</span>
+                                                            <span class="pe-4 pt-1 fw-semibold" style="color: #666;">온수기</span>
+                                                        </span>
+                                                        <span th:if="${facility.name} == '테이블'" class="d-flex align-items-center new-fs-75">
+                                                            <span class="material-symbols-outlined" style="color: #7B8BAB;">table_bar</span>
+                                                            <span class="pe-4 pt-1 fw-semibold" style="color: #666;">테이블</span>
+                                                        </span>
+                                                        <span th:if="${facility.name} == 'TV'" class="d-flex align-items-center new-fs-75">
+                                                            <span class="material-symbols-outlined" style="color: #7B8BAB;">tv</span>
+                                                            <span class="pe-4 pt-1 fw-semibold" style="color: #666;">TV</span>
+                                                        </span>
+                                                        <span th:if="${facility.name} == '에어컨'" class="d-flex align-items-center new-fs-75">
+                                                            <span class="material-symbols-outlined" style="color: #7B8BAB;">ac_unit</span>
+                                                            <span class="pe-4 pt-1 fw-semibold" style="color: #666;">에어컨</span>
+                                                        </span>
+                                                        <span th:if="${facility.name} == '무시동히터'" class="d-flex align-items-center new-fs-75">
+                                                            <span class="material-symbols-outlined" style="color: #7B8BAB;">water_heater</span>
+                                                            <span class="pe-4 pt-1 fw-semibold" style="color: #666;">무시동히터</span>
+                                                        </span>
+                                                    </span>      
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -288,16 +370,16 @@
                     </div>
                     
                     <div class="row mx-0 px-1">
-                        <div class="col border p-4 rounded text-center bg-white">
+                        <div class="col p-4 border border-warning border-3 rounded text-center">
                             <div class="row">
                                 <div class="col">
                                     <div class="d-flex justify-content-center align-items-center text-center">
                                         <span class="material-symbols-outlined" style="font-size: 48px;">person_apron</span>
-                                        <span class="text-warning pe-2" style="font-size: 48px;padding-bottom: 0.55rem;">+</span>
+                                        <span class="text-danger pe-2" style="font-size: 48px;padding-bottom: 0.55rem;">+</span>
                                         <span class="material-symbols-outlined" style="font-size: 48px;">id_card</span>
                                     </div>
                                     <div class="fw-medium new-fs-65">캠핑카 대여시, 운전자는 운전면허증을 꼭 지참해주세요</div>
-                                    <div class="fw-light new-fs-6 text-muted">면허증 확인 및 계약서 작성이 필요합니다.</div>
+                                    <div class="new-fs-6 text-muted fw-semibold text-decoration-underline">면허증 확인 및 계약서 작성이 필요합니다.</div>
                                 </div>
                             </div>
                         </div>
@@ -326,46 +408,64 @@
                     <div class="row">
                         <div class="col">
                             <div class="row">
-                                <div class="col">
+                                <div class="col info-item-title">
                                     <div class="fs-5">자동차 보험</div>
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col info-item">
-                                    <div class="info-item-title ps-3">대인/대물/자손 보상한도 및 자가부담금</div>
+                                    <div class=" new-fs-95 fw-medium" style="color: #494949;padding-left: 0.75rem;">대인/대물/자손 보상한도 및 자가부담금</div>
                                 </div>
                             </div>
-                            <div class="row">
-                                <div class="col">
-                                    <table class="table border">
-                                        <thead class="text-center fw-normal">
-                                            <tr>
-                                            <th scope="col">구분</th>
-                                            <th scope="col">보상한도</th>
-                                            <th scope="col">자기부담금</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody class="text-center">
-                                            <tr>
-                                            <td>대인1·2</td>
-                                            <td>무한</td>
-                                            <td>50만원</td>
-                                            </tr>
-                                            <tr>
-                                            <td>대물</td>
-                                            <td>최대2,000만원</td>
-                                            <td>50만원</td>
-                                            </tr>
-                                            <tr>
-                                            <td>자손</td>
-                                            <td>최대1,500만원</td>
-                                            <td>50만원</td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
+                            <div class="row border border-0" style="padding-left: 0.80rem;padding-right: 0.80rem;">
+                                <div class="col new-fs-9">
+                                    <div class="row text-center bg-light d-flex justify-content-center align-items-center">
+                                        <div class="col py-2 border-end border-bottom" style="background-color: #f1f4f9;">
+                                            <span class="fw-semibold" style="color: #7B8BAB;">구분</span>
+                                        </div>
+                                        <div class="col py-2 border-end border-bottom">
+                                            <span class="fw-semibold" style="color: #666;">보상한도</span>
+                                        </div>
+                                        <div class="col py-2 border-bottom">
+                                            <span class="fw-semibold" style="color: #666;">자기부담금</span>
+                                        </div>
+                                    </div>
+                                    <div class="row text-center d-flex justify-content-center align-items-center">
+                                        <div class="col py-2 border-end border-bottom" style="background-color: #f1f4f9;">
+                                            <span class="fw-bold" style="color: #7B8BAB;">대인1·2</span>
+                                        </div>
+                                        <div class="col py-2 border-end border-bottom d-flex justify-content-center align-items-center">
+                                            <span class="fw-medium new-fs-75" style="color: #666;">무한</span>
+                                        </div>
+                                        <div class="col py-2 border-bottom d-flex justify-content-center align-items-center">
+                                            <span class="fw-medium new-fs-75" style="color: #666;">없음</span>
+                                        </div>
+                                    </div>
+                                    <div class="row text-center">
+                                        <div class="col py-2 border-end border-bottom d-flex justify-content-center align-items-center" style="background-color: #f1f4f9;">
+                                            <span class="fw-bold" style="color: #7B8BAB;">대물</span>
+                                        </div>
+                                        <div class="col py-2 border-end border-bottom d-flex justify-content-center align-items-center">
+                                            <span class="fw-medium new-fs-75" style="color: #666;">최대 2,000만원</span>
+                                        </div>
+                                        <div class="col py-2 border-bottom d-flex justify-content-center align-items-center">
+                                            <span class="fw-medium new-fs-75" style="color: #666;">없음</span>
+                                        </div>
+                                    </div>
+                                    <div class="row text-center">
+                                        <div class="col py-2 border-end d-flex justify-content-center align-items-center" style="background-color: #f1f4f9;">
+                                            <span class="fw-bold" style="color: #7B8BAB;">자손</span>
+                                        </div>
+                                        <div class="col py-2 border-end d-flex justify-content-center align-items-center">
+                                            <span class="fw-medium new-fs-75" style="color: #666;">최대 1,500만원</span>
+                                        </div>
+                                        <div class="col py-2 d-flex justify-content-center align-items-center">
+                                            <span class="fw-medium new-fs-75" style="color: #666;">없음</span>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="row">
+                            <div class="row pt-3 ps-1">
                                 <div class="col">
                                     <div class="text-muted new-fs-65">보험은 현장에서 작성하는 계약서를 기준으로 적용합니다.</div>
                                     <div class="text-muted new-fs-65">반드시 계약서를 확인해주시기 바랍니다.</div>
@@ -382,21 +482,16 @@
             </div>
         </div>
         <div class="container">
-            <div class="row section d-flex justify-content-center">
-                <div class="col d-grid">
-                    <div th:if="${!isRentUser}">
-                        <button class="btn btn-dark btn-lg fw-bold" formaction="/campingcar/reservationProcess" style="color: #C6ED6F;">예약하기</button>
-                    </div>
-                    <div th:unless="${!isRentUser}">
-                        <button class="btn btn-dark btn-lg fw-bold" formaction="/campingcar/existingRentUserReservationProcess" style="color: #C6ED6F;">예약하기</button>
-                    </div>
+            <div class="row py-2">
+                <div class="col d-grid"  th:if="${!isRentUser}">
+                    <button class="btn btn-dark btn-lg fw-bold" formaction="/campingcar/reservationProcess" style="color: #C6ED6F;">예약하기</button>
+                </div>
+                <div class="col d-grid" th:unless="${!isRentUser}">
+                    <button class="btn btn-dark btn-lg fw-bold" formaction="/campingcar/existingRentUserReservationProcess" style="color: #C6ED6F;">예약하기</button>
                 </div>
             </div>
         </div>
     </form>
-       
-
-
     <!-- 부트스트랩 JS -->
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js"></script>
