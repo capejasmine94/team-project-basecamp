@@ -516,6 +516,7 @@
         select insta_profile_img,
                insta_nickname,
                content,
+               bia.created_at,
                biui.id as user_id,
                biui.user_id as s_user_id,
                bia.id as article_id

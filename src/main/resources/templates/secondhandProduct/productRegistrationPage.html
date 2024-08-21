@@ -123,7 +123,11 @@
         priceInput.value = priceInput.value.replace(/,/g, '');  // 폼 제출 전에 쉼표 제거
     });
 
-    // 이미지 관련 코드 유지
+    function updatePhotoCount(count) {
+        const photoCount = document.getElementById('photo-count');
+        photoCount.textContent = `${count}/10`;
+    }
+
     function updatePhotoLabels() {
         const photoBoxes = document.querySelectorAll('.photo-box');
         photoBoxes.forEach((box, index) => {
@@ -156,7 +160,9 @@
             reader.onload = function(e) {
                 const photoBox = document.createElement('div');
                 photoBox.className = 'photo-box';
-                const img = document.createElement
+                const img = document.createElement('img');
+                img.src = e.target.result;
+
                 // 첫 번째 선택된 파일을 대표 사진으로 설정
                 if (photoContainer.childElementCount === 1) {
                     document.getElementById('main_image').value = file.name;
@@ -183,10 +189,6 @@
         const updatedPhotoCount = currentPhotoCount + files.length;
         updatePhotoCount(updatedPhotoCount);
     });
-
-    function updatePhotoCount(count) {
-        document.getElementById('photo-count').textContent = count + "/10";
-    }
 </script>
 <script src="/public/js/lockLikeMobile.js"></script>
 </body>
