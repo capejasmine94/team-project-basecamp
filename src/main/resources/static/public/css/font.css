@@ -43,3 +43,31 @@ body {
 .f40{
     font-size: 4em;
 }
+
+/* 말줄임  */
+.ellipsis { /* 텍스트 한 줄 */
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.ellipsis-line-one { /* 텍스트 한 줄 ver2 */
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box; 
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical; 
+    word-wrap: break-word; 
+    line-height: 1.3em;
+    height: 1.3em;
+}
+.ellipsis-line-two { /* 텍스트 두 줄 노출 후 말줄임 */
+    overflow: hidden; 
+    text-overflow: ellipsis; 
+    display: -webkit-box; 
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical; 
+    word-wrap: break-word; 
+    line-height: 1.3em;
+    height: 2.6em
+}
