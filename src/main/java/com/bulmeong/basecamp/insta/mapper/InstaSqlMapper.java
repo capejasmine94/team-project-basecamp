@@ -108,6 +108,11 @@ public interface InstaSqlMapper {
 
     // 게시글 좋아요 목록
     public List<Map<String, Object>> selectArticleLikeUserInfo(@Param("article_id") int article_id, @Param("user_id") int user_id);
+
+    // 게시물 상세 페이지
+    // 상세 글 페이지(유저프로필, 닉네임, 게시글 내용)
+    public Map<String, Object> articleDtailPageSelectUserProfileAndUserNicknameAndArticleContent(@Param("article_id") int article_id);
+    public List<InstaTagDto> selectTagTextByArticleId(@Param("article_id") int article_id); // 태그 나오게
 }
 
 

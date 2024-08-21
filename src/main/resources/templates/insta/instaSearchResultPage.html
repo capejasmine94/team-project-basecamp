@@ -12,6 +12,9 @@
     <!-- Google Material Icons -->
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet">
 
+    <!-- 파비콘 -->
+    <link rel="shotcut icon" href="/public/img/common/campFire.ico" type="image/x-icon">
+
 
     <link rel="stylesheet" href="/public/css/basecamp.css">
     <link rel="stylesheet" href="/public/css/insta/instaStyle.css">
@@ -57,7 +60,7 @@
 
         <!-- 내 게시물 List -->
         <div class="row mt-5" style="padding-top: 1.2%;">
-            <a class="col-4 px-0 pb d-flex" style="padding-bottom: 0.5%;" th:href="@{./instaMainPage(user_id=${session.sessionUserInfo.id})}" th:each="instaArticleImgDto, iterStat : ${instaArticleImgDtoListBySearchContent}">
+            <a class="col-4 px-0 pb d-flex" style="padding-bottom: 0.5%;" th:href="@{./instaArticleDetailPage(user_id=${session.sessionUserInfo.id}, article_id=${instaArticleImgDto.article_id})}" th:each="instaArticleImgDto, iterStat : ${instaArticleImgDtoListBySearchContent}">
                 <div th:class="${iterStat.index % 3 == 1} ? 'middle' : ''">
                     <img th:src="|/images/${instaArticleImgDto.img_link}|" class="img-fluid" style="object-fit: cover; object-position: center; aspect-ratio: 1/1;"
                          th:classappend="${iterStat.index % 3 == 1} ? 'middle-image' : ''">
