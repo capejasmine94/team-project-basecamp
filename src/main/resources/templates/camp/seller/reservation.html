@@ -275,6 +275,12 @@
                     car.innerText = value.car_number;
                     carList.appendChild(car);
                 }
+                if(carList.innerHTML == '') {
+                    const car = document.createElement('div');
+                    car.classList.add('col-auto', 'mt-1','ms-5', 'new-fs-95','text-secondary','text-start');
+                    car.innerText = '없음'
+                    carList.appendChild(car);
+                }
                 progress.innerText = order.dto.progress;
 
                 totalPrise.innerText = order.dto.total_prise;
