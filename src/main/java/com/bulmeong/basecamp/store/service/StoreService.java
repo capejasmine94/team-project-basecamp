@@ -1419,7 +1419,7 @@ public class StoreService {
                 Map<String, Object> map = new HashMap<>();
     
                 int discount_id = storeProductDto.getDiscount_id();
-                int price = storeProductDto.getPrice();
+                int price = (int)storeProductDto.getPrice();
     
                 if(discount_id!=0){
                     StoreProductDiscountDto storeProductDiscountDto = storeSqlMapper.selectDiscountById(discount_id);
@@ -1445,6 +1445,52 @@ public class StoreService {
                 map.put("purchase_quantity", purchase_quantity);
             }
         }
+        return result;
+    }
+
+    public List<Map<String, Object>> selectNewTenProductDataListByCategoryId(int category_id){
+        List<Map<String, Object>> result = new ArrayList<>();
+        List<Map<String, Object>> newProductDataList =  storeSqlMapper.selectNewTenProductDataListByCategoryId(category_id);
+
+        for(Map<String, Object> newProductData : newProductDataList){
+            
+            double percentage = (double)newProductData.get("percentage");
+            int price = (int)newProductData.get("price");
+            int salePrice = (int)Math.round(price-price*percentage);
+            newProductData.put("salePrice", salePrice);
+            newProductData.put("percentage", (int)(percentage*100));
+
+            int product_id = (int)newProductData.get("id");
+
+            int purchase_quantity = storeSqlMapper.selectProductPurchaseQuantity(product_id);
+            newProductData.put("purchase_quantity", purchase_quantity);
+
+            result.add(newProductData);
+        }
+
+        return result;
+    }
+
+    public List<Map<String, Object>> selectNewTenProductDataListBySubcategoryId(int subcategory_id){
+        List<Map<String, Object>> result = new ArrayList<>();
+        List<Map<String, Object>> newProductDataList =  storeSqlMapper.selectNewTenProductDataListBySubcategoryId(subcategory_id);
+
+        for(Map<String, Object> newProductData : newProductDataList){
+            
+            double percentage = (double)newProductData.get("percentage");
+            int price = (int)newProductData.get("price");
+            int salePrice = (int)Math.round(price-price*percentage);
+            newProductData.put("salePrice", salePrice);
+            newProductData.put("percentage", (int)(percentage*100));
+
+            int product_id = (int)newProductData.get("id");
+
+            int purchase_quantity = storeSqlMapper.selectProductPurchaseQuantity(product_id);
+            newProductData.put("purchase_quantity", purchase_quantity);
+
+            result.add(newProductData);
+        }
+
         return result;
     }
 

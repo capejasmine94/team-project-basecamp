@@ -214,6 +214,7 @@ public class StoreController {
     public String bestProduct(Model model){
         //여기 수정
         model.addAttribute("bestProductDataList", storeService.getTenProductDataList());
+        model.addAttribute("productCategoryList", storeService.getProductCategoryAll());
 
         return "store/mBestProduct";
     }

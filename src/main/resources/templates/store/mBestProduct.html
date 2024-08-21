@@ -76,9 +76,19 @@
             justify-content: center;
             align-items: center;
         }
+
+        .scrollbar-none {
+            -ms-overflow-style: none; /* IE, Edge */
+            scrollbar-width: none; /* Firefox */
+        }
+
+        .scrollbar-none::-webkit-scrollbar {
+            display: none;
+        }
+
     </style>
 </head>
-<body class="bg-body-tertiary">
+<body>
 
     <div class="container-fluid fixed-top bg-white shadow-sm" style="height: 93.2px;">
         <!-- top-nav -->
@@ -124,7 +134,7 @@
 
     <div class="container" style="padding-top: 93.2px;">
 
-        <div class="row px-3 pt-4 bg-white fw-bold">
+        <!-- <div class="row px-3 pt-4 bg-white fw-bold">
             <div class="col p-0">
                 BEST ITEMS
             </div>
@@ -132,6 +142,24 @@
         <div class="row pt-1 px-3 bg-white text-body-tertiary f07">
             <div class="col p-0">
                 주간 판매순위 Top-10
+            </div>
+        </div> -->
+
+        <div class="row">
+            <div class="col overflow-x-auto scrollbar-none">
+                <div class="row py-3 px-3 text-center f08 flex-nowrap" style="gap: 8px;">
+                    <div class="col-auto py-1 rounded-pill text-white bg-dark categoryCol" id="allCategory" onclick="getBestAllproduct()">
+                        전체
+                    </div>
+                    <div class="col-auto py-1 rounded-pill bg-body-tertiary text-body-tertiary categoryCol" th:data-categoryid="${productCategory.id}" th:each="productCategory : ${productCategoryList}" onclick="getCategoryBestProduct(this)">
+                        <span th:text="${productCategory.name}">텐트</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col d-none overflow-x-auto scrollbar-none" id="subCategoryContainer">
+
             </div>
         </div>
 
@@ -268,34 +296,207 @@
                 <div class="col product-col">
                     <img class="border mainImage">
                 </div>
-                <div class="col position-absolute soldout_col">
+                <div class="col position-absolute soldout_col d-none">
                     <span class="sold-out fw-semibold text-white">SOLD OUT</span>
                 </div>
             </div>
-            <div class="row pt-1 f08 fw-semibold">
-                <div class="col storeName">
-                    GogumaStore
-                </div>
+            <div class="row pt-1 f07 fw-semibold">
+                <div class="col storeName"></div>
             </div>
-            <div class="row f09">
-                <div class="col productName">
-                    진짜 맛있는 납작복숭아
-                </div>
+            <div class="row f08">
+                <div class="col productName"></div>
             </div>
-            <div class="row fw-semibold f08 text-body-tertiary">
-                <div class="col price d-none" style="text-decoration: line-through;">
-                    40,000
-                </div>
+            <div class="row fw-semibold f07 text-body-tertiary">
+                <div class="col price d-none" style="text-decoration: line-through;"></div>
             </div>
-            <div class="row fw-semibold">
+            <div class="row fw-semibold f09">
                 <div class="col">
-                    <span class="percentage lightFont d-none">30% </span>
-                    <span class="salePrice d-none">28,000</span>
+                    <span class="percentage lightFont d-none"></span>
+                    <span class="salePrice"></span>
                 </div>
             </div>
         </a>
 
+        <div class="row px-3 f08 pb-3 border-bottom flex-nowrap subCategoryRow">
+            <div class="col-auto ps-0 fw-semibold allSubcategory subcategoryCol">
+                전체
+            </div>
+        </div>
+
+        <div class="col-auto ps-0 text-body-tertiary subcategory subcategoryCol" onclick="getsubcategoryBestProduct(this)"></div>
+
     </div>
+
+    <script>
+
+        // 카테고리 선택
+        function getCategoryBestProduct(selectedCategory){
+            const categoryCols = document.querySelectorAll(".categoryCol");
+            for(categoryCol of categoryCols){
+                categoryCol.classList.add("bg-body-tertiary")
+                categoryCol.classList.add("text-body-tertiary")
+                categoryCol.classList.remove("text-white")
+                categoryCol.classList.remove("bg-dark")
+            }
+            selectedCategory.classList.remove("bg-body-tertiary")
+            selectedCategory.classList.remove("text-body-tertiary")
+            selectedCategory.classList.add("text-white")
+            selectedCategory.classList.add("bg-dark")
+
+            const id = selectedCategory.dataset.categoryid;
+
+            const url = `/api/store/getProductSubcategoryDto?category_id=${id}`
+            fetch(url)
+            .then(response => response.json())
+            .then((response) => {
+                const subcategoryDtoList = response.data.subcategoryDtoList
+
+                const subCategoryContainer = document.getElementById("subCategoryContainer")
+                subCategoryContainer.classList.remove("d-none");
+                subCategoryContainer.innerHTML = ""
+
+                const subCategoryRow = document.querySelector("#template .subCategoryRow").cloneNode(true)
+                subCategoryRow.querySelector(".allSubcategory").setAttribute("onclick",`getAllCategoryBestProduct(${id})`)
+
+                subCategoryContainer.appendChild(subCategoryRow)
+
+                for(subcategoryDto of subcategoryDtoList){
+                    const subcategory = document.querySelector("#template .subcategory").cloneNode(true);
+                    subcategory.innerText = subcategoryDto.name
+                    subcategory.setAttribute("data-subcategoryid", subcategoryDto.id)
+
+                    subCategoryRow.appendChild(subcategory)
+                }
+
+                getAllCategoryBestProduct(id)
+            })
+        }
+
+        // 상품 전체
+        function getBestAllproduct(){
+            // const categoryCols = document.querySelectorAll(".categoryCol");
+            // for(categoryCol of categoryCols){
+            //     categoryCol.classList.add("bg-body-tertiary")
+            //     categoryCol.classList.add("text-body-tertiary")
+            //     categoryCol.classList.remove("text-white")
+            //     categoryCol.classList.remove("bg-dark")
+            // }
+
+            // document.getElementById("allCategory")
+            // allCategory.classList.remove("bg-body-tertiary")
+            // allCategory.classList.remove("text-body-tertiary")
+            // allCategory.classList.add("text-white")
+            // allCategory.classList.add("bg-dark")
+
+            // document.getElementById("subCategoryContainer").classList.add("d-none");
+
+            location.reload();
+            
+        }
+
+        // 카테고리 전체
+        function getAllCategoryBestProduct(categoryId){
+            console.log(categoryId)
+            
+            const url = `/api/store/selectNewTenProductDataListByCategoryId?category_id=${categoryId}`
+            fetch(url)
+            .then(response => response.json())
+            .then((response) => {
+                const newTenProductDataList = response.data.newTenProductDataList
+
+                const contentBox = document.getElementById("contentBox")
+                contentBox.innerHTML = ""
+                for(newTenProductData of newTenProductDataList){
+                    const productCol = document.querySelector("#template .productCol").cloneNode(true)
+                    productCol.querySelector(".mainImage").setAttribute("src",`/images/${newTenProductData.main_image}`)
+                    productCol.querySelector(".storeName").innerText = newTenProductData.store_name
+                    productCol.querySelector(".productName").innerText = newTenProductData.name
+                    
+                    const purchase_quantity = newTenProductData.purchase_quantity
+                    if(newTenProductData.quantity>purchase_quantity){
+                        productCol.querySelector(".soldout_col").classList.add("d-none")
+                    }else{
+                        productCol.querySelector(".soldout_col").classList.remove("d-none")
+                    }
+
+                    if(newTenProductData.percentage!=0){
+                        const percentage = productCol.querySelector(".percentage")
+                        percentage.classList.remove("d-none")
+                        percentage.innerText = `${newTenProductData.percentage}%`
+
+                        const price = productCol.querySelector(".price")
+                        price.classList.remove("d-none")
+                        price.innerText = `${formatNumberToPrice(newTenProductData.price)}`
+                    }
+
+                    productCol.querySelector(".salePrice").innerText = `${formatNumberToPrice(newTenProductData.salePrice)}`
+
+                    productCol.setAttribute("href", `/store/productDetails?id=${newTenProductData.id}`)
+
+                    contentBox.appendChild(productCol)
+                }
+            })
+        }
+
+        // 서브카테고리 선택
+        function getsubcategoryBestProduct(selectedSubcategory){
+            const subcategoryList = document.querySelectorAll("#subCategoryContainer .subcategoryCol");
+            for(subcategoryCol of subcategoryList){
+                subcategoryCol.classList.remove("fw-semibold")
+                subcategoryCol.classList.add("text-body-tertiary")
+            }
+            selectedSubcategory.classList.add("fw-semibold")
+            selectedSubcategory.classList.remove("text-body-tertiary")
+
+            const id = selectedSubcategory.dataset.subcategoryid;
+
+            const url = `/api/store/selectNewTenProductDataListBySubcategoryId?category_id=${id}`
+            fetch(url)
+            .then(response => response.json())
+            .then((response) => {
+                const newTenProductDataList = response.data.newTenProductDataList
+
+                const contentBox = document.getElementById("contentBox")
+                contentBox.innerHTML = ""
+                for(newTenProductData of newTenProductDataList){
+                    const productCol = document.querySelector("#template .productCol").cloneNode(true)
+                    productCol.querySelector(".mainImage").setAttribute("src",`/images/${newTenProductData.main_image}`)
+                    productCol.querySelector(".storeName").innerText = newTenProductData.store_name
+                    productCol.querySelector(".productName").innerText = newTenProductData.name
+                    
+                    const purchase_quantity = newTenProductData.purchase_quantity
+                    if(newTenProductData.quantity>purchase_quantity){
+                        productCol.querySelector(".soldout_col").classList.add("d-none")
+                    }else{
+                        productCol.querySelector(".soldout_col").classList.remove("d-none")
+                    }
+
+                    if(newTenProductData.percentage!=0){
+                        const percentage = productCol.querySelector(".percentage")
+                        percentage.classList.remove("d-none")
+                        percentage.innerText = `${newTenProductData.percentage}%`
+
+                        const price = productCol.querySelector(".price")
+                        price.classList.remove("d-none")
+                        price.innerText = `${formatNumberToPrice(newTenProductData.price)}`
+                    }
+
+                    productCol.querySelector(".salePrice").innerText = `${formatNumberToPrice(newTenProductData.salePrice)}`
+
+                    productCol.setAttribute("href", `/store/productDetails?id=${newTenProductData.id}`)
+
+                    contentBox.appendChild(productCol)
+                }
+            })
+            
+            return;
+        }
+
+
+        function formatNumberToPrice(number) {
+            return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+        }
+    </script>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 </body>

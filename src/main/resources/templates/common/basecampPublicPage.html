@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/public/css/common.css">
     <link rel="stylesheet" href="/public/css/basecamp.css">
+    <link rel="stylesheet" href="/public/css/font.css">
 
     <!-- 이걸로 레이아웃 확인하셈 -->
     <script src="/public/js/lockLikeMobile.js"></script>
@@ -32,6 +33,12 @@
             /* 원하는 위치를 설정할 수 있습니다 */
             position: absolute;
             transform: translate(-1.7px, -1.7px); /* X, Y 좌표로 이동 */
+        }
+        .productCol img{
+            aspect-ratio: 1/1;
+            width: 6em;
+            object-fit: cover;
+            object-position: center;
         }
 
         .scroll-container {
@@ -160,7 +167,18 @@
             transition: background-color 0.1s;
             background: linear-gradient(180deg, #060606 0%, #232323 100%);
         }
+        .scrollbar-none {
+            overflow-x: auto;
+            -ms-overflow-style: none; /* IE, Edge */
+            scrollbar-width: none; /* Firefox */
+        }
 
+        .scrollbar-none::-webkit-scrollbar {
+            display: none; /* Chrome, Safari, Opera */
+        }
+        .active-category-border{
+            border-bottom: 2px solid black;
+        }
     </style>
 </head>
 <body class="mainPage">
@@ -173,7 +191,7 @@
         </div>
 
         <!-- 준희님 예약 조회 페이지로 이동 -->
-        <a href="/camp" class="col-auto" th:if="${session.sessionUserInfo != null}">
+        <a href="/camp" class="col-auto p-0" th:if="${session.sessionUserInfo != null}">
             <span class="border px-2 py-1 fw-semi-bold text-white" style="border-radius: 10px; font-size: 0.75em;">
                 예약조회
             </span>
@@ -227,17 +245,45 @@
         </div>
     </div>
 
-    <div class="row ps-3 pt-3">
-        <div class="col fw-bold">
-            <span style="font-size: 0.85em;">
+    <!-- <div class="row px-4 pt-3">
+        <div class="col p-0 fw-bold">
+            <span>
                 떠날 준비가 되셨나요?
             </span>
         </div>
+    </div> -->
+    <div class="row py-3">
+        <div class="col">
+            <div class="row px-4" style="gap: 0.5em;">
+                <a href="/camp" class="col text-center p-0 f08 bg-white d-grid fw-semibold">
+                    <span class="border py-2 rounded-pill">캠핑장 예약</span>
+                </a>
+                <a href="/campingcar/main" class="col text-center p-0 f08 bg-white d-grid fw-semibold">
+                    <span class="border py-2 rounded-pill">캠핑카 예약</span>
+                </a>
+                <a href="/store" class="col text-center p-0 f08 bg-white d-grid fw-semibold">
+                    <span class="border py-2 rounded-pill">쇼핑하기</span>
+                </a>
+            </div>
+            <div class="row pt-3 px-4" style="gap: 0.5em;">
+                <a href="/secondhandProduct/mainPage" class="col text-center p-0 f08 bg-white d-grid fw-semibold">
+                    <span class="border py-2 rounded-pill">중고거래</span>
+                </a>
+                <a href="/club/main" class="col text-center p-0 f08 bg-white d-grid fw-semibold">
+                    <span class="border py-2 rounded-pill">커뮤니티</span>
+                </a>
+                <a href="/insta/instaMainPage" class="col text-center p-0 f08 bg-white d-grid fw-semibold">
+                    <span class="border py-2 rounded-pill">캠프스타그램</span>
+                </a>
+            </div>
+            
+        </div>
     </div>
+    
 
     <!-- 조준희, 양은자 예약하기 -->
-    <div class="row pb-4">
-        <!-- 조준희 -->
+    <!-- <div class="row pb-4">
+
         <a href="/camp" class="col d-flex flex-column align-items-center">
             <div class="row rounded-border justify-content-center">
                 <div class="col">
@@ -266,7 +312,7 @@
                 </div>
             </div>
         </a>
-        <!-- 양은자 -->
+
         <a href="/campingcar/main" class="col d-flex flex-column align-items-center">
             <div class="row rounded-border justify-content-center">
                 <div class="col">
@@ -309,7 +355,7 @@
                 </div>
             </div>
         </a>
-    </div>
+    </div> -->
 
     <!-- border -->
     <div class="row mt-2" style="border-bottom: 5px solid; border-color: rgba(227, 227, 227, 0.567);"></div>
@@ -322,118 +368,138 @@
             <div class="row">
                 <div class="col">
                     <!-- 상품 구매 -->
-                    <div class="row ps-3 px-1 py-3">
-                        <div class="col fw-bold">
-                            <span style="font-size: 0.85em;">
-                                썸머 COOL 세일!
+                    <div class="row px-4 pt-3 align-items-center">
+                        <div class="col-auto p-0 fw-bold">
+                            <span>
+                                BASECAMP Best Items
                             </span>
                         </div>
-                        <div class="col d-flex align-items-end justify-content-end">
+                        <div class="col p-0 d-flex align-items-end justify-content-end">
                             <a href="/store"><span class="text-secondary" style="font-size: 0.7rem">더보기<i class="bi bi-chevron-right"></i></span></a>
                         </div>
                     </div>
-                    <div class="row">
-                        <div class="col">
-                            <div class="row px-1 d-flex">
-                                <a href="/store/category?category_id=1" class="col-3 pb-4">
-                                    <div class="row">
-                                        <div class="col icon-col d-flex justify-content-center">
-                                            <img src="/public/img/storeImage/icon001.png">
-                                        </div>
-                                    </div>
-                                    <div class="row pt-1 text-center">
-                                        <div class="col" style="font-size: 0.7em;">
-                                            텐트
-                                        </div>
-                                    </div>
-                                </a>
-                                <a href="/store/category?category_id=2" class="col-3 pb-4">
-                                    <div class="row">
-                                        <div class="col icon-col d-flex justify-content-center">
-                                            <img src="/public/img/storeImage/icon001.png">
-                                        </div>
-                                    </div>
-                                    <div class="row pt-1 text-center">
-                                        <div class="col" style="font-size: 0.7em;">
-                                            타프
-                                        </div>
-                                    </div>
-                                </a>
-                                <a href="/store/category?category_id=3" class="col-3 pb-4">
-                                    <div class="row">
-                                        <div class="col icon-col d-flex justify-content-center">
-                                            <img src="/public/img/storeImage/icon002.png">
-                                        </div>
-                                    </div>
-                                    <div class="row pt-1 text-center">
-                                        <div class="col" style="font-size: 0.7em;">
-                                            캠핑가구
-                                        </div>
-                                    </div>
-                                </a>
-                                <a href="/store/category?category_id=4" class="col-3 pb-4">
-                                    <div class="row">
-                                        <div class="col icon-col d-flex justify-content-center">
-                                            <img src="/public/img/storeImage/icon007.png">
-                                        </div>
-                                    </div>
-                                    <div class="row pt-1 text-center">
-                                        <div class="col" style="font-size: 0.7em;">
-                                            취침용품
-                                        </div>
-                                    </div>
-                                </a>
-                                <a href="/store/category?category_id=5" class="col-3 pb-4">
-                                    <div class="row">
-                                        <div class="col icon-col d-flex justify-content-center">
-                                            <img src="/public/img/storeImage/icon003.png">
-                                        </div>
-                                    </div>
-                                    <div class="row pt-1 text-center">
-                                        <div class="col" style="font-size: 0.7em;">
-                                            주방용품
-                                        </div>
-                                    </div>
-                                </a>
-                                <a href="/store/category?category_id=6" class="col-3 pb-4">
-                                    <div class="row">
-                                        <div class="col icon-col d-flex justify-content-center">
-                                            <img src="/public/img/storeImage/icon004.png" style="font-size: 0.7em;">
-                                        </div>
-                                    </div>
-                                    <div class="row pt-1 text-center">
-                                        <div class="col" style="font-size: 0.7em;">
-                                            계절용품
-                                        </div>
-                                    </div>
-                                </a>
-                                <a href="/store/category?category_id=7" class="col-3 pb-4">
-                                    <div class="row">
-                                        <div class="col icon-col d-flex justify-content-center">
-                                            <img src="/public/img/storeImage/icon001.png">
-                                        </div>
-                                    </div>
-                                    <div class="row pt-1 text-center">
-                                        <div class="col" style="font-size: 0.7em;">
-                                            밀키트
-                                        </div>
-                                    </div>
-                                </a>
-                                <div class="col-3 pb-2">
-                                    <div class="row">
-                                        <div class="col icon-col d-flex justify-content-center">
-                                            <img src="/public/img/storeImage/icon012.png">
-                                        </div>
-                                    </div>
-                                    <div class="row pt-1 text-center">
-                                        <div class="col" style="font-size: 0.7em;">
-                                            베스트
-                                        </div>
-                                    </div>
+                    <div class="row px-4 pb-3">
+                        <div class="col p-0 f07 text-body-tertiary">
+                            가장 인기 있는 상품을 바로 확인해보세요!
+                        </div>
+                    </div>
+                    <div class="row px-4">
+                        <div class="col border-bottom p-0 overflow-x-auto scrollbar-none">
+                            <div class="row f08 flex-nowrap">
+                                <div class="col-auto pe-0 pb-2 fw-semibold active-category-border">
+                                    전체
+                                </div>
+                                <div class="col-auto  pe-0 pb-2 text-body-tertiary">
+                                    텐트
+                                </div>
+                                <div class="col-auto pe-0 pb-2 text-body-tertiary">
+                                    타프
+                                </div>
+                                <div class="col-auto pe-0 pb-2 text-body-tertiary">
+                                    캠핑가구
+                                </div>
+                                <div class="col-auto pe-0 pb-2 text-body-tertiary">
+                                    취침용품
+                                </div>
+                                <div class="col-auto pe-0 pb-2 text-body-tertiary">
+                                    주방용품
+                                </div>
+                                <div class="col-auto pe-0 pb-2 text-body-tertiary">
+                                    계절용품
+                                </div>
+                                <div class="col-auto pe-0 pb-2 text-body-tertiary">
+                                    밀키트
                                 </div>
                             </div>
                         </div>
                     </div>
+                    <div class="row px-4 pt-3 f08">
+                        <div class="col p-0">
+                            <!-- 상품 하나의 정보 -->
+                            <a href="/store" class="row pb-3">
+                                <div class="col-auto productCol pe-0">
+                                    <img src="/public/img/storeImage/productDetail1.jpg" class="border">
+                                </div>
+                                <div class="col">
+                                    <div class="row fw-semibold">
+                                        <div class="col">
+                                            BaseCampStore
+                                        </div>
+                                    </div>
+                                    <div class="row fw-light pt-1">
+                                        <div class="col">
+                                            BaseCamp Product
+                                        </div>
+                                    </div>
+                                    <div class="row fw-semibold pt-1">
+                                        <div class="col-auto pe-0">
+                                            110,600
+                                        </div>
+                                        <div class="col lightFont">
+                                            30%
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+                            <a href="/store" class="row pb-3">
+                                <div class="col-auto productCol pe-0">
+                                    <img src="/public/img/storeImage/productDetail1.jpg" class="border">
+                                </div>
+                                <div class="col">
+                                    <div class="row fw-semibold">
+                                        <div class="col">
+                                            BaseCampStore
+                                        </div>
+                                    </div>
+                                    <div class="row fw-light pt-1">
+                                        <div class="col">
+                                            BaseCamp Product
+                                        </div>
+                                    </div>
+                                    <div class="row fw-semibold pt-1">
+                                        <div class="col-auto pe-0">
+                                            110,600
+                                        </div>
+                                        <div class="col lightFont">
+                                            30%
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+                            <a href="/store" class="row pb-3">
+                                <div class="col-auto productCol pe-0">
+                                    <img src="/public/img/storeImage/productDetail1.jpg" class="border">
+                                </div>
+                                <div class="col">
+                                    <div class="row fw-semibold">
+                                        <div class="col">
+                                            BaseCampStore
+                                        </div>
+                                    </div>
+                                    <div class="row fw-light pt-1">
+                                        <div class="col">
+                                            BaseCamp Product
+                                        </div>
+                                    </div>
+                                    <div class="row fw-semibold pt-1">
+                                        <div class="col-auto pe-0">
+                                            110,600
+                                        </div>
+                                        <div class="col lightFont">
+                                            30%
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                    <a href="/store/bestProduct" class="row px-4 pb-3">
+                        <div class="col p-0 d-grid">
+                            <button class="f08 py-2 border rounded-0 bg-white">
+                                전체 베스트 보기
+                            </button>
+                        </div>
+                    </a>
                 </div>
             </div>
 
@@ -446,7 +512,7 @@
                     <!-- 모임 -->
                     <div class="row ps-3 px-1 py-3">
                         <div class="col fw-bold">
-                            <span style="font-size: 0.85em;">
+                            <span>
                                 오늘의 신규 모임
                             </span>
                         </div>
@@ -564,19 +630,19 @@
             <!-- 남현지 -->
             <div class="row">
                 <div class="col">
-                    <div class="row ps-3 pt-3">
-                        <div class="col fw-light">
-                            <span class="text-secondary" style="font-size: 0.7em;">주간 인플루언서에게 2000P 지급</span>
-                        </div>
-                    </div>
-                    <div class="row ps-3 px-1 pb-3">
+                    <div class="row ps-3 px-1 pt-3">
                         <div class="col-auto fw-bold">
-                            <span style="font-size: 0.8em;">
+                            <span>
                                 주간 베스트 인플루언서!
                             </span>
                         </div>
                         <div class="col d-flex align-items-end justify-content-end">
                             <a href="/insta/instaMainPage"><span class="text-secondary" style="font-size: 0.7rem">더보기<i class="bi bi-chevron-right"></i></span></a>
+                        </div>
+                    </div>
+                    <div class="row ps-3 pb-3">
+                        <div class="col f08">
+                            <span class="text-body-tertiary">주간 인플루언서에게 2000P 지급</span>
                         </div>
                     </div>
 
@@ -661,8 +727,8 @@
                 <div class="col">
                     <!-- 모임 -->
                     <div class="row ps-3 px-1 py-3">
-                        <div class="col fw-bold">
-                            <span style="font-size: 0.85em;">
+                        <div class="col-auto fw-bold">
+                            <span>
                                 오늘의 빈티지 상품 추천
                             </span>
                         </div>
