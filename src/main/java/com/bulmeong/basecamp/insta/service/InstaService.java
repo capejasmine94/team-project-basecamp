@@ -456,6 +456,25 @@ public class InstaService {
     public Map<String, Object> articleDtailPageSelectArticleInfo(int article_id){
         Map<String, Object> articleInfo = instaSqlMapper.articleDtailPageSelectUserProfileAndUserNicknameAndArticleContent(article_id);
 
+        Integer user_id = (Integer) articleInfo.get("user_id");
+
+        // 게시물 좋아요 여부
+        InstaArticleLikeDto instaArticleLikeDto = new InstaArticleLikeDto();
+        instaArticleLikeDto.setArticle_id(article_id);
+        instaArticleLikeDto.setUser_id(user_id);
+        int like = instaSqlMapper.countLikeByArticleIdAndUserId(instaArticleLikeDto); // 게시글 좋아요 상태 여부
+
+        articleInfo.put("like", like);
+
+        // 게시물 북마크 여부
+        // 북마크 유무
+        InstaBookmarkDto instaBookmarkDto = new InstaBookmarkDto();
+        instaBookmarkDto.setArticle_id(article_id);
+        instaBookmarkDto.setUser_id(user_id);
+        int bookmark = instaSqlMapper.confirmBookmarkByArticleIdAndUserId(instaBookmarkDto);
+
+        articleInfo.put("bookmark", bookmark);
+
         return articleInfo;
     }
 

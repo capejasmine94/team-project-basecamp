@@ -47,7 +47,7 @@
             </div>
 
             <!-- 게시글 출력 -->
-            <div class="row mt-5 pt-4">
+            <div class="row mt-5 pt-3">
                 <div class="col">
                     <div class="row">
                         <!-- 글 작성한 사람 프로필 이미지 -->
@@ -191,8 +191,114 @@
                         </div>
                     </div>
 
+                    <!-- 타임리프 사용해서 좋아요 누르면 메인 페이지로 리다이렉트ㅋㅋㅋㅋㅋ -->
+                    <div class="row align-items-center" style="height: 25px;">
+                        <!-- 좋아요 -->
+                        <form action="./pushArticleLikeDeleteProcess" method="get" class="col-auto px-0" th:if="${articleInfo.like >= 1}">
+                            <button class="btn d-flex align-items-center pb-0">
+                                <i class="fa-solid fa-heart likeColor"></i>
+                            </button>
 
+                            <input type="hidden" name="user_id" th:value="${articleInfo.user_id}">
+                            <input type="hidden" name="article_id" th:value="${articleInfo.article_id}">
+                        </form>
+                        <form action="./pushArticleLikeProcess" method="get" class="col-auto px-0" th:if="${articleInfo.like < 1}">
+                            <button class="btn d-flex align-items-center pb-0">
+                                <i id="heart" class="fa-regular fa-heart"></i>
+                            </button>
+
+                            <input type="hidden" name="user_id" th:value="${articleInfo.user_id}">
+                            <input type="hidden" name="article_id" th:value="${articleInfo.article_id}">
+                        </form>
+
+                        <div class="col px-0">
+                            <button class="btn pb-0 px-0 d-flex align-items-center" type="button">
+                                <i class="fa-regular fa-comment"></i>
+                                <!-- <input type="hidden" class="inputInstaArticleId" th:value="${instaArticleList.instaArticleDto.id}"> -->
+                            </button>
+        
+                            <!-- 오프 캠버스 실행 -->
+                        </div>
+        
+                        <!-- 북마크 -->
+                        <form action="./pushBookmarkProcess" method="get" class="col-auto text-end" th:if="${articleInfo.bookmark != 1}">
+                            <button type="submit" class="btn pe-0 pb-0 d-flex align-items-center">
+                                <i class="fa-regular fa-bookmark"></i>
+                            </button>
+        
+                            <input type="hidden" name="user_id" th:value="${articleInfo.user_id}">
+                            <input type="hidden" name="article_id" th:value="${articleInfo.article_id}">
+                        </form>
+                        <form action="./pushBookmarkDeleteProcess" method="get" class="col-auto text-end" th:unless="${articleInfo.bookmark != 1}">
+                            <button type="submit" class="btn pe-0 pb-0 d-flex align-items-center">
+                                <i class="fa-solid fa-bookmark"></i>
+                            </button>
+        
+                            <input type="hidden" name="user_id" th:value="${articleInfo.user_id}">
+                            <input type="hidden" name="article_id" th:value="${articleInfo.article_id}">
+                        </form>
+                    </div>
+
+
+                    <!-- 좋아요 수 -->
+                    <div class="row">
+                        <a class="col fontBasic link-dark link-offset-2 link-underline link-underline-opacity-0 " th:href="@{./pushLikeUserPage(article_id=${articleInfo.article_id}, user_id=${session.sessionUserInfo.id})}">
+                            <span>좋아요</span>
+                            <span th:text="${articleLikeCount}"></span><span>개</span>
+                        </a>
+                    </div>
+
+                    <!-- 글 작성한 사람 닉네임,
+                            게시글 작성일,
+                            내용 -->
+                    <div class="row justify-content-center">
+                        <a class="col-auto d-flex align-items-center pe-0 link-dark link-offset-2 link-underline link-underline-opacity-0"
+                                    th:href="${session.sessionUserInfo.id == articleInfo.s_user_id} ?
+                                                @{./instaMyPage(user_id=${articleInfo.user_id})} : @{./instaUserPage(user_id=${articleInfo.user_id})}">
+                            <span class="fontBasic" th:text="${articleInfo.insta_nickname}"></span>
+                        </a>
+                        <div class="col-auto fontBasic ps-1 pe-0">
+                            <span th:text="${T(com.bulmeong.basecamp.common.util.TimeUtil).timeAgo(articleInfo.created_at)}" style="color: rgb(162, 162, 162);"></span>                                             
+                        </div>
+                        <div class="col ps-1 fontBasic">
+                            <span th:utext="${articleInfo.content}">good day✨</span>   
+                        </div>
+                    </div>
                     
+                    <!-- 해시태그 -->
+                    <div class="row ps-2">
+                        <div class="col-auto fontBasic pe-0 ps-1 lightFont" 
+                             th:each="hashtag : ${instaTagDtoList}">
+                            <span th:utext="${hashtag.text}">해시태그</span>
+                        </div>
+                    </div>
+
+                    <!-- 댓글 -->
+                    <div class="row">
+                        <div class="col">
+                            <button class="btn p-0 comment-button" type="button">
+                                <span class="fontBasic" style="color: rgb(162, 162, 162);">댓글
+                                    <span th:text="${articleCommentCount}"></span>개 모두 보기
+                                </span>
+                                <!-- <input type="hidden" class="inputInstaArticleId" th:value="${instaArticleList.instaArticleDto.id}"> -->
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-auto pe-0">
+                            <!-- 로그인한 유저 프로필 -->
+                            <img th:src="|/images/${articleInfo.insta_profile_img}|" class="img-fluid rounded-circle commentImage">
+                        </div>
+                        <div class="col ps-1">
+                            <button class="btn p-0" type="button" style="line-height: 1px;">
+                                <span class="fontBasic" style="color: rgb(162, 162, 162);">댓글 달기...</span>
+                                <!-- <input type="hidden" class="inputInstaArticleId" th:value="${instaArticleList.instaArticleDto.id}"> -->
+                            </button>
+
+                            <!-- 오프 캠버스 실행 -->
+                        </div>
+                    </div>
 
                 </div>
             </div>
