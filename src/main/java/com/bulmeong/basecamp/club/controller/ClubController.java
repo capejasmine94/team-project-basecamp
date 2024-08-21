@@ -126,6 +126,7 @@ public class ClubController {
 
         List<Map<String, Object>> clubMemberDataList = clubService.findClubMemerDataList(id);
         model.addAttribute("clubMemberDataList", clubMemberDataList);
+        System.out.println(clubMemberDataList);
 
         ClubMemberDto clubMemberDto = new ClubMemberDto();
         

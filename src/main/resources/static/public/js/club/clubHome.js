@@ -6,9 +6,13 @@ document.addEventListener('DOMContentLoaded', () => {
     registerBtnEvent();
     getMeetingList();
 
-    document.getElementById('register-club-btn').addEventListener('click', () => {
-        getMeetingList();
-    });
+    const btn = document.getElementById('register-club-btn');
+    if (btn !== null) {
+        btn.addEventListener('click', () => {
+            getMeetingList();
+        });
+    }
+    
 });
 
 function registerBtnEvent() {
