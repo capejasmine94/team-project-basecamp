@@ -18,55 +18,72 @@ const llmSettingValues = {
 
 // 왼쪽 요약 페이지 세팅값(em)
 const llmLeftSummarySettingValues = {
-    left: 1,                                    // auto 옵션 만들어야 되나
+    left: 3,                                    // auto 옵션 만들어야 되나
     top: 3,
     backgroundColor: "#FFF",
-    width: 23,
-    height: 40,
+    width: 25,
+    height: 53,
 };
 
 // 오른쪽 요약 페이지 세팅값(em)
 const llmRightSummarySettingValues = {
-    right: 3,                                    // auto 옵션 만들어야 되나
-    top: 3,
-    backgroundColor: "#FFF",
-    width: 15,
-    height: 40,
+    right: 0,                                    // auto 옵션 만들어야 되나
+    top: 0,
+    // backgroundColor: "#FFF",
+    width: 43,
+    height: 50,
 };
 
 
 const leftSummaryHtml = `
 <div class="container">
-    <div class="row justify-content-center">
-        <img class="col-auto mt-5 pt-5 img-fluid" src="/public/img/common/배캠.png" style="width:80%; height:80%">
-    </div>
-    <div class="row mt-4">
-         <div class="col text-center">Basecamp는 <br> 모바일 환경에 최적화 되어있습니다.</div>
-    </div>
-    <div class="row justify-content-center my-3">
-        <img class="col-auto img-fluid" src="/public/img/common/qrCode.png" style="width: 50%; height: 50%">
-    </div>
-     <div class="row">
-        <div class="col text-center">모바일 환경으로 로그인하기</div>
-    </div>
-    <div class="row mt-5">
-        <a href="/seller/login" class="col text-center lightFont fw-semibold">판매자 페이지</a>
-    </div>
-    <div class="row pt-3">
-        <div class="col new-fs-85 text-center">
-            <span class="text-secondary">비밀번호 : 1234</span>
+    <div class="row align-items-center">
+        <div class="col">
+             <div class="row justify-content-center">
+                <img class="col-auto mt-5 pt-5 img-fluid" src="/public/img/common/배캠.png" style="width:80%; height:80%">
+            </div>
+            <div class="row mt-4">
+                <div class="col text-center">Basecamp는 <br> 모바일 환경에 최적화 되어있습니다.</div>
+            </div>
+            <div class="row justify-content-center my-3">
+                <img class="col-auto img-fluid" src="/public/img/common/qrCode.png" style="width: 50%; height: 50%">
+            </div>
+            <div class="row">
+                <div class="col text-center">모바일 환경으로 로그인하기</div>
+            </div>
+            <div class="row mt-5">
+                <a href="/seller/login" class="col text-center lightFont fw-semibold">판매자 페이지</a>
+            </div>
+            <div class="row pt-3">
+                <div class="col new-fs-85 text-center">
+                    <span class="text-secondary">비밀번호 : 1234</span>
+                </div>
+            </div>
+             <div class="row pt-4">
+                <div class="col fw-semibold text-center">
+                    캠핑장 쓰레기투기 방지 캠페인
+                </div>
+            </div>
+            <a class="row mt-2 justify-content-center"  href="/camp/unity">
+                <div class="col-auto">
+                    <img class="img-fluid" src="/unity/CampgameTitle.png" style="height:11em;">
+                </div>
+            </a>
+             <div class="row mt-2">
+                <div class="col text-center">
+                    ↑캠프파이어 게임 플레이하기↑
+                </div>
+            </div>
         </div>
     </div>
-
 </div>
 `;
 
 const rightSummaryHtml = `
 <div class="row">
-<div class="col fw-bold">오른쪽 제목... 블라블라...</div>
-</div>
-<div class="row">
-<div class="col">레이아웃 테스트</div>
+    <div class="col">
+     
+    </div>
 </div>
 `;
 

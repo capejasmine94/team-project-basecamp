@@ -71,6 +71,8 @@ public class UserController {
 
     @GetMapping("logoutProcess")
     public String logoutProcess(HttpSession session) {
+        if(utils.getSession("sessionUserInfo") ==null)
+            return "redirect:/user/login";
         session.invalidate();
         return "redirect:/";
     }
