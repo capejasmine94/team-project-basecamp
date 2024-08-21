@@ -60,15 +60,14 @@ public class KakaoPayService {
         requestBody.put("cid", "TC0ONETIME");
         requestBody.put("partner_order_id", "캠핑장예약");
         requestBody.put("partner_user_id", orderDto.getCustomer_name());
-        System.out.println("뭐가 문젠데");
         System.out.println(campsiteMapper.pointById(orderDto.getPoint_id()));
         requestBody.put("item_name", campsiteMapper.pointById(orderDto.getPoint_id()).getName());
         requestBody.put("quantity", "1");
-        requestBody.put("total_amount", "1");
-        requestBody.put("tax_free_amount", "1");
-        requestBody.put("approval_url", "http://localhost:8888/camp/pay/completed");
-        requestBody.put("fail_url", "http://localhost:8888/camp");
-        requestBody.put("cancel_url", "http://localhost:8888/camp");
+        requestBody.put("total_amount", orderDto.getTotal_prise());
+        requestBody.put("tax_free_amount", "0");
+        requestBody.put("approval_url", "https://basecamp.null-pointer-exception.com/camp/pay/completed");
+        requestBody.put("fail_url", "https://basecamp.null-pointer-exception.com/camp");
+        requestBody.put("cancel_url", "https://basecamp.null-pointer-exception.com/camp");
 
         HttpEntity<Map<String, Object>> requestEntity = new HttpEntity<>(requestBody, headers);
 

@@ -494,7 +494,8 @@
         <!-- 예약번호로 예약 -->
         <select id="getOrderByResvCode" resultType="com.bulmeong.basecamp.camp.dto.CampsiteOrderDto">
             SELECT * from bc_campsite_order
-            where reservation_code = #{reservation_code}
+            where reservation_code = #{reservation_code} or
+            customer_phone = #{reservation_code} 
         </select>
         
         <!-- 고유번호로 예약 -->
