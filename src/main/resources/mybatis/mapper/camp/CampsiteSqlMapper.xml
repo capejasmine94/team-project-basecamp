@@ -381,7 +381,7 @@
             FROM bc_campsite_area_point pt
             inner join bc_campsite_order odr on
             odr.point_id = pt.id
-            WHERE id = #{id} 
+            WHERE pt.id = #{id} 
             AND (odr.start_date &lt;= #{end_date} AND odr.end_date >= #{start_date})
         </select>
 

@@ -114,7 +114,7 @@ public class CampsiteUserController {
         CampsiteOrderDto campsiteOrderDto = utils.getSession("orderDto");
         String[] carNumbers = utils.getSession("carNumbers");
         int useMileage = utils.getSession("useMileage");
-        int number = utils.getSession("number");
+        int number = utils.getSession("pointNumber");
 
         if (campsiteOrderDto != null) {
             campsiteOrderDto.setReservation_code(utils.randomCode(12));

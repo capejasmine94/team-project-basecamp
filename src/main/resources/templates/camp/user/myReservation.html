@@ -152,10 +152,11 @@
                     <div class="col-auto">예약 내역이 존재하지 않습니다.</div>
                 </div>
                 <div class="row py-5"></div>
-                <div class="row py-5"></div>
+                
             </div>
           
         </div>
+        <div class="row py-5"></div>
         <div class="row py-2 bg-dark-subtle text-white text-center f09">
             <form id="logoutForm" action="/user/logoutProcess" class="col fw-bold border-end">
                 <button class="border-0 bg-transparent text-white fw-bold">
@@ -421,6 +422,7 @@
                 }
                 reservList.classList.remove('d-none');
             }
+            addColonMoneyInput();
         });
     }
 
