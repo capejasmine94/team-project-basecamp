@@ -987,7 +987,7 @@
 
     <select id="selectFiveProductList" resultType="com.bulmeong.basecamp.store.dto.StoreProductDto">
         select * from store_product
-        order by id desc
+        order by id asc
         limit 5
     </select>
     <select id="selectTenProductListDesc" resultType="com.bulmeong.basecamp.store.dto.StoreProductDto">
