@@ -510,8 +510,25 @@
                 bial.id desc
     </select>
     
-    
+    <!-- 게시물 상세글 페이지 -->
+    <!-- 유저프로필, 닉네임, 게시글 내용 -->
+    <select id="articleDtailPageSelectUserProfileAndUserNicknameAndArticleContent" resultType="java.util.HashMap">
+        select insta_profile_img,
+               insta_nickname,
+               content,
+               biui.id as user_id,
+               biui.user_id as s_user_id,
+               bia.id as article_id
+        from bc_insta_article bia
+        inner join bc_insta_user_info biui on biui.id = bia.user_id
+        where bia.id = #{article_id}
+    </select>
 
+    <select id="selectTagTextByArticleId" resultType="com.bulmeong.basecamp.insta.dto.InstaTagDto">
+        select bit2.* from bc_insta_article_tag biat
+        inner join bc_insta_tag bit2 on bit2.id = biat.tag_id
+        where article_id = #{article_id}
+    </select>
 </mapper>
 
 

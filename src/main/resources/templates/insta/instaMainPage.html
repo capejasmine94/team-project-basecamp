@@ -14,6 +14,9 @@
 
     <!-- 이걸로 레이아웃 확인하셈 -->
     <script src="/public/js/lockLikeMobile.js"></script>
+
+    <!-- 파비콘 -->
+    <link rel="shotcut icon" href="/public/img/common/campFire.ico" type="image/x-icon">
     
     <title>BASECAMP</title>
 
@@ -70,208 +73,7 @@
         </div>
     </div>
 
-    <!-- canvas 시작 -->
-    <div class="row g-0 offcanvas offcanvas-end custom-offcanvas-width custom-offcanvas-background" id="offcanvasRight" tabindex="-1" style="width: 17rem;">
-        <div class="col">
-            <!-- 로그인 & 비로그인 -->
-            <div class="row offcanvas-header pt-4 pb-0" style="position: relative;">
-                <div class="col-auto pe-1">
-                    <div class="row">
-                        <div class="col">
-                            <a href="/user/login" th:if="${session.sessionUserInfo == null}">
-                                <span style="font-size: 1.3em;" class="fw-bold">로그인</span>
-                                <span class="material-symbols-outlined" style="font-size: 1.1em;">
-                                    arrow_forward_ios
-                                </span>
-                            </a>
-                            <span th:text="${session.sessionUserInfo.nickname}" th:if="${session.sessionUserInfo != null}"
-                                style="font-size: 1.3em;" class="fw-bold">닉네임</span>
-                            <span th:if="${session.sessionUserInfo != null}"> 님</span>
-                        </div>
-                    </div>
-                </div>
-                <!-- 마이페이지 -->
-                <a href="/user/myPage" class="col ps-0" th:if="${session.sessionUserInfo != null}">
-                    <span class="material-symbols-outlined pt-2" style="font-size: 1.1em;">
-                        arrow_forward_ios
-                    </span>
-                </a>
 
-                <div class="col text-end position-relative ps-0" th:if="${session.sessionUserInfo != null}">
-                    <span class="fw-light" style="font-size: 1.2em;">
-                        <i class="fa-regular fa-bell"></i>
-                    </span><span><i class="bi bi-dot position-absolute king" style="color: rgb(233, 40, 40); font-size: 1.5em;"></i></span>
-                </div>
-            </div>
-
-            <!-- 이메일 -->
-            <div class="row">
-                <div class="col-auto" style="padding-left: 10%;">
-                    <span th:text="${session.sessionUserInfo.email}" th:if="${session.sessionUserInfo != null}" style="font-size: 0.75em; color: rgb(83, 83, 83);">
-
-                    </span>
-                </div>
-            </div>
-
-            <!-- 포인트(마일리지) -->
-            <div class="row pt-2" th:if="${session.sessionUserInfo != null}">
-                <div class="col-auto pe-0" style="font-size: 0.8em; padding-left: 10%;">
-                    <span style="color: rgb(168, 168, 168);">포인트</span>
-                </div>
-                <div class="col-auto ps-1" style="font-size: 0.8em;">
-                    <span class="fw-bold lightFont" th:text="${session.sessionUserInfo.mileage}" th:if="${session.sessionUserInfo != null}">
-                    </span>
-                </div>
-            </div>
-
-            <div class="row mt-3">
-                <div class="col">
-                    <!-- 임시 배너 바꾸셈 -->
-                    <img src="/public/img/common/배너저쩌고.jpg" class="img-fluid">
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="col order-list-scroll">
-                    <!-- 내용 -->
-                    <div class="row offcanvas-body m-0 pt-0">
-                        <div class="col" style="font-size: 0.9em;">
-                            <!-- 캠핑장 -->
-                            <a href="/camp/main" class="row align-end pt-4">
-                                <!-- <div class="col-auto pe-0">
-                                    <span class="fs-1 material-symbols-outlined">camping</span>
-                                </div> -->
-                                <div class="col ps-0">
-                                    <span>캠핑장</span>
-                                </div>
-                            </a>
-                            <!-- 캠핑카 -->
-                            <a href="/campingcar/main" class="row align-end pt-4">
-                                <!-- <div class="col-auto pe-0">
-                                    <span class="fs-1 material-symbols-outlined">car_repair</span>
-                                </div> -->
-                                <div class="col ps-0">
-                                    <span>캠핑카</span>
-                                </div>
-                            </a>
-                            <!-- 상점 -->
-                            <a href="/store" class="row align-end pt-4">
-                                <!-- <div class="col-auto pe-0">
-                                    <span class="material-symbols-outlined">storefront</span>
-                                </div> -->
-                                <div class="col ps-0">
-                                    <span>상점</span>
-                                </div>
-                            </a>
-                            <!-- 중고거래 -->
-                            <a href="/secondhandProduct/mainPage" class="row align-end pt-4">
-                                <!-- <div class="col-auto pe-0">
-                                    <span class="material-symbols-outlined">settings_accessibility</span>
-                                </div> -->
-                                <div class="col ps-0">
-                                    <span>중고거래</span>
-                                </div>
-                            </a>
-                            <!-- 인스타 -->
-                            <!-- <a href="#" class="row align-end pt-4">
-                                <div class="col ps-0">
-                                    <span>인스타그램</span>
-                                </div>
-                            </a> -->
-                            <!-- 모임 -->
-                            <a href="/club/main" class="row align-end pt-4">
-                                <!-- <div class="col-auto pe-0">
-                                    <span class="material-symbols-outlined">settings_accessibility</span>
-                                </div> -->
-                                <div class="col ps-0">
-                                    <span>소모임</span>
-                                </div>
-                            </a>                        
-                        </div>
-                    </div>
-
-                    <!-- 캠프스타그램 -->
-                    <div class="row border-top m-0">
-                        <a href="/insta/instaMainPage" class="col-5 pt-3 pb-3" style="font-size: 0.9em;">
-                            <!-- My -->
-                            <!-- <div class="col-auto pe-0">
-                                <span class="material-symbols-outlined">settings_accessibility</span>
-                            </div> -->
-                            <img src="/public/img/instaImage/campstagram.png" class="img-fluid">
-                        </a>
-                    </div>
-
-                    <!-- 유튜브, 트위터, 페이스북 로고 -->
-                    <div class="row border-top m-0 pt-3 pb-3" style="padding-left: 12px;">
-                        <div class="col-auto">
-                            <div class="row pe-2">
-                                <div class="col-auto rounded-circle border border-dark d-flex align-items-center justify-content-center" style="aspect-ratio: 1/1; width: 28px;">
-                                    <i class="fa-brands fa-youtube"></i>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-auto">
-                            <div class="row pe-2">
-                                <div class="col-auto rounded-circle border border-dark d-flex align-items-center justify-content-center" style="aspect-ratio: 1/1; width: 28px;">
-                                    <i class="fa-brands fa-x-twitter"></i>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-auto">
-                            <div class="row pe-2">
-                                <div class="col-auto rounded-circle border border-dark d-flex align-items-center justify-content-center" style="aspect-ratio: 1/1; width: 28px;">
-                                    <i class="fa-brands fa-facebook"></i>
-                                </div>
-                            </div>
-                        </div>
-
-                    </div>
-
-                    <div class="row m-0 pb-3 border-top border-bottom" style="font-size: 0.8em; color: rgb(168, 168, 168);">
-                        <div class="col">
-                            <div class="row pt-3">
-                                <div class="col">
-                                    <span>고객센터</span>
-                                </div>
-                            </div>
-                            <div class="row pt-3">
-                                <div class="col">
-                                    <span>공지사항</span>
-                                </div>
-                            </div>
-                            <div class="row pt-3">
-                                <div class="col">
-                                    <span>이용약관 / 개인정보 처리방침</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- 로그아웃 -->
-                    <div class="row pt-4 pb-5 m-0 justify-content-center">
-                        <a class="col-auto d-flex align-items-center" th:if="${session.sessionUserInfo != null}" href="/user/logoutProcess">
-                            <!-- <button th:if="${session.sessionUserInfo == null}"
-                                    type="button" class="btn-close-custom" data-bs-dismiss="offcanvas">
-                            </button> -->
-                            <span class="material-symbols-outlined" style="font-size: 1.2em; color: rgb(168, 168, 168);">
-                                logout
-                            </span>
-                            <span style="font-size: 0.8em; color: rgb(168, 168, 168);">로그아웃</span>
-                        </a>
-                    </div>
-
-                    <div class="row mb-5 py-2">
-                        <div class="col">
-    
-                        </div>
-                    </div>
-                    
-                </div>
-            </div>
-
-        </div>
-    </div>
-    <!-- canvas 끝 -->
 
     <!-- 스토리 -->
     <!-- overflow-x: auto; 이 클래스가 적용된 요소는 내용이 요소의 크기를 초과할 때, x축 방향으로 스크롤할 수 있게 됩니다. -->
@@ -841,6 +643,209 @@
 
     </div>
 </div>
+
+<!-- canvas 시작 -->
+<div class="row g-0 offcanvas offcanvas-end custom-offcanvas-width custom-offcanvas-background" id="offcanvasRight" tabindex="-1" style="width: 17rem;">
+    <div class="col">
+        <!-- 로그인 & 비로그인 -->
+        <div class="row offcanvas-header pt-4 pb-0" style="position: relative;">
+            <div class="col-auto pe-1">
+                <div class="row">
+                    <div class="col">
+                        <a href="/user/login" th:if="${session.sessionUserInfo == null}">
+                            <span style="font-size: 1.3em;" class="fw-bold">로그인</span>
+                            <span class="material-symbols-outlined" style="font-size: 1.1em;">
+                                arrow_forward_ios
+                            </span>
+                        </a>
+                        <span th:text="${session.sessionUserInfo.nickname}" th:if="${session.sessionUserInfo != null}"
+                            style="font-size: 1.3em;" class="fw-bold">닉네임</span>
+                        <span th:if="${session.sessionUserInfo != null}"> 님</span>
+                    </div>
+                </div>
+            </div>
+            <!-- 마이페이지 -->
+            <a href="/user/myPage" class="col ps-0" th:if="${session.sessionUserInfo != null}">
+                <span class="material-symbols-outlined pt-2" style="font-size: 1.1em;">
+                    arrow_forward_ios
+                </span>
+            </a>
+
+            <div class="col text-end position-relative ps-0" th:if="${session.sessionUserInfo != null}">
+                <span class="fw-light" style="font-size: 1.2em;">
+                    <i class="fa-regular fa-bell"></i>
+                </span><span><i class="bi bi-dot position-absolute king" style="color: rgb(233, 40, 40); font-size: 1.5em;"></i></span>
+            </div>
+        </div>
+
+        <!-- 이메일 -->
+        <div class="row">
+            <div class="col-auto" style="padding-left: 10%;">
+                <span th:text="${session.sessionUserInfo.email}" th:if="${session.sessionUserInfo != null}" style="font-size: 0.75em; color: rgb(83, 83, 83);">
+
+                </span>
+            </div>
+        </div>
+
+        <!-- 포인트(마일리지) -->
+        <div class="row pt-2" th:if="${session.sessionUserInfo != null}">
+            <div class="col-auto pe-0" style="font-size: 0.8em; padding-left: 10%;">
+                <span style="color: rgb(168, 168, 168);">포인트</span>
+            </div>
+            <div class="col-auto ps-1" style="font-size: 0.8em;">
+                <span class="fw-bold lightFont" th:text="${session.sessionUserInfo.mileage}" th:if="${session.sessionUserInfo != null}">
+                </span>
+            </div>
+        </div>
+
+        <div class="row mt-3">
+            <div class="col">
+                <!-- 임시 배너 바꾸셈 -->
+                <img src="/public/img/common/배너저쩌고.jpg" class="img-fluid">
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col order-list-scroll">
+                <!-- 내용 -->
+                <div class="row offcanvas-body m-0 pt-0">
+                    <div class="col" style="font-size: 0.9em;">
+                        <!-- 캠핑장 -->
+                        <a href="/camp/main" class="row align-end pt-4">
+                            <!-- <div class="col-auto pe-0">
+                                <span class="fs-1 material-symbols-outlined">camping</span>
+                            </div> -->
+                            <div class="col ps-0">
+                                <span>캠핑장</span>
+                            </div>
+                        </a>
+                        <!-- 캠핑카 -->
+                        <a href="/campingcar/main" class="row align-end pt-4">
+                            <!-- <div class="col-auto pe-0">
+                                <span class="fs-1 material-symbols-outlined">car_repair</span>
+                            </div> -->
+                            <div class="col ps-0">
+                                <span>캠핑카</span>
+                            </div>
+                        </a>
+                        <!-- 상점 -->
+                        <a href="/store" class="row align-end pt-4">
+                            <!-- <div class="col-auto pe-0">
+                                <span class="material-symbols-outlined">storefront</span>
+                            </div> -->
+                            <div class="col ps-0">
+                                <span>상점</span>
+                            </div>
+                        </a>
+                        <!-- 중고거래 -->
+                        <a href="/secondhandProduct/mainPage" class="row align-end pt-4">
+                            <!-- <div class="col-auto pe-0">
+                                <span class="material-symbols-outlined">settings_accessibility</span>
+                            </div> -->
+                            <div class="col ps-0">
+                                <span>중고거래</span>
+                            </div>
+                        </a>
+                        <!-- 인스타 -->
+                        <!-- <a href="#" class="row align-end pt-4">
+                            <div class="col ps-0">
+                                <span>인스타그램</span>
+                            </div>
+                        </a> -->
+                        <!-- 모임 -->
+                        <a href="/club/main" class="row align-end pt-4">
+                            <!-- <div class="col-auto pe-0">
+                                <span class="material-symbols-outlined">settings_accessibility</span>
+                            </div> -->
+                            <div class="col ps-0">
+                                <span>소모임</span>
+                            </div>
+                        </a>                        
+                    </div>
+                </div>
+
+                <!-- 캠프스타그램 -->
+                <div class="row border-top m-0">
+                    <a href="/insta/instaMainPage" class="col-5 pt-3 pb-3" style="font-size: 0.9em;">
+                        <!-- My -->
+                        <!-- <div class="col-auto pe-0">
+                            <span class="material-symbols-outlined">settings_accessibility</span>
+                        </div> -->
+                        <img src="/public/img/instaImage/campstagram.png" class="img-fluid">
+                    </a>
+                </div>
+
+                <!-- 유튜브, 트위터, 페이스북 로고 -->
+                <div class="row border-top m-0 pt-3 pb-3" style="padding-left: 12px;">
+                    <div class="col-auto">
+                        <div class="row pe-2">
+                            <div class="col-auto rounded-circle border border-dark d-flex align-items-center justify-content-center" style="aspect-ratio: 1/1; width: 28px;">
+                                <i class="fa-brands fa-youtube"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-auto">
+                        <div class="row pe-2">
+                            <div class="col-auto rounded-circle border border-dark d-flex align-items-center justify-content-center" style="aspect-ratio: 1/1; width: 28px;">
+                                <i class="fa-brands fa-x-twitter"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-auto">
+                        <div class="row pe-2">
+                            <div class="col-auto rounded-circle border border-dark d-flex align-items-center justify-content-center" style="aspect-ratio: 1/1; width: 28px;">
+                                <i class="fa-brands fa-facebook"></i>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="row m-0 pb-3 border-top border-bottom" style="font-size: 0.8em; color: rgb(168, 168, 168);">
+                    <div class="col">
+                        <div class="row pt-3">
+                            <div class="col">
+                                <span>고객센터</span>
+                            </div>
+                        </div>
+                        <div class="row pt-3">
+                            <div class="col">
+                                <span>공지사항</span>
+                            </div>
+                        </div>
+                        <div class="row pt-3">
+                            <div class="col">
+                                <span>이용약관 / 개인정보 처리방침</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 로그아웃 -->
+                <div class="row pt-4 pb-5 m-0 justify-content-center">
+                    <a class="col-auto d-flex align-items-center" th:if="${session.sessionUserInfo != null}" href="/user/logoutProcess">
+                        <!-- <button th:if="${session.sessionUserInfo == null}"
+                                type="button" class="btn-close-custom" data-bs-dismiss="offcanvas">
+                        </button> -->
+                        <span class="material-symbols-outlined" style="font-size: 1.2em; color: rgb(168, 168, 168);">
+                            logout
+                        </span>
+                        <span style="font-size: 0.8em; color: rgb(168, 168, 168);">로그아웃</span>
+                    </a>
+                </div>
+
+                <div class="row mb-5 py-2">
+                    <div class="col">
+
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+
+    </div>
+</div>
+<!-- canvas 끝 -->
 
 
 <!-- 댓글 오프캠버스 -->

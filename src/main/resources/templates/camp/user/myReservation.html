@@ -2,6 +2,7 @@
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>BASECAMP</title>
+    <link rel="shotcut icon" href="/public/img/common/campFire.ico" type="image/x-icon">
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet">
@@ -142,14 +143,105 @@
 
         <div class="row">
             <div class="col" id="reservationList">
-
             </div>
         </div>
 
-        <div id="emptyReservation" class="row mt-3 justify-content-center new-fs-9 fw-semibold text-secondary">
-            <div class="col-auto">예약 내역이 존재하지 않습니다.</div>
+        <div id="emptyReservation" class="row mt-3 new-fs-9 fw-semibold text-secondary">
+            <div class="col">
+                <div class="row justify-content-center align-items-center">
+                    <div class="col-auto">예약 내역이 존재하지 않습니다.</div>
+                </div>
+                <div class="row py-5"></div>
+                <div class="row py-5"></div>
+            </div>
+          
         </div>
-        <div class="row my-5 py-3"></div>
+        <div class="row py-2 bg-dark-subtle text-white text-center f09">
+            <form id="logoutForm" action="/user/logoutProcess" class="col fw-bold border-end">
+                <button class="border-0 bg-transparent text-white fw-bold">
+                    <span th:if="${session.sessionUserInfo != null}">로그아웃</span>
+                    <span th:if="${session.sessionUserInfo == null}">로그인</span>
+                </button>
+            </form>
+            <div class="col fw-bold border-end">
+                고객센터
+            </div>
+            <div class="col fw-bold">
+                NEWS
+            </div>
+        </div>
+        <div class="row py-4 px-3 bg-body-secondary text-secondary">
+            <div class="col">
+                <div class="row pb-2">
+                    <div class="col-auto p-0">
+                        <span class="material-symbols-outlined f20">
+                            camping
+                        </span>
+                    </div>
+                    <div class="col p-0 fw-bold fs-3">
+                        <span>&nbsp;BASECAMP</span>
+                    </div>
+                </div>
+                <div class="row pb-3 border-bottom border-2">
+                    <div class="col p-0 f08">
+                        BASECAMP는 통신판매 중개자로서 통신판매의 당사자가 아니며 상품의 예약, 이용 및 환불 등과 관련한 의무와 책임은 각 판매자에게 있습니다.
+                    </div>
+                </div>
+
+                <div class="row pt-3 py-3 border-bottom border-2">
+                    <div class="col-auto p-0">
+                        <button class="btn btn-sm bg-dark-subtle text-white fw-bold f08 d-flex align-items-center">
+                            <span class="material-symbols-outlined f12">
+                                phone_in_talk
+                            </span>
+                            <span>&nbsp;고객센터</span>
+                        </button>
+                    </div>
+                    <div class="col-auto">
+                        <button class="btn btn-sm bg-dark-subtle text-white fw-bold f08">
+                            카카오 1:1 문의
+                        </button>
+                    </div>
+                    <div class="col p-0 f08">
+                        <div class="row">
+                            <div class="col">
+                                <span>평일</span> : 10:00 ~ 17:00
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <span>점심</span> : 12:00 ~ 13:00
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                * 주말 공휴일 휴무
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row pt-3 align-items-center">
+                    <div class="col-auto me-2 bg-dark-subtle rounded-circle d-flex align-items-center" style="aspect-ratio: 1/1;">
+                        <i class="bi bi-google-play"></i>
+                    </div>
+                    <div class="col-auto me-2 bg-dark-subtle rounded-circle d-flex align-items-center" style="aspect-ratio: 1/1;">
+                        <i class="bi bi-youtube"></i>
+                    </div>
+                    <div class="col-auto me-2 bg-dark-subtle rounded-circle d-flex align-items-center" style="aspect-ratio: 1/1;">
+                        <i class="bi bi-instagram"></i>
+                    </div>
+                    <div class="col-auto pe-0 f08">
+                        이용약관
+                    </div>
+                    <div class="col f08">
+                        개인정보처리방침
+                    </div>
+                </div>
+                <div class="row py-5"></div>
+                <div class="row py-2"></div>
+            </div>
+        </div>
     </div>
 </div>
 <div th:replace="camp/campNavi::bottomNaviOffCanvas"></div>
