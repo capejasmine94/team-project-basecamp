@@ -152,7 +152,7 @@ document.addEventListener('DOMContentLoaded', function() {
                    const upcomingMeetingUserDtoWrapper = document.querySelector('#join-member-profile-template .wrapper');
                    const upcomingMeetingUserDto = upcomingMeetingUserDtoWrapper.cloneNode(true);
 
-                   if(userDto.profile_image === 'default') {
+                   if(userDto.profile_image === 'default_profile') {
                     upcomingMeetingUserDto.querySelector('.join-member-profile').src= `/public/img/common/default_profile.png`;  
                    } else {
                     upcomingMeetingUserDto.querySelector('.join-member-profile').src= `/images/${userDto.profile_image}`;

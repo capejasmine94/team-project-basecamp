@@ -38,7 +38,7 @@
                                     <div class="row">
                                         <div class="col-4 align-self-center">
                                             <div>
-                                                <!-- <img class="rounded" th:src="|/images/${clubDto.main_image}|" alt="모임 이미지 1" style="width: 100%; height: 5em; object-fit: cover;"> -->
+                                                <img class="rounded" th:src="|/images/${clubDto.main_image}|" alt="모임 이미지 1" style="width: 100%; height: 5em; object-fit: cover;">
                                             </div>
                                         </div>
 
@@ -55,7 +55,7 @@
                                             </div>
                                             <div class="row">
                                                 <div class="col text-secondary" style="font-size: 0.8em;">
-                                                    <span>지역</span> | 멤버 20 | 정모 <span class="text-danger">3</span>
+                                                    <span>지역</span> | 정원 <span th:text="${clubDto.capacity}"></span> | 정모 <span class="text-danger">3</span>
                                                 </div>
                                             </div>
                                         </div>
