@@ -164,16 +164,22 @@ function moveToMoblieWrapper(mobileWrapper){
 
 function lockFixedDiv(targetElement, width) {
 
-    if(isFixed(targetElement)
+
+
+
+    if((isFixed(targetElement)
         || isModal(targetElement)
-        || isVerticalOffcanvas(targetElement)
+        || isVerticalOffcanvas(targetElement))
+        && !(targetElement.classList.contains("noTouch") || targetElement.classList.contains("noModal"))
     ){
+
         targetElement.style.width = width;
         // targetElement.style.margin = "0 auto"; // 민지가 찾아냄... 난 이게 왜 문제인지 전혀 모르겠다, 현영 - 오히려 이게 있는게 더 잘 맞음
 
         // 민지 - 모달에 left 속성 원래 있나??
         targetElement.style.left = "auto";
         targetElement.style.right = "auto";
+
     }
 
     // 재귀

@@ -182,5 +182,13 @@ public class ProductService {
     public int checkSellerReviews(int seller_user_id, int product_id) {
         return productSqlMapper.checkSellerReviews(seller_user_id, product_id);
     }
+
+    // 구매자 확인
+    public void insertBuyerConfirmation(BuyerConfirmationDto buyerConfirmationDto) {
+        productSqlMapper.insertBuyerConfirmation(buyerConfirmationDto);
+    }
+    public List<BuyerConfirmationProductDto> selectBuyerConfirmationProductList(int buyer_user_id) {
+        return productSqlMapper.selectBuyerConfirmationProductList(buyer_user_id);
+    }
 }
 

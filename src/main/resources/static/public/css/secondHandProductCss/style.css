@@ -161,7 +161,7 @@ body {
 
 /* 메인페이지 상품 이미지 크기*/
 .mainPostImg-custom {
-    width: 6.5rem;
+    width: 100%;
     height: 6.5rem;
     border: 0.05rem solid #868e96;
     border-radius: 0.5rem;

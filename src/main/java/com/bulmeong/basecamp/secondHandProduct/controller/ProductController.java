@@ -6,6 +6,7 @@ import com.bulmeong.basecamp.secondHandProduct.service.LocationService;
 import com.bulmeong.basecamp.secondHandProduct.service.PolygonService;
 import com.bulmeong.basecamp.secondHandProduct.service.ProductService;
 import com.bulmeong.basecamp.user.dto.UserDto;
+import com.bulmeong.basecamp.user.service.UserService;
 import jakarta.servlet.http.HttpSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,6 +18,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.*;
+
 
 @Controller
 @RequestMapping("secondhandProduct")
@@ -173,7 +175,8 @@ public class ProductController {
         secondhandProductDto.setUpdated_at(new Date());
         productService.updateProduct(secondhandProductDto, imageDtoList);
 
-        return "redirect:/secondhandProduct/mainPage";
+        //return "redirect:/secondhandProduct/mainPage";
+        return "redirect:https://basecamp.null-pointer-exception.com/secondhandProduct/mainPage";
     }
 
 
@@ -231,7 +234,8 @@ public class ProductController {
         secondhandProductDto.setUser_id(userId);
         productService.insertProduct(secondhandProductDto, imageDtoList);
 
-        return "redirect:/secondhandProduct/mainPage";
+        //return "redirect:/secondhandProduct/mainPage";
+        return "redirect:https://basecamp.null-pointer-exception.com/secondhandProduct/mainPage";
     }
 
     @GetMapping("postDetailsPage")
@@ -352,7 +356,12 @@ public class ProductController {
     }
 
     @GetMapping("purchaseHistoryPage")
-    public String purchaseHistoryPage() {
+    public String purchaseHistoryPage(HttpSession session,
+                                      Model model) {
+
+        UserDto sessionUserInfo = (UserDto) session.getAttribute("sessionUserInfo");
+        List<BuyerConfirmationProductDto> selectBuyerConfirmationProductList = productService.selectBuyerConfirmationProductList(sessionUserInfo.getId());
+        model.addAttribute("selectBuyerConfirmationProductList", selectBuyerConfirmationProductList);
 
         return "secondhandProduct/purchaseHistoryPage";
     }
@@ -501,9 +510,13 @@ public class ProductController {
     public String myReviewPage(Model model,
                                @RequestParam("buyer_user_id") int buyer_user_id) {
 
+        List<LikeReviewDto> likeReviewDtoList = productService.selectLikeReviewList();
+        model.addAttribute("likeReviewDtoList", likeReviewDtoList);
         List<LikeTransactionReviewListDto> myLikeReviewList = productService.myLikeReviewList(buyer_user_id);
         model.addAttribute("myLikeReviewList", myLikeReviewList);
 
+        List<UnlikeReviewDto> unlikeReviewDtoList = productService.selectUnlikeReviewList();
+        model.addAttribute("unlikeReviewDtoList", unlikeReviewDtoList);
         List<UnLikeTransactionReviewListDto> myUnlikeReviewList = productService.myUnlikeReviewList(buyer_user_id);
         model.addAttribute("myUnlikeReviewList", myUnlikeReviewList);
 
@@ -515,6 +528,7 @@ public class ProductController {
     public String insertReview(HttpSession session,
                                @RequestParam("buyer_user_id") int buyer_user_id,
                                @RequestParam("product_id") int product_id,
+                               @RequestParam("nickname") String nickname,
                                @RequestParam(name = "like_review", required = false) int[] like_review,
                                @RequestParam(name = "unlike_review", required = false) int[] unlike_review) {
 
@@ -547,7 +561,15 @@ public class ProductController {
             }
         }
 
-        return "redirect:/secondhandProduct/mainPage";
+        // 구매자 확인
+        BuyerConfirmationDto dto = new BuyerConfirmationDto();
+        dto.setProduct_id(product_id);
+        dto.setBuyer_user_id(buyer_user_id);
+        dto.setSeller_user_id(sessionUserInfo.getId());
+        productService.insertBuyerConfirmation(dto);
+
+//        return "redirect:/secondhandProduct/mainPage";
+        return "redirect:https://basecamp.null-pointer-exception.com/secondhandProduct/mainPage";
 
     }
 

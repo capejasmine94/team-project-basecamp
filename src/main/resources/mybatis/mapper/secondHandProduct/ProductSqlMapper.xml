@@ -239,11 +239,11 @@
     </select>
     <!-- 후기보내기 -> 좋아요 선택지 -->
     <select id="selectLikeReviewList" resultType="com.bulmeong.basecamp.secondHandProduct.dto.LikeReviewDto">
-        SELECT * FROM bc_secondhand_like_review
+        SELECT * FROM bc_secondhand_like_review ORDER BY like_review_id ASC
     </select>
     <!-- 후기보내기 -> 싫어요 선택지 -->
     <select id="selectUnlikeReviewList" resultType="com.bulmeong.basecamp.secondHandProduct.dto.UnlikeReviewDto">
-        SELECT * FROM bc_secondhand_unlike_review
+        SELECT * FROM bc_secondhand_unlike_review ORDER BY unlike_review_id ASC
     </select>
 
     <!-- 좋아요 거래후기 저장 -->
@@ -267,6 +267,7 @@
         JOIN bc_secondhand_like_review lr ON lr.like_review_id = tr.like_review_id
         WHERE tr.buyer_user_id = #{buyer_user_id}
         GROUP BY lr.like_review_id
+        ORDER BY lr.like_review_id
     </select>
 
     <!-- 싫어요 거래후기 저장 -->
@@ -287,9 +288,10 @@
     <select id="myUnlikeReviewList" resultType="com.bulmeong.basecamp.secondHandProduct.dto.UnLikeTransactionReviewListDto">
         SELECT tr.*, ur.unlike_review_content , ur.unlike_count
         FROM bc_secondhand_product_unlike_transaction_review tr
-                 JOIN bc_secondhand_unlike_review ur ON ur.unlike_review_id = tr.unlike_review_id
+        JOIN bc_secondhand_unlike_review ur ON ur.unlike_review_id = tr.unlike_review_id
         WHERE tr.buyer_user_id = #{buyer_user_id}
         GROUP BY ur.unlike_review_id
+        ORDER BY ur.unlike_review_id
     </select>
     <!-- 유저 닉네임 받아서 id 가져오기 -->
     <select id="getBuyerUserId" resultType="int">
@@ -312,6 +314,30 @@
              WHERE seller_user_id = #{seller_user_id}
                AND product_id = #{product_id})
                 AS total_reviews
+    </select>
+    <!-- 구매자 확인 -->
+    <insert id="insertBuyerConfirmation">
+        INSERT INTO bc_secondhand_buyer_confirmation
+            (product_id, buyer_user_id, seller_user_id, review_confirmation)
+        values
+            (#{product_id}, #{buyer_user_id}, #{seller_user_id}, 1)
+    </insert>
+
+    <!-- 구매자 구매 상품 -->
+    <select id="selectBuyerConfirmationProductList" resultType="com.bulmeong.basecamp.secondHandProduct.dto.BuyerConfirmationProductDto">
+        SELECT
+            p.*,
+            c.category_name,
+            COALESCE(COUNT(w.product_id), 0) AS wish_list_count,
+            poly.polygon_name,
+            bc.buyer_user_id
+        FROM bc_secondhand_buyer_confirmation bc
+        JOIN bc_secondhand_product p ON bc.product_id = p.product_id
+        JOIN bc_secondhand_product_category c ON c.category_id = p.category_id
+        LEFT JOIN bc_secondhand_polygon poly ON poly.polygon_id = p.polygon_id
+        LEFT JOIN bc_secondhand_product_wish_list w ON w.product_id = p.product_id
+        WHERE bc.buyer_user_id = #{buyer_user_id}
+        GROUP BY p.product_id
     </select>
 
 
