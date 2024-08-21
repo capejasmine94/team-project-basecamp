@@ -844,10 +844,6 @@
             </div>
         </div>
     </div>
-    
-        
-        
-        
         <!-- <div class="section">
             <h5 class="section-title">이용 조건 선택</h5>
             <div class="info-item">
@@ -888,7 +884,7 @@
                     <a class="btn btn-dark btn-lg fw-bold" 
                     th:if="${session.sessionUserInfo != null}"
                     th:href="@{/campingcar/reservationInfo(id=${campingcarDetails.campingcarDto.id})}" 
-                    style="color:#C6ED6F;">
+                    style="background-color: #28323C;color: #fff;">
                         <div class="new-fs-85">캠핑카 바로 예약</div>
                         <span class="new-fs-9" th:text="${#numbers.formatInteger(campingcarDetails.campingcarDto.rental_fee_weekdays, 3, 'COMMA') + '원'}">
                     </a>
