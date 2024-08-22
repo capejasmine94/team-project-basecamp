@@ -570,104 +570,51 @@
                         </div>
                     </div>
 
-                    <div class="row ms-1 me-1">
-                        <div class="col overflow-x-auto" style="scrollbar-width: none;">
-                            <div class="row flex-nowrap">
+                    <div class="row ms-1 me-1 scroll-list-box overflow-x-auto best-items-scroll">
+                        <div class="col ps-3 ">
 
-                                <!-- 하나의 모임 -->
-                                <div class="col-7" style="margin-left: 12px; margin-right: 12px;">
-                                    <div class="row border rounded-top border-bottom-0" style="height: 8em; overflow: hidden">
-                                        <a href="/club/main" class="col px-0 pb-0 mx-0">
-                                            <img src="/public/img/common/소모임.png" style="width: 100%; object-fit: cover;" class="img-fluid fixed-image-size">>
-                                        </a>
-                                    </div>
-
-                                    <div class="row border shadow-sm rounded-bottom border-top-0" style="height: 9em;">
-                                        <div class="col">
-                                            <div class="row pt-3">
-                                                <a href="/club/main" class="col fw-medium text-truncate" style="font-size: 0.9em;">
-                                                    <span>소모임명</span>
-                                                </a>
-                                            </div>
-                                            <div class="row py-2">
-                                                <a href="/club/main" class="col ellipsis-line-two text-secondary" style="font-size: 0.8em;">
-                                                    <span >소모임 설명 소모임 설명 소모임 설명 소모임 설명 소모임 설명 소모임 설명</span>
-                                                </a>
-                                            </div>
-                                            <div class="row pt-2">
-                                                <div class="col">
-                                                    <a  href="/club/main" class="btn btn-outline-secondary py-1 d-grid" style="font-size: 0.8em;">
-                                                        둘러보기
-                                                    </a>
-                                                </div>
+                            <div class="row py-2 flex-nowrap">
+                                <div class="col-7" th:each="clubDto : ${clubDtoList}">
+                                    <a th:href="@{/club/home(id=${clubDto.id})}">
+                                        <div class="row border me-1 rounded-top border-bottom-0" style="height: 8em; overflow: hidden">
+                                            <div class="col px-0 pb-0 mx-0">
+                                                <img th:src="|/images/${clubDto.main_image}|" style="width: 100%; object-fit: cover;" class="card-img-top img-fluid rounded-top fixed-image-size" alt="...">
                                             </div>
                                         </div>
-                                    </div>
-                                </div>
+                                    </a>
 
-                                <!-- 하나의 모임 -->
-                                <div class="col-7" style="margin-right: 12px;">
-                                    <div class="row border rounded-top border-bottom-0" style="height: 8em; overflow: hidden">
-                                        <a href="/club/main" class="col px-0 pb-0 mx-0">
-                                            <img src="/public/img/common/소모임.png" style="width: 100%; object-fit: cover;" class="img-fluid fixed-image-size">>
-                                        </a>
-                                    </div>
+                                    <a th:href="@{/club/home(id=${clubDto.id})}">
+                                        <div class="row border me-1 shadow-sm rounded-bottom border-top-0" style="height: 9em;">
+                                            <div class="col">
+                                                <div class="row pt-1">
+                                                    <!-- <div class="col text-center fw-semi-bold text-truncate" style="font-size: 0.9em;">
+                                                        <span th:text="${clubDto.name}">소모임명</span>
+                                                    </div> -->
 
-                                    <div class="row border shadow-sm rounded-bottom border-top-0" style="height: 9em;">
-                                        <div class="col">
-                                            <div class="row pt-3">
-                                                <a href="/club/main" class="col fw-medium text-truncate" style="font-size: 0.9em;">
-                                                    <span>소모임명</span>
-                                                </a>
-                                            </div>
-                                            <div class="row py-2">
-                                                <a href="/club/main" class="col ellipsis-line-two text-secondary" style="font-size: 0.8em;">
-                                                    <span >소모임 설명 소모임 설명 소모임 설명 소모임 설명 소모임 설명 소모임 설명</span>
-                                                </a>
-                                            </div>
-                                            <div class="row pt-2">
-                                                <div class="col">
-                                                    <a  href="/club/main" class="btn btn-outline-secondary py-1 d-grid" style="font-size: 0.8em;">
-                                                        둘러보기
-                                                    </a>
+                                                    <div class="col fw-medium text-truncate" style="font-size: 0.9em;">
+                                                        <span th:text="${clubDto.name}">소모임명</span>
+                                                    </div>
                                                 </div>
+                                                <div class="row py-2">
+                                                    <div class="col ellipsis-line-two text-secondary" style="font-size: 0.8em;">
+                                                        <span th:text="${clubDto.description}">소모임 설명</span>
+                                                    </div>
+                                                </div>
+                                                <div class="row pt-2">
+                                                    <div class="col">
+                                                        <a th:href="@{/club/home(id=${clubDto.id})}" class="btn btn-outline-secondary col-auto py-1 d-grid" style="font-size: 0.8em;">
+                                                            둘러보기
+                                                        </a>
+                                                    </div>
+                                                </div>
+
                                             </div>
                                         </div>
-                                    </div>
+                                    </a>
+
                                 </div>
-
-                                <!-- 하나의 모임 -->
-                                <div class="col-7" style="margin-right: 12px;">
-                                    <div class="row border rounded-top border-bottom-0" style="height: 8em; overflow: hidden">
-                                        <a href="/club/main" class="col px-0 pb-0 mx-0">
-                                            <img src="/public/img/common/소모임.png" style="width: 100%; object-fit: cover;" class="img-fluid fixed-image-size">>
-                                        </a>
-                                    </div>
-
-                                    <div class="row border shadow-sm rounded-bottom border-top-0" style="height: 9em;">
-                                        <div class="col">
-                                            <div class="row pt-3">
-                                                <a href="/club/main" class="col fw-medium text-truncate" style="font-size: 0.9em;">
-                                                    <span>소모임명</span>
-                                                </a>
-                                            </div>
-                                            <div class="row py-2">
-                                                <a href="/club/main" class="col ellipsis-line-two text-secondary" style="font-size: 0.8em;">
-                                                    <span >소모임 설명 소모임 설명 소모임 설명 소모임 설명 소모임 설명 소모임 설명</span>
-                                                </a>
-                                            </div>
-                                            <div class="row pt-2">
-                                                <div class="col">
-                                                    <a  href="/club/main" class="btn btn-outline-secondary py-1 d-grid" style="font-size: 0.8em;">
-                                                        둘러보기
-                                                    </a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
                             </div>
+
                         </div>
                     </div>
                 </div>

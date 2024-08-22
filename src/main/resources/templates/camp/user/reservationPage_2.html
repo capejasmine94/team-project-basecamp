@@ -25,6 +25,28 @@
           'GRAD' 0,
           'opsz' 24
         }
+        input[type="checkbox"].darkBg {
+            background-color: #fff; /* 기본 배경색 */
+        }
+        /* 체크박스에 .darkBg 클래스가 적용되었을 때 */
+        input[type="checkbox"].darkBg:checked,
+        input[type="checkbox"].darkBg:hover {
+            background-color: #28323C;
+            border-color: #28323C;
+        }
+
+        /* 체크박스가 체크되었을 때 */
+        input[type="checkbox"].darkBg:checked::before {
+            background-color: #28323C;
+            border-color: #28323C;
+        }
+
+        /* 선택(포커스)되었을 때 */
+        input[type="checkbox"].darkBg:focus {
+            outline: none;
+            box-shadow: 0 0 0 2px #71777e;
+        }
+
         .topNaviBasecamp {
             background-color: white;
         }
@@ -318,7 +340,7 @@
                             </div>
                             <div class="row mt-3 ms-1">
                                 <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" value="T" id="agreeTerms">
+                                    <input class="form-check-input rounded-0 darkBg" type="checkbox" value="T" id="agreeTerms">
                                     <label class="form-check-label" for="agreeTerms">
                                         약관에 동의합니다.
                                     </label>

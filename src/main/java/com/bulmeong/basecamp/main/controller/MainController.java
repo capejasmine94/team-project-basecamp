@@ -1,5 +1,8 @@
 package com.bulmeong.basecamp.main.controller;
 
+import java.util.*;
+import java.util.stream.Collectors;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -14,6 +17,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.client.RestTemplate;
 
+import com.bulmeong.basecamp.club.dto.ClubDto;
+import com.bulmeong.basecamp.club.service.ClubService;
+import com.bulmeong.basecamp.common.util.Utils;
 import com.bulmeong.basecamp.main.model.OAuthToken;
 import com.bulmeong.basecamp.user.dto.UserDto;
 import com.bulmeong.basecamp.user.service.UserService;
@@ -29,13 +35,20 @@ public class MainController {
 
     @Autowired
     private UserService userService;
-
+    @Autowired
+    private ClubService clubService;
+    @Autowired
+    private Utils utils;
     @GetMapping("")
     public String basecampPublicPage(HttpSession session,
                                      Model model) {
         UserDto sessionUserInfo = (UserDto) session.getAttribute("sessionUserInfo");
         model.addAttribute("sessionUserInfo", sessionUserInfo);
-
+        List<ClubDto> clubDtoList = clubService.findClubDtoList();
+        List<ClubDto> limitedClubDtoList = clubDtoList.stream()
+        .limit(10)
+        .collect(Collectors.toList());
+        utils.setModel("clubDtoList", limitedClubDtoList);
         return "common/basecampPublicPage";
     }
 
