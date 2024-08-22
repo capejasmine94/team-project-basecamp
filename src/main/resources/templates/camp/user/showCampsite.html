@@ -402,7 +402,8 @@
                 </div>
                 <div class="row py-1">
                     <div class="col" th:if="${isAlreadyOrdered}">
-                        <div class="row mt-2 border-bottom pb-2" th:unless="${isAlreadyReviewed}">
+                          <div class="row mt-2 border-bottom pb-2">
+                        <!-- <div class="row mt-2 border-bottom pb-2" th:unless="${isAlreadyReviewed}"> -->
                             <div class="col">
                                 <div class="row">
                                     <div class="col new-fs-8 text-secondary">리뷰를 작성하실 수 있습니다!</div>
@@ -434,7 +435,7 @@
                             <div class="col">
                                 <div class="row align-iteps-center">
                                     <div class="col-auto">
-                                       <img class="img-fluid rounded-circle border" th:src="|/images/${review.profile_image}|" alt="" style="width: 2em; height: 2em;">
+                                       <img class="img-fluid rounded-circle border" th:src="|/images/${session.sessionUserInfo.profile_image}|" alt="" style="width: 2em; height: 2em;">
                                     </div>
                                     <div class="col mt-1 fw-semibold" th:text="${review.nickname}">
                                         사용자 1
