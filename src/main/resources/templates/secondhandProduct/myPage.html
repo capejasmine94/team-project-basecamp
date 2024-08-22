@@ -170,6 +170,7 @@
     <div class="row mx-2 py-3 border-bottom align-items-center">
         <div class="col-auto pe-0 profile-custom">
             <img src="/public/img/secondHandProductImage/profile.png" alt="Profile Image">
+<!--            <img th:src="|/images/${session.sessionUserInfo.profile_image}|" alt="Profile Image">-->
         </div>
         <div class="col d-flex align-items-center fw-semibold" style="font-size: 1.2rem">
             <span th:text="${session.sessionUserInfo.nickname}" th:unless="${session.sessionUserInfo == null}"></span>
