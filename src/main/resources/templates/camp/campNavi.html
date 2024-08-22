@@ -286,7 +286,7 @@
             </div>
             <div id="popupCategory-content" class="modal-body col">
                 <div class="row categoryList">
-                    <div class="col-auto p-0" th:each="category:${session.category.camp}">
+                    <div class="col-auto pe-0" th:each="category:${session.category.camp}">
                         <input type="checkbox" class="btn-check" th:id="${category.id}" name="selectCategory" autocomplete="off">
                         <label class="btn btn-outline-primary rounded-5 m-1" th:for="${category.id}">
                             <i th:class="${category.image} + ' ' + 'text-secondary'" style="width: 1.5em; height: 1.5em;"></i>

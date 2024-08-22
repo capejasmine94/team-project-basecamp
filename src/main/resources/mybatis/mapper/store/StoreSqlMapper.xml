@@ -221,6 +221,7 @@
         <if test="subcategory_id != null">
             and ps.id = #{subcategory_id}
         </if>
+        order by sp.id desc
     </select>
 
     <select id="countProductDtoByCategoryId" resultType="int">
@@ -320,6 +321,7 @@
         inner join order_product op on op.id = pr.order_product_id 
         inner join bc_user bu on bu.id = pr.user_id 
         where op.product_id = #{product_id}
+        order by pr.id desc
     </select>
 
     <select id="countOrderProductByOptionValueIds" parameterType="map" resultType="int">

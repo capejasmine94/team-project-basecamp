@@ -100,7 +100,10 @@
                                         </div>
                                         <div class="row">
                                             <div id="refundList" class="col">
-                                                <div class="row py-1 border-bottom new-fs-9 justify-content-between">
+                                                <div class="row mt-2">
+                                                    <div class="col new-fs-9 text-secondary text-center">최근 취소된 예약이 없습니다.</div>
+                                                </div>
+                                                <!-- <div class="row py-1 border-bottom new-fs-9 justify-content-between">
                                                     <div class="col text-start ms-3">2024.08.11</div>
                                                     <div class="col text-center">120,000</div>
                                                     <div class="col text-end me-3">A(한가족)</div>
@@ -110,7 +113,7 @@
                                                     <div class="col text-start ms-3">2024.08.14</div>
                                                     <div class="col text-center">48,000</div>
                                                     <div class="col text-end me-3">C(온누리)</div>
-                                                </div>
+                                                </div> -->
                                             </div>
                                         </div>
                                     </div>
@@ -159,7 +162,7 @@
                                                     <div class="col text-start ms-1" th:text="${review.nickname}">김불편</div>
                                                  </div>
                                                 <div class="row mt-2">
-                                                    <div class="col text-start ms-1 new-fs-8" th:text="${review.content}">12만원이라는 큰 돈을 주고 가기에는 너무 별로다</div>
+                                                    <div class="col text-start ms-1 new-fs-8" th:utext="${review.content}">12만원이라는 큰 돈을 주고 가기에는 너무 별로다</div>
                                                 </div>
                                                 <div class="row mt-1 pb-2">
                                                     <div class="col text-end text-secondary ms-1 new-fs-7" th:text="${#dates.format(review.created_at, 'YYYY-MM-dd')}">12일 전 작성</div>

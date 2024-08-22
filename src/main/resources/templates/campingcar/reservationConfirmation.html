@@ -13,9 +13,10 @@
     <!-- Google Material Icons -->
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet">
     <link href="/public/css/common.css" rel="stylesheet">
+    <script src="/public/js/lockLikeMobile.js"></script>
+    <link rel="shotcut icon" href="/public/img/common/campFire.ico" type="image/x-icon">
     <style>
         body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
             margin: 0;
             padding: 0;
         }
@@ -72,64 +73,34 @@
 
     </style>
 </head>
-<body class="text-dark" style="background-color: #DBF3FF;">
-    <div class="container">
-        <!-- 상단 상태 바 -->
-        <div class="row fixed-top bg-white p-2">
-            <div class="col d-flex justify-content-start align-items-center">
-                <div class="d-flex align-items-center">
-                    <i class="bi bi-chevron-left" onclick="history.back();" style="cursor: pointer;"></i>
-                </div>
-                <div class="fs-6 ps-2 fw-semibold">캠핑카 예약 정보 확인</div>
-            </div>
-        </div>
-    </div>
+<body class="text-dark">
     <div class="container mt-3 pt-3">
-        <div class="row">
+        <div class="row text-center py-5">
             <div class="col">
-                <div class="row pt-5 pb-5">
-                    <div class="col mb-0 fs-5 fw-semibold d-flex justify-content-center align-items-center" style="max-width: 20rem; white-space: normal;">
-                        <span>캠핑카 대여 예약이 정상적으로 접수되었습니다.</span>
+                <div class="row justify-content-center pt-5">
+                    <div class="col-auto ps-3 rounded-circle d-flex align-items-center justify-content-center" style="background-color:#00B8FF;width: 85px; height: 80px;">
+                        <i class="fa-solid fa-check fa-2xl" style="color: white; padding: 20px;"></i></i>
                     </div>
                 </div>
-                <!-- 차량 정보 -->
-                <div class="row p-3 d-flex justify-content-start">
-                    <div class="col section">
-                        <div class="row py-2">
-                            <div class="col">
-                                <span class="fw-semibold">예약번호 : </span><span class="fw-normal" th:text="${reservationConfirm.id}"></span>
-                            </div>
-                        </div>
-                        <div class="row py-2">
-                            <div class="col">
-                                <span class="fw-semibold">예약자 : </span><span class="fw-normal" th:text="${reservationConfirm.rentUserNickname}"></span>
-                            </div>
-                        </div>
-                        <div class="row py-2">
-                            <div class="col">
-                                <span class="fw-semibold">대여 날짜 : </span><span class="fw-normal" th:text="${#dates.format(reservationConfirm.reservationStart_date, 'yyyy.MM.dd a HH:mm')}"></span>
-                            </div>
-                        </div>
-                        <div class="row py-2">
-                            <div class="col">
-                                <span class="fw-semibold">반납 날짜 : </span><span class="fw-normal" th:text="${#dates.format(reservationConfirm.reservationEnd_date, 'yyyy.MM.dd a HH:mm')}"></span>
-                            </div>
-                        </div>
-                        <div class="row py-2">
-                            <div class="col">
-                                <span class="fw-semibold">대여 가격 : </span><span class="fw-normal" th:text="${reservationConfirm.rental_fee_weekdays}"></span><span class="fw-normal" th:text="${reservationConfirm.rental_fee_weekend}"></span>
-                            </div>
-                        </div>
-                        <div class="row py-2">
-                            <div class="col">
-                                <span class="fw-semibold">차고지 주소 : </span><span class="fw-normal" th:text="${reservationConfirm.garage_address}"></span>
-                            </div>
-                        </div>
+                <div class="row pt-4">
+                    <div class="col fw-semibold pt-3">예약이 접수되었습니다.</div>
+                </div>
+                <div class="row">
+                    <div class="col pt-2">
+                        <div class="new-fs-8" style="color: #7C7B7B;">베이스캠프 캠핑카 예약은 렌트카 회사의 승인 후 확정됩니다.! </div>
+                        <div class="new-fs-8" style="color: #7C7B7B;">예약 내역은 입력하신 이메일로 전송하였습니다.</div>
                     </div>
                 </div>
-
             </div>
-        </div>    
+        </div> 
+        <div class="row text-center py-5 px-5">
+            <div class="col border py-3 d-flex justify-content-center align-items-center">
+                <a href="/campingcar/rentUseageHistory">내 예약내역보기</a>
+            </div>
+            <div class="col border d-flex justify-content-center align-items-center">
+                <a href="/campingcar/main" class="fw-medium" style="color: #00B8FF;">홈으로 가기</a>
+            </div>
+        </div>       
     </div>
 
     <!-- 부트스트랩 JS -->

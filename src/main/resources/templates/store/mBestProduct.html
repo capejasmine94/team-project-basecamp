@@ -396,7 +396,14 @@
 
         // 카테고리 전체
         function getAllCategoryBestProduct(categoryId){
-            console.log(categoryId)
+            const subcategoryList = document.querySelectorAll("#subCategoryContainer .subcategoryCol");
+            for(subcategoryCol of subcategoryList){
+                subcategoryCol.classList.remove("fw-semibold")
+                subcategoryCol.classList.add("text-body-tertiary")
+            }
+            const allSubcategory = document.querySelector("#subCategoryContainer .allSubcategory")
+            allSubcategory.classList.add("fw-semibold")
+            allSubcategory.classList.remove("text-body-tertiary")
             
             const url = `/api/store/selectNewTenProductDataListByCategoryId?category_id=${categoryId}`
             fetch(url)

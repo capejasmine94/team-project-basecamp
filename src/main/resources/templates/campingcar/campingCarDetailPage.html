@@ -19,7 +19,7 @@
         body {
             margin: 0;
             padding: 0;
-            padding-bottom: 100px;
+
         }
         .tab-content {
             width: 100%;
@@ -207,7 +207,7 @@
             font-size: 0.9em;
         }
         /* 하단 예약하기 버튼 고정 */
-        .fixed-bottom-button {
+        /* .fixed-bottom-button {
             position: fixed;
             bottom: 0;
             left: 0;
@@ -215,7 +215,7 @@
             z-index: 1050;
             background-color: white;
             border-top: 1px solid #e0e0e0;
-        }        
+        }         */
     </style>
 </head>
 <body>
@@ -844,10 +844,6 @@
             </div>
         </div>
     </div>
-    
-        
-        
-        
         <!-- <div class="section">
             <h5 class="section-title">이용 조건 선택</h5>
             <div class="info-item">
@@ -882,13 +878,13 @@
         <div class="final-price">
             월 256,500원
         </div> -->
-        <div class="container overflow-x-hidden border-top fixed-bottom-button">
-            <div class="row pt-3 pb-5">
+        <div class="container overflow-x-hidden border-top">
+            <div class="row pt-3 pb-3">
                 <div class="col d-grid">
                     <a class="btn btn-dark btn-lg fw-bold" 
                     th:if="${session.sessionUserInfo != null}"
                     th:href="@{/campingcar/reservationInfo(id=${campingcarDetails.campingcarDto.id})}" 
-                    style="color:#C6ED6F;">
+                    style="background-color: #28323C;color: #fff;">
                         <div class="new-fs-85">캠핑카 바로 예약</div>
                         <span class="new-fs-9" th:text="${#numbers.formatInteger(campingcarDetails.campingcarDto.rental_fee_weekdays, 3, 'COMMA') + '원'}">
                     </a>
@@ -989,6 +985,7 @@
                 </div>
             </div>
         </div>
+
         
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <!-- 부트스트랩 JS -->

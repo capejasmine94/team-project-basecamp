@@ -2,6 +2,7 @@ package com.bulmeong.basecamp.camp.controller;
 
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -13,6 +14,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.bulmeong.basecamp.camp.dto.CampsiteOrderDto;
 import com.bulmeong.basecamp.camp.dto.CampsiteReviewDto;
 import com.bulmeong.basecamp.camp.service.CampsiteService;
+import com.bulmeong.basecamp.club.dto.ClubDto;
+import com.bulmeong.basecamp.club.service.ClubService;
 import com.bulmeong.basecamp.common.util.Utils;
 
 
@@ -23,6 +26,8 @@ public class CampsiteUserController {
     private CampsiteService service;
     @Autowired
     private Utils utils;
+    @Autowired
+    private ClubService clubService;
 
     @RequestMapping("/main")
     public String mainPage() {
@@ -106,6 +111,11 @@ public class CampsiteUserController {
 
     @RequestMapping("/reservationComplete")
     public String reservationComplete() {
+        List<ClubDto> clubDtoList = clubService.findClubDtoList();
+        List<ClubDto> limitedClubDtoList = clubDtoList.stream()
+        .limit(10)
+        .collect(Collectors.toList());
+        utils.setModel("clubDtoList", limitedClubDtoList);
         return "camp/user/reservationComplete";
     }
 

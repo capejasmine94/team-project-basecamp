@@ -142,6 +142,7 @@ public class CampsiteSellerController {
         @RequestParam("campCategory") String[] categories) {
         // 판매자 데이터 업데이트
         campsiteDto.setOpentime(opentime);
+        
         service.updateCamp(campsiteDto, mapImage, mainImages, categories);
         return "redirect:./campsite";      
     }
