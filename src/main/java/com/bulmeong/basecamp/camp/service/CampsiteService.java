@@ -589,6 +589,7 @@ public class CampsiteService {
 
     // 리뷰 작성
     public void registerReview(CampsiteReviewDto campsiteReviewDto) {
+        campsiteReviewDto.setContent(utils.SpaceWordForHtml(campsiteReviewDto.getContent()));
         campsiteSqlMapper.registerReview(campsiteReviewDto);
     }
 

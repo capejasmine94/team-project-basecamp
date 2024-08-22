@@ -141,6 +141,7 @@ public class Utils {
     }
 
     public String SpaceWordForHtml(String originalText){
+        originalText = originalText.replace("<br>", "");
         originalText = originalText.replace("\n", "<br>");
         return originalText;
     }

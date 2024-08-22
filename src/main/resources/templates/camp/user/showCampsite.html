@@ -413,7 +413,7 @@
                                         <input type="hidden" name="user_id" th:value="${session.sessionUserInfo.id}">
                                         <input type="hidden" name="campsite_id" th:value="${session.campsiteUser.dto.id}">
                                         <div class="col">
-                                            <textarea class="form-control" name="content" id="write_review" row="3"></textarea>
+                                            <textarea class="form-control" name="content" id="write_review" row="6"></textarea>
                                         </div>
                                 </div>
                                 <div class="row justify-content-end pb-2">
@@ -434,14 +434,14 @@
                             <div class="col">
                                 <div class="row align-iteps-center">
                                     <div class="col-auto">
-                                       <img class="img-fluid rounded-circle border" th:src="${review.profile_image}" alt="" style="width: 2em; height: 2em;">
+                                       <img class="img-fluid rounded-circle border" th:src="|/images/${review.profile_image}|" alt="" style="width: 2em; height: 2em;">
                                     </div>
                                     <div class="col mt-1 fw-semibold" th:text="${review.nickname}">
                                         사용자 1
                                     </div>
                                 </div>
                                 <div class="row mt-2">
-                                    <div class="col" th:text="${review.content}">리뷰 내용</div>
+                                    <div class="col" th:utext="${review.content}">리뷰 내용</div>
                                 </div>
                                 <div class="row mt-3">
                                     <div class="col new-fs-75 text-end text-secondary" th:text="${#dates.format(review.created_at, 'YYYY-MM-dd')}">리뷰 작성일</div>
