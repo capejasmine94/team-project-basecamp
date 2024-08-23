@@ -70,4 +70,8 @@ public interface CampingcarSqlMapper {
     public int reviewByCountPerson (int id);
     // 해당 차량의 각 별점 마다 인원수
     public List<Map<String,Object>> ratingGroupBycar(int id);
+
+    public List<Map<String, Object>> getMyLikeList(int rentUserPk);
+
+    public List<Map<String, Object>> getSearchResultList(Map<String, Object> map);
 }

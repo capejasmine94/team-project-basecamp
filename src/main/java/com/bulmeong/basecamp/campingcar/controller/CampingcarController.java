@@ -3,9 +3,11 @@ package com.bulmeong.basecamp.campingcar.controller;
 import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -247,6 +249,41 @@ public class CampingcarController {
         }
         String newName = todayPath + filename;
         return newName;
+    }
+
+    @RequestMapping("maintest")
+    public String maintest() {
+        return "/campingcar/maintest";
+    }
+
+    @RequestMapping("myLike")
+    public String myLike(HttpSession session,Model model){
+        UserDto sessionUserInfo = (UserDto)session.getAttribute("sessionUserInfo");
+        int rentUserPk = campingcarService.getExistingByRentUserId(sessionUserInfo.getId());
+        
+        List<Map<String,Object>> MyLikeList = campingcarService.getMyLikeList(rentUserPk);
+        
+        model.addAttribute("MyLikeList", MyLikeList);
+
+        return "campingcar/myLike";
+    }
+
+    @RequestMapping("searchResultsPage")
+    public String searchResultsPage(@RequestParam(name = "location", required = false) String location,
+    @RequestParam(name = "carTypes", required = false) List<String> carTypes,
+    @RequestParam(name = "rentDate", required = false) String rentDate,
+    @RequestParam(name = "returnDate", required = false) String returnDate,
+    Model model) {
+        Map<String,Object> map = new HashMap<>();
+        map.put("location", location);
+        map.put("carTypes", carTypes);
+        map.put("rentDate", rentDate);
+        map.put("returnDate", returnDate);
+
+        List<Map<String,Object>> searchResultList = campingcarService.getSearchResultList(map);
+        model.addAttribute("searchResultList", searchResultList);
+        
+        return "campingcar/searchResultsPage";
     }
 
 

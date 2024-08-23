@@ -135,6 +135,14 @@ public class CampingcarService {
         return campingCarSqlMapper.ratingGroupBycar(id);
     }
 
+    public List<Map<String, Object>> getMyLikeList(int rentUserPk) {
+        return campingCarSqlMapper.getMyLikeList(rentUserPk);
+    }
+
+    public List<Map<String, Object>> getSearchResultList(Map<String, Object> map) {
+        return campingCarSqlMapper.getSearchResultList(map);
+    }
+
 }
 
 

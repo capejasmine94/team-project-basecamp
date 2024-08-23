@@ -1,21 +1,27 @@
 <!-- 최상단 헤더 -->
-<div th:fragment="topNavi" class="header d-flex align-items-center border-bottom" style="background-color: #141414;">
-    <div class="container">
-        <nav class="navbar position-relative d-flex aligin-items-center">
-            <button class="navbar-toggler new-btn-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar" aria-label="Toggle navigation">
-                <i class="bi bi-list fs-1 text-white"></i>
-            </button>
-            <a href="/user/mainPage" class="logo position-absolute top-50 start-50 translate-middle">
-                <img src="/public/img/campingCarImage/logo.png" alt="" class="d-block">
-            </a>
-            <div class="d-flex align-items-center">
-                <a href="/user/myPage" th:if="${session.sessionUserInfo != null}" class="profile_icon overflow-hidden d-block me-2 rounded-pill">
-                    <!-- <img th:if="${session.sessionUserInfo.userDto.profile_image != null}" th:src="|/images/${session.sessionUserInfo.userDto.profile_image}|" alt=" " class="img-fluid"> -->
-                    <!-- <i th:if="${session.sessionUserInfo.userDto.profile_image == null}" class="bi bi-person-circle fs-2 lh-1 text-white"></i> -->
+<div th:fragment="topNavi">
+    <div class="container-fluid fixed-top">
+        <div class="row ps-4 pe-2 align-items-center" style="height: 3.625em; background-color: #fff;">
+            <div class="col-10 p-0 fs-3 d-flex align-items-center">
+                <a href="/"  th:if="${session.sessionUserInfo != null}">
+                    <img src="/public/img/common/배캠.png" style="width: 40%">
                 </a>
-                <a href=""><i class="bi bi-bell fs-5 text-white"></i></a>
             </div>
-        </nav>
+            <div class="col-1 d-flex justify-content-end pe-0 fw-bold text-black">
+                <a href="/campingcar/rentUseageHistory" class="col-auto p-0 fw-bold text-black">
+                    <span class="material-symbols-outlined">calendar_month</span>
+                </a>
+            </div>
+
+            <div class="col-1 d-flex justify-content-end p-0 fw-bold text-black">
+                <a href="/campingcar/rentUseageHistory" >
+                    <span class="material-symbols-outlined">
+                        notifications
+                    </span>
+                </a>
+            </div>
+
+        </div>
     </div>
 </div>
 

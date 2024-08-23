@@ -9,18 +9,25 @@
     <script src="https://kit.fontawesome.com/7b271bba58.js" crossorigin="anonymous"></script>
     <!-- Google Material Icons -->
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,1,0" />
     <link href="/public/css/common.css" rel="stylesheet">
-    <link href="/public/css/basecamp.css" rel="stylesheet">
     <script src="/public/js/lockLikeMobile.js"></script>
+    <link rel="shotcut icon" href="/public/img/common/campFire.ico" type="image/x-icon">
     <style>
+        body {
+            margin: 0;
+            padding: 0;
+        }
+
+        /* main 이미지 */
         .carousel-inner img {
             height: 550px; /* 이미지 높이 조정 */
         }
         .rounded-top-only {
-            border-top-left-radius: 30px; /* 상단 좌측 모서리 둥글게 */
-            border-top-right-radius: 30px; /* 상단 우측 모서리 둥글게 */
-            border-bottom-left-radius: 0; /* 하단 좌측 모서리 둥글지 않게 */
-            border-bottom-right-radius: 0; /* 하단 우측 모서리 둥글지 않게 */
+            border-top-left-radius: 30px !important; /* 상단 좌측 모서리 둥글게 */
+            border-top-right-radius: 30px !important; /* 상단 우측 모서리 둥글게 */
+            border-bottom-left-radius: 0 !important; /* 하단 좌측 모서리 둥글지 않게 */
+            border-bottom-right-radius: 0 !important; /* 하단 우측 모서리 둥글지 않게 */
         }
         .location img {
             aspect-ratio: 1/1;
@@ -41,6 +48,230 @@
             text-align: left;
             display: inline-block; /* 버튼을 인라인 블록으로 설정하여 텍스트가 줄바꿈되지 않도록 합니다. */
         }
+
+/* /////////new css///////// */
+        .search-bar {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+
+        .search-input-wrapper {
+            display: flex;
+            align-items: center;
+            border-radius: 25px;
+            border: 2px solid #007bff;
+            padding: 5px 15px;
+            background-color: white;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            flex-grow: 1;
+            max-width: 600px;
+            height: 50px;
+        }
+
+        .search-input {
+            border: none;
+            outline: none;
+            font-size: 16px;
+            color: #333;
+            flex-grow: 1;
+            padding: 5px 10px;
+            border-radius: 25px;
+        }
+
+        .search-input::placeholder {
+            color: #aaa;
+        }
+
+        .mic-icon {
+            font-size: 24px;
+            color: #00aaff;
+            margin-left: 10px;
+        }
+
+        .map-icon-wrapper {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 50px;
+            height: 50px;
+            background-color: white;
+            border: 2px solid #007bff;
+            border-radius: 50%;
+            margin-left: 10px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .map-icon {
+            font-size: 22px;
+            color: #007bff;
+        }
+
+        /* 카드 스타일 */
+        .search-bar {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding-top: 20px;
+            padding-bottom: 10px;
+            padding-left: 50px;
+            padding-right: 50px;
+            margin-bottom: 0px;
+        }
+
+        .search-input-wrapper {
+            display: flex;
+            align-items: center;
+            border-radius: 25px;
+            border: 2px solid #007bff;
+            padding: 5px 15px;
+            background-color: white;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            flex-grow: 1;
+            max-width: 325px;
+            height: 50px;
+        }
+
+        .search-input {
+            border: none;
+            outline: none;
+            font-size: 16px;
+            color: #333;
+            flex-grow: 1;
+            padding: 5px 10px;
+            border-radius: 25px;
+        }
+
+        .search-input::placeholder {
+            color: #aaa;
+        }
+
+        .mic-icon {
+            font-size: 24px;
+            color: #00aaff;
+            margin-left: 10px;
+        }
+
+        .map-icon-wrapper {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 55.5px;
+            height: 43px;
+            background-color: white;
+            border: 2px solid #007bff;
+            border-radius: 50%;
+            margin-left: 5px;
+            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
+        }
+
+        .map-icon {
+            font-size: 20px;
+            color: #007bff;
+        }
+
+        /* 카드 스타일 */
+        .card {
+            border-radius: 15px; /* 모서리 둥글게 */
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            margin: 0 auto;
+            width: 170px; /* 카드의 넓이 */
+            height: 120px; /* 카드의 높이 */
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            padding: 10px;
+        }
+
+        .card-body {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            padding: 5px;
+            position: relative; /* 이미지 위치 조정 */
+        }
+
+        .card-title {
+            font-size: 16px; /* 타이틀 크기 */
+            font-weight: bold;
+        }
+
+        .card-text {
+            font-size: 12px; /* 텍스트 크기 */
+            color: #dfe4ea; /* 글씨 색상 */
+            margin-bottom: 20px;
+
+        }
+
+        .card img {
+            width: 40px; /* 이미지 크기 */
+            height: auto;
+            position: absolute;
+            bottom: -2px;
+            right: 5px;
+        }
+
+        /* 기본 뱃지 스타일 */
+        .badge {
+            background-color: #f7f7f7;
+            color: black;;
+            font-size: 10px;
+            padding: 2px 5px;
+            border-radius: 5px;
+            position: absolute;
+            right: 5px;
+            
+        }
+
+        /* 특정 뱃지 위치 조정 */
+        .badge-n {
+            top: 10px;
+            border: 1px solid #F24724;
+            background-color: #F24724;
+            color: white;
+            padding-bottom: 4px
+        }
+
+        .badge-discount {
+            top: -15px;
+            border: 1px solid #773EFA;
+            color: #773EFA;
+        }
+
+        /* 내비 카드 그라데이션 */
+        .nav-card {
+            background: linear-gradient(135deg, #6E3FFF, #2158FF);
+            color: white;
+        }
+
+        .transit-card {
+            background: linear-gradient(135deg, #223e5c, #1d3557);
+            color: white;
+        }
+
+        .parking-card,
+        .drive-card {
+            background-color: #ffffff;
+            color: #333;
+            border: 1px solid #ddd;
+        }
+
+        /* 카드 간격 조정 */
+        .custom-row-spacing {
+            margin-left: -5px;
+            margin-right: -5px;
+        }
+
+        .col-6 {
+            padding-left: 5px;
+            padding-right: 5px;
+            margin-bottom: 10px;
+        }
+
+        /*/////////캘린더///////// */
         .calendar-container {
             text-align: center;
             font-family: Arial, sans-serif;
@@ -145,7 +376,7 @@
 <body>
     <!-- topnavi -->
     <div th:replace="~{campingcar/campingNavi::topNavi}"></div>
-    <div th:replace="~{campingcar/campingNavi::menuNavi}"></div>
+    
     <div class="container">
         <!-- 캐러셀 섹션 -->
         <div class="row">
@@ -172,18 +403,74 @@
             </div>
         </div>
     </div>
-    <!-- 지역 카테고리 Img-->
-    <div class="container position-relative" style="top: -30px;">
+    <div class="container position-relative rounded-top-only" style="top: -40px;">
+        <!-- 검색바 -->
+        <div class="search-bar">
+            <div class="search-input-wrapper">
+                <input type="text" class="search-input" placeholder="어디로 갈까요?">
+                <span class="mic-icon material-symbols-outlined">search</span>
+            </div>
+            <div class="map-icon-wrapper">
+                <span class="map-icon material-symbols-outlined">near_me</span>
+            </div>
+        </div>
+        <!-- 메뉴 -->
         <div class="row">
-            <div class="col px-3 location bg-white rounded-top-only">
+            <div class="col px-3 location bg-white">
+                <div class="row custom-row-spacing mb-2">
+                    <div class="col-6">
+                        <div class="card nav-card">
+                            <div class="card-body">
+                                <div class="card-title">대여</div>
+                                <p class="card-text">최상의 휴식과 힐링을 한번에</p>
+                                <img src="/public/img/campingCarImage/캠핑카_대여.png" alt="Car Icon">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <a href="/campingcar/rentUseageHistory">
+                            <div class="card transit-card">
+                                <div class="card-body">
+                                    <div class="card-title">예약내역</div>
+                                    <p class="card-text">나의 예약 실시간 확인하기!!!</p>
+                                    <img src="/public/img/campingCarImage/예약내역.png" alt="Bus Icon">
+                                    <div class="badge badge-n">N</div>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                <div class="row custom-row-spacing mb-2">
+                    <div class="col-6">
+                        <a href="myLike">
+                            <div class="card parking-card">
+                                <div class="card-body">
+                                    <div class="card-title">좋아요</div>
+                                    <p class="card-text text-dark">관심있는 캠핑카 한번에 보기</p>
+                                    <img src="/public/img/campingCarImage/좋아요.png" alt="Parking Icon">
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="col-6">
+                        <div class="card drive-card">
+                            <div class="card-body">
+                                <div class="card-title">대여/반납</div>
+                                <p class="card-text text-dark">대여,반납할때는 체크리스트 점검</p>
+                                <img src="/public/img/campingCarImage/camera.png" alt="Drive Icon">
+                                <div class="badge badge-discount">체크리스트는 여기서!!</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 <!-- 첫번째 row -->
                 <div class="row">
-                    <div class="col text-center font-roboto fw-bold">
+                    <div class="col text-centerfw-bold">
                         <div class="p-3 pb-4 bg-white text-dark rounded-top-only">원하시는 지역을 선택해주세요</div>
                     </div>
                 </div>
                 <!-- 두번째 row -->
-                <div class="row px-2 text-center font-roboto">
+                <div class="row px-2 text-center">
                     <div class="col">
                         <div class="position-relative d-inline-block">
                             <img src="/public/img/campingCarImage/서울.jpg" alt="서울·경기" class="img-fluid rounded-circle opacity-50">
@@ -216,7 +503,7 @@
                     </div>
                 </div>
                 <!-- 세번째 row -->
-                <div class="row px-2 text-center py-3 font-roboto">
+                <div class="row px-2 text-center py-3">
                     <div class="col">
                         <div class="position-relative d-inline-block">
                             <img src="/public/img/campingCarImage/경북.jpg" alt="경북·대구" class="img-fluid rounded-circle opacity-50">
@@ -261,9 +548,11 @@
                         <div class="fs-2 fw-semibold">Camping Car 🚙</div>
                     </div>
                 </div>
+                
                 <!-- 검색 필터1 -->
                 <div class="row d-flex justify-content-between align-self-center bg-white pt-3 border border-light-subtle">
                     <!-- 대여 장소 -->
+                    
                     <div class="col text-center text-light-emphasis form-group px-1">
                         <div class="row">
                             <div class="col">
@@ -325,7 +614,7 @@
                 <!-- 검색하기 버튼 -->
                 <div class="row">
                     <div class="col py-3 px-0 d-grid">
-                        <button class="btn btn-dark btn-lg fw-bold" style="color: #C6ED6F;">검색하기</button>
+                        <button class="btn btn-dark btn-lg fw-bold" style="color: #C6ED6F;" onclick="search()">검색하기</button>
                     </div>
                 </div>
             </div>
@@ -1070,7 +1359,7 @@
 
             // 필터링 조건에 맞는 검색 결과 페이지로 이동
             const queryString = `location=${selectedLocation}&carTypes=${selectedCarTypes.join(',')}&rentDate=${selectedRentDate}&returnDate=${selectedReturnDate}`;
-            window.location.href = `/searchResultsPage?${queryString}`;
+            window.location.href = `searchResultsPage?${queryString}`;
         }
     </script>
 </body>
