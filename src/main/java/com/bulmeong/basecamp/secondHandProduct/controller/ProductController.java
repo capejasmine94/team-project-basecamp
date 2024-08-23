@@ -56,7 +56,6 @@ public class ProductController {
         return "secondhandProduct/mainPage";
     }
 
-
     @GetMapping("productRegistrationPage")
     public String productRegistrationPage(HttpSession session,
                                           Model model) {
