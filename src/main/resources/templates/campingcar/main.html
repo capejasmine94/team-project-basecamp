@@ -23,12 +23,7 @@
         .carousel-inner img {
             height: 550px; /* 이미지 높이 조정 */
         }
-        .rounded-top-only {
-            border-top-left-radius: 30px !important; /* 상단 좌측 모서리 둥글게 */
-            border-top-right-radius: 30px !important; /* 상단 우측 모서리 둥글게 */
-            border-bottom-left-radius: 0 !important; /* 하단 좌측 모서리 둥글지 않게 */
-            border-bottom-right-radius: 0 !important; /* 하단 우측 모서리 둥글지 않게 */
-        }
+
         .location img {
             aspect-ratio: 1/1;
             width: 100px;
@@ -50,125 +45,36 @@
         }
 
 /* /////////new css///////// */
-        .search-bar {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 20px;
-            margin-bottom: 20px;
-        }
-
-        .search-input-wrapper {
-            display: flex;
-            align-items: center;
-            border-radius: 25px;
-            border: 2px solid #007bff;
-            padding: 5px 15px;
-            background-color: white;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-            flex-grow: 1;
-            max-width: 600px;
-            height: 50px;
-        }
 
         .search-input {
             border: none;
             outline: none;
             font-size: 16px;
             color: #333;
-            flex-grow: 1;
-            padding: 5px 10px;
             border-radius: 25px;
         }
 
         .search-input::placeholder {
             color: #aaa;
         }
-
-        .mic-icon {
-            font-size: 24px;
-            color: #00aaff;
-            margin-left: 10px;
-        }
-
-        .map-icon-wrapper {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            width: 50px;
-            height: 50px;
-            background-color: white;
-            border: 2px solid #007bff;
-            border-radius: 50%;
-            margin-left: 10px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-        }
-
-        .map-icon {
-            font-size: 22px;
-            color: #007bff;
-        }
-
-        /* 카드 스타일 */
-        .search-bar {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding-top: 20px;
-            padding-bottom: 10px;
-            padding-left: 50px;
-            padding-right: 50px;
-            margin-bottom: 0px;
-        }
-
         .search-input-wrapper {
-            display: flex;
-            align-items: center;
-            border-radius: 25px;
             border: 2px solid #007bff;
-            padding: 5px 15px;
             background-color: white;
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-            flex-grow: 1;
-            max-width: 325px;
-            height: 50px;
-        }
-
-        .search-input {
-            border: none;
-            outline: none;
-            font-size: 16px;
-            color: #333;
-            flex-grow: 1;
-            padding: 5px 10px;
-            border-radius: 25px;
-        }
-
-        .search-input::placeholder {
-            color: #aaa;
         }
 
         .mic-icon {
             font-size: 24px;
             color: #00aaff;
-            margin-left: 10px;
         }
 
         .map-icon-wrapper {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            width: 55.5px;
-            height: 43px;
             background-color: white;
             border: 2px solid #007bff;
-            border-radius: 50%;
-            margin-left: 5px;
-            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
         }
 
         .map-icon {
-            font-size: 20px;
             color: #007bff;
         }
 
@@ -405,12 +311,18 @@
     </div>
     <div class="container position-relative rounded-top-only" style="top: -40px;">
         <!-- 검색바 -->
-        <div class="search-bar">
-            <div class="search-input-wrapper">
-                <input type="text" class="search-input" placeholder="어디로 갈까요?">
-                <span class="mic-icon material-symbols-outlined">search</span>
+        <div class="row align-items-center px-3 pb-3 pt-2">
+            <div class="col pe-3">
+                <div class="row px-3 bg-white rounded-pill search-input-wrapper" style="height: 3em;">
+                    <div class="col d-grid p-0">
+                        <input type="text" placeholder="어디로 갈까요?" class="w-100 bg-transparent border-0 search-input">
+                    </div>
+                    <div class="col-auto pe-0 d-flex align-items-center">
+                        <span class="mic-icon material-symbols-outlined">search</span>
+                    </div>
+                </div>
             </div>
-            <div class="map-icon-wrapper">
+            <div class="col-auto p-0 rounded-circle d-flex align-items-center map-icon-wrapper justify-content-center " style="aspect-ratio: 1/1;  height: 3em;">
                 <span class="map-icon material-symbols-outlined">near_me</span>
             </div>
         </div>
