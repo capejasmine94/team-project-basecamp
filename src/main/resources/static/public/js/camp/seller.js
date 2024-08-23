@@ -273,7 +273,7 @@ function refreshUpdateAreaView() {
 
     // 삭제문구
     value = updateAreaView.querySelector('#request_delete_area');
-    value.setAttribute('placeholder',`샤르르 뿡뿡!! 뿍짝뿍짝 사람이 되라~~ 얍!!`);
+    value.setAttribute('placeholder',`${curArea.dto.name} 구역을 삭제하겠습니다.`);
 
     updateAreaView.classList.remove('d-none');
 }
