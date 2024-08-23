@@ -318,7 +318,7 @@
                         </div>
                     </div>
                     
-                    <div class="row px-4 pb-4 text-body-tertiary f08 fw-semibold">
+                    <div class="row px-4 pb-4 text-body-tertiary f08">
                         <div class="col border py-3 bg-white  px-4">
                             <li>
                                 주문확인이 완료된 주문입니다. 구매자에게 상품을 발송해주세요
@@ -337,6 +337,83 @@
                             뭔가 검색 옵션들..(다른 페이지 먼저 만들고 이것저것 추가할 수 있으면 할 것)
                         </div>
                     </div> -->
+                    
+                    <div class="row px-4 pb-4">
+                        <div class="col border bg-white">
+
+                            <div class="row pt-4 px-3 align-items-center">
+                                <div class="col-2 text-secondary">
+                                    주문상태
+                                </div>
+                                <div class="col-auto d-flex align-items-center">
+                                    <input type="checkbox" class="form-check-input rounded-0 fs-5 m-0" id="All">
+                                    <label class="form-check-label" for="All">
+                                        &nbsp;&nbsp;전체
+                                    </label>
+                                </div>
+                                <div class="col-auto d-flex align-items-center">
+                                    <input type="checkbox" class="form-check-input rounded-0 fs-5 m-0" id="sale">
+                                    <label class="form-check-label" for="sale">
+                                        &nbsp;&nbsp;발송대기
+                                    </label>
+                                </div>
+                                <div class="col-auto d-flex align-items-center">
+                                    <input type="checkbox" class="form-check-input rounded-0 fs-5 m-0" id="soldout">
+                                    <label class="form-check-label" for="soldout">
+                                        &nbsp;&nbsp;상품준비중
+                                    </label>
+                                </div>
+                                <div class="col-auto d-flex align-items-center">
+                                    <input type="checkbox" class="form-check-input rounded-0 fs-5 m-0" id="pendingApproval">
+                                    <label class="form-check-label" for="pendingApproval">
+                                        &nbsp;&nbsp;배송중
+                                    </label>
+                                </div>
+                                <div class="col-auto d-flex align-items-center">
+                                    <input type="checkbox" class="form-check-input rounded-0 fs-5 m-0" id="prohibited">
+                                    <label class="form-check-label" for="prohibited">
+                                        &nbsp;&nbsp;배송완료
+                                    </label>
+                                </div>
+                            </div>
+
+                            <div class="row py-4 px-3 align-items-center">
+                                <div class="col-2 text-secondary">
+                                    검색조건
+                                </div>
+                                <div class="col-2">
+                                    <select id="" class="form-select rounded-0">
+                                        <option value="" selected>
+                                            주문번호
+                                        </option>
+                                        <option value="">
+                                            상품주문번호
+                                        </option>
+                                    </select>
+                                </div>
+                                <div class="col">
+                                    <input type="text" class="form-control rounded-0">
+                                </div>
+                                <div class="col-2"></div>
+                            </div>
+
+                            <div class="row pb-4 bg-white rounded-top-0">
+                                <div class="col"></div>
+                                <div class="col-2 d-grid pe-0">
+                                    <button class="btn s-white-btn py-2 rounded-0 d-flex align-items-center justify-content-center">
+                                        초기화
+                                    </button>
+                                </div>
+                                <div class="col-2 d-grid pe-0">
+                                    <button class="btn s-dark-btn py-2 rounded-0 d-flex align-items-center justify-content-center">
+                                        검색
+                                    </button>
+                                </div>
+                                <div class="col"></div>
+                            </div>
+
+                        </div>
+                    </div>
 
                     <div class="row px-4 pb-4">
                         <div class="col border bg-white ">
@@ -368,8 +445,11 @@
                                         <div class="col align-items-center justify-content-center d-flex border-end border-start">
                                             주문번호
                                         </div>
-                                        <div class="col align-items-center justify-content-center d-flex border-end border-start">
+                                        <div class="col align-items-center justify-content-center d-flex border-end">
                                             상품주문번호
+                                        </div>
+                                        <div class="col align-items-center justify-content-center d-flex border-end">
+                                            주문상태
                                         </div>
                                         <div class="col align-items-center justify-content-center d-flex border-end">
                                             택배사
@@ -380,7 +460,7 @@
                                         <div class="col align-items-center justify-content-center d-flex border-end">
                                             발송일
                                         </div>
-                                        <div class="col align-items-center justify-content-center d-flex border-end">
+                                        <div class="col align-items-center justify-content-center d-flex">
                                             발송기한
                                         </div>
                                     </div>
@@ -470,9 +550,10 @@
                 <div class="col orderNumber align-items-center justify-content-center d-flex border-end border-start">
                     내용
                 </div>
-                <a class="col orderProductNumber align-items-center justify-content-center d-flex border-end border-start">
+                <a class="col orderProductNumber align-items-center justify-content-center d-flex border-end">
                     상품주문번호
                 </a>
+                <div class="col order_status align-items-center justify-content-center d-flex border-end"></div>
                 <div class="col courierCol align-items-center justify-content-center d-flex border-end">
                     <select class="form-select courier rounded-0">
                         <option value="" selected disabled>택배사 선택</option>
@@ -487,8 +568,7 @@
                     <input type="text" class="form-control rounded-0 inputTrackingNumber" oninput="validateNumberInput(this)">
                 </div>
                 <div class="col shippedDate align-items-center justify-content-center d-flex border-end"></div>
-                <div class="col deliveryDeadline align-items-center justify-content-center d-flex border-end"></div>
-                <div class="col d-none order_status"></div>
+                <div class="col deliveryDeadline align-items-center justify-content-center d-flex"></div>
             </div>
 
         </div>
@@ -531,7 +611,7 @@
                     const orderProductData = checkedCheckbox.closest(".orderProductData")
 
                     const order_status = orderProductData.querySelector(".order_status").innerText
-                    if(order_status=="배송중"){
+                    if(order_status=="배송완료"){
                         alert("발송처리 된 주문건입니다.")
                         checkedCheckbox.checked = false
                         return;
@@ -550,6 +630,7 @@
 
                 fetch(`/api/store/confirmOrder?ids=${checked_order_product_ids}`)
                 .then(response => {
+                    document.getElementById("allSelectCheckBox").checked = false;
                     reloadStoreOrderData();
                 })
 
@@ -560,7 +641,17 @@
                 const checkedCheckboxes = Array.from(orderCheckboxes).filter(checkbox => checkbox.checked);
                 
                 for(checkedCheckbox of checkedCheckboxes){
-                    const courier = checkedCheckbox.closest(".orderProductData").querySelector(".courier")
+                    const orderProductData = checkedCheckbox.closest(".orderProductData")
+
+                    const order_status = orderProductData.querySelector(".order_status").innerText
+                    if(order_status=="배송완료"){
+                        alert("발송처리 된 주문건입니다.")
+                        document.getElementById("allSelectCheckBox").checked = false;
+                        checkedCheckbox.checked = false
+                        return;
+                    }
+
+                    const courier = orderProductData.querySelector(".courier")
                     const selectedOption = courier.options[courier.selectedIndex];
 
                     if(selectedOption.disabled==true){
@@ -569,7 +660,7 @@
                         return;
                     }
 
-                    const inputTrackingNumber = checkedCheckbox.closest(".orderProductData").querySelector(".inputTrackingNumber")
+                    const inputTrackingNumber = orderProductData.querySelector(".inputTrackingNumber")
 
                     if(inputTrackingNumber.value==""){
                         alert("송장번호를 입력해주세요");
@@ -577,12 +668,13 @@
                         return;
                     }
 
-                    const orderProductNumber = checkedCheckbox.closest(".orderProductData").querySelector(".orderProductNumber").innerText;
+                    const orderProductNumber = orderProductData.querySelector(".orderProductNumber").innerText;
 
                     const url = `/api/store/insertDeliveryInfo?courier=${courier.value}&tracking_number=${inputTrackingNumber.value}&order_product_id=${orderProductNumber}`
                     await fetch(url)
                 }
-
+                
+                document.getElementById("allSelectCheckBox").checked = false;
                 reloadStoreOrderData();
                 
             }
@@ -603,7 +695,16 @@
                     orderContainer.innerHTML = "";
                     const orderProductData = document.querySelector("#template .orderProductData");
                     for(storeOrderData of storeOrderDataList){
+
                         const newOrderProductData = orderProductData.cloneNode(true);
+
+                        if(storeOrderData.orderProductDto.status=="주문완료"){
+                            newOrderProductData.querySelector(".order_status").innerText = "발송대기"
+                        }else if(storeOrderData.orderProductDto.status=="상품준비중"){
+                            newOrderProductData.querySelector(".order_status").innerText = "상품준비중"
+                        }else if(storeOrderData.orderProductDto.status=="배송완료"||storeOrderData.orderProductDto.status=="구매확정"||storeOrderData.orderProductDto.status=="리뷰작성완료"){
+                            newOrderProductData.querySelector(".order_status").innerText = "배송완료"
+                        }
 
                         const orderNumber = newOrderProductData.querySelector(".orderNumber");
                         orderNumber.innerText = storeOrderData.orderProductDto.order_id
@@ -630,8 +731,6 @@
                         deliveryDeadlineDate.setDate(createdAtDate.getDate() + 3);
 
                         newOrderProductData.querySelector(".deliveryDeadline").innerText = `${deliveryDeadlineDate.getFullYear()}.${deliveryDeadlineDate.getMonth()+1}.${deliveryDeadlineDate.getDate()}`;
-
-                        newOrderProductData.querySelector(".order_status").innerText = storeOrderData.orderProductDto.status
 
                         orderContainer.appendChild(newOrderProductData);
                     }

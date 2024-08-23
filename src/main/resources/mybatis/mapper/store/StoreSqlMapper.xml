@@ -688,6 +688,7 @@
         inner join store s on s.id  = sp.store_id 
         inner join store_order so on so.id = op.order_id
         where s.id = #{store_id}
+        and op.status not in ('pending', '환불완료','주문취소')
         order by so.created_at asc
     </select>
 

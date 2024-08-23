@@ -44,6 +44,10 @@ body {
     font-size: 4em;
 }
 
+.orf{
+    color: orangered;
+}
+
 /* 말줄임  */
 .ellipsis { /* 텍스트 한 줄 */
     white-space: nowrap;

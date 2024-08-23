@@ -78,26 +78,20 @@
 
     <!-- top-nav -->
     <div class="container fixed-top">
-        <div class="row border-bottom bg-white" style="height: 60.79px;">
-            <div class="col">
-                <div class="row py-3">
-                    <div class="col-auto">
-                        <button id="backButton" class="border-0 bg-transparent d-flex align-items-center">
-                            <span class="material-symbols-outlined fw-light">
-                                arrow_back
-                            </span>
-                        </button>
-                    </div>
-                    <div class="col ps-0 fw-semibold text-center">
-                        주문/배송조회
-                    </div>
-                    <a href="/" class="col-auto pe-0 d-flex align-items-center text-black">
-                        <span class="material-symbols-outlined fw-light">
-                            home
-                        </span>
-                    </a>
-                </div>
+        <div class="row px-3 py-3 border-bottom bg-white" style="height: 60.79px;">
+            <div class="col-auto ps-0 d-flex align-items-center" id="backButton">
+                <span class="material-symbols-outlined fw-light">
+                    arrow_back
+                </span>
             </div>
+            <div class="col fw-semibold text-center">
+                주문/배송조회
+            </div>
+            <a href="/" class="col-auto pe-0 d-flex align-items-center text-black">
+                <span class="material-symbols-outlined fw-light">
+                    home
+                </span>
+            </a>
         </div>
     </div>
 
@@ -114,7 +108,7 @@
 
                 <div class="row bg-white py-3 align-items-center border-top border-bottom">
                     <div class="col-auto pe-0">
-                        <span class="fw-semibold">전체</span>
+                        <span class="fw-semibold f09" id="reloadStatus">전체</span>
                     </div>
                     <div class="col">
                         <span class="f08">최근 1년</span>
@@ -133,20 +127,20 @@
                 <div class="row bg-white py-3 mb-2 border-bottom">
                     <div class="col d-grid">
                         <a type="button" class="row text-dark p-0 text-center border-0 bg-transparent">
-                            <div onclick="reloadOrderList(this)" class="col orderProductStatusFilter text-primary">
-                                <div class="row pb-2 fw-semibold fs-4">
+                            <div onclick="reloadOrderList(this)" class="col orderProductStatusFilter orf">
+                                <div class="row pb-2 fw-semibold f12">
                                     <div class="col" id="allOrderCount">0</div>
                                 </div>
-                                <div class="row f08">
+                                <div class="row f08 fw-light">
                                     <div class="col px-1 filterOption">전체</div>
                                 </div>                                    
                             </div>
                         </a>
                     </div>
                     <div class="col d-grid">
-                        <button type="button" class="row text-secondary p-0 text-center border-0 bg-transparent">
+                        <button type="button" class="row  p-0 text-center border-0 bg-transparent">
                             <div onclick="reloadOrderList(this)" class="col orderProductStatusFilter">
-                                <div class="row pb-2 fw-semibold fs-4">
+                                <div class="row pb-2 fw-semibold f12">
                                     <div class="col" id="orderCompleteCount">0</div>
                                 </div>
                                 <div class="row f08">
@@ -156,9 +150,9 @@
                         </button>
                     </div>
                     <div class="col d-grid">
-                        <button type="button" class="row text-secondary p-0 text-center border-0 bg-transparent">
+                        <button type="button" class="row  p-0 text-center border-0 bg-transparent">
                             <div onclick="reloadOrderList(this)" class="col orderProductStatusFilter">
-                                <div class="row pb-2 fw-semibold fs-4">
+                                <div class="row pb-2 fw-semibold f12">
                                     <div class="col">0</div>
                                 </div>
                                 <div class="row f08">
@@ -168,9 +162,9 @@
                         </button>
                     </div>
                     <div class="col d-grid">
-                        <button type="button" class="row text-secondary p-0 text-center border-0 bg-transparent">
+                        <button type="button" class="row  p-0 text-center border-0 bg-transparent">
                             <div onclick="reloadOrderList(this)" class="col orderProductStatusFilter">
-                                <div class="row pb-2 fw-semibold fs-4">
+                                <div class="row pb-2 fw-semibold f12">
                                     <div class="col" id="deliveryCompleteCount">0</div>
                                 </div>
                                 <div class="row f08">
@@ -182,7 +176,7 @@
                     <div class="col d-grid">
                         <button type="button" class="row text-dark p-0 text-center border-0 bg-transparent">
                             <div onclick="reloadOrderList(this)" class="col orderProductStatusFilter">
-                                <div class="row pb-2 fw-semibold fs-4">
+                                <div class="row pb-2 fw-semibold f12">
                                     <div class="col" id="purchaseConfirmationCount">0</div>
                                 </div>
                                 <div class="row f08">
@@ -298,7 +292,7 @@
             <div class="col">
 
                 <!-- 주문상세보기 -->
-                <a href="/store/orderView" class="row bg-white py-2 border-bottom orderView">
+                <a href="/store/orderView" class="row bg-white py-2 border-bottom f09 orderView">
                     <div class="col fw-semibold orderDate">
                         2024.07.07
                     </div>
@@ -332,16 +326,16 @@
                     </div>
                     <div class="col">
                         <div class="row pb-1">
-                            <div class="col f09 storeName">
+                            <div class="col f08 storeName">
                                 GamjaStore
                             </div>
                         </div>
                         <div class="row pb-1">
-                            <a class="col-auto f09 fw-semibold name">
+                            <a class="col-auto f08 fw-semibold name">
                                 진짜 맛있는 납작복숭아
                             </a>
                         </div>
-                        <div class="row pb-1 text-body-tertiary f09">
+                        <div class="row pb-1 text-body-tertiary f08">
                             <div class="col-auto pe-0 valueName d-none">
                                 Black / M
                             </div>
@@ -349,7 +343,7 @@
                                 <span class="quantity">5개</span>
                             </div>
                         </div>
-                        <div class="row">
+                        <div class="row f09">
                             <div class="col fw-semibold price">
                                 13,500원
                             </div>
@@ -442,12 +436,15 @@
         function reloadOrderList(selectedStatusFilter){
 
             if(selectedStatusFilter == "전체"){
+                document.getElementById("reloadStatus").innerText == '전체';
                 filterOption = '전체'
             }else{
                 const statusFilters = document.querySelectorAll(".orderProductStatusFilter")
-                statusFilters.forEach(statusFilter => statusFilter.classList.remove("text-primary"))
 
-                selectedStatusFilter.classList.add("text-primary")
+                statusFilters.forEach(statusFilter => statusFilter.classList.remove("orf"))
+                selectedStatusFilter.classList.add("orf")
+                
+                document.getElementById("reloadStatus").innerText == selectedStatusFilter.querySelector(".filterOption").innerText;
                 filterOption = selectedStatusFilter.querySelector(".filterOption").innerText;
             }
             
