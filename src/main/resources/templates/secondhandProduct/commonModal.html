@@ -16,7 +16,7 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="list-group">
-<!--                <button onclick="editPost()" type="button" class="list-group-item list-group-item-action">게시글 수정</button>-->
+                <button onclick="editPost()" type="button" class="list-group-item list-group-item-action">게시글 수정</button>
                 <button type="button" class="list-group-item list-group-item-action text-danger" data-bs-toggle="modal" data-bs-target="#deleteModal">삭제</button>
                 <button type="button" class="list-group-item list-group-item-action" data-bs-dismiss="modal">취소</button>
             </div>
@@ -89,6 +89,133 @@
                 </div>
             </div>
         </div>
+    </div>
+</div>
+
+<!--공용바텀네비-->
+<!--구매 하단네비 -->
+<div th:fragment="bottomNaviBasecamp" class="container-fluid g-0 border-top bg-white fixed-bottom pb-3">
+    <div class="row mx-1 py-2 text-center">
+
+        <!--HOME-->
+        <a href="/" class="col icon-and-text">
+            <span class="material-symbols-outlined fw-light" style="font-size: 1.8em; color: darkgray;">
+                home
+            </span>
+            <span class="text-navi pt-1" style="font-size: 0.7em; color: darkgray">홈</span>
+        </a>
+
+        <!--구매-->
+        <div class="col icon-and-text dropdown dropup">
+            <span data-bs-toggle="dropdown" aria-expanded="false">
+                <span class="material-symbols-outlined" style="font-size: 1.7em; display: block;">
+                    storefront
+                </span>
+                <span class="text-navi pt-1 fw-bold" style="font-size: 0.7em;">
+                    구매
+                </span>
+            </span>
+            <ul class="dropdown-menu custom-dropdown-menu">
+                <!-- 변초연 -->
+                <a class="dropdown-item col" href="/store">
+                    <div class="row w-100">
+                        <div class="col-auto d-flex">
+                            <span class="material-symbols-outlined pe-1 ps-1 fw-light">
+                                shopping_bag
+                            </span>
+                            <span style="font-size: 0.9em;">스토어</span>
+                        </div>
+                    </div>
+                </a>
+                <!-- 심규진 -->
+                <a class="dropdown-item col" href="/secondhandProduct/mainPage">
+                    <div class="row w-100">
+                        <div class="col-auto d-flex">
+                            <span class="material-symbols-outlined pe-1 ps-1 fw-light">
+                                eco
+                            </span>
+                            <span style="font-size: 0.9em;">중고</span>
+                        </div>
+                    </div>
+                </a>
+            </ul>
+        </div>
+
+        <!-- 예약 -->
+        <div class="col icon-and-text dropdown dropup">
+            <span data-bs-toggle="dropdown" aria-expanded="false">
+                <span class="material-symbols-outlined fw-light" style="font-size: 1.7em; color: darkgray; display: block;">
+                    event_available
+                </span>
+                <span class="text-navi pt-1" style="font-size: 0.7em; color: darkgray;">
+                    예약
+                </span>
+            </span>
+            <ul class="dropdown-menu row custom-dropdown-menu">
+                <!-- 메뉴 내용 -->
+                <a class="dropdown-item col" href="/camp/main">
+                    <div class="row w-100">
+                        <div class="col-auto d-flex">
+                            <span class="material-symbols-outlined pe-1 ps-1 fw-light">camping</span>
+                            <span style="font-size: 0.9em;">캠핑장</span>
+                        </div>
+                    </div>
+                </a>
+                <a class="dropdown-item col" href="/campingcar/main">
+                    <div class="row w-100">
+                        <div class="col-auto d-flex">
+                            <span class="material-symbols-outlined pe-1 ps-1 fw-light">airport_shuttle</span>
+                            <span style="font-size: 0.9em;">캠핑카</span>
+                        </div>
+                    </div>
+                </a>
+            </ul>
+        </div>
+
+        <!-- 커뮤니티 -->
+        <div class="col icon-and-text dropdown dropup">
+            <span data-bs-toggle="dropdown" aria-expanded="false">
+                <span class="material-symbols-outlined fw-light" style="font-size: 1.7em; color: darkgray; display: block;">
+                    forum
+                </span>
+                <span class="text-navi pt-1" style="font-size: 0.7em; color: darkgray; display: block;">
+                    커뮤니티
+                </span>
+            </span>
+            <ul class="dropdown-menu custom-dropdown-menu">
+                <!-- 메뉴 내용 -->
+                <a class="dropdown-item col" href="/club/main">
+                    <div class="row w-100">
+                        <div class="col-auto d-flex">
+                            <span class="material-symbols-outlined pe-1 ps-1 fw-light">group</span>
+                            <span style="font-size: 0.9em;">소모임</span>
+                        </div>
+                    </div>
+                </a>
+                <a class="dropdown-item col" href="/insta/instaMainPage">
+                    <span>
+                        <img src="/public/img/instaImage/campstagram.png" class="img-fluid">
+                    </span>
+                </a>
+            </ul>
+        </div>
+
+        <!--canvas 버튼-->
+        <div class="col">
+            <button class="btn py-0" style="color: darkgray; line-height: 20px;" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight">
+                <span class="material-symbols-outlined">
+                    menu
+                </span>
+                <div class="row">
+                    <div class="col">
+                        <span style="font-size: 0.7em; color: darkgray;">
+                            메뉴
+                        </span>
+                    </div>
+                </div>
+            </button>
+        </div>
+
     </div>
 </div>
 
