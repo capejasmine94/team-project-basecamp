@@ -34,7 +34,7 @@
             <div class="row-auto">
                 <div class="col">
                     <span class="me-2" th:text="${productTotalDtoList.AllContentsDto.status}">판매중</span>
-                    <span style="font-weight: 400" th:text="${productTotalDtoList.AllContentsDto.title}">상품이름</span>
+                    <span style="font-weight: 400; max-width: 12rem;" th:text="${productTotalDtoList.AllContentsDto.title}">상품이름</span>
                 </div>
                 <div class="col" style="font-weight: 600">
                     <span th:text="|${#numbers.formatInteger(productTotalDtoList.AllContentsDto.price, 0, 'COMMA')}원|"></span>
