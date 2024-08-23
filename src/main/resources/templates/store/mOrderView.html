@@ -75,19 +75,19 @@
             border-bottom: 10px solid #F8F9FA;
         }
     </style>
-    <script>
+    <!-- <script>
         document.addEventListener('DOMContentLoaded', function() {
             document.getElementById('backButton').addEventListener('click', function() {
                 history.back();
             });
         });
-    </script>
+    </script> -->
 </head>
 <body class="bg-light">
 
     <!-- top-nav -->
     <div class="container fixed-top">
-        <div class="row px-3 border-bottom bg-white">
+        <div class="row px-3 border-bottom bg-white" style="height: 60.79px;">
             <div class="col">
                 <div class="row py-3 align-items-center">
                     <div class="col-auto ps-0 d-flex align-items-center" onclick="history.back()">
@@ -108,7 +108,7 @@
         </div>
     </div>
 
-    <div class="container" style="padding-top: 60.792px;">
+    <div class="container" style="padding-top: 60.79px;">
 
         <div class="row">
             <div class="col">
@@ -199,7 +199,7 @@
                                                         보유 적립금 사용
                                                     </div>
                                                     <div class="col text-end text-primary">
-                                                        <span th:text="-|${#numbers.formatDecimal(orderProductData.orderProductDto.used_point, 1, 'COMMA', 0, 'POINT')}원|">-2,513원</span>
+                                                        <span th:text="|-${#numbers.formatDecimal(orderProductData.orderProductDto.used_point, 1, 'COMMA', 0, 'POINT')}원|">-2,513원</span>
                                                     </div>
                                                 </div>
                                             </div>
@@ -208,11 +208,7 @@
                                     </div>
                                 </div>
                                 <div class="row py-3" th:if="${orderProductData.orderProductDto.status}=='구매확정'">
-                                    <!-- <div class="col d-grid pe-0">
-                                        <button class="btn f09 border bg-white rounded-0">
-                                            배송조회
-                                        </button>
-                                    </div> -->
+ 
                                     <div class="col d-grid">
                                         <button class="btn f09 border-primary text-primary bg-white rounded-0">
                                             리뷰작성
@@ -225,34 +221,14 @@
                                             환불요청
                                         </a>
                                     </div>
-                                    <!-- <div class="col d-grid pe-0">
-                                        <a type="button" class="btn px-0 f09 border bg-white rounded-0">
-                                            교환요청
-                                        </a>
-                                    </div>
-                                    <div class="col d-grid pe-0">
-                                        <button class="btn px-0 f09 border bg-white rounded-0">
-                                            배송조회
-                                        </button>
-                                    </div> -->
+
                                     <div class="col d-grid">
                                         <button class="btn px-0 f09 border bg-white rounded-0">
                                             구매확정
                                         </button>
                                     </div>
                                 </div>
-                                <!-- <div class="row py-3" th:if="${orderProductData.orderProductDto.status}=='주문완료'">
-                                    <div class="col d-grid pe-0">
-                                        <a type="button" class="btn px-0 f09 border bg-white rounded-0">
-                                            주문취소
-                                        </a>
-                                    </div>
-                                    <div class="col d-grid">
-                                        <a type="button" class="btn px-0 f09 border bg-white rounded-0">
-                                            배송지 변경
-                                        </a>
-                                    </div>
-                                </div> -->
+
                             </div>
                         </div>
                         

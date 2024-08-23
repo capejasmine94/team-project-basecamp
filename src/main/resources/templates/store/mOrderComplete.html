@@ -121,13 +121,13 @@
         </div>
         <div class="row px-3 f09 bg-white pb-2">
             <div class="col p-0">
-                <span class="fw-semibold">김첨지</span>
-                <span class="text-body-tertiary">010-1234-5678</span>
+                <span class="fw-semibold" th:text="${orderData.storeOrderDto.receiver_name}">김첨지</span>
+                <span class="text-body-tertiary" th:text="${orderData.storeOrderDto.phone}">010-1234-5678</span>
             </div>
         </div>
         <div class="row px-3 f09 bg-white pb-2">
             <div class="col p-0">
-                <span>서울특별시 강남구 테헤란로 7길 7 무슨빌딩 6층</span>
+                <span th:text="${orderData.storeOrderDto.delivery_address}">서울특별시 강남구 테헤란로 7길 7 무슨빌딩 6층</span>
             </div>
         </div>
             
