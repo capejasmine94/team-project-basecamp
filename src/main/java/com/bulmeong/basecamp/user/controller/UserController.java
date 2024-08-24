@@ -66,8 +66,8 @@ public class UserController {
                 return "redirect:" + redirectAfterLogin;
             }
 
-            // return "redirect:https://basecamp.null-pointer-exception.com";
-            return "redirect:/";
+            return "redirect:https://basecamp.null-pointer-exception.com";
+            // return "redirect:/";
         }
     }
 
