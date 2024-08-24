@@ -506,7 +506,12 @@
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js"></script>
     <script>
+        
         document.addEventListener('DOMContentLoaded', function() {
+
+            //페이지 로드시 예약된 날짜를 가져와서 비활성화 
+            reservationById();
+
             const collapseElement = document.getElementById('collapseExample');
             const toggleButton = document.getElementById('toggleButton');
             const initialButtonContainer = toggleButton.parentElement.parentElement.parentElement;
@@ -525,6 +530,47 @@
                     isMoved = true;
                 }
             });
+
+
+            function reservationById (){
+                const productId = document.querySelector('input[name="product_id"]').value; // hidden input에서 product_id 가져오기
+                const url = `api/rent-user/reservationData?product_id=${productId}`;
+
+                fetch(url)
+                .then(response => response.json())
+                .then(response => {
+                    const reservedDates = response.data.reservedDateStrings; 
+                    disableReservaedDates(reservedDates);
+                });
+            }
+
+            function disableReservedDates(reservedDates) {
+                const startDateInput = document.querySelector('input[name="start_date"]');
+                const endDateInput = document.querySelector('input[name="end_date"]');
+
+                // 예약된 날짜들을 비활성화
+                reservedDates.forEach(date => {
+                    // "YYYY-MM-DD" 형식으로 입력된 날짜를 처리
+                    const disabledDate = date;
+                    
+                    // 현재 입력 필드에 min 및 max 속성을 통해 비활성화
+                    startDateInput.setAttribute('min', getNextAvailableDate(disabledDate, reservedDates));
+                    endDateInput.setAttribute('min', getNextAvailableDate(disabledDate, reservedDates));
+                });
+            }
+
+            function getNextAvailableDate(date, reservedDates) {
+                // 다음 사용할 수 있는 날짜를 찾는 함수
+                let nextDate = new Date(date);
+                nextDate.setDate(nextDate.getDate() + 1); // 하루 추가
+
+                while (reservedDates.includes(nextDate.toISOString().split('T')[0])) {
+                    nextDate.setDate(nextDate.getDate() + 1);
+                }
+
+                return nextDate.toISOString().split('T')[0];
+            }
+            
         });
     </script>
 </body>

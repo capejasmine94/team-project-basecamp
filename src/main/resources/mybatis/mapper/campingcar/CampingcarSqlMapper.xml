@@ -355,8 +355,14 @@
     order by bc.id DESC
     </select>
 
-    <select id="getSearchResultList" resultType="Map">
-        select * from 
+    <!-- <select id="getSearchResultList" resultType="Map">
+        
+    </select> -->
+
+    <!-- 특정 차량의 무한대의 예약을 막는 쿼리  -->
+    <select id="ReservationById" resultType="Map">
+       select br.start_date, br.end_date  from bc_reservation br
+        where product_id = #{id}
     </select>
 
 </mapper>

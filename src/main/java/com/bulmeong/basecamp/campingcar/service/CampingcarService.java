@@ -1,5 +1,7 @@
 package com.bulmeong.basecamp.campingcar.service;
 
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -143,6 +145,23 @@ public class CampingcarService {
         return campingCarSqlMapper.getSearchResultList(map);
     }
 
+    // 예약하기에서 특정 날짜 막기 
+    public List<LocalDate> getReservedDates(int id) {
+        List<Map<String,Object>> reservations = campingCarSqlMapper.ReservationById(id);
+
+        List<LocalDate> reservedDates = new ArrayList<>();
+
+        for(Map<String,Object> reservation  : reservations) {
+            LocalDate start_date = (LocalDate) reservation.get("br.start_date");
+            LocalDate end_date = (LocalDate) reservation.get("br.end_date");
+            
+            while (!start_date.isAfter(end_date)) {
+                reservedDates.add(start_date);
+                start_date = start_date.plusDays(1);
+            }
+        }
+        return reservedDates;
+    }
 }
 
 
