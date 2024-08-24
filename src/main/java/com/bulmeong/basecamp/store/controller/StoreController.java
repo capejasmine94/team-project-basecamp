@@ -221,7 +221,7 @@ public class StoreController {
 
     @RequestMapping("newProduct")
     public String newProduct(Model model){
-        model.addAttribute("newProductDataList", storeService.getFiveProductDataList());
+        model.addAttribute("newProductDataList", storeService.getTenProductDataList());
         model.addAttribute("newStoreData", storeService.getNewStoreData());
 
         return "store/mNewProduct";
