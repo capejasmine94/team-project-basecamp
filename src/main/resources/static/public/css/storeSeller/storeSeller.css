@@ -99,6 +99,11 @@ a{
     background-color: #222222;
 }
 
+.form-check-input:checked {
+    background-color: #222222;
+    border-color: #222222;
+}
+
 /* .s-light-btn {
     --bs-btn-color: #fff;
     --bs-btn-bg: #409EFF;

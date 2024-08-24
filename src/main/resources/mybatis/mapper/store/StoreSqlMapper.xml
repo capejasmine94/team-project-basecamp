@@ -794,6 +794,7 @@
             ) t1 on t1.id = sp.id
         where sp.store_id = #{store_id}
         group by sp.id
+        order by sp.id desc
     </select>
 
     <update id="updateOrderProductStatusToConfirm">

@@ -356,7 +356,7 @@
                                                 </div>
                                             </div>
                                             <div class="row">
-                                                <div class="col f12 fw-semibold">
+                                                <div class="col f12 fw-semibold" id="AllCount">
                                                     0건
                                                 </div>
                                             </div>
@@ -377,7 +377,7 @@
                                                 </div>
                                             </div>
                                             <div class="row">
-                                                <div class="col f12 fw-semibold">
+                                                <div class="col f12 fw-semibold" id="saleCount">
                                                     0건
                                                 </div>
                                             </div>
@@ -399,7 +399,7 @@
                                             </div>
                                             <div class="row">
                                                 <div class="col f12 fw-semibold">
-                                                    0건
+                                                    <span id="soldoutCount" class="text-danger">0</span>건
                                                 </div>
                                             </div>
                                         </div>
@@ -557,18 +557,18 @@
                             <div class="row px-3 py-3 f09">
                                 <div class="col border bg-white" style="height: 20em; overflow-y: auto;">
                                     <div class="row d-flex align-items-stretch border-bottom text-center align-items-center fw-semibold" style="position: sticky; top: 0; z-index: 1; background-color: #F5F5F5;">
-                                        <div class="col-auto py-3 align-items-center justify-content-center d-flex">
+                                        <!-- <div class="col-auto py-3 align-items-center justify-content-center d-flex">
                                             <input id="allOptionsSelectCheckBox" type="checkbox" class="form-check-input">
-                                        </div>
-                                        <div class="align-items-center justify-content-center d-flex border-end border-start" style="width: 3em;">
+                                        </div> -->
+                                        <div class="col-auto py-3 align-items-center justify-content-center d-flex border-end" style="width: 3em;">
                                             No
                                         </div>
                                         <div class="col-3 align-items-center justify-content-center d-flex border-end">
                                             상품명
                                         </div>
-                                        <div class="col align-items-center justify-content-center d-flex border-end">
+                                        <!-- <div class="col align-items-center justify-content-center d-flex border-end">
                                             평점
-                                        </div>
+                                        </div> -->
                                         <div class="col align-items-center justify-content-center d-flex border-end">
                                             재고수량
                                         </div>
@@ -667,18 +667,18 @@
             <option value="" class="subcategoryOption"></option>
 
             <div class="storeProductRow row d-flex align-items-stretch border-bottom text-center align-items-center bg-white">
-                <div class="col-auto py-3 align-items-center justify-content-center d-flex">
+                <!-- <div class="col-auto py-3 align-items-center justify-content-center d-flex">
                     <input type="checkbox" class="form-check-input">
-                </div>
-                <div class="align-items-center justify-content-center d-flex border-end border-start" style="width: 3em;">
+                </div> -->
+                <div class="col-auto py-3 align-items-center justify-content-center d-flex border-end" style="width: 3em;">
                     <span class="productNumber">8</span>
                 </div>
                 <div class="col-3 align-items-center justify-content-center d-flex border-end">
                     <span class="productName">상품명</span>
                 </div>
-                <div class="col align-items-center justify-content-center d-flex border-end">
+                <!-- <div class="col align-items-center justify-content-center d-flex border-end">
                     <span class="productRating"></span>
-                </div>
+                </div> -->
                 <div class="col align-items-center justify-content-center d-flex border-end">
                     <span class="productStockQuantity">재고수량</span>
                 </div>
@@ -716,6 +716,11 @@
 
                     const storeProductRow = document.querySelector("#template .storeProductRow");
 
+                    document.getElementById("AllCount").innerText = `${response.data.storeProductDataList.length}건`
+
+                    let saleCount = 0;
+                    let soldoutCount = 0;
+
                     for(storeProductData of response.data.storeProductDataList){
                         const newStoreProductRow = storeProductRow.cloneNode(true);
 
@@ -731,9 +736,11 @@
 
                         if(quantity-purchase_quantity>0){
                             productStatus.innerText = "판매중";
+                            saleCount++;
                         }else{
                             productStatus.innerText = "품절";
                             productStatus.classList.add("text-danger");
+                            soldoutCount++
                         }
 
                         newStoreProductRow.querySelector(".productPrice").innerText = formatNumberToPrice(storeProductData.price);
@@ -742,12 +749,21 @@
                         const percentage = storeProductData.percentage;
 
                         newStoreProductRow.querySelector(".productSalePrice").innerText = formatNumberToPrice(Math.round(price-price*percentage));
+
+                        // newStoreProductRow.setAttribute("onclick", `showProductModal(${storeProductData.id})`)
                         
                         storeProductContainer.appendChild(newStoreProductRow);
                     }
+
+                    document.getElementById("saleCount").innerText = `${saleCount}건`
+                    document.getElementById("soldoutCount").innerText = soldoutCount
                 })
 
             }
+
+            // function showProductModal(product_id){
+                
+            // }
 
             document.querySelectorAll('.toggle-icon').forEach(button => {
                 button.addEventListener('click', function () {
