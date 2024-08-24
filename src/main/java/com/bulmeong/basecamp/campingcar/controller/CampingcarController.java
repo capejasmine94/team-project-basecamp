@@ -51,21 +51,27 @@ public class CampingcarController {
     public String campingCarDetailPage(@RequestParam("id") int id, Model model, HttpSession session) {
         UserDto sessionUserInfo = (UserDto) session.getAttribute("sessionUserInfo");
         model.addAttribute("sessionUserInfo", sessionUserInfo);
-        
+        System.out.println("유저"+ sessionUserInfo);
+
         Map<String,Object> campingcarDetails = campingcarService.getCampingCarDetailByid(id);
         model.addAttribute("campingcarDetails", campingcarDetails);
+        System.out.println("디테일" + campingcarDetails);
 
         // 캠핑옵션 
         List<ProductDetailImgDto> detailImgDto = campingcarService.getProductDetailImgByProductId(id);
         model.addAttribute("detailImgDto", detailImgDto);
 
+        System.out.println("캠핑옵션" + detailImgDto);
+
         // 차량옵션
         List<BasicFacilitiesDto> facilities = campingcarService.getBasicFacilitiesByProductId(id);
         model.addAttribute("facilities", facilities);
+        System.out.println("차량옵션" + facilities);
 
         //리뷰 리스트
         List<Map<String,Object>> reviewData = campingcarService.getReviewAllbyCarId(id);
         model.addAttribute("reviewData", reviewData);
+        System.out.println("reviewData"+reviewData);
 
         // 해당 차량의 리뷰 별점 평균 
         Double reviewAvg = campingcarService.getAvgByCarId(id);
@@ -78,6 +84,7 @@ public class CampingcarController {
         // 해당 차량의 각 별점 마다 인원수
         List<Map<String,Object>> ratings = campingcarService.ratingGroupBycar(id);
         model.addAttribute("ratings", ratings);
+        System.out.println("별점인원원수" + ratings);
 
         return "campingcar/campingCarDetailPage";
     }

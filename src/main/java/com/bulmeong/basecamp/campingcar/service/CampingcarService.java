@@ -1,5 +1,6 @@
 package com.bulmeong.basecamp.campingcar.service;
 
+import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -146,20 +147,27 @@ public class CampingcarService {
     }
 
     // 예약하기에서 특정 날짜 막기 
-    public List<LocalDate> getReservedDates(int id) {
-        List<Map<String,Object>> reservations = campingCarSqlMapper.ReservationById(id);
-
+    public List<LocalDate> getReservedDates(int product_id) {
+        List<Map<String,Object>> reservations = campingCarSqlMapper.ReservationById(product_id);
+        
         List<LocalDate> reservedDates = new ArrayList<>();
 
-        for(Map<String,Object> reservation  : reservations) {
-            LocalDate start_date = (LocalDate) reservation.get("br.start_date");
-            LocalDate end_date = (LocalDate) reservation.get("br.end_date");
-            
+        for (Map<String, Object> reservation : reservations) {
+            // Timestamp 객체로 반환된 start_date와 end_date를 가져옵니다.
+            Timestamp startTimestamp = (Timestamp) reservation.get("start_date");
+            Timestamp endTimestamp = (Timestamp) reservation.get("end_date");
+    
+            // Timestamp를 LocalDate로 변환합니다.
+            LocalDate start_date = startTimestamp.toLocalDateTime().toLocalDate();
+            LocalDate end_date = endTimestamp.toLocalDateTime().toLocalDate();
+    
+            // start_date부터 end_date까지의 모든 날짜를 reservedDates에 추가합니다.
             while (!start_date.isAfter(end_date)) {
                 reservedDates.add(start_date);
                 start_date = start_date.plusDays(1);
             }
         }
+
         return reservedDates;
     }
 }

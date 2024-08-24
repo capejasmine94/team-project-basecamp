@@ -76,5 +76,5 @@ public interface CampingcarSqlMapper {
     public List<Map<String, Object>> getSearchResultList(Map<String, Object> map);
 
     // 특장 날짜 예약 막기 
-    public List<Map<String,Object>> ReservationById(int id);
+    public List<Map<String,Object>> ReservationById(int product_id);
 }

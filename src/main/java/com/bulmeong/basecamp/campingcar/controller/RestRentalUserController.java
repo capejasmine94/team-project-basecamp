@@ -140,7 +140,7 @@ public class RestRentalUserController {
             restRentUserResponseDto.setResult("success");
 
             List<LocalDate> reservationList = campingCarService.getReservedDates(product_id);
-            System.out.println("리스트"+reservationList);
+            // System.out.println("리스트"+reservationList);
 
             // JSON으로 반환할 수 있도록 LocalDate를 문자열로 변환
             List<String> reservedDateStrings = reservationList.stream()
@@ -148,7 +148,7 @@ public class RestRentalUserController {
                 .collect(Collectors.toList());
 
             restRentUserResponseDto.add("reservedDateStrings", reservedDateStrings);
-            System.out.println("dto" + restRentUserResponseDto);
+            // System.out.println("dto" + restRentUserResponseDto);
 
         return restRentUserResponseDto;
 

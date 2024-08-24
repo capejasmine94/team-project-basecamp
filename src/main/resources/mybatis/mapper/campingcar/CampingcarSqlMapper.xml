@@ -71,8 +71,6 @@
                     bc_driver_age_condition bdac on bc.driver_age_id = bdac.id
         INNER join 
                     bc_driver_experience_condition bdec on bc.driver_experience_id = bdec.id
-        left join 
-                    bc_campingcar_like cl on cl.product_id = bc.id 
         where bc.id = #{id}
     </select>
     <!-- 상세페이지_세부이미지 -->
@@ -362,7 +360,7 @@
     <!-- 특정 차량의 무한대의 예약을 막는 쿼리  -->
     <select id="ReservationById" resultType="Map">
        select br.start_date, br.end_date  from bc_reservation br
-        where product_id = #{id}
+        where product_id = #{product_id}
     </select>
 
 </mapper>
