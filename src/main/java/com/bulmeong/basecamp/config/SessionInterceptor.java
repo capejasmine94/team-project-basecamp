@@ -24,7 +24,7 @@ public class SessionInterceptor implements HandlerInterceptor {
             }
             // 요청 페이지 세션 저장 : 프로젝트 끝나면 지우는게 좋을수도
             session.setAttribute("redirectAfterLogin", requestURI);
-            response.sendRedirect("/user/login");
+            response.sendRedirect("https://basecamp.null-pointer-exception.com/user/login");
             return false;
         }
         return true;
