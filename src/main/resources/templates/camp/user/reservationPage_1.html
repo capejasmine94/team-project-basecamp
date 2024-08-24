@@ -509,10 +509,10 @@
         const calendar_start = document.getElementById('selectDay_start_date');
         const calendar_end = document.getElementById('selectDay_end_date');
         const endDate = new Date(calendar_end.value);
-        if(endDate.getDate() < new Date(calendar_start.value)){
-            calendar_end.value = null;
-        }
-        if(!calendar_start.value || !calendar_end.value) {
+        const startDate = new Date(calendar_start.value)
+        console.log(startDate);
+        console.log(endDate);
+        if(!calendar_start.value || endDate.getDate() < startDate.getDate()) {
             alert('예약 날짜를 선택해주세요.');
             document.getElementById('calendar_selectDay').scrollIntoView({ behavior: 'smooth', block: 'center' });
             bootstrap.Offcanvas.getOrCreateInstance('#offcanvasSelectOption').hide();
