@@ -73,6 +73,7 @@ public interface CampingcarSqlMapper {
 
     public List<Map<String, Object>> getMyLikeList(int rentUserPk);
 
+    // 차량 리시트를 필터링 하는 쿼리
     public List<Map<String, Object>> getSearchResultList(Map<String, Object> map);
 
     // 특장 날짜 예약 막기 

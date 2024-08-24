@@ -143,6 +143,8 @@ public class CampingcarService {
     }
 
     public List<Map<String, Object>> getSearchResultList(Map<String, Object> map) {
+        System.out.println(map+"으어어어어어");
+        System.out.println("필터링 리스트 어떻게 나오니.. " + campingCarSqlMapper.getSearchResultList(map));
         return campingCarSqlMapper.getSearchResultList(map);
     }
 

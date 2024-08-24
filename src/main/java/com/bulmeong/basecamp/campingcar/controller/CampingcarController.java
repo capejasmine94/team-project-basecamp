@@ -283,18 +283,22 @@ public class CampingcarController {
         Map<String,Object> map = new HashMap<>();
         map.put("location", location);
         map.put("carTypes", carTypes);
-        map.put("rentDate", rentDate);
-        map.put("returnDate", returnDate);
+        if (rentDate != null && returnDate != null) {
+            String formattedRentDate = rentDate + " 00:00:00";
+            String formattedReturnDate = returnDate + " 23:59:59";
+    
+            map.put("rentDate", formattedRentDate);
+            map.put("returnDate", formattedReturnDate);
+        }
+
 
         List<Map<String,Object>> searchResultList = campingcarService.getSearchResultList(map);
+        System.out.println("@@@@@@@@@@@@@@@@@@"+searchResultList);
         model.addAttribute("searchResultList", searchResultList);
+
         
         return "campingcar/searchResultsPage";
     }
 
 
-    @RequestMapping("dateTest")
-    public String dateTest () {
-        return "campingcar/dateTest";
-    }
 }
