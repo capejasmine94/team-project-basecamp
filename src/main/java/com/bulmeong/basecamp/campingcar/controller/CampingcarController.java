@@ -184,7 +184,6 @@ public class CampingcarController {
         return "redirect:/campingcar/main";
     }
 
-
     @RequestMapping("carExteriorInteriorShoot")
     public String carExteriorInteriorShoot() {
 
@@ -260,9 +259,9 @@ public class CampingcarController {
     public String myLike(HttpSession session,Model model){
         UserDto sessionUserInfo = (UserDto)session.getAttribute("sessionUserInfo");
         int rentUserPk = campingcarService.getExistingByRentUserId(sessionUserInfo.getId());
-        
+        System.out.println("@@@@@@@@@@@@@@@@@@@@@@"+ rentUserPk);
         List<Map<String,Object>> MyLikeList = campingcarService.getMyLikeList(rentUserPk);
-        
+        System.out.println(MyLikeList);
         model.addAttribute("MyLikeList", MyLikeList);
 
         return "campingcar/myLike";
@@ -287,5 +286,8 @@ public class CampingcarController {
     }
 
 
-
+    @RequestMapping("dateTest")
+    public String dateTest () {
+        return "campingcar/dateTest";
+    }
 }
