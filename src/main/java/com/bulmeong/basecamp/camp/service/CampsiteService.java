@@ -417,6 +417,7 @@ public class CampsiteService {
         List<Map<String,Object>> result = new ArrayList<>();
         List<CampsiteDto> campsiteList = campsiteSqlMapper.getAllCampsiteDto();
         for(CampsiteDto dto : campsiteList) {
+            if(dto.getIs_authenticated().equals("F")) continue;
             result.add(campsiteInfoForUser(dto.getId()));
         }
         return result;
