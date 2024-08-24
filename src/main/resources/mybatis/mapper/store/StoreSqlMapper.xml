@@ -841,6 +841,7 @@
         inner join product_review pr on pr.order_product_id = op.id
         where so.user_id = #{user_id}
         and op.status = '리뷰작성완료'
+        order by pr.id desc
     </select>
 
     <select id="selectStoreReviewList" resultType="java.util.HashMap">
