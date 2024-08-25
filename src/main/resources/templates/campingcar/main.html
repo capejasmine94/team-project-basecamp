@@ -338,13 +338,13 @@
         <!-- 메뉴 -->
         <div class="row">
             <div class="col px-3 location bg-white">
-                <div class="row custom-row-spacing mb-2">
+                <div class="row custom-row-spacing mb-1">
                     <div class="col-6">
                         <a href="gotoRentCar" onclick="gotoRentCar(event)">
                             <div class="card nav-card">
                                 <div class="card-body">
                                     <div class="card-title">대여</div>
-                                    <p class="card-text">최상의 휴식과 힐링을 한번에</p>
+                                    <div class="card-text">최상의 휴식과 힐링을 한번에</div>
                                     <img src="/public/img/campingCarImage/캠핑카_대여.png" alt="Car Icon">
                                 </div>
                             </div>
@@ -355,7 +355,7 @@
                             <div class="card transit-card">
                                 <div class="card-body">
                                     <div class="card-title">예약내역</div>
-                                    <p class="card-text">나의 예약 실시간 확인하기!!!</p>
+                                    <div class="card-text">나의 예약을 실시간 확인하세요!</div>
                                     <img src="/public/img/campingCarImage/calendar.png" alt="Bus Icon">
                                     <div class="badge badge-n">N</div>
                                 </div>
@@ -369,7 +369,7 @@
                             <div class="card parking-card">
                                 <div class="card-body">
                                     <div class="card-title">좋아요</div>
-                                    <p class="card-text text-dark">관심있는 캠핑카 한번에 보기</p>
+                                    <div class="card-text text-dark">관심있는 캠핑카 한번에 보기</div>
                                     <img src="/public/img/campingCarImage/좋아요.png" alt="Parking Icon">
                                 </div>
                             </div>
@@ -380,7 +380,7 @@
                             <div class="card drive-card">
                                 <div class="card-body">
                                     <div class="card-title">대여/반납</div>
-                                    <p class="card-text text-dark">대여,반납할때는 체크리스트 점검</p>
+                                    <div class="card-text text-dark">대여,반납할때는 체크리스트 점검</div>
                                     <img src="/public/img/campingCarImage/camera.png" alt="Drive Icon">
                                     <div class="badge badge-discount">체크리스트는 여기서</div>
                                 </div>
@@ -551,7 +551,7 @@
             </div>
         </div>
         <div class="row pt-2 pb-3">
-            <div class="col px-4 ms-1">
+            <div class="col px-3 ms-1">
                 <div id="carouselExampleAutoplaying" class="carousel slide" data-bs-ride="carousel" data-bs-interval="3000" data-bs-touch="true">
                     <!-- Indicators (동그라미 표시) -->
                     <div class="carousel-indicators">
@@ -578,8 +578,12 @@
         </div>
 
         <div class="row pt-3 pb-3">
-            <div class="col ps-4 ms-1">
-                <span class="fs-5 fw-bold test-start">캠핑카 정보 & 팁</span>
+            <div class="col-10 ps-4 ms-1">
+                <span class="fs-5 pe-0 fw-bold test-start">캠핑카 정보 & 팁</span>
+            </div>
+            <!-- 더보기 버튼 -->
+            <div class="col-auto ps-0 pe-1 text-center d-grid" id="loadMoreContainer"> 
+                <button class="btn btn-ligh new-fs-85 p-0" id="loadMoreButton" onclick="loadMoreCampingCars()">더보기</button>
             </div>
         </div>
         <div class="row bg-white">
@@ -679,19 +683,16 @@
                 </div>
             </div>
         </div>
-        <div class="row pb-3 px-3 bg-white">
-            <div class="col p-0 d-grid">
-                <a href="" class="new-fs-85 text-center py-1 rounded-0 bg-white">
-                    더보기
-                </a>
-            </div>
-        </div>
     </div>
     <!-- 캠핑카 등록 리스트 출력 -->
     <div class="container overflow-x- pt-3">
         <div class="row pt-3 pb-3">
-            <div class="col ps-4 ms-1">
+            <div class="col-10 ps-4 pe-0 ms-1">
                 <span class="fs-5 fw-bold test-start">캠핑카 차량 대여</span>
+            </div>
+            <!-- 더보기 버튼 -->
+            <div class="col-auto ps-0 pe-1 text-center d-grid" id="loadMoreContainer"> 
+                <button class="btn btn-ligh new-fs-85 p-0" id="loadMoreButton" onclick="loadMoreCampingCars()">더보기</button>
             </div>
         </div>
         <!-- 캠핑카 등록 차량 반복 출력 -->
@@ -701,12 +702,6 @@
                 <div class="d-flex flex-nowrap overflow-auto list-scroll" id="campingcarListBox" style="gap: 16px;">
                     <!-- 여기에 동적으로 리스트가 추가됩니다 -->
                 </div>
-            </div>
-        </div>
-        <!-- 더보기 버튼 -->
-        <div class="row mx-0 mt-3" id="loadMoreContainer">
-            <div class="col-12 text-center d-grid">
-                <button class="btn btn-ligh new-fs-85" id="loadMoreButton" onclick="loadMoreCampingCars()">더보기</button>
             </div>
         </div>
     </div>
