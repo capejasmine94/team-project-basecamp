@@ -278,6 +278,11 @@
         .calendar-container .text-primary {
             color: #007bff;
         }
+
+        .carList-scroll::-webkit-scrollbar {
+            display: none;
+        }
+
     </style>
 </head>
 <body>
@@ -538,24 +543,69 @@
         </div>
     </div>
     <!-- 캠핑카 등록 리스트 출력 -->
-    <div class="contaimer overflow-x-hidden">
+    <div class="container overflow-x-hidden">
         <!-- 캠핑카 등록 차량 반복 출력 -->
         <div class="row mx-0">
-            <div class="col">
-                <!-- 등록차량이 없을 경우 -->
-                <!-- <div class="row mx-0" th:if="${#lists.isEmpty(campingcarList)}">
-                    <div class="col">
-                        등록된 차량이 없습니다.
-                    </div>
-                </div> -->
-                <!--등록차량이 있을 경우 -->
-                <div class="row mx-0">
-                    <div class="col" id="campingcarListBox"></div>
+            <div class="col-12">
+                <!-- 가로 스크롤 가능한 컨테이너 -->
+                <div class="d-flex flex-nowrap overflow-auto carList-scroll" id="campingcarListBox" style="gap: 16px;">
+                    <!-- 여기에 동적으로 리스트가 추가됩니다 -->
                 </div>
-
             </div>
         </div>
     </div>
+
+    <!-- campingcarList Templete -->
+    <div id="campingcarListTemplete" class="d-none">
+        <div class="campingcarListWrapper carList-scroll row px-3" style="min-width: 240px; max-width: 240px;">
+            <div class="col px-0 shadow-sm border rounded-4 my-4">
+                <div class="row mx-0">
+                    <div class="col px-0 d-flex justify-content-center align-items-center overflow-hidden rounded-top position-relative" style="height: 160px;">
+                        <!-- 캠핑카 이미지 -->
+                        <img class="campingcarImg img-fluid location" alt="썸네일">
+                        <!-- 찜 기능 아이콘 -->
+                        <div class="position-absolute top-0 end-0 p-2">
+                            <i id="heart-${product_id}" onclick="like()" class="fa-regular fa-heart text-danger"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="row p-3">
+                    <div class="col">
+                        <div class="d-flex flex-column">
+                            <!-- 회사명 + 차량명 -->
+                            <div class="row">
+                                <div class="col pe-0 pb-2 new-fs-8">
+                                    <div class="campingcarComp_name fw-bold mb-0 text-truncate"></div> <!-- 한 줄 말줄임표 -->
+                                    <div class="campingcarProduct_name fw-normal text-dark mb-0 text-truncate" style="max-height: 3rem; overflow: hidden; text-overflow: ellipsis;"></div> <!-- 여러 줄 말줄임표 -->
+                                </div>
+                            </div>
+                        </div>
+                        <!-- 비수기 평일가격 -->
+                        <div class="row">
+                            <div class="col d-flex align-items-center" style="padding-left: 0.75rem;">
+                                <span class="campingcarRental_fee_weekdays new-fs-8 fw-semibold" style="color: #0777F5;"></span>
+                            </div>
+                        </div>
+
+                        <!-- 차고지 주소 -->
+                        <div class="row">
+                            <div class="col pt-2 fw-medium">
+                                <div class="campingcarGarage_address text-primary-emphasis new-fs-8"></div>
+                            </div>
+                        </div>
+                        <!-- 캠핑카유형 해시태그 -->
+                        <div class="row">
+                            <div class="col pt-2 fw-medium d-flex justify-content-start">
+                                <div class="campingcarType_hashtag px-2 py-1 rounded fw-semibold new-fs-8" style="background-color: #F0F4F7; color: #808485;">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- 대여 장소 선택 모달-->
     <div class="modal fade" id="locationModal" tabindex="-1" aria-labelledby="locationModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
@@ -581,6 +631,12 @@
             </div>
         </div>
     </div>
+    <!-- 지역선택 모달 Template -->
+    <div id="regionsListTemplate" class="d-none">
+        <div class="regionstsListWrapper col-6 pb-2 d-flex justify-content-center">
+            <span class="regionsBtn btn btn-outline-light text-dark w-100"></span>
+        </div>
+    </div>
     <!-- 캠핑카 유형 선택 모달 -->
     <div class="modal fade" id="campingcarModal" tabindex="-1" aria-labelledby="campingcarModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
@@ -597,6 +653,15 @@
                 <div class="modal-footer d-flex justify-content-center">
                     <button type="button" class="carTypeBtn btn btn-bc-dark w-100" data-bs-dismiss="modal" onClick="updateSelectedCarTypes()">선택</button>
                 </div>
+            </div>
+        </div>
+    </div>
+    <!-- 캠핑카선택 모달 Template -->
+    <div id="carTypeCheckListTemplate" class="d-none">
+        <div class="col-12 pb-2">
+            <div class="carTypeCheckListWrapper form-check d-flex align-items-center">
+                <input class="carTypeCheck form-check-input" type="checkbox">
+                <label class="form-check-label"></label>
             </div>
         </div>
     </div>
@@ -634,94 +699,6 @@
             </div>
         </div>
     </div>
-
-    <!-- campingcarList Templete -->
-    <div id="campingcarListTemplete" class="d-none">
-        <div class="campingcarListWrapper row px-3">
-            <div class="col px-0 shadow border border-2 rounded-4 my-4">
-                <div class="row mx-0">
-                    <div class="col px-0 d-flex justify-content-center align-items-center overflow-hidden rounded-top-4 position-relative">
-                    <!-- 캠핑카 이미지 -->
-                    <!-- 이미지를 표시하는 img 태그. JavaScript로 src 속성을 설정 -->
-                    <img class="campingcarImg img-fluid" style="max-width: 100%; min-height: 100%;" alt="썸네일">
-                    <!-- 찜 기능 아이콘 -->
-                    <!-- 좋아요 기능을 위한 하트 아이콘. 클릭 시 like() 함수 호출 -->
-                    <div class="position-absolute top-0 end-0 pt-1" style="padding-right: 0.75rem;">
-                        <!-- id 속성에 product_id 변수를 넣어 특정 차량과 연결. onclick 이벤트로 like() 함수 호출 -->
-                        <!-- id 속성을 `heart-${product_id}` 형태로 설정하여 고유한 ID를 부여합니다. 
-                             여기서 product_id는 각 캠핑카 항목의 고유 ID를 의미합니다. 
-                             이를 통해 특정 캠핑카 항목에 대한 좋아요 상태를 개별적으로 관리할 수 있습니다. -->
-                            <i id="heart-${product_id}" onclick="like()" class="fa-regular fa-heart" style="color: #ff0000;"></i>
-                        </div>
-                    </div>
-                </div>
-                <div class="row px-3">
-                    <div class="col">
-                        <!-- 회사명 + 차량명 -->
-                        <div class="row">
-                            <div class="col pe-0 pb-2">
-                                <span class="campingcarComp_name fw-bold fs-6 text-success"></span>
-                                <span class="campingcarProduct_name fw-bold fs-6" style="color: #484647;"></span>
-                                <div class="campingcarShortdescription fw-bold new-fs-85" style="color: #7C7B7B;"></div>
-                            </div>
-                        </div>
-                        <!-- 비수기 평일가격, 주말가격 -->
-                        <div class="row ps-1">
-                            <div class="col fs-6 ps-2 pb-2 d-flex align-items-center">
-                                <span class="text-primary fw-semibold"></span>
-                                <span class="campingcarRental_fee_weekdays"></span>
-                            </div>
-                            <div class="col fs-6 ps-0 pb-2 d-flex justify-content-center aling-items-center">
-                                <span class="text-primary fw-semibold"></span>
-                                <span class="campingcarRental_fee_weekend"></span>
-                            </div>
-                        </div>
-                        <!-- 차고지 주소 + 운전 조건 -->
-                        <div class="row border-top">
-                            <div class="col pt-2 pb-2 fw-bold new-fs-85" style="color: #7C7B7B;">
-                                <div class="campingcarGarage_address"></div>
-                                <div class="campingcarDriver_license_name"></div>
-                                <div class="campingcarDriver_age_condition_name"></div>
-                                <div class="campingcarDriver_experience_condition_name"></div>
-                            </div>
-                        </div>
-                        <!-- 동승,취침, 애완 조건 -->
-                        <div class="row py-2 new-fs-85 border-top">
-                            <div class="col-4 px-0 d-flex justify-content-between align-items-center">
-                                <span class="material-symbols-outlined">groups</span><span class="campingcarSeating_capacity"></span>|
-                            </div>
-                            <div class="col-4 px-0 d-flex justify-content-between align-items-center">
-                                <span class="material-symbols-outlined">hotel</span>
-                                <span class="campingcarSleeping_capacity"></span>|
-                            </div>
-                            <div class="col-4 px-0 d-flex align-items-center">
-                                <span class="material-symbols-outlined">Pets</span>
-                                <span class="campingcarPet_friendly"></span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- 지역선택 모달 Template -->
-    <div id="regionsListTemplate" class="d-none">
-        <div class="regionstsListWrapper col-6 pb-2 d-flex justify-content-center">
-          <span class="regionsBtn btn btn-outline-light text-dark w-100"></span>
-        </div>
-    </div>
-
-    <!-- 캠핑카선택 모달 Template -->
-    <div id="carTypeCheckListTemplate" class="d-none">
-        <div class="col-12 pb-2">
-            <div class="carTypeCheckListWrapper form-check d-flex align-items-center">
-                <input class="carTypeCheck form-check-input" type="checkbox">
-                <label class="form-check-label"></label>
-            </div>
-        </div>
-    </div>
-
 
 
 
@@ -925,37 +902,19 @@
                         const campingcarProduct_name = newCampingcarListWrapper.querySelector(".campingcarProduct_name");
                         campingcarProduct_name.innerText = e.product_name;
 
-                        const campingcarShortdescription = newCampingcarListWrapper.querySelector(".campingcarShortdescription");
-                        campingcarShortdescription.innerText = e.shortdescription;
-
                         // 가격 정보 설정
                         const campingcarRental_fee_weekdays = newCampingcarListWrapper.querySelector(".campingcarRental_fee_weekdays");
-                        campingcarRental_fee_weekdays.innerText = `평일 가격 : ${e.rental_fee_weekdays.toLocaleString('ko-KR')}원`;
-
-                        const campingcarRental_fee_weekend = newCampingcarListWrapper.querySelector(".campingcarRental_fee_weekend");
-                        campingcarRental_fee_weekend.innerText = `주말 가격 : ${e.rental_fee_weekend.toLocaleString('ko-KR')}원`;
+                        campingcarRental_fee_weekdays.innerText = `${e.rental_fee_weekdays.toLocaleString('ko-KR')}원`;
 
                         // 주소 및 운전 조건 설정
                         const campingcarGarage_address = newCampingcarListWrapper.querySelector(".campingcarGarage_address");
                         campingcarGarage_address.innerText = `차고지 주소 : ${e.garage_address}`;
 
-                        const campingcarDriver_license_name = newCampingcarListWrapper.querySelector(".campingcarDriver_license_name");
-                        campingcarDriver_license_name.innerText = `운전면허증 : ${e.driver_license_name}`;
+                        // 해시태그 설정 (차고지 주소 아래)
+                        const campingcarType_hashtag = newCampingcarListWrapper.querySelector(".campingcarType_hashtag");
+                        campingcarType_hashtag.innerText = `#${e.car_type_name}`;
+                        
 
-                        const campingcarDriver_age_condition_name = newCampingcarListWrapper.querySelector(".campingcarDriver_age_condition_name");
-                        campingcarDriver_age_condition_name.innerText = `운전자 나이 : ${e.driver_age_condition_name}`;
-
-                        const campingcarDriver_experience_condition_name = newCampingcarListWrapper.querySelector(".campingcarDriver_experience_condition_name");
-                        campingcarDriver_experience_condition_name.innerText = `운전 경력 : ${e.driver_experience_condition_name}`;
-
-                        const campingcarSeating_capacity = newCampingcarListWrapper.querySelector(".campingcarSeating_capacity");
-                        campingcarSeating_capacity.innerText = `동승인원 : ${e.seating_capacity}명`; 
-
-                        const campingcarSleeping_capacity = newCampingcarListWrapper.querySelector(".campingcarSleeping_capacity");
-                        campingcarSleeping_capacity.innerText = `취침인원 : ${e.sleeping_capacity}명`;
-
-                        const campingcarPet_friendly = newCampingcarListWrapper.querySelector(".campingcarPet_friendly");
-                        campingcarPet_friendly.innerText = e.pet_friendly;
 
                         // 새로운 캠핑카 항목을 리스트 박스에 추가
                         campingcarListBox.appendChild(newCampingcarListWrapper);
