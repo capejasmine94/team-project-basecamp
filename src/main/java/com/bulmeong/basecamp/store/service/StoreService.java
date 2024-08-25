@@ -20,6 +20,7 @@ import com.bulmeong.basecamp.store.dto.ProductOptionValueDto;
 import com.bulmeong.basecamp.store.dto.ProductRefundDto;
 import com.bulmeong.basecamp.store.dto.ProductRefundReasonDto;
 import com.bulmeong.basecamp.store.dto.ProductReviewDto;
+import com.bulmeong.basecamp.store.dto.ProductSearchOptionData;
 import com.bulmeong.basecamp.store.dto.ProductSubcategoryDto;
 import com.bulmeong.basecamp.store.dto.ProductWishDto;
 import com.bulmeong.basecamp.store.dto.StoreBankAccountDto;
@@ -1170,6 +1171,10 @@ public class StoreService {
 
     public List<Map<String, Object>> getStoreProductByStoreId(int store_id){
         return storeSqlMapper.selectStoreProductDataListByStoreId(store_id);
+    }
+
+    public List<Map<String, Object>> getStoreProductByFilter(ProductSearchOptionData productSearchOptionData){
+        return storeSqlMapper.selectStoreProductDataListByfilter(productSearchOptionData);
     }
 
     public void purchaseConfirmation(int order_product_id){
