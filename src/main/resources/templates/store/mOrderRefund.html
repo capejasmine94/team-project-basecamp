@@ -435,6 +435,7 @@
             })
             .then(response => response.json())
             .then((response) => {
+                console.log(response.data.productRefundId);
                 window.location.href = `/store/refundRequestComplete?id=${response.data.productRefundId}`;
             })
 

@@ -48,4 +48,10 @@
             values
                 (#{account}, #{password}, #{nickname}, default, 1000, #{name})
         </insert>
+
+        <select id="selectUserMileageLogByUserId" resultType="com.bulmeong.basecamp.user.dto.MileageLogDto">
+            select * from bc_user_mileage_log
+            where user_id = #{user_id}
+            order by id desc
+        </select>
 </mapper>

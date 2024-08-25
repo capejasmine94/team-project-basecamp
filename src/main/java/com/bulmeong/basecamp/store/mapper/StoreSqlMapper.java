@@ -146,6 +146,7 @@ public interface StoreSqlMapper {
 
     public List<OrderProductDto> selectOrderProductListByOrderId(@Param("order_id") int order_id, @Param("filterOption") String filterOption);
     public List<OrderProductDto> selectOrderProductListForMyOrderListPage(@Param("order_id") int order_id, @Param("filterOption") String filterOption);
+    public List<OrderProductDto> selectOrderProductListForMyClaimListPage(@Param("order_id") int order_id, @Param("filterOption") String filterOption);
 
     public List<OrderProductDto> selectOrderProductListByStoreId(int store_id);
 
@@ -173,6 +174,8 @@ public interface StoreSqlMapper {
     public int purchaseConfirmationCount(int user_id);
     public int allOrderCount(int user_id);
     public int reviewCompleteCount(int user_id);
+    public int refundCompleteCount(int user_id);
+    public int selectRefundPriceSum(int order_id);
 
     public List<StoreProductDto> selectStoreProductByStoreId(int store_id);
 

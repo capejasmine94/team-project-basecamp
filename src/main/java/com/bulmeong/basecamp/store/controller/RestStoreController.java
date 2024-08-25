@@ -460,6 +460,21 @@ public class RestStoreController {
         return restResponseDto;
     }
 
+    
+    @RequestMapping("getClaimDataList")
+    public RestResponseDto getClaimDataList(HttpSession session, @RequestParam("filterOption")String filterOption){
+        RestResponseDto restResponseDto = new RestResponseDto();
+
+        UserDto userDto = (UserDto)session.getAttribute("sessionUserInfo");
+        int user_id = userDto.getId();
+
+        List<Map<String, Object>> orderDataList = storeService.getStoreClaimDataListByUserId(user_id, filterOption);
+
+        restResponseDto.add("orderDataList", orderDataList);
+
+        return restResponseDto;
+    }
+
     @RequestMapping("getStoreProductList")
     public RestResponseDto getStoreProductList(HttpSession session){
         RestResponseDto restResponseDto = new RestResponseDto();

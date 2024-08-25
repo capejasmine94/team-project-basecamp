@@ -144,9 +144,9 @@
                     </div>
                     <div class="row accordion-collapse collapse p-0" id="second-collapse" data-bs-parent="#leftAccordion">
                         <div class="col">
-                            <a class="row accordion-body py-3 ps-4 subcategory" href="/storeCenter/orderIntegration">
+                            <!-- <a class="row accordion-body py-3 ps-4 subcategory" href="/storeCenter/orderIntegration">
                                 주문 통합 검색
-                            </a>
+                            </a> -->
                             <a class="row accordion-body py-3 ps-4 subcategory" href="/storeCenter/sendProcessing">
                                 발송관리
                             </a>
@@ -460,31 +460,31 @@
                                     판매상태
                                 </div>
                                 <div class="col-auto d-flex align-items-center">
-                                    <input type="checkbox" class="form-check-input rounded-0 fs-5 m-0" id="All">
+                                    <input type="checkbox" class="form-check-input rounded-0 fs-5 m-0 productStatusCheckBox" id="All" onchange="selectedOption(this)">
                                     <label class="form-check-label" for="All">
                                         &nbsp;&nbsp;전체
                                     </label>
                                 </div>
                                 <div class="col-auto d-flex align-items-center">
-                                    <input type="checkbox" class="form-check-input rounded-0 fs-5 m-0" id="sale">
+                                    <input type="checkbox" class="form-check-input rounded-0 fs-5 m-0 productStatusCheckBox" id="sale" onchange="selectedOption(this)">
                                     <label class="form-check-label" for="sale">
                                         &nbsp;&nbsp;판매중
                                     </label>
                                 </div>
                                 <div class="col-auto d-flex align-items-center">
-                                    <input type="checkbox" class="form-check-input rounded-0 fs-5 m-0" id="soldout">
+                                    <input type="checkbox" class="form-check-input rounded-0 fs-5 m-0 productStatusCheckBox" id="soldout" onchange="selectedOption(this)">
                                     <label class="form-check-label" for="soldout">
                                         &nbsp;&nbsp;품절
                                     </label>
                                 </div>
                                 <div class="col-auto d-flex align-items-center">
-                                    <input type="checkbox" class="form-check-input rounded-0 fs-5 m-0" id="pendingApproval">
+                                    <input type="checkbox" class="form-check-input rounded-0 fs-5 m-0 productStatusCheckBox" id="pendingApproval" onchange="selectedOption(this)">
                                     <label class="form-check-label" for="pendingApproval">
                                         &nbsp;&nbsp;승인대기
                                     </label>
                                 </div>
                                 <div class="col-auto d-flex align-items-center">
-                                    <input type="checkbox" class="form-check-input rounded-0 fs-5 m-0" id="prohibited">
+                                    <input type="checkbox" class="form-check-input rounded-0 fs-5 m-0 productStatusCheckBox" id="prohibited" onchange="selectedOption(this)">
                                     <label class="form-check-label" for="prohibited">
                                         &nbsp;&nbsp;판매금지
                                     </label>
@@ -701,6 +701,32 @@
                 return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
             }
 
+
+            function selectedOption(checkBox){
+                const productStatusCheckBoxList = document.querySelectorAll(".productStatusCheckBox");
+
+                if(checkBox.id == 'All'&& checkBox.checked==true){
+                    productStatusCheckBoxList.forEach(productStatusCheckBox => productStatusCheckBox.checked=true)
+                }else if(checkBox.id == 'All'&& checkBox.checked==false){
+                    productStatusCheckBoxList.forEach(productStatusCheckBox => productStatusCheckBox.checked=false)
+                }else if(checkBox.id != 'All'&&checkBox.checked==true){
+                    
+                    const AllCheckBox = document.getElementById("All");
+
+                    for(productStatusCheckBox of productStatusCheckBoxList){
+                        if(productStatusCheckBox.id != "All" && productStatusCheckBox.checked == false){
+                            AllCheckBox.checked = false
+                            return;
+                        }
+                    }
+
+                    AllCheckBox.checked = true;
+                    
+                }else if(checkBox.id != 'All'&&checkBox.checked==false){
+                    document.getElementById("All").checked = false;
+                }
+            }
+
             function reloadProductList(){
                 const url = "/api/store/getStoreProductList"
 
@@ -821,7 +847,6 @@
                 leftMenu.style.paddingTop = height + 'px';
             }
             onResize();
-
             window.addEventListener("resize",function(){onResize();});
 
             window.addEventListener("DOMContentLoaded", () => {

@@ -645,6 +645,16 @@
         <if test="filterOption=='구매확정'">
             and status in ('구매확정', '리뷰작성완료')
         </if>
+        and status not in ('환불완료')
+    </select>
+
+    <select id="selectOrderProductListForMyClaimListPage" resultType="com.bulmeong.basecamp.store.dto.OrderProductDto">
+        select * from order_product
+        where order_id = #{order_id}
+        <if test="filterOption!=null and filterOption!='전체'">
+            and status = #{filterOption}
+        </if>
+        and status not in ('주문완료', '상품준비중', '배송완료', '구매확정', '리뷰작성완료')
     </select>
 
     <select id="orderCompleteCount" resultType="int">
@@ -673,6 +683,20 @@
         inner join store_order so on op.order_id = so.id
         where so.user_id = #{user_id}
         and op.status = '리뷰작성완료'
+    </select>
+
+    <select id="refundCompleteCount" resultType="int">
+        select count(*) from order_product op
+        inner join store_order so on op.order_id = so.id
+        where so.user_id = #{user_id}
+        and op.status = '환불완료'
+    </select>
+
+    <select id="selectRefundPriceSum" resultType="int">
+        select coalesce(sum(op.order_price), 0) from order_product op 
+        inner join store_order so on op.order_id = so.id 
+        where so.id = #{order_id}
+        and op.status = '환불완료'
     </select>
 
     <select id="allOrderCount" resultType="int">
