@@ -1,119 +1,23 @@
 <!-- 최상단 헤더 -->
 <div th:fragment="topNavi">
-    <div class="container-fluid fixed-top">
-        <div class="row ps-4 pe-2 align-items-center" style="height: 3.625em; background-color: #fff;">
-            <div class="col-10 p-0 fs-3 d-flex align-items-center">
-                <a href="/"  th:if="${session.sessionUserInfo != null}">
-                    <img src="/public/img/common/배캠.png" style="width: 40%">
+    <div class="container-fluid fixed-top bg-white shadow-sm" style="height: 3.625em">
+        <div class="row">
+            <div class="col align-itmes-bottomline px-3 py-3 shadow-sm bg-whihte">
+                <a href="/"  th:if="${session.sessionUserInfo != null}" class="col-auto p-0 fw-bold d-flex align-itmes-center text-black">
+                    <img src="/public/img/common/배캠.png" style="width: 6.5em">
                 </a>
             </div>
-            <div class="col-1 d-flex justify-content-end pe-0 fw-bold text-black">
-                <a href="/campingcar/rentUseageHistory" class="col-auto p-0 fw-bold text-black">
-                    <span class="material-symbols-outlined">calendar_month</span>
-                </a>
-            </div>
-
-            <div class="col-1 d-flex justify-content-end p-0 fw-bold text-black">
-                <a href="/campingcar/rentUseageHistory" >
-                    <span class="material-symbols-outlined">
-                        notifications
-                    </span>
-                </a>
-            </div>
-
-        </div>
-    </div>
-</div>
-
-<!-- 서브 헤더 -->
-<div th:fragment="subNavi" class="header d-flex align-items-center border-bottom bg-primary2">
-    <div class="container">
-        <nav class="navbar position-relative d-flex aligin-items-center">
-            <a href="javascript:history.back();" class="d-flex align-items-center pe-3">
-                <i class="bi bi-arrow-left fs-3 text-white lh-1"></i>
+            <div class="col fw-semibold text-body-secondary ps-2 f09 align-self-end"></div>
+            <a href="/campingcar/rentUseageHistory" class="col-auto pe-1 py-3 d-flex align-items-center text-black">
+                <span class="material-symbols-outlined fw-light">calendar_month</span>
             </a>
-            <div class="d-flex align-items-center">
-                <a href="/user/myPage" th:if="${session.sessionUserInfo != null}" class="profile_icon overflow-hidden d-block me-2 rounded-pill">
-                    <img th:if="${session.sessionUserInfo.userDto.profile_image != null}" th:src="|/images/${session.sessionUserInfo.userDto.profile_image}|" alt=" " class="img-fluid">
-                    <i th:if="${session.sessionUserInfo.userDto.profile_image == null}" class="bi bi-person-circle fs-2 lh-1 text-white"></i>
-                </a>
-                <a href=""><i class="bi bi-bell fs-5 text-white"></i></a>
-            </div>
-        </nav>
+            <a href="/campingcar/rentUseageHistory" class="col-auto pe-2 py-3 d-flex align-items-center text-black">
+                <span class="material-symbols-outlined fw-light">notifications</span>
+            </a>
+        </div>
     </div>
 </div>
 
-<!-- 임시 메뉴 -->
-<div th:fragment="menuNavi" class="header-menu sticky-top bg-white">
-    <div class="container">
-        <div class="row p-0 d-flex justify-content-between">
-            <div class="col text-center">
-                <div class="row">
-                    <div class="col py-0">
-                        <a href="">
-                            <span class="material-symbols-outlined">
-                                heart_plus
-                            </span>
-                        </a>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col fs-6 fw-bold">
-                        찜
-                    </div>
-                </div>
-            </div>
-            <div class="col text-center">
-                <div class="row">
-                    <div class="col py-0">
-                        <a href="">
-                            <span class="material-symbols-outlined">
-                                calendar_month
-                            </span>
-                        </a>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col fs-6 fw-bold">
-                        <a href="/campingcar/rentUseageHistory">예약내역</a>
-                    </div>
-                </div>
-            </div>
-            <div class="col text-center">
-                <div class="row">
-                    <div class="col py-0">
-                        <a href="">
-                            <span class="material-symbols-outlined">
-                                search
-                            </span>
-                        </a>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col fs-6 fw-bold">
-                        검색
-                    </div>
-                </div>
-            </div>
-            <div class="col text-center">
-                <div class="row">
-                    <div class="col py-0">
-                        <a href="">
-                            <span class="material-symbols-outlined">
-                                account_circle
-                            </span>
-                        </a>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col fs-6 fw-bold">
-                        내정보
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div> 
-</div>
 
 <!-- 공통 푸터 -->
 <div th:fragment="bottomNavi" class="footer py-5 mt-5">

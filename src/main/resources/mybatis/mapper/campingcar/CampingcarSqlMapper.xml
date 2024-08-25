@@ -396,9 +396,10 @@
                     </foreach>
                 </if>
                 AND bc.id not in (
-                    select DISTINCT (product_id) from bc_reservation br
+                    select DISTINCT product_id from bc_reservation
                     where cancellation_date is NULL
-                    and (start_date &lt;= #{rentDate} AND end_date &gt;= #{returnDate}))
+                    AND start_date &lt;= #{rentDate} 
+                    AND end_date &gt;= #{returnDate})
             ORDER BY 
                 bc.id DESC
     </select>
