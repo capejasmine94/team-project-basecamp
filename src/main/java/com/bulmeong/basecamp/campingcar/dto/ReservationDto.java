@@ -13,6 +13,7 @@ public class ReservationDto {
     int product_id;
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
     Date start_date;
+    
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
     Date end_date;
     String progress;

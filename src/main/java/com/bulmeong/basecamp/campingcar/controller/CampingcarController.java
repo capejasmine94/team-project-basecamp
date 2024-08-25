@@ -2,6 +2,8 @@ package com.bulmeong.basecamp.campingcar.controller;
 
 import java.io.File;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -275,29 +277,30 @@ public class CampingcarController {
     }
 
     @RequestMapping("searchResultsPage")
-    public String searchResultsPage(@RequestParam(name = "location", required = false) String location,
-    @RequestParam(name = "carTypes", required = false) List<String> carTypes,
-    @RequestParam(name = "rentDate", required = false) String rentDate,
-    @RequestParam(name = "returnDate", required = false) String returnDate,
-    Model model) {
-        Map<String,Object> map = new HashMap<>();
+    public String searchResultsPage(
+        @RequestParam(name = "location", required = false) String location,
+        @RequestParam(name = "carTypes", required = false) List<String> carTypes,
+        @RequestParam(name = "rentDate", required = false) String rentDate,
+        @RequestParam(name = "returnDate", required = false) String returnDate,
+        Model model) {
+
+        Map<String, Object> map = new HashMap<>();
         map.put("location", location);
         map.put("carTypes", carTypes);
+
         if (rentDate != null && returnDate != null) {
-            String formattedRentDate = rentDate + " 00:00:00";
-            String formattedReturnDate = returnDate + " 23:59:59";
-    
-            map.put("rentDate", formattedRentDate);
-            map.put("returnDate", formattedReturnDate);
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+            LocalDate rentDateTime = LocalDate.parse(rentDate, formatter);
+            LocalDate returnDateTime = LocalDate.parse(returnDate, formatter);
+
+            map.put("rentDate", java.sql.Date.valueOf(rentDateTime));
+            map.put("returnDate", java.sql.Date.valueOf(returnDateTime));
         }
 
-
-        List<Map<String,Object>> searchResultList = campingcarService.getSearchResultList(map);
-        System.out.println("@@@@@@@@@@@@@@@@@@"+searchResultList);
+        List<Map<String, Object>> searchResultList = campingcarService.getSearchResultList(map);
         model.addAttribute("searchResultList", searchResultList);
 
-        
-        return "campingcar/searchResultsPage";
+        return "/campingcar/searchResultsPage";
     }
 
 
