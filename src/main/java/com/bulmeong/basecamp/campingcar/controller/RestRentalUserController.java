@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.bulmeong.basecamp.campingcar.dto.CampingCarLikeDto;
 import com.bulmeong.basecamp.campingcar.dto.CarTypeDto;
 import com.bulmeong.basecamp.campingcar.dto.LocationDto;
+import com.bulmeong.basecamp.campingcar.dto.RentUserDto;
 import com.bulmeong.basecamp.campingcar.dto.RestRentUserResponseDto;
 import com.bulmeong.basecamp.campingcar.service.CampingcarService;
 import com.bulmeong.basecamp.campingcar.service.PartnerCampingCarService;
@@ -26,7 +28,7 @@ public class RestRentalUserController {
     @Autowired
     private PartnerCampingCarService partnerCampingCarService;
     @Autowired
-    private CampingcarService campingCarService;
+    private CampingcarService campingcarService;
 
 
 // user 확인 작업
@@ -47,6 +49,24 @@ public class RestRentalUserController {
         
     }
 
+    // rentUser검증
+    @RequestMapping("isRentUser")
+    public RestRentUserResponseDto isRentUser(HttpSession session, UserDto userDto, RentUserDto rentUserDto, Model model) {
+    
+        RestRentUserResponseDto restRentUserResponseDto = new RestRentUserResponseDto();
+        restRentUserResponseDto.setResult("success");
+    
+        UserDto sessionUserInfo = (UserDto)session.getAttribute("sessionUserInfo");
+        if(sessionUserInfo != null) {
+            boolean isRentUser = campingcarService.isRentUser(sessionUserInfo.getId());
+            restRentUserResponseDto.add("isRentUser", isRentUser);
+        } else {
+            model.addAttribute("isRentUser", false);
+        }
+    
+        return restRentUserResponseDto;
+    }
+
     // 좋아요 관련 
     @RequestMapping("like")
     public RestRentUserResponseDto like(CampingCarLikeDto campingCarLikeDto, HttpSession session) {
@@ -54,10 +74,10 @@ public class RestRentalUserController {
         restRentUserResponseDto.setResult("success");
 
         UserDto userDto = (UserDto) session.getAttribute("sessionUserInfo");
-        int rentUserPk = campingCarService.getExistingByRentUserId(userDto.getId());
+        int rentUserPk = campingcarService.getExistingByRentUserId(userDto.getId());
         campingCarLikeDto.setRent_user_id(rentUserPk);
         
-        campingCarService.like(campingCarLikeDto);
+        campingcarService.like(campingCarLikeDto);
         
         return restRentUserResponseDto;
     }
@@ -69,10 +89,10 @@ public class RestRentalUserController {
         restRentUserResponseDto.setResult("success");
         
         UserDto userDto = (UserDto) session.getAttribute("sessionUserInfo");
-        int rentUserPk = campingCarService.getExistingByRentUserId(userDto.getId());
+        int rentUserPk = campingcarService.getExistingByRentUserId(userDto.getId());
         campingCarLikeDto.setRent_user_id(rentUserPk);
 
-        campingCarService.unLike(campingCarLikeDto);
+        campingcarService.unLike(campingCarLikeDto);
 
         return restRentUserResponseDto;
     }
@@ -83,7 +103,7 @@ public class RestRentalUserController {
         RestRentUserResponseDto restRentUserResponseDto = new RestRentUserResponseDto();
         restRentUserResponseDto.setResult("success");
 
-        int count = campingCarService.getLikeTotalCountByProduct_id(product_id);
+        int count = campingcarService.getLikeTotalCountByProduct_id(product_id);
 
         restRentUserResponseDto.add("count", count);
 
@@ -97,10 +117,10 @@ public class RestRentalUserController {
         restRentUserResponseDto.setResult("success");
 
         UserDto userDto = (UserDto) session.getAttribute("sessionUserInfo");
-        int rentUserPk = campingCarService.getExistingByRentUserId(userDto.getId());
+        int rentUserPk = campingcarService.getExistingByRentUserId(userDto.getId());
         campingCarLikeDto.setRent_user_id(rentUserPk);
 
-        Boolean isLikedByUser = campingCarService.isLiked(campingCarLikeDto);
+        Boolean isLikedByUser = campingcarService.isLiked(campingCarLikeDto);
         restRentUserResponseDto.add("isLikedByUser", isLikedByUser);
 
 
@@ -139,7 +159,7 @@ public class RestRentalUserController {
             RestRentUserResponseDto restRentUserResponseDto = new RestRentUserResponseDto();
             restRentUserResponseDto.setResult("success");
 
-            List<LocalDate> reservationList = campingCarService.getReservedDates(product_id);
+            List<LocalDate> reservationList = campingcarService.getReservedDates(product_id);
             // System.out.println("리스트"+reservationList);
 
             // JSON으로 반환할 수 있도록 LocalDate를 문자열로 변환

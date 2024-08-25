@@ -332,16 +332,18 @@
             <div class="col px-3 location bg-white">
                 <div class="row custom-row-spacing mb-2">
                     <div class="col-6">
-                        <div class="card nav-card">
-                            <div class="card-body">
-                                <div class="card-title">대여</div>
-                                <p class="card-text">최상의 휴식과 힐링을 한번에</p>
-                                <img src="/public/img/campingCarImage/캠핑카_대여.png" alt="Car Icon">
+                        <a href="gotoRentCar" onclick="gotoRentCar(event)">
+                            <div class="card nav-card">
+                                <div class="card-body">
+                                    <div class="card-title">대여</div>
+                                    <p class="card-text">최상의 휴식과 힐링을 한번에</p>
+                                    <img src="/public/img/campingCarImage/캠핑카_대여.png" alt="Car Icon">
+                                </div>
                             </div>
-                        </div>
+                        </a>
                     </div>
                     <div class="col-6">
-                        <a href="/campingcar/rentUseageHistory">
+                        <a href="/campingcar/rentUseageHistory" onclick="goToReservationHistory(event)">
                             <div class="card transit-card">
                                 <div class="card-body">
                                     <div class="card-title">예약내역</div>
@@ -355,7 +357,7 @@
                 </div>
                 <div class="row custom-row-spacing mb-2">
                     <div class="col-6">
-                        <a href="myLike">
+                        <a href="/campingcar/myLike" onclick="goTomyLike(event)">
                             <div class="card parking-card">
                                 <div class="card-body">
                                     <div class="card-title">좋아요</div>
@@ -366,14 +368,16 @@
                         </a>
                     </div>
                     <div class="col-6">
-                        <div class="card drive-card">
-                            <div class="card-body">
-                                <div class="card-title">대여/반납</div>
-                                <p class="card-text text-dark">대여,반납할때는 체크리스트 점검</p>
-                                <img src="/public/img/campingCarImage/camera.png" alt="Drive Icon">
-                                <div class="badge badge-discount">체크리스트는 여기서!!</div>
+                        <a href="campingcar/carExteriorInteriorShoot" onclick="carExteriorInteriorShoot(event)">
+                            <div class="card drive-card">
+                                <div class="card-body">
+                                    <div class="card-title">대여/반납</div>
+                                    <p class="card-text text-dark">대여,반납할때는 체크리스트 점검</p>
+                                    <img src="/public/img/campingCarImage/camera.png" alt="Drive Icon">
+                                    <div class="badge badge-discount">체크리스트는 여기서!!</div>
+                                </div>
                             </div>
-                        </div>
+                        </a>
                     </div>
                 </div>
                 <!-- 첫번째 row -->
@@ -572,7 +576,7 @@
                     </div>
                 </div>
                 <div class="modal-footer d-flex justify-content-center">
-                    <button type="button" class="btn text-dark w-100" data-bs-dismiss="modal" style="background-color: #C6ED6F;">취소하기</button>
+                    <button type="button" class="btn btn-bc-dark w-100 " data-bs-dismiss="modal">취소하기</button>
                 </div>
             </div>
         </div>
@@ -591,7 +595,7 @@
                     </div>
                 </div>
                 <div class="modal-footer d-flex justify-content-center">
-                    <button type="button" class="carTypeBtn btn text-dark w-100" data-bs-dismiss="modal" style="background-color: #C6ED6F;" onClick="updateSelectedCarTypes()">선택</button>
+                    <button type="button" class="carTypeBtn btn btn-bc-dark w-100" data-bs-dismiss="modal" onClick="updateSelectedCarTypes()">선택</button>
                 </div>
             </div>
         </div>
@@ -601,14 +605,14 @@
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header border-0">
-                    <h5 class="modal-title text-center w-100" id="rentdateModalLabel">언제 필요한가요?</h5>
+                    <h5 class="modal-title text-center w-100 ps-4" id="rentdateModalLabel">언제 필요한가요?</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
                     <div id="calendar"></div>
                 </div>
                 <div class="modal-footer border-0">
-                    <button type="button" class="btn w-100 text-dark" style="background-color: #C6ED6F;" data-bs-dismiss="modal" onclick="confirmRentDate()">확인</button>
+                    <button type="button" class="btn btn-bc-dark w-100" data-bs-dismiss="modal" onclick="confirmRentDate()">확인</button>
                 </div>
             </div>
         </div>
@@ -618,14 +622,14 @@
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header border-0">
-                    <h5 class="modal-title text-center w-100" id="returndateModalLabel">반납일 선택</h5>
+                    <h5 class="modal-title text-center w-100 ps-4" id="returndateModalLabel">반납일 선택</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
                     <div id="calendarReturn"></div>
                 </div>
                 <div class="modal-footer border-0">
-                    <button type="button" class="btn w-100 text-dark" style="background-color: #C6ED6F;" data-bs-dismiss="modal" onclick="confirmReturnDate()">확인</button>
+                    <button type="button" class="btn btn-bc-dark w-100 " data-bs-dismiss="modal" onclick="confirmReturnDate()">확인</button>
                 </div>
             </div>
         </div>
@@ -721,8 +725,9 @@
 
 
 
-
-    <!-- <div th:replace="~{campingcar/campingNavi::bottomNaviBasecamp}"></div> -->
+    <!-- footer -->
+    <div th:replace="~{campingcar/campingNavi::footerNavi}"></div>
+    <!-- bottom -->
     <div th:replace="~{campingcar/campingNavi::bottomNaviBasecamp}"></div>
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <!-- Bootstrap JS -->
@@ -750,6 +755,115 @@
                 .then((response) => {
                     // 응답에서 사용자 ID를 추출하여 전역 변수에 저장
                     myId = response.data.id;
+                });
+        }
+
+        //대여하기 버튼 클릭 이벤트 리스너 추가
+        function gotoRentCar(envet) {
+            // 링크의 기본 동작을 차단
+            event.preventDefault();
+
+        // 사용자가 로그인하지 않은 경우 로그인 페이지로 리다이렉트
+        if (myId == null) {
+            alert("로그인 하셔야 이용 가능합니다. 로그인 페이지로 이동해 주세요.");
+            return;
+        }
+
+        // rent_user_id를 확인하는 API 요청
+        const checkUrl = `/api/rent-user/isRentUser`;
+        fetch(checkUrl)
+            .then(response => response.json())
+            .then(response => {
+                if (response.data.isRentUser) {
+                    // rent_user_id가 있는 경우, 대여하기 페이지로 이동
+                    window.location.href = "/campingcar/gotoRentCar";
+                } else {
+                    // rent_user_id가 없는 경우 경고 메시지 표시하고 페이지 이동 차단
+                    alert("캠핑카 고객만 서비스를 이용하실 수 있습니다.");
+                    return;
+                }
+            });
+        }
+
+
+        // 예약내역 버튼 클릭 이벤트 리스너 추가
+        function goToReservationHistory(event) {
+            // 링크의 기본 동작을 차단
+            event.preventDefault();
+
+            // 사용자가 로그인하지 않은 경우 로그인 페이지로 리다이렉트
+            if (myId == null) {
+                alert("로그인 하셔야 이용 가능합니다. 로그인 페이지로 이동해 주세요.");
+                return;
+            }
+
+            // rent_user_id를 확인하는 API 요청
+            const checkUrl = `/api/rent-user/isRentUser`;
+            fetch(checkUrl)
+                .then(response => response.json())
+                .then(response => {
+                    if (response.data.isRentUser) {
+                        // rent_user_id가 있는 경우, 예약 내역 페이지로 이동
+                        window.location.href = "/campingcar/rentUseageHistory";
+                    } else {
+                        // rent_user_id가 없는 경우 경고 메시지 표시하고 페이지 이동 차단
+                        alert("캠핑카 고객만 서비스를 이용하실 수 있습니다.");
+                        return;
+                    }
+                });
+        }
+
+        // 좋아요 내역 버튼 클릭 이벤트 리스너 추가
+        function goTomyLike(event) {
+            // 링크의 기본 동작을 차단
+            event.preventDefault();
+
+            // 사용자가 로그인하지 않은 경우 로그인 페이지로 리다이렉트
+            if (myId == null) {
+                alert("로그인 하셔야 이용 가능합니다. 로그인 페이지로 이동해 주세요.");
+                return;
+            }
+
+            // rent_user_id를 확인하는 API 요청
+            const checkUrl = `/api/rent-user/isRentUser`;
+            fetch(checkUrl)
+                .then(response => response.json())
+                .then(response => {
+                    if (response.data.isRentUser) {
+                        // rent_user_id가 있는 경우, 좋아요 내역 페이지로 이동
+                        window.location.href = "/campingcar/myLike";
+                    } else {
+                        // rent_user_id가 없는 경우 경고 메시지 표시하고 페이지 이동 차단
+                        alert("캠핑카 고객만 서비스를 이용하실 수 있습니다.");
+                        return;
+                    }
+                });
+        }
+
+        // 차량 대여 반납 점검 내역 이벤트 리스너
+        function carExteriorInteriorShoot() {
+            // 링크의 기본 동작을 차단
+            event.preventDefault();
+
+            // 사용자가 로그인하지 않은 경우 로그인 페이지로 리다이렉트
+            if (myId == null) {
+                alert("로그인 하셔야 이용 가능합니다. 로그인 페이지로 이동해 주세요.");
+                return;
+            }
+
+            // rent_user_id를 확인하는 API 요청
+            const checkUrl = `/api/rent-user/isRentUser`;
+            fetch(checkUrl)
+                .then(response => response.json())
+                .then(response => {
+                    if (response.data.isRentUser) {
+                        // rent_user_id가 있는 경우, 차량 대여 반납 점검 내역 페이지로 이동
+                        window.location.href = "/campingcar/carExteriorInteriorShoot";
+                    } else {
+                        // rent_user_id가 없는 경우 경고 메시지 표시하고 페이지 이동 차단
+                        alert("캠핑카 고객만 서비스를 이용하실 수 있습니다.");
+                        return;
+                    }
                 });
         }
 
@@ -795,7 +909,7 @@
                         // 이를 통해 하트 아이콘 클릭 시 like() 함수가 호출되도록 합니다.
                         // product_id는 현재 캠핑카 항목의 고유 ID를 나타내며, 
                         // 이를 통해 특정 캠핑카에 대해 좋아요를 추가하거나 제거할 수 있습니다.
-                        like.setAttribute("onclick", `like(${e.id})`);
+                        like.setAttribute("onclick", `like(${e.id}, event)`);
 
                         // 하트 아이콘의 id 속성 설정
                         const heart = newCampingcarListWrapper.querySelector(".fa-heart");
@@ -858,24 +972,38 @@
         }
 
         // 좋아요 클릭 함수
-        function like(product_id) {
+        function like(product_id, event) {
+            event.stopPropagation(); // 이벤트 전파 중지
+
             // 사용자가 로그인하지 않은 경우 로그인 페이지로 리다이렉트
             if (myId == null) {
                 if (confirm("로그인 하셔야 이용 가능합니다. 로그인 페이지로 이동하시겠습니까?")) {
-                    location.href = "/user/loginPage";
+                    location.href = "/user/login";
                 }
                 return;
             }
 
-            // 좋아요를 추가하는 API 요청
-            const url = `/api/rent-user/like?product_id=${product_id}`;
-            fetch(url)
-                .then(response => response.json()) // JSON 형식으로 응답을 처리
-                .then(response => {
-                    // 좋아요 상태를 갱신합니다.
-                    reloadLike(product_id);
-                });
+            // rent_user_id를 확인하는 API 요청
+            const checkUrl = `/api/rent-user/isRentUser`;
+            fetch(checkUrl)
+            .then(response => response.json())
+            .then(response => {
+                if (response.data.isRentUser) {
+                    // rent_user_id가 있는 경우, 좋아요를 추가하는 API 요청
+                    const url = `/api/rent-user/like?product_id=${product_id}`;
+                    fetch(url)
+                        .then(response => response.json()) // JSON 형식으로 응답을 처리
+                        .then(response => {
+                            // 좋아요 상태를 갱신합니다.
+                            reloadLike(product_id);
+                        });
+                } else {
+                    // rent_user_id가 없는 경우 경고 메시지 표시
+                    alert("캠핑카 고객만 서비스를 이용하실 수 있습니다.");
+                }
+            });
         }
+
 
         // 좋아요 상태를 갱신하는 함수
         function reloadLike(product_id) {
@@ -905,7 +1033,7 @@
 
                         // setAttribute 메서드를 사용하여 하트 아이콘의 onclick 속성을 설정합니다.
                         // 현재 좋아요 상태일 경우 클릭 시 좋아요를 취소하는 unLike() 함수가 호출되도록 설정합니다.
-                        heart.setAttribute("onclick", `unLike(${product_id})`);
+                        heart.setAttribute("onclick", `unLike(${product_id}, event)`);
                     } else {
                         // 좋아요가 눌리지 않은 상태: 하트 아이콘의 클래스를 fa-regular로 변경하여 비활성화
                         heart.classList.remove("fa-solid");
@@ -913,13 +1041,15 @@
 
                         // setAttribute 메서드를 사용하여 하트 아이콘의 onclick 속성을 설정합니다.
                         // 현재 좋아요 상태가 아닐 경우 클릭 시 좋아요를 추가하는 like() 함수가 호출되도록 설정합니다.
-                        heart.setAttribute("onclick", `like(${product_id})`);
+                        heart.setAttribute("onclick", `like(${product_id}, event)`);
                     }
                 });
         }
 
         // 좋아요 취소 함수
-        function unLike(product_id) {
+        function unLike(product_id, event) {
+            event.stopPropagation(); // 이벤트 전파 중지
+
             // 사용자가 로그인하지 않은 경우 로그인 페이지로 리다이렉트
             if (myId == null) {
                 if (confirm("로그인 하셔야 이용 가능합니다. 로그인 페이지로 이동하시겠습니까?")) {
@@ -945,6 +1075,7 @@
             loadRegionOptionList(); // 모달을 열 때 지역 옵션 목록을 로드
             modal.show();
         }
+
         // 대여 장소 모달의 지역 리스트 함수 
         function loadRegionOptionList() {
             const url = "/api/rent-user/getRegionsAll";
@@ -1120,9 +1251,9 @@
             }
 
             html += `
-                        </tbody>
-                    </table>
-                </div>
+                            </tbody>
+                        </table>
+                    </div>
             `;
 
             calendar.innerHTML = html;
@@ -1191,9 +1322,9 @@
             }
 
             html += `
-                        </tbody>
-                    </table>
-                </div>
+                            </tbody>
+                        </table>
+                    </div>
             `;
 
             calendarReturn.innerHTML = html;
@@ -1274,6 +1405,7 @@
             const queryString = `location=${selectedLocation}&carTypes=${selectedCarTypes.join(',')}&rentDate=${selectedRentDate}&returnDate=${selectedReturnDate}`;
             window.location.href = `searchResultsPage?${queryString}`;
         }
+
     </script>
 </body>
 </html>
