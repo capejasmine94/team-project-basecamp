@@ -828,8 +828,8 @@
             sp.price, 
             sp.quantity, 
             sp.status, 
-            COALESCE(spd.percentage, 0) AS percentage,
-            COALESCE(t1.purchase_quantity, 0) AS purchase_quantity
+            coalesce(spd.percentage, 0) as percentage,
+            coalesce(t1.purchase_quantity, 0) as purchase_quantity
         from store_product sp 
         left outer join store_product_discount spd on sp.discount_id = spd.id 
         left outer join (
@@ -838,12 +838,17 @@
             inner join store_order so on op.order_id = so.id 
             inner join store_product sp on sp.id = op.product_id 
             where sp.store_id = #{store_id}
-            ) t1 on t1.id = sp.id
+            group by sp.id
+        ) t1 on t1.id = sp.id
         where sp.store_id = #{store_id}
-        <if test="subcategory_id!=0">
+        <if test="subcategory_id != 0">
             and sp.subcategory_id = #{subcategory_id}
         </if>
-        and sp.status in
+        and 
+        case 
+            when sp.quantity - coalesce(t1.purchase_quantity, 0) &lt;= 0 then '품절'
+            else '판매가능'
+        end in
         <foreach item="status" collection="status_list" open="(" separator="," close=")">
             #{status}
         </foreach>
@@ -856,6 +861,7 @@
         group by sp.id
         order by sp.id desc
     </select>
+
 
     <update id="updateOrderProductStatusToConfirm">
         update order_product

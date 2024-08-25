@@ -153,9 +153,9 @@
                             <!-- <a class="row accordion-body py-3 ps-4 subcategory" href="/storeCenter/cancelManage">
                                 취소관리
                             </a> -->
-                            <a class="row accordion-body py-3 ps-4 subcategory" href="/storeCenter/returnManage">
+                            <!-- <a class="row accordion-body py-3 ps-4 subcategory" href="/storeCenter/returnManage">
                                 반품관리
-                            </a>
+                            </a> -->
                         </div>
                     </div>
 
@@ -203,13 +203,13 @@
                         </div>
                     </div> -->
 
-                    <div class="row category px-3">
+                    <!-- <div class="row category px-3">
                         <div class="col p-0 d-grid border-bottom">
                             <a href="/storeCenter/statistics" type="button" class="py-3 fw-semibold">
                                 통계
                             </a>
                         </div>
-                    </div>
+                    </div> -->
 
                     <div class="row category px-3">
                         <div class="col p-0 d-grid border-bottom">
@@ -829,11 +829,6 @@
 
                     const storeProductRow = document.querySelector("#template .storeProductRow");
 
-                    document.getElementById("AllCount").innerText = `${response.data.storeProductDataList.length}건`
-
-                    let saleCount = 0;
-                    let soldoutCount = 0;
-
                     for(storeProductData of response.data.storeProductDataList){
                         const newStoreProductRow = storeProductRow.cloneNode(true);
 
@@ -849,11 +844,9 @@
 
                         if(quantity-purchase_quantity>0){
                             productStatus.innerText = "판매중";
-                            saleCount++;
                         }else{
                             productStatus.innerText = "품절";
                             productStatus.classList.add("text-danger");
-                            soldoutCount++
                         }
 
                         newStoreProductRow.querySelector(".productPrice").innerText = formatNumberToPrice(storeProductData.price);
@@ -868,8 +861,6 @@
                         storeProductContainer.appendChild(newStoreProductRow);
                     }
 
-                    document.getElementById("saleCount").innerText = `${saleCount}건`
-                    document.getElementById("soldoutCount").innerText = soldoutCount
                 })
 
             }
