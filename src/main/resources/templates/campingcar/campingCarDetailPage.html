@@ -784,7 +784,7 @@
     </div> -->
         
     <div class="container overflow-x-hidden">
-        <div class="row section border-0 pt-3 pb-5" id="reviews">
+        <div class="row section border-0 py-5" id="reviews">
             <div class="col">
                 <div class="row border-bottom pb-4">
                     <div class="col-4 text-center pe-0">
@@ -828,14 +828,14 @@
                         <div class="row d-flex justify-content-between">
                             <div class="col-8 fw-semibold">
                                 <i class="bi bi-star-fill" style="color: #FFD700;"></i>
-                                <span class="new-fs-85" th:text="${reviewList.rate}"></span> 
+                                <span class="new-fs-85" th:text="${reviewList.rate}+'점'"></span> 
                             </div>
-                            <div class="col text-end pt-1">
+                            <div class="col ps-1 text-end pt-1">
                                 <div class="fw-semibold new-fs-7 createdAt" th:text="${#dates.format(reviewList.created_at, 'yyyy.MM.dd HH:mm')}" style="color: #7C7B7B;"></div>
                             </div>
                         </div>
                         <!--리뷰 리스트: 후기 내용-->
-                        <div class="row pt-2 pb-3 border-bottom">
+                        <div class="row pt-1 pb-1 border-bottom">
                             <div class="col">
                                 <span class="fs-7" th:text="${reviewList.content}" style="word-wrap: break-word;"></span>
                             </div>
