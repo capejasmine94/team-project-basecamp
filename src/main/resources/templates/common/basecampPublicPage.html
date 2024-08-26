@@ -477,7 +477,7 @@
                                         <div class="col-auto pe-0 salePrice" th:text="${#numbers.formatDecimal(bestProductData.salePrice, 1, 'COMMA', 0, 'POINT')}">
                                             110,600
                                         </div>
-                                        <div class="col lightFont d-none percentage" th:if="${bestProductData.percentage!=0}" th:text="|${bestProductData.percentage}%|">
+                                        <div class="col lightFont percentage" th:if="${bestProductData.percentage!=0}" th:text="|${bestProductData.percentage}%|">
                                             10%
                                         </div>
                                     </div>
