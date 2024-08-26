@@ -121,7 +121,7 @@ public class CampsiteUserController {
 
     @GetMapping("/pay/completed")
     public String payCompleted(@RequestParam("pg_token") String pgToken) {
-        CampsiteOrderDto campsiteOrderDto = utils.getSession("orderDto");
+        CampsiteOrderDto campsiteOrderDto = utils.getSession("order");
         String[] carNumbers = utils.getSession("carNumbers");
         int useMileage = utils.getSession("useMileage");
         int number = utils.getSession("pointNumber");
