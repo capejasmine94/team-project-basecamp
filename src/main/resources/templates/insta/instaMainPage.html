@@ -138,7 +138,7 @@
                             th:href="${session.sessionUserInfo.id == instaArticleList.instaUserInfoDto.user_id} ?
                                         @{./instaMyPage(user_id=${instaArticleList.instaUserInfoDto.id})} : @{./instaUserPage(user_id=${instaArticleList.instaUserInfoDto.id})}">
                     <span th:text="${instaArticleList.instaUserInfoDto.insta_nickname}" style="font-size: 0.8em;"></span>
-                    <img src="/public/img/instaImage/badge.png" class="img-fluid" style="width: 13px; height: 13px;">
+                    <!-- <img src="/public/img/instaImage/badge.png" class="img-fluid" style="width: 13px; height: 13px;"> -->
                 </a>
 
 
@@ -924,13 +924,13 @@
     <div class="commentWrapper row mt-1">
         <div class="col mt-3">
             <div class="row pe-1 align-items-center">
-                <a class="col-auto pe-0 align-self-center link-dark link-offset-2 link-underline link-underline-opacity-0" href="./instaUserPage" style="position: relative;">
+                <a class="col-auto pe-0 align-self-center link-dark link-offset-2 link-underline link-underline-opacity-0" href="#" style="position: relative;">
                     <img src="/public/img/instaImage/story.jpg" class="img-fluid rounded-circle commentWriteImg" style="position: relative; z-index: 1;">
                     <img class="commentProfile img-fluid rounded-circle commentWriteImage" style="position: absolute; left: 12px; z-index: 2;">
                 </a>
                 <div class="col">
                     <div class="row align-items-center">
-                        <a class="commentName col-auto pe-0 link-dark link-offset-2 link-underline link-underline-opacity-0" href="./instaUserPage">
+                        <a class="commentName col-auto pe-0 link-dark link-offset-2 link-underline link-underline-opacity-0" href="#">
                             닉네임
                         </a>
 
@@ -1025,18 +1025,18 @@
     <div class="replyTemplete row mt-3" style="padding-left: 20%;">
         <div class="col">
             <div class="row pe-1">    
-                <a class="col-auto pe-0 link-dark link-offset-2 link-underline link-underline-opacity-0" href="./instaUserPage" style="position: relative;">
+                <a class="col-auto pe-0 link-dark link-offset-2 link-underline link-underline-opacity-0" href="#" style="position: relative;">
                     <img src="/public/img/instaImage/story.jpg" class="img-fluid rounded-circle replyWriteImg" style="position: relative; z-index: 1;">
                     <img class="replyProfile img-fluid rounded-circle replyWriteImage" style="position: absolute; left: 12px; z-index: 2;">
                 </a>
                 <div class="col align-self-center">
                     <div class="row">
-                        <a class="replyName col-auto pe-0 link-dark link-offset-2 link-underline link-underline-opacity-0" href="./instaUserPage">
+                        <a class="replyName col-auto pe-0 link-dark link-offset-2 link-underline link-underline-opacity-0" href="#">
                             닉네임
                         </a>
-                        <div class="col-auto px-1">
+                        <!-- <div class="col-auto px-1">
                             <img src="/public/img/instaImage/badge.png" class="img-fluid" style="width: 13px; height: 13px;">
-                        </div>
+                        </div> -->
                         <div class="replyDate col-auto ps-1 pe-0 fontNine" style="color: rgb(162, 162, 162); padding-top: 0.5%;">날짜</div>
                         <!-- 삭제버튼 -->
                         <div class="replyDeleteButton d-none col" style="color: rgb(162, 162, 162);">
