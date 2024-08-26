@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>검색창 및 카드 레이아웃</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f5f5f5;
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        .search-bar {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+
+        .search-input-wrapper {
+            display: flex;
+            align-items: center;
+            border-radius: 25px;
+            border: 2px solid #007bff;
+            padding: 5px 15px;
+            background-color: white;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            flex-grow: 1;
+            max-width: 600px;
+            height: 50px;
+        }
+
+        .search-input {
+            border: none;
+            outline: none;
+            font-size: 16px;
+            color: #333;
+            flex-grow: 1;
+            padding: 5px 10px;
+            border-radius: 25px;
+        }
+
+        .search-input::placeholder {
+            color: #aaa;
+        }
+
+        .mic-icon {
+            font-size: 24px;
+            color: #00aaff;
+            margin-left: 10px;
+        }
+
+        .map-icon-wrapper {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 50px;
+            height: 50px;
+            background-color: white;
+            border: 2px solid #007bff;
+            border-radius: 50%;
+            margin-left: 10px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .map-icon {
+            font-size: 22px;
+            color: #007bff;
+        }
+
+        .section {
+            margin: 0 5px; /* 좌우 여백을 줄이기 위해 조정 */
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            gap: 5px; /* 카드 사이의 여백을 줄이기 위해 추가 */
+        }
+
+        .card-custom {
+            background-color: white;
+            border-radius: 15px;
+            padding: 20px; /* 카드 내부를 넓게 하기 위해 패딩 조정 */
+            text-align: left;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            margin-bottom: 10px; /* 카드 간의 하단 여백을 줄임 */
+            width: calc(50% - 5px); /* 카드 너비를 더 넓게 조정하고 여백 감소 */
+            min-height: 140px; /* 카드의 높이를 조금 더 늘려 내부를 넓게 */
+            color: white;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            position: relative;
+        }
+
+        .card-custom .title {
+            font-size: 16px;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .card-custom .subtitle {
+            font-size: 14px;
+            color: #eee;
+        }
+
+        .card-custom img {
+            width: 40px;
+            position: absolute;
+            bottom: 15px;
+            right: 15px;
+        }
+
+        .nav-card {
+            background: linear-gradient(135deg, #6f86d6, #48c6ef);
+        }
+
+        .transit-card {
+            background: linear-gradient(135deg, #223e5c, #1d3557);
+        }
+
+        .parking-card,
+        .drive-card {
+            background-color: #ffffff;
+            color: #333;
+            border: 1px solid #ddd;
+        }
+
+        .badge {
+            background-color: #f7f7f7;
+            color: #888;
+            font-size: 12px;
+            padding: 2px 5px;
+            border-radius: 5px;
+            position: absolute;
+            top: 10px;
+            right: 10px;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- 검색바 -->
+    <div class="search-bar">
+        <div class="search-input-wrapper">
+            <input type="text" class="search-input" placeholder="어디로 갈까요?">
+            <span class="mic-icon">&#127908;</span> <!-- 유니코드로 마이크 아이콘 표현 -->
+        </div>
+        <div class="map-icon-wrapper">
+            <span class="map-icon">&#10148;</span> <!-- 유니코드로 지도 아이콘 표현 -->
+        </div>
+    </div>
+
+    <!-- 섹션 1 -->
+    <div class="section">
+        <div class="card-custom nav-card">
+            <div class="title">내비</div>
+            <div class="subtitle">가장 빠르고 정확한 길안내</div>
+            <img src="car-icon.png" alt="Car Icon">
+        </div>
+        <div class="card-custom transit-card">
+            <div class="title">대중교통</div>
+            <div class="subtitle">버스, 지하철도 티맵에서</div>
+            <img src="bus-icon.png" alt="Bus Icon">
+            <div class="badge">N</div>
+        </div>
+    </div>
+
+    <!-- 섹션 2 -->
+    <div class="section">
+        <div class="card-custom parking-card">
+            <div class="title">주차</div>
+            <div class="subtitle">주차요금 할인받고 간편결제</div>
+            <img src="parking-icon.png" alt="Parking Icon">
+        </div>
+        <div class="card-custom drive-card">
+            <div class="title">대리운전</div>
+            <div class="subtitle">음주운전예방 할인쿠폰 증정</div>
+            <img src="drive-icon.png" alt="Drive Icon">
+            <div class="badge">할인+적립 더블혜택</div>
+        </div>
+    </div>
+
+</body>
+</html>

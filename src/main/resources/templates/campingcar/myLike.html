@@ -12,226 +12,230 @@
     <link href="/public/css/common.css" rel="stylesheet">
     <link href="/public/css/basecamp.css" rel="stylesheet">
     <script src="/public/js/lockLikeMobile.js"></script>
+    <link rel="shotcut icon" href="/public/img/common/campFire.ico" type="image/x-icon">
     <style>
-        .carousel-inner img {
-            height: 550px; /* 이미지 높이 조정 */
+        body {
+            margin: 0;
+            padding: 0;
         }
-        .rounded-top-only {
-            border-top-left-radius: 30px; /* 상단 좌측 모서리 둥글게 */
-            border-top-right-radius: 30px; /* 상단 우측 모서리 둥글게 */
-            border-bottom-left-radius: 0; /* 하단 좌측 모서리 둥글지 않게 */
-            border-bottom-right-radius: 0; /* 하단 우측 모서리 둥글지 않게 */
+        .section {
+            margin: 1.5rem 1rem;
+            padding: 1rem;
+            border-radius: 0.75rem;
+            box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+            background-color: #fff;
+            border: 1px solid #e0e0e0;
         }
-        .location img {
-            aspect-ratio: 1/1;
-            width: 100px;
-            object-fit: cover;
-            object-position: center;
-        }
-        .text-on-image {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%) rotate(0deg); /* 회전 제거 및 중앙 정렬 유지 */
-            text-align: center; /* 텍스트를 중앙 정렬 */
-            font-size: 11px; /* 폰트 크기 설정, 필요에 따라 조정 */
-        }
-        .btn-block { /* 버튼 레이아웃 유지 */
-            max-width: 100%;
-            text-align: left;
-            display: inline-block; /* 버튼을 인라인 블록으로 설정하여 텍스트가 줄바꿈되지 않도록 합니다. */
-        }
-        .calendar-container {
-            text-align: center;
-            font-family: Arial, sans-serif;
-            overflow-x: hidden;
-        }
-
-        .calendar-container table {
+        .section img {
             width: 100%;
-            border-collapse: collapse; /* 테두리가 겹치지 않도록 설정 */
-            margin: 0 auto;
-            border: none; /* 전체 테두리 제거 */
-            table-layout: fixed; /* 모든 셀이 동일한 크기를 가지도록 설정 */
-        }
-
-        .calendar-container th, .calendar-container td {
-            padding: 0; /* 패딩을 제거하여 셀의 높이를 고정 */
-            text-align: center;
-            border: none; /* 셀 테두리 제거 */
-            height: 40px; /* 모든 셀의 높이를 동일하게 설정 */
-        }
-
-        .calendar-container th {
-            color: #999;
-            font-weight: bold;
-            height: 40px; /* 헤더 셀의 높이도 동일하게 설정 */
-            line-height: 40px; /* 수직 정렬을 위해 라인 높이 설정 */
-        }
-
-        .calendar-container td {
-            cursor: pointer;
-        }
-
-        .calendar-container .inactive {
-            color: #ccc;
-            pointer-events: none;
-        }
-
-        .calendar-container .cursor-pointer .date-circle {
-            cursor: pointer;
-        }
-
-        .calendar-container .selected .date-circle {
-            background-color: black;
-            color: white;
-            border-radius: 50%;
-        }
-
-        .calendar-container .today .date-circle {
-            border: 2px solid black;
-        }
-
-        .calendar-container .cursor-pointer {
-            cursor: pointer;
-        }
-
-        .calendar-container .header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 10px;
-        }
-
-        .calendar-container .header button {
-            border: none;
-            background: none;
-            font-size: 1.5rem;
-            font-weight: bold;
-            color: #333;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            width: 40px;
-            height: 40px;
+            height: 200px;
+            object-fit: cover;
             border-radius: 8px;
         }
-
-        .calendar-container .header button:hover {
-            background-color: #f0f0f0;
+        .section-title {
+            font-size: 16px;
+            font-weight: bold;
+            margin-bottom: 8px;
         }
-
-        .calendar-container .header h4 {
-            margin: 0;
-            font-size: 1.5rem;
+        .section-text {
+            font-size: 14px;
+            color: #888;
+            margin-bottom: 8px;
+        }
+        .highlight-text {
+            color: #ff5e57;
             font-weight: bold;
         }
-
-        .calendar-container .date-circle {
-            display: inline-block;
-            width: 30px; /* 날짜 원형 크기 조정 */
-            height: 30px; /* 날짜 원형 크기 조정 */
-            line-height: 30px; /* 텍스트 수직 정렬 */
-            border-radius: 50%;
+        .final-price {
+            font-size: 24px;
+            font-weight: bold;
+            color: #007aff;
             text-align: center;
-            margin: -2px auto; /* 날짜 간격 조정 및 가운데 정렬 */
+            margin-bottom: 16px;
         }
-
-        .calendar-container .text-primary {
-            color: #007bff;
+        .info-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 16px 0;
+            border-bottom: 1px solid #e0e0e0;
+            font-size: 14px;
+        }
+        .info-item:last-child {
+            border-bottom: none;
+        }
+        .info-item-title {
+            color: #333;
+            font-weight: bold;
+        }
+        .info-item-value {
+            color: #555;
         }
     </style>
 </head>
 <body>
-    <!-- topnavi -->
-    <div th:replace="~{campingcar/campingNavi::topNavi}"></div>
-    
-    
+    <div class="container">
+        <div class="row bg-white pt-2 pe-1 justify-content-end">
+            <div class="col bg-white py-2 ps-3">
+                <div class="fs-2 fw-medium">위시리스트</div>
+            </div>
+            <div class="col-auto">
+                <i class="bi bi-x-lg fs-2" onclick="goToMainPage()"></i>
+            </div>
+        </div>  
+    </div>
+
     <!-- 켐핑카 필터 -->
-    <div class="container mb-5">
-        <div class="row px-4">
-            <div class="col mt-5">
-                <div class="row d-flex flex-wrap" th:each="myLike : ${MyLikeList}">
-                    
-                    <div class="col px-0 shadow border border-2 rounded-4 my-4">
-                        <div class="row mx-0">
-                            <div class="col px-0 d-flex justify-content-center align-items-center overflow-hidden rounded-top-4 position-relative">
-                                <!-- 캠핑카 이미지 -->
-                                <img class="campingcarImg img-fluid" style="max-width: 100%; min-height: 100%;" th:src="@{/images/${myLike.main_img}}" alt="썸네일">
-                                <!-- 찜 기능 아이콘 -->
-                                <div class="position-absolute top-0 end-0 pt-1" style="padding-right: 0.75rem;">
-                                    <i class="fa-regular fa-heart" style="color: #ff0000;"></i>
+    <div class="container-fluid py-2 mt-3">
+        <div class="row px-3" th:each="myLike : ${MyLikeList}">
+            <a th:href="@{/campingcar/campingCarDetailPage(id=${myLike.id})}" class="col px-0 shadow rounded-4 my-4">
+                <div class="row mx-0">
+                    <div class="col px-0 d-flex justify-content-center align-items-center overflow-hidden rounded-top-4 position-relative">
+                        <img th:src="|/images/${myLike.main_img}|" class="img-fluid" style="max-width: 100%; min-height: 100%;" alt="썸네일">
+                        <div class="position-absolute top-0 end-0 pt-1" style="padding-right: 0.75rem;">
+                            <i id="heart-${myLike.id}" th:onclick="'like(' + ${myLike.id} + ')'" class="fa-regular fa-heart" style="color: #ff0000;"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="row px-3">
+                    <div class="col">
+                        <!-- 회사명 + 차량명 -->
+                        <div class="row">
+                            <div class="col pe-0 pb-2">
+                                <span th:text="${myLike.comp_name}" class="fw-bold fs-6 text-success"></span>
+                                <span th:text="${myLike.product_name}" class="fw-bold fs-6" style="color: #484647;"></span>
+                            </div>
+                        </div>
+                        <!-- 비수기 평일가격, 주말가격 -->
+                        <div class="row ps-1 d-flex align-items-between">
+                            <div class="col-auto fs-6 ps-2 pb-2 d-flex align-items-center">
+                                <span class="text-dark fw-semibold pe-1">평일 :</span>
+                                <span class="lightFont fw-medium" th:text="${#numbers.formatInteger(myLike.rental_fee_weekdays, 3, 'COMMA')}+'원'"></span>
+                            </div>
+                            <div class="col-2 px-0"></div>
+                            <div class="col-auto fs-6 px-0 pb-2 d-flex justify-content-center align-items-center">
+                                <span class="text-dark fw-semibold pe-1">주말 :</span>
+                                <span class="lightFont fw-medium" th:text="${#numbers.formatInteger(myLike.rental_fee_weekend, 3, 'COMMA')}+'원'"></span>
+                            </div>
+                        </div>
+                        <!-- 차고지 주소 + 운전 조건 -->
+                        <div class="row border-top d-flex-items-between">
+                            <div class="col-12 pt-2 pb-2 fw-bold new-fs-8" style="color: #7C7B7B;">
+                                <div class="d-flex align-items-center">
+                                    <div th:text="'차고지 : ' + ${myLike.garage_address}"></div>
                                 </div>
                             </div>
                         </div>
-                        <div class="row px-3">
-                            <div class="col">
-                                <!-- 회사명 + 차량명 -->
-                                <div class="row">
-                                    <div class="col pe-0 pb-2">
-                                        <span class="campingcarComp_name fw-bold fs-6 text-success" th:text="${myLike.comp_name}"></span>
-                                        <span class="campingcarProduct_name fw-bold fs-6" style="color: #484647;" th:text="${myLike.product_name}"></span>
-                                        <div class="campingcarShortdescription fw-bold new-fs-85" style="color: #7C7B7B;" th:text="${myLike.short_description}"></div>
-                                    </div>
+                        <div class="row">
+                            <div class="col-12 pb-2 pe-0 fw-bold new-fs-8" style="color: #7C7B7B;">
+                                <div class="d-flex align-items-center flex-wrap gap-2">
+                                    <div th:text="'운전면허증 : ' + ${myLike.driver_license_condition_name} + ' |'"></div>
+                                    <div th:text="'운전자 나이 : ' + ${myLike.driver_age_condition_name} + ' |'"></div>
+                                    <div th:text="'운전자 경력 : ' + ${myLike.driver_experience_condition_name}"></div>
                                 </div>
-                                <!-- 비수기 평일가격, 주말가격 -->
-                                <div class="row ps-1">
-                                    <div class="col fs-6 ps-2 pb-2 d-flex align-items-center">
-                                        <span class="text-primary fw-semibold">평일 가격:</span>
-                                        <span class="campingcarRental_fee_weekdays" th:text="${myLike.rental_fee_weekdays}"></span>
-                                    </div>
-                                    <div class="col fs-6 ps-0 pb-2 d-flex justify-content-center align-items-center">
-                                        <span class="text-primary fw-semibold">주말 가격:</span>
-                                        <span class="campingcarRental_fee_weekend" th:text="${myLike.rental_fee_weekend}"></span>
-                                    </div>
+                            </div>
+                        </div>
+                        <!-- 동승, 취침, 애완 조건 -->
+                        <div class="row py-2 new-fs-7 border-top">
+                            <div class="col px-2 d-flex justify-content-between align-items-center">
+                                <div class="d-flex align-items-center">
+                                    <span class="material-symbols-outlined pe-1 fs-5">groups</span>
+                                    <span class="text-center pe-2" th:text="'동승 인원 ' + ${myLike.seating_capacity} + '명'"></span>
                                 </div>
-                                <!-- 차고지 주소 + 운전 조건 -->
-                                <div class="row border-top">
-                                    <div class="col pt-2 pb-2 fw-bold new-fs-85" style="color: #7C7B7B;">
-                                        <div class="campingcarGarage_address" th:text="${myLike.garage_address}"></div>
-                                        <div class="campingcarDriver_license_name" th:text="${myLike.driver_license_condition_name}"></div>
-                                        <div class="campingcarDriver_age_condition_name" th:text="${myLike.driver_age_condition_name}"></div>
-                                        <div class="campingcarDriver_experience_condition_name" th:text="${myLike.driver_experience_condition_name}"></div>
-                                    </div>
+                                <div class="d-flex align-items-center">
+                                    <span class="material-symbols-outlined pe-1 fs-5">hotel</span>
+                                    <span class="text-center pe-0" th:text="'취침 인원 ' + ${myLike.sleeping_capacity} + '명'"></span>
                                 </div>
-                                
-                                <!-- 동승, 취침, 애완 조건 -->
-                                <div class="row py-2 new-fs-85 border-top">
-                                    <div class="col-4 px-0 d-flex justify-content-between align-items-center">
-                                        <span class="material-symbols-outlined">groups</span><span class="campingcarSeating_capacity" th:text="${myLike.seating_capacity}"></span>|
-                                    </div>
-                                    <div class="col-4 px-0 d-flex justify-content-between align-items-center">
-                                        <span class="material-symbols-outlined">hotel</span>
-                                        <span class="campingcarSleeping_capacity" th:text="${myLike.sleeping_capacity}"></span>|
-                                    </div>
-                                    <div class="col-4 px-0 d-flex align-items-center">
-                                        <span class="material-symbols-outlined">Pets</span>
-                                        <span class="campingcarPet_friendly" th:text="${myLike.pet_friendly}"></span>
-                                    </div>
+                                <div class="d-flex align-items-center">
+                                    <span class="material-symbols-outlined ps-2 new-fs-9">Pets</span>
+                                    <span class="text-center pe-0" th:text="' 반려 동물  ' + ${myLike.pet_friendly}"></span>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div> <!-- </div> 태그를 추가하여 row를 닫습니다 -->
-            </div>
+                </div>
+            </a>
         </div>
     </div>
-    <div class="row mb-5"></div>
-    
-    
-    
 
+    <!-- 모든 리스트가 출력된 후에 메시지를 출력 -->
+    <div class="container">
+        <div class="row text-center pb-4">
+            <div class="col">
+                <span class="text-body-tertiary">모든 내용을 불러왔습니다.</span>
+            </div>
+        </div>
+    </div>    
 
-
-
-    <!-- <div th:replace="~{campingcar/campingNavi::bottomNaviBasecamp}"></div> -->
+    <!-- footer -->
+    <div th:replace="~{campingcar/campingNavi::footerNavi}"></div>
+    <!-- bottom -->
     <div th:replace="~{campingcar/campingNavi::bottomNaviBasecamp}"></div>
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js"></script>
+    <script>
+    function goToMainPage() {
+        window.location.href = '/campingcar/main';
+    }
+    document.addEventListener("DOMContentLoaded", function() {
 
+        // 페이지 로드 시 좋아요 상태를 확인하고 업데이트합니다.
+        document.querySelectorAll('[id^="heart-"]').forEach(function(heartIcon) {
+            const productId = heartIcon.id.split('-')[1];
+            checkLikeStatus(productId);
+        });
 
-    
+        function like(productId) {
+            const heartIcon = document.getElementById(`heart-${productId}`);
+            const isLiked = heartIcon.classList.contains('fa-solid');
+            
+            if (isLiked) {
+                // 좋아요를 취소하는 API 호출
+                fetch(`/api/rent-user/unlike?product_id=${productId}`, {
+                    method: 'POST'
+                }).then(() => {
+                    heartIcon.classList.remove('fa-solid');
+                    heartIcon.classList.add('fa-regular');
+                });
+            } else {
+                // 좋아요를 추가하는 API 호출
+                fetch(`/api/rent-user/like?product_id=${productId}`, {
+                    method: 'POST'
+                }).then(() => {
+                    heartIcon.classList.remove('fa-regular');
+                    heartIcon.classList.add('fa-solid');
+                });
+            }
+        }
+
+        function checkLikeStatus(productId) {
+            const url = `/api/rent-user/isLiked?product_id=${productId}`;
+            fetch(url)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! status: ${response.status}`);
+                    }
+                    return response.json(); // 이 라인에서 문제가 발생할 수 있음
+                })
+                .then(data => {
+                    const heart = document.getElementById(`heart-${productId}`);
+                    if (data.isLikedByUser) {
+                        heart.classList.remove("fa-regular");
+                        heart.classList.add("fa-solid");
+                        heart.setAttribute("onclick", `like(${productId}, event)`);
+                    } else {
+                        heart.classList.remove("fa-solid");
+                        heart.classList.add("fa-regular");
+                        heart.setAttribute("onclick", `like(${productId}, event)`);
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
+        }
+
+    });
+    </script>
 </body>
 </html>
