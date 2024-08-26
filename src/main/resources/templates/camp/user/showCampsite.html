@@ -159,7 +159,7 @@
                                     </div>
                                     <div class="col ps-0">
                                         <span class="new-fs-8" th:text="${session.campsiteUser.dto.address} +' '+ ${session.campsiteUser.dto.detail_address}">주소</span>     
-                                        <span class="ps-2 new-fs-8 lightFont" onclick="displayMap()">지도보기<i class="bi bi-chevron-right"></i></span>
+                                        <div class="ps-2 new-fs-8 lightFont" onclick="displayMap()">지도보기<i class="bi bi-chevron-right"></i></div>
                                     </div>
                                 </div>
 
@@ -448,7 +448,7 @@
                                         <div class="row mt-3">
                                             <div class="col new-fs-75 text-end text-secondary" th:text="${#dates.format(review.created_at, 'YYYY-MM-dd')}">리뷰 작성일</div>
                                         </div>
-                                        <div class="row mt-2 pt-1">
+                                        <div class="row mt-2 pt-1" th:if="${review.nickname == '행복한미소'}">
                                             <div class="col">
                                                 <div class="row">
                                                     <div class="col-auto text-secondary new-fs-8">캠핑장 답변</div>
