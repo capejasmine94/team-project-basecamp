@@ -159,7 +159,8 @@
                     <span class="material-symbols-outlined">close</span>
                 </a>
                 <div class="col text-center fw-medium" th:text="${clubDto.name}">소모임 이름</div>
-                <div class="col-2"></div>
+                <a th:href="@{/club/managementClub(id=${id})}" class="col-2 pe-2 text-end justify-content-center align-items-center d-flex">
+                    <span  class="material-symbols-outlined fw-light">settings</span></a> 
             </div>
             <div class="row px-0">
                 <div class="col">
