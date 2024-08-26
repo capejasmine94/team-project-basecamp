@@ -242,7 +242,7 @@
 
                     <!-- 좋아요 수 -->
                     <div class="row">
-                        <a class="col fontBasic link-dark link-offset-2 link-underline link-underline-opacity-0 " th:href="@{./pushLikeUserPage(article_id=${articleInfo.article_id}, user_id=${session.sessionUserInfo.id})}">
+                        <a class="col fontBasic link-dark link-offset-2 link-underline link-underline-opacity-0" href="#">
                             <span>좋아요</span>
                             <span th:text="${articleLikeCount}"></span><span>개</span>
                         </a>

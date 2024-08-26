@@ -165,9 +165,18 @@ public class CampingcarController {
 
         UserDto sessionUserInfo = (UserDto)session.getAttribute("sessionUserInfo");
         int rentUserPk = campingcarService.getExistingByRentUserId(sessionUserInfo.getId());
+        System.out.println("렌트 고객 : " + rentUserPk);
         
         List<Map<String,Object>> rentuserHistoryData = campingcarService.getUseageHistroyAllByRentUserId(rentUserPk);
+
+        for(Map<String,Object> reservation :rentuserHistoryData){
+            int reservation_id = (int) reservation.get("id");    
+            boolean isReviewWritten = campingcarService.isReviewWritten(reservation_id);
+            
+            reservation.put("isReviewWritten", isReviewWritten);
+        };
         model.addAttribute("rentuserHistoryData", rentuserHistoryData);
+        
 
         return "campingcar/rentUseageHistory";
     }

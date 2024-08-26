@@ -12,6 +12,7 @@
     <link href="/public/css/common.css" rel="stylesheet">
     <link href="/public/css/basecamp.css" rel="stylesheet">
     <script src="/public/js/lockLikeMobile.js"></script>
+    <link rel="shotcut icon" href="/public/img/common/campFire.ico" type="image/x-icon">
     <style>
         .carousel-inner img {
             height: 550px;
@@ -269,7 +270,7 @@
 
     <div class="container-fluid pt-5 mt-3">
         <div class="row px-3" th:each="searchResultData : ${searchResultList}">
-            <div class="col px-0 shadow rounded-4 my-4">
+            <a th:href="@{/campingcar/campingCarDetailPage(id=${searchResultData.id})}" class="col px-0 shadow rounded-4 my-4">
                 <div class="row mx-0">
                     <div class="col px-0 d-flex justify-content-center align-items-center overflow-hidden rounded-top-4 position-relative">
                         <img th:src="|/images/${searchResultData.main_img}|" class="img-fluid" style="max-width: 100%; min-height: 100%;" alt="썸네일">
@@ -335,7 +336,7 @@
                         </div>
                     </div>
                 </div>
-            </div>
+            </a>
         </div>
     </div>
     <!-- 모든 리스트가 출력된 후에 메시지를 출력 -->

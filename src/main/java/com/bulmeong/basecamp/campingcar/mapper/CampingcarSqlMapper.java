@@ -64,10 +64,15 @@ public interface CampingcarSqlMapper {
 
     // 해당 차량의 리뷰 리스트
     public List<Map<String,Object>> reviewAllbyCarId(int id);
+
+    public int isReviewWritten(int id);
+
     // 해당 차량의 리뷰 별점 평균 
     public Double avgByCarId(int id);
+    
     // 해당 차량의 리뷰 참여 인원 수
     public int reviewByCountPerson (int id);
+    
     // 해당 차량의 각 별점 마다 인원수
     public List<Map<String,Object>> ratingGroupBycar(int id);
 

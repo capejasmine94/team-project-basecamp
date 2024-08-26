@@ -150,7 +150,7 @@ public class RestCampsiteUserController {
         utils.setSession("orderDto", campsiteOrderDto);
         utils.setSession("carNumbers", car_number);
         utils.setSession("useMileage", useMileage);
-        utils.setSession("number", number);
+        utils.setSession("pointNumber", number);
         utils.setSession("tid", readyResponse.getTid());
 
         RestResponseDto result = new RestResponseDto();

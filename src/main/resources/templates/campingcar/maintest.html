@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>검색창 및 카드 레이아웃</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f5f5f5;
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        .search-bar {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+
+        .search-input-wrapper {
+            display: flex;
+            align-items: center;
+            border-radius: 25px;
+            border: 2px solid #007bff;
+            padding: 5px 15px;
+            background-color: white;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            flex-grow: 1;
+            max-width: 600px;
+            height: 50px;
+        }
+
+        .search-input {
+            border: none;
+            outline: none;
+            font-size: 16px;
+            color: #333;
+            flex-grow: 1;
+            padding: 5px 10px;
+            border-radius: 25px;
+        }
+
+        .search-input::placeholder {
+            color: #aaa;
+        }
+
+        .mic-icon {
+            font-size: 24px;
+            color: #00aaff;
+            margin-left: 10px;
+        }
+
+        .map-icon-wrapper {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 50px;
+            height: 50px;
+            background-color: white;
+            border: 2px solid #007bff;
+            border-radius: 50%;
+            margin-left: 10px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .map-icon {
+            font-size: 22px;
+            color: #007bff;
+        }
+
+        /* 카드 스타일 */
+        .card {
+            border-radius: 15px; /* 모서리 둥글게 */
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            margin: 0 auto;
+            width: 170px; /* 카드의 넓이 */
+            height: 120px; /* 카드의 높이 */
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            padding: 10px;
+        }
+
+        .card-body {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            padding: 5px;
+            position: relative; /* 이미지 위치 조정 */
+        }
+
+        .card-title {
+            font-size: 16px; /* 타이틀 크기 */
+            font-weight: bold;
+        }
+
+        .card-text {
+            font-size: 12px; /* 텍스트 크기 */
+            color: #dfe4ea; /* 글씨 색상 */
+        }
+
+        .card img {
+            width: 40px; /* 이미지 크기 */
+            height: auto;
+            position: absolute;
+            bottom: 5px;
+            right: 5px;
+        }
+
+        /* 기본 뱃지 스타일 */
+        .badge {
+            background-color: #f7f7f7;
+            color: black;;
+            font-size: 10px;
+            padding: 2px 5px;
+            border-radius: 5px;
+            position: absolute;
+            right: 5px;
+            
+        }
+
+        /* 특정 뱃지 위치 조정 */
+        .badge-n {
+            top: 10px;
+            border: 1px solid #F24724;
+            background-color: #F24724;
+            color: white;
+        }
+
+        .badge-discount {
+            top: -15px;
+            border: 1px solid #773EFA;
+        }
+
+        /* 내비 카드 그라데이션 */
+        .nav-card {
+            background: linear-gradient(135deg, #6E3FFF, #2158FF);
+            color: white;
+        }
+
+        .transit-card {
+            background: linear-gradient(135deg, #223e5c, #1d3557);
+            color: white;
+        }
+
+        .parking-card,
+        .drive-card {
+            background-color: #ffffff;
+            color: #333;
+            border: 1px solid #ddd;
+        }
+
+        /* 카드 간격 조정 */
+        .custom-row-spacing {
+            margin-left: -5px;
+            margin-right: -5px;
+        }
+
+        .col-6 {
+            padding-left: 5px;
+            padding-right: 5px;
+            margin-bottom: 10px;
+        }
+
+    </style>
+</head>
+<body>
+
+    <!-- 검색바 -->
+    <div class="search-bar">
+        <div class="search-input-wrapper">
+            <input type="text" class="search-input" placeholder="어디로 갈까요?">
+            <span class="mic-icon">&#127908;</span>
+        </div>
+        <div class="map-icon-wrapper">
+            <span class="map-icon">&#10148;</span>
+        </div>
+    </div>
+
+    <!-- 메인 컨테이너 -->
+    <div class="container">
+        <!-- 첫 번째 row -->
+        <div class="row custom-row-spacing mb-2">
+            <div class="col-6">
+                <div class="card nav-card">
+                    <div class="card-body">
+                        <div class="card-title">대여</div>
+                        <p class="card-text">최상의 휴식과 힐링을 한번에</p>
+                        <img src="/public/img/campingCarImage/캠핑카_대여.png" alt="Car Icon">
+                    </div>
+                </div>
+            </div>
+            <div class="col-6">
+                <a href="/campingcar/rentUseageHistory">
+                    <div class="card transit-card">
+                        <div class="card-body">
+                            <div class="card-title">예약내역</div>
+                            <p class="card-text">나의 예약 실시간 확인하기</p>
+                            <img src="/public/img/campingCarImage/예약내역.png" alt="Bus Icon">
+                            <div class="badge badge-n">N</div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </div>
+        <div class="row custom-row-spacing mb-2">
+            <div class="col-6">
+                <a href="myLike">
+                    <div class="card parking-card">
+                        <div class="card-body">
+                            <div class="card-title">좋아요</div>
+                            <p class="card-text text-dark">관심있는 캠핑카 한번에 보기</p>
+                            <img src="/public/img/campingCarImage/좋아요.png" alt="Parking Icon">
+                        </div>
+                    </div>
+                </a>
+            </div>
+            <div class="col-6">
+                <div class="card drive-card">
+                    <div class="card-body">
+                        <div class="card-title">대여/반납</div>
+                        <p class="card-text text-dark">대여,반납할때는 체크리스트 점검</p>
+                        <img src="/public/img/campingCarImage/camera.png" alt="Drive Icon">
+                        <div class="badge badge-discount">체크리스트는 여기서!!</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 추가적인 row도 동일하게 구성할 수 있습니다. -->
+    </div>
+
+</body>
+</html>
