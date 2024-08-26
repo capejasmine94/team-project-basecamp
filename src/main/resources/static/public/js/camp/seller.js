@@ -243,6 +243,8 @@ function selectArea(id, onRefresh) {
     
 }
 
+
+
 function refreshUpdateAreaView() {
     const updateAreaView = document.getElementById('updateAreaView');
 
