@@ -156,7 +156,7 @@ public class PartnerCampingCarController {
     }
 
     @RequestMapping("reviewManage")
-    public String reviewManga(HttpSession session, Model model) {
+    public String reviewManage(HttpSession session, Model model) {
         
         RentalCompanyDto rentalCompanyDto = (RentalCompanyDto) session.getAttribute("sessionCaravanInfo");
         int rentalPk = rentalCompanyDto.getId();

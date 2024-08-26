@@ -170,10 +170,10 @@
                     th:href="@{/campingcar/carReviewPage(id=${rentuserHistoryList.id})}" class="btn btn-outline-info d-grid">리뷰작성하기</a>
                     
                     <!-- 예약 취소하기 버튼 -->
-                    <div th:if="${rentuserHistoryList.progress == '예약접수'}" class="text-muted new-fs-85">예약취소하기</div>
+                    <div th:if="${rentuserHistoryList.progress == '예약접수'}" class="btn btn-outline-danger fs-6">예약취소하기</div>
                     
                     <!-- 리뷰 작성 완료 메시지 -->
-                    <div th:if="${rentuserHistoryList.isReviewWritten}" class="text-success new-fs-85">리뷰 작성 완료</div>
+                    <div th:if="${rentuserHistoryList.isReviewWritten}" class="btn btn-outline-secondary fs-6">리뷰 작성 완료</div>
                 </div>
             </div>
         </div>
