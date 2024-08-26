@@ -427,111 +427,63 @@
                     <div class="row px-4">
                         <div class="col border-bottom p-0 overflow-x-auto scrollbar-none">
                             <div class="row f08 flex-nowrap">
-                                <div class="col-auto pe-0 pb-2 fw-semibold active-category-border">
+                                <div class="col-auto  pb-2 fw-semibold active-category-border categoryCol" onclick="getBestAllproduct()">
                                     전체
                                 </div>
-                                <div class="col-auto  pe-0 pb-2 text-body-tertiary">
+                                <div class="col-auto   pb-2 text-body-tertiary categoryCol" data-categoryid="1" onclick="getCategoryBestProduct(this)">
                                     텐트
                                 </div>
-                                <div class="col-auto pe-0 pb-2 text-body-tertiary">
+                                <div class="col-auto  pb-2 text-body-tertiary categoryCol" data-categoryid="2" onclick="getCategoryBestProduct(this)">
                                     타프
                                 </div>
-                                <div class="col-auto pe-0 pb-2 text-body-tertiary">
+                                <div class="col-auto  pb-2 text-body-tertiary categoryCol" data-categoryid="3" onclick="getCategoryBestProduct(this)">
                                     캠핑가구
                                 </div>
-                                <div class="col-auto pe-0 pb-2 text-body-tertiary">
+                                <div class="col-auto  pb-2 text-body-tertiary categoryCol" data-categoryid="4" onclick="getCategoryBestProduct(this)">
                                     취침용품
                                 </div>
-                                <div class="col-auto pe-0 pb-2 text-body-tertiary">
+                                <div class="col-auto  pb-2 text-body-tertiary categoryCol" data-categoryid="5" onclick="getCategoryBestProduct(this)">
                                     주방용품
                                 </div>
-                                <div class="col-auto pe-0 pb-2 text-body-tertiary">
+                                <div class="col-auto  pb-2 text-body-tertiary categoryCol" data-categoryid="6" onclick="getCategoryBestProduct(this)">
                                     계절용품
                                 </div>
-                                <div class="col-auto pe-0 pb-2 text-body-tertiary">
+                                <div class="col-auto  pb-2 text-body-tertiary categoryCol" data-categoryid="7" onclick="getCategoryBestProduct(this)">
                                     패션잡화
                                 </div>
                             </div>
                         </div>
                     </div>
                     <div class="row px-4 pt-3 f08">
-                        <div class="col p-0">
+                        <div class="col p-0" id="productBox">
+
                             <!-- 상품 하나의 정보 -->
-                            <a href="/store" class="row pb-3">
+                            <a th:href="@{/store/productDetails(id=${bestProductData.storeProductDto.id})}" class="row pb-3 productRow" th:each="bestProductData : ${bestProductDataList}">
                                 <div class="col-auto productCol pe-0">
-                                    <img src="/public/img/storeImage/productDetail1.jpg" class="border">
+                                    <img class="border mainImage" th:src="|/images/${bestProductData.storeProductDto.main_image}|">
                                 </div>
                                 <div class="col">
                                     <div class="row fw-semibold">
-                                        <div class="col">
+                                        <div class="col storeName" th:text="${bestProductData.storeDto.name}">
                                             BaseCampStore
                                         </div>
                                     </div>
                                     <div class="row fw-light pt-1">
-                                        <div class="col">
+                                        <div class="col productName" th:text="${bestProductData.storeProductDto.name}">
                                             BaseCamp Product
                                         </div>
                                     </div>
                                     <div class="row fw-semibold pt-1">
-                                        <div class="col-auto pe-0">
+                                        <div class="col-auto pe-0 salePrice" th:text="${#numbers.formatDecimal(bestProductData.salePrice, 1, 'COMMA', 0, 'POINT')}">
                                             110,600
                                         </div>
-                                        <div class="col lightFont">
+                                        <div class="col lightFont d-none percentage" th:if="${bestProductData.percentage!=0}" th:text="|${bestProductData.percentage}%|">
                                             10%
                                         </div>
                                     </div>
                                 </div>
                             </a>
-                            <a href="/store" class="row pb-3">
-                                <div class="col-auto productCol pe-0">
-                                    <img src="/public/img/storeImage/productDetail3.jpg" class="border">
-                                </div>
-                                <div class="col">
-                                    <div class="row fw-semibold">
-                                        <div class="col">
-                                            BROOKLYN WORKS
-                                        </div>
-                                    </div>
-                                    <div class="row fw-light pt-1">
-                                        <div class="col">
-                                            BW_[브루클린웍스] 로버 텐트
-                                        </div>
-                                    </div>
-                                    <div class="row fw-semibold pt-1">
-                                        <div class="col-auto pe-0">
-                                            1,200,300
-                                        </div>
-                                        <div class="col lightFont">
-                                            12%
-                                        </div>
-                                    </div>
-                                </div>
-                            </a>
-                            <a href="/store" class="row pb-3">
-                                <div class="col-auto productCol pe-0">
-                                    <img src="/public/img/storeImage/productDetail4.jpg" class="border">
-                                </div>
-                                <div class="col">
-                                    <div class="row fw-semibold">
-                                        <div class="col">
-                                            NORTH PEAK
-                                        </div>
-                                    </div>
-                                    <div class="row fw-light pt-1">
-                                        <div class="col">
-                                            로이텐트 2.0 (3-4인용)
-                                        </div>
-                                    </div>
-                                    <div class="row fw-semibold pt-1">
-                                        <div class="col-auto pe-0">
-                                            360,000
-                                        </div>
-                                        <div class="col lightFont">
-                                            30%
-                                        </div>
-                                    </div>
-                                </div>
-                            </a>
+
                         </div>
                     </div>
                     <a href="/store/bestProduct" class="row px-4 pb-3">
@@ -1327,7 +1279,35 @@
     </div>
 </div>
 
+<div id="template" class="d-none">
+    <!-- 상품 하나의 정보 -->
+    <a href="" class="row pb-3 productRow">
+        <div class="col-auto productCol pe-0">
+            <img class="border mainImage">
+        </div>
+        <div class="col">
+            <div class="row fw-semibold">
+                <div class="col storeName">
+                    BaseCampStore
+                </div>
+            </div>
+            <div class="row fw-light pt-1">
+                <div class="col productName">
+                    BaseCamp Product
+                </div>
+            </div>
+            <div class="row fw-semibold pt-1">
+                <div class="col-auto pe-0 salePrice">
+                    110,600
+                </div>
+                <div class="col lightFont d-none percentage">
+                    10%
+                </div>
+            </div>
+        </div>
+    </a>
 
+</div>
 
 
 
@@ -1344,6 +1324,63 @@
             topNav.classList.remove('fixed-background');
         }
     });
+
+    function getCategoryBestProduct(selectedCategory){
+        const categoryCols = document.querySelectorAll(".categoryCol");
+        for(categoryCol of categoryCols){
+            categoryCol.classList.add("text-body-tertiary")
+            categoryCol.classList.remove("fw-semibold")
+            categoryCol.classList.remove("active-category-border")
+        }
+        selectedCategory.classList.remove("text-body-tertiary")
+        selectedCategory.classList.add("fw-semibold")
+        selectedCategory.classList.add("active-category-border")
+
+        const id = selectedCategory.dataset.categoryid;
+
+        getAllCategoryBestProduct(id);
+    }
+
+    function getBestAllproduct(){
+
+        location.reload();
+        
+    }
+
+    function getAllCategoryBestProduct(id){
+
+        const url = `/api/store/selectNewThreeProductDataListByCategoryId?category_id=${id}`
+        fetch(url)
+        .then(response => response.json())
+        .then((response) => {
+            const newThreeProductDataList = response.data.newThreeProductDataList
+
+            const productBox = document.getElementById("productBox")
+            productBox.innerHTML = ""
+            for(newThreeProductData of newThreeProductDataList){
+                const productRow = document.querySelector("#template .productRow").cloneNode(true)
+
+                productRow.querySelector(".mainImage").setAttribute("src",`/images/${newThreeProductData.main_image}`)
+                productRow.querySelector(".storeName").innerText = newThreeProductData.store_name
+                productRow.querySelector(".productName").innerText = newThreeProductData.name
+
+                if(newThreeProductData.percentage!=0){
+                    const percentage = productRow.querySelector(".percentage")
+                    percentage.classList.remove("d-none")
+                    percentage.innerText = `${newThreeProductData.percentage}%`
+                }
+
+                productRow.querySelector(".salePrice").innerText = `${formatNumberToPrice(newThreeProductData.salePrice)}`
+                productRow.setAttribute("href", `/store/productDetails?id=${newThreeProductData.id}`)
+
+                productBox.appendChild(productRow)
+            }
+        })
+    }
+
+    function formatNumberToPrice(number) {
+        return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    }
 
 </script>
 </body>

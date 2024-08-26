@@ -1505,9 +1505,72 @@ public class StoreService {
         return result;
     }
 
+    
+    public List<Map<String, Object>> getThreeProductDataList(){
+        List<Map<String, Object>> result = new ArrayList<>();
+
+        List<StoreProductDto> storeProductDtoList = storeSqlMapper.selectThreeProductListDesc();
+        if(storeProductDtoList.size()!=0&&storeProductDtoList!=null){
+            for(StoreProductDto storeProductDto : storeProductDtoList){
+                Map<String, Object> map = new HashMap<>();
+    
+                int discount_id = storeProductDto.getDiscount_id();
+                int price = (int)storeProductDto.getPrice();
+    
+                if(discount_id!=0){
+                    StoreProductDiscountDto storeProductDiscountDto = storeSqlMapper.selectDiscountById(discount_id);
+    
+                    double percentage = storeProductDiscountDto.getPercentage();
+                    int salePrice = (int)Math.round(price-price*percentage);
+    
+                    map.put("salePrice", salePrice);
+                    map.put("percentage", (int)(percentage*100));
+                    map.put("storeProductDto", storeProductDto);
+                    result.add(map);
+                }else{
+                    map.put("salePrice", price);
+                    map.put("percentage", 0);
+                    map.put("storeProductDto", storeProductDto);
+                    result.add(map);
+                }
+
+                StoreDto storeDto = storeSqlMapper.selectStoreDtoById(storeProductDto.getStore_id());
+                map.put("storeDto", storeDto);
+
+                int purchase_quantity = storeSqlMapper.selectProductPurchaseQuantity(storeProductDto.getId());
+                map.put("purchase_quantity", purchase_quantity);
+            }
+        }
+        return result;
+    }
+
+    
     public List<Map<String, Object>> selectNewTenProductDataListByCategoryId(int category_id){
         List<Map<String, Object>> result = new ArrayList<>();
         List<Map<String, Object>> newProductDataList =  storeSqlMapper.selectNewTenProductDataListByCategoryId(category_id);
+
+        for(Map<String, Object> newProductData : newProductDataList){
+            
+            double percentage = (double)newProductData.get("percentage");
+            int price = (int)newProductData.get("price");
+            int salePrice = (int)Math.round(price-price*percentage);
+            newProductData.put("salePrice", salePrice);
+            newProductData.put("percentage", (int)(percentage*100));
+
+            int product_id = (int)newProductData.get("id");
+
+            int purchase_quantity = storeSqlMapper.selectProductPurchaseQuantity(product_id);
+            newProductData.put("purchase_quantity", purchase_quantity);
+
+            result.add(newProductData);
+        }
+
+        return result;
+    }
+    
+    public List<Map<String, Object>> selectNewThreeProductDataListByCategoryId(int category_id){
+        List<Map<String, Object>> result = new ArrayList<>();
+        List<Map<String, Object>> newProductDataList =  storeSqlMapper.selectNewThreeProductDataListByCategoryId(category_id);
 
         for(Map<String, Object> newProductData : newProductDataList){
             
