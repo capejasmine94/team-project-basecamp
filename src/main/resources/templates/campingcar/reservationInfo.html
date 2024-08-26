@@ -13,6 +13,7 @@
     <!-- Google Material Icons -->
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet">
     <link href="/public/css/common.css" rel="stylesheet">
+    <link href="/public/css/basecamp.css" rel="stylesheet">
     <script src="/public/js/lockLikeMobile.js"></script>
     <link rel="shotcut icon" href="/public/img/common/campFire.ico" type="image/x-icon">
     <style>
@@ -217,7 +218,7 @@
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                        <div class="row pt-2">
+                                                        <div class="row pt-2 pb-3">
                                                             <div class="col">
                                                                 <div class="row">
                                                                     <div class="col d-flex align-items-center">
@@ -240,19 +241,32 @@
                                                                 </div>
                                                             </div>
                                                         </div> 
-                                                        <div class="row">
+                                                        <div class="row pt-5 mt-5">
+                                                            <div class="col"></div>
+                                                        </div>
+                                                        <div class="row pt-5 mt-5">
                                                             <div class="col px-0 pb-0">
-                                                                <button class="text-white btn-lg border border-0 fw-bold w-100 fs- px-0 py-2 overflow-y-hidden" type="button" style="background-color: #00B8FF;height: 3.3rem;" onclick="inputReservationDate()">확인</button>
+                                                                <button class="btn btn-lg fw-bold text-white w-100" 
+                                                                type="button" style="background-color: #00B8FF; height: 4.5rem; border: none;" 
+                                                                onclick="inputReservationDate()">확인</button>
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </div>
                                                 <!-- 오프캔버스끝 -->
                                             </div>
-                                            <div class="row" id="reservationDetails" style="display: none;">
+                                            <div class="row pt-3" id="reservationDetails" style="display: none;">
                                                 <div class="col">
-                                                    <div class="new-fs-9 fw-semibold" id="displayStartDate" style="color: #00B8FF;"></div>
-                                                    <div class="new-fs-9 fw-semibold" id="displayEndDate" style="color: #00B8FF;"></div>
+                                                    <div class="row">
+                                                        <div class="col">
+                                                            <span class="fs-5 fw-medium" style="color: #00B8FF;">대여 날짜 : </span><span class="fs-5 fw-normal" id="displayStartDate"></span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row pt-2">
+                                                        <div class="col">
+                                                            <span class="fs-5 fw-medium" style="color: #00B8FF;">반납 날짜 : </span><span class="fs-5 fw-normal" id="displayEndDate"></span>
+                                                        </div>
+                                                    </div>
                                                 </div>
                                             </div>
                                             <!-- 숨겨진 input 요소를 추가하여 선택한 날짜와 시간을 폼 데이터로 저장 -->
@@ -564,12 +578,12 @@
             </div>
         </div>
         <div class="container">
-            <div class="row py-2" style="margin-bottom: 45px;">
+            <div class="row py-2">
                 <div class="col d-grid"  th:if="${!isRentUser}">
-                    <button class="btn btn-dark btn-lg fw-bold" formaction="/campingcar/reservationProcess" style="background-color: #28323C;color: #fff;">예약하기</button>
+                    <button class="btn btn-dark btn-lg fw-bold btn-bc-dark" formaction="/campingcar/reservationProcess">예약하기</button>
                 </div>
                 <div class="col d-grid" th:unless="${!isRentUser}">
-                    <button class="btn btn-dark btn-lg fw-bold" formaction="/campingcar/existingRentUserReservationProcess" style="background-color: #28323C;color: #fff;">예약하기</button>
+                    <button class="btn btn-dark btn-lg fw-bold btn-bc-dark" formaction="/campingcar/existingRentUserReservationProcess">예약하기</button>
                 </div>
             </div>
         </div>
@@ -739,8 +753,8 @@
             const endMinute = document.getElementById('endMinute').value.padStart(2, '0');
 
             // 날짜와 시간 표시
-            document.getElementById('displayStartDate').textContent = `대여날짜: ${startDate} ${startHour}:${startMinute}`;
-            document.getElementById('displayEndDate').textContent = `반납날짜: ${endDate} ${endHour}:${endMinute}`;
+            document.getElementById('displayStartDate').textContent = `${startDate} ${startHour}:${startMinute}`;
+            document.getElementById('displayEndDate').textContent = `${endDate} ${endHour}:${endMinute}`;
 
             // 숨겨진 input 요소에 값 설정
             document.getElementById('startDateInput').value = `${startDate}T${startHour}:${startMinute}`;
