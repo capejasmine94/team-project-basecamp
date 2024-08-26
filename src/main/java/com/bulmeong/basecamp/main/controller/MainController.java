@@ -21,6 +21,7 @@ import com.bulmeong.basecamp.club.dto.ClubDto;
 import com.bulmeong.basecamp.club.service.ClubService;
 import com.bulmeong.basecamp.common.util.Utils;
 import com.bulmeong.basecamp.main.model.OAuthToken;
+import com.bulmeong.basecamp.store.service.StoreService;
 import com.bulmeong.basecamp.user.dto.UserDto;
 import com.bulmeong.basecamp.user.service.UserService;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -39,6 +40,10 @@ public class MainController {
     private ClubService clubService;
     @Autowired
     private Utils utils;
+
+    @Autowired
+    private StoreService storeService;
+
     @GetMapping("")
     public String basecampPublicPage(HttpSession session,
                                      Model model) {
@@ -49,6 +54,9 @@ public class MainController {
         .limit(10)
         .collect(Collectors.toList());
         utils.setModel("clubDtoList", limitedClubDtoList);
+
+        model.addAttribute("bestProductDataList", storeService.getThreeProductDataList());
+
         return "common/basecampPublicPage";
     }
 

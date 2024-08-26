@@ -1066,6 +1066,11 @@
         order by id desc
         limit 10
     </select>
+    <select id="selectThreeProductListDesc" resultType="com.bulmeong.basecamp.store.dto.StoreProductDto">
+        select * from store_product
+        order by id desc
+        limit 3
+    </select>
 
     <select id="selectNewStoreDto" resultType="com.bulmeong.basecamp.store.dto.StoreDto">
         select s.* from store s 
@@ -1092,6 +1097,21 @@
         where pc.id= #{category_id}
         order by sp.id desc
         limit 10
+    </select>
+
+    <select id="selectNewThreeProductDataListByCategoryId" resultType="java.util.HashMap">
+        select
+            sp.*,
+            coalesce(spd.percentage, 0) as percentage,
+            s.name as store_name
+        from store_product sp
+        inner join store s on sp.store_id = s.id
+        inner join product_subcategory ps on ps.id = sp.subcategory_id 
+        inner join product_category pc on pc.id = ps.category_id 
+        left outer join store_product_discount spd on spd.id = sp.discount_id 
+        where pc.id= #{category_id}
+        order by sp.id desc
+        limit 3
     </select>
 
     <select id="selectNewTenProductDataListBySubcategoryId" resultType="java.util.HashMap">
