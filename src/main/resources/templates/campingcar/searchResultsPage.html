@@ -14,13 +14,10 @@
     <script src="/public/js/lockLikeMobile.js"></script>
     <style>
         .carousel-inner img {
-            height: 550px; /* 이미지 높이 조정 */
+            height: 550px;
         }
         .rounded-top-only {
-            border-top-left-radius: 30px; /* 상단 좌측 모서리 둥글게 */
-            border-top-right-radius: 30px; /* 상단 우측 모서리 둥글게 */
-            border-bottom-left-radius: 0; /* 하단 좌측 모서리 둥글지 않게 */
-            border-bottom-right-radius: 0; /* 하단 우측 모서리 둥글지 않게 */
+            border-radius: 30px 30px 0 0;
         }
         .location img {
             aspect-ratio: 1/1;
@@ -32,14 +29,14 @@
             position: absolute;
             top: 50%;
             left: 50%;
-            transform: translate(-50%, -50%) rotate(0deg); /* 회전 제거 및 중앙 정렬 유지 */
-            text-align: center; /* 텍스트를 중앙 정렬 */
-            font-size: 11px; /* 폰트 크기 설정, 필요에 따라 조정 */
+            transform: translate(-50%, -50%);
+            text-align: center;
+            font-size: 11px;
         }
-        .btn-block { /* 버튼 레이아웃 유지 */
+        .btn-block {
             max-width: 100%;
             text-align: left;
-            display: inline-block; /* 버튼을 인라인 블록으로 설정하여 텍스트가 줄바꿈되지 않도록 합니다. */
+            display: inline-block;
         }
         .calendar-container {
             text-align: center;
@@ -48,22 +45,21 @@
         }
         .calendar-container table {
             width: 100%;
-            border-collapse: collapse; /* 테두리가 겹치지 않도록 설정 */
+            border-collapse: collapse;
             margin: 0 auto;
-            border: none; /* 전체 테두리 제거 */
-            table-layout: fixed; /* 모든 셀이 동일한 크기를 가지도록 설정 */
+            border: none;
+            table-layout: fixed;
         }
         .calendar-container th, .calendar-container td {
-            padding: 0; /* 패딩을 제거하여 셀의 높이를 고정 */
+            padding: 0;
             text-align: center;
-            border: none; /* 셀 테두리 제거 */
-            height: 40px; /* 모든 셀의 높이를 동일하게 설정 */
+            border: none;
+            height: 40px;
         }
         .calendar-container th {
             color: #999;
             font-weight: bold;
-            height: 40px; /* 헤더 셀의 높이도 동일하게 설정 */
-            line-height: 40px; /* 수직 정렬을 위해 라인 높이 설정 */
+            line-height: 40px;
         }
         .calendar-container td {
             cursor: pointer;
@@ -72,7 +68,8 @@
             color: #ccc;
             pointer-events: none;
         }
-        .calendar-container .cursor-pointer .date-circle {
+        .calendar-container .cursor-pointer .date-circle,
+        .calendar-container .cursor-pointer {
             cursor: pointer;
         }
         .calendar-container .selected .date-circle {
@@ -82,9 +79,6 @@
         }
         .calendar-container .today .date-circle {
             border: 2px solid black;
-        }
-        .calendar-container .cursor-pointer {
-            cursor: pointer;
         }
         .calendar-container .header {
             display: flex;
@@ -115,30 +109,165 @@
         }
         .calendar-container .date-circle {
             display: inline-block;
-            width: 30px; /* 날짜 원형 크기 조정 */
-            height: 30px; /* 날짜 원형 크기 조정 */
-            line-height: 30px; /* 텍스트 수직 정렬 */
+            width: 30px;
+            height: 30px;
+            line-height: 30px;
             border-radius: 50%;
             text-align: center;
-            margin: -2px auto; /* 날짜 간격 조정 및 가운데 정렬 */
+            margin: -2px auto;
         }
         .calendar-container .text-primary {
             color: #007bff;
         }
+        
     </style>
 </head>
 <body>
-    <div class="container-fluid fixed-top bg-white shadow-sm overflow-x-hidden" style="height: 4.5em">
-        <div class="row">
-            <div class="col align-items-bottomline px-3 py-3 shadow-sm bg-white">
-                <button class="border-0 bg-transparent d-flex align-items-center text-dark">
-                    <span class="material-symbols-outlined" onclick="history.back();" style="cursor: pointer;">arrow_back</span>
+    <div class="container-fluid fixed-top pt-0 pb-2" style="height: 4.5em;">
+        <div class="row h-100">
+            <!-- Back Button -->
+            <div class="col-auto d-flex align-items-center p-1 pb-4">
+                <button class="border-0 bg-transparent d-flex align-items-center text-dark" onclick="history.back();" style="cursor: pointer;">
+                    <span class="material-symbols-outlined">arrow_back</span>
                 </button>
+            </div>
+
+            <!-- Main Content -->
+            <div class="col ps-1 pe-0 d-flex align-items-center justify-content-center">
+                <div class="w-100">
+                    <!-- Location Button -->
+                    <div class="d-flex justify-content-between bg-white border border-1 rounded-pill w-100 p-1 mb-1" style="border-color: #28323C;">
+                        <div class="d-flex align-items-center">
+                            <i class="fa-solid fa-location-dot"></i>
+                            <button class="ms-2 new-fs-9 btn bg-white border border-0 p-0" id="locationDisplay" onclick="showLocationModal()">서울</button>
+                        </div>
+                        <div class="d-flex align-items-center">
+                            <i class="fa-solid fa-caravan fa-flip-horizontal"></i>
+                            <button class="ms-2 new-fs-9 btn bg-white border border-0 p-0" id="carTypeDisplay" onClick="showCarTypeModal()">모터홈, 차박...</button>
+                        </div>
+                    </div>
+
+                    <!-- Start Date Button -->
+                    <div class="d-flex justify-content-between bg-white border border-1 rounded-pill w-100 p-1" style="border-color: #28323C;">
+                        <div class="d-flex align-items-center">
+                            <i class="fa-regular fa-calendar"></i>
+                            <button class="ps-2 new-fs-9 btn bg-white border border-0 p-0" id="rendDateDisplay" onclick="showRentDateModal()">24.08.27 (화)</button>
+                        </div>
+                        <div class="d-flex align-items-center">
+                            <i class="fa-regular fa-calendar"></i>
+                            <button class="ps-2 new-fs-9 btn bg-white border border-0 p-0" id="returnDateDisplay" onclick="showReturnDateModal()">24.08.28 (수)</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Filter Icon -->
+            <div class="col-auto d-flex align-items-center justify-content-end ps-2 pe-2">
+                <div class="bg-white border border-1 rounded-pill d-flex align-items-center justify-content-center" style="width: 2.5em; height: 2.5em; border-color: #28323C;">
+                    <button class="position-relative border-0 bg-transparent p-0" onclick="filterOptions()">
+                        <span class="material-symbols-outlined new-fs-9">instant_mix</span>
+                        <span class="position-absolute" style="top: -8px; right: -9px; width: 0.6em; height: 0.6em; background-color: red; border-radius: 50%;"></span>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- 대여 장소 선택 모달 -->
+        <div class="modal fade" id="locationModal" tabindex="-1" aria-labelledby="locationModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <div class="modal-title fs-5 fw-semibold text-center w-100" id="locationModalLabel">대여 장소 선택</div>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="container">
+                            <div class="row pb-2">
+                                <div class="col-12 d-flex justify-content-center">
+                                    <button type="button" class="btn btn-outline-light text-dark w-100" data-location="전체">전체</button>
+                                </div>
+                            </div>
+                            <!-- 대여 지역 리스트 박스 -->
+                            <div class="row d-flex flex-wrap" id="regionsListBox"></div>
+                        </div>
+                    </div>
+                    <div class="modal-footer d-flex justify-content-center">
+                        <button type="button" class="btn btn-bc-dark w-100" data-bs-dismiss="modal">취소하기</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- 지역선택 모달 Template -->
+        <div id="regionsListTemplate" class="d-none">
+            <div class="regionstsListWrapper col-6 pb-2 d-flex justify-content-center">
+                <span class="regionsBtn btn btn-outline-light text-dark w-100"></span>
+            </div>
+        </div>
+        <!-- 캠핑카 유형 선택 모달 -->
+        <div class="modal fade" id="campingcarModal" tabindex="-1" aria-labelledby="campingcarModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <div class="modal-title fs-5 fw-semibold text-center w-100" id="campingcarModalLabel">캠핑카 유형 선택</div>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="container">
+                            <div class="row" id="carTypeCheckListBox"></div>
+                        </div>
+                    </div>
+                    <div class="modal-footer d-flex justify-content-center">
+                        <button type="button" class="carTypeBtn btn btn-bc-dark w-100" data-bs-dismiss="modal" onClick="updateSelectedCarTypes()">선택</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- 캠핑카선택 모달 Template -->
+        <div id="carTypeCheckListTemplate" class="d-none">
+            <div class="col-12 pb-2">
+                <div class="carTypeCheckListWrapper form-check d-flex align-items-center">
+                    <input class="carTypeCheck form-check-input" type="checkbox">
+                    <label class="form-check-label"></label>
+                </div>
+            </div>
+        </div>
+        <!-- 대여일 모달 -->
+        <div class="modal fade" id="rentdateModal" tabindex="-1" aria-labelledby="rentdateModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header border-0">
+                        <h5 class="modal-title text-center w-100 ps-4" id="rentdateModalLabel">언제 필요한가요?</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div id="calendar"></div>
+                    </div>
+                    <div class="modal-footer border-0">
+                        <button type="button" class="btn btn-bc-dark w-100" data-bs-dismiss="modal" onclick="confirmRentDate()">확인</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- 반납일 모달 -->
+        <div class="modal fade" id="returndateModal" tabindex="-1" aria-labelledby="returndateModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header border-0">
+                        <h5 class="modal-title text-center w-100 ps-4" id="returndateModalLabel">반납일 선택</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div id="calendarReturn"></div>
+                    </div>
+                    <div class="modal-footer border-0">
+                        <button type="button" class="btn btn-bc-dark w-100" data-bs-dismiss="modal" onclick="confirmReturnDate()">확인</button>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 
-    <div class="container-fluid">
+    <div class="container-fluid pt-5 mt-3">
         <div class="row px-3" th:each="searchResultData : ${searchResultList}">
             <div class="col px-0 shadow rounded-4 my-4">
                 <div class="row mx-0">
@@ -188,19 +317,19 @@
                             </div>
                         </div>
                         <!-- 동승, 취침, 애완 조건 -->
-                        <div class="row py-2 new-fs-9 border-top">
+                        <div class="row py-2 new-fs-7 border-top">
                             <div class="col px-2 d-flex justify-content-between align-items-center">
                                 <div class="d-flex align-items-center">
-                                    <span class="material-symbols-outlined pe-1">groups</span>
+                                    <span class="material-symbols-outlined pe-1 fs-5">groups</span>
                                     <span class="text-center pe-2" th:text="'동승 인원 ' + ${searchResultData.seating_capacity} + '명'"></span>
                                 </div>
                                 <div class="d-flex align-items-center">
-                                    <span class="material-symbols-outlined pe-1">hotel</span>
+                                    <span class="material-symbols-outlined pe-1 fs-5">hotel</span>
                                     <span class="text-center pe-0" th:text="'취침 인원 ' + ${searchResultData.sleeping_capacity} + '명'"></span>
                                 </div>
                                 <div class="d-flex align-items-center">
-                                    <span class="material-symbols-outlined ps-1">Pets</span>
-                                    <span class="text-center pe-0" th:text="'반려 동물  ' + ${searchResultData.pet_friendly}"></span>
+                                    <span class="material-symbols-outlined ps-2 new-fs-9">Pets</span>
+                                    <span class="text-center pe-0" th:text="' 반려 동물  ' + ${searchResultData.pet_friendly}"></span>
                                 </div>
                             </div>
                         </div>
@@ -217,11 +346,261 @@
             </div>
         </div>
     </div>    
-    <div class="pb-4"></div>
+
+    <!-- footer -->
+    <div th:replace="~{campingcar/campingNavi::footerNavi}"></div>
+    <!-- bottom -->
     <div th:replace="~{campingcar/campingNavi::bottomNaviBasecamp}"></div>
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const urlParams = new URLSearchParams(window.location.search);
+
+            // 필터링 값을 가져오기
+            const location = urlParams.get('location');
+            const carTypes = urlParams.get('carTypes') ? urlParams.get('carTypes').split(',') : [];
+            const rentDate = urlParams.get('rentDate');
+            const returnDate = urlParams.get('returnDate');
+
+            // UI에 필터링 값 반영
+            if (location) {
+                document.getElementById("locationDisplay").innerText = location;
+            }
+            if (carTypes.length > 0) {
+                document.getElementById("carTypeDisplay").innerText = carTypes.join(', ');
+            }
+            if (rentDate) {
+                document.getElementById("rendDateDisplay").innerText = rentDate;
+            }
+            if (returnDate) {
+                document.getElementById("returnDateDisplay").innerText = returnDate;
+            }
+        });
+
+        const today = new Date();
+        let currentMonth = today.getMonth();
+        let currentYear = today.getFullYear();
+        let lastSelectedDate = null;
+        let lastSelectedReturnDate = null;
+
+        document.addEventListener("DOMContentLoaded", () => {
+            renderCalendar(currentMonth, currentYear);
+            renderReturnCalendar(currentMonth, currentYear);
+        });
+
+        // 대여 장소 선택 모달 열기 함수 
+        const showLocationModal = () => {
+            const locationModal = new bootstrap.Modal(document.getElementById("locationModal"));
+            loadRegionOptionList(); 
+            locationModal.show();
+        }
+
+        function loadRegionOptionList() {
+            fetch("/api/rent-user/getRegionsAll")
+            .then(response => response.json())
+            .then(response => {
+                const regionsListBox = document.getElementById("regionsListBox");
+                regionsListBox.innerHTML = "";  // 컨테이너의 기존 내용을 초기화
+
+                const template = document.querySelector("#regionsListTemplate .regionstsListWrapper"); 
+
+                response.data.allRegionsList.forEach(region => {
+                    const newRegion = template.cloneNode(true);
+                    const newButton = newRegion.querySelector(".regionsBtn"); 
+                    newButton.innerText = region.name;
+
+                    newButton.addEventListener('click', () => {
+                        document.getElementById("locationDisplay").innerText = region.name;
+                        const modalInstance = bootstrap.Modal.getInstance(document.getElementById("locationModal"));
+                        modalInstance.hide();
+                    });
+
+                    regionsListBox.appendChild(newRegion);
+                });
+            });
+        }
+
+        let selectedCarTypes = [];
+
+        // 캠핑카 유형 선택 모달 열기 함수 
+        const showCarTypeModal = () => {
+            const campingcarModal = new bootstrap.Modal(document.getElementById("campingcarModal")); 
+            loadCampingCarTypeOptionList();
+            campingcarModal.show();
+        }
+
+        function loadCampingCarTypeOptionList() {
+            fetch("/api/rent-user/getCarTypeAll")
+            .then(response => response.json())
+            .then(response => {
+                const carTypeCheckListBox = document.getElementById("carTypeCheckListBox");
+                carTypeCheckListBox.innerHTML = "";  // 컨테이너의 기존 내용을 초기화
+
+                const template = document.querySelector("#carTypeCheckListTemplate .carTypeCheckListWrapper"); 
+
+                response.data.allCarType.forEach((carType, index) => {
+                    const newCarType = template.cloneNode(true);
+                    const checkbox = newCarType.querySelector(".carTypeCheck");
+                    const label = newCarType.querySelector(".form-check-label");
+
+                    checkbox.value = carType.name; 
+                    checkbox.id = `carTypeCheck${index}`;
+                    label.innerText = carType.name;
+                    label.setAttribute("for", `carTypeCheck${index}`);
+
+                    checkbox.addEventListener('change', (event) => selectCarType(event));
+                    carTypeCheckListBox.appendChild(newCarType);
+                });
+            });
+        }
+
+        function selectCarType(event) { 
+            const { value, checked } = event.target;
+            if (checked) {
+                selectedCarTypes.push(value);
+            } else {
+                selectedCarTypes = selectedCarTypes.filter(type => type !== value);
+            }
+        }
+
+        function updateSelectedCarTypes() {
+            document.getElementById("carTypeDisplay").innerText = selectedCarTypes.join(', ');
+        }
+
+        // 대여일 모달 열기 함수 
+        const showRentDateModal = () => {
+            const rentDateModal = new bootstrap.Modal(document.getElementById("rentdateModal"));
+            rentDateModal.show();
+            renderCalendar(currentMonth, currentYear);
+        }
+
+        // 반납일 모달 열기 함수 
+        const showReturnDateModal = () => {
+            const returnDateModal = new bootstrap.Modal(document.getElementById("returndateModal"));
+            returnDateModal.show();
+            renderReturnCalendar(currentMonth, currentYear);
+        }
+
+        function renderCalendar(month, year) {
+            renderCalendarTemplate("calendar", month, year, lastSelectedDate, selectDate);
+        }
+
+        function renderReturnCalendar(month, year) {
+            renderCalendarTemplate("calendarReturn", month, year, lastSelectedReturnDate, selectReturnDate);
+        }
+
+        function renderCalendarTemplate(calendarId, month, year, lastSelectedDate, selectDateFunction) {
+            const firstDay = new Date(Date.UTC(year, month, 1)).getUTCDay();
+            const lastDate = new Date(Date.UTC(year, month + 1, 0)).getUTCDate();
+            const lastDatePrevMonth = new Date(Date.UTC(year, month, 0)).getUTCDate();
+            const calendar = document.getElementById(calendarId);
+
+            let html = `
+                <div class="calendar-container">
+                    <div class="header">
+                        <button class="btn btn-light" onclick="changeMonth(${calendarId}, -1)">
+                            <i class="fas fa-chevron-left"></i>
+                        </button>
+                        <h4>${year}.${month + 1 < 10 ? '0' : ''}${month + 1}</h4>
+                        <button class="btn btn-light" onclick="changeMonth(${calendarId}, 1)">
+                            <i class="fas fa-chevron-right"></i>
+                        </button>
+                    </div>
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th class="text-danger">일</th>
+                                <th>월</th>
+                                <th>화</th>
+                                <th>수</th>
+                                <th>목</th>
+                                <th>금</th>
+                                <th class="text-primary">토</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+            `;
+
+            let date = 1;
+            let nextMonthDate = 1;
+
+            for (let i = 0; i < 6; i++) {
+                html += '<tr>';
+                for (let j = 0; j < 7; j++) {
+                    if (i === 0 && j < firstDay) {
+                        html += `<td class="inactive">${lastDatePrevMonth - firstDay + 1 + j}</td>`;
+                    } else if (date > lastDate) {
+                        html += `<td class="inactive">${nextMonthDate++}</td>`;
+                    } else {
+                        let cellDate = new Date(Date.UTC(year, month, date));
+                        let cellClass = cellDate < today && !(date === today.getUTCDate() && month === today.getUTCMonth() && year === today.getUTCFullYear()) ? 'inactive' : 'cursor-pointer';
+                        if (date === today.getUTCDate() && month === today.getUTCMonth() && year === today.getUTCFullYear() && !lastSelectedDate) {
+                            cellClass += ' today';
+                        }
+                        html += `<td class="${cellClass}" data-date="${cellDate.toISOString().split('T')[0]}" onclick="${selectDateFunction.name}(this, '${cellDate.toISOString().split('T')[0]}')"><span class="date-circle">${date++}</span></td>`;
+                    }
+                }
+                html += '</tr>';
+            }
+
+            html += `
+                        </tbody>
+                    </table>
+                </div>
+            `;
+
+            calendar.innerHTML = html;
+
+            if (lastSelectedDate) {
+                const selectedCell = calendar.querySelector(`[data-date="${lastSelectedDate}"]`);
+                if (selectedCell) {
+                    selectedCell.classList.add('selected');
+                }
+            }
+        }
+
+        function changeMonth(calendarId, direction) {
+            currentMonth += direction;
+            if (currentMonth < 0) {
+                currentMonth = 11;
+                currentYear--;
+            } else if (currentMonth > 11) {
+                currentMonth = 0;
+                currentYear++;
+            }
+            renderCalendarTemplate(calendarId, currentMonth, currentYear);
+        }
+
+        function selectDate(cell, date) {
+            document.querySelectorAll('#calendarBody td').forEach(td => td.classList.remove('selected', 'today'));
+            cell.classList.add('selected');
+            lastSelectedDate = date;
+        }
+
+        function selectReturnDate(cell, date) {
+            document.querySelectorAll('#calendarBodyReturn td').forEach(td => td.classList.remove('selected', 'today'));
+            cell.classList.add('selected');
+            lastSelectedReturnDate = date;
+        }
+
+        function confirmRentDate() {
+            const selectedDate = document.querySelector('#calendarBody td.selected').dataset.date;
+            if (selectedDate) {
+                const displayDate = new Date(selectedDate);
+                document.getElementById("rendDateDisplay").textContent = displayDate.toISOString().split('T')[0];
+            }
+        }
+
+        function confirmReturnDate() {
+            const selectedReturnDate = document.querySelector('#calendarBodyReturn td.selected').dataset.date;
+            if (selectedReturnDate) {
+                const displayDate = new Date(selectedReturnDate);
+                document.getElementById("returnDateDisplay").textContent = displayDate.toISOString().split('T')[0];
+            }
+        }
+    </script>
 </body>
 </html>

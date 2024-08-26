@@ -645,6 +645,16 @@
         <if test="filterOption=='구매확정'">
             and status in ('구매확정', '리뷰작성완료')
         </if>
+        and status not in ('환불완료')
+    </select>
+
+    <select id="selectOrderProductListForMyClaimListPage" resultType="com.bulmeong.basecamp.store.dto.OrderProductDto">
+        select * from order_product
+        where order_id = #{order_id}
+        <if test="filterOption!=null and filterOption!='전체'">
+            and status = #{filterOption}
+        </if>
+        and status not in ('주문완료', '상품준비중', '배송완료', '구매확정', '리뷰작성완료')
     </select>
 
     <select id="orderCompleteCount" resultType="int">
@@ -673,6 +683,20 @@
         inner join store_order so on op.order_id = so.id
         where so.user_id = #{user_id}
         and op.status = '리뷰작성완료'
+    </select>
+
+    <select id="refundCompleteCount" resultType="int">
+        select count(*) from order_product op
+        inner join store_order so on op.order_id = so.id
+        where so.user_id = #{user_id}
+        and op.status = '환불완료'
+    </select>
+
+    <select id="selectRefundPriceSum" resultType="int">
+        select coalesce(sum(op.order_price), 0) from order_product op 
+        inner join store_order so on op.order_id = so.id 
+        where so.id = #{order_id}
+        and op.status = '환불완료'
     </select>
 
     <select id="allOrderCount" resultType="int">
@@ -796,6 +820,48 @@
         group by sp.id
         order by sp.id desc
     </select>
+
+    <select id="selectStoreProductDataListByfilter" resultType="java.util.HashMap">
+        select 
+            sp.id, 
+            sp.name, 
+            sp.price, 
+            sp.quantity, 
+            sp.status, 
+            coalesce(spd.percentage, 0) as percentage,
+            coalesce(t1.purchase_quantity, 0) as purchase_quantity
+        from store_product sp 
+        left outer join store_product_discount spd on sp.discount_id = spd.id 
+        left outer join (
+            select sp.id, sum(op.quantity) as purchase_quantity 
+            from order_product op 
+            inner join store_order so on op.order_id = so.id 
+            inner join store_product sp on sp.id = op.product_id 
+            where sp.store_id = #{store_id}
+            group by sp.id
+        ) t1 on t1.id = sp.id
+        where sp.store_id = #{store_id}
+        <if test="subcategory_id != 0">
+            and sp.subcategory_id = #{subcategory_id}
+        </if>
+        and 
+        case 
+            when sp.quantity - coalesce(t1.purchase_quantity, 0) &lt;= 0 then '품절'
+            else '판매가능'
+        end in
+        <foreach item="status" collection="status_list" open="(" separator="," close=")">
+            #{status}
+        </foreach>
+        <if test="search_option.equals('productName') and search_word != null and search_word.trim() != ''">
+            and sp.name like concat('%', #{search_word}, '%')
+        </if>
+        <if test="search_option.equals('productId') and search_word != null and search_word.trim() != ''">
+            and sp.id = #{search_word}
+        </if>
+        group by sp.id
+        order by sp.id desc
+    </select>
+
 
     <update id="updateOrderProductStatusToConfirm">
         update order_product

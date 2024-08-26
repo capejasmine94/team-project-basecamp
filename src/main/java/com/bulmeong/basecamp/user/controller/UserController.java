@@ -6,6 +6,7 @@ import com.bulmeong.basecamp.user.service.UserService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -77,6 +78,20 @@ public class UserController {
             return "redirect:https://basecamp.null-pointer-exception.com/user/login";
         session.invalidate();
         return "redirect:https://basecamp.null-pointer-exception.com";
+    }
+
+    @RequestMapping("coupon")
+    public String coupon(){
+        return "common/coupon";
+    }
+
+    @RequestMapping("pointLog")
+    public String pointLog(HttpSession session, Model model){
+        
+        UserDto userDto = (UserDto)session.getAttribute("sessionUserInfo");
+        model.addAttribute("pointLogDtoList", userService.getUserMileageLogByUserId(userDto.getId()));
+
+        return "common/pointLog";
     }
 
     private final String[] nicknames = {

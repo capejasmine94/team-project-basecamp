@@ -19,6 +19,7 @@ import com.bulmeong.basecamp.store.dto.ProductOptionValueDto;
 import com.bulmeong.basecamp.store.dto.ProductRefundDto;
 import com.bulmeong.basecamp.store.dto.ProductRefundReasonDto;
 import com.bulmeong.basecamp.store.dto.ProductReviewDto;
+import com.bulmeong.basecamp.store.dto.ProductSearchOptionData;
 import com.bulmeong.basecamp.store.dto.ProductSubcategoryDto;
 import com.bulmeong.basecamp.store.dto.ProductWishDto;
 import com.bulmeong.basecamp.store.dto.StoreBankAccountDto;
@@ -146,6 +147,7 @@ public interface StoreSqlMapper {
 
     public List<OrderProductDto> selectOrderProductListByOrderId(@Param("order_id") int order_id, @Param("filterOption") String filterOption);
     public List<OrderProductDto> selectOrderProductListForMyOrderListPage(@Param("order_id") int order_id, @Param("filterOption") String filterOption);
+    public List<OrderProductDto> selectOrderProductListForMyClaimListPage(@Param("order_id") int order_id, @Param("filterOption") String filterOption);
 
     public List<OrderProductDto> selectOrderProductListByStoreId(int store_id);
 
@@ -173,10 +175,13 @@ public interface StoreSqlMapper {
     public int purchaseConfirmationCount(int user_id);
     public int allOrderCount(int user_id);
     public int reviewCompleteCount(int user_id);
+    public int refundCompleteCount(int user_id);
+    public int selectRefundPriceSum(int order_id);
 
     public List<StoreProductDto> selectStoreProductByStoreId(int store_id);
 
     public List<Map<String, Object>> selectStoreProductDataListByStoreId(int store_id);
+    public List<Map<String, Object>> selectStoreProductDataListByfilter(ProductSearchOptionData productSearchOptionData);
 
     public void updateOrderProductStatusToConfirm(int order_product_id);
 

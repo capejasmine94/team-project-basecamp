@@ -1,8 +1,8 @@
 <!-- 최상단 헤더 -->
 <div th:fragment="topNavi">
-    <div class="container-fluid fixed-top bg-white shadow-sm" style="height: 3.625em">
+    <div class="container-fluid fixed-top bg-white shadow-sm overflow-x-hidden" style="height: 3.625em">
         <div class="row">
-            <div class="col align-itmes-bottomline px-3 py-3 shadow-sm bg-whihte">
+            <div class="col align-itmes-bottomline px-3 py-3 bg-whihte">
                 <a href="/"  th:if="${session.sessionUserInfo != null}" class="col-auto p-0 fw-bold d-flex align-itmes-center text-black">
                     <img src="/public/img/common/배캠.png" style="width: 6.5em">
                 </a>
@@ -20,11 +20,14 @@
 
 
 <!-- 공통 푸터 -->
-<div th:fragment="bottomNavi" class="footer py-5 mt-5">
-    <div class="row mt-4 py-2 bg-dark-subtle text-white text-center f09">
-        <div class="col fw-bold border-end">
-            로그아웃
-        </div>
+<div th:fragment="footerNavi" class="footer py-5 mt-5 overflow-x-hidden">
+    <!-- footer -->
+    <div class="row py-2 bg-dark-subtle text-white text-center f09">
+        <form id="logoutForm" action="/user/logoutProcess" class="col fw-bold border-end">
+            <button class="border-0 bg-transparent text-white fw-bold">
+                로그아웃
+            </button>
+        </form>
         <div class="col fw-bold border-end">
             고객센터
         </div>
@@ -35,9 +38,13 @@
     <div class="row py-4 px-3 bg-body-secondary text-secondary">
         <div class="col">
             <div class="row pb-2">
-                <div class="col p-0 fw-bold fs-3 d-flex align-items-center">
-                    <span class="material-symbols-outlined">camping</span>
-                    <span class="ms-1">BASECAMP</span>
+                <div class="col-auto p-0">
+                    <span class="material-symbols-outlined f20">
+                        camping
+                    </span>
+                </div>
+                <div class="col p-0 fw-bold fs-3">
+                    <span>&nbsp;BASECAMP</span>
                 </div>
             </div>
             <div class="row pb-3 border-bottom border-2">
@@ -49,12 +56,14 @@
             <div class="row pt-3 py-3 border-bottom border-2">
                 <div class="col-auto p-0">
                     <button class="btn btn-sm bg-dark-subtle text-white fw-bold f08 d-flex align-items-center">
-                        <span class="material-symbols-outlined" style="font-size: 1rem; line-height: 1;">phone_in_talk</span>
-                        <span class="ms-1" style="font-size: 0.8rem;">고객센터</span>
+                        <span class="material-symbols-outlined f12">
+                            phone_in_talk
+                        </span>
+                        <span>&nbsp;고객센터</span>
                     </button>
                 </div>
                 <div class="col-auto">
-                    <button class="btn btn-sm bg-dark-subtle text-white fw-bold f08" style="font-size: 0.8rem;">
+                    <button class="btn btn-sm bg-dark-subtle text-white fw-bold f08">
                         카카오 1:1 문의
                     </button>
                 </div>
@@ -71,7 +80,7 @@
                     </div>
                     <div class="row">
                         <div class="col">
-                            <span>※</span><span>주말 공휴일 휴무</span>
+                            * 주말 공휴일 휴무
                         </div>
                     </div>
                 </div>
@@ -94,6 +103,8 @@
                     개인정보처리방침
                 </div>
             </div>
+            <div class="row py-5"></div>
+            <div class="row py-4"></div>
         </div>
     </div>
 </div>

@@ -97,11 +97,13 @@
         select count(*) from bc_campingcar_like
         where product_id=#{id}
     </select>
+    
     <!-- rentuser 존재 여부 검증 -->
     <select id="findRentUserByUserId" resultType="int">
         select count(*) from bc_rent_user bru
         where user_id =#{id}
     </select>
+    
     <!-- 예약하기의 기존 rentuserId를 가지고 오는 쿼리 -->
     <select id="existingByRentUserId" resultType="int">
         select id from bc_rent_user bru

@@ -144,18 +144,18 @@
                     </div>
                     <div class="row accordion-collapse collapse p-0" id="second-collapse" data-bs-parent="#leftAccordion">
                         <div class="col">
-                            <a class="row accordion-body py-3 ps-4 subcategory" href="/storeCenter/orderIntegration">
+                            <!-- <a class="row accordion-body py-3 ps-4 subcategory" href="/storeCenter/orderIntegration">
                                 주문 통합 검색
-                            </a>
+                            </a> -->
                             <a class="row accordion-body py-3 ps-4 subcategory" href="/storeCenter/sendProcessing">
                                 발송관리
                             </a>
                             <!-- <a class="row accordion-body py-3 ps-4 subcategory" href="/storeCenter/cancelManage">
                                 취소관리
                             </a> -->
-                            <a class="row accordion-body py-3 ps-4 subcategory" href="/storeCenter/returnManage">
+                            <!-- <a class="row accordion-body py-3 ps-4 subcategory" href="/storeCenter/returnManage">
                                 반품관리
-                            </a>
+                            </a> -->
                         </div>
                     </div>
 
@@ -203,13 +203,13 @@
                         </div>
                     </div> -->
 
-                    <div class="row category px-3">
+                    <!-- <div class="row category px-3">
                         <div class="col p-0 d-grid border-bottom">
                             <a href="/storeCenter/statistics" type="button" class="py-3 fw-semibold">
                                 통계
                             </a>
                         </div>
-                    </div>
+                    </div> -->
 
                     <div class="row category px-3">
                         <div class="col p-0 d-grid border-bottom">
@@ -460,31 +460,31 @@
                                     판매상태
                                 </div>
                                 <div class="col-auto d-flex align-items-center">
-                                    <input type="checkbox" class="form-check-input rounded-0 fs-5 m-0" id="All">
+                                    <input type="checkbox" class="form-check-input rounded-0 fs-5 m-0 productStatusCheckBox" value="All" id="All" onchange="selectedOption(this)" checked>
                                     <label class="form-check-label" for="All">
                                         &nbsp;&nbsp;전체
                                     </label>
                                 </div>
                                 <div class="col-auto d-flex align-items-center">
-                                    <input type="checkbox" class="form-check-input rounded-0 fs-5 m-0" id="sale">
+                                    <input type="checkbox" class="form-check-input rounded-0 fs-5 m-0 productStatusCheckBox" value="판매가능" id="sale" onchange="selectedOption(this)" checked>
                                     <label class="form-check-label" for="sale">
                                         &nbsp;&nbsp;판매중
                                     </label>
                                 </div>
                                 <div class="col-auto d-flex align-items-center">
-                                    <input type="checkbox" class="form-check-input rounded-0 fs-5 m-0" id="soldout">
+                                    <input type="checkbox" class="form-check-input rounded-0 fs-5 m-0 productStatusCheckBox" value="품절" id="soldout" onchange="selectedOption(this)" checked>
                                     <label class="form-check-label" for="soldout">
                                         &nbsp;&nbsp;품절
                                     </label>
                                 </div>
                                 <div class="col-auto d-flex align-items-center">
-                                    <input type="checkbox" class="form-check-input rounded-0 fs-5 m-0" id="pendingApproval">
+                                    <input type="checkbox" class="form-check-input rounded-0 fs-5 m-0 productStatusCheckBox" value="승인대기" id="pendingApproval" onchange="selectedOption(this)" checked>
                                     <label class="form-check-label" for="pendingApproval">
                                         &nbsp;&nbsp;승인대기
                                     </label>
                                 </div>
                                 <div class="col-auto d-flex align-items-center">
-                                    <input type="checkbox" class="form-check-input rounded-0 fs-5 m-0" id="prohibited">
+                                    <input type="checkbox" class="form-check-input rounded-0 fs-5 m-0 productStatusCheckBox" value="판매금지" id="prohibited" onchange="selectedOption(this)" checked>
                                     <label class="form-check-label" for="prohibited">
                                         &nbsp;&nbsp;판매금지
                                     </label>
@@ -513,17 +513,17 @@
                                     검색어
                                 </div>
                                 <div class="col-2">
-                                    <select id="" class="form-select rounded-0">
-                                        <option value="" selected>
+                                    <select id="searchOption" class="form-select rounded-0">
+                                        <option value="productName" selected>
                                             상품명
                                         </option>
-                                        <option value="">
+                                        <option value="productId">
                                             상품번호
                                         </option>
                                     </select>
                                 </div>
                                 <div class="col">
-                                    <input type="text" class="form-control rounded-0">
+                                    <input type="text" class="form-control rounded-0" id="inputSearchWord">
                                 </div>
                                 <div class="col-2"></div>
                             </div>
@@ -536,7 +536,7 @@
                                     </button>
                                 </div>
                                 <div class="col-2 d-grid pe-0">
-                                    <button class="btn s-dark-btn py-2 rounded-0 d-flex align-items-center justify-content-center">
+                                    <button class="btn s-dark-btn py-2 rounded-0 d-flex align-items-center justify-content-center" onclick="reloadProductListByFilter()">
                                         검색
                                     </button>
                                 </div>
@@ -662,7 +662,7 @@
 
         <div id="template" class="d-none">
             <select class="form-select productSubcategorySelectBox">
-                <option value="" disabled selected>소분류</option>
+                <option value="0" disabled selected>소분류</option>
             </select>
             <option value="" class="subcategoryOption"></option>
 
@@ -699,6 +699,32 @@
         <script>
             function formatNumberToPrice(number) {
                 return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+            }
+
+
+            function selectedOption(checkBox){
+                const productStatusCheckBoxList = document.querySelectorAll(".productStatusCheckBox");
+
+                if(checkBox.id == 'All'&& checkBox.checked==true){
+                    productStatusCheckBoxList.forEach(productStatusCheckBox => productStatusCheckBox.checked=true)
+                }else if(checkBox.id == 'All'&& checkBox.checked==false){
+                    productStatusCheckBoxList.forEach(productStatusCheckBox => productStatusCheckBox.checked=false)
+                }else if(checkBox.id != 'All'&&checkBox.checked==true){
+                    
+                    const AllCheckBox = document.getElementById("All");
+
+                    for(productStatusCheckBox of productStatusCheckBoxList){
+                        if(productStatusCheckBox.id != "All" && productStatusCheckBox.checked == false){
+                            AllCheckBox.checked = false
+                            return;
+                        }
+                    }
+
+                    AllCheckBox.checked = true;
+                    
+                }else if(checkBox.id != 'All'&&checkBox.checked==false){
+                    document.getElementById("All").checked = false;
+                }
             }
 
             function reloadProductList(){
@@ -761,6 +787,85 @@
 
             }
 
+
+            function reloadProductListByFilter(){
+                const productStatusCheckBoxList = document.querySelectorAll(".productStatusCheckBox")
+                const checkedCheckboxes = Array.from(productStatusCheckBoxList).filter(checkbox => checkbox.checked);
+                
+                let status_list = [];
+
+                if(checkedCheckboxes.length > 0) {
+                    status_list = checkedCheckboxes.map(checkbox => checkbox.value);
+                } else {
+                    status_list = ['All'];
+                }
+
+                const subcategory_id = document.querySelector("#productSubcategoryContainer .productSubcategorySelectBox").value
+                const search_option = document.getElementById("searchOption").value
+                const search_word = document.getElementById("inputSearchWord").value
+                
+                const requestBody = {
+                    status_list: status_list,
+                    subcategory_id: subcategory_id,
+                    search_option: search_option,
+                    search_word: search_word
+                };
+                
+                fetch('/api/store/getStoreProductListByFilter', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(requestBody)
+                })
+                .then(response => response.json())
+                .then((response) => {
+
+                    const productCount = document.getElementById("productCount");
+                    productCount.innerText = response.data.storeProductDataList.length;
+
+                    const storeProductContainer = document.getElementById("storeProductContainer")
+                    storeProductContainer.innerHTML = "";
+
+                    const storeProductRow = document.querySelector("#template .storeProductRow");
+
+                    for(storeProductData of response.data.storeProductDataList){
+                        const newStoreProductRow = storeProductRow.cloneNode(true);
+
+                        newStoreProductRow.querySelector(".productNumber").innerText = storeProductData.id;
+                        newStoreProductRow.querySelector(".productName").innerText = storeProductData.name;
+
+                        const quantity = storeProductData.quantity;
+                        const purchase_quantity = storeProductData.purchase_quantity;
+
+                        newStoreProductRow.querySelector(".productStockQuantity").innerText = `${quantity-purchase_quantity}`;
+
+                        const productStatus = newStoreProductRow.querySelector(".productStatus");
+
+                        if(quantity-purchase_quantity>0){
+                            productStatus.innerText = "판매중";
+                        }else{
+                            productStatus.innerText = "품절";
+                            productStatus.classList.add("text-danger");
+                        }
+
+                        newStoreProductRow.querySelector(".productPrice").innerText = formatNumberToPrice(storeProductData.price);
+
+                        const price = storeProductData.price;
+                        const percentage = storeProductData.percentage;
+
+                        newStoreProductRow.querySelector(".productSalePrice").innerText = formatNumberToPrice(Math.round(price-price*percentage));
+
+                        // newStoreProductRow.setAttribute("onclick", `showProductModal(${storeProductData.id})`)
+                        
+                        storeProductContainer.appendChild(newStoreProductRow);
+                    }
+
+                })
+
+            }
+
+
             // function showProductModal(product_id){
                 
             // }
@@ -821,7 +926,6 @@
                 leftMenu.style.paddingTop = height + 'px';
             }
             onResize();
-
             window.addEventListener("resize",function(){onResize();});
 
             window.addEventListener("DOMContentLoaded", () => {

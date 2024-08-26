@@ -17,9 +17,6 @@
             background: -webkit-linear-gradient(to right, #1C3F5B, #0D263C);
         }
 
-        a{
-            color:black;
-        }
     </style>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
@@ -33,244 +30,47 @@
 <body>
     
     <!-- 탑네비 부분 -->
-    <div class="container bg-body-tertiary" style="padding-top: 60.792px;">
+    <div class="container-fluid fixed-top bg-white shadow-sm border-bottom" style="height: 56px;">
     
-        <div class="fixed-top row border-bottom py-3 shadow-sm bg-white">
-            <div id="backButton" class="col ps-4 align-items-center d-flex ps-0" style="cursor: pointer;">
+        <div class="row py-3 px-3">
+            <div id="backButton" class="col align-items-center d-flex ps-0" style="cursor: pointer;">
                 <span class="material-symbols-outlined fw-light">arrow_back</span>
             </div>
-            <div class="col text-center fw-medium">마이페이지</div>
-            <a class="col pe-4 justify-content-end d-flex pe-0" href="/user/logoutProcess" th:unless="${session.sessionUserInfo == null}">
-                <span class="material-symbols-outlined fw-light">logout</span>
+            <div class="col text-center fw-medium">쿠폰</div>
+            <a class="col justify-content-end d-flex pe-0" href="/" style="cursor: pointer;">
+                <span class="material-symbols-outlined fw-light">home</span>
             </a>
         </div>
 
-        
+    </div>
+    <div class="container-fluid" style="padding-top: 56px;">
 
-
-    <!-- 프로필 -->
-        <div class="row mb-5 pb-5">
-            <div class="col">
-                <div class="row bg-white px-2 py-3">
-                    <div class="col-3">
-                        <img src="/public/img/common/default_profile.png" class="img-fluid rounded-circle" style="aspect-ratio: 1/1;">
-                    </div>
-                    <div class="col align-items-center d-flex">
-                        <span th:text="${session.sessionUserInfo.nickname}" class="fw-semibold"></span>&nbsp님
-                    </div>
-                    <!-- <div class="col-auto align-items-center d-flex">
-                        <span class="material-symbols-outlined fw-light">
-                            settings
-                        </span>
-                    </div> -->
-                </div>
-            
-                <div class="row px-2 bg-white">
-                    <a href="/user/pointLog" class="col border rounded p-2 me-2">
-                        <div class="row">
-                            <div class="col align-items-center d-flex">
-                                <span class="material-symbols-outlined fw-light f12 pe-1 text-body-tertiary">paid</span>
-                                <span class="f08"> 포인트</span>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col text-end f09">
-                                <span class="lightFont fw-semibold" th:text="${session.sessionUserInfo.mileage}">1000</span><span>P</span>
-                            </div>
-                        </div>
-                    </a>
-                    <a href="/user/coupon" class="col border rounded p-2">
-                        <div class="row">
-                            <div class="col align-items-center d-flex">
-                                <span class="material-symbols-outlined fw-light f12 pe-1 text-body-tertiary">confirmation_number</span>
-                                <span class="f08"> 쿠폰</span>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col text-end f09">
-                                <span class="lightFont fw-semibold">0</span><span>장</span>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-                
-                <div class="row">
+        <div class="row py-3 px-3">
+            <div class="col p-0">
+                <div class="row f08">
                     <div class="col">
-
-                        <div class="row">
-                            <div class="col">
-                                
-                                <div class="row bg-white pt-4 pb-3">
-                                    <div class="col fw-medium">
-                                        캠핑장 예약
-                                    </div>
-                                </div>
-                                <div class="row bg-white pb-2">
-                                    <div class="col">
-                                        <a href="/camp/myReservation" class="row pb-2">
-                                            <div class="col">
-                                                예약내역
-                                            </div>
-                                        </a>
-                                        <div class="row pb-2">
-                                            <div class="col">
-                                                리뷰작성
-                                            </div>
-                                        </div>
-                                 
-                                    </div>
-                                </div>
-
-                            </div>
-                        </div>
-
-                        <div class="row bg-white mt-2 py-1">
-                            <div class="col">
-                                
-                                <div class="row bg-white py-3">
-                                    <div class="col fw-medium">
-                                        캠핑카 예약
-                                    </div>
-                                </div>
-                                <div class="row bg-white pb-2">
-                                    <div class="col">
-                                        <div class="row pb-2">
-                                            <div class="col">
-                                                예약내역
-                                            </div>
-                                        </div>
-                                        <div class="row pb-3">
-                                            <div class="col">
-                                                위시리스트
-                                            </div>
-                                        </div>
-                                 
-                                    </div>
-                                </div>
-
-                            </div>
-                        </div>
-
-                        <div class="row">
-                            <div class="col">
-                                
-                                <div class="row bg-white mt-2 py-3">
-                                    <div class="col fw-medium">
-                                        쇼핑몰
-                                    </div>
-                                </div>
-                                <div class="row bg-white pb-2">
-                                    <div class="col">
-                                        <a href="/store/myOrderList" class="row pb-2">
-                                            <div class="col">
-                                                주문내역
-                                            </div>
-                                        </a>
-                                        <a href="/store/myClaimList" class="row pb-2">
-                                            <div class="col">
-                                                취소/반품/교환 내역
-                                            </div>
-                                        </a>
-                                        <a href="/store/myReview" class="row pb-2">
-                                            <div class="col">
-                                                리뷰 작성
-                                            </div>
-                                        </a>
-                                        <a href="/store/addressBook" class="row pb-3">
-                                            <div class="col">
-                                                배송지 관리
-                                            </div>
-                                        </a>
-                                        <!-- <a href="/store/myOrderList" class="row pb-3">
-                                            <div class="col">
-                                                위시리시트
-                                            </div>
-                                        </a> -->
-                                    </div>
-                                </div>
-
-                            </div>
-                        </div>
-
-                        <div class="row bg-white mt-2">
-                            <div class="col">
-                                
-                                <div class="row bg-white py-3">
-                                    <div class="col fw-medium">
-                                        중고마켓
-                                    </div>
-                                </div>
-                           
-
-                            </div>
-                        </div>
-
-                        <div class="row bg-white mt-2 py-2">
-                            <div class="col">
-                                
-                                <div class="row bg-white py-3">
-                                    <div class="col fw-medium">
-                                        소모임
-                                    </div>
-                                </div>
-                                <div class="row bg-white pb-2">
-                                    <div class="col">
-                                        <div class="row pb-2">
-                                            <a href="/club/myClubs">
-                                                <div class="col">
-                                                    나의 소모임
-                                                </div>
-                                            </a>
-                                        </div>
-                                        <div class="row pb-2">
-                                            <a href="/club/bookmarkedClubs">
-                                                <div class="col">
-                                                    즐겨찾기한 소모임
-                                                </div>
-                                            </a>
-                                        </div>
-                                        <div class="row pb-2">
-                                            <div class="col">
-                                                나의 정기모임
-                                            </div>
-                                        </div>
-                                        <div class="row pb-2">
-                                            <div class="col">
-                                                내가 작성한 게시글
-                                            </div>
-                                        </div>
-                                        <div class="row pb-3">
-                                            <div class="col">
-                                                내가 작성한 댓글
-                                            </div>
-                                        </div>
-                                 
-                                    </div>
-                                </div>
-
-                            </div>
-                        </div>
-
-                        <div class="row bg-white mt-2 py-2">
-                            <div class="col">
-                                
-                                <div class="row py-2">
-                                    <div class="col fw-medium">
-                                        캠프스타그램
-                                    </div>
-                                </div>
-                           
-                            </div>
-                        </div>
-
-
-
-
+                        총 <span class="fw-semibold">0</span>개
                     </div>
                 </div>
-
+                <div class="row text-center align-items-center" style="height: 30vh;">
+                    <div class="col">
+                        <div class="row">
+                            <div class="col text-body-tertiary">
+                                <span class="material-symbols-outlined f40" style="font-weight: 100;">
+                                    error
+                                </span>
+                            </div>
+                        </div>
+                        <div class="row f09">
+                            <div class="col">
+                                발급 받은 쿠폰이 없습니다.
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
+
     </div>
     
 <!--메뉴 offcanvas 하단네비 -->

@@ -313,7 +313,7 @@
                         개인정보처리방침
                     </div>
                 </div>
-                <div class="row py-5"></div>
+                <div class="row py-4"></div>
                 <div class="row py-2"></div>
             </div>
         </div>
@@ -510,8 +510,6 @@
         const calendar_end = document.getElementById('selectDay_end_date');
         const endDate = new Date(calendar_end.value);
         const startDate = new Date(calendar_start.value)
-        console.log(startDate);
-        console.log(endDate);
         if(!calendar_start.value || endDate.getDate() < startDate.getDate()) {
             alert('예약 날짜를 선택해주세요.');
             document.getElementById('calendar_selectDay').scrollIntoView({ behavior: 'smooth', block: 'center' });

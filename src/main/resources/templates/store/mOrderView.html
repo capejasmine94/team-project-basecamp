@@ -96,9 +96,9 @@
             <div class="col fw-bold text-center">
                 주문 상세내역
             </div>
-            <a href="/store" class="col-auto pe-0 d-flex align-items-center">
+            <a href="/" class="col-auto pe-0 d-flex align-items-center">
                 <span class="material-symbols-outlined fw-light">
-                    storefront
+                    home
                 </span>
             </a>
         </div>
@@ -421,7 +421,7 @@
                 </div>
 
                 <!-- 결제 수단 -->
-                <div class="row bg-white pb-4 px-3">
+                <div class="row bg-white pb-4 px-3 bgBorder">
                     <div class="col p-0">
                         
                         <div class="row py-4">
@@ -459,57 +459,55 @@
                 </div>
 
                 <!-- 환불정보 -->
-                <!-- 
-                <div class="row bg-white pb-4 px-3 border-top">
-                    <div class="col p-0">
-                        
-                        <div class="row py-4">
-                            <div class="col fw-bold">
-                                환불정보
-                            </div>
-                            <div class="col d-flex align-items-center justify-content-end">
-                                <span class="material-symbols-outlined fw-light">
-                                    keyboard_arrow_down
-                                </span>
-                            </div>
-                        </div>
-
-                        <div class="row f08">
-                            <div class="col">
-                                <div class="row pb-2">
-                                    <div class="col text-body-tertiary">
-                                        환불 수단
-                                    </div>
-                                    <div class="col text-end">
-                                        카카오페이
+                <div class="row" th:if="${refundPrice!=0}">
+                    <div class="col">
+                        <div class="row bg-white pb-4 px-3">
+                            <div class="col p-0">
+                                
+                                <div class="row py-4">
+                                    <div class="col fw-bold">
+                                        환불정보
                                     </div>
                                 </div>
+
+                                <div class="row f08">
+                                    <div class="col">
+                                        <div class="row pb-2">
+                                            <div class="col text-body-tertiary">
+                                                환불 수단
+                                            </div>
+                                            <div class="col text-end">
+                                                카카오페이
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col text-body-tertiary">
+                                                결제 금액
+                                            </div>
+                                            <div class="col text-end fw-bold">
+                                                <span th:text="${#numbers.formatDecimal(refundPrice, 1, 'COMMA', 0, 'POINT')}">57,351</span>원
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="row px-3 fw-bold f08 bg-white bgBorder">
+                            <div class="col p-0 py-3 border-top">
                                 <div class="row">
-                                    <div class="col text-body-tertiary">
-                                        결제 금액
+                                    <div class="col">
+                                        환불 금액
                                     </div>
-                                    <div class="col text-end fw-bold">
-                                        57,351원
+                                    <div class="col-auto text-end">
+                                        <span th:text="${#numbers.formatDecimal(refundPrice, 1, 'COMMA', 0, 'POINT')}">57,351</span>원
                                     </div>
                                 </div>
-
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="row px-3 fw-bold f08 bg-white mb-3 border-bottom">
-                    <div class="col p-0 py-3 border-top">
-                        <div class="row">
-                            <div class="col">
-                                환불 금액
-                            </div>
-                            <div class="col-auto text-end">
-                                44,491원
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                 -->
+                
 
                 <!-- <div class="row px-2 bg-white pt-3 pb-5">
                     <div class="col d-grid">

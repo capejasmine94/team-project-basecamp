@@ -51,6 +51,7 @@ public class CampingcarController {
 
     @RequestMapping("campingCarDetailPage")
     public String campingCarDetailPage(@RequestParam("id") int id, Model model, HttpSession session) {
+
         UserDto sessionUserInfo = (UserDto) session.getAttribute("sessionUserInfo");
         model.addAttribute("sessionUserInfo", sessionUserInfo);
         System.out.println("유저"+ sessionUserInfo);
@@ -269,6 +270,7 @@ public class CampingcarController {
         UserDto sessionUserInfo = (UserDto)session.getAttribute("sessionUserInfo");
         int rentUserPk = campingcarService.getExistingByRentUserId(sessionUserInfo.getId());
         System.out.println("@@@@@@@@@@@@@@@@@@@@@@"+ rentUserPk);
+        
         List<Map<String,Object>> MyLikeList = campingcarService.getMyLikeList(rentUserPk);
         System.out.println(MyLikeList);
         model.addAttribute("MyLikeList", MyLikeList);

@@ -184,12 +184,10 @@
         <div class=" px-3 row border-bottom shadow-sm bg-white">
             <div class="col">
                 <div class="row py-3 align-items-center">
-                    <div class="col-auto ps-0">
-                        <button id="backButton" class="border-0 bg-transparent d-flex align-items-center">
-                            <span class="material-symbols-outlined fw-light">
-                                arrow_back
-                            </span>
-                        </button>
+                    <div class="col-auto ps-0 d-flex align-items-center" id="backButton">
+                        <span class="material-symbols-outlined fw-light">
+                            arrow_back
+                        </span>
                     </div>
                     <div class="col ps-0 fw-semibold text-center">
                         <span th:text="${productCategoryData.storeProductCategoryDto.name}">텐트</span>

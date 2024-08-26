@@ -20,6 +20,7 @@ import com.bulmeong.basecamp.store.dto.ProductOptionValueDto;
 import com.bulmeong.basecamp.store.dto.ProductRefundDto;
 import com.bulmeong.basecamp.store.dto.ProductRefundReasonDto;
 import com.bulmeong.basecamp.store.dto.ProductReviewDto;
+import com.bulmeong.basecamp.store.dto.ProductSearchOptionData;
 import com.bulmeong.basecamp.store.dto.ProductSubcategoryDto;
 import com.bulmeong.basecamp.store.dto.ProductWishDto;
 import com.bulmeong.basecamp.store.dto.StoreBankAccountDto;
@@ -1042,6 +1043,53 @@ public class StoreService {
         return result;
     }
 
+    public List<Map<String, Object>> getStoreClaimDataListByUserId(int user_id, String filterOption){
+        List<Map<String, Object>> result = new ArrayList<>();
+
+        List<StoreOrderDto> storeOrderDtoList = storeSqlMapper.selectStoreOrderDtoListByUserId(user_id);
+
+        for(StoreOrderDto storeOrderDto : storeOrderDtoList){
+            Map<String, Object> orderMap = new HashMap<>();
+
+            int order_id = storeOrderDto.getId();
+            List<OrderProductDto> orderProductDtoList = storeSqlMapper.selectOrderProductListForMyClaimListPage(order_id, filterOption);
+
+            List<Map<String, Object>> OrderProductDataList = new ArrayList<>();
+            
+            for(OrderProductDto orderProductDto : orderProductDtoList){
+                Map<String, Object> map = new HashMap<>();
+                
+                int order_product_id = orderProductDto.getId();
+
+                StoreDto storeDto = storeSqlMapper.selectStoreDtoByOrderProductId(order_product_id);
+
+                map.put("store_name", storeDto.getName());
+
+                int[] value_ids = storeSqlMapper.selectOrderProductOptionValueIds(order_product_id);
+                List<String> valueNameList = new ArrayList<>();
+                for(int value_id : value_ids){
+                    String value_name = storeSqlMapper.selectOptionValueNameById(value_id);
+                    valueNameList.add(value_name);
+                }
+
+                map.put("valueNameList", valueNameList);
+                map.put("orderProductDto", orderProductDto);
+    
+                OrderProductDataList.add(map);
+            }
+
+            orderMap.put("storeOrderDto", storeOrderDto);
+            orderMap.put("OrderProductDataList", OrderProductDataList);
+
+            result.add(orderMap);
+        }
+
+        return result;
+    }
+
+
+
+
     public Map<String, Object> getOrderStatusCountData(int user_id){
         Map<String, Object> map = new HashMap<>();
 
@@ -1050,8 +1098,13 @@ public class StoreService {
         map.put("purchaseConfirmationCount", storeSqlMapper.purchaseConfirmationCount(user_id));
         map.put("allOrderCount", storeSqlMapper.allOrderCount(user_id));
         map.put("reviewCompleteCount", storeSqlMapper.reviewCompleteCount(user_id));
+        map.put("refundCompleteCount", storeSqlMapper.refundCompleteCount(user_id));
 
         return map;
+    }
+
+    public int getRefundPriceSum(int order_id){
+        return storeSqlMapper.selectRefundPriceSum(order_id);
     }
 
     public Map<String, Object> getStoreOrderDataListByOrderId(int order_id){
@@ -1118,6 +1171,10 @@ public class StoreService {
 
     public List<Map<String, Object>> getStoreProductByStoreId(int store_id){
         return storeSqlMapper.selectStoreProductDataListByStoreId(store_id);
+    }
+
+    public List<Map<String, Object>> getStoreProductByFilter(ProductSearchOptionData productSearchOptionData){
+        return storeSqlMapper.selectStoreProductDataListByfilter(productSearchOptionData);
     }
 
     public void purchaseConfirmation(int order_product_id){

@@ -21,6 +21,7 @@ import com.bulmeong.basecamp.store.dto.OrderProductDto;
 import com.bulmeong.basecamp.store.dto.ProductOptionNameDto;
 import com.bulmeong.basecamp.store.dto.ProductRefundDto;
 import com.bulmeong.basecamp.store.dto.ProductReviewDto;
+import com.bulmeong.basecamp.store.dto.ProductSearchOptionData;
 import com.bulmeong.basecamp.store.dto.ProductWishDto;
 import com.bulmeong.basecamp.store.dto.StoreDto;
 import com.bulmeong.basecamp.store.dto.StoreOrderDto;
@@ -460,6 +461,21 @@ public class RestStoreController {
         return restResponseDto;
     }
 
+    
+    @RequestMapping("getClaimDataList")
+    public RestResponseDto getClaimDataList(HttpSession session, @RequestParam("filterOption")String filterOption){
+        RestResponseDto restResponseDto = new RestResponseDto();
+
+        UserDto userDto = (UserDto)session.getAttribute("sessionUserInfo");
+        int user_id = userDto.getId();
+
+        List<Map<String, Object>> orderDataList = storeService.getStoreClaimDataListByUserId(user_id, filterOption);
+
+        restResponseDto.add("orderDataList", orderDataList);
+
+        return restResponseDto;
+    }
+
     @RequestMapping("getStoreProductList")
     public RestResponseDto getStoreProductList(HttpSession session){
         RestResponseDto restResponseDto = new RestResponseDto();
@@ -640,6 +656,20 @@ public class RestStoreController {
         RestResponseDto restResponseDto = new RestResponseDto();
         
         restResponseDto.add("newTenProductDataList", storeService.selectNewTenProductDataListBySubcategoryId(category_id));
+
+        return restResponseDto;
+    }
+
+    @PostMapping("getStoreProductListByFilter")
+    public RestResponseDto getStoreProductListByFilter(@RequestBody ProductSearchOptionData requestBody, HttpSession session){
+        RestResponseDto restResponseDto = new RestResponseDto();
+
+        StoreDto storeDto = (StoreDto)session.getAttribute("sessionStoreInfo");
+
+        int store_id = storeDto.getId();
+        requestBody.setStore_id(store_id);
+
+        restResponseDto.add("storeProductDataList", storeService.getStoreProductByFilter(requestBody));
 
         return restResponseDto;
     }

@@ -7,6 +7,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.bulmeong.basecamp.user.dto.MileageLogDto;
 import com.bulmeong.basecamp.user.dto.UserDto;
 import com.bulmeong.basecamp.user.mapper.UserSqlMapper;
 
@@ -78,5 +79,9 @@ public class UserService {
 
     public void registerKakaoUser(UserDto userDto){
         userSqlMapper.insertKakaoUser(userDto);
+    }
+
+    public List<MileageLogDto> getUserMileageLogByUserId(int user_id){
+        return userSqlMapper.selectUserMileageLogByUserId(user_id);
     }
 }

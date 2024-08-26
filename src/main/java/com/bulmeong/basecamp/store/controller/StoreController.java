@@ -131,6 +131,9 @@ public class StoreController {
         Map<String, Object> orderData = storeService.getStoreOrderDataListByOrderId(id);
         model.addAttribute("orderData", orderData);
 
+        int refundPrice = storeService.getRefundPriceSum(id);
+        model.addAttribute("refundPrice", refundPrice);
+
         return "store/mOrderView";
     }
 
@@ -240,5 +243,10 @@ public class StoreController {
     @RequestMapping("brand")
     public String brand(){
         return "store/mBrand";
+    }
+
+    @RequestMapping("myClaimList")
+    public String myClaimList(){
+        return "store/mMyClaimList";
     }
 }
