@@ -92,7 +92,11 @@
                     <div class="col px-0 d-flex justify-content-center align-items-center overflow-hidden rounded-top-4 position-relative">
                         <img th:src="|/images/${myLike.main_img}|" class="img-fluid" style="max-width: 100%; min-height: 100%;" alt="썸네일">
                         <div class="position-absolute top-0 end-0 pt-1" style="padding-right: 0.75rem;">
-                            <i id="heart-${myLike.id}" th:onclick="'like(' + ${myLike.id} + ')'" class="fa-regular fa-heart" style="color: #ff0000;"></i>
+                            <!-- 좋아요 아이콘 상태를 서버에서 관리 -->
+                            <i id="heart-${myLike.id}" 
+                            th:classappend="${myLike.id} ? 'fa-solid' : 'fa-regular'"
+                            class="fa-heart" 
+                            style="color: #ff0000;"></i>
                         </div>
                     </div>
                 </div>
@@ -175,67 +179,11 @@
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js"></script>
     <script>
-    function goToMainPage() {
-        window.location.href = '/campingcar/main';
-    }
-    document.addEventListener("DOMContentLoaded", function() {
-
-        // 페이지 로드 시 좋아요 상태를 확인하고 업데이트합니다.
-        document.querySelectorAll('[id^="heart-"]').forEach(function(heartIcon) {
-            const productId = heartIcon.id.split('-')[1];
-            checkLikeStatus(productId);
-        });
-
-        function like(productId) {
-            const heartIcon = document.getElementById(`heart-${productId}`);
-            const isLiked = heartIcon.classList.contains('fa-solid');
-            
-            if (isLiked) {
-                // 좋아요를 취소하는 API 호출
-                fetch(`/api/rent-user/unlike?product_id=${productId}`, {
-                    method: 'POST'
-                }).then(() => {
-                    heartIcon.classList.remove('fa-solid');
-                    heartIcon.classList.add('fa-regular');
-                });
-            } else {
-                // 좋아요를 추가하는 API 호출
-                fetch(`/api/rent-user/like?product_id=${productId}`, {
-                    method: 'POST'
-                }).then(() => {
-                    heartIcon.classList.remove('fa-regular');
-                    heartIcon.classList.add('fa-solid');
-                });
-            }
+        function goToMainPage() {
+            window.location.href = '/campingcar/main';
         }
 
-        function checkLikeStatus(productId) {
-            const url = `/api/rent-user/isLiked?product_id=${productId}`;
-            fetch(url)
-                .then(response => {
-                    if (!response.ok) {
-                        throw new Error(`HTTP error! status: ${response.status}`);
-                    }
-                    return response.json(); // 이 라인에서 문제가 발생할 수 있음
-                })
-                .then(data => {
-                    const heart = document.getElementById(`heart-${productId}`);
-                    if (data.isLikedByUser) {
-                        heart.classList.remove("fa-regular");
-                        heart.classList.add("fa-solid");
-                        heart.setAttribute("onclick", `like(${productId}, event)`);
-                    } else {
-                        heart.classList.remove("fa-solid");
-                        heart.classList.add("fa-regular");
-                        heart.setAttribute("onclick", `like(${productId}, event)`);
-                    }
-                })
-                .catch(error => {
-                    console.error('Error:', error);
-                });
-        }
 
-    });
     </script>
 </body>
 </html>
