@@ -21,9 +21,9 @@ public class CampingcarDto {
     private String overnight_stay;
     private int seating_capacity;
     private int sleeping_capacity;
-    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm")
+    @DateTimeFormat(pattern = "HH:mm")
     private Date avaid_time;
-    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm")
+    @DateTimeFormat(pattern = "HH:mm")
     private Date return_dateTime;
     private int driver_license_id;
     private int driver_experience_id;
