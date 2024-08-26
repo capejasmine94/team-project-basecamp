@@ -100,6 +100,10 @@ public class CampingcarService {
         return campingCarSqlMapper.findReservationByRentUserIdAndReservationId(rentUserId, id);
     }
 
+    public boolean isReviewWritten(int id) {
+        return campingCarSqlMapper.isReviewWritten(id) > 0;
+    }
+
     // 차량 대여 점검 Shoot
     public void registerRentShoot(RentalExternalInspectionDto parmas) {
         campingCarSqlMapper.createRentShoot(parmas);

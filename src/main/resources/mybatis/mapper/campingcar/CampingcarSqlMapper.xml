@@ -290,6 +290,13 @@
                     bc_user bu on bru.user_id = bu.id 
         where bc.id = #{id}
     </select>
+
+    <!-- 같은 사용자가 같은 차량을 다른 날에 리뷰를 쓴 경우 검증 -->
+    <select id="isReviewWritten" resultType="int">
+        select count(*)isReviewWritten from bc_rental_review brr 
+        where brr.reservation_id =#{id}
+    </select>
+
     <!-- 해당 차량의 리뷰 별점 평균 -->
     <select id="avgByCarId" resultType="Double">
         select ROUND(avg(rate),2)
