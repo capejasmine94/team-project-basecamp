@@ -28,14 +28,14 @@
 </div>
 <!--하단네비-->
 <div class="container-fluid g-0" style="margin-top: 3rem;">
-    <a th:href="@{/secondhandProduct/postDetailsPage(product_id=${categoryByList.product_id})}" class="row mx-2 py-3 border-bottom mainPostLink-custom" th:each="categoryByList : ${categoryNameList}">
+    <a th:href="@{/secondhandProduct/postDetailsPage(product_id=${categoryByList.product_id}, user_id=${productList.user_id}, polygon_name=${productList.polygon_name})}" class="row mx-2 py-3 border-bottom mainPostLink-custom" th:each="categoryByList : ${categoryNameList}">
         <div class="col-4 me-1" style="height: 7rem;">
             <img class="mainPostImg-custom" th:src="@{/images/{image}(image=${categoryByList.main_image})}">
         </div>
         <div class="col">
             <div class="row-auto">
                 <div class="col">
-                    <span th:text="${categoryByList.title}" class="main-title-font">제목~</span>
+                    <span th:text="${categoryByList.title}" class="main-title-font title-line">제목~</span>
                 </div>
                 <div class="col main-subtitle-font">
                     <span th:text="${categoryByList.category_name}">카테고리</span><span>・</span>

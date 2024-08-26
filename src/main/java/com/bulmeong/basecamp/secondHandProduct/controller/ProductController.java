@@ -338,8 +338,12 @@ public class ProductController {
 
         List<AllContentsProductDto> selectSecondhandProductByCategoryNameList = productService.selectSecondhandProductByCategoryNameList(category_id);
         model.addAttribute("categoryNameList", selectSecondhandProductByCategoryNameList);
+
         String categoryName = productService.selectCategoryName(category_id);
         model.addAttribute("categoryName", categoryName);
+
+        List<AllContentsProductDto> productDtoList = productService.selectSecondhandProductList();
+        model.addAttribute("productDtoList", productDtoList);
 
 
         return "secondhandProduct/selectCategoryDetailListPage";
