@@ -127,6 +127,7 @@ public class RestRentalUserController {
         return restRentUserResponseDto;
 
     }
+    
     @RequestMapping("getRegionsAll")
     public RestRentUserResponseDto getAllRegions() {
         RestRentUserResponseDto restRentUserResponseDto = new RestRentUserResponseDto();
