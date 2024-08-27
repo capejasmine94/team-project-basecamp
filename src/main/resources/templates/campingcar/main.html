@@ -1490,7 +1490,7 @@
 
             // 필터링 조건에 맞는 검색 결과 페이지로 이동
             const queryString = `location=${selectedLocation}&carTypes=${selectedCarTypes.join(',')}&rentDate=${selectedRentDate}&returnDate=${selectedReturnDate}`;
-            window.location.href = `searchResultsPage?${queryString}`;
+            window.location.href = `/campingcar/searchResultsPage?${queryString}`;
         }
 
     </script>
