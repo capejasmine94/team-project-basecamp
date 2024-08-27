@@ -105,25 +105,25 @@
                         <!-- 회사명 + 차량명 -->
                         <div class="row">
                             <div class="col pe-0 pb-2">
-                                <span th:text="${myLike.comp_name}" class="fw-bold fs-6 text-success"></span>
-                                <span th:text="${myLike.product_name}" class="fw-bold fs-6" style="color: #484647;"></span>
+                                <span th:text="${myLike.comp_name}" class="fw-bold new-fs-8 text-dark"></span><span class="ms-1 py-0 rounded fw-semibold new-fs-75" th:text="${myLike.car_type_name}"style="background-color: #F0F4F7; color: #808485;"></span>
+                                <div th:text="${myLike.product_name}" class="fw-normal new-fs-10 text-dark" style="color: #484647;"></div>
                             </div>
                         </div>
                         <!-- 비수기 평일가격, 주말가격 -->
                         <div class="row ps-1 d-flex align-items-between">
-                            <div class="col-auto fs-6 ps-2 pb-2 d-flex align-items-center">
+                            <div class="col-auto new-fs-85 ps-2 pb-2 d-flex align-items-center">
                                 <span class="text-dark fw-semibold pe-1">평일 :</span>
-                                <span class="lightFont fw-medium" th:text="${#numbers.formatInteger(myLike.rental_fee_weekdays, 3, 'COMMA')}+'원'"></span>
+                                <span tyle="color: #0777F5;" class="lightFont fw-medium"  th:text="${#numbers.formatInteger(myLike.rental_fee_weekdays, 3, 'COMMA')}+'원'"></span>
                             </div>
                             <div class="col-2 px-0"></div>
-                            <div class="col-auto fs-6 px-0 pb-2 d-flex justify-content-center align-items-center">
+                            <div class="col-auto new-fs-85 px-0 pb-2 d-flex justify-content-center align-items-center">
                                 <span class="text-dark fw-semibold pe-1">주말 :</span>
-                                <span class="lightFont fw-medium" th:text="${#numbers.formatInteger(myLike.rental_fee_weekend, 3, 'COMMA')}+'원'"></span>
+                                <span style="color: #0777F5;" class="lightFont fw-medium" th:text="${#numbers.formatInteger(myLike.rental_fee_weekend, 3, 'COMMA')}+'원'"></span>
                             </div>
                         </div>
                         <!-- 차고지 주소 + 운전 조건 -->
                         <div class="row border-top d-flex-items-between">
-                            <div class="col-12 pt-2 pb-2 fw-bold new-fs-8" style="color: #7C7B7B;">
+                            <div class="col-12 px-2 ms-1 pt-2 pb-2 fw-medium text-primary-emphasis new-fs-8">
                                 <div class="d-flex align-items-center">
                                     <div th:text="'차고지 : ' + ${myLike.garage_address}"></div>
                                 </div>
