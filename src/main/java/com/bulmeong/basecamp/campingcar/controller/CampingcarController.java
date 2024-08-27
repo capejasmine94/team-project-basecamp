@@ -151,6 +151,7 @@ public class CampingcarController {
         UserDto sessionUserInfo = (UserDto)session.getAttribute("sessionUserInfo");
         int rentUserPk = campingcarService.getExistingByRentUserId(sessionUserInfo.getId());
         reservationDto.setRent_user_id(rentUserPk);
+        System.out.println("렌트고객확인: "+ rentUserPk);
 
         campingcarService.existingRentUserReservation(reservationDto);
 
@@ -200,7 +201,7 @@ public class CampingcarController {
 
         campingcarService.registerReview(review);
 
-        return "redirect:/campingcar/main";
+        return "redirect:https://basecamp.null-pointer-exception.com/campingcar/main";
     }
 
     @RequestMapping("carExteriorInteriorShoot")
@@ -236,7 +237,7 @@ public class CampingcarController {
         campingcarService.registerRentShoot(rentalExternalInspectionDto);
 
     model.addAttribute("message", "파일이 성공적으로 업로드되었습니다.");
-    return "redirect:/campingcar/myRentalHistory";
+    return "redirect:https://basecamp.null-pointer-exception.com/campingcar/myRentalHistory";
     }
 
     
@@ -269,10 +270,6 @@ public class CampingcarController {
         return newName;
     }
 
-    @RequestMapping("maintest")
-    public String maintest() {
-        return "/campingcar/maintest";
-    }
 
     @RequestMapping("myLike")
     public String myLike(HttpSession session,Model model){
@@ -311,7 +308,7 @@ public class CampingcarController {
         List<Map<String, Object>> searchResultList = campingcarService.getSearchResultList(map);
         model.addAttribute("searchResultList", searchResultList);
 
-        return "/campingcar/searchResultsPage";
+        return "campingcar/searchResultsPage";
     }
 
 

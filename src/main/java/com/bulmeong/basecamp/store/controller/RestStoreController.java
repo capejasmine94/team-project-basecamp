@@ -651,6 +651,15 @@ public class RestStoreController {
         return restResponseDto;
     }
 
+    @RequestMapping("selectNewThreeProductDataListByCategoryId")
+    public RestResponseDto selectNewThreeProductDataListByCategoryId(@RequestParam("category_id") int category_id){
+        RestResponseDto restResponseDto = new RestResponseDto();
+        
+        restResponseDto.add("newThreeProductDataList", storeService.selectNewThreeProductDataListByCategoryId(category_id));
+
+        return restResponseDto;
+    }
+
     @RequestMapping("selectNewTenProductDataListBySubcategoryId")
     public RestResponseDto selectNewTenProductDataListBySubcategoryId(@RequestParam("category_id") int category_id){
         RestResponseDto restResponseDto = new RestResponseDto();

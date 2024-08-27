@@ -31,6 +31,7 @@
         .location img {
             aspect-ratio: 1/1;
             width: 100px;
+            height: 100%;
             object-fit: cover;
             object-position: center;
         }
@@ -460,251 +461,248 @@
                         </div>
                     </div>
                 </div>
+                <!-- 네번째 row -->
+                <div class="row pt-3 px-3">
+                    <div class="col">
+                        <div class="row ps-1 pb-2">
+                            <div class="col ps-0 text-start">
+                                <div class="fw-semibold new-fs-10">Camping Car🚙</div>
+                            </div>
+                        </div>
+                        
+                        <!-- 검색 필터1 -->
+                        <div class="row d-flex justify-content-between align-self-center bg-white pt-3 border border-light-subtle">
+                            <!-- 대여 장소 -->
+                            
+                            <div class="col text-center text-light-emphasis form-group px-1">
+                                <div class="row">
+                                    <div class="col">
+                                        <i class="fa-solid fa-location-dot"></i><span> 대여 장소</span>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col py-2 pb-3">
+                                    <!-- id: 장소선택 버튼 문구를 사용자가 모달창에서 선택한 지역 이름을 동적으로 바꿀 수 있도록 하는 id -->
+                                        <button class="btn btn-light btn-block border border-0" id="locationDisplay" onclick="showLocationModal()">장소 선택</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- 캠핑카 유형 -->
+                            <div class="col text-center text-light-emphasis form-group">
+                                <div class="row">
+                                    <div class="col">
+                                        <i class="fa-solid fa-caravan fa-flip-horizontal"></i><span> 캠핑카 유형</span>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col py-2 pb-3">
+                                        <button class="btn btn-light btn-block border border-0 ellipsis-line-two" id="carTypeDisplay" onClick="showCarTypeModal()">유형 선택</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- 검색 필터2 -->
+                        <div class="row d-flex justify-content-between align-self-center bg-white pt-3 border border-light-subtle">
+                            <!-- 대여일 -->
+                            <div class="col text-center text-light-emphasis form-group">
+                                <div class="row">
+                                    <div class="col">
+                                        <i class="fa-regular fa-calendar"></i><span> 대여일</span>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col py-2 pb-3">
+                                        <button type="button" class="btn btn-light btn-block border border-0" id="rendDateDisplay" onclick="showRentDateModal()">날짜 선택 
+                                            <i class="fa-solid fa-chevron-down fa-xs"></i></button>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- 반납일 -->
+                            <div class="col text-center text-light-emphasis form-group">
+                                <div class="row">
+                                    <div class="col">
+                                        <i class="fa-regular fa-calendar"></i><span> 반납일</span>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col py-2 pb-3">
+                                        <button type="button" class="btn btn-light btn-block border border-0" id="returnDateDisplay" onclick="showReturnDateModal()">날짜 선택 
+                                            <i class="fa-solid fa-chevron-down fa-xs"></i></button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- 검색하기 버튼 -->
+                        <div class="row">
+                            <div class="col py-3 px-0 d-grid">
+                                <button class="btn btn-bc-dark btn-lg fw-bold"  onclick="search()">검색하기</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row pt-3">
+                    <div class="col ps-3 ms-1">
+                        <span class="new-fs-10 fw-bold test-start">진행 중인 이벤트</span>
+                    </div>
+                </div>
+                <div class="row pt-2 pb-3">
+                    <div class="col px-3 ms-1">
+                        <div id="carouselExampleAutoplaying" class="carousel slide" data-bs-ride="carousel" data-bs-interval="3000" data-bs-touch="true">
+                            <!-- Indicators (동그라미 표시) -->
+                            <div class="carousel-indicators">
+                                <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+                                <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
+                                <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
+                            </div>
+                          
+                            <!-- Carousel Images -->
+                            <div class="carousel-inner">
+                                <div class="carousel-item active img-fluid">
+                                    <img src="/public/img/campingCarImage/광고배너_1.png" class="d-block w-100 h-100" alt="할인 캐시백 이벤트">
+                                </div>
+                                <div class="carousel-item">
+                                    <img src="/public/img/campingCarImage/광고배너_2.png" class="d-block w-100 h-100" alt="출석 인증 이벤트">
+                                </div>
+                                <div class="carousel-item">
+                                    <img src="/public/img/campingCarImage/광고배너_3.png" class="d-block w-100 h-100" alt="신규 가입 혜택 이벤트">
+                                </div>
+                            </div>
+                        </div> 
+                    </div>
+                </div>
+                <div class="row pt-3">
+                    <div class="col-9 ps-4 pe-0 ms-1">
+                        <span class="new-fs-10 fw-bold test-start">캠핑카 차량 대여</span>
+                    </div>
+                    <!-- 더보기 버튼 -->
+                    <div class="col-auto ps-4 text-center d-grid" id="loadMoreContainer">
+                        <button class="btn btn-ligh text-secondary p-0 text-end d-flex align-items-center" id="loadMoreButton" onclick="loadMoreCampingCars()">
+                            <span class="new-fs-75">더보기</span><span class="material-symbols-outlined new-fs-75">arrow_forward_ios</span>
+                        </button>
+                    </div>
+                </div>
+                <!-- 캠핑카 등록 차량 반복 출력 -->
+                <div class="row mx-0">
+                    <div class="col-12">
+                        <!-- 가로 스크롤 가능한 컨테이너 -->
+                        <div class="d-flex flex-nowrap overflow-auto list-scroll" id="campingcarListBox" style="gap: 16px;">
+                            <!-- 여기에 동적으로 리스트가 추가됩니다 -->
+                        </div>
+                    </div>
+                </div>
+                <div class="row pt-3">
+                    <div class="col-9 ps-4 pb-2 ms-1">
+                        <span class="new-fs-10 pe-0 fw-bold test-start">캠핑카 정보 & 팁</span>
+                    </div>
+                    <!-- 더보기 버튼 -->
+                    <div class="col-auto ps-4 text-center d-grid" id="loadMoreContainer">
+                        <button class="btn btn-ligh text-secondary p-0 text-end d-flex align-items-center" id="loadMoreButton" onclick="loadMoreCampingCars()">
+                            <span class="new-fs-75">더보기</span><span class="material-symbols-outlined new-fs-75">arrow_forward_ios</span>
+                        </button>
+                    </div>
+                </div>
+                <div class="row bg-white">
+                    <div class="col overflow-x-auto list-scroll">
+                        <div class="row bg-white ps-4 pb-3 d-flex flex-nowrap" style="width: 50%; gap: 8px;">
+                            <!-- 정보1 -->
+                            <div class="col px-2 py-1 border rounded-4" style="flex: 1 1 calc(20% - 8px);">
+                                <div class="row">
+                                    <div class="col location d-flex justify-content-center">
+                                        <img class="border img-fluid" src="/public/img/campingCarImage/캠핑카정보&팁_1.png">
+                                    </div>
+                                </div>
+                                <div class="row pt-2 new-fs-85 fw-semibold">
+                                    <div class="col">
+                                        <span class="fs-6 semibold ellipsis-line-one">별보러 가자! 별 구경 성지 차바지 추천!</span>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col">
+                                        <span class="new-fs-85 ellipsis-line-two">강릉 안반데기, 화악터널 쌈지공원 스텔라스차박추천 작년, 나혼자산다에서</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- 정보2 -->
+                            <div class="col px-2 py-1 border rounded-4" style="flex: 1 1 calc(20% - 8px);">
+                                <div class="row">
+                                    <div class="col location d-flex justify-content-center">
+                                        <img class="border img-fluid" src="/public/img/campingCarImage/캠핑카정보&팁_2.png">
+                                    </div>
+                                </div>
+                                <div class="row pt-2 new-fs-85 fw-semibold">
+                                    <div class="col">
+                                        <span class="fs-6 semibold ellipsis-line-one">캠핑카 렌트 방법 꿀팀 총정리 가격부터 종류까지</span>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col px-2 py-1">
+                                        <span class="new-fs-85 ellipsis-line-two">캠핑카 렌트 붐이 일고 있다는 기사를 보신적이 있으신가요? 코로나 시대 일반 여행에 제한이</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- 정보3 -->
+                            <div class="col px-2 py-1 border rounded-4" style="flex: 1 1 calc(20% - 8px);">
+                                <div class="row">
+                                    <div class="col location d-flex justify-content-center">
+                                        <img class="border img-fluid" src="/public/img/campingCarImage/캠핑카정보&팁_3.png">
+                                    </div>
+                                </div>
+                                <div class="row pt-2 new-fs-85 fw-semibold">
+                                    <div class="col">
+                                        <span class="fs-6 semibold ellipsis-line-one">캠핑 에티넷 함께 살펴보고 건강한 차박문화 만들어가요</span>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col">
+                                        <span class="new-fs-85 ellipsis-line-two">캠핑 에티켓 꼭 지켜야 하나요? 차박과 캠핑카 여행, 즐겁지만 모두가 즐거운 여행을 위한</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- 정보4 -->
+                            <div class="col px-2 py-1 border rounded-4" style="flex: 1 1 calc(20% - 8px);">
+                                <div class="row">
+                                    <div class="col location d-flex justify-content-center">
+                                        <img class="border img-fluid" src="/public/img/campingCarImage/캠핑카정보&팁_4.png">
+                                    </div>
+                                </div>
+                                <div class="row pt-2 new-fs-85 fw-semibold">
+                                    <div class="col">
+                                        <span class="fs-6 semibold ellipsis-line-one">캠핑카 장비 준비물 이것만 챙긴다면 캠핑 초보 탈출!</span>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col">
+                                        <span class="new-fs-85 ellipsis-line-two">캠핑카 장비 무엇이 있는지 모르겠을때! 초보자가 캠핑카 여행 또는 차박 여행을 가면 어떤것을</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- 정보5 -->
+                            <div class="col px-2 py-1 border rounded-4" style="flex: 1 1 calc(20% - 8px);">
+                                <div class="row">
+                                    <div class="col location d-flex justify-content-center">
+                                        <img class="border img-fluid" src="/public/img/campingCarImage/캠핑카정보&팁_5.png">
+                                    </div>
+                                </div>
+                                <div class="row pt-2 new-fs-85 fw-semibold">
+                                    <div class="col">
+                                        <span class="fs-6 semibold ellipsis-line-one">혼캠 꿀팁 대방출! 소형 레이 캠핑카, 캠핑용품 추천까지!</span>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col">
+                                        <span class="new-fs-85 ellipsis-line-two">혼캠 두근거리기도 하지만 낯설고 어렵기도 하죠? 코로나19로 인해서 여행에 많은 제약이 </span>
+                                    </div>
+                                </div>
+                            </div>
+        
+                        </div>
+                    </div>
+                </div>
+
             </div>
         </div>
     </div>
     
-    <!-- 켐핑카 필터 -->
-    <div class="container overflow-x-hidden">
-        <div class="row px-4">
-            <div class="col">
-                <div class="row ps-1">
-                    <div class="col ps-0 text-start">
-                        <div class="fs-5 fw-semibold">Camping Car🚙</div>
-                    </div>
-                </div>
-                
-                <!-- 검색 필터1 -->
-                <div class="row d-flex justify-content-between align-self-center bg-white pt-3 border border-light-subtle">
-                    <!-- 대여 장소 -->
-                    
-                    <div class="col text-center text-light-emphasis form-group px-1">
-                        <div class="row">
-                            <div class="col">
-                                <i class="fa-solid fa-location-dot"></i><span> 대여 장소</span>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col py-2 pb-3">
-                            <!-- id: 장소선택 버튼 문구를 사용자가 모달창에서 선택한 지역 이름을 동적으로 바꿀 수 있도록 하는 id -->
-                                <button class="btn btn-light btn-block border border-0" id="locationDisplay" onclick="showLocationModal()">장소 선택</button>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- 캠핑카 유형 -->
-                    <div class="col text-center text-light-emphasis form-group">
-                        <div class="row">
-                            <div class="col">
-                                <i class="fa-solid fa-caravan fa-flip-horizontal"></i><span> 캠핑카 유형</span>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col py-2 pb-3">
-                                <button class="btn btn-light btn-block border border-0 ellipsis-line-two" id="carTypeDisplay" onClick="showCarTypeModal()">유형 선택</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!-- 검색 필터2 -->
-                <div class="row d-flex justify-content-between align-self-center bg-white pt-3 border border-light-subtle">
-                    <!-- 대여일 -->
-                    <div class="col text-center text-light-emphasis form-group">
-                        <div class="row">
-                            <div class="col">
-                                <i class="fa-regular fa-calendar"></i><span> 대여일</span>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col py-2 pb-3">
-                                <button type="button" class="btn btn-light btn-block border border-0" id="rendDateDisplay" onclick="showRentDateModal()">날짜 선택 
-                                    <i class="fa-solid fa-chevron-down fa-xs"></i></button>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- 반납일 -->
-                    <div class="col text-center text-light-emphasis form-group">
-                        <div class="row">
-                            <div class="col">
-                                <i class="fa-regular fa-calendar"></i><span> 반납일</span>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col py-2 pb-3">
-                                <button type="button" class="btn btn-light btn-block border border-0" id="returnDateDisplay" onclick="showReturnDateModal()">날짜 선택 
-                                    <i class="fa-solid fa-chevron-down fa-xs"></i></button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!-- 검색하기 버튼 -->
-                <div class="row">
-                    <div class="col py-3 px-0 d-grid">
-                        <button class="btn btn-bc-dark btn-lg fw-bold"  onclick="search()">검색하기</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="row pt-3">
-            <div class="col ps-3 ms-1">
-                <span class="fs-5 fw-bold test-start">진행 중인 이벤트</span>
-            </div>
-        </div>
-        <div class="row pt-2 pb-3">
-            <div class="col px-3 ms-1">
-                <div id="carouselExampleAutoplaying" class="carousel slide" data-bs-ride="carousel" data-bs-interval="3000" data-bs-touch="true">
-                    <!-- Indicators (동그라미 표시) -->
-                    <div class="carousel-indicators">
-                      <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
-                      <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
-                      <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
-                    </div>
-                  
-                    <!-- Carousel Images -->
-                    <div class="carousel-inner">
-                      <div class="carousel-item active img-fluid">
-                        <img src="/public/img/campingcarImage/광고 배너_1.png" class="d-block w-100 h-100 location" alt="...">
-                      </div>
-                      <div class="carousel-item">
-                        <img src="/public/img/campingcarImage/광고 배너_2.png" class="d-block w-100 h-50 location" alt="...">
-                      </div>
-                      <div class="carousel-item">
-                        <img src="/public/img/campingcarImage/광고 배너_3.png" class="d-block w-100 h-50 location" alt="...">
-                      </div>
-                    </div>
-                  </div> 
-            </div>
-        </div>
-    </div>
-    <!-- 캠핑카 등록 리스트 출력 -->
-    <div class="container overflow-x- pt-3">
-        <div class="row pt-3">
-            <div class="col-10 ps-4 pe-0 ms-1">
-                <span class="fs-5 fw-bold test-start">캠핑카 차량 대여</span>
-            </div>
-            <!-- 더보기 버튼 -->
-            <div class="col-auto ps-0 pe-1 text-center d-grid" id="loadMoreContainer"> 
-                <button class="btn btn-ligh new-fs-85 p-0" id="loadMoreButton" onclick="loadMoreCampingCars()">더보기</button>
-            </div>
-        </div>
-        <!-- 캠핑카 등록 차량 반복 출력 -->
-        <div class="row mx-0">
-            <div class="col-12">
-                <!-- 가로 스크롤 가능한 컨테이너 -->
-                <div class="d-flex flex-nowrap overflow-auto list-scroll" id="campingcarListBox" style="gap: 16px;">
-                    <!-- 여기에 동적으로 리스트가 추가됩니다 -->
-                </div>
-            </div>
-        </div>
-
-        <div class="row pt-3">
-            <div class="col-10 ps-4 ms-1">
-                <span class="fs-5 pe-0 fw-bold test-start">캠핑카 정보 & 팁</span>
-            </div>
-            <!-- 더보기 버튼 -->
-            <div class="col-auto ps-0 pe-1 text-center d-grid" id="loadMoreContainer"> 
-                <button class="btn btn-ligh new-fs-85 p-0" id="loadMoreButton" onclick="loadMoreCampingCars()">더보기</button>
-            </div>
-        </div>
-        <div class="row bg-white">
-            <div class="col overflow-x-auto list-scroll">
-                <div class="row bg-white ps-4 pb-3 d-flex flex-nowrap" style="width: 50%; gap: 8px;">
-                    <!-- 정보1 -->
-                    <div class="col px-2 py-1 border rounded-4" style="flex: 1 1 calc(20% - 8px);">
-                        <div class="row">
-                            <div class="col location d-flex justify-content-center">
-                                <img class="border img-fluid" src="/public/img/campingCarImage/캠핑카정보&팁_1.png">
-                            </div>
-                        </div>
-                        <div class="row pt-2 new-fs-85 fw-semibold">
-                            <div class="col">
-                                <span class="fs-6 semibold ellipsis-line-one">별보러 가자! 별 구경 성지 차바지 추천!</span>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col">
-                                <span class="new-fs-85 ellipsis-line-two">강릉 안반데기, 화악터널 쌈지공원 스텔라스차박추천 작년, 나혼자산다에서</span>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- 정보2 -->
-                    <div class="col px-2 py-1 border rounded-4" style="flex: 1 1 calc(20% - 8px);">
-                        <div class="row">
-                            <div class="col location d-flex justify-content-center">
-                                <img class="border img-fluid" src="/public/img/campingCarImage/캠핑카정보&팁_2.png">
-                            </div>
-                        </div>
-                        <div class="row pt-2 new-fs-85 fw-semibold">
-                            <div class="col">
-                                <span class="fs-6 semibold ellipsis-line-one">캠핑카 렌트 방법 꿀팀 총정리 가격부터 종류까지</span>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col px-2 py-1">
-                                <span class="new-fs-85 ellipsis-line-two">캠핑카 렌트 붐이 일고 있다는 기사를 보신적이 있으신가요? 코로나 시대 일반 여행에 제한이</span>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- 정보3 -->
-                    <div class="col px-2 py-1 border rounded-4" style="flex: 1 1 calc(20% - 8px);">
-                        <div class="row">
-                            <div class="col location d-flex justify-content-center">
-                                <img class="border img-fluid" src="/public/img/campingCarImage/캠핑카정보&팁_3.png">
-                            </div>
-                        </div>
-                        <div class="row pt-2 new-fs-85 fw-semibold">
-                            <div class="col">
-                                <span class="fs-6 semibold ellipsis-line-one">캠핑 에티넷 함께 살펴보고 건강한 차박문화 만들어가요</span>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col">
-                                <span class="new-fs-85 ellipsis-line-two">캠핑 에티켓 꼭 지켜야 하나요? 차박과 캠핑카 여행, 즐겁지만 모두가 즐거운 여행을 위한</span>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- 정보4 -->
-                    <div class="col px-2 py-1 border rounded-4" style="flex: 1 1 calc(20% - 8px);">
-                        <div class="row">
-                            <div class="col location d-flex justify-content-center">
-                                <img class="border img-fluid" src="/public/img/campingCarImage/캠핑카정보&팁_4.png">
-                            </div>
-                        </div>
-                        <div class="row pt-2 new-fs-85 fw-semibold">
-                            <div class="col">
-                                <span class="fs-6 semibold ellipsis-line-one">캠핑카 장비 준비물 이것만 챙긴다면 캠핑 초보 탈출!</span>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col">
-                                <span class="new-fs-85 ellipsis-line-two">캠핑카 장비 무엇이 있는지 모르겠을때! 초보자가 캠핑카 여행 또는 차박 여행을 가면 어떤것을</span>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- 정보5 -->
-                    <div class="col px-2 py-1 border rounded-4" style="flex: 1 1 calc(20% - 8px);">
-                        <div class="row">
-                            <div class="col location d-flex justify-content-center">
-                                <img class="border img-fluid" src="/public/img/campingCarImage/캠핑카정보&팁_5.png">
-                            </div>
-                        </div>
-                        <div class="row pt-2 new-fs-85 fw-semibold">
-                            <div class="col">
-                                <span class="fs-6 semibold ellipsis-line-one">혼캠 꿀팁 대방출! 소형 레이 캠핑카, 캠핑용품 추천까지!</span>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col">
-                                <span class="new-fs-85 ellipsis-line-two">혼캠 두근거리기도 하지만 낯설고 어렵기도 하죠? 코로나19로 인해서 여행에 많은 제약이 </span>
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
-            </div>
-        </div>
-    </div>
-
     <!-- campingcarList Templete -->
     <div id="campingcarListTemplete" class="d-none">
         <div class="campingcarListWrapper list-scroll row px-3" style="min-width: 240px; max-width: 240px;">
@@ -996,7 +994,7 @@
         }
 
         let currentCarIndex = 0;
-        const carsPerPage = 2;
+        const carsPerPage = 7;
         let campingCarList = [];
 
         // 캠핑카 리스트를 로드하고 화면에 표시하는 함수
@@ -1006,23 +1004,22 @@
                 .then(response => response.json())
                 .then(response => {
                     campingCarList = response.data.campingcarList;
-                    currentCarIndex = 0; // 초기 인덱스 설정
-                    displayCampingCars();
+                    displayCampingCars(); // 처음 carsPerPage개의 차량을 표시
                 });
         }
 
         // 차량을 화면에 표시하는 함수
         function displayCampingCars() {
             const campingcarListBox = document.getElementById("campingcarListBox");
-            campingcarListBox.innerHTML = ""; // 초기화
-
+            
+            // 표시할 차량 범위를 설정
             const endIndex = Math.min(currentCarIndex + carsPerPage, campingCarList.length);
 
-            for (let i = currentCarIndex; i < endIndex; i++) {
+            for (let i = 0; i < endIndex; i++) {
                 const e = campingCarList[i];
                 const newCampingcarListWrapper = document.querySelector("#campingcarListTemplete .campingcarListWrapper").cloneNode(true);
 
-                // 아래는 기존 loadCampingCarList 함수에서의 설정 작업들입니다.
+                // 차량 정보 설정
                 const campingcarImg = newCampingcarListWrapper.querySelector(".campingcarImg");
                 campingcarImg.setAttribute("src", `/images/${e.main_img}`);
                 const heart = newCampingcarListWrapper.querySelector(".fa-heart");
@@ -1043,6 +1040,7 @@
                 });
             }
 
+            // 인덱스를 업데이트하여 다음 항목을 표시할 수 있도록 함
             currentCarIndex = endIndex;
 
             // "더보기" 버튼 표시 여부 결정
@@ -1056,8 +1054,9 @@
 
         // "더보기" 버튼 클릭 시 호출되는 함수
         function loadMoreCampingCars() {
+            currentCarIndex -= carsPerPage; // 이전 인덱스로 이동하여 더보기 클릭 시 이전 차량 포함
             displayCampingCars();
-        }
+        }   
 
         // 좋아요 클릭 함수
         function like(product_id, event) {
@@ -1491,7 +1490,7 @@
 
             // 필터링 조건에 맞는 검색 결과 페이지로 이동
             const queryString = `location=${selectedLocation}&carTypes=${selectedCarTypes.join(',')}&rentDate=${selectedRentDate}&returnDate=${selectedReturnDate}`;
-            window.location.href = `searchResultsPage?${queryString}`;
+            window.location.href = `/campingcar/searchResultsPage?${queryString}`;
         }
 
     </script>

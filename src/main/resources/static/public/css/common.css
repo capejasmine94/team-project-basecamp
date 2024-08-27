@@ -176,6 +176,7 @@ ul, li {
 }
 
 /* 작은 폰트 사이즈 */
+.new-fs-10 { font-size: 1rem }
 .new-fs-95 { font-size: 0.95rem }
 .new-fs-9 { font-size: 0.9rem }
 .new-fs-85 { font-size: 0.85rem }

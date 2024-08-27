@@ -235,6 +235,7 @@ public interface StoreSqlMapper {
 
     public List<StoreProductDto> selectFiveProductList();
     public List<StoreProductDto> selectTenProductListDesc();
+    public List<StoreProductDto> selectThreeProductListDesc();
 
     public StoreDto selectNewStoreDto();
     public List<Map<String, Object>> selectNewStoreProductDataList();
@@ -245,4 +246,6 @@ public interface StoreSqlMapper {
 
     public List<Map<String, Object>> selectNewTenProductDataListByCategoryId(int category_id);
     public List<Map<String, Object>> selectNewTenProductDataListBySubcategoryId(int subcategory_id);
+
+    public List<Map<String, Object>> selectNewThreeProductDataListByCategoryId(int category_id);
 }

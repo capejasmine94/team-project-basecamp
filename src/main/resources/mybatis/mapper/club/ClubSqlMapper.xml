@@ -116,7 +116,13 @@
     <!-- 소모임 목록 뽑기 -->
     <select id="selectClubList" resultType="com.bulmeong.basecamp.club.dto.ClubDto">
         select * from bc_club
-        order by id desc
+        order by 
+        case 
+        when id = 6
+        then 0
+        else 1
+        end,
+        id desc;
     </select>
 
     <!-- 가입한 소모임 목록 뽑기 (by user_id) -->
