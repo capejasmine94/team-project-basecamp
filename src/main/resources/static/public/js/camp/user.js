@@ -51,7 +51,7 @@ function refreshCampsite() {
                     <div class="col-auto">
                         <div class="row mt-2 justify-content-end">
                             <div class="col-auto">
-                                <i class="bi bi-star fs-5"></i>
+                                <i class="bi bi-bookmark fs-5"></i>
                             </div>
                         </div>
                     </div>
