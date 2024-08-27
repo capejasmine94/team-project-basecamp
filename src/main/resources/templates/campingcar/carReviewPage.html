@@ -111,9 +111,11 @@
                 <div class="row">
                     <div class="col pt-2">
                         <div class="form-floating px-2">
+                            <!-- <style>
+                                textarea::placeholder{color: #333;opacity: 1;}
+                            </style> -->
                             <textarea name="content" class="form-control" id="floatingTextarea2" 
-                            style="height: 100%;width: 100%;" onclick="clearLabel();"></textarea>
-                            <label id="labelTextarea" for="floatingTextarea2" class="new-fs-7 ps-3" style="width: 100%; white-space: normal; word-wrap: break-word;">다른 고객들이 도움이 될 수 있도록 차량 상태, 청결도, 이용경험 등 자세히 남겨주세요</label>
+                            style="height: 100%;width: 100%;white-space: normal; word-wrap: break-word;"></textarea>
                         </div>
                         <input type="hidden" name="reservation_id" th:value="${reservationConfirm.id}">
                     </div>
