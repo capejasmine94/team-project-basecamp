@@ -355,7 +355,7 @@
                             <!-- 렌트카 회사 정보 -->
                             <div class="row border-top pt-2 mt-2">
                                 <div class="col d-flex align-items-center justify-content-center px-2">
-                                    <img th:src="@{/images/${campingcarDetails.campingcarDto.comp_profile_image}}" class="rounded-circle pe-2" style="width: 2.75rem;height: 2.75rem;">
+                                    <img th:src="|/images/${campingcarDetails.campingcarDto.comp_profile_image}|" class="rounded-circle pe-2" style="width: 2.75rem;height: 2.75rem;">
                                     <div class="flex-grow-1">
                                         <div class="fw-bold" th:text="${campingcarDetails.campingcarDto.comp_name}"></div>
                                         <div class="text-muted new-fs-8" th:text="${campingcarDetails.campingcarDto.comp_email}"></div>
