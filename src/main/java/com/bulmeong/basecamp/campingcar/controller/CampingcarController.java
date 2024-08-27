@@ -270,10 +270,6 @@ public class CampingcarController {
         return newName;
     }
 
-    @RequestMapping("maintest")
-    public String maintest() {
-        return "/campingcar/maintest";
-    }
 
     @RequestMapping("myLike")
     public String myLike(HttpSession session,Model model){
@@ -312,7 +308,7 @@ public class CampingcarController {
         List<Map<String, Object>> searchResultList = campingcarService.getSearchResultList(map);
         model.addAttribute("searchResultList", searchResultList);
 
-        return "/campingcar/searchResultsPage";
+        return "campingcar/searchResultsPage";
     }
 
 
