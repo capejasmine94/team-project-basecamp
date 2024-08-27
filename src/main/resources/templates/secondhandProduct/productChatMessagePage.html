@@ -47,9 +47,9 @@
 <div class="container-fluid g-0" style="margin-top: 8rem; padding-bottom: 5rem">
     <!--채팅 시작 날짜 -->
     <div class="row mx-2">
-        <div class="col text-center" style="font-size: 0.8rem">
-            <span id="date-span" th:text="${#dates.format(chatMessageDtoList.message_time, 'yyyy년 M월 d일')}">2024년 7월 15일</span>
-        </div>
+<!--        <div class="col text-center" style="font-size: 0.8rem">-->
+<!--            <span id="date-span" th:text="${#dates.format(productTotalDtoList.AllContentsDto.created_at, 'yyyy년 M월 d일')}">2024년 7월 15일</span>-->
+<!--        </div>-->
     </div>
     <!-- 메세지 -->
     <div id="chatMessages">
@@ -183,31 +183,24 @@
         const chatMessagesContainer = document.getElementById('chatMessages');
         chatMessagesContainer.innerHTML = '';
 
-        let lastMessageDate = ''; // 마지막 메시지의 날짜를 추적하기 위한 변수
+        let lastFormattedTime = '';
 
         messages.forEach((message, index) => {
             const messageElement = document.createElement('div');
             const formattedTime = formatTime(message.message_time);
-            const currentMessageDate = formatDate(message.message_time); // 날짜 포맷 추가
-
-            // 메시지의 날짜가 이전 메시지의 날짜와 다르면 날짜 표시를 추가
-            if (lastMessageDate !== currentMessageDate) {
-                const dateElement = document.createElement('div');
-                dateElement.className = 'row mx-2';
-                dateElement.innerHTML = `
-                <div class="col text-center" style="font-size: 0.8rem">
-                    <span>${currentMessageDate}</span>
-                </div>
-            `;
-                chatMessagesContainer.appendChild(dateElement);
-                lastMessageDate = currentMessageDate; // 마지막 메시지 날짜 갱신
-            }
 
             let showTime = false;
 
-            // 마지막 메시지이거나 다음 메시지의 시간이 다르면 시간을 표시
-            if (index === messages.length - 1 || formatTime(messages[index + 1].message_time) !== formattedTime) {
+            // 다음 메시지가 없다면 현재 메시지는 마지막 메시지
+            if (index === messages.length - 1) {
                 showTime = true;
+            } else {
+                // 다음 메시지가 있다면 다음 메시지의 시간을 확인
+                const nextMessage = messages[index + 1];
+                const nextFormattedTime = formatTime(nextMessage.message_time);
+                if (formattedTime !== nextFormattedTime) {
+                    showTime = true;
+                }
             }
 
             if (message.sender_id === myId) {
@@ -233,16 +226,8 @@
             }
 
             chatMessagesContainer.appendChild(messageElement);
+            lastFormattedTime = formattedTime;
         });
-    }
-
-    // 날짜 포맷 함수 추가
-    function formatDate(dateString) {
-        const date = new Date(dateString);
-        const year = date.getFullYear();
-        const month = date.getMonth() + 1;
-        const day = date.getDate();
-        return `${year}년 ${month}월 ${day}일`;
     }
 
     function formatTime(dateString) {
@@ -255,7 +240,6 @@
         const minutesStr = minutes < 10 ? '0' + minutes : minutes;
         return `${ampm} ${hours}:${minutesStr}`;
     }
-
     function setSessionUserId() {
         const url = "/api/user/getSessionUserId";
         fetch(url)
