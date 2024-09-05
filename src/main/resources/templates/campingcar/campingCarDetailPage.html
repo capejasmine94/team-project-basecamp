@@ -204,6 +204,33 @@
             background-color: white;
             border-top: 1px solid #e0e0e0;
         }         */
+
+
+        /* 리뷰 답변 말풍선 스타일 */
+        .speech-bubble {
+            position: relative;
+            background: #f0f0f0; /* 말풍선 배경색 */
+            border-radius: 10px;
+            padding: 15px;
+            margin-left: 15px;
+            width: auto;
+            max-width: 300px;
+            font-size: 14px;
+            line-height: 1.5;
+            color: #333;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        /* 말풍선 꼬리 (상단 왼쪽) */
+        .speech-bubble::after {
+            content: '';
+            position: absolute;
+            top: -15px; /* 말풍선의 상단에 꼬리 붙임 */
+            left: 10px; /* 왼쪽에서 약간 떨어진 곳에 꼬리 위치 */
+            border-width: 0 15px 15px 0; /* 삼각형 방향 설정 */
+            border-style: solid;
+            border-color: transparent transparent #f0f0f0 transparent; /* 말풍선 배경색과 동일하게 설정 */
+        }
     </style>
 </head>
 <body>
@@ -897,7 +924,23 @@
                         <!--리뷰 리스트: 후기 내용-->
                         <div class="row pt-1 pb-1 border-bottom">
                             <div class="col">
-                                <span class="fs-7" th:text="${reviewList.content}" style="word-wrap: break-word;"></span>
+                                <span class="fs-7" th:text="${reviewList.content}" style="word-wrap: break-word;font-size: 0.875rem;"></span>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <!-- 판매자 정보 -->
+                                <div class="d-flex align-items-center mt-3">
+                                    <img th:src="|/images/${campingcarDetails.campingcarDto.comp_profile_image}|" class="rounded-circle me-1" style="width: 1.75rem;height: 1.65rem;">
+                                    <span class="fw-semibold new-fs-85" th:text="${campingcarDetails.campingcarDto.comp_name}"></span>
+                                    <span class="ms-2 new-fs-85" th:text="${#dates.format(reviewList.reply_date, 'yyyy.MM.dd HH:mm')}" style="color: #7C7B7B;"></span>
+                                    <a href="#" class="ms-auto" style="font-size: 12px;">신고</a>
+                                </div>
+                        
+                                <!-- 판매자 답글 내용 (말풍선 스타일 적용) -->
+                                <div class="speech-bubble mt-3 p-3 bg-light border rounded" style="white-space: pre-wrap;" th:text="${reviewList.reply_content}">
+                                    <!-- 답글 내용 -->
+                                </div>
                             </div>
                         </div>
                     </div>

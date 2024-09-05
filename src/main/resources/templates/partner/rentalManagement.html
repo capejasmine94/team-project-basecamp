@@ -92,8 +92,8 @@
                                     <form method="post"  th:if="${rentalManageMetnData.progress == '예약승인'}">
                                         <input type="hidden" name="progress" value="대여승인">
                                         <input type="hidden" name="id" th:value="${rentalManageMetnData.reservation_id}">
-                                        <button class="btn btn-bc-light" >대여 동의</button>
-                                        <button class="btn btn-bc-light" th:if="${rentalManageMetnData.progress == '대여승인'}">대여 승인</button>
+                                        <button class="btn btn-bc-light">대여 동의</button>
+                                        <button class="btn btn-bc-light" th:if="${rentalManageMetnData.progress=='대여승인'}">대여 승인</button>
                                     </form>
                                 </div>
                                 <div class="col-1 ps-0 pe-4 d-flex justify-content-center align-items-center">메모</div>

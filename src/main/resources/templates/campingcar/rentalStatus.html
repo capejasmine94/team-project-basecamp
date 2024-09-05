@@ -183,15 +183,11 @@
                     </div>
                 </div>
             </div>
-            <div class="row">
-                <div class="col d-flex justify-content-center text-center ps-4">
+            <div class="row ms-0 mt-2 ps-3">
+                <div class="col d-flex justify-content-center text-center">
                     <!-- 리뷰 작성하기 버튼 -->
-                    <a th:if="${rentuserHistoryList.progress == '예약접수'} and !${rentuserHistoryList.isReviewWritten}" 
+                    <a th:if="${rentuserHistoryList.progress == '반납완료'} and !${rentuserHistoryList.isReviewWritten}" 
                     th:href="@{/campingcar/carReviewPage(id=${rentuserHistoryList.id})}" class="btn btn-outline-info d-grid">리뷰작성하기</a>
-                    
-                    <!-- 예약 취소하기 버튼 -->
-                    <!-- <div th:if="${rentuserHistoryList.progress == '예약접수'}" class="btn btn-outline-danger fs-6">예약취소하기</div> -->
-                    
                     <!-- 리뷰 작성 완료 메시지 -->
                     <div th:if="${rentuserHistoryList.isReviewWritten}" class="btn btn-outline-secondary fs-6">리뷰 작성 완료</div>
                 </div>

@@ -234,23 +234,29 @@
     </form>
     
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            // 이미 전송이 완료되었는지 확인
-            const isSubmitted = localStorage.getItem('rentShootSubmitted') === 'true';
-
-            // 전송이 완료되었다면 버튼을 비활성화
-            if (isSubmitted) {
-                const button = document.getElementById('submitButton');
-                button.disabled = true;
-                button.classList.remove('btn-bc-light');  // 기존 클래스 제거
-                button.classList.add('btn-secondary');    // 새 클래스 추가
-            }
-        });
-
         // 사진 전송 폼을 제출할 때 전송 상태를 저장
         document.getElementById('submitButton').addEventListener('click', function() {
             localStorage.setItem('rentShootSubmitted', 'true');
         });
+
+        function previewImage(event, previewId, containerId) {
+        const input = event.target;
+        const preview = document.getElementById(previewId);
+        const container = document.getElementById(containerId);
+
+        if (input.files && input.files[0]) {
+            const reader = new FileReader();
+            
+            reader.onload = function(e) {
+                preview.src = e.target.result;
+                container.style.display = 'block';  // 이미지 미리보기 컨테이너 보이기
+            };
+            
+            reader.readAsDataURL(input.files[0]);  // 파일을 읽고 미리보기로 표시
+        } else {
+            container.style.display = 'none';  // 파일이 없으면 컨테이너 숨기기
+        }
+    }
     </script>
 
     <!-- 부트스트랩 JS -->

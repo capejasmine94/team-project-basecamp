@@ -54,10 +54,10 @@
                                                     <input type="checkbox">
                                                 </div>
                                                 <div class="col-1 py-3 d-flex align-items-center justify-content-center">차량 번호</div>
-                                                <div class="col-1 py-3 d-flex align-items-center justify-content-center">차량명</div>
+                                                <div class="col-2 py-3 d-flex align-items-center justify-content-center">차량명</div>
                                                 <div class="col-1 py-3 d-flex align-items-center justify-content-center">예약자명</div>
                                                 <div class="col-2 py-3 d-flex align-items-center justify-content-center">대여/반납일</div>
-                                                <div class="col-2 py-3 d-flex align-items-center justify-content-center">리뷰 평점</div>
+                                                <div class="col-1 py-3 d-flex align-items-center justify-content-center">리뷰 평점</div>
                                                 <div class="col-1 py-3 d-flex align-items-center justify-content-center">리뷰 내용</div>
                                                 <div class="col-2 py-3 d-flex align-items-center justify-content-center">리뷰 작성일</div>
                                                 <div class="col-1 py-3 d-flex align-items-center justify-content-center">답변 완료</div>
@@ -69,18 +69,18 @@
                                                     <input type="checkbox">
                                                 </div>
                                                 <div class="col-1 py-3 d-flex align-items-center justify-content-center" th:text="${reviewData.product_id}">16</div>
-                                                <div class="col-1 py-3 d-flex align-items-center justify-content-center" th:text="${reviewData.product_name}">5인승</div>
+                                                <div class="col-2 py-3 d-flex align-items-center justify-content-center" th:text="${reviewData.product_name}">5인승</div>
                                                 <div class="col-1 py-3 d-flex align-items-center justify-content-center" th:text="${reviewData.nickname}">고구마</div>
                                                 <div class="col-2 py-3 d-flex align-items-center justify-content-center" 
                                                 th:utext="${#dates.format(reviewData.start_date, 'yyyy.MM.dd HH:mm')} + '<br/>' + ${#dates.format(reviewData.end_date, 'yyyy.MM.dd HH:mm')}">2024.08.15/2024.08.17</div>
-                                                <div class="col-2 py-3 d-flex align-items-center justify-content-center">
+                                                <div class="col-1 py-3 d-flex align-items-center justify-content-center">
                                                     <span class="text-warning">
                                                         <span th:if="${reviewData.rate >=1}">★</span>
                                                         <span th:if="${reviewData.rate >=2}">★</span>
                                                         <span th:if="${reviewData.rate >=3}">★</span>
                                                         <span th:if="${reviewData.rate >=4}">★</span>
                                                         <span th:if="${reviewData.rate >=5}">★</span>
-                                                        <span class="text-dark fw-medium" th:text="${reviewData.rate}+'점'"></span>
+                                                        <div class="text-dark fw-medium" th:text="${reviewData.rate}+'점'"></div>
                                                     </span>
                                                 </div>
                                                 <div class="col-1 py-3 d-flex align-items-center justify-content-center">
@@ -89,8 +89,8 @@
                                                 <div class="col-2 py-3 d-flex align-items-center justify-content-center" th:text="${#dates.format(reviewData.created_at, 'yyyy.MM.dd HH:mm')}">2024.08.16.11:15</div>
                                                     <!-- 답변 완료 표시 -->
                                                 <div class="col-1 py-3 d-flex align-items-center justify-content-center">
-                                                    <span th:if="${reviewData.reply_content != null and !#strings.isEmpty(reviewData.reply_content)}" class="btn btn-info btn-sm fw-medium">답변 완료</span>
-                                                    <span th:if="${reviewData.reply_content == null or #strings.isEmpty(reviewData.reply_content)}" class="btn btn-danger btn-sm fw-medium">미답변</span>
+                                                    <span th:if="${reviewData['reply_content'] != null and !#strings.isEmpty(reviewData['reply_content'])}" class="btn btn-info btn-sm fw-medium">답변 완료</span>
+                                                    <span th:if="${reviewData['reply_content'] == null or #strings.isEmpty(reviewData['reply_content'])}" class="btn btn-danger btn-sm fw-medium">미답변</span>
                                                 </div>
                                             </div>
 
@@ -119,7 +119,7 @@
                                                                                 <span th:text="'리뷰번호 : '+ ${reviewData.reviewId}"></span>
                                                                             </div>
                                                                         </div>
-                                                                        <div class="row">
+                                                                        <div class="row d-flex align-items-center">
                                                                             <div class="col text-start">
                                                                                 <span class="text-warning">
                                                                                     <span th:if="${reviewData.rate >=1}">★</span>
@@ -130,18 +130,18 @@
                                                                                     <span class="text-dark fw-medium new-fs-9" th:text="${reviewData.rate}+'점'"></span>
                                                                                 </span>
                                                                             </div>
-                                                                            <div class="col text-end text-muted new-fs-8">
+                                                                            <div class="col text-end text-muted new-fs-85">
                                                                                 <span th:text="${reviewData.nickname} + ' | '"></span><span th:text="${#dates.format(reviewData.created_at, 'yyyy.MM.dd HH:mm:ss')}"></span>
                                                                             </div>
                                                                         </div>
                                                                         <div class="row">
                                                                             <div class="col fs-5 py-4 d-flex justify-content-start align-items-center">
-                                                                                <span th:text="${reviewData.content}"></span>
+                                                                                <span th:text="${reviewData.content}" class="new-fs-10"></span>
                                                                             </div>
                                                                         </div>
                                                                         <div class="row border-top pt-2">
                                                                             <div class="col new-fs-9 d-flex justify-content-start align-items-center">
-                                                                                <span th:text="'차량 번호 : ' + ${reviewData.product_id} + ' | '">차량번호</span><span th:text="${reviewData.product_name}">차량명</span>
+                                                                                <span th:text="'차량 번호 : ' + ${reviewData.product_id} + ' | '"></span>&nbsp;<span th:text="'차량명 : ' + ${reviewData.product_name}">차량명</span>
                                                                             </div>
                                                                         </div>
                                                                         <form class="row bg-body-secondary mt-4 py-3" action="/partner/reviewRelyContentProcess" method="post">
@@ -151,7 +151,7 @@
                                                                                         <div class="new-fs-9 fw-semibold ps-1 d-flex justify-content-start align-items-center">판매자 답변</div>
                                                                                         <textarea class="form-control" name="reply_content" id="sellerReply" rows="3" placeholder="판매자 답글을 작성하세요"></textarea> 
                                                                                         <input type="hidden" name="id" th:value="${reviewData.reviewId}">
-                                                                                        <div class="text-end new-fs-75">최대500자</div>
+                                                                                        <div class="mt-1 text-end new-fs-75">최대500자</div>
                                                                                     </div>
                                                                                 </div>
                                                                                 <div class="row pt-2">
