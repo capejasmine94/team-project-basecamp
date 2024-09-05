@@ -15,6 +15,8 @@ import com.bulmeong.basecamp.campingcar.dto.LocationDto;
 import com.bulmeong.basecamp.campingcar.dto.RentalCompanyDto;
 import com.bulmeong.basecamp.campingcar.dto.RentalPeakPriceDto;
 import com.bulmeong.basecamp.campingcar.dto.RentalReview;
+import com.bulmeong.basecamp.campingcar.dto.ReservationDto;
+import com.bulmeong.basecamp.campingcar.dto.ReturnExternalInspectionDto;
 
 
 @Mapper
@@ -72,9 +74,20 @@ public interface PartnerCampingCarSqlMapper {
     // 판매자: 예약신청 내역 리스트
     public List<Map<String,Object>> findbookReservationAll(int id);
     // 판매자 : 예약상태 update
-    public void reserationApproved(int id);
+    public void reserationApproved(ReservationDto reservationDto);
     // 판매자 : 리뷰 관리
     public List<Map<String,Object>> reviewManagebyRentCompanyId(int id);
     // 판매자 : 리뷰 관리의 답글 등록 
     public void reivewReplyContentByReviewId(RentalReview rentalReviewDto);
+    // 판매자 : 차량 대여 관리 
+    public List<Map<String,Object>> rentalManagementList(int id);
+    
+    // 판매자 : 렌트 외관 촬영 사진 리스트
+    public List<Map<String,Object>> rentalShootList(int id); 
+
+    // 판매자 : 차량 반납 관리 
+    public List<Map<String,Object>> returnManagementList(int id); 
+
+    // 차량 반납 외관 사진 업로드 
+    public void createReturnShoot(ReturnExternalInspectionDto parmas);
 }

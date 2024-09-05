@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <!-- Font Awesome -->
+    <script src="https://kit.fontawesome.com/7b271bba58.js" crossorigin="anonymous"></script>
+    <!-- Google Material Icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet">
+    <!-- partner 오른쪽  본문 css -->
+    <link href="/public/css/campingcar/right-content.css" rel="stylesheet">
+    <link href="/public/css/common.css" rel="stylesheet">
+    <link href="/public/css/basecamp.css" rel="stylesheet">
+    <script src="/public/js/util.js"></script>
+</head>
+<body>
+    <div th:replace="~{partner/carNavi::topNavi}"></div>
+
+    <div class="container-fluid">
+        <div class="row">
+            <div th:replace="~{partner/carNavi::leftNavi}"></div>
+            <!-- right 템플릿 -->
+            <div class="col right bg-body-secondary" style="padding-top: 55px;">
+                <div class="row py-3 px-4 d-flex align-items-center bg-white">
+                    <div class="col-0"></div>
+                    <div class="col fs-6 fw-semibold">
+                        대여 관리
+                    </div>
+                </div>
+                <!-- 본문내용(templets) -->
+                <div class="row px-4 pt-1" th:if="${session.sessionCaravanInfo != null}">
+                    <div class="col">
+                        <!-- 탭 내용 -->
+                        <div class="card">
+                            <div class="row mb-3">
+                                <div class="col d-flex align-items-center">
+                                    <div class="row w-100">
+                                        <!-- 날짜 선택 필드 -->
+                                        <div class="col-auto py-1 ps-4 d-flex align-items-center">
+                                            <div class="input-group">
+                                                <input type="date" class="form-control text-center" style="width: auto; font-size: 0.875rem;">
+                                                <span class="input-group-text bg-white" style="border-left: none; border-right: none; font-size: 0.875rem;">-</span>
+                                                <input type="date" class="form-control text-center" style="width: auto; font-size: 0.875rem;">
+                                            </div>
+                                        </div>
+                                        <!-- 셀렉트 박스 -->
+                                        <div class="col-auto py-3 ps-0">
+                                            <select class="form-select" aria-label="Default select example" style="font-size: 0.875rem;">
+                                                <option selected>전체</option>
+                                                <option value="1">옵션 1</option>
+                                                <option value="2">옵션 2</option>
+                                                <option value="3">Three</option>
+                                            </select>
+                                        </div>
+                                        <!-- 검색 창 -->
+                                        <div class="col py-3 ps-0">
+                                            <input type="text" placeholder="예약자명 혹은 차량번호를 검색" class="form-control" style="font-size: 0.875rem;">
+                                        </div>
+                                        <!-- 버튼 -->
+                                        <div class="col-auto py-3 ps-0">
+                                            <button class="btn btn-primary mr-2" style="font-size: 0.875rem;">엑셀 다운</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        
+                            <div class="row bg-body-tertiary fw-semibold border-bottom py-2 px-0 mx-0 new-fs-75">
+                                <div class="col-1 d-flex justify-content-center align-items-center">예약번호</div>
+                                <div class="col-1 d-flex justify-content-center align-items-center">예약자</div>
+                                <div class="col-1 d-flex justify-content-center align-items-center">캠핑카 유형</div>
+                                <div class="col-2 d-flex justify-content-center align-items-center">차량명</div>
+                                <div class="col-2 d-flex justify-content-center align-items-center">대여 외관 촬영</div>
+                                <div class="col-2 d-flex justify-content-center align-items-center">촬영 일시</div>
+                                <div class="col-2 d-flex justify-content-center align-items-center">차량 대여 동의</div>
+                                <div class="col-1 d-flex justify-content-center align-items-center">메모</div>
+                            </div>
+                            
+                            <div class="row py-2 border-bottom new-fs-85" th:each="rentalManageMetnData : ${rentalManageMetnList}">
+                                <div class="col-1 ps-3 pe-0 d-flex justify-content-center align-items-center" th:text="${rentalManageMetnData.reservation_id}"></div>
+                                <div class="col-1 ps-3 pe-0 d-flex justify-content-center align-items-center" th:text="${rentalManageMetnData.rentUserNickname}"></div>
+                                <div class="col-1 ps-3 pe-0 d-flex justify-content-center align-items-center" th:text="${rentalManageMetnData.carTypeName}"></div>
+                                <div class="col-2 ps-3 pe-0 d-flex justify-content-center align-items-center" th:text="${rentalManageMetnData.product_name}"></div>
+                                <div class="col-2 d-flex justify-content-center align-items-center">
+                                    <a th:href="@{/partner/rentalShootDetailPage(id=${rentalManageMetnData.external_inspection_Id})}" class="text-primary">상세보기</a>
+                                </div>
+                                <div class="col-2 d-flex flex-column justify-content-center align-items-center">
+                                    <span th:text="${#dates.format(rentalManageMetnData.external_inspection_Create_at, 'yyyy.MM.dd')}"></span>
+                                    <span th:text="${#dates.format(rentalManageMetnData.external_inspection_Create_at, 'a HH:mm')}"></span>
+                                </div>                               
+                                <div class="col-2 ps-0 pe-3 d-grid justify-content-center align-items-center" formaction="/partner/reservation_approved">
+                                    <form method="post"  th:if="${rentalManageMetnData.progress == '예약승인'}">
+                                        <input type="hidden" name="progress" value="대여승인">
+                                        <input type="hidden" name="id" th:value="${rentalManageMetnData.reservation_id}">
+                                        <button class="btn btn-bc-light" >대여 동의</button>
+                                        <button class="btn btn-bc-light" th:if="${rentalManageMetnData.progress == '대여승인'}">대여 승인</button>
+                                    </form>
+                                </div>
+                                <div class="col-1 ps-0 pe-4 d-flex justify-content-center align-items-center">메모</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js"></script>
+    <script src="/public/js/campingcar/partnermain.js"></script>
+
+
+</body>
+</html>
+

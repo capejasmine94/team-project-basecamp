@@ -14,9 +14,6 @@
     <script src="/public/js/lockLikeMobile.js"></script>
     <link rel="shotcut icon" href="/public/img/common/campFire.ico" type="image/x-icon">
     <style>
-        .carousel-inner img {
-            height: 550px;
-        }
         .rounded-top-only {
             border-radius: 30px 30px 0 0;
         }
@@ -120,7 +117,12 @@
         .calendar-container .text-primary {
             color: #007bff;
         }
-        
+        .modal {
+            z-index: 1070 !important; /* 모달의 z-index를 높게 설정 */
+        }
+        .modal-backdrop {
+            z-index: 1060 !important; /* 모달 배경의 z-index를 모달보다 낮게 설정 */
+        }
     </style>
 </head>
 <body>
@@ -140,11 +142,11 @@
                     <div class="d-flex justify-content-between bg-white border border-1 rounded-pill w-100 p-1 mb-1" style="border-color: #28323C;">
                         <div class="d-flex align-items-center">
                             <i class="fa-solid fa-location-dot"></i>
-                            <button class="ms-2 new-fs-9 btn bg-white border border-0 p-0" id="locationDisplay" onclick="showLocationModal()">서울</button>
+                            <button class="ms-2 new-fs-9 btn bg-white border border-0 p-0" id="locationDisplay" onclick="showLocationModal()"></button>
                         </div>
                         <div class="d-flex align-items-center">
                             <i class="fa-solid fa-caravan fa-flip-horizontal"></i>
-                            <button class="ms-2 new-fs-9 btn bg-white border border-0 p-0" id="carTypeDisplay" onClick="showCarTypeModal()">모터홈, 차박...</button>
+                            <button class="ms-2 new-fs-9 btn bg-white border border-0 p-0" id="carTypeDisplay" onClick="showCarTypeModal()"></button>
                         </div>
                     </div>
 
@@ -152,11 +154,11 @@
                     <div class="d-flex justify-content-between bg-white border border-1 rounded-pill w-100 p-1" style="border-color: #28323C;">
                         <div class="d-flex align-items-center">
                             <i class="fa-regular fa-calendar"></i>
-                            <button class="ps-2 new-fs-9 btn bg-white border border-0 p-0" id="rendDateDisplay" onclick="showRentDateModal()">24.08.27 (화)</button>
+                            <button class="ps-2 new-fs-9 btn bg-white border border-0 p-0" id="rendDateDisplay" onclick="showRentDateModal()"></button>
                         </div>
                         <div class="d-flex align-items-center">
                             <i class="fa-regular fa-calendar"></i>
-                            <button class="ps-2 new-fs-9 btn bg-white border border-0 p-0" id="returnDateDisplay" onclick="showReturnDateModal()">24.08.28 (수)</button>
+                            <button class="ps-2 new-fs-9 btn bg-white border border-0 p-0" id="returnDateDisplay" onclick="showReturnDateModal()"></button>
                         </div>
                     </div>
                 </div>
@@ -285,17 +287,17 @@
                         <div class="row">
                             <div class="col pe-0 pb-2">
                                 <span th:text="${searchResultData.comp_name}" class="fw-bold new-fs-8 text-dark"></span><span class="ms-1 py-0 rounded fw-semibold new-fs-75" th:text="${searchResultData.car_type_name}"style="background-color: #F0F4F7; color: #808485;"></span>
-                                <div th:text="${searchResultData.product_name}" class="fw-normal new-fs-10 text-dark" style="color: #484647;"></div>
+                                <div th:text="${searchResultData.product_name}" class="fw-medium new-fs-10 text-dark" style="color: #484647;"></div>
                             </div>
                         </div>
                         <!-- 비수기 평일가격, 주말가격 -->
-                        <div class="row ps-1 d-flex align-items-between">
-                            <div class="col-auto new-fs-85 ps-2 pb-2 d-flex align-items-center">
+                        <div class="row d-flex ps-1 align-items-between">
+                            <div class="col-5 new-fs-85 px-2 pb-2 text-start">
                                 <span class="text-dark fw-semibold pe-1">평일 :</span>
-                                <span style="color: #0777F5;" class="lightFont fw-medium" th:text="${#numbers.formatInteger(searchResultData.rental_fee_weekdays, 3, 'COMMA')}+'원'"></span>
+                                <span class="lightFont fw-medium" th:text="${#numbers.formatInteger(searchResultData.rental_fee_weekdays, 3, 'COMMA')}+'원'"></span>
                             </div>
-
-                            <div class="col-auto new-fs-85 px-0 pb-2 d-flex justify-content-center align-items-center">
+                            <div class="col-2 px-0"></div>
+                            <div class="col-5 new-fs-85 px-2 pb-2 text-end">
                                 <span class="text-dark fw-semibold pe-1">주말 :</span>
                                 <span style="color: #0777F5;" class="lightFont fw-medium" th:text="${#numbers.formatInteger(searchResultData.rental_fee_weekend, 3, 'COMMA')}+'원'"></span>
                             </div>
@@ -352,9 +354,14 @@
     <div th:replace="~{campingcar/campingNavi::footerNavi}"></div>
     <!-- bottom -->
     <div th:replace="~{campingcar/campingNavi::bottomNaviBasecamp}"></div>
+    
+    <!-- jQuery (optional, but often required for some Bootstrap features) -->
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <!-- Bootstrap JS -->
+
+    <!-- Popper.js -->
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+
+    <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js"></script>
     <script>
         document.addEventListener("DOMContentLoaded", () => {
@@ -502,11 +509,11 @@
             let html = `
                 <div class="calendar-container">
                     <div class="header">
-                        <button class="btn btn-light" onclick="changeMonth(${calendarId}, -1)">
+                        <button class="btn btn-light" onclick="changeMonth('${calendarId}', -1)">
                             <i class="fas fa-chevron-left"></i>
                         </button>
                         <h4>${year}.${month + 1 < 10 ? '0' : ''}${month + 1}</h4>
-                        <button class="btn btn-light" onclick="changeMonth(${calendarId}, 1)">
+                        <button class="btn btn-light" onclick="changeMonth('${calendarId}', 1)">
                             <i class="fas fa-chevron-right"></i>
                         </button>
                     </div>
@@ -576,19 +583,19 @@
         }
 
         function selectDate(cell, date) {
-            document.querySelectorAll('#calendarBody td').forEach(td => td.classList.remove('selected', 'today'));
+            document.querySelectorAll('#calendar td').forEach(td => td.classList.remove('selected', 'today'));
             cell.classList.add('selected');
             lastSelectedDate = date;
         }
 
         function selectReturnDate(cell, date) {
-            document.querySelectorAll('#calendarBodyReturn td').forEach(td => td.classList.remove('selected', 'today'));
+            document.querySelectorAll('#calendarReturn td').forEach(td => td.classList.remove('selected', 'today'));
             cell.classList.add('selected');
             lastSelectedReturnDate = date;
         }
 
         function confirmRentDate() {
-            const selectedDate = document.querySelector('#calendarBody td.selected').dataset.date;
+            const selectedDate = document.querySelector('#calendar td.selected').dataset.date;
             if (selectedDate) {
                 const displayDate = new Date(selectedDate);
                 document.getElementById("rendDateDisplay").textContent = displayDate.toISOString().split('T')[0];
@@ -596,7 +603,7 @@
         }
 
         function confirmReturnDate() {
-            const selectedReturnDate = document.querySelector('#calendarBodyReturn td.selected').dataset.date;
+            const selectedReturnDate = document.querySelector('#calendarReturn td.selected').dataset.date;
             if (selectedReturnDate) {
                 const displayDate = new Date(selectedReturnDate);
                 document.getElementById("returnDateDisplay").textContent = displayDate.toISOString().split('T')[0];
@@ -604,4 +611,5 @@
         }
     </script>
 </body>
+
 </html>

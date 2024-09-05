@@ -1,43 +1,39 @@
 document.addEventListener("DOMContentLoaded", function() {
-    document.querySelectorAll('.accordion-button').forEach(button => {
+    document.querySelectorAll('.toggle-icon').forEach(button => {
         button.addEventListener('click', function() {
-            const isOpen = this.getAttribute('aria-expanded') === 'true';
+            const targetCollapse = document.querySelector(this.getAttribute('data-bs-target'));
+
+            // 모든 섹션을 닫음 (클릭된 섹션 제외)
+            document.querySelectorAll('.accordion-collapse').forEach(collapse => {
+                const collapseButton = collapse.previousElementSibling.querySelector('.accordion-button');
+                const icon = collapseButton.querySelector('.dropdown-icon');
+
+                if (collapse !== targetCollapse) {
+                    collapse.classList.remove('show');
+                    collapseButton.setAttribute('aria-expanded', 'false');
+                    if (icon) {
+                        icon.classList.remove('rotate-icon');
+                    }
+                }
+            });
+
+            // 클릭한 섹션을 토글 (열려있으면 닫고, 닫혀있으면 열음)
+            const isOpen = targetCollapse.classList.contains('show');
+            const icon = this.querySelector('.dropdown-icon');
+
             if (isOpen) {
-                const collapseId = this.getAttribute('data-bs-target');
-                const collapseElement = document.querySelector(collapseId);
-                if (collapseElement) {
-                    collapseElement.classList.remove('show');
+                targetCollapse.classList.remove('show');
+                this.querySelector('.accordion-button').setAttribute('aria-expanded', 'false');
+                if (icon) {
+                    icon.classList.remove('rotate-icon');
+                }
+            } else {
+                targetCollapse.classList.add('show');
+                this.querySelector('.accordion-button').setAttribute('aria-expanded', 'true');
+                if (icon) {
+                    icon.classList.add('rotate-icon');
                 }
             }
         });
     });
-
-    document.querySelectorAll('.toggle-icon').forEach(button => {
-        button.addEventListener('click', function() {
-            const icon = this.querySelector('.material-symbols-outlined.dropdown-icon');
-            const targetCollapse = document.querySelector(this.getAttribute('data-bs-target'));
-            const isOpen = targetCollapse.classList.contains('show');
-
-            document.querySelectorAll('.toggle-icon .material-symbols-outlined.dropdown-icon').forEach(icon => {
-                icon.classList.remove('rotate-icon');
-            });
-
-            if (isOpen) {
-                targetCollapse.classList.remove('show');
-            } else {
-                icon.classList.add('rotate-icon');
-                targetCollapse.classList.add('show');
-            }
-        });
-    });
-
-    // document.querySelectorAll('.subcategory').forEach(link => {
-    //     link.addEventListener('click', function(event) {
-    //         event.preventDefault();
-    //         const page = this.getAttribute('data-page');
-    //         const target = this.getAttribute('data-target');
-    //         loadPage(page, target);
-    //     });
-    // });
-
 });

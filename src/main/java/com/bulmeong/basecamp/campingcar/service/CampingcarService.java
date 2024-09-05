@@ -109,13 +109,15 @@ public class CampingcarService {
         campingCarSqlMapper.createRentShoot(parmas);
     }
 
-    // 차량 외부 촬영
-    public void registerReturnShoot(ReturnExternalInspectionDto params) {
-        campingCarSqlMapper.createReturnShoot(params);
-    }
+
     // 렌트고객 이용내역
     public List<Map<String,Object>> getUseageHistroyAllByRentUserId(int id) {
         return campingCarSqlMapper.useageHistroyAllByRentUserId(id);
+    }
+
+    // 반납 점검 이미지 리스트(동의요청)
+    public Map<String,Object> getReturnInspectionImgList(int id) {
+        return campingCarSqlMapper.returnInspectionImgList(id);
     }
 
     // 리뷰 등록
@@ -176,6 +178,16 @@ public class CampingcarService {
 
         return reservedDates;
     }
+
+    public Map<String,Object> findRetanlCarCheckList(int id) {
+        return campingCarSqlMapper.findRetanlCarCheckList(id);
+    } 
+
+    // 예약 상태 변경
+    public void reservationApproved(ReservationDto reservationDto)  {
+        campingCarSqlMapper.reservationApproved(reservationDto);
+    }
+
 }
 
 

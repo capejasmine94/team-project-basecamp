@@ -22,6 +22,7 @@ import com.bulmeong.basecamp.campingcar.dto.RentalCompanyDto;
 import com.bulmeong.basecamp.campingcar.dto.RentalPeakPriceDto;
 import com.bulmeong.basecamp.campingcar.dto.RentalReview;
 import com.bulmeong.basecamp.campingcar.dto.ReservationDto;
+import com.bulmeong.basecamp.campingcar.dto.ReturnExternalInspectionDto;
 import com.bulmeong.basecamp.campingcar.mapper.PartnerCampingCarSqlMapper;
 import com.bulmeong.basecamp.common.dto.ImageDto;
 import com.bulmeong.basecamp.common.util.ImageUtil;
@@ -143,16 +144,38 @@ public class PartnerCampingCarService {
 
     // 판매자 : 예약 상태 변경
     public void updateReservationProgress(ReservationDto reservationDto) {
-        partnerCampingCarSqlMapper.reserationApproved(reservationDto.getId());
+        partnerCampingCarSqlMapper.reserationApproved(reservationDto);
     }
+
     // 판매자 : 리뷰 관리
     public List<Map<String,Object>> reviewManagebyRentCompanyId(int id) {
         return partnerCampingCarSqlMapper.reviewManagebyRentCompanyId(id);
     }
+
     // 판매자 : 리뷰 관리의 답글 등록 
-        public void updateReviewReply(RentalReview params) {
+    public void updateReviewReply(RentalReview params) {
 
         partnerCampingCarSqlMapper.reivewReplyContentByReviewId(params);
+    }
+
+    // 판매자 : 차량 대여 관리
+    public List<Map<String,Object>> getRentalManagementList(int id) {
+        return partnerCampingCarSqlMapper.rentalManagementList(id);
+    } 
+
+    // 판매자 : 렌트 외관 촬영 사진 리스트
+    public List<Map<String,Object>> getrentalShootList(int id) {
+        return partnerCampingCarSqlMapper.rentalShootList(id);
+    }
+
+    // 판매자 : 차량 반납 관리
+    public List<Map<String,Object>> returnManagementList(int id) {
+        return partnerCampingCarSqlMapper.returnManagementList(id);
+    } 
+
+    // 차량 외부 촬영
+    public void registerReturnShoot(ReturnExternalInspectionDto params) {
+        partnerCampingCarSqlMapper.createReturnShoot(params);
     }
 
 }

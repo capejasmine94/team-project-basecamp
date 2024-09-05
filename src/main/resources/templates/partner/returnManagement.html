@@ -25,7 +25,7 @@
                 <div class="row py-3 px-4 d-flex align-items-center bg-white">
                     <div class="col-0"></div>
                     <div class="col fs-6 fw-semibold">
-                        예약 내역
+                        반납 관리
                     </div>
                 </div>
                 <!-- 본문내용(templets) -->
@@ -66,43 +66,34 @@
                             </div>
                         
                             <div class="row bg-body-tertiary fw-semibold border-bottom py-2 px-0 mx-0 new-fs-75 d-flex align-items-center">
-                                <div class="col-1 ps-1 d-flex justify-content-center align-items-center text-center">예약번호</div>
-                                <div class="col-1 ps-0 d-flex justify-content-center align-items-center text-center">예약자</div>
-                                <div class="col-1 ps-1 d-flex justify-content-center align-items-center text-center">캠핑카 유형</div>
-                                <div class="col-1 ps-1 d-flex justify-content-center align-items-center text-center">차량모델</div>
-                                <div class="col-2 ps-1 d-flex justify-content-center align-items-center text-center">예약시각 - 종료시각</div>
-                                <div class="col-1 ps-3 d-flex justify-content-center align-items-center text-center">운전자면허증</div>
-                                <div class="col-1 ps-3 d-flex justify-content-center align-items-center text-center">운전자나이</div>
-                                <div class="col-1 ps-3 d-flex justify-content-center align-items-center text-center">운전자경력</div>
-                                <div class="col-1 ps-4 d-flex justify-content-center align-items-center text-center">예약상태</div>
-                                <div class="col-1 ps-4 d-flex justify-content-center align-items-center text-center">예약일시</div>
-                                <div class="col-1 ps-3 d-flex justify-content-center align-items-center text-center">이용내역서</div>
+                                <div class="col-1 px-0 d-flex justify-content-center align-items-center text-center">예약번호</div>
+                                <div class="col-1 px-0 d-flex justify-content-center align-items-center text-center">예약자</div>
+                                <div class="col-2 px-0 d-flex justify-content-center align-items-center text-center">캠핑카 유형</div>
+                                <div class="col-2 px-0 d-flex justify-content-center align-items-center text-center">차량명</div>
+                                <div class="col-3 px-0 d-flex justify-content-center align-items-center text-center">반납 외관 촬영 업로드</div>
+                                <div class="col-2 px-0 d-flex justify-content-center align-items-center text-center">예약 상태</div>
+                                <div class="col-1 px-0 d-flex justify-content-center align-items-center text-center">메모</div>
+                                
                             </div>
                         
-                            <form method="post" class="row py-2 border-bottom new-fs-85 text-center d-flex align-items-center" th:each="bookReservationData : ${bookReservationList}">
-                                <div class="col-1 px-0 d-flex justify-content-center align-items-center text-center" th:text="${bookReservationData.id}"></div>
-                                <div class="col-1 px-0 d-flex justify-content-center align-items-center text-center" th:text="${bookReservationData.rentUserNickname}"></div>
-                                <div class="col-1 px-0 d-flex justify-content-center align-items-center text-center" th:text="${bookReservationData.carTypeName}"></div>
-                                <div class="col-1 px-0 d-flex justify-content-center align-items-center text-center ellipsis-line-one" th:text="${bookReservationData.product_name}"></div>
-                                <div class="col-2 px-0 d-flex justify-content-center align-items-center text-center flex-column">
-                                    <span th:text="${#dates.format(bookReservationData.reservationStart_date, 'yyyy.MM.dd a HH:mm')}"></span>
-                                    <span th:text="'- '+${#dates.format(bookReservationData.reservationEnd_date, 'yyyy.MM.dd a HH:mm')}"></span>
+                            <div class="row py-2 border-bottom new-fs-85 text-center d-flex align-items-center" th:each="returnManageData : ${returnManageList}">
+                                <div class="col-1 ps-3 pe-0 d-flex justify-content-center align-items-center text-center" th:text="${returnManageData.reservation_id}"></div>
+                                <div class="col-1 ps-3 pe-0 d-flex justify-content-center align-items-center text-center" th:text="${returnManageData.rentUserNickname}"></div>
+                                <div class="col-2 ps-3 px-0 d-flex justify-content-center align-items-center text-center" th:text="${returnManageData.carTypeName}"></div>
+                                <div class="col-2 ps-1 d-flex justify-content-center align-items-center text-center ellipsis-line-one" th:text="${returnManageData.product_name}"></div>
+                                <div class="col-3 ps-2 d-flex justify-content-center align-items-center text-center">
+                                    <a th:href="@{/partner/returnImageUploadDetailPage(id=${returnManageData.reservation_id})}" class="text-primary">외관 사진 업로드</a>
+                                </div>                         
+                                <div class="col-2 d-grid">
+                                    <!-- 반납 -->
+                                    <input type="hidden" name="progress" value="반납동의요청">
+                                    <input type="hidden" name="id" th:value="${returnManageData.reservation_id}">
+                                    <button class="btn btn-bc-light" th:if="${returnManageData.progress == '반납요청'}" formaction="/partner/reservation_approved">반납 요청</button>
+                                    <button class="btn btn-bc-light btn-sm" th:if="${returnManageData.progress == '반납동의요청'}">반납동의요청</button>
+                                    </form>
                                 </div>
-                                <div class="col-1 px-0 d-flex justify-content-center align-items-center text-center" th:text="${bookReservationData.driver_license_name}"></div>
-                                <div class="col-1 px-0 d-flex justify-content-center align-items-center text-center " th:text="${bookReservationData.driver_age_condition_name}"></div>
-                                <div class="col-1 px-0 d-flex justify-content-center align-items-center text-center" th:text="${bookReservationData.driver_experience_condition_nam}"></div>
-                                <div class="col-1 d-grid ">
-                                    <input type="hidden" name="progress" value="예약승인">
-                                    <input type="hidden" name="id" th:value="${bookReservationData.id}">
-                                    <button class="btn btn-bc-light" th:if="${bookReservationData.progress == '예약접수'}" formaction="/partner/reservation_approved">예약 승인</button>
-                                    <button class="btn btn-bc-light btn-sm" th:if="${bookReservationData.progress == '예약승인'}">승인 완료</button>
-                                </div>
-                                <div class="col-1 px-0 d-flex justify-content-center align-items-center text-center flex-column">
-                                    <span th:text="${#dates.format(bookReservationData.reservationCreated_at, 'yyyy.MM.dd')}"></span>
-                                    <span th:text="${#dates.format(bookReservationData.reservationCreated_at, 'a HH:mm')}"></span>
-                                </div>
-                                <div class="col-1 ps-0 d-flex justify-content-center align-items-center text-center"><a href="#" class="text-primary">다운로드</a></div>
-                            </form>
+                                <div class="col-1 ps-4 d-flex justify-content-center align-items-center text-center">메모</div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -118,4 +109,3 @@
 
 </body>
 </html>
-

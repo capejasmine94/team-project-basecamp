@@ -31,16 +31,6 @@
             width: 100%;
             overflow-x: hidden;
         }
-        .carousel-item {
-            width: 100%;
-            height: 100%;
-        }
-        .carousel-item img {
-            width: 100%;
-            height: 100%;
-            object-fit: contain;
-            background-color: #f0f0f0; /* 배경색 추가 (필요 시) */
-        }
         .section {
             margin-bottom: 5px;
             padding: 16px;
@@ -93,11 +83,8 @@
             color: #555;
         }
         .nav-underline {
-            display: flex;
             flex-wrap: nowrap;
-            overflow-x: auto;
-            -webkit-overflow-scrolling: touch;
-            padding-bottom: 8px;
+            justify-content: center;
         }
 
         .nav-underline::-webkit-scrollbar {
@@ -115,7 +102,7 @@
 
         .nav-link {
             white-space: nowrap;
-            margin-right: 8px;
+            margin-right: 0px;
             text-decoration: none;
             color: black;
             position: relative; /* 상대적 위치 설정으로 자식 요소에 절대 위치를 지정할 수 있도록 함 */
@@ -227,10 +214,8 @@
                     <span class="material-symbols-outlined" onclick="history.back();" style="cursor: pointer;">arrow_back</span>
                 </button>
             </div>
-            <div class="col ps-4 text-center">
-                <div class="mb-0 fw-semibold" style="font-size: 16px;">상세 정보</div>
-            </div>
-            <div class="col-2">
+            <div class="col-9 ps-4 text-center">
+                <div class="mb-0 fw-semibold" style="font-size: 16px;">상세정보</div>
             </div>
         </div>
     </div>
@@ -246,43 +231,36 @@
                 <div class="col section">
                     <div class="row">
                         <div class="col-12">
-                            <div id="carouselExample" class="carousel slide mb-3" data-bs-ride="carousel" data-bs-touch="true" data-bs-wrap="true">
-                                <div class="carousel-indicators">
-                                    <button type="button" data-bs-target="#carouselExample" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+                            <!-- 첫 번째 슬라이드 (모터홈) -->
+                            <div th:if="${#strings.equals(campingcarDetails.campingcarDto.car_type_name, '모터홈')}">
+                                <img th:src="@{/public/img/campingCarImage/모터홈.png}" class="d-block w-100 h-100 img-fluid" alt="모터홈">
+                                <div class="position-absolute d-flex gap-2" style="top: 10px; right: 10px;">
+                                    <i class="bi bi-heart" style="font-size: 12px; font-weight: bold; color: black; padding: 4px; border-radius: 50%;"></i>
+                                    <i class="bi bi-house-door" style="font-size: 12px; font-weight: bold; color: black; padding: 4px; border-radius: 50%;"></i>
                                 </div>
-                                <div class="carousel-inner">
-                                    <!-- 첫 번째 슬라이드 (모터홈) -->
-                                    <div th:if="${#strings.equals(campingcarDetails.campingcarDto.car_type_name, '모터홈')}" class="carousel-item active">
-                                        <img th:src="@{/public/img/campingCarImage/모터홈.png}" class="d-block w-100 h-100 img-fluid" alt="모터홈">
-                                        <div class="position-absolute d-flex gap-2" style="top: 10px; right: 10px;">
-                                            <i class="bi bi-heart" style="font-size: 12px; font-weight: bold; color: white; padding: 4px; border-radius: 50%;"></i>
-                                            <i class="bi bi-house-door" style="font-size: 12px; font-weight: bold; color: white; padding: 4px; border-radius: 50%;"></i>
-                                        </div>
-                                    </div>
-                                    <!-- 두 번째 슬라이드 (차박형(중형)) -->
-                                    <div th:if="${#strings.equals(campingcarDetails.campingcarDto.car_type_name, '차박형(중형)')}" class="carousel-item active">
-                                        <img th:src="@{/public/img/campingCarImage/차박형(중형).png}" class="d-block w-100 h-100 img-fluid" alt="차박형(중형)">
-                                        <div class="position-absolute d-flex gap-2" style="top: 10px; right: 10px;">
-                                            <i class="bi bi-heart" style="font-size: 12px; font-weight: bold; color: white; padding: 4px; border-radius: 50%;"></i>
-                                            <i class="bi bi-house-door" style="font-size: 12px; font-weight: bold; color: white; padding: 4px; border-radius: 50%;"></i>
-                                        </div>
-                                    </div>
-                                    <!-- 세 번째 슬라이드 (차박형(소형)) -->
-                                    <div th:if="${#strings.equals(campingcarDetails.campingcarDto.car_type_name, '차박형(소형)')}" class="carousel-item active">
-                                        <img th:src="@{/public/img/campingCarImage/차박형(소형).png}" class="d-block w-100 h-100 img-fluid" alt="차박형(소형)">
-                                        <div class="position-absolute d-flex gap-2" style="top: 10px; right: 10px;">
-                                            <i class="bi bi-heart" style="font-size: 12px; font-weight: bold; color: white; padding: 4px; border-radius: 50%;"></i>
-                                            <i class="bi bi-house-door" style="font-size: 12px; font-weight: bold; color: white; padding: 4px; border-radius: 50%;"></i>
-                                        </div>
-                                    </div>
-                                    <!-- 네 번째 슬라이드 (카라반펜션) -->
-                                    <div th:if="${#strings.equals(campingcarDetails.campingcarDto.car_type_name, '카라반펜션')}" class="carousel-item active">
-                                        <img th:src="@{/public/img/campingCarImage/카라반.png}" class="d-block w-100 h-100 img-fluid" alt="카라반펜션">
-                                        <div class="position-absolute d-flex gap-2" style="top: 10px; right: 10px;">
-                                            <i class="bi bi-heart" style="font-size: 12px; font-weight: bold; color: white; padding: 4px; border-radius: 50%;"></i>
-                                            <i class="bi bi-house-door" style="font-size: 12px; font-weight: bold; color: white; padding: 4px; border-radius: 50%;"></i>
-                                        </div>
-                                    </div>
+                            </div>
+                            <!-- 두 번째 슬라이드 (차박형(중형)) -->
+                            <div th:if="${#strings.equals(campingcarDetails.campingcarDto.car_type_name, '차박형(중형)')}">
+                                <img th:src="@{/public/img/campingCarImage/차박형(중형).png}" class="d-block w-100 h-100 img-fluid" alt="차박형(중형)">
+                                <div class="position-absolute d-flex gap-2" style="top: 10px; right: 10px;">
+                                    <i class="bi bi-heart" style="font-size: 12px; font-weight: bold; color: black; padding: 4px; border-radius: 50%;"></i>
+                                    <i class="bi bi-house-door" style="font-size: 12px; font-weight: bold; color: black; padding: 4px; border-radius: 50%;"></i>
+                                </div>
+                            </div>
+                            <!-- 세 번째 슬라이드 (차박형(소형)) -->
+                            <div th:if="${#strings.equals(campingcarDetails.campingcarDto.car_type_name, '차박형(소형)')}">
+                                <img th:src="@{/public/img/campingCarImage/차박형(소형).png}" class="d-block w-100 h-100 img-fluid" alt="차박형(소형)">
+                                <div class="position-absolute d-flex gap-2" style="top: 10px; right: 10px;">
+                                    <i class="bi bi-heart" style="font-size: 12px; font-weight: bold; color: black; padding: 4px; border-radius: 50%;"></i>
+                                    <i class="bi bi-house-door" style="font-size: 12px; font-weight: bold; color: black; padding: 4px; border-radius: 50%;"></i>
+                                </div>
+                            </div>
+                            <!-- 네 번째 슬라이드 (카라반펜션) -->
+                            <div th:if="${#strings.equals(campingcarDetails.campingcarDto.car_type_name, '카라반펜션')}">
+                                <img th:src="@{/public/img/campingCarImage/카라반.png}" class="d-block w-100 h-100 img-fluid" alt="카라반펜션">
+                                <div class="position-absolute d-flex gap-2" style="top: 10px; right: 10px;">
+                                    <i class="bi bi-heart" style="font-size: 12px; font-weight: bold; color: black; padding: 4px; border-radius: 50%;"></i>
+                                    <i class="bi bi-house-door" style="font-size: 12px; font-weight: bold; color: black; padding: 4px; border-radius: 50%;"></i>
                                 </div>
                             </div>
                             <div class="new-fs-6 text-center fw-light text-body-secondary" style="font-size: 0.65rem;">차량 이미지는 이해를 돕기 위한 예시입니다.</div>
@@ -378,21 +356,15 @@
             </div>
         </div>
 
-        <div class="section sticky-top mb-0 border-0 py-0 overflow-x-hidden" style="z-index: 1040; overflow-x: auto; white-space:nowrap; top: 42px;">
-            <nav class="row pb-0 d-flex justify-content-between border-bottom nav nav-underline" style="flex-wrap: nowrap;">
-                <div class="col-auto">
+        <div class="section sticky-top mb-0 border-0 py-0 overflow-x-hidden" style="z-index: 1040; top: 42px;">
+            <nav class="row pb-0 border-bottom nav nav-underline">
+                <div class="col-4 text-center">
                     <a class="fw-semibold nav-link" href="#rules">이용규정</a>
                 </div>
-                <div class="col-auto ps-0 pe-4">
-                    <a class="fw-semibold nav-link me-3" href="#info">예약정보</a>
+                <div class="col-4 text-center">
+                    <a class="fw-semibold nav-link" href="#info">예약정보</a>
                 </div>
-                <!-- <div class="col-auto">
-                    <a class="fw-semibold nav-link" href="#options">차량 옵션</a>
-                </div>
-                <div class="col-auto px-0 text-center">
-                    <a class="fw-semibold nav-link" href="#conditions">운전자 대여조건</a>
-                </div> -->
-                <div class="col-auto">
+                <div class="col-4 text-center">
                     <a class="fw-semibold nav-link" href="#reviews">리뷰</a>
                 </div>
             </nav>
@@ -706,6 +678,94 @@
                                     <span class="fs-6 fw-normal">운전경력 : </span><span class="px-1 fs-6" th:text="${campingcarDetails.campingcarDto.driver_experience_condition_name}"></span>
                                 </div>
                             </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row section border-0 pt-3">
+                <div class="col">
+                    <div class="row pb-3">
+                        <div class="col info-item-title">
+                            <span class="underline-bg dc-inline-block">차고지 주소</span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <div class="row py-2">
+                                <div class="col-2 d-flex align-items-center ps-4 pe-0">
+                                    <span class="material-symbols-outlined">pin_drop</span>
+                                </div>
+                                <div class="col-10 px-0">
+                                    <div class="row">
+                                        <div class="col">
+                                            <div class="fs-6 fw-medium">주소</div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col">
+                                            <span class="fs-6" th:text="${campingcarDetails.campingcarDto.garage_address}"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- 카카오지도 -->
+                            <div id="map" style="width:100%;height:350px;margin-top:10px;"></div>
+                            <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=7f8bb83b2b0161991b50622bb9b8be1e&libraries=services"></script>
+                            <script type="text/javascript" th:inline="javascript">
+                                // 타임리프 변수를 사용하여 서버에서 전달된 comp_address를 JavaScript 변수에 할당
+                                var comp_address = /*[[${campingcarDetails.campingcarDto.comp_address}]]*/ '서울특별시 중구 세종대로 110';
+
+                                // 로그로 주소를 출력하여 확인
+                                console.log("Comp Address: ", comp_address);
+
+                                if (!comp_address) {
+                                    console.error("comp_address 값이 비어 있습니다.");
+                                } else {
+                                    var mapContainer = document.getElementById('map'); 
+                                    var mapOption = { 
+                                        center: new kakao.maps.LatLng(37.5665, 126.9780), // 초기 지도의 중심좌표 (서울 시청의 임시 좌표)
+                                        level: 3 // 지도의 확대 레벨
+                                    };
+
+                                    var map = new kakao.maps.Map(mapContainer, mapOption); 
+
+                                    var imageSrc = '/public/img/campingCarImage/차고지위치표시.png', // 마커이미지의 주소입니다    
+                                        imageSize = new kakao.maps.Size(64, 69), // 마커이미지의 크기입니다
+                                        imageOption = {offset: new kakao.maps.Point(27, 69)}; // 마커이미지의 옵션입니다.
+                                    
+                                    var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize, imageOption);
+
+                                    var geocoder = new kakao.maps.services.Geocoder();
+
+                                    // 주소로 좌표를 검색
+                                    geocoder.addressSearch(comp_address.trim(), function(result, status) {
+                                        if (status === kakao.maps.services.Status.OK) {
+                                            // 검색된 좌표 결과가 있다면
+                                            var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
+                                            map.setCenter(coords); // 지도의 중심을 검색된 좌표로 설정
+
+                                            // 마커를 생성하고 이미지 설정
+                                            var marker = new kakao.maps.Marker({
+                                                position: coords,
+                                                image: markerImage // 마커 이미지 설정
+                                            });
+
+                                            // 마커가 지도 위에 표시되도록 설정합니다
+                                            marker.setMap(map);
+
+                                            // 인포윈도우를 생성하여 마커 위에 표시
+                                            // var infowindow = new kakao.maps.InfoWindow({
+                                            //     content: '<div style="padding:5px; text-align:center; color:black; font-weight:500; display: inline-block;">차고지 위치</div>'
+                                            // });
+                                            infowindow.open(map, marker);
+                                        } else {
+                                            console.error("주소 변환에 실패했습니다. 상태 코드: ", status);
+                                        }
+                                    });
+                                }
+                            </script>
+
                         </div>
                     </div>
                 </div>

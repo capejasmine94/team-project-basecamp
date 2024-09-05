@@ -38,12 +38,16 @@ public interface CampingcarSqlMapper {
 
     // 상세페이지_기본보유옵션
     public List<BasicFacilitiesDto> findBasicfacilitiesByCarId(@Param("id") int id);
+
     // 상세페이지_리뷰수
     public int countByProductId(int id);
+
     //렌트 고객 검증
     public int findRentUserByUserId(int id); 
+
     // 예약하기의 기존 렌트유저ID 가지고 오기 
     public int existingByRentUserId(int id);
+
     //최초 렌트 고객 등록
     public void createRentUser(RentUserDto rentUserParams);
 
@@ -55,10 +59,13 @@ public interface CampingcarSqlMapper {
 
     //차량 대여 점검 
     public void createRentShoot(RentalExternalInspectionDto parmas);
-    // 차량 외관 촬영 
-    public void createReturnShoot(ReturnExternalInspectionDto parmas);
+
     // 이용내역
     public List<Map<String,Object>> useageHistroyAllByRentUserId(int id);
+
+    // 렌트 차량 체크 
+    public Map<String,Object> findRetanlCarCheckList(int id);
+
     // 리뷰작성
     public void createCarReview(RentalReview review);
 
@@ -69,6 +76,9 @@ public interface CampingcarSqlMapper {
 
     // 해당 차량의 리뷰 별점 평균 
     public Double avgByCarId(int id);
+
+    // 반납 점검 이미지 리스트(동의요청)
+    public Map<String,Object> returnInspectionImgList (int id);
     
     // 해당 차량의 리뷰 참여 인원 수
     public int reviewByCountPerson (int id);
@@ -83,4 +93,7 @@ public interface CampingcarSqlMapper {
 
     // 특장 날짜 예약 막기 
     public List<Map<String,Object>> ReservationById(int product_id);
+
+    // 예약 상태 변경
+    public void reservationApproved(ReservationDto reservationDto);
 }

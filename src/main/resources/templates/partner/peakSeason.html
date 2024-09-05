@@ -386,63 +386,63 @@
                 </div>
                 <!-- modal -->
                
-    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="exampleModalLabel">기간설정</h1>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <div class="radio-group">
-                        <label class="radio-item">
-                            <input type="radio"  value="peak" checked> 성수기
-                        </label>
-                        <label class="radio-item">
-                            <input type="radio" value="mid-peak"> 준성수기
-                        </label>
-                        <label class="radio-item">
-                            <input type="radio"  value="discount"> 할인기간
-                        </label>
-                        <label class="radio-item">
-                            <input type="radio" value="designated"> 지정기간
-                        </label>
-                        <label class="radio-item">
-                            <input type="radio" value="holiday"> 휴무
-                        </label>
-                    </div>
-                    <form>
-                        <div class="mb-3">
-                            <label class="form-label">기간명</label>
-                            <input type="text" class="form-control custom-bottom-border" id="periodName" placeholder="예: 여름 성수기">
-                        </div>
-                        <div class="mb-3">
-                            <div class="row">
-                                <div class="col">
-                                    <label for="startDate" class="form-label">시작일</label>
-                                    <input type="text" name="weekdays_price" class="form-control custom-bottom-border" id="startDate" readonly>
+                <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h1 class="modal-title fs-5" id="exampleModalLabel">기간설정</h1>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="radio-group">
+                                    <label class="radio-item">
+                                        <input type="radio"  value="peak" checked> 성수기
+                                    </label>
+                                    <label class="radio-item">
+                                        <input type="radio" value="mid-peak"> 준성수기
+                                    </label>
+                                    <label class="radio-item">
+                                        <input type="radio"  value="discount"> 할인기간
+                                    </label>
+                                    <label class="radio-item">
+                                        <input type="radio" value="designated"> 지정기간
+                                    </label>
+                                    <label class="radio-item">
+                                        <input type="radio" value="holiday"> 휴무
+                                    </label>
                                 </div>
-                                <div class="col">
-                                    <label for="endDate" class="form-label">종료일</label>
-                                    <input type="text" name="weekend_price" class="form-control custom-bottom-border" id="endDate" readonly>
-                                </div>
+                                <form>
+                                    <div class="mb-3">
+                                        <label class="form-label">기간명</label>
+                                        <input type="text" class="form-control custom-bottom-border" id="periodName" placeholder="예: 여름 성수기">
+                                    </div>
+                                    <div class="mb-3">
+                                        <div class="row">
+                                            <div class="col">
+                                                <label for="startDate" class="form-label">시작일</label>
+                                                <input type="text" name="weekdays_price" class="form-control custom-bottom-border" id="startDate" readonly>
+                                            </div>
+                                            <div class="col">
+                                                <label for="endDate" class="form-label">종료일</label>
+                                                <input type="text" name="weekend_price" class="form-control custom-bottom-border" id="endDate" readonly>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" id="repeatAnnually">
+                                        <label class="form-check-label" for="repeatAnnually">
+                                            매년 반복
+                                        </label>
+                                    </div>
+                                </form>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
+                                <button type="button" class="btn btn-primary" onclick="inputPeakData()">추가</button>
                             </div>
                         </div>
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" id="repeatAnnually">
-                            <label class="form-check-label" for="repeatAnnually">
-                                매년 반복
-                            </label>
-                        </div>
-                    </form>
+                    </div>
                 </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
-                    <button type="button" class="btn btn-primary" onclick="inputPeakData()">추가</button>
-                </div>
-            </div>
-        </div>
-    </div>
             </div>
         </div>
     </div>

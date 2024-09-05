@@ -252,7 +252,7 @@
 
     <update id="reserationApproved">
     update bc_reservation  
-    set progress = '예약승인'
+    set progress = #{progress}
     where id=#{id}
     </update>
 
@@ -291,4 +291,89 @@
         set reply_content = #{reply_content}
         where id= #{id}
     </update>
+
+    <!-- 판매자 : 차량 대여 관리 -->
+    <select id="rentalManagementList" resultType="Map">
+        select 
+                br.id AS reservation_id,
+                bu.nickname AS rentUserNickname,
+                bctc.name AS carTypeName,
+                bc.product_name,
+                brei.id AS external_inspection_Id,
+                brei.create_at AS external_inspection_Create_at,
+                br.progress
+    from bc_reservation br 
+    INNER JOIN 
+                bc_rental_external_inspection brei on br.id = brei.reservation_id 
+    INNER JOIN 
+                bc_rent_user bru on br.rent_user_id = bru.id
+    INNER JOIN 
+                bc_user bu on bru.user_id = bu.id
+    INNER JOIN 
+                bc_campingcar bc on br.product_id = bc.id 
+    INNER JOIN 
+                bc_car_type_categories bctc on bc.category_id = bctc.id
+    INNER JOIN 
+                bc_rental_company_info brci on bc.rental_company_id = brci.id 
+    where bc.rental_company_id = #{id}
+    </select>
+    
+    <!-- 판매자 : 대여 사진 리스트 -->
+    <select id="rentalShootList" resultType="Map">
+        select 
+                brei.front_view,
+                brei.passenger_front_view,
+                brei.passenger_rear_view,
+                brei.rear_view,
+                brei.driver_rear_view,
+                brei.driver_front_view
+    from 
+                bc_rental_external_inspection brei 
+    INNER JOIN 
+                bc_reservation br on brei.reservation_id = br.id
+    where brei.id=#{id}
+    </select>
+
+    <!-- 판매자 : 반납 관리 리스트-->
+    <select id="returnManagementList" resultType="Map">
+    select 
+                br.id AS reservation_id,
+                bu.nickname AS rentUserNickname,
+                bctc.name AS carTypeName,
+                bc.product_name,
+                br.progress
+    from bc_reservation br
+    INNER JOIN 
+                bc_rent_user bru on br.rent_user_id = bru.id
+    INNER JOIN 
+                bc_user bu on bru.user_id = bu.id
+    INNER JOIN 
+                bc_campingcar bc on br.product_id = bc.id 
+    INNER JOIN 
+                bc_car_type_categories bctc on bc.category_id = bctc.id
+    INNER JOIN 
+                bc_rental_company_info brci on bc.rental_company_id = brci.id 
+    where bc.rental_company_id = #{id}
+    </select>
+
+    <!-- 반납시 차량 점검  -->
+    <insert id="createReturnShoot">
+        insert into bc_return_external_inspection(
+            reservation_id, 
+            front_view, 
+            passenger_front_view, 
+            passenger_rear_view, 
+            rear_view, 
+            driver_rear_view,
+            driver_front_view
+        )values(
+            #{reservation_id},
+            #{front_view},
+            #{passenger_front_view},
+            #{passenger_rear_view},
+            #{rear_view},
+            #{driver_rear_view},
+            #{driver_front_view}
+        )
+    </insert>
 </mapper>

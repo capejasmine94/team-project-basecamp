@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <!-- Font Awesome -->
+    <script src="https://kit.fontawesome.com/7b271bba58.js" crossorigin="anonymous"></script>
+    <!-- Google Material Icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet">
+    <!-- partner 오른쪽  본문 css -->
+    <link href="/public/css/campingcar/right-content.css" rel="stylesheet">
+    <link href="/public/css/common.css" rel="stylesheet">
+    <link href="/public/css/basecamp.css" rel="stylesheet">
+    <script src="/public/js/util.js"></script>
+    <style>
+        .rentalShoot img {
+            aspect-ratio: 1/1;
+            width: 100px;
+            height: 100%;
+            object-fit: cover;
+            object-position: center;
+        }
+    </style>
+</head>
+<body>
+    <div th:replace="~{partner/carNavi::topNavi}"></div>
+
+    <div class="container-fluid">
+        <div class="row">
+            <div th:replace="~{partner/carNavi::leftNavi}"></div>
+            <!-- right 템플릿 -->
+            <div class="col right bg-body-secondary" style="padding-top: 55px;">
+                <div class="row py-3 px-4 d-flex align-items-center bg-white">
+                    <div class="col-0"></div>
+                    <div class="col fs-6 fw-semibold">
+                        반납 관리
+                    </div>
+                </div>
+                <!-- 본문내용(templets) -->
+                <div class="row px-4 pt-1" th:if="${session.sessionCaravanInfo != null}">
+                    <div class="col">
+                        <!-- 탭 내용 -->
+                        <div class="card">
+                            <div class="card-head fw-semibold py-3 px-3">
+                                <head>차량 대여 관리 리스트</head>
+                            </div>
+                            <div class="row bg-body-tertiary fw-semibold border-bottom py-2 px-0 mx-0 new-fs-75 d-flex align-items-center">
+                                <div class="col-1 px-0 d-flex justify-content-center align-items-center text-center">전면</div>
+                                <div class="col-2 px-0 d-flex justify-content-center align-items-center text-center">보조석 앞면</div>
+                                <div class="col-2 px-0 d-flex justify-content-center align-items-center text-center">보조석 뒷면</div>
+                                <div class="col-2 px-0 d-flex justify-content-center align-items-center text-center">후면</div>
+                                <div class="col-2 px-0 d-flex justify-content-center align-items-center text-center">운전석 뒷면</div>
+                                <div class="col-2 px-0 d-flex justify-content-center align-items-center text-center">운전석 앞면</div>
+                                <div class="col-1 px-0 d-flex justify-content-center align-items-center text-center">확인</div>
+                            </div>
+                        
+                            <form class="container-fluid mt-0" id="uploadForm" action="/partner/returnImageProcess" method="post" enctype="multipart/form-data">
+                                <div class="row py-2 border-bottom new-fs-85 text-center d-flex align-items-center">
+                                    <!-- 첫 번째 이미지 업로드 (전면) -->
+                                    <div class="col-1 px-0 rentalShoot d-flex justify-content-center align-items-center text-center flex-column">
+                                        <div id="front-view-preview-container" style="display: none;">
+                                            <img id="preview-front-view" src="" class="img-fluid w-100" style="max-height: 100px;">
+                                        </div>
+                                        <div onclick="document.getElementById('front-view-input').click();" style="cursor: pointer;">
+                                            <span class="material-symbols-outlined" style="font-size: 2rem;">photo_camera</span>
+                                            <div>사진 업로드</div>
+                                        </div>
+                                        <input type="file" id="front-view-input" class="form-control-file d-none" name="front_view" onchange="previewImage(event, 'preview-front-view', 'front-view-preview-container')">
+                                    </div>
+                            
+                                    <!-- 두 번째 이미지 업로드 (보조석 앞면) -->
+                                    <div class="col-2 px-0 rentalShoot d-flex justify-content-center align-items-center text-center flex-column">
+                                        <div id="passenger-front-view-preview-container" style="display: none;">
+                                            <img id="preview-passenger-front-view" src="" class="img-fluid w-100" style="max-height: 100px;">
+                                        </div>
+                                        <div onclick="document.getElementById('passenger-front-view-input').click();" style="cursor: pointer;">
+                                            <span class="material-symbols-outlined" style="font-size: 2rem;">photo_camera</span>
+                                            <div>사진 업로드</div>
+                                        </div>
+                                        <input type="file" id="passenger-front-view-input" class="form-control-file d-none" name="passenger_front_view" onchange="previewImage(event, 'preview-passenger-front-view', 'passenger-front-view-preview-container')">
+                                    </div>
+                            
+                                    <!-- 세 번째 이미지 업로드 (보조석 뒷면) -->
+                                    <div class="col-2 px-0 rentalShoot d-flex justify-content-center align-items-center text-center flex-column">
+                                        <div id="passenger-rear-view-preview-container" style="display: none;">
+                                            <img id="preview-passenger-rear-view" src="" class="img-fluid w-100" style="max-height: 100px;">
+                                        </div>
+                                        <div onclick="document.getElementById('passenger-rear-view-input').click();" style="cursor: pointer;">
+                                            <span class="material-symbols-outlined" style="font-size: 2rem;">photo_camera</span>
+                                            <div>사진 업로드</div>
+                                        </div>
+                                        <input type="file" id="passenger-rear-view-input" class="form-control-file d-none" name="passenger_rear_view" onchange="previewImage(event, 'preview-passenger-rear-view', 'passenger-rear-view-preview-container')">
+                                    </div>
+                            
+                                    <!-- 네 번째 이미지 업로드 (후면) -->
+                                    <div class="col-2 px-0 rentalShoot d-flex justify-content-center align-items-center text-center flex-column">
+                                        <div id="rear-view-preview-container" style="display: none;">
+                                            <img id="preview-rear-view" src="" class="img-fluid w-100" style="max-height: 100px;">
+                                        </div>
+                                        <div onclick="document.getElementById('rear-view-input').click();" style="cursor: pointer;">
+                                            <span class="material-symbols-outlined" style="font-size: 2rem;">photo_camera</span>
+                                            <div>사진 업로드</div>
+                                        </div>
+                                        <input type="file" id="rear-view-input" class="form-control-file d-none" name="rear_view" onchange="previewImage(event, 'preview-rear-view', 'rear-view-preview-container')">
+                                    </div>
+                            
+                                    <!-- 다섯 번째 이미지 업로드 (운전석 뒷면) -->
+                                    <div class="col-2 px-0 rentalShoot d-flex justify-content-center align-items-center text-center flex-column">
+                                        <div id="driver-rear-view-preview-container" style="display: none;">
+                                            <img id="preview-driver-rear-view" src="" class="img-fluid w-100" style="max-height: 100px;">
+                                        </div>
+                                        <div onclick="document.getElementById('driver-rear-view-input').click();" style="cursor: pointer;">
+                                            <span class="material-symbols-outlined" style="font-size: 2rem;">photo_camera</span>
+                                            <div>사진 업로드</div>
+                                        </div>
+                                        <input type="file" id="driver-rear-view-input" class="form-control-file d-none" name="driver_rear_view" onchange="previewImage(event, 'preview-driver-rear-view', 'driver-rear-view-preview-container')">
+                                    </div>
+                            
+                                    <!-- 여섯 번째 이미지 업로드 (운전석 앞면) -->
+                                    <div class="col-2 px-0 rentalShoot d-flex justify-content-center align-items-center text-center flex-column">
+                                        <div id="driver-front-view-preview-container" style="display: none;">
+                                            <img id="preview-driver-front-view" src="" class="img-fluid w-100" style="max-height: 100px;">
+                                        </div>
+                                        <div onclick="document.getElementById('driver-front-view-input').click();" style="cursor: pointer;">
+                                            <span class="material-symbols-outlined" style="font-size: 2rem;">photo_camera</span>
+                                            <div>사진 업로드</div>
+                                        </div>
+                                        <input type="file" id="driver-front-view-input" class="form-control-file d-none" name="driver_front_view" onchange="previewImage(event, 'preview-driver-front-view', 'driver-front-view-preview-container')">
+                                    </div>
+                            
+                                    <!-- 사진 전송 버튼 -->
+                                    <div class="col-1 px-0 rentalShoot d-flex justify-content-center align-items-center text-center">
+                                        <input type="hidden" name="reservation_id" th:value="${reservationId}">
+                                        <button type="button" class="btn btn-bc-outline-dark" onclick="showModal()">사진 전송</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 모달 -->
+                <div class="modal fade" id="uploadModal" tabindex="-1" role="dialog" aria-labelledby="uploadModalLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="uploadModalLabel">사진 전송</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                사진을 업로드 하시겠습니까?
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-warning" data-bs-dismiss="modal">취소</button>
+                                <button type="button" class="btn btn-bc-dark" id="confirmUploadButton">확인</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js"></script>
+    <script src="/public/js/campingcar/partnermain.js"></script>
+
+    <script>
+        function previewImage(event, previewId, containerId) {
+            let input = event.target;
+            let reader = new FileReader();
+            reader.onload = function() {
+                let dataURL = reader.result;
+                let preview = document.getElementById(previewId);
+                let container = document.getElementById(containerId);
+                preview.src = dataURL;
+                container.style.display = 'block'; // 이미지가 로드되면 미리보기 섹션을 표시
+            };
+            reader.readAsDataURL(input.files[0]);
+        }
+
+        function showModal() {
+            let uploadModal = new bootstrap.Modal(document.getElementById('uploadModal'));
+            uploadModal.show();
+
+            document.getElementById('confirmUploadButton').addEventListener('click', function() {
+                document.getElementById('uploadForm').submit();
+            }, { once: true }); // 이벤트 리스너가 한 번만 실행되도록 설정
+        }
+    </script>
+
+</body>
+</html>

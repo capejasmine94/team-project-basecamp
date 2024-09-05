@@ -49,6 +49,13 @@ public class CampingcarController {
 
     }
 
+    @RequestMapping("gotoRentCar")
+    public String gotoRentCar () {
+
+        
+        return "campingcar/gotoRentCar";
+    }
+
     @RequestMapping("campingCarDetailPage")
     public String campingCarDetailPage(@RequestParam("id") int id, Model model, HttpSession session) {
 
@@ -124,6 +131,8 @@ public class CampingcarController {
 
         return "campingcar/reservationInfo";
     }
+
+    // 예약프로세스
     @RequestMapping("reservationProcess")
     public String rentUserInfoProcess(HttpSession session, RentUserDto rentUser,
                                      @RequestParam("driveImage")MultipartFile driveImage, ReservationDto reservationDto,
@@ -145,6 +154,7 @@ public class CampingcarController {
         return "campingcar/reservationConfirmation";
     }
 
+    // 렌트 고객 확인 프로세스
     @RequestMapping("existingRentUserReservationProcess")
     public String existingRentUserReservationProcess(HttpSession session, ReservationDto reservationDto, Model model) {
 
@@ -161,8 +171,25 @@ public class CampingcarController {
         return "campingcar/reservationConfirmation";
     }
 
+    // 이용내역 페이지
     @RequestMapping("rentUseageHistory")
     public String rentUseageHistory(HttpSession session, Model model) { 
+
+        UserDto sessionUserInfo = (UserDto)session.getAttribute("sessionUserInfo");
+        int rentUserPk = campingcarService.getExistingByRentUserId(sessionUserInfo.getId());
+        System.out.println("렌트 고객 : " + rentUserPk);
+        
+        List<Map<String,Object>> rentuserHistoryData = campingcarService.getUseageHistroyAllByRentUserId(rentUserPk);
+
+        model.addAttribute("rentuserHistoryData", rentuserHistoryData);
+        
+
+        return "campingcar/rentUseageHistory";
+    }
+
+    // 차량 예약(상세페이지 포함) 페이지
+    @RequestMapping("rentalStatus")
+    public String rentalStatus(HttpSession session, Model model) {
 
         UserDto sessionUserInfo = (UserDto)session.getAttribute("sessionUserInfo");
         int rentUserPk = campingcarService.getExistingByRentUserId(sessionUserInfo.getId());
@@ -177,9 +204,22 @@ public class CampingcarController {
             reservation.put("isReviewWritten", isReviewWritten);
         };
         model.addAttribute("rentuserHistoryData", rentuserHistoryData);
-        
 
-        return "campingcar/rentUseageHistory";
+        return "campingcar/rentalStatus";
+    }
+
+
+    // 예약상세보기페이지
+    @RequestMapping("rentalCarCheck")
+    public String rentalCarCheck(@RequestParam("id") int id, HttpSession session, Model model) {
+
+        Map<String,Object> rentCarData = campingcarService.findRetanlCarCheckList(id);
+        boolean isReviewWritten = campingcarService.isReviewWritten(id);
+
+        rentCarData.put("isReviewWritten", isReviewWritten);
+        model.addAttribute("rentCarData", rentCarData);
+
+        return "campingcar/rentalCarCheck";
     }
 
     // 리뷰작성하기
@@ -204,14 +244,21 @@ public class CampingcarController {
         return "redirect:https://basecamp.null-pointer-exception.com/campingcar/main";
     }
 
+    // 차량확인 사진찍기 페이지
     @RequestMapping("carExteriorInteriorShoot")
-    public String carExteriorInteriorShoot() {
+    public String carExteriorInteriorShoot(@RequestParam("id") int id, Model model) {
+        System.out.println("reservation_id확인" + id);
+
+        model.addAttribute("reservationId", id);
+
 
         return "campingcar/carExteriorInteriorShoot";
     }
 
+    // 대여 사진 찍기 프로세스 
     @RequestMapping("rentShootProcess")
-    public String rentShootProcess(@RequestParam("front_view") MultipartFile frontView,
+    public String rentShootProcess( @RequestParam("reservation_id") int reservation_id,
+                                    @RequestParam("front_view") MultipartFile frontView,
                                     @RequestParam("passenger_front_view") MultipartFile passengerFrontView,
                                     @RequestParam("passenger_rear_view") MultipartFile passengerRearView,
                                     @RequestParam("rear_view") MultipartFile rearView,
@@ -227,20 +274,22 @@ public class CampingcarController {
         String driverFrontViewImg = rentalShoot(driverFrontView);
 
         RentalExternalInspectionDto rentalExternalInspectionDto = new RentalExternalInspectionDto();
+        rentalExternalInspectionDto.setReservation_id(reservation_id);
         rentalExternalInspectionDto.setFront_view(frontViewImg);
         rentalExternalInspectionDto.setPassenger_front_view(passengerFrontViewImg);
         rentalExternalInspectionDto.setPassenger_rear_view(passengerRearViewImg);
-        rentalExternalInspectionDto.setRear_view(rearViewImg);
+        rentalExternalInspectionDto.setRear_view(rearViewImg); 
         rentalExternalInspectionDto.setDriver_rear_view(driverRearViewImg);
         rentalExternalInspectionDto.setDriver_front_view(driverFrontViewImg);
 
         campingcarService.registerRentShoot(rentalExternalInspectionDto);
+        System.out.println("외관촬영 등록 확인 : " + rentalExternalInspectionDto);
 
-    model.addAttribute("message", "파일이 성공적으로 업로드되었습니다.");
-    return "redirect:https://basecamp.null-pointer-exception.com/campingcar/myRentalHistory";
+        model.addAttribute("message", "파일이 성공적으로 업로드되었습니다.");
+    return "redirect:https://basecamp.null-pointer-exception.com/campingcar/rentalCarCheck?id="+ reservation_id;
     }
 
-    
+    // 차량 대여 사진찍기를 위한 이미지 메소드
     public String rentalShoot(MultipartFile newImage) {
         String rootPath = "C:/basecampeImage_rentuser/";
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd/");
@@ -270,7 +319,41 @@ public class CampingcarController {
         return newName;
     }
 
+    // 차량 반납 요청 페이지
+    @RequestMapping("returnRequest")
+    public String returnRequest (@RequestParam("id") int id, HttpSession session, Model model) {
+        Map<String,Object> rentCarData = campingcarService.findRetanlCarCheckList(id);
+        model.addAttribute("rentCarData", rentCarData);
+        
+        return "campingcar/returnRequest";
+    }
 
+    @RequestMapping("reservation_approved")
+    public String reservation_approved(ReservationDto reservationDto) {
+        System.out.println("reservation 확인" +reservationDto.getProgress());
+    
+        campingcarService.reservationApproved(reservationDto);
+        System.out.println("id확인 " + reservationDto.getId());
+    
+        return "redirect:/campingcar/rentalCarCheck?id="+reservationDto.getId();
+    }
+
+    // 차량 반납 점검 동의 페이지
+    @RequestMapping("returnInspectionAgreement")
+    public String returnInspectionAgreement(@RequestParam("id")int id, Model model) {
+
+        Map<String,Object> returnData = campingcarService.getReturnInspectionImgList(id);
+        model.addAttribute("returnData", returnData);
+
+        return "campingcar/returnInspectionAgreement";
+    }
+
+
+
+
+
+
+    // 좋아요 페이지
     @RequestMapping("myLike")
     public String myLike(HttpSession session,Model model){
         UserDto sessionUserInfo = (UserDto)session.getAttribute("sessionUserInfo");
@@ -284,6 +367,7 @@ public class CampingcarController {
         return "campingcar/myLike";
     }
 
+    // 검색 기능 페이지
     @RequestMapping("searchResultsPage")
     public String searchResultsPage(
         @RequestParam(name = "location", required = false) String location,

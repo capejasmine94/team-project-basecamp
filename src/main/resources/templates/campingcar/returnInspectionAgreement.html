@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>반납 점검 동의</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+     <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+    <!-- Google Material Icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet">
+    <link href="/public/css/common.css" rel="stylesheet">
+    <link href="/public/css/basecamp.css" rel="stylesheet">
+    <script src="/public/js/lockLikeMobile.js"></script>
+    <link rel="shotcut icon" href="/public/img/common/campFire.ico" type="image/x-icon">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+        }
+        .card-img-top {
+            width: 100%;
+            height: 150px; /* 고정된 이미지 높이 */
+            object-fit: cover; /* 비율 유지하며 크기 맞춤 */
+        }
+    </style>
+</head>
+<body>
+    <div class="container-fluid fixed-top">
+        <div class="row bg-white align-items-center py-2 border-bottom">
+            <div class="col-auto px-0">
+                <button class="border-0 bg-transparent d-flex align-items-center text-dark">
+                    <span class="material-symbols-outlined" onclick="history.back();" style="cursor: pointer;">arrow_back</span>
+                </button>
+            </div>
+        </div>
+    </div>
+    <div class="container-fluid text-center p-3">    
+        <div class="row pt-5">
+            <div class="col-12 mb-0 d-flex justify-content-start">
+                <span class="fs-1 fw-semibold">반납 점검 동의 확인</span>
+            </div>
+        </div>
+        <div class="row mt-3 pb-3">
+            <div class="col-12 mb-0 text-start">
+                <div class="text-body-secondary new-fs-85">
+                    <div>렌트카에서 반납 상태를 점검하여 이용자님에게 사진</div>
+                    <div>을 첨부하였습니다. 사진 확인 후 이상이 없다면 아래 </div>
+                    <span class="text-dark fw-semibold">'반납 점검 동의'버튼</span>을 눌러주시기 바랍니다.
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container-fluid">
+        <div class="row mb-5">
+            <div class="col-12 mb-4">
+                <div class="card shadow-sm">
+                    <img th:src="|/images/${returnData.front_view}|" class="card-img-top" alt="Front View">
+                    <div class="card-body text-center pb-1">
+                        <div class="card-title mb-0 fw-medium fs-5">전면</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-12 mb-4">
+                <div class="card shadow-sm">
+                    <img th:src="|/images/${returnData.passenger_front_view}|" class="card-img-top" alt="Passenger Side Front View">
+                    <div class="card-body text-center pb-1">
+                        <div class="card-title mb-0 fw-medium fs-5">보조석 앞면</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-12 mb-4">
+                <div class="card shadow-sm">
+                    <img th:src="|/images/${returnData.passenger_rear_view}|" class="card-img-top" alt="Passenger Side Rear View">
+                    <div class="card-body text-center pb-1">
+                        <div class="card-title mb-0 fw-medium fs-5">보조석 뒷면</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-12 mb-4">
+                <div class="card shadow-sm">
+                    <img th:src="|/images/${returnData.rear_view}|" class="card-img-top" alt="Rear View">
+                    <div class="card-body text-center pb-1">
+                        <div class="card-title mb-0 fw-medium fs-5">후면</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-12 mb-4">
+                <div class="card shadow-sm">
+                    <img th:src="|/images/${returnData.driver_rear_view}|" class="card-img-top" alt="Driver Side Rear View">
+                    <div class="card-body text-center pb-1">
+                        <div class="card-title mb-0 fw-medium fs-5">운전석 뒷면</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-12 mb-4">
+                <div class="card shadow-sm">
+                    <img th:src="|/images/${returnData.driver_front_view}|" class="card-img-top" alt="Driver Side Front View">
+                    <div class="card-body text-center pb-1">
+                        <div class="card-title mb-0 fw-medium fs-5">운전석 앞면</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container fixed-bottom" style="z-index: 1040;">
+        <div class="row">
+            <div class="col px-0 d-grid">
+                <button class="btn btn-bc-light p-3 fw-medium rounded-0" id="returnAgreementButton" onclick="showModal()">반납 점검 동의</button>
+            </div>
+        </div>
+    </div>
+    
+    <div class="modal fade" id="returnInspectionAgreementModal" tabindex="-1" aria-labelledby="returnInspectionAgreementModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header border border-0">
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col">
+                            사진을 업로드 하시겠습니까? 동의하신다면 "확인" 버튼을 눌러주세요.
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer border border-0 d-flex justify-content-center">
+                    <form method="post" id="returnAgreement" th:action="@{/campingcar/reservation_approved}">
+                        <input type="hidden" name="progress" value="반납완료">
+                        <input type="hidden" name="id" th:value="${returnData.reservation_id}">
+                        <button type="button" class="btn btn-warning" data-bs-dismiss="modal">취소</button>
+                        <button type="button" class="btn btn-bc-dark" id="confirmButton">확인</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 부트스트랩 JS -->
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // 사용자가 이미 반납 점검 동의를 했는지 확인
+            const isAgreementApproved = localStorage.getItem('returnAgreementApproved') === 'true';
+    
+            // 이미 동의했다면 버튼을 비활성화하고 색상을 변경
+            if (isAgreementApproved) {
+                const button = document.getElementById('returnAgreementButton');
+                button.disabled = true;
+                button.classList.remove('btn-bc-light');  // 기존 클래스 제거
+                button.classList.add('btn-secondary');    // 새 클래스 추가
+            }
+        });
+    
+        function showModal() {
+            let returnInspectionAgreementModal = new bootstrap.Modal(document.getElementById('returnInspectionAgreementModal'));
+            returnInspectionAgreementModal.show();
+    
+            document.getElementById('confirmButton').addEventListener('click', function() {
+                // 동의 상태를 localStorage에 저장
+                localStorage.setItem('returnAgreementApproved', 'true');
+    
+                // 폼 제출
+                document.getElementById('returnAgreement').submit();
+            }, { once: true });
+        }
+    </script>
+</body>
+</html>

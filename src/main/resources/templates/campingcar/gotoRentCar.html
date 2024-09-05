@@ -1,0 +1,776 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <!-- Font Awesome -->
+    <script src="https://kit.fontawesome.com/7b271bba58.js" crossorigin="anonymous"></script>
+    <!-- Google Material Icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet">
+    <link href="/public/css/common.css" rel="stylesheet">
+    <link href="/public/css/basecamp.css" rel="stylesheet">
+    <script src="/public/js/lockLikeMobile.js"></script>
+    <link rel="shotcut icon" href="/public/img/common/campFire.ico" type="image/x-icon">
+    <style>
+        .rounded-top-only {
+            border-radius: 30px 30px 0 0;
+        }
+        .location img {
+            aspect-ratio: 1/1;
+            width: 100px;
+            object-fit: cover;
+            object-position: center;
+        }
+        .text-on-image {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            font-size: 11px;
+        }
+        .btn-block {
+            max-width: 100%;
+            text-align: left;
+            display: inline-block;
+        }
+        .calendar-container {
+            text-align: center;
+            font-family: Arial, sans-serif;
+            overflow-x: hidden;
+        }
+        .calendar-container table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 0 auto;
+            border: none;
+            table-layout: fixed;
+        }
+        .calendar-container th, .calendar-container td {
+            padding: 0;
+            text-align: center;
+            border: none;
+            height: 40px;
+        }
+        .calendar-container th {
+            color: #999;
+            font-weight: bold;
+            line-height: 40px;
+        }
+        .calendar-container td {
+            cursor: pointer;
+        }
+        .calendar-container .inactive {
+            color: #ccc;
+            pointer-events: none;
+        }
+        .calendar-container .cursor-pointer .date-circle,
+        .calendar-container .cursor-pointer {
+            cursor: pointer;
+        }
+        .calendar-container .selected .date-circle {
+            background-color: black;
+            color: white;
+            border-radius: 50%;
+        }
+        .calendar-container .today .date-circle {
+            border: 2px solid black;
+        }
+        .calendar-container .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        .calendar-container .header button {
+            border: none;
+            background: none;
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #333;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            border-radius: 8px;
+        }
+        .calendar-container .header button:hover {
+            background-color: #f0f0f0;
+        }
+        .calendar-container .header h4 {
+            margin: 0;
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+        .calendar-container .date-circle {
+            display: inline-block;
+            width: 30px;
+            height: 30px;
+            line-height: 30px;
+            border-radius: 50%;
+            text-align: center;
+            margin: -2px auto;
+        }
+        .calendar-container .text-primary {
+            color: #007bff;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="container-fluid fixed-top pt-0 pb-2" style="height: 4.5em;">
+        <div class="row h-100">
+            <!-- Back Button -->
+            <div class="col-auto d-flex align-items-center p-1 pb-4">
+                <button class="border-0 bg-transparent d-flex align-items-center text-dark" onclick="history.back();" style="cursor: pointer;">
+                    <span class="material-symbols-outlined">arrow_back</span>
+                </button>
+            </div>
+
+            <!-- Main Content -->
+            <div class="col ps-1 pe-0 d-flex align-items-center justify-content-center">
+                <div class="w-100">
+                    <!-- Location Button -->
+                    <div class="d-flex justify-content-between bg-white border border-1 rounded-pill w-100 p-1 mb-1" style="border-color: #28323C;">
+                        <div class="d-flex align-items-center">
+                            <span class="material-symbols-outlined fs-5">location_on</span>
+                            <button class="ms-2 new-fs-9 btn bg-white border border-0 p-0" d="locationDisplay" onclick="showLocationModal()">서울</button>
+                        </div>
+                        <div class="d-flex align-items-center">
+                            <span class="material-symbols-outlined fs-5">rv_hookup</span>
+                            <button class="ms-2 new-fs-9 btn bg-white border border-0 p-0" id="carTypeDisplay" onClick="showCarTypeModal()">모터홈, 차박...</button>
+                        </div>
+                    </div>
+
+                    <!-- Start Date Button -->
+                    <div class="d-flex justify-content-between bg-white border border-1 rounded-pill w-100 p-1" style="border-color: #28323C;">
+                        <div class="d-flex align-items-center">
+                            <span class="material-symbols-outlined fs-5">calendar_today</span>
+                            <button class="ps-2 new-fs-9 btn bg-white border border-0 p-0" id="rendDateDisplay" onclick="showRentDateModal()">24.08.27 (화)</button>
+                        </div>
+                        <div class="d-flex align-items-center">
+                            <span class="material-symbols-outlined fs-5">event_repeat</span>
+                            <button class="ps-2 new-fs-9 btn bg-white border border-0 p-0" id="returnDateDisplay" onclick="showReturnDateModal()">24.08.28 (수)</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Filter Icon -->
+            <div class="col-auto d-flex align-items-center justify-content-end ps-2 pe-2">
+                <div class="bg-white border border-1 rounded-pill d-flex align-items-center justify-content-center" style="width: 2.5em; height: 2.5em; border-color: #28323C;">
+                    <button class="position-relative border-0 bg-transparent p-0" onclick="filterOptions()">
+                        <span class="material-symbols-outlined new-fs-9">instant_mix</span>
+                        <span class="position-absolute" style="top: -8px; right: -9px; width: 0.6em; height: 0.6em; background-color: red; border-radius: 50%;"></span>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- 대여 장소 선택 모달-->
+        <div class="modal fade" id="locationModal" tabindex="-1" aria-labelledby="locationModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <div class="modal-title fs-5 fw-semibold text-center w-100" id="locationModalLabel">대여 장소 선택</div>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="container">
+                            <div class="row pb-2">
+                                <div class="col-12 d-flex justify-content-center">
+                                    <button type="button" class="btn btn-outline-light text-dark w-100" data-location="전체">전체</button>
+                                </div>
+                            </div>
+                            <!-- 대여 지역 리스트 박스 -->
+                            <div class="row d-flex flex-wrap" id="regionsListBox"></div>
+                        </div>
+                    </div>
+                    <div class="modal-footer d-flex justify-content-center">
+                        <button type="button" class="btn btn-bc-dark w-100 " data-bs-dismiss="modal">취소하기</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- 지역선택 모달 Template -->
+        <div id="regionsListTemplate" class="d-none">
+            <div class="regionstsListWrapper col-6 pb-2 d-flex justify-content-center">
+                <span class="regionsBtn btn btn-outline-light text-dark w-100"></span>
+            </div>
+        </div>
+        <!-- 캠핑카 유형 선택 모달 -->
+        <div class="modal fade" id="campingcarModal" tabindex="-1" aria-labelledby="campingcarModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <div class="modal-title fs-5 fw-semibold text-center w-100" id="campingcarModalLabel">캠핑카 유형 선택</div>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="container">
+                            <div class="row" id="carTypeCheckListBox"></div>
+                        </div>
+                    </div>
+                    <div class="modal-footer d-flex justify-content-center">
+                        <button type="button" class="carTypeBtn btn btn-bc-dark w-100" data-bs-dismiss="modal" onClick="updateSelectedCarTypes()">선택</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- 캠핑카선택 모달 Template -->
+        <div id="carTypeCheckListTemplate" class="d-none">
+            <div class="col-12 pb-2">
+                <div class="carTypeCheckListWrapper form-check d-flex align-items-center">
+                    <input class="carTypeCheck form-check-input" type="checkbox">
+                    <label class="ps-2 form-check-label"></label>
+                </div>
+            </div>
+        </div>
+        <!-- 대여일 모달 -->
+        <div class="modal fade" id="rentdateModal" tabindex="-1" aria-labelledby="rentdateModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header border-0">
+                        <h5 class="modal-title text-center w-100 ps-4" id="rentdateModalLabel">언제 필요한가요?</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div id="calendar"></div>
+                    </div>
+                    <div class="modal-footer border-0">
+                        <button type="button" class="btn btn-bc-dark w-100" data-bs-dismiss="modal" onclick="confirmRentDate()">확인</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- 반납일 모달 -->
+        <div class="modal fade" id="returndateModal" tabindex="-1" aria-labelledby="returndateModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header border-0">
+                        <h5 class="modal-title text-center w-100 ps-4" id="returndateModalLabel">반납일 선택</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div id="calendarReturn"></div>
+                    </div>
+                    <div class="modal-footer border-0">
+                        <button type="button" class="btn btn-bc-dark w-100 " data-bs-dismiss="modal" onclick="confirmReturnDate()">확인</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container-fluid pt-5 mt-3">
+        <div class="row px-2" id="campingcar-list-container">
+            
+        </div>
+    </div>
+    <!-- 모든 리스트가 출력된 후에 메시지를 출력 -->
+    <div class="container">
+        <div class="row text-center pb-4">
+            <div class="col">
+                <span class="text-body-tertiary">모든 내용을 불러왔습니다.</span>
+            </div>
+        </div>
+    </div> 
+    
+    
+    <!-- Template for camping car list -->
+    <div id="campingcarListTemplate" class="d-none">
+        <div class="col px-0 shadow rounded-4 my-4">
+            <a href="#" class="row mx-0">
+                <div class="col px-0">
+                    <div class="row">
+                        <div class="col px-0 d-flex justify-content-center align-items-center overflow-hidden rounded-top-4 position-relative">
+                            <img class="campingcarImg img-fluid" style="max-width: 100%; min-height: 100%;" alt="썸네일">
+                            <div class="position-absolute top-0 end-0 pt-1" style="padding-right: 1.3rem;">
+                                <i class="fa-regular fa-heart" style="color: #ff0000;"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row px-3">
+                        <div class="col">
+                            <!-- 회사명 + 차량명 -->
+                            <div class="row">
+                                <div class="col pe-0 pb-2">
+                                    <span class="campingcarComp_name fw-bold new-fs-8 text-dark"></span>
+                                    <span class="campingcarCar_type_name ms-1 py-0 rounded fw-semibold new-fs-75" style="background-color: #F0F4F7; color: #808485;"></span>
+                                    <div class="campingcarProduct_name fw-medium new-fs-10 text-dark" style="color: #484647;"></div>
+                                </div>
+                            </div>
+                            <!-- 비수기 평일가격, 주말가격 -->
+                            <div class="row d-flex ps-1 align-items-between">
+                                <div class="col-5 new-fs-85 px-2 pb-2 text-start">
+                                    <span class="text-dark fw-semibold pe-1">평일 :</span>
+                                    <span class="campingcarRental_fee_weekdays lightFont fw-medium"></span>
+                                </div>
+                                <div class="col-2 px-0"></div>
+                                <div class="col-5 new-fs-85 px-2 pb-2 text-end">
+                                    <span class="text-dark fw-semibold pe-1">주말 :</span>
+                                    <span class="campingcarRental_fee_weekend lightFont fw-medium" style="color: #0777F5;"></span>
+                                </div>
+                            </div>
+                            <!-- 차고지 주소 + 운전 조건 -->
+                            <div class="row border-top d-flex-items-between">
+                                <div class="col-12 px-2 ms-1 pt-2 pb-2 fw-medium text-primary-emphasis new-fs-8">
+                                    <div class="d-flex align-items-center">
+                                        <div class="campingcarGarage_address"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-12 pb-2 pe-0 fw-bold new-fs-8" style="color: #7C7B7B;">
+                                    <div class="d-flex align-items-center flex-wrap gap-2">
+                                        <div class="campingcarDriver_license_condition"></div>
+                                        <div class="campingcarDriver_age_condition"></div>
+                                        <div class="campingcarDriver_experience_condition"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- 동승, 취침, 애완 조건 -->
+                            <div class="row py-2 new-fs-7 border-top">
+                                <div class="col px-2 d-flex justify-content-between align-items-center">
+                                    <div class="d-flex align-items-center">
+                                        <span class="material-symbols-outlined pe-1 fs-5">groups</span>
+                                        <span class="campingcarSeating_capacity text-center pe-2"></span>
+                                    </div>
+                                    <div class="d-flex align-items-center">
+                                        <span class="material-symbols-outlined pe-1 fs-5">hotel</span>
+                                        <span class="campingcarSleeping_capacity text-center pe-0"></span>
+                                    </div>
+                                    <div class="d-flex align-items-center">
+                                        <span class="material-symbols-outlined ps-2 new-fs-9">Pets</span>
+                                        <span class="campingcarPet_friendly text-center pe-0"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </a>
+        </div>
+    </div>
+
+
+    <!-- footer -->
+    <div th:replace="~{campingcar/campingNavi::footerNavi}"></div>
+    <!-- bottom -->
+    <div th:replace="~{campingcar/campingNavi::bottomNaviBasecamp}"></div>
+    
+    <!-- jQuery (optional, but often required for some Bootstrap features) -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+
+    <!-- Popper.js -->
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js"></script>
+    <script>
+
+        // 페이지 로드 시 실행되는 이벤트를 등록합니다.
+        window.addEventListener("DOMContentLoaded", () => {
+            // 페이지가 완전히 로드되면 세션에서 사용자 ID를 설정하고, 캠핑카 리스트를 로드합니다.
+            loadCampingCarList();                          
+        });
+
+                // 캠핑카 리스트를 로드하고 화면에 표시하는 함수
+        function loadCampingCarList() {
+            const url = "/api/campingcar/campingcarList";
+            fetch(url)
+                .then(response => response.json())
+                .then(data => {
+                    console.log("API Response:", data);
+                    if (data.result === "success") {
+                        const campingcarList = data.data.campingcarList;
+                        const container = document.getElementById('campingcar-list-container');
+                        const template = document.getElementById('campingcarListTemplate');
+                        console.log("Camping Car List:", campingcarList);
+
+                        if (campingcarList) {
+                            container.innerHTML = ''; // 기존 내용을 초기화
+
+                        campingcarList.forEach(item => {
+                            const newCampingcar = template.cloneNode(true);
+                            newCampingcar.classList.remove('d-none');
+                            newCampingcar.id = ''; // id 속성을 제거
+
+                            // 데이터 채우기
+                            newCampingcar.querySelector('a').href = `/campingcar/campingCarDetailPage?id=${item.id}`;
+                            newCampingcar.querySelector('.campingcarImg').src = `/images/${item.main_img}`;
+                            newCampingcar.querySelector('.campingcarComp_name').textContent = item.comp_name;
+                            newCampingcar.querySelector('.campingcarCar_type_name').textContent = item.car_type_name;
+                            newCampingcar.querySelector('.campingcarProduct_name').textContent = item.product_name;
+                            newCampingcar.querySelector('.campingcarRental_fee_weekdays').textContent = `${item.rental_fee_weekdays.toLocaleString()}원`;
+                            newCampingcar.querySelector('.campingcarRental_fee_weekend').textContent = `${item.rental_fee_weekend.toLocaleString()}원`;
+                            newCampingcar.querySelector('.campingcarGarage_address').textContent = `차고지 : ${item.garage_address}`;
+                            newCampingcar.querySelector('.campingcarDriver_license_condition').textContent = `운전면허증 : ${item.driver_license_condition_name}`;
+                            newCampingcar.querySelector('.campingcarDriver_age_condition').textContent = `운전자 나이 : ${item.driver_age_condition_name}`;
+                            newCampingcar.querySelector('.campingcarDriver_experience_condition').textContent = `운전자 경력 : ${item.driver_experience_condition_name}`;
+                            newCampingcar.querySelector('.campingcarSeating_capacity').textContent = `동승 인원 ${item.seating_capacity}명`;
+                            newCampingcar.querySelector('.campingcarSleeping_capacity').textContent = `취침 인원 ${item.sleeping_capacity}명`;
+                            newCampingcar.querySelector('.campingcarPet_friendly').textContent = `반려 동물 ${item.pet_friendly}`;
+
+                            container.appendChild(newCampingcar);
+                        });
+                        } else {
+                            console.error('campingcarList is undefined');
+                        }
+
+                        
+                    } else {
+                        console.error('Failed to load camping car list.');
+                    }
+                })
+                .catch(error => console.error('Error fetching data:', error));
+        }
+
+
+        
+        // 대여 장소 선택 모달 열기 함수 
+        const showLocationModal = () => {
+            const locationModal = document.getElementById("locationModal"); 
+            const modal = new bootstrap.Modal(locationModal);
+            loadRegionOptionList(); // 모달을 열 때 지역 옵션 목록을 로드
+            modal.show();
+        }
+
+        // 대여 장소 모달의 지역 리스트 함수 
+        function loadRegionOptionList() {
+            const url = "/api/rent-user/getRegionsAll";
+            fetch(url)
+            .then(response => response.json())
+            .then(response => {
+                const regionsListBox = document.getElementById("regionsListBox");
+                // 컨테이너의 기존 내용을 초기화
+                regionsListBox.innerHTML = "";
+
+                const regionsListWrapperTemplate  = document.querySelector("#regionsListTemplate .regionstsListWrapper"); 
+
+                // 차량 지역 리스트의 각 항목을 반복 처리
+                for (const regionsList of response.data.allRegionsList) {
+                    const newRegionsListWrapperTemplate = regionsListWrapperTemplate.cloneNode(true);
+
+                    const newregionsButton = newRegionsListWrapperTemplate.querySelector(".regionsBtn"); 
+                    newregionsButton.innerText = regionsList.name;
+                    
+                    // 지역 버튼 클릭한 것을 click 이벤트 추가
+                    newregionsButton.addEventListener('click', () => {
+                        // 'locationDisplay'라는 ID를 가진 요소(장소 선택이라는 버튼)의 텍스트를 선택한 지역의 이름으로 동적으로 설정
+                        document.getElementById("locationDisplay").innerText = regionsList.name;
+                        // Bootstrap 모달 인스턴스를 가져와서 모달 닫기
+                        const modalInstance = bootstrap.Modal.getInstance(locationModal);// 모달 인스턴스 가져오기
+                        modalInstance.hide();// 모달 닫기
+                    });
+
+                    regionsListBox.appendChild(newRegionsListWrapperTemplate);
+                }
+            });
+        }
+
+        let selectedCarTypes = [];
+
+        // 캠핑카 유형 선택 모달 열기 함수 
+        const showCarTypeModal = () => {
+            const campingcarModal = document.getElementById("campingcarModal"); 
+            const carTypeModal = new bootstrap.Modal(campingcarModal);
+            loadCampingCarTypeOptionList();
+            carTypeModal.show();
+        }
+
+        // 캠핑카유형 선택 모달의 지역 리스트 함수 
+        function loadCampingCarTypeOptionList() {
+            const url = "/api/rent-user/getCarTypeAll";
+            fetch(url)
+            .then(response => response.json())
+            .then(response => {
+                const carTypeCheckListBox = document.getElementById("carTypeCheckListBox");
+                // 컨테이너의 기존 내용을 초기화
+                carTypeCheckListBox.innerHTML = "";
+
+                const carTypeListWrapperTemplate  = document.querySelector("#carTypeCheckListTemplate .carTypeCheckListWrapper"); 
+
+                let id = 0;
+                // 캠핑카 유형 리스트의 각 항목을 반복 처리
+                for(const carTypeList of response.data.allCarType) {
+                    const newCarTypeListWrapperTemplate = carTypeListWrapperTemplate.cloneNode(true);
+
+                    const newCarTypeCheck = newCarTypeListWrapperTemplate.querySelector(".carTypeCheck"); 
+                    newCarTypeCheck.value = carTypeList.name; // 체크박스의 값 설정
+                    newCarTypeCheck.id = `carTypeCheck${id}`; // 체크박스의 고유한 ID 설정
+
+                    const newCarTypeLabel = newCarTypeListWrapperTemplate.querySelector(".form-check-label");
+                    newCarTypeLabel.innerText = carTypeList.name; // 라벨에 텍스트 설정
+                    newCarTypeLabel.setAttribute("for", `carTypeCheck${id}`); // 라벨의 for 속성 설정
+
+                    // 이벤트 리스너 추가 : 선택된 체크박스의 함수 콜백
+                    newCarTypeCheck.addEventListener('change', (event) => selectCarType(event));
+
+                    carTypeCheckListBox.appendChild(newCarTypeListWrapperTemplate); // 복제된 템플릿을 체크박스 목록에 추가
+                    id++;  // 고유한 ID를 위해 id 값 증가
+                }
+            });
+        }
+
+        // 선택된 캠핑카 유형  
+        function selectCarType(event) { 
+            if (event.target.checked) {
+                // 체크박스가 체크되었으면 배열에 추가
+                selectedCarTypes.push(event.target.value);
+            } else {
+                // 체크박스가 체크 해제되었으면 배열에서 제거
+                selectedCarTypes = selectedCarTypes.filter(value => value !== event.target.value);
+            }
+        }
+
+        function updateSelectedCarTypes() {
+            // 선택된 캠핑카 유형들을 콤마로 구분하여 표시
+            document.getElementById("carTypeDisplay").innerText = selectedCarTypes.join(', ');
+        }
+
+
+        function updateSelectedCarTypes() {
+            document.getElementById("carTypeDisplay").innerText = selectedCarTypes.join(', ');
+        }
+
+        // 대여일 모달 열기 함수 
+        const showRentDateModal = () => {
+            const rentDateModalOpen = document.getElementById("rentdateModal");
+            const rentDateModal = new bootstrap.Modal(rentDateModalOpen);
+            rentDateModal.show();
+            renderCalendar(currentMonth, currentYear);
+        }
+
+        // 반납일 모달 열기 함수 
+        const showReturnDateModal = () => {
+            const returnDateModalOpen = document.getElementById("returndateModal");
+            const returnDateModal = new bootstrap.Modal(returnDateModalOpen);
+            returnDateModal.show();
+            renderReturnCalendar(currentMonth, currentYear);
+        }
+
+        const today = new Date();
+        let currentMonth = today.getMonth();
+        let currentYear = today.getFullYear();
+        let lastSelectedDate = null;
+        let lastSelectedReturnDate = null;
+
+        document.addEventListener("DOMContentLoaded", () => {
+            renderCalendar(currentMonth, currentYear);
+            renderReturnCalendar(currentMonth, currentYear);
+        });
+
+
+        function renderCalendar(month, year) {
+            const firstDay = new Date(Date.UTC(year, month, 1)).getUTCDay();
+            const lastDate = new Date(Date.UTC(year, month + 1, 0)).getUTCDate();
+            const lastDatePrevMonth = new Date(Date.UTC(year, month, 0)).getUTCDate();
+            const calendar = document.getElementById("calendar");
+
+            let html = `
+                <div class="calendar-container">
+                    <div class="header">
+                        <button class="btn btn-light" id="prevMonth" onclick="changeMonth(-1)">
+                            <i class="fas fa-chevron-left"></i>
+                        </button>
+                        <h4 id="monthYear">${year}.${month + 1 < 10 ? '0' : ''}${month + 1}</h4>
+                        <button class="btn btn-light" id="nextMonth" onclick="changeMonth(1)">
+                            <i class="fas fa-chevron-right"></i>
+                        </button>
+                    </div>
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th class="text-danger">일</th>
+                                <th>월</th>
+                                <th>화</th>
+                                <th>수</th>
+                                <th>목</th>
+                                <th>금</th>
+                                <th class="text-primary">토</th>
+                            </tr>
+                        </thead>
+                        <tbody id="calendarBody">
+            `;
+
+            let date = 1;
+            let nextMonthDate = 1;
+
+            for (let i = 0; i < 6; i++) {
+                html += '<tr>';
+                for (let j = 0; j < 7; j++) {
+                    if (i === 0 && j < firstDay) {
+                        html += `<td class="inactive">${lastDatePrevMonth - firstDay + 1 + j}</td>`;
+                    } else if (date > lastDate) {
+                        html += `<td class="inactive">${nextMonthDate++}</td>`;
+                    } else {
+                        let cellDate = new Date(Date.UTC(year, month, date));
+                        let cellClass = (cellDate < today && !(cellDate.getUTCDate() === today.getUTCDate() && cellDate.getUTCMonth() === today.getUTCMonth() && cellDate.getUTCFullYear() === today.getUTCFullYear())) ? 'inactive' : 'cursor-pointer';
+                        if (date === today.getUTCDate() && month === today.getUTCMonth() && year === today.getUTCFullYear() && !lastSelectedDate) {
+                            cellClass += ' today';
+                        }
+                        html += `<td class="${cellClass}" data-date="${cellDate.toISOString().split('T')[0]}" onclick="selectDate(this, '${cellDate.toISOString().split('T')[0]}')"><span class="date-circle">${date++}</span></td>`;
+                    }
+                }
+                html += '</tr>';
+            }
+
+            html += `
+                            </tbody>
+                        </table>
+                    </div>
+            `;
+
+            calendar.innerHTML = html;
+
+            // 재선택된 날짜가 현재 월에 있으면 해당 날짜에 선택 표시 추가
+            if (lastSelectedDate) {
+                const selectedCell = document.querySelector(`[data-date="${lastSelectedDate}"]`);
+                if (selectedCell) {
+                    selectedCell.classList.add('selected');
+                }
+            }
+        }
+
+        function renderReturnCalendar(month, year) {
+            const firstDay = new Date(Date.UTC(year, month, 1)).getUTCDay();
+            const lastDate = new Date(Date.UTC(year, month + 1, 0)).getUTCDate();
+            const lastDatePrevMonth = new Date(Date.UTC(year, month, 0)).getUTCDate();
+            const calendarReturn = document.getElementById("calendarReturn");
+
+            let html = `
+                <div class="calendar-container">
+                    <div class="header">
+                        <button class="btn btn-light" id="prevMonthReturn" onclick="changeReturnMonth(-1)">
+                            <i class="fas fa-chevron-left"></i>
+                        </button>
+                        <h4 id="monthYear">${year}.${month + 1 < 10 ? '0' : ''}${month + 1}</h4>
+                        <button class="btn btn-light" id="nextMonthReturn" onclick="changeReturnMonth(1)">
+                            <i class="fas fa-chevron-right"></i>
+                        </button>
+                    </div>
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th class="text-danger">일</th>
+                                <th>월</th>
+                                <th>화</th>
+                                <th>수</th>
+                                <th>목</th>
+                                <th>금</th>
+                                <th class="text-primary">토</th>
+                            </tr>
+                        </thead>
+                        <tbody id="calendarBodyReturn">
+            `;
+
+            let date = 1;
+            let nextMonthDate = 1;
+
+            for (let i = 0; i < 6; i++) {
+                html += '<tr>';
+                for (let j = 0; j < 7; j++) {
+                    if (i === 0 && j < firstDay) {
+                        html += `<td class="inactive">${lastDatePrevMonth - firstDay + 1 + j}</td>`;
+                    } else if (date > lastDate) {
+                        html += `<td class="inactive">${nextMonthDate++}</td>`;
+                    } else {
+                        let cellDate = new Date(Date.UTC(year, month, date));
+                        let cellClass = (cellDate < today && !(cellDate.getUTCDate() === today.getUTCDate() && cellDate.getUTCMonth() === today.getUTCMonth() && cellDate.getUTCFullYear() === today.getUTCFullYear())) ? 'inactive' : 'cursor-pointer';
+                        if (date === today.getUTCDate() && month === today.getUTCMonth() && year === today.getUTCFullYear() && !lastSelectedReturnDate) {
+                            cellClass += ' today';
+                        }
+                        html += `<td class="${cellClass}" data-date="${cellDate.toISOString().split('T')[0]}" onclick="selectReturnDate(this, '${cellDate.toISOString().split('T')[0]}')"><span class="date-circle">${date++}</span></td>`;
+                    }
+                }
+                html += '</tr>';
+            }
+
+            html += `
+                            </tbody>
+                        </table>
+                    </div>
+            `;
+
+            calendarReturn.innerHTML = html;
+
+            // 재선택된 날짜가 현재 월에 있으면 해당 날짜에 선택 표시 추가
+            if (lastSelectedReturnDate) {
+                const selectedCell = document.querySelector(`[data-date="${lastSelectedReturnDate}"]`);
+                if (selectedCell) {
+                    selectedCell.classList.add('selected');
+                }
+            }
+        }
+
+        function changeMonth(direction) {
+            currentMonth += direction;
+            if (currentMonth < 0) {
+                currentMonth = 11;
+                currentYear--;
+            } else if (currentMonth > 11) {
+                currentMonth = 0;
+                currentYear++;
+            }
+            renderCalendar(currentMonth, currentYear);
+        }
+
+        function changeReturnMonth(direction) {
+            currentMonth += direction;
+            if (currentMonth < 0) {
+                currentMonth = 11;
+                currentYear--;
+            } else if (currentMonth > 11) {
+                currentMonth = 0;
+                currentYear++;
+            }
+            renderReturnCalendar(currentMonth, currentYear);
+        }
+
+        function selectDate(cell, date) {
+            document.querySelectorAll('#calendarBody td').forEach(td => td.classList.remove('selected', 'today'));
+            cell.classList.add('selected');
+
+            lastSelectedDate = date;
+            console.log(`Selected date: ${lastSelectedDate}`);
+        }
+
+        function selectReturnDate(cell, date) {
+            document.querySelectorAll('#calendarBodyReturn td').forEach(td => td.classList.remove('selected', 'today'));
+            cell.classList.add('selected');
+
+            lastSelectedReturnDate = date;
+            console.log(`Selected return date: ${lastSelectedReturnDate}`);
+        }
+
+        function confirmRentDate() {
+            const selectedDate = document.querySelector('#calendarBody td.selected').dataset.date;
+            if (selectedDate) {
+                const displayDate = new Date(selectedDate);
+                document.getElementById("rendDateDisplay").textContent = displayDate.toISOString().split('T')[0];
+            }
+        }
+
+        function confirmReturnDate() {
+            const selectedReturnDate = document.querySelector('#calendarReturn td.selected').dataset.date;
+            if (selectedReturnDate) {
+                const displayDate = new Date(selectedReturnDate);
+                document.getElementById("returnDateDisplay").textContent = displayDate.toISOString().split('T')[0];
+            }
+        }
+
+                function confirmReturnDate() {
+            const selectedReturnDate = document.querySelector('#calendarBodyReturn td.selected').dataset.date;
+            if (selectedReturnDate) {
+                const displayDate = new Date(selectedReturnDate);
+                document.getElementById("returnDateDisplay").textContent = displayDate.toISOString().split('T')[0];
+            }
+        }
+    </script>
+</body>
+
+</html>
