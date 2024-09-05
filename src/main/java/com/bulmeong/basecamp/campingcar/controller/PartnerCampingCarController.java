@@ -88,6 +88,20 @@ public class PartnerCampingCarController {
         return "partner/main";
     
     }
+
+    @RequestMapping("dashboard")
+    public String dashboard(HttpSession session, Model model) {
+
+        RentalCompanyDto rentalCompanyDto = (RentalCompanyDto) session.getAttribute("sessionCaravanInfo");
+        model.addAttribute("rentalCompanyDto", rentalCompanyDto);
+        
+        return "partner/dashboard";
+    }
+
+
+
+
+
     // admin_main에 sub_category_쓰는 방식
     @RequestMapping("carRegister")
     public String carRegister(Model model, HttpSession session) {
