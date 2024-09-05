@@ -244,31 +244,38 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js"></script>
 
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            // 반납 요청이 이미 완료되었는지 확인
-            const isReturnRequested = localStorage.getItem('returnRequested') === 'true';
+function toggleButton(yes, no) {
+            const activeButton = document.getElementById(yes);
+            const otherButton = document.getElementById(no);
 
-            // 이미 반납 요청이 완료되었다면 모든 버튼을 비활성화
-            if (isReturnRequested) {
-                // 페이지 내 모든 버튼을 선택
-                const buttons = document.querySelectorAll('button');
-
-                // 모든 버튼을 비활성화 처리
-                buttons.forEach(button => {
-                    button.disabled = true;
-                    button.classList.remove('btn-bc-light');  // 기존 클래스 제거
-                    button.classList.add('btn-secondary');    // 새 클래스 추가
-                });
+            if (activeButton.classList.contains('btn-active')) {
+                // 이미 활성화된 버튼을 다시 클릭하면 초기화
+                activeButton.classList.remove('btn-active');
+                activeButton.classList.add('text-body-tertiary');
+            } else {
+                // 클릭한 버튼을 활성화하고, 다른 버튼은 비활성화 상태로 유지
+                activeButton.classList.add('btn-active');
+                activeButton.classList.remove('text-body-tertiary');
+                otherButton.classList.remove('btn-active');
+                otherButton.classList.add('text-body-tertiary');
             }
-        });
+        }
+
+        function yesButton(id) {
+            const yesButton = document.getElementById(id);
+
+            if (yesButton.classList.contains('btn-active')) {
+                // 이미 활성화된 버튼을 다시 클릭하면 초기화
+                yesButton.classList.remove('btn-active');
+                yesButton.classList.add('text-body-tertiary');
+            } else {
+                // 버튼을 활성화
+                yesButton.classList.add('btn-active');
+                yesButton.classList.remove('text-body-tertiary');
+            }
+        }
 
         function validateForm() {
-            // 반납 요청이 이미 완료된 경우에는 폼 검사를 실행하지 않음
-            const isReturnRequested = localStorage.getItem('returnRequested') === 'true';
-            if (isReturnRequested) {
-                return; // 이미 요청된 경우 실행되지 않도록 중단
-            }
-
             // 유효성 검사를 해야 하는 버튼 ID와 에러 메시지 ID를 매핑한 배열
             const checks = [
                 { buttonId: 'personalItem', errorId: 'personalItemError' },
@@ -295,20 +302,16 @@
                 }
             });
 
-            // 모든 유효성 검사를 통과한 경우 모달 표시 및 전송 처리
+            // 모든 유효성 검사를 통과한 경우 모달 표시
             if (isValid) {
                 showModal();
             }
         }
 
-        // 모달 열기 함수
-        const showModal = () => {
-            // 반납 요청이 이미 완료된 경우 모달을 열지 않음
-            const isReturnRequested = localStorage.getItem('returnRequested') === 'true';
-            if (isReturnRequested) {
-                return; // 이미 요청된 경우 실행되지 않도록 중단
-            }
 
+
+          // 모달 열기 함수
+          const showModal = () => {
             const returnRequestModal = document.getElementById('returnRequestModal');
             const modal = new bootstrap.Modal(returnRequestModal);
 
@@ -317,23 +320,13 @@
                 submitButton.addEventListener('click', function(event) {
                     event.preventDefault(); // 기본 동작 중지
                     document.getElementById('approvalForm').submit(); // 폼 제출
-
-                    // 반납 요청 완료 상태를 localStorage에 저장
-                    localStorage.setItem('returnRequested', 'true');
-
-                    // 모든 버튼을 비활성화 처리
-                    const buttons = document.querySelectorAll('button');
-                    buttons.forEach(button => {
-                        button.disabled = true;
-                        button.classList.remove('btn-bc-light');
-                        button.classList.add('btn-secondary');
-                    });
                 });
                 submitButton.dataset.listenerAdded = true;
             }
 
             modal.show();
         };
+
     </script>
     
       

@@ -88,13 +88,13 @@
                                     <span th:text="${#dates.format(rentalManageMetnData.external_inspection_Create_at, 'yyyy.MM.dd')}"></span>
                                     <span th:text="${#dates.format(rentalManageMetnData.external_inspection_Create_at, 'a HH:mm')}"></span>
                                 </div>                               
-                                <div class="col-2 ps-0 pe-3 d-grid justify-content-center align-items-center" formaction="/partner/reservation_approved">
-                                    <form method="post"  th:if="${rentalManageMetnData.progress == '예약승인'}">
+                                <div class="col-2 ps-0 pe-3 d-grid justify-content-center align-items-center">
+                                    <form method="post" action="/partner/reservation_approved" th:if="${rentalManageMetnData.progress == '예약승인'}">
                                         <input type="hidden" name="progress" value="대여승인">
                                         <input type="hidden" name="id" th:value="${rentalManageMetnData.reservation_id}">
                                         <button class="btn btn-bc-light">대여 동의</button>
-                                        <button class="btn btn-bc-light" th:if="${rentalManageMetnData.progress=='대여승인'}">대여 승인</button>
                                     </form>
+                                    <button class="btn btn-bc-light" th:if="${rentalManageMetnData.progress != '대여승인'}">대여 승인</button>
                                 </div>
                                 <div class="col-1 ps-0 pe-4 d-flex justify-content-center align-items-center">메모</div>
                             </div>
