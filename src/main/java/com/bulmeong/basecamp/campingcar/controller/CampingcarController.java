@@ -36,6 +36,7 @@ import jakarta.servlet.http.HttpSession;
 @RequestMapping("campingcar")
 public class CampingcarController {
 
+    // 깃 테스트
     @Autowired
     private CampingcarService campingcarService;
 
