@@ -39,8 +39,8 @@ public interface CampingcarSqlMapper {
     // 상세페이지_기본보유옵션
     public List<BasicFacilitiesDto> findBasicfacilitiesByCarId(@Param("id") int id);
 
-    // 상세페이지_리뷰수
-    public int countByProductId(int id);
+    // 상세페이지_예약건수
+    public int reservationCountByProductId(int id);
 
     //렌트 고객 검증
     public int findRentUserByUserId(int id); 

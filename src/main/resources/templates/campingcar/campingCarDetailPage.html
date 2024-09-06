@@ -342,9 +342,9 @@
                             </div>
                             <div class="row pt-3">
                                 <div class="col">
-                                    <i class="bi bi-star-fill" style="color: #FFD700;"></i><span class="fw-5 fw-bold"> 4.8</span><span class="new-fs-85" style="font-family: initial; color: #7C7B7B;" th:text="'['+ ${campingcarDetails.countReview}+ '+' + ' Review]'"> [140+ Review]</span>
-                                    <div class="new-fs-65 d-flex justify-content-start align-items-start">
-                                        <span class="pe-1">현재까지</span><span class="text-danger"th:text="${campingcarDetails.countReview}+ '명'"> 50명</span><span>이 차량을 예약하였습니다</span>
+                                    <i class="bi bi-star-fill" style="color: #FFD700;"></i><span class="fw-5 fw-bold" th:text="' ' + ${reviewAvg}"></span><span class="new-fs-85" style="font-family: initial; color: #7C7B7B;" th:text="' ['+ ${reivewCountBycar}+ '+' + ' Review]'"></span>
+                                    <div class="new-fs-7 d-flex justify-content-start align-items-start">
+                                        <span class="pe-1">현재까지</span><span class="text-danger fw-semibold" th:text="${campingcarDetails.reservationCount}+ '명'"></span><span>이 차량을 예약하였습니다</span>
                                     </div>
                                 </div>
                             </div>

@@ -93,9 +93,9 @@
         where bc.id = #{id}    
     </select>
 
-    <!-- 상세페이지_리뷰 카운트 -->
-    <select id="countByProductId" resultType="int">
-        select count(*) from bc_campingcar_like
+    <!-- 상세페이지_예약 건 수 카운트 -->
+    <select id="reservationCountByProductId" resultType="int">
+        select count(*) from bc_reservation
         where product_id=#{id}
     </select>
     
@@ -200,7 +200,7 @@
                     bc_user bu  on bru.user_id = bu.id
         INNER JOIN 
                     bc_campingcar bc on br.product_id = bc.id
-        INNER JOIN 
+        INNER JOIN
                     bc_rental_company_info brci on bc.rental_company_id = brci.id
         INNER JOIN 
                     bc_car_type_categories bctc on bc.category_id = bctc.id

@@ -54,9 +54,9 @@ public class CampingcarService {
         // 캠핑카 기본 정보 
         Map<String,Object> campingCar = campingCarSqlMapper.findCampingCarById(id);
         result.put("campingcarDto", campingCar);
-        // 상세 페이지 리뷰수
-        int countReview = campingCarSqlMapper.countByProductId(id);
-        result.put("countReview", countReview);
+        // 상세 페이지 예약 건수
+        int reservationCount = campingCarSqlMapper.reservationCountByProductId(id);
+        result.put("reservationCount", reservationCount);
         return result;
     }
 
