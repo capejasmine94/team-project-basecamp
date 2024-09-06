@@ -115,7 +115,7 @@
                 <!-- 렌트카 회사 정보 -->
                 <div class="row">
                     <div class="col px-3">
-                        <div class="row pt-1">
+                        <div class="row mt-1">
                             <div class="col-3 ps-1 pe-0">
                                 <div class="px-0" th:if="${#strings.equals(rentuserHistoryList.carTypeName, '모터홈')}">
                                     <img th:src="@{/public/img/campingCarImage/모터홈.jpg}" class="d-block w-100 h-100 img-fluid" alt="모터홈" style="aspect-ratio: 1/1">
@@ -131,8 +131,8 @@
                                 </div>
                             </div>
                             <div class="col-9 ps-1 pe-0">
-                                <span th:text="${rentuserHistoryList.carTypeName}" class="rounded fw-medium new-fs-8 text-white px-2" style="background-color: #808485;"></span>
-                                <div th:text="${rentuserHistoryList.product_name}" class="fw-bold new-fs-10"></div>
+                                <span th:text="${rentuserHistoryList.carTypeName}" class="rounded fw-semibold new-fs-8 px-2" style="background-color: #F0F4F7; color: #808485;"></span>
+                                <div th:text="${rentuserHistoryList.product_name}" class="fw-semibold new-fs-10 mt-1"></div>
                             </div>
                         </div>
                     </div>
@@ -146,17 +146,17 @@
                     <div class="col text-center">
                         <div class="row d-flex justify-content-start">
                             <div class="col-2">
-                                <span class="badge rounded-pill text-bg-dark new-fs-75">대여일</span>
+                                <span class="badge text-dark fw-normal rounded-pill new-fs-85">대여일</span>
                             </div>
-                            <div class="col-auto ps-4 ms-2 d-flex justify-center align-items-center">
+                            <div class="col-10 ps-4 ms-2 d-flex justify-center align-items-center">
                                 <span class="new-fs-85" th:text="${#dates.format(rentuserHistoryList.get('reservationStart_date'), 'yyyy.MM.dd a HH:mm')}"></span>
                             </div>
                         </div>
                         <div class="row pb-2 d-flex justify-content-start">
                             <div class="col-2">
-                                <span class="badge rounded-pill text-bg-dark new-fs-75">반납일</span>
+                                <span class="badge text-dark fw-normal rounded-pill new-fs-85">반납일</span>
                             </div>
-                            <div class="col-auto ps-4 ms-2 d-flex justify-center align-items-center">
+                            <div class="col-12 ps-4 ms-2 d-flex justify-center align-items-center">
                                 <div class="new-fs-85" th:text="${#dates.format(rentuserHistoryList.get('reservationEnd_date'), 'yyyy.MM.dd a HH:mm')}"></div>
                             </div>
                         </div>
