@@ -75,7 +75,7 @@ public class SellerController {
             RentalCompanyDto rentalCompanyDto = partnerCampingCarService.getSellerByIdAndPw(account_id, account_pw);
             session.setAttribute("sessionCaravanInfo", rentalCompanyDto);
     
-            return "redirect:https://basecamp.null-pointer-exception.com/partner/main";
+            return "redirect:https://basecamp.null-pointer-exception.com/partner/partnerDashboard";
         }
     }
 }

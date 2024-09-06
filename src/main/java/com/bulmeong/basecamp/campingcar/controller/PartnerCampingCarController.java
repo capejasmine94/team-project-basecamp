@@ -79,23 +79,23 @@ public class PartnerCampingCarController {
         return "redirect:https://basecamp.null-pointer-exception.com/seller/login";
     }
     // 판매자페이지 main
-    @RequestMapping("main")
-    public String main(HttpSession session, Model model){
+    // @RequestMapping("main")
+    // public String main(HttpSession session, Model model){
 
-        RentalCompanyDto rentalCompanyDto = (RentalCompanyDto) session.getAttribute("sessionCaravanInfo");
-        model.addAttribute("rentalCompanyDto", rentalCompanyDto);
+    //     RentalCompanyDto rentalCompanyDto = (RentalCompanyDto) session.getAttribute("sessionCaravanInfo");
+    //     model.addAttribute("rentalCompanyDto", rentalCompanyDto);
         
-        return "partner/main";
+    //     return "partner/main";
     
-    }
+    // }
 
-    @RequestMapping("dashboard")
-    public String dashboard(HttpSession session, Model model) {
+    @RequestMapping("partnerDashboard")
+    public String partnerDashboard(HttpSession session, Model model) {
 
         RentalCompanyDto rentalCompanyDto = (RentalCompanyDto) session.getAttribute("sessionCaravanInfo");
         model.addAttribute("rentalCompanyDto", rentalCompanyDto);
         
-        return "partner/dashboard";
+        return "partner/partnerDashboard";
     }
 
 
@@ -142,7 +142,7 @@ public class PartnerCampingCarController {
 
         partnerCampingCarService.registerCamping(campingcarDto,basicFacilites_id,detailedImg,rentalPeakPriceDto);
         System.out.println("차량등록 : " +campingcarDto+basicFacilites_id+detailedImg+rentalPeakPriceDto);
-        return "redirect:https://basecamp.null-pointer-exception.com/partner/main";
+        return "redirect:https://basecamp.null-pointer-exception.com/partner/carRegister";
     }
     
     @RequestMapping("carManagement") 
@@ -171,7 +171,7 @@ public class PartnerCampingCarController {
     
         partnerCampingCarService.updateReservationProgress(reservationDto);
     
-        return "redirect:/partner/main";
+        return "redirect:/partner/bookReservation";
     }
 
     @RequestMapping("reviewManage")
