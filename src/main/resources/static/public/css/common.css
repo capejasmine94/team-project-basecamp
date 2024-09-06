@@ -111,6 +111,14 @@ ul, li {
     .thin-icon {
     font-weight: 100; /* 두께를 얇게 설정 */
     }
+
+    .lighter-icon{
+        font-weight: 200;
+    }
+
+    .light-icon {
+        font-weight: 300;
+    }
     .normal-icon {
     font-weight: 400; /* 기본 두께 설정 */
     }

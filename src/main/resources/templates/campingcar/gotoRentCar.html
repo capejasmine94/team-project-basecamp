@@ -121,100 +121,99 @@
     </style>
 </head>
 <body>
-
     <!-- 대여 장소 선택 모달-->
-    <div class="modal fade" id="locationModal" tabindex="-1" aria-labelledby="locationModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <div class="modal-title fs-5 fw-semibold text-center w-100" id="locationModalLabel">대여 장소 선택</div>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <div class="container">
-                        <div class="row pb-2">
-                            <div class="col-12 d-flex justify-content-center">
-                                <button type="button" class="btn btn-outline-light text-dark w-100" data-location="전체">전체</button>
+        <div class="modal fade" id="locationModal" tabindex="-1" aria-labelledby="locationModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <div class="modal-title fs-5 fw-semibold text-center w-100" id="locationModalLabel">대여 장소 선택</div>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="container">
+                            <div class="row pb-2">
+                                <div class="col-12 d-flex justify-content-center">
+                                    <button type="button" class="btn btn-outline-light text-dark w-100" data-location="전체">전체</button>
+                                </div>
                             </div>
+                            <!-- 대여 지역 리스트 박스 -->
+                            <div class="row d-flex flex-wrap" id="regionsListBox"></div>
                         </div>
-                        <!-- 대여 지역 리스트 박스 -->
-                        <div class="row d-flex flex-wrap" id="regionsListBox"></div>
+                    </div>
+                    <div class="modal-footer d-flex justify-content-center">
+                        <button type="button" class="btn btn-bc-dark w-100 " data-bs-dismiss="modal">취소하기</button>
                     </div>
                 </div>
-                <div class="modal-footer d-flex justify-content-center">
-                    <button type="button" class="btn btn-bc-dark w-100 " data-bs-dismiss="modal">취소하기</button>
-                </div>
             </div>
         </div>
-    </div>
-    <!-- 지역선택 모달 Template -->
-    <div id="regionsListTemplate" class="d-none">
-        <div class="regionstsListWrapper col-6 pb-2 d-flex justify-content-center">
-            <span class="regionsBtn btn btn-outline-light text-dark w-100"></span>
+        <!-- 지역선택 모달 Template -->
+        <div id="regionsListTemplate" class="d-none">
+            <div class="regionstsListWrapper col-6 pb-2 d-flex justify-content-center">
+                <span class="regionsBtn btn btn-outline-light text-dark w-100"></span>
+            </div>
         </div>
-    </div>
-    <!-- 캠핑카 유형 선택 모달 -->
-    <div class="modal fade" id="campingcarModal" tabindex="-1" aria-labelledby="campingcarModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <div class="modal-title fs-5 fw-semibold text-center w-100" id="campingcarModalLabel">캠핑카 유형 선택</div>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <div class="container">
-                        <div class="row" id="carTypeCheckListBox"></div>
+        <!-- 캠핑카 유형 선택 모달 -->
+        <div class="modal fade" id="campingcarModal" tabindex="-1" aria-labelledby="campingcarModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <div class="modal-title fs-5 fw-semibold text-center w-100" id="campingcarModalLabel">캠핑카 유형 선택</div>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="container">
+                            <div class="row" id="carTypeCheckListBox"></div>
+                        </div>
+                    </div>
+                    <div class="modal-footer d-flex justify-content-center">
+                        <button type="button" class="carTypeBtn btn btn-bc-dark w-100" data-bs-dismiss="modal" onClick="updateSelectedCarTypes()">선택</button>
                     </div>
                 </div>
-                <div class="modal-footer d-flex justify-content-center">
-                    <button type="button" class="carTypeBtn btn btn-bc-dark w-100" data-bs-dismiss="modal" onClick="updateSelectedCarTypes()">선택</button>
+            </div>
+        </div>
+        <!-- 캠핑카선택 모달 Template -->
+        <div id="carTypeCheckListTemplate" class="d-none">
+            <div class="col-12 pb-2">
+                <div class="carTypeCheckListWrapper form-check d-flex align-items-center">
+                    <input class="carTypeCheck form-check-input" type="checkbox">
+                    <label class="ps-2 form-check-label"></label>
                 </div>
             </div>
         </div>
-    </div>
-    <!-- 캠핑카선택 모달 Template -->
-    <div id="carTypeCheckListTemplate" class="d-none">
-        <div class="col-12 pb-2">
-            <div class="carTypeCheckListWrapper form-check d-flex align-items-center">
-                <input class="carTypeCheck form-check-input" type="checkbox">
-                <label class="ps-2 form-check-label"></label>
-            </div>
-        </div>
-    </div>
-    <!-- 대여일 모달 -->
-    <div class="modal fade" id="rentdateModal" tabindex="-1" aria-labelledby="rentdateModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
-                <div class="modal-header border-0">
-                    <h5 class="modal-title text-center w-100 ps-4" id="rentdateModalLabel">언제 필요한가요?</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <div id="calendar"></div>
-                </div>
-                <div class="modal-footer border-0">
-                    <button type="button" class="btn btn-bc-dark w-100" data-bs-dismiss="modal" onclick="confirmRentDate()">확인</button>
+        <!-- 대여일 모달 -->
+        <div class="modal fade" id="rentdateModal" tabindex="-1" aria-labelledby="rentdateModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header border-0">
+                        <h5 class="modal-title text-center w-100 ps-4" id="rentdateModalLabel">언제 필요한가요?</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div id="calendar"></div>
+                    </div>
+                    <div class="modal-footer border-0">
+                        <button type="button" class="btn btn-bc-dark w-100" data-bs-dismiss="modal" onclick="confirmRentDate()">확인</button>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-    <!-- 반납일 모달 -->
-    <div class="modal fade" id="returndateModal" tabindex="-1" aria-labelledby="returndateModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
-                <div class="modal-header border-0">
-                    <h5 class="modal-title text-center w-100 ps-4" id="returndateModalLabel">반납일 선택</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <div id="calendarReturn"></div>
-                </div>
-                <div class="modal-footer border-0">
-                    <button type="button" class="btn btn-bc-dark w-100 " data-bs-dismiss="modal" onclick="confirmReturnDate()">확인</button>
+        <!-- 반납일 모달 -->
+        <div class="modal fade" id="returndateModal" tabindex="-1" aria-labelledby="returndateModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header border-0">
+                        <h5 class="modal-title text-center w-100 ps-4" id="returndateModalLabel">반납일 선택</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div id="calendarReturn"></div>
+                    </div>
+                    <div class="modal-footer border-0">
+                        <button type="button" class="btn btn-bc-dark w-100 " data-bs-dismiss="modal" onclick="confirmReturnDate()">확인</button>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
     <div class="container-fluid fixed-top pt-0 pb-2" style="height: 4.5em;">
         <div class="row h-100">
             <!-- Back Button -->
@@ -225,7 +224,7 @@
             </div>
 
             <!-- Main Content -->
-            <div class="col px-0 mt-2 d-flex align-items-center justify-content-center">
+            <div class="col ps-1 pe-0 d-flex align-items-center justify-content-center">
                 <div class="w-100">
                     <!-- Location Button -->
                     <div class="d-flex justify-content-between bg-white border border-1 rounded-pill w-100 p-1 mb-1" style="border-color: #28323C;">
@@ -289,7 +288,7 @@
                         <div class="col px-0 d-flex justify-content-center align-items-center overflow-hidden rounded-top-4 position-relative">
                             <img class="campingcarImg img-fluid" style="max-width: 100%; min-height: 100%;" alt="썸네일">
                             <div class="position-absolute top-0 end-0 pt-1" style="padding-right: 1.3rem;">
-                                <i class="fa-regular fa-heart" style="color: #ff0000;"></i>
+                                <i class="fa-regular fa-heart heart-icon" style="color: #ff0000;"></i>
                             </div>
                         </div>
                     </div>
@@ -374,17 +373,31 @@
 
         // 페이지 로드 시 실행되는 이벤트를 등록합니다.
         window.addEventListener("DOMContentLoaded", () => {
-            // 페이지가 완전히 로드되면 세션에서 사용자 ID를 설정하고, 캠핑카 리스트를 로드합니다.
-            loadCampingCarList();                          
+            loadMyLikeList();                     
         });
 
-                // 캠핑카 리스트를 로드하고 화면에 표시하는 함수
-        function loadCampingCarList() {
+        // MyLikeList API 호출 함수
+        function loadMyLikeList() {
+            fetch("/api/rent-user/MyLikeList")
+                .then(response => response.json())
+                .then(data => {
+                    if (data && data.data && Array.isArray(data.data.MyLikeList)) {
+                        const likeListIds = data.data.MyLikeList.map(item => item.id);
+                        loadCampingCarList(likeListIds);
+                    } else {
+                        console.error('MyLikeList is missing or not an array:', data);
+                    }
+                })
+                .catch(console.error); // 간결한 오류 처리
+        }
+        // 캠핑카 리스트를 로드하고 화면에 표시하는 함수
+        
+        function loadCampingCarList(myLikeList) {
             const url = "/api/campingcar/campingcarList";
             fetch(url)
                 .then(response => response.json())
                 .then(data => {
-                    console.log("API Response:", data);
+                    // console.log("API Response:", data);
                     if (data.result === "success") {
                         const campingcarList = data.data.campingcarList;
                         const container = document.getElementById('campingcar-list-container');
@@ -402,6 +415,7 @@
                             // 데이터 채우기
                             newCampingcar.querySelector('a').href = `/campingcar/campingCarDetailPage?id=${item.id}`;
                             newCampingcar.querySelector('.campingcarImg').src = `/images/${item.main_img}`;
+                            newCampingcar.querySelector('.heart-icon').classList.toggle('fa-solid', myLikeList.includes(item.id));
                             newCampingcar.querySelector('.campingcarComp_name').textContent = item.comp_name;
                             newCampingcar.querySelector('.campingcarCar_type_name').textContent = item.car_type_name;
                             newCampingcar.querySelector('.campingcarProduct_name').textContent = item.product_name;

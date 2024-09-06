@@ -18,6 +18,7 @@ import com.bulmeong.basecamp.campingcar.dto.RestRentUserResponseDto;
 import com.bulmeong.basecamp.campingcar.service.CampingcarService;
 import com.bulmeong.basecamp.campingcar.service.PartnerCampingCarService;
 import com.bulmeong.basecamp.user.dto.UserDto;
+import java.util.Map;
 
 import jakarta.servlet.http.HttpSession;
 
@@ -127,6 +128,20 @@ public class RestRentalUserController {
         return restRentUserResponseDto;
 
     }
+
+    @RequestMapping("MyLikeList")
+    public RestRentUserResponseDto MyLikeList(HttpSession session) {
+        RestRentUserResponseDto restRentUserResponseDto = new RestRentUserResponseDto();
+        restRentUserResponseDto.setResult("success");
+
+        UserDto userDto = (UserDto) session.getAttribute("sessionUserInfo");
+        int rentUserPk = campingcarService.getExistingByRentUserId(userDto.getId());
+
+        List<Map<String,Object>> MyLikeList = campingcarService.getMyLikeList(rentUserPk);
+        restRentUserResponseDto.add("MyLikeList", MyLikeList);
+
+        return restRentUserResponseDto;
+    }
     
     @RequestMapping("getRegionsAll")
     public RestRentUserResponseDto getAllRegions() {
@@ -173,6 +188,6 @@ public class RestRentalUserController {
 
         return restRentUserResponseDto;
 
-        }
+    }
 
 }

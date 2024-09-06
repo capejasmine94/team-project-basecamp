@@ -53,7 +53,6 @@ public class CampingcarController {
     @RequestMapping("gotoRentCar")
     public String gotoRentCar () {
 
-        
         return "campingcar/gotoRentCar";
     }
 
@@ -61,6 +60,8 @@ public class CampingcarController {
     public String campingCarDetailPage(@RequestParam("id") int id, Model model, HttpSession session) {
 
         UserDto sessionUserInfo = (UserDto) session.getAttribute("sessionUserInfo");
+        int rentUserPk = campingcarService.getExistingByRentUserId(sessionUserInfo.getId());
+
         model.addAttribute("sessionUserInfo", sessionUserInfo);
         System.out.println("유저"+ sessionUserInfo);
 
@@ -96,6 +97,10 @@ public class CampingcarController {
         List<Map<String,Object>> ratings = campingcarService.ratingGroupBycar(id);
         model.addAttribute("ratings", ratings);
         System.out.println("별점인원원수" + ratings);
+
+        List<Map<String,Object>> MyLikeList = campingcarService.getMyLikeList(rentUserPk);
+        System.out.println(MyLikeList);
+        model.addAttribute("MyLikeList", MyLikeList);
 
         return "campingcar/campingCarDetailPage";
     }

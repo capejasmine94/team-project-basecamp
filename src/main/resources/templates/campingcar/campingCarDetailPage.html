@@ -290,8 +290,8 @@
                                     <i class="bi bi-house-door" style="font-size: 12px; font-weight: bold; color: black; padding: 4px; border-radius: 50%;"></i>
                                 </div>
                             </div>
-                            <div class="new-fs-6 text-center fw-light text-body-secondary" style="font-size: 0.65rem;">차량 이미지는 이해를 돕기 위한 예시입니다.</div>
-                            <div class="new-fs-6 text-center fw-light text-body-secondary">상세 정보에서 차량 내부, 외부 사진을 확인하시기 바랍니다.</div>
+                            <div class="new-fs-65 text-center text-body-secondary">차량 이미지는 이해를 돕기 위한 예시입니다.</div>
+                            <div class="new-fs-65 text-center text-body-secondary">상세 정보에서 차량 내부, 외부 사진을 확인하시기 바랍니다.</div>
                         </div>
                     </div>
                     <div class="row mt-3">
@@ -316,17 +316,17 @@
                                     <div class="d-flex border border-start-0 border-end-0">
                                         <!-- 출고 가능 시간 -->
                                         <div class="d-flex flex-column justify-content-center align-items-center p-2" style="flex: 1; border-left: none;border-right: none; border-top: none; border-bottom: none;">
-                                            <div class="text-muted new-fs-75">출고가능시간</div>
+                                            <div class="text-muted fw-medium new-fs-75">출고가능시간</div>
                                             <div class="new-fs-95 fw-semibold" style="font-size: 1rem;" th:text="${#dates.format(campingcarDetails.campingcarDto.avaid_time, 'a HH:ss')}"></div>
                                         </div>
                                         <!-- 대여 기간 -->
                                         <div class="d-flex flex-column justify-content-center align-items-center p-2" style="flex: 1; border-top: none; border-bottom: none;">
-                                            <div class="text-muted new-fs-75">1박기준 시간</div>
-                                            <div class="new-fs-85 fw-semibold badge rounded-pill" th:text="${campingcarDetails.campingcarDto.overnight_stay}" style="background-color: rgb(241,244,249); color: rgb(123,139,171);">24시간</div>
+                                            <div class="text-muted fw-medium new-fs-75">1박기준 시간</div>
+                                            <div class="new-fs-85 fw-semibold badge rounded-pill darkFont" th:text="${campingcarDetails.campingcarDto.overnight_stay}" style="background-color: rgb(241,244,249);"></div>
                                         </div>
                                         <!-- 반납 가능 시간 -->
                                         <div class="d-flex flex-column justify-content-center align-items-center p-2" style="flex: 1; border-left: none;border-right: none; border-top: none; border-bottom: none;">
-                                            <div class="text-muted new-fs-75">반납가능시간</div>
+                                            <div class="text-muted fw-medium new-fs-75">반납가능시간</div>
                                             <div class="new-fs-95 fw-semibold" th:text="${#dates.format(campingcarDetails.campingcarDto.return_dateTime, 'a HH:ss')}">18:00</div>
                                         </div>
                                     </div>
@@ -366,7 +366,7 @@
                                         <div class="text-muted new-fs-8" th:text="${campingcarDetails.campingcarDto.comp_email}"></div>
                                     </div>
                                     <div class="d-flex ps-4 pt-2">
-                                        <div class="d-flex justify-content-center align-items-center rounded-circle" style="width: 2.18575rem; height: 2.18575rem; background-color: #FFD700;">
+                                        <div class="me-2 d-flex justify-content-center align-items-center rounded-circle" style="width: 2.18575rem; height: 2.18575rem; background-color: #FFD700;">
                                             <!-- 회사별 채팅 기능 -->
                                             <span class="bi bi-chat-fill" style="color: #000000; font-size: 18px;"></span>
                                         </div>
@@ -902,29 +902,26 @@
                 <!--리뷰 리스트-->
                 <div class="row pt-2" th:each="reviewList : ${reviewData}">
                     <div class="col">
-                        <!--리뷰 리스트: 후기 쓴 사용자 이미지와 닉네임-->
-                        <div class="row">
-                            <div class="col fw-semibold py-2">
-                                <img th:if="${reviewList.profile_image != null}" th:src="|/images/${reviewList.profile_image}|" class="rounded-circle img-fluid"
-                                style="width: 20px; height: 20px;">
-                                <img th:unless="${reviewList.profile_image != null}" style="width: 20px; height: 20px;">
-                                <span class="new-fs-85" th:text="${reviewList.nickname}"></span>
-                            </div>
-                        </div>
                         <!--리뷰 리스트: 후기 쓴 사용자 별점,리뷰 쓴 시간-->
                         <div class="row d-flex justify-content-between">
                             <div class="col-8 fw-semibold">
                                 <i class="bi bi-star-fill" style="color: #FFD700;"></i>
                                 <span class="new-fs-85" th:text="${reviewList.rate}+'점'"></span> 
                             </div>
-                            <div class="col ps-1 text-end pt-1">
-                                <div class="fw-semibold new-fs-7 createdAt" th:text="${#dates.format(reviewList.created_at, 'yyyy.MM.dd HH:mm')}" style="color: #7C7B7B;"></div>
-                            </div>
                         </div>
                         <!--리뷰 리스트: 후기 내용-->
-                        <div class="row pt-1 pb-1 border-bottom">
+                        <div class="row pt-1">
                             <div class="col">
-                                <span class="fs-7" th:text="${reviewList.content}" style="word-wrap: break-word;font-size: 0.875rem;"></span>
+                                <span th:text="${reviewList.content}" style="word-wrap: break-word;font-size: 14px;"></span>
+                            </div>
+                        </div>
+
+                        <!--리뷰 리스트: 후기 쓴 사용자 이미지와 닉네임-->
+                        <div class="row border-bottom">
+                            <div class="col pb-2">
+                                <span class="fw-semibold new-fs-7" th:text="${reviewList.nickname}" style="color: #7C7B7B;"></span> 
+                                <span class="fw-semibold new-fs-7 createdAt" th:text="${#dates.format(reviewList.created_at, 'yyyy.MM.dd HH:mm')}" style="color: #7C7B7B;"></span>
+                                <span class="ms-auto new-fs-7">신고</span>
                             </div>
                         </div>
                         <div class="row">
@@ -934,7 +931,7 @@
                                     <img th:src="|/images/${campingcarDetails.campingcarDto.comp_profile_image}|" class="rounded-circle me-1" style="width: 1.75rem;height: 1.65rem;">
                                     <span class="fw-semibold new-fs-85" th:text="${campingcarDetails.campingcarDto.comp_name}"></span>
                                     <span class="ms-2 new-fs-85" th:text="${#dates.format(reviewList.reply_date, 'yyyy.MM.dd HH:mm')}" style="color: #7C7B7B;"></span>
-                                    <a href="#" class="ms-auto" style="font-size: 12px;">신고</a>
+                                    <a href="#" class="ms-auto new-fs-85" style="font-size: 12px;">신고</a>
                                 </div>
                         
                                 <!-- 판매자 답글 내용 (말풍선 스타일 적용) -->
@@ -983,8 +980,8 @@
             월 256,500원
         </div> -->
         <div class="container overflow-x-hidden border-top">
-            <div class="row pt-3 pb-3">
-                <div class="col d-grid">
+            <div class="row">
+                <div class="col d-grid px-0">
                     <a class="btn btn-dark btn-lg fw-bold" 
                     th:if="${session.sessionUserInfo != null}"
                     th:href="@{/campingcar/reservationInfo(id=${campingcarDetails.campingcarDto.id})}" 
