@@ -72,8 +72,12 @@ public class CampingcarController {
         // 캠핑옵션 
         List<ProductDetailImgDto> detailImgDto = campingcarService.getProductDetailImgByProductId(id);
         model.addAttribute("detailImgDto", detailImgDto);
-
         System.out.println("캠핑옵션" + detailImgDto);
+        
+        // 좋아요 유무 확인
+        List<Map<String,Object>> MyLikeList = campingcarService.getMyLikeList(rentUserPk);
+        System.out.println(MyLikeList);
+        model.addAttribute("MyLikeList", MyLikeList);
 
         // 차량옵션
         List<BasicFacilitiesDto> facilities = campingcarService.getBasicFacilitiesByProductId(id);
@@ -97,10 +101,6 @@ public class CampingcarController {
         List<Map<String,Object>> ratings = campingcarService.ratingGroupBycar(id);
         model.addAttribute("ratings", ratings);
         System.out.println("별점인원원수" + ratings);
-
-        List<Map<String,Object>> MyLikeList = campingcarService.getMyLikeList(rentUserPk);
-        System.out.println(MyLikeList);
-        model.addAttribute("MyLikeList", MyLikeList);
 
         return "campingcar/campingCarDetailPage";
     }

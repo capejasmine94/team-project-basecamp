@@ -256,38 +256,46 @@
             </div>
             <div class="row">
                 <div class="col section">
-                    <div class="row">
+                    <div class="row"th:each="myLike, iterStat : ${MyLikeList}" th:if="${iterStat.index == 0}">
                         <div class="col-12">
                             <!-- 첫 번째 슬라이드 (모터홈) -->
                             <div th:if="${#strings.equals(campingcarDetails.campingcarDto.car_type_name, '모터홈')}">
                                 <img th:src="@{/public/img/campingCarImage/모터홈.png}" class="d-block w-100 h-100 img-fluid" alt="모터홈">
-                                <div class="position-absolute d-flex gap-2" style="top: 10px; right: 10px;">
-                                    <i class="bi bi-heart" style="font-size: 12px; font-weight: bold; color: black; padding: 4px; border-radius: 50%;"></i>
-                                    <i class="bi bi-house-door" style="font-size: 12px; font-weight: bold; color: black; padding: 4px; border-radius: 50%;"></i>
+                                <div class="position-absolute d-flex align-items-center gap-1" style="top: 80px; right: 13px;">
+                                    <i id="heart-${myLike.id}" 
+                                       th:classappend="${myLike.id == campingcarDetails.campingcarDto.id} ? 'fa-solid fa-heart' : 'fa-regular fa-heart'"
+                                       style="color: #ff0000; font-size: 16px;"></i>
+                                    <i class="bi bi-house-door" style="font-size: 16px; font-weight: bold; color: black;"></i>
                                 </div>
                             </div>
                             <!-- 두 번째 슬라이드 (차박형(중형)) -->
                             <div th:if="${#strings.equals(campingcarDetails.campingcarDto.car_type_name, '차박형(중형)')}">
                                 <img th:src="@{/public/img/campingCarImage/차박형(중형).png}" class="d-block w-100 h-100 img-fluid" alt="차박형(중형)">
-                                <div class="position-absolute d-flex gap-2" style="top: 10px; right: 10px;">
-                                    <i class="bi bi-heart" style="font-size: 12px; font-weight: bold; color: black; padding: 4px; border-radius: 50%;"></i>
-                                    <i class="bi bi-house-door" style="font-size: 12px; font-weight: bold; color: black; padding: 4px; border-radius: 50%;"></i>
+                                <div class="position-absolute d-flex align-items-center gap-1" style="top: 80px; right: 13px;">
+                                    <i id="heart-${myLike.id}" 
+                                       th:classappend="${myLike.id == campingcarDetails.campingcarDto.id} ? 'fa-solid fa-heart' : 'fa-regular fa-heart'"
+                                       style="color: #ff0000; font-size: 16px;"></i>
+                                    <i class="bi bi-house-door" style="font-size: 16px; font-weight: bold; color: black;"></i>
                                 </div>
                             </div>
                             <!-- 세 번째 슬라이드 (차박형(소형)) -->
                             <div th:if="${#strings.equals(campingcarDetails.campingcarDto.car_type_name, '차박형(소형)')}">
                                 <img th:src="@{/public/img/campingCarImage/차박형(소형).png}" class="d-block w-100 h-100 img-fluid" alt="차박형(소형)">
-                                <div class="position-absolute d-flex gap-2" style="top: 10px; right: 10px;">
-                                    <i class="bi bi-heart" style="font-size: 12px; font-weight: bold; color: black; padding: 4px; border-radius: 50%;"></i>
-                                    <i class="bi bi-house-door" style="font-size: 12px; font-weight: bold; color: black; padding: 4px; border-radius: 50%;"></i>
+                                <div class="position-absolute d-flex align-items-center gap-1" style="top: 80px; right: 13px;">
+                                    <i id="heart-${myLike.id}" 
+                                       th:classappend="${myLike.id == campingcarDetails.campingcarDto.id} ? 'fa-solid fa-heart' : 'fa-regular fa-heart'"
+                                       style="color: #ff0000; font-size: 16px;"></i>
+                                    <i class="bi bi-house-door" style="font-size: 16px; font-weight: bold; color: black;"></i>
                                 </div>
                             </div>
                             <!-- 네 번째 슬라이드 (카라반펜션) -->
                             <div th:if="${#strings.equals(campingcarDetails.campingcarDto.car_type_name, '카라반펜션')}">
                                 <img th:src="@{/public/img/campingCarImage/카라반.png}" class="d-block w-100 h-100 img-fluid" alt="카라반펜션">
-                                <div class="position-absolute d-flex gap-2" style="top: 10px; right: 10px;">
-                                    <i class="bi bi-heart" style="font-size: 12px; font-weight: bold; color: black; padding: 4px; border-radius: 50%;"></i>
-                                    <i class="bi bi-house-door" style="font-size: 12px; font-weight: bold; color: black; padding: 4px; border-radius: 50%;"></i>
+                                <div class="position-absolute d-flex align-items-center gap-1" style="top: 80px; right: 13px;">
+                                    <i id="heart-${myLike.id}" 
+                                       th:classappend="${myLike.id == campingcarDetails.campingcarDto.id} ? 'fa-solid fa-heart' : 'fa-regular fa-heart'"
+                                       style="color: #ff0000; font-size: 16px;"></i>
+                                    <i class="bi bi-house-door" style="font-size: 16px; font-weight: bold; color: black;"></i>
                                 </div>
                             </div>
                             <div class="new-fs-65 text-center text-body-secondary">차량 이미지는 이해를 돕기 위한 예시입니다.</div>
