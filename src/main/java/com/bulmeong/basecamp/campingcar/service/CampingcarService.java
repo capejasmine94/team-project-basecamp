@@ -78,7 +78,7 @@ public class CampingcarService {
         return campingCarSqlMapper.findRentUserByUserId(id) > 0;
     }
     // 렌트 고객ID 가지고 오기
-    public int getExistingByRentUserId(int id) {
+    public Integer  getExistingByRentUserId(int id) {
         return campingCarSqlMapper.existingByRentUserId(id);
     }
 

@@ -9,6 +9,7 @@
     <!-- partner 오른쪽  본문 css -->
     <link href="/public/css/campingcar/right-content.css" rel="stylesheet">
     <link href="/public/css/common.css" rel="stylesheet">
+    <link href="/public/css/basecamp.css" rel="stylesheet">
     <!-- 이미지 js -->
     <script src="/public/js/util.js"></script>
 </head>
@@ -35,7 +36,7 @@
                                 <a class="nav-link active fw-bold" href="#all" data-bs-toggle="tab">전체</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link fw-bold" href="#selling" data-bs-toggle="tab">판매중</a>
+                                <a class="nav-link fw-bold" href="#selling" data-bs-toggle="tab">품절</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link fw-bold" href="#hidden" data-bs-toggle="tab">숨김</a>
@@ -55,142 +56,87 @@
                             <div class="tab-content">
                                 <div class="tab-pane fade show active" id="all">
                                     <!-- 테이블 1: 전체 -->
-                                    <table class="table table-border table-hover">
-                                        <thead class="table-light text-dark fw-bold text-center">
-                                            <tr>
-                                                <th scope="col" class="text-center">No</th>
-                                                <th colspan="1">상품명</th>
-                                                <th>비수기</th>
-                                                <th>성수기</th>
-                                                <th>준성수기</th>
-                                                <th>할인가</th>
-                                                <th>지정기간</th>
-                                                <th>운전조건</th>
-                                                <th>상태</th>
-                                                <th></th>
-                                                <th></th>
-                                            </tr>
-                                        </thead>
-                                        <tbody id="registeredCampersListBox">
-                                            <!-- 동적 데이터-->
-                                        </tbody>
-                                        <!-- registeredCampersListTemplete -->                                        
-                                        <tbody>
-                                            <tr id="registeredCampersListTemplete" class="hidden" style="display: none;">
-                                                <td class="rclNumberWrapper text-center"></td>
-                                                <td>
+                                    <div class="row">
+                                        <div class="col new-fs-85">
+                                            <!-- 테이블 헤더 -->
+                                            <div class="row mx-0 mb-2 py-2 text-center fw-bold bg-light border-bottom">
+                                                <div class="col-1 px-0">No</div> <!-- No 열을 좁게 -->
+                                                <div class="col-2">상품명</div> 
+                                                <div class="col-1">비수기</div>
+                                                <div class="col-1">성수기</div>
+                                                <div class="col-1">준성수기</div>
+                                                <div class="col-1">할인가</div>
+                                                <div class="col-1">지정기간</div>
+                                                <div class="col-2">운전조건</div>
+                                                <div class="col-1">상태</div> <!-- 상태 열을 좁게 -->
+                                                <div class="col-1 ps-4">수정/삭제</div> <!-- 간격 추가 -->
+                                            </div>
+                
+                                            <!-- 동적 데이터 영역 -->
+                                            <div id="registeredCampersListBox"></div>
+                
+                                            <!-- 템플릿 -->
+                                            <div id="registeredCampersListTemplete" class="row hidden mb-3 align-items-center" style="display: none;">
+                                                <div class="col-1 px-0 text-center rclNumberWrapper"></div> <!-- No 열 -->
+                                                <div class="col-2"> <!-- 상품명 컬럼 -->
                                                     <div class="d-flex align-items-center">
-                                                        <div class="me-2">
-                                                            <img class="rcl-main_img"  style="width: 4rem; height: 4rem;">
-                                                        </div>
-                                                        <div class="px-0">
-                                                            <div class="rcl-carType_cate new-fs-7"></div>
+                                                        <img class="rcl-main_img me-2" style="width: 4rem; height: 4rem;">
+                                                        <div>
+                                                            <div class="rcl-carType_cate"></div>
                                                             <div class="rcl-product_name"></div>
                                                             <div class="text-body-tertiary" style="font-size: 0.75rem;">
-                                                                <span class="rcl-seating_capacity"></span>
-                                                                <span class="rcl-sleeping_capacity"></span>
+                                                                <div class="rcl-seating_capacity"></div>
+                                                                <div class="rcl-sleeping_capacity"></div>
                                                             </div>
                                                         </div>
                                                         <div class="ms-auto">
-                                                            <a href="/상품상세페이지_경로" class="text-body-tertiary">
-                                                                <span class="material-symbols-outlined">search</span>
-                                                            </a>
+                                                            <span class="material-symbols-outlined rcl-detail_link" style="cursor: pointer;">search</span>
                                                         </div>
                                                     </div>
-                                                </td>
-                                                <!-- 비수기 -->
-                                                <td>
-                                                    <ul class="list-unstyled mb-0">
-                                                        <li class="d-flex justify-content-between">
-                                                            <span class="rcl-rental_fee_weekdays"></span>
-                                                        </li>
-                                                        <li class="d-flex justify-content-between">
-                                                            
-                                                            <span class="rcl-rental_fee_weekend"></span>
-                                                        </li>
-                                                    </ul>
-                                                </td>
-                                                <!-- 성수기 -->
-                                                <td>
-                                                    <ul class="list-unstyled mb-0">
-                                                        <li class="d-flex justify-content-between">
-                                                            <span class="rcl-weekdays_price"></span>
-                                                        </li>
-                                                        <li class="d-flex justify-content-between">
-                                                            <span class="rcl-weekend_price"></span>
-                                                        </li>
-                                                    </ul>
-                                                </td>
-                                                <!-- 준성수기 -->
-                                                <td>
-                                                    <ul class="list-unstyled mb-0">
-                                                        <li class="d-flex justify-content-between">
-                                                            <!-- <span>평일</span> -->
-                                                            <span class="rcl-semi_peak_weekdays_price"></span>
-                                                        </li>
-                                                        <li class="d-flex justify-content-between">
-                                                            <!-- <span>주말</span> -->
-                                                            <span class="rcl-semi_peak_weekend_price"></span>
-                                                        </li>
-                                                    </ul>
-                                                </td>
-                                                <!-- 할인가 -->
-                                                <td>
-                                                    <ul class="list-unstyled mb-0">
-                                                        <li class="d-flex justify-content-between">
-                                                            <!-- <span>평일</span> -->
-                                                            <span class="rcl-saile_weekdays_price"></span>
-                                                        </li>
-                                                        <li class="d-flex justify-content-between">
-                                                            <!-- <span>주말</span> -->
-                                                            <span class="rcl-saile_weekend_price"></span>
-                                                        </li>
-                                                    </ul>
-                                                </td>
-                                                <!-- 지정기간 -->
-                                                <td>
-                                                    <ul class="list-unstyled mb-0">
-                                                        <li class="d-flex justify-content-between">
-                                                            <!-- <span>평일</span> -->
-                                                            <span class="rcl-specifiedPeriod_weekdays"></span>
-                                                        </li>
-                                                        <li class="d-flex justify-content-between">
-                                                            <!-- <span>주말</span> -->
-                                                            <span class="rcl-specifiedPeriod_weekend"></span>
-                                                        </li>
-                                                    </ul>
-                                                </td>
-                                                <td class="d-flex justify-content-between">
-                                                    <ul class="list-unstyled">
-                                                        <li class="d-flex justify-content-between">
-                                                            <!-- <span>운전면허증</span> -->
-                                                            <span class="rcl-driver_liecense_condition"></span>
-                                                        </li>
-                                                        <li class="d-flex justify-content-between">
-                                                            <!-- <span class="pe-2">운전자나이</span> -->
-                                                            <span class="rcl-dirver_age_condition"></span>
-                                                        </li>
-                                                        <li class="d-flex justify-content-between">
-                                                            <!-- <span>운전경력</span> -->
-                                                            <span class="rcl-driver_experience_condition"></span>
-                                                        </li>
-                                                    </ul>
-                                                </td>
-                                                <td class="text-center pt-4 justify-content-center align-items-center">
+                                                </div>
+                                                <div class="col-1 text-center">
+                                                    <div class="rcl-rental_fee_weekdays"></div>
+                                                    <div class="rcl-rental_fee_weekend"></div>
+                                                </div>
+                                                <div class="col-1 text-center">
+                                                    <div class="rcl-weekdays_price"></div>
+                                                    <div class="rcl-weekend_price"></div>
+                                                </div>
+                                                <div class="col-1 text-center">
+                                                    <div class="rcl-semi_peak_weekdays_price"></div>
+                                                    <div class="rcl-semi_peak_weekend_price"></div>
+                                                </div>
+                                                <div class="col-1 text-center">
+                                                    <div class="rcl-saile_weekdays_price"></div>
+                                                    <div class="rcl-saile_weekend_price"></div>
+                                                </div>
+                                                <div class="col-1 text-center">
+                                                    <div class="rcl-specifiedPeriod_weekdays"></div>
+                                                    <div class="rcl-specifiedPeriod_weekend"></div>
+                                                </div>
+                                                <div class="col-2 text-center">
+                                                    <div>운전면허: <span class="rcl-driver_liecense_condition"></span></div>
+                                                    <div>운전자 나이: <span class="rcl-dirver_age_condition"></span></div>
+                                                    <div>운전 경력: <span class="rcl-driver_experience_condition"></span></div>
+                                                </div>
+                                                <div class="col-1 text-center">
                                                     <select class="form-select form-select-sm">
                                                         <option selected>노출중</option>
                                                         <option value="1">품절</option>
                                                         <option value="2">숨김</option>
                                                     </select>
-                                                </td>
-                                                <td class="text-center pt-4 justify-content-center align-items-center">
-                                                    <a class="border btn btn-outline-dark"><span class="material-symbols-outlined d-flex justify-content-center align-items-center">edit</span> </a>
-                                                    <a class="border btn btn-outline-dark"><span class="material-symbols-outlined d-flex justify-content-center align-items-center">delete</span></a>
-                                                </td>
-                                                <td></td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
+                                                </div>
+                                                <div class="col-1 text-center"> <!-- 오른쪽 간격 추가 -->
+                                                    <a class="btn btn-bc-outline-dark me-1 btn-sm px-1 light-icon"> <!-- 수정/삭제 버튼 간격 추가 -->
+                                                        <span class="material-symbols-outlined d-flex justify-content-center">edit</span>
+                                                    </a>
+                                                    <a class="btn btn-bc-outline-dark btn-sm px-1 light-icon">
+                                                        <span class="material-symbols-outlined d-flex justify-content-center">delete</span>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -291,11 +237,20 @@
                     }
 
                     // 운전 조건
-                    newRclWrapper.querySelector(".rcl-driver_liecense_condition").innerText = `운전면허 ${e.driver_license_condition_name}`;
-                    newRclWrapper.querySelector(".rcl-dirver_age_condition").innerText = `운전자나이 ${e.driver_age_condition_name}`;
-                    newRclWrapper.querySelector(".rcl-driver_experience_condition").innerText = `운전 경력 ${e.driver_experience_condition_name}`;
+                    newRclWrapper.querySelector(".rcl-driver_liecense_condition").innerText = `${e.driver_license_condition_name}`;
+                    newRclWrapper.querySelector(".rcl-dirver_age_condition").innerText = `${e.driver_age_condition_name}`;
+                    newRclWrapper.querySelector(".rcl-driver_experience_condition").innerText = `${e.driver_experience_condition_name}`;
 
+
+                    const searchIcon = newRclWrapper.querySelector(".rcl-detail_link");
+                    searchIcon.addEventListener('click', () => {
+                        // Use JavaScript to navigate to the details page
+                        window.location.href = `/campingcar/campingCarDetailPage?id=${e.id}`;
+                    });
+
+                    // Append the new camper row to the list
                     registeredCampersListBox.appendChild(newRclWrapper);
+                    
                 }
         });
     }

@@ -46,21 +46,21 @@
                                 <head>차량 대여 관리 리스트</head>
                             </div>
                             <div class="row bg-body-tertiary fw-semibold border-bottom py-2 px-0 mx-0 new-fs-75 d-flex align-items-center">
-                                <div class="col-1 px-0 d-flex justify-content-center align-items-center text-center">전면</div>
-                                <div class="col-2 px-0 d-flex justify-content-center align-items-center text-center">보조석 앞면</div>
-                                <div class="col-2 px-0 d-flex justify-content-center align-items-center text-center">보조석 뒷면</div>
-                                <div class="col-2 px-0 d-flex justify-content-center align-items-center text-center">후면</div>
-                                <div class="col-2 px-0 d-flex justify-content-center align-items-center text-center">운전석 뒷면</div>
-                                <div class="col-2 px-0 d-flex justify-content-center align-items-center text-center">운전석 앞면</div>
-                                <div class="col-1 px-0 d-flex justify-content-center align-items-center text-center">확인</div>
+                                <div class="col d-flex justify-content-center align-items-center text-center">전면</div>
+                                <div class="col d-flex justify-content-center align-items-center text-center">보조석 앞면</div>
+                                <div class="col d-flex justify-content-center align-items-center text-center">보조석 뒷면</div>
+                                <div class="col d-flex justify-content-center align-items-center text-center">후면</div>
+                                <div class="col d-flex justify-content-center align-items-center text-center">운전석 뒷면</div>
+                                <div class="col d-flex justify-content-center align-items-center text-center">운전석 앞면</div>
+                                <div class="col-1 d-flex justify-content-center align-items-center text-center">사진 전송</div>
                             </div>
-                        
+                            
                             <form class="container-fluid mt-0" id="uploadForm" action="/partner/returnImageProcess" method="post" enctype="multipart/form-data">
                                 <div class="row py-2 border-bottom new-fs-85 text-center d-flex align-items-center">
                                     <!-- 첫 번째 이미지 업로드 (전면) -->
-                                    <div class="col-1 px-0 rentalShoot d-flex justify-content-center align-items-center text-center flex-column">
+                                    <div class="col d-flex justify-content-center align-items-center text-center flex-column p-0">
                                         <div id="front-view-preview-container" style="display: none;">
-                                            <img id="preview-front-view" src="" class="img-fluid w-100" style="max-height: 100px;">
+                                            <img id="preview-front-view" src="" class="img-fluid" style="max-width: 150px; height: auto; object-fit: contain;">
                                         </div>
                                         <div onclick="document.getElementById('front-view-input').click();" style="cursor: pointer;">
                                             <span class="material-symbols-outlined" style="font-size: 2rem;">photo_camera</span>
@@ -70,9 +70,9 @@
                                     </div>
                             
                                     <!-- 두 번째 이미지 업로드 (보조석 앞면) -->
-                                    <div class="col-2 px-0 rentalShoot d-flex justify-content-center align-items-center text-center flex-column">
+                                    <div class="col d-flex justify-content-center align-items-center text-center flex-column p-0">
                                         <div id="passenger-front-view-preview-container" style="display: none;">
-                                            <img id="preview-passenger-front-view" src="" class="img-fluid w-100" style="max-height: 100px;">
+                                            <img id="preview-passenger-front-view" src="" class="img-fluid" style="max-width: 150px; height: auto; object-fit: contain;">
                                         </div>
                                         <div onclick="document.getElementById('passenger-front-view-input').click();" style="cursor: pointer;">
                                             <span class="material-symbols-outlined" style="font-size: 2rem;">photo_camera</span>
@@ -82,9 +82,9 @@
                                     </div>
                             
                                     <!-- 세 번째 이미지 업로드 (보조석 뒷면) -->
-                                    <div class="col-2 px-0 rentalShoot d-flex justify-content-center align-items-center text-center flex-column">
+                                    <div class="col d-flex justify-content-center align-items-center text-center flex-column p-0">
                                         <div id="passenger-rear-view-preview-container" style="display: none;">
-                                            <img id="preview-passenger-rear-view" src="" class="img-fluid w-100" style="max-height: 100px;">
+                                            <img id="preview-passenger-rear-view" src="" class="img-fluid" style="max-width: 150px; height: auto; object-fit: contain;">
                                         </div>
                                         <div onclick="document.getElementById('passenger-rear-view-input').click();" style="cursor: pointer;">
                                             <span class="material-symbols-outlined" style="font-size: 2rem;">photo_camera</span>
@@ -94,9 +94,9 @@
                                     </div>
                             
                                     <!-- 네 번째 이미지 업로드 (후면) -->
-                                    <div class="col-2 px-0 rentalShoot d-flex justify-content-center align-items-center text-center flex-column">
+                                    <div class="col d-flex justify-content-center align-items-center text-center flex-column p-0">
                                         <div id="rear-view-preview-container" style="display: none;">
-                                            <img id="preview-rear-view" src="" class="img-fluid w-100" style="max-height: 100px;">
+                                            <img id="preview-rear-view" src="" class="img-fluid" style="max-width: 150px; height: auto; object-fit: contain;">
                                         </div>
                                         <div onclick="document.getElementById('rear-view-input').click();" style="cursor: pointer;">
                                             <span class="material-symbols-outlined" style="font-size: 2rem;">photo_camera</span>
@@ -106,9 +106,9 @@
                                     </div>
                             
                                     <!-- 다섯 번째 이미지 업로드 (운전석 뒷면) -->
-                                    <div class="col-2 px-0 rentalShoot d-flex justify-content-center align-items-center text-center flex-column">
+                                    <div class="col d-flex justify-content-center align-items-center text-center flex-column p-0">
                                         <div id="driver-rear-view-preview-container" style="display: none;">
-                                            <img id="preview-driver-rear-view" src="" class="img-fluid w-100" style="max-height: 100px;">
+                                            <img id="preview-driver-rear-view" src="" class="img-fluid" style="max-width: 150px; height: auto; object-fit: contain;">
                                         </div>
                                         <div onclick="document.getElementById('driver-rear-view-input').click();" style="cursor: pointer;">
                                             <span class="material-symbols-outlined" style="font-size: 2rem;">photo_camera</span>
@@ -118,9 +118,9 @@
                                     </div>
                             
                                     <!-- 여섯 번째 이미지 업로드 (운전석 앞면) -->
-                                    <div class="col-2 px-0 rentalShoot d-flex justify-content-center align-items-center text-center flex-column">
+                                    <div class="col d-flex justify-content-center align-items-center text-center flex-column p-0">
                                         <div id="driver-front-view-preview-container" style="display: none;">
-                                            <img id="preview-driver-front-view" src="" class="img-fluid w-100" style="max-height: 100px;">
+                                            <img id="preview-driver-front-view" src="" class="img-fluid" style="max-width: 150px; height: auto; object-fit: contain;">
                                         </div>
                                         <div onclick="document.getElementById('driver-front-view-input').click();" style="cursor: pointer;">
                                             <span class="material-symbols-outlined" style="font-size: 2rem;">photo_camera</span>
@@ -130,7 +130,7 @@
                                     </div>
                             
                                     <!-- 사진 전송 버튼 -->
-                                    <div class="col-1 px-0 rentalShoot d-flex justify-content-center align-items-center text-center">
+                                    <div class="col-1 d-flex justify-content-center align-items-center text-center">
                                         <input type="hidden" name="reservation_id" th:value="${reservationId}">
                                         <button type="button" class="btn btn-bc-outline-dark" onclick="showModal()">사진 전송</button>
                                     </div>

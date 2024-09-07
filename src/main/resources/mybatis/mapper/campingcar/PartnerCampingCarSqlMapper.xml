@@ -331,7 +331,7 @@
                 bc_rental_external_inspection brei 
     INNER JOIN 
                 bc_reservation br on brei.reservation_id = br.id
-    where brei.id=#{id}
+    where brei.reservation_id=#{id}
     </select>
 
     <!-- 판매자 : 반납 관리 리스트-->

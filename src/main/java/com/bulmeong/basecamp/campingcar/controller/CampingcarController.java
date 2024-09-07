@@ -4,6 +4,7 @@ import java.io.File;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -56,54 +57,65 @@ public class CampingcarController {
         return "campingcar/gotoRentCar";
     }
 
-    @RequestMapping("campingCarDetailPage")
-    public String campingCarDetailPage(@RequestParam("id") int id, Model model, HttpSession session) {
+@RequestMapping("campingCarDetailPage")
+public String campingCarDetailPage(@RequestParam("id") int id, Model model, HttpSession session) {
 
-        UserDto sessionUserInfo = (UserDto) session.getAttribute("sessionUserInfo");
-        int rentUserPk = campingcarService.getExistingByRentUserId(sessionUserInfo.getId());
+    UserDto sessionUserInfo = (UserDto) session.getAttribute("sessionUserInfo");
 
-        model.addAttribute("sessionUserInfo", sessionUserInfo);
-        System.out.println("유저"+ sessionUserInfo);
-
-        Map<String,Object> campingcarDetails = campingcarService.getCampingCarDetailByid(id);
-        model.addAttribute("campingcarDetails", campingcarDetails);
-        System.out.println("디테일" + campingcarDetails);
-
-        // 캠핑옵션 
-        List<ProductDetailImgDto> detailImgDto = campingcarService.getProductDetailImgByProductId(id);
-        model.addAttribute("detailImgDto", detailImgDto);
-        System.out.println("캠핑옵션" + detailImgDto);
-        
-        // 좋아요 유무 확인
-        List<Map<String,Object>> MyLikeList = campingcarService.getMyLikeList(rentUserPk);
-        System.out.println(MyLikeList);
-        model.addAttribute("MyLikeList", MyLikeList);
-
-        // 차량옵션
-        List<BasicFacilitiesDto> facilities = campingcarService.getBasicFacilitiesByProductId(id);
-        model.addAttribute("facilities", facilities);
-        System.out.println("차량옵션" + facilities);
-
-        //리뷰 리스트
-        List<Map<String,Object>> reviewData = campingcarService.getReviewAllbyCarId(id);
-        model.addAttribute("reviewData", reviewData);
-        System.out.println("reviewData"+reviewData);
-
-        // 해당 차량의 리뷰 별점 평균 
-        Double reviewAvg = campingcarService.getAvgByCarId(id);
-        model.addAttribute("reviewAvg", reviewAvg);
-
-        // 해당 차량의 리뷰 참여 인원 수
-        int reivewCountBycar = campingcarService.getReviewByCountPersont(id);
-        model.addAttribute("reivewCountBycar", reivewCountBycar);
-
-        // 해당 차량의 각 별점 마다 인원수
-        List<Map<String,Object>> ratings = campingcarService.ratingGroupBycar(id);
-        model.addAttribute("ratings", ratings);
-        System.out.println("별점인원원수" + ratings);
-
-        return "campingcar/campingCarDetailPage";
+    // sessionUserInfo가 null이면 로그인 페이지로 리다이렉트
+    if (sessionUserInfo == null) {
+        return "redirect:/user/login";  // 로그인 페이지로 리다이렉트
     }
+
+    // 유저가 로그인한 경우 rentUserPk 조회 (null일 수 있음)
+    Integer rentUserPk = campingcarService.getExistingByRentUserId(sessionUserInfo.getId());
+    model.addAttribute("sessionUserInfo", sessionUserInfo);
+    System.out.println("유저" + sessionUserInfo);
+
+    // 캠핑카 상세 정보 가져오기
+    Map<String, Object> campingcarDetails = campingcarService.getCampingCarDetailByid(id);
+    model.addAttribute("campingcarDetails", campingcarDetails);
+    System.out.println("디테일" + campingcarDetails);
+
+    // 캠핑 옵션
+    List<ProductDetailImgDto> detailImgDto = campingcarService.getProductDetailImgByProductId(id);
+    model.addAttribute("detailImgDto", detailImgDto);
+    System.out.println("캠핑옵션" + detailImgDto);
+
+    // 좋아요 유무 확인 (rentUserPk가 null이어도 페이지 접근 가능)
+    if (rentUserPk != null) {
+        List<Map<String, Object>> MyLikeList = campingcarService.getMyLikeList(rentUserPk);
+        model.addAttribute("MyLikeList", MyLikeList);
+        System.out.println(MyLikeList);
+    } else {
+        model.addAttribute("MyLikeList", new ArrayList<>()); // 빈 리스트 설정
+    }
+
+    // 차량 옵션
+    List<BasicFacilitiesDto> facilities = campingcarService.getBasicFacilitiesByProductId(id);
+    model.addAttribute("facilities", facilities);
+    System.out.println("차량옵션" + facilities);
+
+    // 리뷰 리스트
+    List<Map<String, Object>> reviewData = campingcarService.getReviewAllbyCarId(id);
+    model.addAttribute("reviewData", reviewData);
+    System.out.println("reviewData" + reviewData);
+
+    // 해당 차량의 리뷰 별점 평균
+    Double reviewAvg = campingcarService.getAvgByCarId(id);
+    model.addAttribute("reviewAvg", reviewAvg);
+
+    // 해당 차량의 리뷰 참여 인원 수
+    int reivewCountBycar = campingcarService.getReviewByCountPersont(id);
+    model.addAttribute("reivewCountBycar", reivewCountBycar);
+
+    // 해당 차량의 각 별점마다 인원수
+    List<Map<String, Object>> ratings = campingcarService.ratingGroupBycar(id);
+    model.addAttribute("ratings", ratings);
+    System.out.println("별점인원수" + ratings);
+
+    return "campingcar/campingCarDetailPage";
+}
 
     @RequestMapping("reservationInfo")
     public String reservationInfo(@RequestParam("id") int id, HttpSession session, Model model){
@@ -297,7 +309,7 @@ public class CampingcarController {
 
     // 차량 대여 사진찍기를 위한 이미지 메소드
     public String rentalShoot(MultipartFile newImage) {
-        String rootPath = "C:/basecampeImage_rentuser/";
+        String rootPath = "C:/basecampImage/basecampeImage_rentuser/";
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd/");
         String todayPath = sdf.format(new Date());
 

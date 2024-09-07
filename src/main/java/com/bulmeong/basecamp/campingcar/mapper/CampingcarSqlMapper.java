@@ -46,7 +46,7 @@ public interface CampingcarSqlMapper {
     public int findRentUserByUserId(int id); 
 
     // 예약하기의 기존 렌트유저ID 가지고 오기 
-    public int existingByRentUserId(int id);
+    public Integer  existingByRentUserId(int id);
 
     //최초 렌트 고객 등록
     public void createRentUser(RentUserDto rentUserParams);

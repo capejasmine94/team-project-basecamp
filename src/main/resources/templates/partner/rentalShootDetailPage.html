@@ -46,38 +46,38 @@
                                 <head>차량 대여 관리 리스트</head>
                             </div>
                             <div class="row bg-body-tertiary fw-semibold border-bottom py-2 px-0 mx-0 new-fs-75 d-flex align-items-center">
-                                <div class="col-2 d-flex justify-content-center align-items-center text-center">전면</div>
-                                <div class="col-2 d-flex justify-content-center align-items-center text-center">보조석 앞면</div>
-                                <div class="col-2 d-flex justify-content-center align-items-center text-center">보조석 뒷면</div>
-                                <div class="col-1 d-flex justify-content-center align-items-center text-center">후면</div>
-                                <div class="col-2 d-flex justify-content-center align-items-center text-center">운전석 뒷면</div>
-                                <div class="col-2 d-flex justify-content-center align-items-center text-center">운전석 앞면</div>
-                                <div class="col-1 d-flex justify-content-center align-items-center text-center">확인</div>
+                                <div class="col d-flex justify-content-center align-items-center text-center">전면</div>
+                                <div class="col d-flex justify-content-center align-items-center text-center">보조석 앞면</div>
+                                <div class="col d-flex justify-content-center align-items-center text-center">보조석 뒷면</div>
+                                <div class="col d-flex justify-content-center align-items-center text-center">후면</div>
+                                <div class="col d-flex justify-content-center align-items-center text-center">운전석 뒷면</div>
+                                <div class="col d-flex justify-content-center align-items-center text-center">운전석 앞면</div>
+                                <div class="col-1 ps-4 d-flex justify-content-center align-items-center text-center">확인</div>
                             </div>
                             
                             <div class="row py-2 border-bottom new-fs-85 d-flex align-items-center text-center" th:each="rentalShootData : ${rentalShootList}">
-                                <div class="col-2 d-flex justify-content-center align-items-center text-center ps-4 pe-0">
-                                    <img th:src="@{${rentalShootData.front_view}}" class="img-fluid"/>
+                                <div class="col d-flex justify-content-center align-items-center text-center p-0">
+                                    <img th:src="|/images/basecampeImage_rentuser/${rentalShootData.front_view}|" class="img-fluid" style="max-width: 150px; height: auto; object-fit: contain;">
                                 </div>
-                                <div class="col-2 d-flex justify-content-center align-items-center text-center ps-4 pe-0">
-                                    <img th:src="@{${rentalShootData.passenger_front_view}}" class="img-fluid"/>
+                                <div class="col d-flex justify-content-center align-items-center text-center p-0">
+                                    <img th:src="|/images/basecampeImage_rentuser/${rentalShootData.passenger_front_view}|" class="img-fluid" style="max-width: 150px; height: auto; object-fit: contain;">
                                 </div>
-                                <div class="col-2 d-flex justify-content-center align-items-center text-center px-0">
-                                    <img th:src="@{${rentalShootData.passenger_rear_view}}" class="img-fluid"/>
+                                <div class="col d-flex justify-content-center align-items-center text-center p-0">
+                                    <img th:src="|/images/basecampeImage_rentuser/${rentalShootData.passenger_rear_view}|" class="img-fluid" style="max-width: 150px; height: auto; object-fit: contain;">
                                 </div>
-                                <div class="col-1 d-flex justify-content-center align-items-center text-center px-0">
-                                    <img th:src="@{${rentalShootData.rear_view}}" class="img-fluid"/>
+                                <div class="col d-flex justify-content-center align-items-center text-center p-0">
+                                    <img th:src="|/images/basecampeImage_rentuser/${rentalShootData.rear_view}|" class="img-fluid" style="max-width: 150px; height: auto; object-fit: contain;">
                                 </div>
-                                <div class="col-2 d-flex justify-content-center align-items-center text-center px-0">
-                                    <img th:src="@{${rentalShootData.driver_rear_view}}" class="img-fluid"/>
+                                <div class="col d-flex justify-content-center align-items-center text-center p-0">
+                                    <img th:src="|/images/basecampeImage_rentuser/${rentalShootData.driver_rear_view}|" class="img-fluid" style="max-width: 150px; height: auto; object-fit: contain;">
                                 </div>
-                                <div class="col-2 d-flex justify-content-center align-items-center text-center px-0">
-                                    <img th:src="@{${rentalShootData.driver_front_view}}" class="img-fluid"/>
+                                <div class="col d-flex justify-content-center align-items-center text-center p-0">
+                                    <img th:src="|/images/basecampeImage_rentuser/${rentalShootData.driver_front_view}|" class="img-fluid" style="max-width: 150px; height: auto; object-fit: contain;">
                                 </div>
-                                <div class="col-1 d-flex justify-content-center align-items-center text-center ps-0 pe-3">
+                                <div class="col-1 d-flex justify-content-center align-items-center text-center p-0">
                                     <a href="/partner/rentalManagement" class="btn btn-bc-outline-dark px-2 new-fs-9">확인</a>
                                 </div>
-                            </div>
+                            </div>                     
                         </div>
                     </div>
                 </div>

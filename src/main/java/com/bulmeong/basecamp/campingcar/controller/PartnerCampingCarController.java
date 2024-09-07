@@ -98,10 +98,6 @@ public class PartnerCampingCarController {
         return "partner/partnerDashboard";
     }
 
-
-
-
-
     // admin_main에 sub_category_쓰는 방식
     @RequestMapping("carRegister")
     public String carRegister(Model model, HttpSession session) {
@@ -273,7 +269,7 @@ public class PartnerCampingCarController {
 
     // 차량 반납 이미지 업로드를 위한 이미지 메소드
     public String rentalShoot(MultipartFile newImage) {
-        String rootPath = "C:/basecampeImage_rentuser/";
+        String rootPath = "C:/basecampImage/basecampeImage_rentuser/";
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd/");
         String todayPath = sdf.format(new Date());
 

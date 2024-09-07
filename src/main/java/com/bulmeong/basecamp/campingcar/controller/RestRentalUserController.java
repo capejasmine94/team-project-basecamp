@@ -75,7 +75,7 @@ public class RestRentalUserController {
         restRentUserResponseDto.setResult("success");
 
         UserDto userDto = (UserDto) session.getAttribute("sessionUserInfo");
-        int rentUserPk = campingcarService.getExistingByRentUserId(userDto.getId());
+        Integer rentUserPk = campingcarService.getExistingByRentUserId(userDto.getId());
         campingCarLikeDto.setRent_user_id(rentUserPk);
         
         campingcarService.like(campingCarLikeDto);
@@ -90,7 +90,7 @@ public class RestRentalUserController {
         restRentUserResponseDto.setResult("success");
         
         UserDto userDto = (UserDto) session.getAttribute("sessionUserInfo");
-        int rentUserPk = campingcarService.getExistingByRentUserId(userDto.getId());
+        Integer rentUserPk = campingcarService.getExistingByRentUserId(userDto.getId());
         campingCarLikeDto.setRent_user_id(rentUserPk);
 
         campingcarService.unLike(campingCarLikeDto);
@@ -118,7 +118,7 @@ public class RestRentalUserController {
         restRentUserResponseDto.setResult("success");
 
         UserDto userDto = (UserDto) session.getAttribute("sessionUserInfo");
-        int rentUserPk = campingcarService.getExistingByRentUserId(userDto.getId());
+        Integer rentUserPk = campingcarService.getExistingByRentUserId(userDto.getId());
         campingCarLikeDto.setRent_user_id(rentUserPk);
 
         Boolean isLikedByUser = campingcarService.isLiked(campingCarLikeDto);
@@ -135,7 +135,7 @@ public class RestRentalUserController {
         restRentUserResponseDto.setResult("success");
 
         UserDto userDto = (UserDto) session.getAttribute("sessionUserInfo");
-        int rentUserPk = campingcarService.getExistingByRentUserId(userDto.getId());
+        Integer rentUserPk = campingcarService.getExistingByRentUserId(userDto.getId());
 
         List<Map<String,Object>> MyLikeList = campingcarService.getMyLikeList(rentUserPk);
         restRentUserResponseDto.add("MyLikeList", MyLikeList);

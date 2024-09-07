@@ -21,8 +21,8 @@
         }
         .card-img-top {
             width: 100%;
-            height: 150px; /* 고정된 이미지 높이 */
-            object-fit: cover; /* 비율 유지하며 크기 맞춤 */
+            height: 100%; /* 고정된 이미지 높이 */
+            object-fit: contain; /* 비율 유지하며 크기 맞춤 */
         }
     </style>
 </head>
@@ -57,54 +57,54 @@
         <div class="row mb-5">
             <div class="col-12 mb-4">
                 <div class="card shadow-sm">
-                    <img th:src="|/images/${returnData.front_view}|" class="card-img-top" alt="Front View">
+                    <img th:src="|/images/basecampeImage_rentuser/${returnData.front_view}|" class="card-img-top"  alt="Front View">
                     <div class="card-body text-center pb-1">
-                        <div class="card-title mb-0 fw-medium fs-5">전면</div>
+                        <div class="card-title mb-0 fw-medium fs-6">전면</div>
                     </div>
                 </div>
             </div>
 
             <div class="col-12 mb-4">
                 <div class="card shadow-sm">
-                    <img th:src="|/images/${returnData.passenger_front_view}|" class="card-img-top" alt="Passenger Side Front View">
+                    <img th:src="|/images/basecampeImage_rentuser/${returnData.passenger_front_view}|" class="card-img-top" alt="Passenger Side Front View">
                     <div class="card-body text-center pb-1">
-                        <div class="card-title mb-0 fw-medium fs-5">보조석 앞면</div>
+                        <div class="card-title mb-0 fw-medium fs-6">보조석 앞면</div>
                     </div>
                 </div>
             </div>
 
             <div class="col-12 mb-4">
                 <div class="card shadow-sm">
-                    <img th:src="|/images/${returnData.passenger_rear_view}|" class="card-img-top" alt="Passenger Side Rear View">
+                    <img th:src="|/images/basecampeImage_rentuser/${returnData.passenger_rear_view}|" class="card-img-top" alt="Passenger Side Rear View">
                     <div class="card-body text-center pb-1">
-                        <div class="card-title mb-0 fw-medium fs-5">보조석 뒷면</div>
+                        <div class="card-title mb-0 fw-medium fs-6">보조석 뒷면</div>
                     </div>
                 </div>
             </div>
 
             <div class="col-12 mb-4">
                 <div class="card shadow-sm">
-                    <img th:src="|/images/${returnData.rear_view}|" class="card-img-top" alt="Rear View">
+                    <img th:src="|/images/basecampeImage_rentuser/${returnData.rear_view}|" class="card-img-top" alt="Rear View">
                     <div class="card-body text-center pb-1">
-                        <div class="card-title mb-0 fw-medium fs-5">후면</div>
+                        <div class="card-title mb-0 fw-medium fs-6">후면</div>
                     </div>
                 </div>
             </div>
 
             <div class="col-12 mb-4">
                 <div class="card shadow-sm">
-                    <img th:src="|/images/${returnData.driver_rear_view}|" class="card-img-top" alt="Driver Side Rear View">
+                    <img th:src="|/images/basecampeImage_rentuser/${returnData.driver_rear_view}|" class="card-img-top"  alt="Driver Side Rear View">
                     <div class="card-body text-center pb-1">
-                        <div class="card-title mb-0 fw-medium fs-5">운전석 뒷면</div>
+                        <div class="card-title mb-0 fw-medium fs-6">운전석 뒷면</div>
                     </div>
                 </div>
             </div>
 
             <div class="col-12 mb-4">
                 <div class="card shadow-sm">
-                    <img th:src="|/images/${returnData.driver_front_view}|" class="card-img-top" alt="Driver Side Front View">
+                    <img th:src="|/images/basecampeImage_rentuser/${returnData.driver_front_view}|" class="card-img-top" alt="Driver Side Front View">
                     <div class="card-body text-center pb-1">
-                        <div class="card-title mb-0 fw-medium fs-5">운전석 앞면</div>
+                        <div class="card-title mb-0 fw-medium fs-6">운전석 앞면</div>
                     </div>
                 </div>
             </div>
