@@ -3,6 +3,8 @@ package com.bulmeong.basecamp.campingcar.controller;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.Collections;
+
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
@@ -76,8 +78,15 @@ public class RestRentalUserController {
 
         UserDto userDto = (UserDto) session.getAttribute("sessionUserInfo");
         Integer rentUserPk = campingcarService.getExistingByRentUserId(userDto.getId());
+    
+        // rentUserPk가 null일 경우
+        if (rentUserPk == null) {
+            restRentUserResponseDto.setResult("fail");
+            restRentUserResponseDto.setReason("렌트 유저만 좋아요를 누를 수 있습니다.");
+            return restRentUserResponseDto;
+        }
+    
         campingCarLikeDto.setRent_user_id(rentUserPk);
-        
         campingcarService.like(campingCarLikeDto);
         
         return restRentUserResponseDto;
@@ -91,9 +100,17 @@ public class RestRentalUserController {
         
         UserDto userDto = (UserDto) session.getAttribute("sessionUserInfo");
         Integer rentUserPk = campingcarService.getExistingByRentUserId(userDto.getId());
+    
+        // rentUserPk가 null일 경우
+        if (rentUserPk == null) {
+            restRentUserResponseDto.setResult("fail");
+            restRentUserResponseDto.setReason("렌트 유저만 좋아요를 취소할 수 있습니다.");
+            return restRentUserResponseDto;
+        }
+        
         campingCarLikeDto.setRent_user_id(rentUserPk);
-
         campingcarService.unLike(campingCarLikeDto);
+    
 
         return restRentUserResponseDto;
     }
@@ -119,8 +136,15 @@ public class RestRentalUserController {
 
         UserDto userDto = (UserDto) session.getAttribute("sessionUserInfo");
         Integer rentUserPk = campingcarService.getExistingByRentUserId(userDto.getId());
+    
+        // rentUserPk가 null일 경우
+        if (rentUserPk == null) {
+            restRentUserResponseDto.setResult("fail");
+            restRentUserResponseDto.add("message", "렌트 유저만 좋아요를 확인할 수 있습니다.");
+            return restRentUserResponseDto;
+        }
+    
         campingCarLikeDto.setRent_user_id(rentUserPk);
-
         Boolean isLikedByUser = campingcarService.isLiked(campingCarLikeDto);
         restRentUserResponseDto.add("isLikedByUser", isLikedByUser);
 
@@ -133,13 +157,29 @@ public class RestRentalUserController {
     public RestRentUserResponseDto MyLikeList(HttpSession session) {
         RestRentUserResponseDto restRentUserResponseDto = new RestRentUserResponseDto();
         restRentUserResponseDto.setResult("success");
-
+    
+        // 세션에서 사용자 정보 가져오기
         UserDto userDto = (UserDto) session.getAttribute("sessionUserInfo");
+    
+        // rentUserPk를 가져오지만 null일 경우 처리
         Integer rentUserPk = campingcarService.getExistingByRentUserId(userDto.getId());
-
-        List<Map<String,Object>> MyLikeList = campingcarService.getMyLikeList(rentUserPk);
+    
+        if (rentUserPk == null) {
+            // rentUserPk가 null일 경우 빈 목록을 반환
+            restRentUserResponseDto.setResult("fail");
+            restRentUserResponseDto.setReason("등록된 렌트 유저가 없습니다.");
+            
+            // 빈 목록 반환
+            List<Map<String, Object>> emptyList = Collections.emptyList();
+            restRentUserResponseDto.add("MyLikeList", emptyList);
+    
+            return restRentUserResponseDto;
+        }
+    
+        // rentUserPk가 존재할 경우 좋아요 목록 가져오기
+        List<Map<String, Object>> MyLikeList = campingcarService.getMyLikeList(rentUserPk);
         restRentUserResponseDto.add("MyLikeList", MyLikeList);
-
+    
         return restRentUserResponseDto;
     }
     

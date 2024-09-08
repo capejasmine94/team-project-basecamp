@@ -963,30 +963,18 @@
         }
 
         //대여하기 버튼 클릭 이벤트 리스너 추가
-        function gotoRentCar(envet) {
+        function gotoRentCar(event) {
             // 링크의 기본 동작을 차단
             event.preventDefault();
 
-        // 사용자가 로그인하지 않은 경우 로그인 페이지로 리다이렉트
-        if (myId == null) {
-            alert("로그인 하셔야 이용 가능합니다. 로그인 페이지로 이동해 주세요.");
-            return;
-        }
+            // 사용자가 로그인하지 않은 경우 로그인 페이지로 리다이렉트
+            if (myId == null) {
+                alert("로그인 하셔야 이용 가능합니다. 로그인 페이지로 이동해 주세요.");
+                return;
+            }
 
-        // rent_user_id를 확인하는 API 요청
-        const checkUrl = `/api/rent-user/isRentUser`;
-        fetch(checkUrl)
-            .then(response => response.json())
-            .then(response => {
-                if (response.data.isRentUser) {
-                    // rent_user_id가 있는 경우, 대여하기 페이지로 이동
-                    window.location.href = "/campingcar/gotoRentCar";
-                } else {
-                    // rent_user_id가 없는 경우 경고 메시지 표시하고 페이지 이동 차단
-                    alert("캠핑카 고객만 서비스를 이용하실 수 있습니다.");
-                    return;
-                }
-            });
+            // 로그인된 상태라면 바로 대여 페이지로 이동
+            window.location.href = "/campingcar/gotoRentCar";
         }
 
 
@@ -1138,35 +1126,29 @@
 
         // 좋아요 클릭 함수
         function like(product_id, event) {
-            event.stopPropagation(); // 이벤트 전파 중지
+            event.stopPropagation(); // 이벤트가 부모로 전파되는 것을 막기 위한 함수 호출 (다른 이벤트가 영향을 받지 않도록)
 
             // 사용자가 로그인하지 않은 경우 로그인 페이지로 리다이렉트
             if (myId == null) {
-                if (confirm("로그인 하셔야 이용 가능합니다. 로그인 페이지로 이동하시겠습니까?")) {
-                    location.href = "/user/login";
-                }
-                return;
+                alert("로그인 하셔야 이용 가능합니다. 로그인 페이지로 이동해 주세요."); // 로그인 필요 알림 메시지
+                return; // 함수 종료, 더 이상 실행하지 않음
             }
 
-            // rent_user_id를 확인하는 API 요청
-            const checkUrl = `/api/rent-user/isRentUser`;
-            fetch(checkUrl)
-            .then(response => response.json())
-            .then(response => {
-                if (response.data.isRentUser) {
-                    // rent_user_id가 있는 경우, 좋아요를 추가하는 API 요청
-                    const url = `/api/rent-user/like?product_id=${product_id}`;
-                    fetch(url)
-                        .then(response => response.json()) // JSON 형식으로 응답을 처리
-                        .then(response => {
-                            // 좋아요 상태를 갱신합니다.
-                            reloadLike(product_id);
-                        });
-                } else {
-                    // rent_user_id가 없는 경우 경고 메시지 표시
-                    alert("캠핑카 고객만 서비스를 이용하실 수 있습니다.");
-                }
-            });
+            // 좋아요 요청을 서버로 전송하는 API URL을 생성 (GET 요청으로 제품 ID를 전달)
+            const url = `/api/rent-user/like?product_id=${product_id}`;
+
+            // fetch를 사용하여 서버에 요청을 보냄
+            fetch(url)
+                .then(response => response.json()) // 서버로부터 응답을 JSON 형식으로 변환
+                .then(response => {
+                    // 서버에서 반환된 데이터가 "fail"일 경우 처리
+                    if (response.result === "fail") {
+                        alert(response.reason); // 실패한 이유를 사용자에게 알림
+                    } else {
+                        // 좋아요가 성공적으로 눌린 경우 상태를 갱신하는 함수 호출
+                        reloadLike(product_id); 
+                    }
+                });
         }
 
 
@@ -1213,25 +1195,26 @@
 
         // 좋아요 취소 함수
         function unLike(product_id, event) {
-            event.stopPropagation(); // 이벤트 전파 중지
+            event.stopPropagation();
 
             // 사용자가 로그인하지 않은 경우 로그인 페이지로 리다이렉트
             if (myId == null) {
-                if (confirm("로그인 하셔야 이용 가능합니다. 로그인 페이지로 이동하시겠습니까?")) {
-                    location.href = "/user/loginPage";
-                }
+                alert("로그인 하셔야 이용 가능합니다. 로그인 페이지로 이동해 주세요.");
                 return;
             }
 
-            // 좋아요를 취소하는 API 요청
             const url = `/api/rent-user/unLike?product_id=${product_id}`;
             fetch(url)
-                .then(response => response.json()) // JSON 형식으로 응답을 처리
+                .then(response => response.json())
                 .then(response => {
-                    // 좋아요 상태를 갱신합니다.
-                    reloadLike(product_id);
+                    if (response.result === "fail") {
+                        alert(response.reason); // 렌트 유저가 아닌 경우 서버에서 전송된 메시지 표시
+                    } else {
+                        reloadLike(product_id); // 성공적으로 좋아요가 취소된 경우 상태 갱신
+                    }
                 });
         }
+
 
         // 대여 장소 선택 모달 열기 함수 
         const showLocationModal = () => {
